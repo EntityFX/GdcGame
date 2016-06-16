@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EntityFx.EconomicsArcade.TestApplication.Contracts
+namespace EntityFX.EconomicsArcade.Contract.Game
 {
-    class GenericCounter : Counter
+    public class GenericCounter : CounterBase
     {
         public decimal Bonus
         {

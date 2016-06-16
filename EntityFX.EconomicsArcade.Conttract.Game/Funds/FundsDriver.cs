@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EntityFx.EconomicsArcade.TestApplication.Contracts
+namespace EntityFX.EconomicsArcade.Contract.Game
 {
     public class FundsDriver
     {

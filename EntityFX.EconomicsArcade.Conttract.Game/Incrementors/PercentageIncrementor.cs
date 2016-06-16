@@ -4,18 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EntityFx.EconomicsArcade.TestApplication.Contracts
+namespace EntityFX.EconomicsArcade.Contract.Game
 {
-    class ValueIncrementor : IncrementorBase
+    public class PercentageIncrementor : IncrementorBase
     {
-        public ValueIncrementor(int value)
+        public PercentageIncrementor(int value)
             : base(value)
         {
         }
         
         protected override IncrementorTypeEnum GetIncrementorType()
         {
-            return IncrementorTypeEnum.ValueIncrementor;
+            return IncrementorTypeEnum.PercentageIncrementor;
         }
     }
 }

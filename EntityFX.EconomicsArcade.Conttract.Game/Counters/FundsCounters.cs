@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EntityFx.EconomicsArcade.TestApplication.Contracts
+namespace EntityFX.EconomicsArcade.Contract.Game
 {
     public class FundsCounters
     {
@@ -12,8 +12,8 @@ namespace EntityFx.EconomicsArcade.TestApplication.Contracts
 
         public decimal TotalFunds { get; set; }
 
-        public Counter RootCounter { get; set; }
+        public CounterBase RootCounter { get; set; }
 
-        public IDictionary<int, Counter> Counters { get; set; }
+        public IDictionary<int, CounterBase> Counters { get; set; }
     }
 }

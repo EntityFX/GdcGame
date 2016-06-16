@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EntityFx.EconomicsArcade.TestApplication.Contracts
+namespace EntityFX.EconomicsArcade.Contract.Game
 {
-    class SingleCounter : Counter
+    public enum IncrementorTypeEnum
     {
+        ValueIncrementor,
+        PercentageIncrementor
     }
 }

@@ -1,4 +1,5 @@
-﻿using EntityFx.EconomicsArcade.TestApplication.Contracts;
+﻿using EntityFX.EconomicsArcade.Contract.Game;
+using EntityFX.EconomicsArcade.Engine.GameEngine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -450,7 +451,7 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
 
         protected override FundsCounters GetFundsCounters()
         {
-            var counters = new Dictionary<int, Counter>() { 
+            var counters = new Dictionary<int, CounterBase>() { 
                     {
                         (int)UssrCounterEnum.Communism,
                         new SingleCounter {
@@ -499,6 +500,7 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
         protected override void PostInitialize()
         {
             //CashFunds(1500000);
+            DisplayGameData();
         }
 
         protected override void PostByFundDriver(int fundDriverId)

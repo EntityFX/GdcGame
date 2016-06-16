@@ -1,17 +1,15 @@
-﻿using EntityFx.EconomicsArcade.TestApplication.Contracts;
+﻿using EntityFX.EconomicsArcade.Contract.Game;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
-using System.Timers;
 
-namespace EntityFx.EconomicsArcade.TestApplication
+namespace EntityFX.EconomicsArcade.Engine.GameEngine
 {
-    public abstract class GameBase
+    public abstract class GameBase : IGame
     {
-        private readonly Timer _stepTimer = new Timer(1000);
-
         private bool _isInitialized;
 
         private bool _isStarted;
@@ -26,12 +24,6 @@ namespace EntityFx.EconomicsArcade.TestApplication
 
         public GameBase()
         {
-            _stepTimer.Elapsed += StepTimerElapsed;
-        }
-
-        private void StepTimerElapsed(object sender, ElapsedEventArgs e)
-        {
-            PerformAutoStep();
         }
 
         public void Initialize()
@@ -50,63 +42,49 @@ namespace EntityFx.EconomicsArcade.TestApplication
         private void InitializeFundsDrivers()
         {
             FundsDrivers = GetFundsDrivers();
-            FundsDrivers.Values.ToList().ForEach(
-                _ => {
-                    _.CurrentValue = _.InitialValue;
-                    _.InflationPercent = 15;
-                }
-            );
+            foreach (var fundDriver in FundsDrivers)
+            {
+                fundDriver.Value.CurrentValue = fundDriver.Value.InitialValue;
+                fundDriver.Value.InflationPercent = 15;
+            }
         }
 
         protected abstract IDictionary<int, FundsDriver> GetFundsDrivers();
 
         protected abstract FundsCounters GetFundsCounters();
 
-        public void Start()
-        {
-            if (!_isInitialized) throw new Exception("Game is not initialized");
-            _stepTimer.Enabled = true;
-            _isStarted = true;
-        }
-
         public void PerformAutoStep()
         {
-            if (!_isStarted) throw new Exception("Game is not started");
+            if (!_isInitialized) throw new Exception("Game is not started");
             PerformAutoStepInternal();
             PostPerformAutoStep();
         }
 
         private void PerformAutoStepInternal()
         {
-            FundsCounters.Counters.Values.OfType<GenericCounter>().ToList().ForEach(
-                _ => 
-                {
-                    if (_.IsUsedInAutoStep)
-                    {
-                        CashFunds(_.Value);
-                    }
-                }
-            );
+            var genericCounters = FundsCounters.Counters.Values.OfType<GenericCounter>()
+                .Where(_ => !_.IsUsedInAutoStep);
+            foreach (var genericCounter in genericCounters)
+            {
+                CashFunds(genericCounter.Value);
+            }
             AutomaticStepNumber++;
         }
 
         private void PerformManualStepInternal()
         {
-            FundsCounters.Counters.Values.OfType<GenericCounter>().ToList().ForEach(
-                _ =>
-                {
-                    if (!_.IsUsedInAutoStep)
-                    {
-                        CashFunds(_.Value);
-                    }
-                }
-            );
+            var genericCounters = FundsCounters.Counters.Values.OfType<GenericCounter>()
+                .Where(_ => !_.IsUsedInAutoStep);
+            foreach (var genericCounter in genericCounters)
+            {
+                CashFunds(genericCounter.Value);
+            }
             ManualStepNumber++;
         }
 
         public void PerformManualStep()
         {
-            if (!_isStarted) throw new Exception("Game is not started");
+            if (!_isInitialized) throw new Exception("Game is not started");
             PerformManualStepInternal();
             PostPerformAutoStep();
         }
@@ -206,6 +184,17 @@ namespace EntityFx.EconomicsArcade.TestApplication
         protected bool IsFundsDriverAvailableForBuy(FundsDriver fundsDriver)
         {
             return fundsDriver.UnlockValue <= FundsCounters.RootCounter.Value;
+        }
+
+
+        public void FightAgainstInflation()
+        {
+            throw new NotImplementedException();
+        }
+
+        public LotteryResult PlayLottery()
+        {
+            throw new NotImplementedException();
         }
     }
 }
