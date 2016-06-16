@@ -65,6 +65,7 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
                     2,
                     new FundsDriver {
                         InitialValue = 400,
+                        UnlockValue = 5,
                         Incrementors = new Dictionary<int, IncrementorBase> {
                             {
                                 (int)UssrCounterEnum.Tax,
@@ -82,6 +83,7 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
                     3,
                     new FundsDriver {
                         InitialValue = 800,
+                        UnlockValue = 10,
                         Incrementors = new Dictionary<int, IncrementorBase> {
                             {
                                 (int)UssrCounterEnum.Production,
@@ -103,6 +105,7 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
                     4,
                     new FundsDriver {
                         InitialValue = 1500,
+                        UnlockValue = 25,
                         Incrementors = new Dictionary<int, IncrementorBase> {
                             {
                                 (int)UssrCounterEnum.Production,
@@ -120,6 +123,7 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
                     5,
                     new FundsDriver {
                         InitialValue = 3000,
+                        UnlockValue = 40,
                         Incrementors = new Dictionary<int, IncrementorBase> {
                             {
                                 (int)UssrCounterEnum.Production,
@@ -133,6 +137,7 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
                     6,
                     new FundsDriver {
                         InitialValue = 6000,
+                        UnlockValue = 80,
                         Incrementors = new Dictionary<int, IncrementorBase> {
                             {
                                 (int)UssrCounterEnum.Tax,
@@ -150,6 +155,7 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
                     7,
                     new FundsDriver {
                         InitialValue = 10000,
+                        UnlockValue = 120,
                         Incrementors = new Dictionary<int, IncrementorBase> {
                             {
                                 (int)UssrCounterEnum.Production,
@@ -171,6 +177,7 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
                     8,
                     new FundsDriver {
                         InitialValue = 20000,
+                        UnlockValue = 180,
                         Incrementors = new Dictionary<int, IncrementorBase> {
                             {
                                 (int)UssrCounterEnum.Production,
@@ -192,6 +199,7 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
                     9,
                     new FundsDriver {
                         InitialValue = 50000,
+                        UnlockValue = 220,
                         Incrementors = new Dictionary<int, IncrementorBase> {
                             {
                                 (int)UssrCounterEnum.Production,
@@ -212,7 +220,8 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
                 {
                     10,
                     new FundsDriver {
-                        InitialValue = 60000,
+                        InitialValue = 223200,
+                        UnlockValue = 250,
                         Incrementors = new Dictionary<int, IncrementorBase> {
                             {
                                 (int)UssrCounterEnum.Tax,
@@ -229,7 +238,8 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
                 {
                     11,
                     new FundsDriver {
-                        InitialValue = 80000,
+                        InitialValue = 250000,
+                        UnlockValue = 280,
                         Incrementors = new Dictionary<int, IncrementorBase> {
                             {
                                 (int)UssrCounterEnum.Production,
@@ -250,7 +260,8 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
                 {
                     12,
                     new FundsDriver {
-                        InitialValue = 100000,
+                        InitialValue = 300000,
+                        UnlockValue = 500,
                         Incrementors = new Dictionary<int, IncrementorBase> {
                             {
                                 (int)UssrCounterEnum.Production,
@@ -267,7 +278,8 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
                 {
                     13,
                     new FundsDriver {
-                        InitialValue = 120000,
+                        InitialValue = 500000,
+                        UnlockValue = 600,
                         Incrementors = new Dictionary<int, IncrementorBase> {
                             {
                                 (int)UssrCounterEnum.Production,
@@ -284,7 +296,8 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
                 {
                     14,
                     new FundsDriver {
-                        InitialValue = 150000,
+                        InitialValue = 800000,
+                        UnlockValue = 650,
                         Incrementors = new Dictionary<int, IncrementorBase> {
                             {
                                 (int)UssrCounterEnum.Communism,
@@ -297,7 +310,8 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
                 {
                     15,
                     new FundsDriver {
-                        InitialValue = 180000,
+                        InitialValue = 1100000,
+                        UnlockValue = 700,
                         Incrementors = new Dictionary<int, IncrementorBase> {
                             {
                                 (int)UssrCounterEnum.Production,
@@ -314,7 +328,8 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
                 {
                     16,
                     new FundsDriver {
-                        InitialValue = 200000,
+                        InitialValue = 1100000,
+                        UnlockValue = 800,
                         Incrementors = new Dictionary<int, IncrementorBase> {
                             {
                                 (int)UssrCounterEnum.Production,
@@ -335,7 +350,8 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
                 {
                     17,
                     new FundsDriver {
-                        InitialValue = 250000,
+                        InitialValue = 1350000,
+                        UnlockValue = 900,
                         Incrementors = new Dictionary<int, IncrementorBase> {
                             {
                                 (int)UssrCounterEnum.Production,
@@ -356,7 +372,8 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
                 {
                     18,
                     new FundsDriver {
-                        InitialValue = 400000,
+                        InitialValue = 2200000,
+                        UnlockValue = 1000,
                         Incrementors = new Dictionary<int, IncrementorBase> {
                             {
                                 (int)UssrCounterEnum.Production,
@@ -377,7 +394,8 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
                 {
                     19,
                     new FundsDriver {
-                        InitialValue = 1000000,
+                        InitialValue = 2500000,
+                        UnlockValue = 1200,
                         Incrementors = new Dictionary<int, IncrementorBase> {
                             {
                                 (int)UssrCounterEnum.Tax,
@@ -388,7 +406,43 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
                                 new ValueIncrementor(10)
                             } ,
                         },
-                        Name = "Black Market"
+                        Name = "Collectivisation"
+                    }   
+                },
+                {
+                    20,
+                    new FundsDriver {
+                        InitialValue = 2500000,
+                        UnlockValue = 1300,
+                        Incrementors = new Dictionary<int, IncrementorBase> {
+                            {
+                                (int)UssrCounterEnum.Production,
+                                new ValueIncrementor(500)
+                            } ,
+                            {
+                                (int)UssrCounterEnum.Communism,
+                                new ValueIncrementor(20)
+                            } ,
+                        },
+                        Name = "Corn fields"
+                    }   
+                },
+                {
+                    21,
+                    new FundsDriver {
+                        InitialValue = 1000000,
+                        UnlockValue = 1500,
+                        Incrementors = new Dictionary<int, IncrementorBase> {
+                            {
+                                (int)UssrCounterEnum.Tax,
+                                new ValueIncrementor(500)
+                            } ,
+                            {
+                                (int)UssrCounterEnum.Communism,
+                                new ValueIncrementor(25)
+                            } ,
+                        },
+                        Name = "Virign Land Campaign"
                     }   
                 },
             };
@@ -396,9 +450,7 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
 
         protected override FundsCounters GetFundsCounters()
         {
-            return new FundsCounters()
-            {
-                Counters = new Dictionary<int, Counter>() { 
+            var counters = new Dictionary<int, Counter>() { 
                     {
                         (int)UssrCounterEnum.Communism,
                         new SingleCounter {
@@ -426,7 +478,12 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
                             Name = "Five Year Plan",
                         }   
                     },
-                }
+                };
+
+            return new FundsCounters()
+            {
+                Counters = counters,
+                RootCounter = counters[(int)UssrCounterEnum.Communism]
             };
         }
 
@@ -435,7 +492,7 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
         protected override void PostPerformAutoStep()
         {
 
-                DisplayGameData();
+            DisplayGameData();
 
         }
 
@@ -477,7 +534,14 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
                 int charIndex = 65;
                 foreach (var fundsDriver in FundsDrivers)
                 {
-                    Console.Write("{3,2}: {0,28} {1,15:C} x{2,-4} ", fundsDriver.Value.Name, fundsDriver.Value.CurrentValue, fundsDriver.Value.BuyCount, ((char)charIndex).ToString());
+                    if (!IsFundsDriverAvailableForBuy(fundsDriver.Value))
+                    {
+                        Console.Write("{0,2}:             Need money to buy:     {1,8}. x{2,-4} ", ((char)charIndex).ToString(), fundsDriver.Value.UnlockValue, fundsDriver.Value.BuyCount);
+                    }
+                    else
+                    {
+                        Console.Write("{3,2}: {0,28} {1,15:C} x{2,-4} ", fundsDriver.Value.Name, fundsDriver.Value.CurrentValue, fundsDriver.Value.BuyCount, ((char)charIndex).ToString());
+                    }
                     PrettyConsole.WriteColor(ConsoleColor.Red, "+{0, -4} ", GetIncrementorValueById(fundsDriver.Value, (int)UssrCounterEnum.Communism));
                     PrettyConsole.WriteColor(ConsoleColor.Cyan, "+{0, -7} ", GetIncrementorValueById(fundsDriver.Value, (int)UssrCounterEnum.Production));
                     PrettyConsole.WriteColor(ConsoleColor.Green, "+{0,-7} ", GetIncrementorValueById(fundsDriver.Value, (int)UssrCounterEnum.Tax));
@@ -491,7 +555,7 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
     internal static class PrettyConsole
     {
         private static readonly object _lockObject = new { };
-        
+
         public static void WriteColor(ConsoleColor color, string text)
         {
             WriteColor(color, text, null);

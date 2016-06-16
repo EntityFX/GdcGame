@@ -53,7 +53,7 @@ namespace EntityFx.EconomicsArcade.TestApplication
             FundsDrivers.Values.ToList().ForEach(
                 _ => {
                     _.CurrentValue = _.InitialValue;
-                    _.InflationPercent = 10;
+                    _.InflationPercent = 15;
                 }
             );
         }
@@ -118,6 +118,10 @@ namespace EntityFx.EconomicsArcade.TestApplication
                 return;
             }
             var fundDriver = FundsDrivers[fundDriverId];
+            if (!IsFundsDriverAvailableForBuy(fundDriver))
+            {
+                return;
+            }
             if (FundsCounters.CurrentFunds >= fundDriver.CurrentValue)
             {
                 PayWithFunds(fundDriver.CurrentValue);
@@ -197,6 +201,11 @@ namespace EntityFx.EconomicsArcade.TestApplication
                 return String.Format("{0}{1}", incrementor.Value, incrementor.IncrementorType == IncrementorTypeEnum.PercentageIncrementor ? "%" : string.Empty);
             }
             return "0";
+        }
+
+        protected bool IsFundsDriverAvailableForBuy(FundsDriver fundsDriver)
+        {
+            return fundsDriver.UnlockValue <= FundsCounters.RootCounter.Value;
         }
     }
 }

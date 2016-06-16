@@ -16,6 +16,8 @@ namespace EntityFx.EconomicsArcade.TestApplication.Contracts
 
         public int InflationPercent { get; set; }
 
+        public decimal UnlockValue { get; set; }
+
         public int BuyCount { get; set; }
 
         public IDictionary<int, IncrementorBase> Incrementors { get; set; }

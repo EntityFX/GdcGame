@@ -12,6 +12,8 @@ namespace EntityFx.EconomicsArcade.TestApplication.Contracts
 
         public decimal TotalFunds { get; set; }
 
+        public Counter RootCounter { get; set; }
+
         public IDictionary<int, Counter> Counters { get; set; }
     }
 }
