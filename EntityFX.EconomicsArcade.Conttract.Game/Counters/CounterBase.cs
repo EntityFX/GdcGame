@@ -10,7 +10,15 @@ namespace EntityFX.EconomicsArcade.Contract.Game
     {
         public string Name { get; set; }
 
-        public virtual decimal Value { get; set; }
+        public decimal SubValue { get; set; }
+
+        public virtual decimal Value
+        {
+            get
+            {
+                return SubValue;
+            }
+        }
 
         public bool IsUsedInAutoStep { get; set; }
     }

@@ -18,7 +18,7 @@ namespace EntityFX.EconomicsArcade.Contract.Game
 
         void Initialize();
 
-        void PerformAutoStep();
+        Task<int> PerformAutoStep();
 
         void PerformManualStep();
 

@@ -37,6 +37,11 @@ namespace EntityFX.EconomicsArcade.Engine.GameEngine
         private void InitializeFundsCounters()
         {
             FundsCounters = GetFundsCounters();
+            var genericCounters = FundsCounters.Counters.Values.OfType<GenericCounter>();
+            foreach (var fundCounter in genericCounters)
+            {
+                fundCounter.StepsToIncreaseInflation = fundCounter.StepsToIncreaseInflation == 0 ? 1000 : fundCounter.StepsToIncreaseInflation;
+            }
         }
 
         private void InitializeFundsDrivers()
@@ -53,20 +58,34 @@ namespace EntityFX.EconomicsArcade.Engine.GameEngine
 
         protected abstract FundsCounters GetFundsCounters();
 
-        public void PerformAutoStep()
+        public async Task<int> PerformAutoStep()
         {
             if (!_isInitialized) throw new Exception("Game is not started");
-            PerformAutoStepInternal();
-            PostPerformAutoStep();
+            return await Task<int>.Factory.StartNew(() =>
+            {
+                PerformAutoStepInternal();
+                PostPerformAutoStep();
+                return 0;
+            });
         }
 
         private void PerformAutoStepInternal()
         {
             var genericCounters = FundsCounters.Counters.Values.OfType<GenericCounter>()
-                .Where(_ => !_.IsUsedInAutoStep);
+                .Where(_ => _.IsUsedInAutoStep);
             foreach (var genericCounter in genericCounters)
             {
                 CashFunds(genericCounter.Value);
+                genericCounter.CurrentSteps++;
+                genericCounter.Inflation = genericCounter.CurrentSteps / genericCounter.StepsToIncreaseInflation;
+            }
+
+            var genericManualCounters = FundsCounters.Counters.Values.OfType<GenericCounter>()
+                .Where(_ => !_.IsUsedInAutoStep);
+            foreach (var manualCounter in genericManualCounters)
+            {
+                manualCounter.CurrentSteps--;
+                manualCounter.Inflation = manualCounter.CurrentSteps / manualCounter.StepsToIncreaseInflation;
             }
             AutomaticStepNumber++;
         }
@@ -78,6 +97,8 @@ namespace EntityFX.EconomicsArcade.Engine.GameEngine
             foreach (var genericCounter in genericCounters)
             {
                 CashFunds(genericCounter.Value);
+                genericCounter.CurrentSteps++;
+                genericCounter.Inflation = genericCounter.CurrentSteps / genericCounter.StepsToIncreaseInflation;
             }
             ManualStepNumber++;
         }
@@ -85,8 +106,10 @@ namespace EntityFX.EconomicsArcade.Engine.GameEngine
         public void PerformManualStep()
         {
             if (!_isInitialized) throw new Exception("Game is not started");
-            PerformManualStepInternal();
-            PostPerformAutoStep();
+
+                PerformManualStepInternal();
+                PostPerformManualStep();
+
         }
 
         public void BuyFundDriver(int fundDriverId)
@@ -108,6 +131,11 @@ namespace EntityFX.EconomicsArcade.Engine.GameEngine
                 IncrementCounters(fundDriver.Incrementors);
             }
             PostByFundDriver(fundDriverId);
+        }
+
+        protected virtual void PostPerformManualStep()
+        {
+
         }
 
         protected virtual void PostPerformAutoStep()
@@ -154,7 +182,7 @@ namespace EntityFX.EconomicsArcade.Engine.GameEngine
                         }
                         else
                         {
-                            counter.Value.Value += incrementors[counter.Key].Value;
+                            counter.Value.SubValue += incrementors[counter.Key].Value;
                         }
 
                     }
@@ -189,7 +217,18 @@ namespace EntityFX.EconomicsArcade.Engine.GameEngine
 
         public void FightAgainstInflation()
         {
-            throw new NotImplementedException();
+            var genericCounters = FundsCounters.Counters.Values.OfType<GenericCounter>()
+                .Where(_ => _.IsUsedInAutoStep);
+            if (genericCounters.All(_ => _.Inflation == 0)) 
+            {
+                return;
+            }
+
+            foreach (var genericCounter in genericCounters)
+            {
+                genericCounter.CurrentSteps = 0;
+                genericCounter.Inflation = genericCounter.CurrentSteps / genericCounter.StepsToIncreaseInflation;
+            }
         }
 
         public LotteryResult PlayLottery()
