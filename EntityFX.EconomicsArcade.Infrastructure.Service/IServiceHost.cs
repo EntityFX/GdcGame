@@ -13,6 +13,11 @@ namespace EntityFX.EconomicsArcade.Infrastructure.Service
             get;
         }
 
+        Uri Endpoint
+        {
+            get;
+        }
+
         void Open(Uri endpointAddress);
 
         void Close();

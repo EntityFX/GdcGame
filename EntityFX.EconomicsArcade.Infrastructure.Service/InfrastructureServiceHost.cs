@@ -15,6 +15,22 @@ namespace EntityFX.EconomicsArcade.Infrastructure.Service
     {
         private ServiceHost _serviceHost;
 
+        public ServiceHost ServiceHost
+        {
+            get
+            {
+                return _serviceHost;
+            }
+        }
+
+        public Uri Endpoint
+        {
+            get
+            {
+                return _serviceHost.BaseAddresses.First();
+            }
+        }
+
         protected virtual IUnityContainer Container
         {
             get;

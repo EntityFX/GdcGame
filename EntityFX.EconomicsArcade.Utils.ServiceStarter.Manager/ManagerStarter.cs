@@ -32,5 +32,10 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
         {
             throw new NotImplementedException();
         }
+
+        protected override void OnServiceOpened(IServiceHost service)
+        {
+            Console.WriteLine(service.Name);
+        }
     }
 }
