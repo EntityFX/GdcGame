@@ -5,15 +5,15 @@
     <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{19D1BC2F-D0EB-4012-BCF2-CED6F3B926B2}</ProjectGuid>
+    <ProjectGuid>{56A380DE-2370-4C2D-8C8E-EAF3163C92EC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EntityFX.EconomicArcade.Engine.GameEngine</RootNamespace>
-    <AssemblyName>EntityFX.EconomicArcade.Engine.GameEngine</AssemblyName>
+    <RootNamespace>EntityFX.EconomicsArcade.Manager</RootNamespace>
+    <AssemblyName>EntityFX.EconomicsArcade.Manager</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <TargetFrameworkProfile>Profile111</TargetFrameworkProfile>
+    <TargetFrameworkProfile>Profile7</TargetFrameworkProfile>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -35,16 +35,28 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
+    <ProjectReference Include="..\EntityFX.EconomicArcade.Engine.GameEngine\EntityFX.EconomicArcade.Engine.GameEngine.csproj">
+      <Project>{19d1bc2f-d0eb-4012-bcf2-ced6f3b926b2}</Project>
+      <Name>EntityFX.EconomicArcade.Engine.GameEngine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.EconomicsArcade.Contract.Manager\EntityFX.EconomicsArcade.Contract.Manager.csproj">
+      <Project>{41696f24-e345-4599-a0c7-0715f64946d8}</Project>
+      <Name>EntityFX.EconomicsArcade.Contract.Manager</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EntityFX.EconomicsArcade.Conttract.Game\EntityFX.EconomicsArcade.Contract.Game.csproj">
       <Project>{beea0656-542b-4c48-a480-ceff662dd29f}</Project>
       <Name>EntityFX.EconomicsArcade.Contract.Game</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EntityFX.EconomicsArcade.Infrastructure.Common\EntityFX.EconomicsArcade.Infrastructure.Common.csproj">
+      <Project>{924cc67d-9e2b-46ba-be1d-6c6c780ccfbc}</Project>
+      <Name>EntityFX.EconomicsArcade.Infrastructure.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameBase.cs" />
+    <Compile Include="GameManager.cs" />
+    <Compile Include="GameSessions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UssrSimulator\UssrCounterEnum.cs" />
-    <Compile Include="UssrSimulator\UssrSimulatorGame.cs" />
+    <Compile Include="SessionManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
