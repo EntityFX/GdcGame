@@ -43,15 +43,9 @@ namespace EntityFX.EconomicsArcade.Infrastructure.Service
             }
         }
 
-        public void StopService()
-        {
-            throw new NotImplementedException();
-        }
+        public abstract void StopService();
 
-        public void StartService()
-        {
-            throw new NotImplementedException();
-        }
+        public abstract void StartService();
 
         protected virtual void OnServiceOpened(IServiceHost service) {
 

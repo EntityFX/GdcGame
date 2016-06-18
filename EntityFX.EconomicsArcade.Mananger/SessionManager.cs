@@ -2,6 +2,7 @@
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,7 @@ namespace EntityFX.EconomicsArcade.Manager
 
         public Guid AddSession(string login)
         {
+            Debug.WriteLine("Login {0}", login);
             return _gameSessions.AddSession(login);
         }
 

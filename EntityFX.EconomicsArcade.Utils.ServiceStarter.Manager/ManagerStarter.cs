@@ -22,20 +22,20 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
 
         }
 
-        public void StartService()
+        public override void StartService()
         {
             AddNetTcpService<ISessionManager>();
             OpenServices(new Uri(BASE_URL));
         }
 
-        public void StopService()
+        public override void StopService()
         {
-            throw new NotImplementedException();
+            CloseServices();
         }
 
         protected override void OnServiceOpened(IServiceHost service)
         {
-            Console.WriteLine(service.Name);
+            ServiceInfoHelper.PrintServiceHostInfo(service.ServiceHost);
         }
     }
 }

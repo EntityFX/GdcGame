@@ -64,10 +64,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WcfServiceFactory.cs" />
+    <Compile Include="InfrastructureProxyFactory.cs" />
     <Compile Include="InfrastructureServiceHost.cs" />
     <Compile Include="IServiceHost.cs" />
+    <Compile Include="NetTcpProxyFactory.cs" />
     <Compile Include="NetTcpServiceHost.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceInfoHelper.cs" />
     <Compile Include="ServiceStarterBase.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFx.EconomicsArcade.TestApplication", "EntityFx.EconomicsArcade.TestApplication\EntityFx.EconomicsArcade.TestApplication.csproj", "{24C8E95E-66EA-4E35-8584-C50171B68984}"
 EndProject
@@ -36,6 +36,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ServiceHost", "ServiceHost", "{2B3C3D7D-D36A-47E8-9395-DB1AA2D271EA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.EconomicsArcade.Utils.ServiceHost.Mananger.ConsoleApp", "EntityFX.EconomicsArcade.Utils.ServiceHost.Mananger.ConsoleApp\EntityFX.EconomicsArcade.Utils.ServiceHost.Mananger.ConsoleApp.csproj", "{B21B6E54-ED6B-401B-9460-328F9B3151C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.EconomicsArcade.TestClient", "EntityFX.EconomicsArcade.TestClient\EntityFX.EconomicsArcade.TestClient.csproj", "{3D8D07C2-B2EB-4FD6-869D-1075FD5FB3C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.EconomicsArcade.Utils.ClientProxy.Manager", "EntityFX.EconomicsArcade.Utils.ClientProxy.Manager\EntityFX.EconomicsArcade.Utils.ClientProxy.Manager.csproj", "{234EB70F-3E7D-4F66-82B0-2B506518B027}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,6 +83,14 @@ Global
 		{B21B6E54-ED6B-401B-9460-328F9B3151C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B21B6E54-ED6B-401B-9460-328F9B3151C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B21B6E54-ED6B-401B-9460-328F9B3151C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D8D07C2-B2EB-4FD6-869D-1075FD5FB3C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D8D07C2-B2EB-4FD6-869D-1075FD5FB3C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D8D07C2-B2EB-4FD6-869D-1075FD5FB3C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D8D07C2-B2EB-4FD6-869D-1075FD5FB3C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{234EB70F-3E7D-4F66-82B0-2B506518B027}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{234EB70F-3E7D-4F66-82B0-2B506518B027}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{234EB70F-3E7D-4F66-82B0-2B506518B027}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{234EB70F-3E7D-4F66-82B0-2B506518B027}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -94,5 +106,7 @@ Global
 		{F025D4A4-CDC8-437D-848C-5B71A8249BD2} = {2B7D0649-6899-491F-B4E7-70D163B1F72D}
 		{2B3C3D7D-D36A-47E8-9395-DB1AA2D271EA} = {2B7D0649-6899-491F-B4E7-70D163B1F72D}
 		{B21B6E54-ED6B-401B-9460-328F9B3151C5} = {2B3C3D7D-D36A-47E8-9395-DB1AA2D271EA}
+		{3D8D07C2-B2EB-4FD6-869D-1075FD5FB3C3} = {D150B452-1254-4C2D-90DA-27765E2C7C0B}
+		{234EB70F-3E7D-4F66-82B0-2B506518B027} = {2B7D0649-6899-491F-B4E7-70D163B1F72D}
 	EndGlobalSection
 EndGlobal
