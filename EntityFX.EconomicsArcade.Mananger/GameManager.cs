@@ -13,5 +13,30 @@ namespace EntityFX.EconomicsArcade.Manager
         {
             throw new NotImplementedException();
         }
+
+        public void PerformManualStep()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void FightAgainstInflation()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void PlayLottery()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetCounters()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetGameData()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
