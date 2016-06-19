@@ -96,7 +96,7 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
                             },
                             {
                                 (int)UssrCounterEnum.Communism,
-                                new ValueIncrementor(1)
+                                new ValueIncrementor(2)
                             } ,
                         },
                         Name = "Beer"
@@ -146,7 +146,7 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
                             } ,
                             {
                                 (int)UssrCounterEnum.Communism,
-                                new ValueIncrementor(10)
+                                new ValueIncrementor(5)
                             } ,
                         },
                         Name = "Hucksterism"
@@ -444,6 +444,28 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
                             } ,
                         },
                         Name = "Virign Land Campaign"
+                    }   
+                },
+                                {
+                    22,
+                    new FundsDriver {
+                        InitialValue = 2500000,
+                        UnlockValue = 1800,
+                        Incrementors = new Dictionary<int, IncrementorBase> {
+                                                        {
+                                (int)UssrCounterEnum.Production,
+                                new ValueIncrementor(500)
+                            } ,
+                            {
+                                (int)UssrCounterEnum.Tax,
+                                new ValueIncrementor(150)
+                            } ,
+                            {
+                                (int)UssrCounterEnum.Communism,
+                                new ValueIncrementor(15)
+                            } ,
+                        },
+                        Name = "Cinema"
                     }   
                 },
             };

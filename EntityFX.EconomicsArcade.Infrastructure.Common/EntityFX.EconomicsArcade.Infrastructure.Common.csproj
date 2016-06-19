@@ -35,6 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="IContainerBootstrapper.cs" />
+    <Compile Include="IMapper.cs" />
     <Compile Include="IServiceStarter.cs" />
     <Compile Include="OperationContextHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

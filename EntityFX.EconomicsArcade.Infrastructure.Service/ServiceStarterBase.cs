@@ -30,7 +30,7 @@ namespace EntityFX.EconomicsArcade.Infrastructure.Service
         {
             foreach (var service in _serviceHosts)
             {
-                service.Value.Open(baseAddress);
+                service.Value.Open(new Uri(baseAddress + service.Value.Name));
                 OnServiceOpened(service.Value);
             }
         }

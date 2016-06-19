@@ -1,23 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using EntityFX.EconomicsArcade.Contract.Manager.GameManager.Counters;
 
 namespace EntityFX.EconomicsArcade.Contract.Manager.GameManager
 {
+    [ServiceContract]
     public interface IGameManager
     {
+        [OperationContract]
         void BuyFundDriver(int fundDriverId);
-
+        [OperationContract]
         void PerformManualStep();
-
+        [OperationContract]
         void FightAgainstInflation();
-
+        [OperationContract]
         void PlayLottery();
-
-        void GetCounters();
-
-        void GetGameData();
+        [OperationContract]
+        FundsCounters GetCounters();
+        [OperationContract]
+        GameData GetGameData();
     }
 }

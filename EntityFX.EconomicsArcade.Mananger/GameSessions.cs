@@ -23,12 +23,9 @@ namespace EntityFX.EconomicsArcade.Manager
 
             if (!_gameSessions.ContainsKey(session.Login))
             {
-                var gameInOtherSessions = _sessions.Values.FirstOrDefault(_ => _.Login == session.Login);
-                if (gameInOtherSessions == null)
-                {
-                    _gameSessions.Add(session.Login, new UssrSimulatorGame());
-                }
-                return _gameSessions[gameInOtherSessions.Login];
+                var game = new UssrSimulatorGame();
+                game.Initialize();
+                _gameSessions.Add(session.Login, game);
             }
             return _gameSessions[session.Login];
         }

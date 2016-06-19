@@ -55,6 +55,11 @@
   <ItemGroup>
     <Compile Include="GameManager.cs" />
     <Compile Include="GameSessions.cs" />
+    <Compile Include="Mappers\CounterContractMapper.cs" />
+    <Compile Include="Mappers\FundsCountersContractMapper.cs" />
+    <Compile Include="Mappers\FundsDriverContractMapper.cs" />
+    <Compile Include="Mappers\GameDataContractMapper.cs" />
+    <Compile Include="Mappers\IncrementorContractMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SessionManager.cs" />
   </ItemGroup>

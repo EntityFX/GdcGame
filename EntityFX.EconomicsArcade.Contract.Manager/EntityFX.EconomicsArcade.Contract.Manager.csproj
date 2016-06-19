@@ -37,7 +37,15 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameManager\Counters\CounterBase.cs" />
+    <Compile Include="GameManager\Counters\FundsCounters.cs" />
+    <Compile Include="GameManager\Counters\GenericCounter.cs" />
+    <Compile Include="GameManager\Counters\SingleCounter.cs" />
+    <Compile Include="GameManager\Funds\FundsDriver.cs" />
+    <Compile Include="GameManager\GameData.cs" />
     <Compile Include="GameManager\IGameManager.cs" />
+    <Compile Include="GameManager\Incrementors\Incrementor.cs" />
+    <Compile Include="GameManager\Incrementors\IncrementorTypeEnum.cs" />
     <Compile Include="SessionManager\ISessionManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SessionManager\Session.cs" />

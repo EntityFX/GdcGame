@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EntityFX.EconomicsArcade.Contract.Manager.GameManager;
 
 namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
 {
@@ -14,7 +15,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
     {
         InfrastructureServiceHost<ISessionManager> _sessionManager;
 
-        private const string BASE_URL = "net.tcp://localhost/EntityFX.EconomicsArcade.Manager/";
+        private const string BASE_URL = "net.tcp://localhost/EntityFX.EconomicsArcade.Manager:8555/";
 
         public ManagerStarter(ContainerBootstrapper container)
             :base(container)
@@ -25,6 +26,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
         public override void StartService()
         {
             AddNetTcpService<ISessionManager>();
+            AddNetTcpService<IGameManager>();
             OpenServices(new Uri(BASE_URL));
         }
 
