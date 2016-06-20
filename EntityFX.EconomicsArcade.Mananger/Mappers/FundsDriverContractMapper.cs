@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using EntityFX.EconomicsArcade.Contract.Game;
-using EntityFX.EconomicsArcade.Contract.Manager.GameManager.Incrementors;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
+using EntityFX.EconomicsArcade.Contract.Common.Incrementors;
 
 namespace EntityFX.EconomicsArcade.Manager.Mappers
 {
-    public class FundsDriverContractMapper : IMapper<FundsDriver, Contract.Manager.GameManager.Funds.FundsDriver>
+    public class FundsDriverContractMapper : IMapper<FundsDriver, Contract.Common.Funds.FundsDriver>
     {
         private readonly IMapper<IncrementorBase, Incrementor> _incrementorContractMapper;
 
@@ -15,12 +15,12 @@ namespace EntityFX.EconomicsArcade.Manager.Mappers
             _incrementorContractMapper = incrementorContractMapper;
         }
 
-        public Contract.Manager.GameManager.Funds.FundsDriver Map(FundsDriver source, Contract.Manager.GameManager.Funds.FundsDriver destination)
+        public Contract.Common.Funds.FundsDriver Map(FundsDriver source, Contract.Common.Funds.FundsDriver destination)
         {
             var destinationIncrementors = source.Incrementors.ToDictionary(
                 sourceIncrementor => sourceIncrementor.Key, 
                 sourceIncrementor => _incrementorContractMapper.Map(sourceIncrementor.Value));
-            return new Contract.Manager.GameManager.Funds.FundsDriver()
+            return new Contract.Common.Funds.FundsDriver()
             {
                 BuyCount = source.BuyCount,
                 Incrementors = destinationIncrementors,

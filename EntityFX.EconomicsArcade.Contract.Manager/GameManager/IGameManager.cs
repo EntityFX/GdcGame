@@ -4,7 +4,8 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
-using EntityFX.EconomicsArcade.Contract.Manager.GameManager.Counters;
+using EntityFX.EconomicsArcade.Contract.Common.Counters;
+using EntityFX.EconomicsArcade.Contract.Common;
 
 namespace EntityFX.EconomicsArcade.Contract.Manager.GameManager
 {

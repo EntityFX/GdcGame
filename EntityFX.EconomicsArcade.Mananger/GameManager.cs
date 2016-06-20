@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 using EntityFX.EconomicsArcade.Contract.Game;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 using EntityFX.EconomicsArcade.Manager.Mappers;
-using FundsCounters = EntityFX.EconomicsArcade.Contract.Manager.GameManager.Counters.FundsCounters;
+using FundsCounters = EntityFX.EconomicsArcade.Contract.Common.Counters.FundsCounters;
+using EntityFX.EconomicsArcade.Contract.Common;
 
 namespace EntityFX.EconomicsArcade.Manager
 {

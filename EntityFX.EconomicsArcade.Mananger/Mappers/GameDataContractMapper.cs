@@ -3,17 +3,18 @@ using System.Linq;
 using EntityFX.EconomicsArcade.Contract.Game;
 using EntityFX.EconomicsArcade.Contract.Manager.GameManager;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
+using EntityFX.EconomicsArcade.Contract.Common;
 
 namespace EntityFX.EconomicsArcade.Manager.Mappers
 {
     public class GameDataContractMapper : IMapper<IGame, GameData>
     {
-        private readonly IMapper<FundsCounters, Contract.Manager.GameManager.Counters.FundsCounters> _fundsCountersContractMapper;
-        private readonly IMapper<FundsDriver, Contract.Manager.GameManager.Funds.FundsDriver> _fundsDriversContractMapper;
+        private readonly IMapper<FundsCounters, Contract.Common.Counters.FundsCounters> _fundsCountersContractMapper;
+        private readonly IMapper<FundsDriver, Contract.Common.Funds.FundsDriver> _fundsDriversContractMapper;
 
         public GameDataContractMapper(
-            IMapper<FundsCounters, Contract.Manager.GameManager.Counters.FundsCounters> fundsCountersContractMapper,
-                        IMapper<FundsDriver, Contract.Manager.GameManager.Funds.FundsDriver> fundsDriversContractMapper
+            IMapper<FundsCounters, Contract.Common.Counters.FundsCounters> fundsCountersContractMapper,
+                        IMapper<FundsDriver, Contract.Common.Funds.FundsDriver> fundsDriversContractMapper
             )
         {
             _fundsCountersContractMapper = fundsCountersContractMapper;

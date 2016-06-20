@@ -1,7 +1,7 @@
-﻿using EntityFX.EconomicsArcade.Contract.Game;
-using EntityFX.EconomicsArcade.Contract.Manager.GameManager.Incrementors;
+﻿using EntityFX.EconomicsArcade.Contract.Common.Incrementors;
+using EntityFX.EconomicsArcade.Contract.Game;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
-using IncrementorTypeEnum = EntityFX.EconomicsArcade.Contract.Manager.GameManager.Incrementors.IncrementorTypeEnum;
+using IncrementorTypeEnum = EntityFX.EconomicsArcade.Contract.Common.Incrementors.IncrementorTypeEnum;
 
 namespace EntityFX.EconomicsArcade.Manager.Mappers
 {

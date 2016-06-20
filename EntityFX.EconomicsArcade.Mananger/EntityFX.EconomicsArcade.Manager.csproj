@@ -39,6 +39,10 @@
       <Project>{19d1bc2f-d0eb-4012-bcf2-ced6f3b926b2}</Project>
       <Name>EntityFX.EconomicArcade.Engine.GameEngine</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EntityFX.EconomicsArcade.Contract.Common\EntityFX.EconomicsArcade.Contract.Common.csproj">
+      <Project>{89f89c37-f564-47eb-839d-c45acd9d012a}</Project>
+      <Name>EntityFX.EconomicsArcade.Contract.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EntityFX.EconomicsArcade.Contract.Manager\EntityFX.EconomicsArcade.Contract.Manager.csproj">
       <Project>{41696f24-e345-4599-a0c7-0715f64946d8}</Project>
       <Name>EntityFX.EconomicsArcade.Contract.Manager</Name>

@@ -48,6 +48,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EntityFX.EconomicsArcade.Contract.Common\EntityFX.EconomicsArcade.Contract.Common.csproj">
+      <Project>{89f89c37-f564-47eb-839d-c45acd9d012a}</Project>
+      <Name>EntityFX.EconomicsArcade.Contract.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EntityFX.EconomicsArcade.Contract.Manager\EntityFX.EconomicsArcade.Contract.Manager.csproj">
       <Project>{41696F24-E345-4599-A0C7-0715F64946D8}</Project>
       <Name>EntityFX.EconomicsArcade.Contract.Manager</Name>
