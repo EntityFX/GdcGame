@@ -65,7 +65,7 @@ namespace EntityFX.EconomicsArcade.DataAccess.Service
             {
                 var findQuery = uow.BuildQuery();
                 var entity = findQuery.For<User>()
-                    .With(new GetByIdCriterion(userId));
+                    .With(new GetByIdCriterion(userId))
 
             }
         }

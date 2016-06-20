@@ -21,5 +21,14 @@ namespace EntityFX.EconomicsArcade.DataAccess.Model
             : base(connectionString)
         {
         }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<IncrementorEntity>()
+                .HasRequired<FundsDriverEntity>(_ => _.FundsDriver)
+                .WithMany(_ => _.Incrementors)
+                .HasForeignKey(_ => _.FundsDriverId);
+        }
     }
 }

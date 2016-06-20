@@ -9,12 +9,15 @@ using System.Threading.Tasks;
 namespace EntityFX.EconomicsArcade.DataAccess.Model
 {
     [Table("Incrementor")]
-    class IncrementorEntity
+    public class IncrementorEntity
     {
         [Key]
         public int Id { get; set; }
         public short Type { get; set; }
         public decimal Value { get; set; }
         public int FundsDriverId { get; set; }
+
+        [ForeignKey("FK_FundsDriver")]
+        public virtual FundsDriverEntity FundsDriver { get; set; }
     }
 }

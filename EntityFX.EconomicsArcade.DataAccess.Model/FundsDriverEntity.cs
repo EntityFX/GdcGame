@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace EntityFX.EconomicsArcade.DataAccess.Model
 {
     [Table("FundsDriver")]
-    class FundsDriverEntity
+    public class FundsDriverEntity
     {
         [Key]
         public int Id { get; set; }
@@ -18,5 +18,6 @@ namespace EntityFX.EconomicsArcade.DataAccess.Model
         public decimal InitialValue { get; set; }
         public decimal UnlockValue { get; set; }
         public short InflationPercent { get; set; }
+        public virtual ICollection<IncrementorEntity> Incrementors { get; set; }
     }
 }
