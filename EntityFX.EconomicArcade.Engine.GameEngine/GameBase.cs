@@ -1,5 +1,4 @@
-﻿using EntityFX.EconomicsArcade.Contract.DataAccess.GameData;
-using EntityFX.EconomicsArcade.Contract.Game;
+﻿using EntityFX.EconomicsArcade.Contract.Game;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,8 +14,6 @@ namespace EntityFX.EconomicsArcade.Engine.GameEngine
 
         private bool _isStarted;
 
-        private readonly IGameDataRepository _gameDataRepository;
-
         public IDictionary<int, FundsDriver> FundsDrivers { get; private set; }
 
         public FundsCounters FundsCounters { get; private set; }
@@ -25,9 +22,12 @@ namespace EntityFX.EconomicsArcade.Engine.GameEngine
 
         public int ManualStepNumber { get; private set; }
 
+        public GameBase()
+        {
+        }
+
         public void Initialize()
         {
-            PreInitialize();
             InitializeFundsCounters();
             InitializeFundsDrivers();
             PostInitialize();
@@ -144,11 +144,6 @@ namespace EntityFX.EconomicsArcade.Engine.GameEngine
         }
 
         protected virtual void PostByFundDriver(int fundDriverId)
-        {
-
-        }
-
-        protected virtual void PreInitialize()
         {
 
         }

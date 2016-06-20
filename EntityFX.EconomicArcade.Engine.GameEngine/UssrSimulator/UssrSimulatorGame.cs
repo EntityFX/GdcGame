@@ -1,6 +1,4 @@
-﻿using EntityFX.EconomicsArcade.Contract.Common;
-using EntityFX.EconomicsArcade.Contract.DataAccess.GameData;
-using EntityFX.EconomicsArcade.Contract.Game;
+﻿using EntityFX.EconomicsArcade.Contract.Game;
 using EntityFX.EconomicsArcade.Engine.GameEngine;
 using System;
 using System.Collections.Generic;
@@ -12,15 +10,6 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
 {
     public class UssrSimulatorGame : GameBase
     {
-        private readonly IGameDataRepository _gameDataRepository;
-
-        private GameData _gameData;
-
-        public UssrSimulatorGame(IGameDataRepository gameDataRepository)
-        {
-            _gameDataRepository = gameDataRepository;
-        }
-
         public decimal Communism
         {
             get
@@ -55,62 +44,443 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
 
         protected override IDictionary<int, FundsDriver> GetFundsDrivers()
         {
-            var result = new Dictionary<int, FundsDriver>();
-            foreach (var fundDriver in _gameData.FundsDrivers)
-            {
-                var incrementors = new Dictionary<int, IncrementorBase>();
-                foreach (var incrementor in fundDriver.Incrementors)
+            return new Dictionary<int, FundsDriver> {
                 {
-                    IncrementorBase value;
-                    if (incrementor.Value.IncrementorType == EntityFX.EconomicsArcade.Contract.Common.Incrementors.IncrementorTypeEnum.ValueIncrementor)
-                    {
-                        value = new ValueIncrementor(incrementor.Value.Value);
-                    }
-                    else if (incrementor.Value.IncrementorType == EntityFX.EconomicsArcade.Contract.Common.Incrementors.IncrementorTypeEnum.PercentageIncrementor)
-                    {
-                        value = new PercentageIncrementor(incrementor.Value.Value);
-                    }
-                    else
-                    {
-                        value = null;
-                    }
-                    incrementors.Add(incrementor.Key, value);
-                }
-
-                result.Add(fundDriver.Id, new FundsDriver()
+                    1,
+                    new FundsDriver {
+                        InitialValue = 200,
+                        Incrementors = new Dictionary<int, IncrementorBase> {
+                            {
+                                (int)UssrCounterEnum.Production,
+                                new ValueIncrementor(10)
+                            } ,
+                            {
+                                (int)UssrCounterEnum.Communism,
+                                new ValueIncrementor(1)
+                            } ,
+                        },
+                        Name = "Matches"
+                    }   
+                },
                 {
-                    Name = fundDriver.Name,
-                    InitialValue = fundDriver.Value,
-                    UnlockValue = fundDriver.UnlockValue,
-                    CurrentValue = fundDriver.Value,
-                    InflationPercent = fundDriver.InflationPercent,
-                    BuyCount = 0,
-                    Incrementors = incrementors
-                });
-            }
-            return result;
+                    2,
+                    new FundsDriver {
+                        InitialValue = 400,
+                        UnlockValue = 5,
+                        Incrementors = new Dictionary<int, IncrementorBase> {
+                            {
+                                (int)UssrCounterEnum.Tax,
+                                new ValueIncrementor(10)
+                            },
+                            {
+                                (int)UssrCounterEnum.Communism,
+                                new ValueIncrementor(1)
+                            } ,
+                        },
+                        Name = "Bubble gum"
+                    }   
+                },
+                {
+                    3,
+                    new FundsDriver {
+                        InitialValue = 800,
+                        UnlockValue = 10,
+                        Incrementors = new Dictionary<int, IncrementorBase> {
+                            {
+                                (int)UssrCounterEnum.Production,
+                                new ValueIncrementor(20)
+                            } ,
+                            {
+                                (int)UssrCounterEnum.Tax,
+                                new ValueIncrementor(20)
+                            },
+                            {
+                                (int)UssrCounterEnum.Communism,
+                                new ValueIncrementor(1)
+                            } ,
+                        },
+                        Name = "Beer"
+                    }   
+                },
+                {
+                    4,
+                    new FundsDriver {
+                        InitialValue = 1500,
+                        UnlockValue = 25,
+                        Incrementors = new Dictionary<int, IncrementorBase> {
+                            {
+                                (int)UssrCounterEnum.Production,
+                                new ValueIncrementor(80)
+                            } ,
+                            {
+                                (int)UssrCounterEnum.Tax,
+                                new ValueIncrementor(40)
+                            },
+                        },
+                        Name = "Voice Of America"
+                    }   
+                },
+                {
+                    5,
+                    new FundsDriver {
+                        InitialValue = 3000,
+                        UnlockValue = 40,
+                        Incrementors = new Dictionary<int, IncrementorBase> {
+                            {
+                                (int)UssrCounterEnum.Production,
+                                new ValueIncrementor(160)
+                            } ,
+                        },
+                        Name = "Dissidence On Flat"
+                    }   
+                },
+                {
+                    6,
+                    new FundsDriver {
+                        InitialValue = 6000,
+                        UnlockValue = 80,
+                        Incrementors = new Dictionary<int, IncrementorBase> {
+                            {
+                                (int)UssrCounterEnum.Tax,
+                                new ValueIncrementor(80)
+                            } ,
+                            {
+                                (int)UssrCounterEnum.Communism,
+                                new ValueIncrementor(10)
+                            } ,
+                        },
+                        Name = "Hucksterism"
+                    }   
+                },
+                {
+                    7,
+                    new FundsDriver {
+                        InitialValue = 10000,
+                        UnlockValue = 120,
+                        Incrementors = new Dictionary<int, IncrementorBase> {
+                            {
+                                (int)UssrCounterEnum.Production,
+                                new ValueIncrementor(240)
+                            } ,
+                            {
+                                (int)UssrCounterEnum.Tax,
+                                new ValueIncrementor(80)
+                            } ,
+                            {
+                                (int)UssrCounterEnum.Communism,
+                                new ValueIncrementor(5)
+                            } ,
+                        },
+                        Name = "Soda Machine"
+                    }   
+                },
+                {
+                    8,
+                    new FundsDriver {
+                        InitialValue = 20000,
+                        UnlockValue = 180,
+                        Incrementors = new Dictionary<int, IncrementorBase> {
+                            {
+                                (int)UssrCounterEnum.Production,
+                                new ValueIncrementor(80)
+                            } ,
+                            {
+                                (int)UssrCounterEnum.Tax,
+                                new ValueIncrementor(80)
+                            } ,
+                            {
+                                (int)UssrCounterEnum.Communism,
+                                new ValueIncrementor(5)
+                            } ,
+                        },
+                        Name = "Grocery Store"
+                    }   
+                },
+                {
+                    9,
+                    new FundsDriver {
+                        InitialValue = 50000,
+                        UnlockValue = 220,
+                        Incrementors = new Dictionary<int, IncrementorBase> {
+                            {
+                                (int)UssrCounterEnum.Production,
+                                new PercentageIncrementor(2)
+                            },
+                            {
+                                (int)UssrCounterEnum.Tax,
+                                new ValueIncrementor(80)
+                            },
+                            {
+                                (int)UssrCounterEnum.Communism,
+                                new ValueIncrementor(10)
+                            } ,
+                        },
+                        Name = "Black market"
+                    }   
+                },
+                {
+                    10,
+                    new FundsDriver {
+                        InitialValue = 223200,
+                        UnlockValue = 250,
+                        Incrementors = new Dictionary<int, IncrementorBase> {
+                            {
+                                (int)UssrCounterEnum.Tax,
+                                new ValueIncrementor(150)
+                            },
+                            {
+                                (int)UssrCounterEnum.Communism,
+                                new ValueIncrementor(10)
+                            } ,
+                        },
+                        Name = "Poster agitation"
+                    }   
+                },
+                {
+                    11,
+                    new FundsDriver {
+                        InitialValue = 250000,
+                        UnlockValue = 280,
+                        Incrementors = new Dictionary<int, IncrementorBase> {
+                            {
+                                (int)UssrCounterEnum.Production,
+                                new ValueIncrementor(100)
+                            } ,
+                            {
+                                (int)UssrCounterEnum.Tax,
+                                new ValueIncrementor(150)
+                            },
+                            {
+                                (int)UssrCounterEnum.Communism,
+                                new ValueIncrementor(5)
+                            } ,
+                        },
+                        Name = "TV Shows"
+                    }   
+                },
+                {
+                    12,
+                    new FundsDriver {
+                        InitialValue = 300000,
+                        UnlockValue = 500,
+                        Incrementors = new Dictionary<int, IncrementorBase> {
+                            {
+                                (int)UssrCounterEnum.Production,
+                                new ValueIncrementor(200)
+                            },
+                            {
+                                (int)UssrCounterEnum.Communism,
+                                new ValueIncrementor(10)
+                            } ,
+                        },
+                        Name = "Censore"
+                    }   
+                },
+                {
+                    13,
+                    new FundsDriver {
+                        InitialValue = 500000,
+                        UnlockValue = 600,
+                        Incrementors = new Dictionary<int, IncrementorBase> {
+                            {
+                                (int)UssrCounterEnum.Production,
+                                new ValueIncrementor(250)
+                            },
+                            {
+                                (int)UssrCounterEnum.Communism,
+                                new ValueIncrementor(5)
+                            },
+                        },
+                        Name = "Excursion to the mausoleum"
+                    }   
+                },
+                {
+                    14,
+                    new FundsDriver {
+                        InitialValue = 800000,
+                        UnlockValue = 650,
+                        Incrementors = new Dictionary<int, IncrementorBase> {
+                            {
+                                (int)UssrCounterEnum.Communism,
+                                new ValueIncrementor(30)
+                            } ,
+                        },
+                        Name = "Build Lenin Statue"
+                    }   
+                },
+                {
+                    15,
+                    new FundsDriver {
+                        InitialValue = 1100000,
+                        UnlockValue = 700,
+                        Incrementors = new Dictionary<int, IncrementorBase> {
+                            {
+                                (int)UssrCounterEnum.Production,
+                                new PercentageIncrementor(5)
+                            } ,
+                            {
+                                (int)UssrCounterEnum.Communism,
+                                new ValueIncrementor(10)
+                            } ,
+                        },
+                        Name = "Electrofication"
+                    }   
+                },
+                {
+                    16,
+                    new FundsDriver {
+                        InitialValue = 1100000,
+                        UnlockValue = 800,
+                        Incrementors = new Dictionary<int, IncrementorBase> {
+                            {
+                                (int)UssrCounterEnum.Production,
+                                new ValueIncrementor(100)
+                            } ,
+                            {
+                                (int)UssrCounterEnum.Tax,
+                                new ValueIncrementor(100)
+                            },
+                            {
+                                (int)UssrCounterEnum.Communism,
+                                new ValueIncrementor(10)
+                            } ,
+                        },
+                        Name = "Canned Production"
+                    }   
+                },
+                {
+                    17,
+                    new FundsDriver {
+                        InitialValue = 1350000,
+                        UnlockValue = 900,
+                        Incrementors = new Dictionary<int, IncrementorBase> {
+                            {
+                                (int)UssrCounterEnum.Production,
+                                new ValueIncrementor(150)
+                            } ,
+                            {
+                                (int)UssrCounterEnum.Tax,
+                                new ValueIncrementor(200)
+                            },
+                            {
+                                (int)UssrCounterEnum.Communism,
+                                new ValueIncrementor(10)
+                            } ,
+                        },
+                        Name = "Candies Production"
+                    }   
+                },
+                {
+                    18,
+                    new FundsDriver {
+                        InitialValue = 2200000,
+                        UnlockValue = 1000,
+                        Incrementors = new Dictionary<int, IncrementorBase> {
+                            {
+                                (int)UssrCounterEnum.Production,
+                                new ValueIncrementor(300)
+                            } ,
+                            {
+                                (int)UssrCounterEnum.Tax,
+                                new ValueIncrementor(50)
+                            },
+                            {
+                                (int)UssrCounterEnum.Communism,
+                                new ValueIncrementor(15)
+                            } ,
+                        },
+                        Name = "Champagne Production"
+                    }   
+                },
+                {
+                    19,
+                    new FundsDriver {
+                        InitialValue = 2500000,
+                        UnlockValue = 1200,
+                        Incrementors = new Dictionary<int, IncrementorBase> {
+                            {
+                                (int)UssrCounterEnum.Tax,
+                                new PercentageIncrementor(2)
+                            },
+                            {
+                                (int)UssrCounterEnum.Communism,
+                                new ValueIncrementor(10)
+                            } ,
+                        },
+                        Name = "Collectivisation"
+                    }   
+                },
+                {
+                    20,
+                    new FundsDriver {
+                        InitialValue = 2500000,
+                        UnlockValue = 1300,
+                        Incrementors = new Dictionary<int, IncrementorBase> {
+                            {
+                                (int)UssrCounterEnum.Production,
+                                new ValueIncrementor(500)
+                            } ,
+                            {
+                                (int)UssrCounterEnum.Communism,
+                                new ValueIncrementor(20)
+                            } ,
+                        },
+                        Name = "Corn fields"
+                    }   
+                },
+                {
+                    21,
+                    new FundsDriver {
+                        InitialValue = 1000000,
+                        UnlockValue = 1500,
+                        Incrementors = new Dictionary<int, IncrementorBase> {
+                            {
+                                (int)UssrCounterEnum.Tax,
+                                new ValueIncrementor(500)
+                            } ,
+                            {
+                                (int)UssrCounterEnum.Communism,
+                                new ValueIncrementor(25)
+                            } ,
+                        },
+                        Name = "Virign Land Campaign"
+                    }   
+                },
+            };
         }
 
         protected override FundsCounters GetFundsCounters()
         {
-            var fundsCounters = _gameData.Counters;
-            var counters = new Dictionary<int, CounterBase>();
-            var inc = 1;
-            foreach (var sourceCounter in fundsCounters.Counters)
-            {
-                CounterBase destinationCouner = null;
-                if (sourceCounter.GetType() == typeof(EntityFX.EconomicsArcade.Contract.Common.Counters.GenericCounter)) {
-                     destinationCouner = new GenericCounter();
-                    destinationCouner.IsUsedInAutoStep = ((EntityFX.EconomicsArcade.Contract.Common.Counters.GenericCounter)sourceCounter).UseInAutoStep;
-                }
-                if (destinationCouner != null)
-                {
-                    destinationCouner.Name = sourceCounter.Name;
-                    destinationCouner.SubValue = sourceCounter.Value;
-                }
-                counters.Add(inc, destinationCouner);
-                inc++;
-            }
+            var counters = new Dictionary<int, CounterBase>() { 
+                    {
+                        (int)UssrCounterEnum.Communism,
+                        new SingleCounter {
+                            Name = "Communism"
+                        } 
+                    },
+                    {
+                        (int)UssrCounterEnum.Production,  
+                        new GenericCounter {
+                            Name = "Production",
+                            SubValue = 10,
+                            StepsToIncreaseInflation = 1000
+                        } 
+                    }, 
+                    { 
+                        (int)UssrCounterEnum.Tax, 
+                        new GenericCounter {
+                            Name = "Tax",
+                            IsUsedInAutoStep = true,
+                            StepsToIncreaseInflation = 2000
+                        }   
+                    },
+                    { 
+                        (int)UssrCounterEnum.FiveYearPlan, 
+                        new DelayedCounter {
+                            Name = "Five Year Plan",
+                        }   
+                    },
+                };
 
             return new FundsCounters()
             {
@@ -120,11 +490,6 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
         }
 
         private object _lockObject = new { };
-
-        protected override void PreInitialize()
-        {
-            _gameData = _gameDataRepository.GetGameData();
-        }
 
         protected override void PostPerformManualStep()
         {

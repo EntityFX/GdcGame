@@ -16,19 +16,19 @@ namespace EntityFX.EconomicsArcade.TestClient
             Guid ses;
             using (var proxyFactory = new SessionManagerProxyFactory(Guid.Empty))
             {
-                var proxy = proxyFactory.OpenChannel(new Uri("net.tcp://localhost:8555/EntityFX.EconomicsArcade.Manager/EntityFX.EconomicsArcade.Contract.Manager.SessionManager.ISessionManager"));
+                var proxy = proxyFactory.OpenChannel(new Uri("net.tcp://localhost/EntityFX.EconomicsArcade.Manager:8555/EntityFX.EconomicsArcade.Contract.Manager.SessionManager.ISessionManager"));
                 ses = proxy.AddSession("entityfx");
             }
 
             using (var proxyFactory = new SessionManagerProxyFactory(ses))
             {
-                var proxy = proxyFactory.OpenChannel(new Uri("net.tcp://localhost:8555/EntityFX.EconomicsArcade.Manager/EntityFX.EconomicsArcade.Contract.Manager.SessionManager.ISessionManager"));
+                var proxy = proxyFactory.OpenChannel(new Uri("net.tcp://localhost/EntityFX.EconomicsArcade.Manager:8555/EntityFX.EconomicsArcade.Contract.Manager.SessionManager.ISessionManager"));
                 var ss = proxy.GetSession();
             }
 
             using (var proxyFactory = new GameManagerProxyFactoy(ses))
             {
-                var proxy = proxyFactory.OpenChannel(new Uri("net.tcp://localhost:8555/EntityFX.EconomicsArcade.Manager/EntityFX.EconomicsArcade.Contract.Manager.GameManager.IGameManager"));
+                var proxy = proxyFactory.OpenChannel(new Uri("net.tcp://localhost/EntityFX.EconomicsArcade.Manager:8555/EntityFX.EconomicsArcade.Contract.Manager.GameManager.IGameManager"));
                 var gameData = proxy.GetGameData();
                 proxy.PerformManualStep();
                 var counters = proxy.GetCounters();

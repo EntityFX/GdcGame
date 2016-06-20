@@ -1,5 +1,4 @@
 ﻿using EntityFx.EconomicsArcade.TestApplication.UssrSimulator;
-using EntityFX.EconomicArcade.Engine.GameEngine;
 using EntityFX.EconomicsArcade.Contract.Game;
 using EntityFX.EconomicsArcade.Contract.Manager.SessionManager;
 using System;
@@ -16,13 +15,6 @@ namespace EntityFX.EconomicsArcade.Manager
 
         private static IDictionary<Guid, Session> _sessions = new Dictionary<Guid, Session>();
 
-        private readonly GameFactory _gameFactory;
-
-        public GameSessions(GameFactory gameFactory)
-        {
-            _gameFactory = gameFactory;
-        }
-
 
         public IGame GetGame(Guid sessionId)
         {
@@ -31,7 +23,7 @@ namespace EntityFX.EconomicsArcade.Manager
 
             if (!_gameSessions.ContainsKey(session.Login))
             {
-                var game = BuildGame();
+                var game = new UssrSimulatorGame();
                 game.Initialize();
                 _gameSessions.Add(session.Login, game);
             }
@@ -52,11 +44,6 @@ namespace EntityFX.EconomicsArcade.Manager
         public Session GetSession(Guid sessionId)
         {
             return !_sessions.ContainsKey(sessionId) ? null : _sessions[sessionId];
-        }
-
-        private IGame BuildGame()
-        {
-            return _gameFactory.BuildGame();
         }
     }
 }
