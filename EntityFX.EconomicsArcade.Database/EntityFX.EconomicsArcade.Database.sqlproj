@@ -58,10 +58,13 @@
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="Tables" />
+    <Folder Include="Data" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\User.sql" />
     <Build Include="Tables\FundsDriver.sql" />
+    <Build Include="Data\DataCounters.sql" />
+    <Build Include="Data\DataFundsDriver.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Tables\Incrementor.sql" />
