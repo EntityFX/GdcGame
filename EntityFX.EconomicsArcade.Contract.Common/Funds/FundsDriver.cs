@@ -8,6 +8,8 @@ namespace EntityFX.EconomicsArcade.Contract.Common.Funds
     public class FundsDriver
     {
         [DataMember]
+        public string Id { get; set; }
+        [DataMember]
         public string Name { get; set; }
         [DataMember]
         public decimal Value { get; set; }

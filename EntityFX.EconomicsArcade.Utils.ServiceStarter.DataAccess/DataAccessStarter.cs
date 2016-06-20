@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EntityFX.EconomicsArcade.Contract.DataAccess.User;
+using EntityFX.EconomicsArcade.Contract.DataAccess.GameData;
 
 namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess
 {
@@ -24,6 +25,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess
         public override void StartService()
         {
             AddNetTcpService<IUserRepository>();
+            AddNetTcpService<IGameDataRepository>();
             OpenServices(new Uri(BASE_URL));
         }
 

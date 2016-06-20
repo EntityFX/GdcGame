@@ -12,6 +12,7 @@ using EntityFX.EconomicsArcade.DataAccess.Service.Mappers;
 using EntityFX.EconomicsArcade.Infrastructure.Repository.UnitOfWork;
 using System.Data.Entity;
 using EntityFX.EconomicsArcade.Infrastructure.Repository.Query;
+using EntityFX.EconomicsArcade.Contract.DataAccess.GameData;
 
 namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess
 {
@@ -25,6 +26,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess
             container.RegisterType<IUnitOfWork, UnitOfWork>();
             container.RegisterType<IUnitOfWorkFactory, UnitOfWorkFactory>();
             container.RegisterType<IUserRepository, UserRepository>();
+            container.RegisterType<IGameDataRepository, GameDataRepository>();
             container.RegisterType<IMapper<User, UserEntity>, UserEntityMapper>();
             return container;
         }
