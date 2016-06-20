@@ -14,7 +14,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess
     public class DataAccessStarter: ServiceStarterBase<ContainerBootstrapper>, IServiceStarter
     {
 
-        private const string BASE_URL = "net.tcp://localhost/EntityFX.EconomicsArcade.DataAccess:8777/";
+        private const string BASE_URL = "net.tcp://localhost:8777/EntityFX.EconomicsArcade.DataAccess/";
 
         public DataAccessStarter(ContainerBootstrapper container)
             :base(container)

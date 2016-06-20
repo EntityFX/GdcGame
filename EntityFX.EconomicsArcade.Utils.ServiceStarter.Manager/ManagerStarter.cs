@@ -15,7 +15,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
     {
         InfrastructureServiceHost<ISessionManager> _sessionManager;
 
-        private const string BASE_URL = "net.tcp://localhost/EntityFX.EconomicsArcade.Manager:8555/";
+        private const string BASE_URL = "net.tcp://localhost:8555/EntityFX.EconomicsArcade.Manager/";
 
         public ManagerStarter(ContainerBootstrapper container)
             :base(container)

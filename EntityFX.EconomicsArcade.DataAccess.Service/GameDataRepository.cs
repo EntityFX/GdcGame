@@ -16,6 +16,7 @@ namespace EntityFX.EconomicsArcade.DataAccess.Service
             var fundDrivers = new FundsDriver[] {
 
                     new FundsDriver {
+                        Id = 0,
                         Value = 200,
                         BuyCount = 0,
                         UnlockValue = 0,
@@ -39,6 +40,7 @@ namespace EntityFX.EconomicsArcade.DataAccess.Service
                 ,
 
                     new FundsDriver {
+                                                Id = 1,
                         Value = 400,
                         UnlockValue = 5,
                         Incrementors = new Dictionary<int, Incrementor> {

@@ -11,6 +11,7 @@ namespace EntityFX.EconomicsArcade.Contract.Common.Counters
         public int BonusPercentage { get; set; }
         [DataMember]
         public int Inflation { get; set; }
-
+        [DataMember]
+        public bool UseInAutoStep { get; set; }
     }
 }

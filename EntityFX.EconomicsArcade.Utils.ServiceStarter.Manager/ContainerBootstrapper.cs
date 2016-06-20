@@ -12,6 +12,10 @@ using EntityFX.EconomicsArcade.Contract.Manager.GameManager;
 using EntityFX.EconomicsArcade.Manager.Mappers;
 using EntityFX.EconomicsArcade.Contract.Common;
 using EntityFX.EconomicsArcade.Contract.Common.Incrementors;
+using EntityFx.EconomicsArcade.TestApplication.UssrSimulator;
+using EntityFX.EconomicsArcade.Contract.DataAccess.GameData;
+using EntityFX.EconomicsArcade.Utils.ClientProxy.Manager;
+using EntityFX.EconomicsArcade.Utils.ClientProxy.DataAccess;
 
 namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
 {
@@ -20,6 +24,8 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
         //public 
         public IUnityContainer Configure(IUnityContainer container)
         {
+            container.RegisterType<IGameDataRepository, GameDataRepositoryClientProxy>();
+            container.RegisterType<IGame, UssrSimulatorGame>();
             container.RegisterType<ISessionManager, SessionManager>();
             container.RegisterType<IMapper<IncrementorBase, Incrementor>, IncrementorContractMapper>();
             container.RegisterType<IMapper<CounterBase, Contract.Common.Counters.CounterBase>, CounterContractMapper>();
