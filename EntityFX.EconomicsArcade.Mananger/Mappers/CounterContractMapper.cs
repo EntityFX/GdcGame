@@ -5,7 +5,7 @@ namespace EntityFX.EconomicsArcade.Manager.Mappers
 {
     public class CounterContractMapper : IMapper<CounterBase, Contract.Manager.GameManager.Counters.CounterBase>
     {
-        public Contract.Manager.GameManager.Counters.CounterBase Map(CounterBase source)
+        public Contract.Manager.GameManager.Counters.CounterBase Map(CounterBase source, Contract.Manager.GameManager.Counters.CounterBase destination)
         {
             Contract.Manager.GameManager.Counters.CounterBase destinationCounter = null;
             var genericCounter = source as GenericCounter;

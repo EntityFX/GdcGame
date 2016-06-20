@@ -7,7 +7,7 @@ namespace EntityFX.EconomicsArcade.Manager.Mappers
 {
     public class IncrementorContractMapper : IMapper<IncrementorBase, Incrementor>
     {
-        public Incrementor Map(IncrementorBase source)
+        public Incrementor Map(IncrementorBase source, Incrementor destination)
         {
             return new Incrementor()
             {

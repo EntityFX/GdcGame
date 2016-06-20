@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2008F2C2-C1FA-4CB9-8A99-A9406AC4967D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EntityFX.EconomicsArcade.DataAccess.Service</RootNamespace>
+    <AssemblyName>EntityFX.EconomicsArcade.DataAccess.Service</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Mappers\UserEntityMapper.cs" />
+    <Compile Include="UserRepository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EntityFX.EconomicsArcade.Contract.DataAccess\EntityFX.EconomicsArcade.Contract.DataAccess.csproj">
+      <Project>{0932d8b3-29eb-4546-987a-b246421a9b87}</Project>
+      <Name>EntityFX.EconomicsArcade.Contract.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.EconomicsArcade.DataAccess.Model\EntityFX.EconomicsArcade.DataAccess.Model.csproj">
+      <Project>{de1d1c25-f30a-461c-b572-00bfa1c7161e}</Project>
+      <Name>EntityFX.EconomicsArcade.DataAccess.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.EconomicsArcade.Infrastructure.Common\EntityFX.EconomicsArcade.Infrastructure.Common.csproj">
+      <Project>{924cc67d-9e2b-46ba-be1d-6c6c780ccfbc}</Project>
+      <Name>EntityFX.EconomicsArcade.Infrastructure.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.EconomicsArcade.Infrastructure.Repository\EntityFX.EconomicsArcade.Infrastructure.Repository.csproj">
+      <Project>{95745c95-a356-4e4a-9ac5-25abd9659831}</Project>
+      <Name>EntityFX.EconomicsArcade.Infrastructure.Repository</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

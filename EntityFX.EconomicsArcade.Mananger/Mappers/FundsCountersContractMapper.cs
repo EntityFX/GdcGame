@@ -14,7 +14,7 @@ namespace EntityFX.EconomicsArcade.Manager.Mappers
             _counterContractMapper = counterContractMapper;
         }
 
-        public Contract.Manager.GameManager.Counters.FundsCounters Map(FundsCounters source)
+        public Contract.Manager.GameManager.Counters.FundsCounters Map(FundsCounters source, Contract.Manager.GameManager.Counters.FundsCounters destination = null)
         {
             return new Contract.Manager.GameManager.Counters.FundsCounters()
             {

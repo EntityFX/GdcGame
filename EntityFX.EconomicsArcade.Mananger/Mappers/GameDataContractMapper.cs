@@ -20,7 +20,7 @@ namespace EntityFX.EconomicsArcade.Manager.Mappers
             _fundsDriversContractMapper = fundsDriversContractMapper;
         }
 
-        public GameData Map(IGame source)
+        public GameData Map(IGame source, GameData destination = null)
         {
             return new GameData()
             {

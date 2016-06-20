@@ -15,7 +15,7 @@ namespace EntityFX.EconomicsArcade.Manager.Mappers
             _incrementorContractMapper = incrementorContractMapper;
         }
 
-        public Contract.Manager.GameManager.Funds.FundsDriver Map(FundsDriver source)
+        public Contract.Manager.GameManager.Funds.FundsDriver Map(FundsDriver source, Contract.Manager.GameManager.Funds.FundsDriver destination)
         {
             var destinationIncrementors = source.Incrementors.ToDictionary(
                 sourceIncrementor => sourceIncrementor.Key, 
