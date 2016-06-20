@@ -49,7 +49,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CounterEntity.cs" />
     <Compile Include="EconomicsArcadeDbContext.cs" />
+    <Compile Include="FundsDriverEntity.cs" />
+    <Compile Include="IncrementorEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserEntity.cs" />
   </ItemGroup>
