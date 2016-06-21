@@ -48,10 +48,12 @@
     <Compile Include="Criterion\GetAllCriterion.cs" />
     <Compile Include="Criterion\GetByIdCriterion.cs" />
     <Compile Include="Criterion\ICriterion.cs" />
+    <Compile Include="IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query\IQuery.cs" />
     <Compile Include="Query\IQueryBuilder.cs" />
     <Compile Include="Query\IQueryFor.cs" />
+    <Compile Include="Query\QueryBase.cs" />
     <Compile Include="Query\QueryBuilder.cs" />
     <Compile Include="Query\QueryFor.cs" />
     <Compile Include="UnitOfWork\IUnitOfWork.cs" />

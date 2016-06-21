@@ -24,8 +24,8 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess
 
         public override void StartService()
         {
-            AddNetTcpService<IUserRepository>();
-            AddNetTcpService<IGameDataRepository>();
+            AddNetTcpService<IUserDataAccessService>();
+            AddNetTcpService<IGameDataDataAccessService>();
             OpenServices(new Uri(BASE_URL));
         }
 

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace EntityFX.EconomicsArcade.Contract.DataAccess.GameData
 {
     [ServiceContract]
-    public interface IGameDataRepository
+    public interface IGameDataDataAccessService
     {
         [OperationContract]
         Common.GameData GetGameData();

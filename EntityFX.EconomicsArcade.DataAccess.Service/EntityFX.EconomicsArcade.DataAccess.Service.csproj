@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -39,9 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameDataRepository.cs" />
-    <Compile Include="Mappers\UserEntityMapper.cs" />
-    <Compile Include="UserRepository.cs" />
+    <Compile Include="GameDataDataAccessService.cs" />
+    <Compile Include="UserDataAccessService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -57,6 +60,10 @@
       <Project>{de1d1c25-f30a-461c-b572-00bfa1c7161e}</Project>
       <Name>EntityFX.EconomicsArcade.DataAccess.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EntityFX.EconomicsArcade.DataAccess.Repository\EntityFX.EconomicsArcade.DataAccess.Repository.csproj">
+      <Project>{d5a72a34-5de5-41e1-b52e-8f70d19cb7bf}</Project>
+      <Name>EntityFX.EconomicsArcade.DataAccess.Repository</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EntityFX.EconomicsArcade.Infrastructure.Common\EntityFX.EconomicsArcade.Infrastructure.Common.csproj">
       <Project>{924cc67d-9e2b-46ba-be1d-6c6c780ccfbc}</Project>
       <Name>EntityFX.EconomicsArcade.Infrastructure.Common</Name>
@@ -65,7 +72,12 @@
       <Project>{95745c95-a356-4e4a-9ac5-25abd9659831}</Project>
       <Name>EntityFX.EconomicsArcade.Infrastructure.Repository</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EntityFX.EconomicsArcade.Infrastructure.Service\EntityFX.EconomicsArcade.Infrastructure.Service.csproj">
+      <Project>{2b414418-f3d8-4528-ba9f-6fefa8b7aa03}</Project>
+      <Name>EntityFX.EconomicsArcade.Infrastructure.Service</Name>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -7,15 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EntityFX.EconomicsArcade.DataAccess.Service.Mappers
+namespace EntityFX.EconomicsArcade.DataAccess.Repository.Mappers
 {
-    public class UserEntityMapper : IMapper<User, UserEntity>
+    public class UserContractMapper : IMapper<UserEntity, User>
     {
-        public UserEntity Map(User source, UserEntity destination)
+        public User Map(UserEntity source, User destination = null)
         {
+            destination = new User();
             destination.Id = source.Id;
-                destination.Email = source.Email;
-                return destination;
+            destination.Email = source.Email;
+            return destination;
         }
     }
 }

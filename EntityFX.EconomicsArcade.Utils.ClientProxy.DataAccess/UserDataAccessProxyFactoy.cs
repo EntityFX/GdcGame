@@ -5,7 +5,7 @@ using EntityFX.EconomicsArcade.Contract.DataAccess.User;
 
 namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
 {
-    public class UserRepositoryProxyFactoy : NetTcpProxyFactory<IUserRepository>
+    public class UserDataAccessProxyFactoy : NetTcpProxyFactory<IUserDataAccessService>
     {
 
         protected override void ApplyOperationContext()

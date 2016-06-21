@@ -55,6 +55,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EntityFX.EconomicsArcade.Contract.Common\EntityFX.EconomicsArcade.Contract.Common.csproj">
+      <Project>{89f89c37-f564-47eb-839d-c45acd9d012a}</Project>
+      <Name>EntityFX.EconomicsArcade.Contract.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EntityFX.EconomicsArcade.Contract.DataAccess\EntityFX.EconomicsArcade.Contract.DataAccess.csproj">
       <Project>{0932d8b3-29eb-4546-987a-b246421a9b87}</Project>
       <Name>EntityFX.EconomicsArcade.Contract.DataAccess</Name>
@@ -62,6 +66,10 @@
     <ProjectReference Include="..\EntityFX.EconomicsArcade.DataAccess.Model\EntityFX.EconomicsArcade.DataAccess.Model.csproj">
       <Project>{de1d1c25-f30a-461c-b572-00bfa1c7161e}</Project>
       <Name>EntityFX.EconomicsArcade.DataAccess.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.EconomicsArcade.DataAccess.Repository\EntityFX.EconomicsArcade.DataAccess.Repository.csproj">
+      <Project>{d5a72a34-5de5-41e1-b52e-8f70d19cb7bf}</Project>
+      <Name>EntityFX.EconomicsArcade.DataAccess.Repository</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.EconomicsArcade.DataAccess.Service\EntityFX.EconomicsArcade.DataAccess.Service.csproj">
       <Project>{2008f2c2-c1fa-4cb9-8a99-a9406ac4967d}</Project>

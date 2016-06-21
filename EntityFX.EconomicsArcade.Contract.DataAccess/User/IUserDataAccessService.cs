@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace EntityFX.EconomicsArcade.Contract.DataAccess.User
 {
     [ServiceContract]
-    public interface IUserRepository
+    public interface IUserDataAccessService
     {
         [OperationContract]
         int Create(User user);
@@ -17,7 +17,7 @@ namespace EntityFX.EconomicsArcade.Contract.DataAccess.User
         [OperationContract]
         void Delete(int userId);
         [OperationContract]
-        void FindById(int userId);
+        User FindById(int userId);
         [OperationContract]
         User[] FindAll();
     }

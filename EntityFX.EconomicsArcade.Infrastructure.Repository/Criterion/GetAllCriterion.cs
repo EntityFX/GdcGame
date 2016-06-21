@@ -10,7 +10,7 @@ namespace EntityFX.EconomicsArcade.Infrastructure.Repository.Criterion
     {
         public static readonly GetAllCriterion Value = new GetAllCriterion();
 
-        private GetAllCriterion()
+        protected GetAllCriterion()
         { }
     }
 }

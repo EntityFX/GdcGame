@@ -41,9 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameData\IGameDataRepository.cs" />
+    <Compile Include="GameData\IGameDataDataAccessService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="User\IUserRepository.cs" />
+    <Compile Include="User\IUserDataAccessService.cs" />
     <Compile Include="User\User.cs" />
   </ItemGroup>
   <ItemGroup>

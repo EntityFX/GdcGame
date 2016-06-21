@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace EntityFX.EconomicsArcade.DataAccess.Service
 {
-    public class GameDataRepository : IGameDataRepository
+    public class GameDataDataAccessService : IGameDataDataAccessService
     {
         public Contract.Common.GameData GetGameData()
         {
