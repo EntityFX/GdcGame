@@ -8,7 +8,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
 {
     public class ManagerStarter: ServiceStarterBase<ContainerBootstrapper>, IServiceStarter
     {
-        private const string BaseUrl = "net.tcp://localhost/EntityFX.EconomicsArcade.Manager:8555/";
+        private const string BaseUrl = "net.tcp://localhost:8555/EntityFX.EconomicsArcade.Manager/";
 
         public ManagerStarter(ContainerBootstrapper container)
             :base(container)

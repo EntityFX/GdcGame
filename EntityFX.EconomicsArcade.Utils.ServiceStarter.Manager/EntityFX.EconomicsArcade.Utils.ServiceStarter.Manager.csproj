@@ -54,9 +54,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EntityFX.EconomicArcade.Engine.GameEngine\EntityFX.EconomicArcade.Engine.GameEngine.csproj">
+      <Project>{19D1BC2F-D0EB-4012-BCF2-CED6F3B926B2}</Project>
+      <Name>EntityFX.EconomicArcade.Engine.GameEngine</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EntityFX.EconomicsArcade.Contract.Common\EntityFX.EconomicsArcade.Contract.Common.csproj">
       <Project>{89f89c37-f564-47eb-839d-c45acd9d012a}</Project>
       <Name>EntityFX.EconomicsArcade.Contract.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.EconomicsArcade.Contract.DataAccess\EntityFX.EconomicsArcade.Contract.DataAccess.csproj">
+      <Project>{0932D8B3-29EB-4546-987A-B246421A9B87}</Project>
+      <Name>EntityFX.EconomicsArcade.Contract.DataAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.EconomicsArcade.Contract.Manager\EntityFX.EconomicsArcade.Contract.Manager.csproj">
       <Project>{41696f24-e345-4599-a0c7-0715f64946d8}</Project>
@@ -77,6 +85,10 @@
     <ProjectReference Include="..\EntityFX.EconomicsArcade.Mananger\EntityFX.EconomicsArcade.Manager.csproj">
       <Project>{56a380de-2370-4c2d-8c8e-eaf3163c92ec}</Project>
       <Name>EntityFX.EconomicsArcade.Manager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.EconomicsArcade.Utils.ClientProxy.DataAccess\EntityFX.EconomicsArcade.Utils.ClientProxy.DataAccess.csproj">
+      <Project>{CEAD1C8C-20A4-4E48-969A-9AFCD104D109}</Project>
+      <Name>EntityFX.EconomicsArcade.Utils.ClientProxy.DataAccess</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

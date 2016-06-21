@@ -27,7 +27,7 @@ namespace EntityFX.EconomicsArcade.Manager.Mappers
                 InflationPercent = source.InflationPercent,
                 Name = source.Name,
                 UnlockValue = source.UnlockValue,
-                Value = source.UnlockValue
+                Value = source.CurrentValue
             };
         }
     }

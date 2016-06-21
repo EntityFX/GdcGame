@@ -38,6 +38,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Counters\CounterBase.cs" />
+    <Compile Include="Counters\DelayedCounter.cs" />
     <Compile Include="Counters\FundsCounters.cs" />
     <Compile Include="Counters\GenericCounter.cs" />
     <Compile Include="Counters\SingleCounter.cs" />

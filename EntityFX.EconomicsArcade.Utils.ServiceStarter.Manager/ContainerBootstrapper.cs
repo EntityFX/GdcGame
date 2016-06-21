@@ -1,4 +1,6 @@
-﻿using EntityFX.EconomicsArcade.Contract.Manager.SessionManager;
+﻿using System;
+using EntityFX.EconomicArcade.Engine.GameEngine.UssrSimulator;
+using EntityFX.EconomicsArcade.Contract.Manager.SessionManager;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 using EntityFX.EconomicsArcade.Manager;
 using Microsoft.Practices.Unity;
@@ -7,9 +9,11 @@ using EntityFX.EconomicsArcade.Contract.Manager.GameManager;
 using EntityFX.EconomicsArcade.Manager.Mappers;
 using EntityFX.EconomicsArcade.Contract.Common;
 using EntityFX.EconomicsArcade.Contract.Common.Incrementors;
+using EntityFX.EconomicsArcade.Contract.DataAccess.GameData;
 using EntityFX.EconomicsArcade.Contract.Game.Counters;
 using EntityFX.EconomicsArcade.Contract.Game.Funds;
 using EntityFX.EconomicsArcade.Contract.Game.Incrementors;
+using EntityFX.EconomicsArcade.Utils.ClientProxy.DataAccess;
 
 namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
 {
@@ -24,8 +28,18 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
             container.RegisterType<IMapper<FundsCounters, Contract.Common.Counters.FundsCounters>, FundsCountersContractMapper>();
             container.RegisterType<IMapper<FundsDriver, Contract.Common.Funds.FundsDriver>, FundsDriverContractMapper>();
             container.RegisterType<IMapper<IGame, GameData>, GameDataContractMapper>();
+            container.RegisterType<IGame, UssrSimulatorGame>();
             container.RegisterType<FundsCountersContractMapper>();
-            container.RegisterType<IGameManager, GameManager>(); 
+            container.RegisterType<IGameManager, GameManager>();
+            container.RegisterType<IGameDataDataAccessService>(
+                new InjectionFactory(
+                    _ =>
+                    {
+                        var proxyFactory = _.Resolve<GameDataDataAccessProxyFactory>();
+                        return proxyFactory.OpenChannel(
+                            new Uri("net.tcp://localhost:8777/EntityFX.EconomicsArcade.DataAccess/EntityFX.EconomicsArcade.Contract.DataAccess.GameData.IGameDataDataAccessService")
+                         );
+                    }));
             return container;
         }
     }

@@ -21,7 +21,8 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository.Mappers
             destionation.BuyCount = 0;
             destionation.Value = source.InitialValue;
             destionation.UnlockValue = source.UnlockValue;
-            destionation.Id = source.Id.ToString();
+            destionation.Name = source.Name;
+            destionation.Id = source.Id;
             destionation.InflationPercent = source.InflationPercent;
             destionation.Incrementors = new Dictionary<int, Incrementor>();
             foreach (var incrementor in source.Incrementors)

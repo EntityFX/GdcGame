@@ -86,14 +86,5 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository
                     .ToArray();
             }
         }
-
-        public void FindById(int userId)
-        {
-        }
-
-        public User[] FindAll()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

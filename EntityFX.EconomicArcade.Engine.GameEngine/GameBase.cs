@@ -27,10 +27,16 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
 
         public void Initialize()
         {
+           PreInitialize();
             InitializeFundsCounters();
             InitializeFundsDrivers();
             PostInitialize();
             _isInitialized = true;
+        }
+
+        protected virtual void PreInitialize()
+        {
+
         }
 
         private void InitializeFundsCounters()
@@ -152,18 +158,18 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
 
         }
 
-        protected void CashFunds(decimal value)
+        protected virtual void CashFunds(decimal value)
         {
             FundsCounters.CurrentFunds += value;
             FundsCounters.TotalFunds += value;
         }
 
-        protected void PayWithFunds(decimal value)
+        protected virtual void PayWithFunds(decimal value)
         {
             FundsCounters.CurrentFunds -= value;
         }
 
-        protected void IncrementCounters(IDictionary<int, IncrementorBase> incrementors)
+        protected virtual void IncrementCounters(IDictionary<int, IncrementorBase> incrementors)
         {
             var incrementorsList = incrementors.ToList(); 
             foreach (var counter in  FundsCounters.Counters)

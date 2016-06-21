@@ -8,10 +8,15 @@ namespace EntityFX.EconomicsArcade.Manager
 {
     public class GameSessions
     {
+        private readonly GameFactory _gameFactory;
         private static readonly IDictionary<string, IGame> GameSessionsStorage = new Dictionary<string, IGame>();
 
         private static readonly IDictionary<Guid, Session> SessionsStorage = new Dictionary<Guid, Session>();
 
+        public GameSessions(GameFactory gameFactory)
+        {
+            _gameFactory = gameFactory;
+        }
 
         public IGame GetGame(Guid sessionId)
         {
@@ -20,7 +25,7 @@ namespace EntityFX.EconomicsArcade.Manager
 
             if (!GameSessionsStorage.ContainsKey(session.Login))
             {
-                var game = new UssrSimulatorGame();
+                var game = BuildGame();
                 game.Initialize();
                 GameSessionsStorage.Add(session.Login, game);
             }
@@ -41,6 +46,11 @@ namespace EntityFX.EconomicsArcade.Manager
         public Session GetSession(Guid sessionId)
         {
             return !SessionsStorage.ContainsKey(sessionId) ? null : SessionsStorage[sessionId];
+        }
+
+        private IGame BuildGame()
+        {
+            return _gameFactory.BuildGame();
         }
     }
 }
