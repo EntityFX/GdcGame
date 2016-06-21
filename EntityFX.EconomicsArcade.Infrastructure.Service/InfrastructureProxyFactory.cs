@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EntityFX.EconomicsArcade.Infrastructure.Service
 {
@@ -23,7 +19,7 @@ namespace EntityFX.EconomicsArcade.Infrastructure.Service
 
         protected abstract Binding GetBinding();
 
-        protected OperationContextScope CreateContextScope()
+        private OperationContextScope CreateContextScope()
         {
             return new OperationContextScope((IContextChannel)_clientProxy);
         }

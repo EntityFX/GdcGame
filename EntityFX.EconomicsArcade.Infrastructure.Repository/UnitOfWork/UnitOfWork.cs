@@ -1,10 +1,5 @@
 ﻿using EntityFX.EconomicsArcade.Infrastructure.Repository.Query;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EntityFX.EconomicsArcade.Infrastructure.Repository.UnitOfWork
 {
@@ -36,7 +31,7 @@ namespace EntityFX.EconomicsArcade.Infrastructure.Repository.UnitOfWork
             _dbContext.Set<TEntity>().Remove(entity);
         }
 
-        public Query.IQueryBuilder BuildQuery()
+        public IQueryBuilder BuildQuery()
         {
             return _queryBuilder;
         }

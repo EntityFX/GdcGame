@@ -1,6 +1,6 @@
 ﻿using System;
+using EntityFX.EconomicsArcade.Utils.ClientProxy.DataAccess;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using EntityFX.EconomicsArcade.Utils.ClientProxy.Manager;
 
 namespace EntityFX.EconomicsArcade.Test.DataAccessTest
 {

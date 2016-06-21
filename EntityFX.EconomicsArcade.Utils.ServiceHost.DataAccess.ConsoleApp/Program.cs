@@ -1,9 +1,5 @@
 ﻿using EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EntityFX.EconomicsArcade.Utils.ServiceHost.DataAccess.ConsoleApp
 {

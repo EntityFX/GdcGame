@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.Entity;
 
 namespace EntityFX.EconomicsArcade.DataAccess.Model
 {
@@ -26,12 +21,12 @@ namespace EntityFX.EconomicsArcade.DataAccess.Model
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<IncrementorEntity>()
-                .HasRequired<FundsDriverEntity>(_ => _.FundsDriver)
+                .HasRequired(_ => _.FundsDriver)
                 .WithMany(_ => _.Incrementors)
                 .HasForeignKey(_ => _.FundsDriverId);
 
             modelBuilder.Entity<IncrementorEntity>()
-                .HasRequired<CounterEntity>(_ => _.Counter)
+                .HasRequired(_ => _.Counter)
                 .WithMany(_ => _.Incrementors)
                 .HasForeignKey(_ => _.CounterId);
         }

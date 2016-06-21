@@ -1,5 +1,4 @@
 ﻿using System.Runtime.Serialization;
-using System.ServiceModel;
 using EntityFX.EconomicsArcade.Contract.Common.Counters;
 using EntityFX.EconomicsArcade.Contract.Common.Funds;
 

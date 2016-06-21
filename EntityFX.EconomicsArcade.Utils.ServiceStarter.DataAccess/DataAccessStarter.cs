@@ -1,11 +1,6 @@
 ﻿using EntityFX.EconomicsArcade.Infrastructure.Common;
 using EntityFX.EconomicsArcade.Infrastructure.Service;
-using Microsoft.Practices.Unity;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using EntityFX.EconomicsArcade.Contract.DataAccess.User;
 using EntityFX.EconomicsArcade.Contract.DataAccess.GameData;
 
@@ -14,7 +9,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess
     public class DataAccessStarter: ServiceStarterBase<ContainerBootstrapper>, IServiceStarter
     {
 
-        private const string BASE_URL = "net.tcp://localhost/EntityFX.EconomicsArcade.DataAccess:8777/";
+        private const string BaseUrl = "net.tcp://localhost/EntityFX.EconomicsArcade.DataAccess:8777/";
 
         public DataAccessStarter(ContainerBootstrapper container)
             :base(container)
@@ -26,7 +21,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess
         {
             AddNetTcpService<IUserDataAccessService>();
             AddNetTcpService<IGameDataDataAccessService>();
-            OpenServices(new Uri(BASE_URL));
+            OpenServices(new Uri(BaseUrl));
         }
 
         public override void StopService()

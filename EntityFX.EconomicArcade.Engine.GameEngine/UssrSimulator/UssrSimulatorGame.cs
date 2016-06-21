@@ -1,12 +1,9 @@
-﻿using EntityFX.EconomicsArcade.Contract.Game;
-using EntityFX.EconomicsArcade.Engine.GameEngine;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using EntityFX.EconomicsArcade.Contract.Game.Counters;
+using EntityFX.EconomicsArcade.Contract.Game.Funds;
+using EntityFX.EconomicsArcade.Contract.Game.Incrementors;
 
-namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
+namespace EntityFX.EconomicArcade.Engine.GameEngine.UssrSimulator
 {
     public class UssrSimulatorGame : GameBase
     {
@@ -14,7 +11,7 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
         {
             get
             {
-                return this.FundsCounters.Counters[(int)UssrCounterEnum.Communism].SubValue;
+                return FundsCounters.Counters[(int)UssrCounterEnum.Communism].SubValue;
             }
         }
 
@@ -22,7 +19,7 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
         {
             get
             {
-                return this.FundsCounters.Counters[(int)UssrCounterEnum.Production].SubValue;
+                return FundsCounters.Counters[(int)UssrCounterEnum.Production].SubValue;
             }
         }
 
@@ -30,7 +27,7 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
         {
             get
             {
-                return this.FundsCounters.Counters[(int)UssrCounterEnum.Tax].SubValue;
+                return FundsCounters.Counters[(int)UssrCounterEnum.Tax].SubValue;
             }
         }
 
@@ -38,7 +35,7 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
         {
             get
             {
-                return this.FundsCounters.Counters[(int)UssrCounterEnum.FiveYearPlan].SubValue;
+                return FundsCounters.Counters[(int)UssrCounterEnum.FiveYearPlan].SubValue;
             }
         }
 

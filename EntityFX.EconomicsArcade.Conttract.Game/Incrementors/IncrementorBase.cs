@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EntityFX.EconomicsArcade.Contract.Game
+﻿namespace EntityFX.EconomicsArcade.Contract.Game.Incrementors
 {
     public abstract class IncrementorBase
     {
@@ -12,14 +6,14 @@ namespace EntityFX.EconomicsArcade.Contract.Game
 
         protected abstract IncrementorTypeEnum GetIncrementorType();
 
-        public int Value { get; set; }
+        public int Value { get; private set; }
 
-        public IncrementorBase()
+        private IncrementorBase()
         {
             IncrementorType = GetIncrementorType();
         }
 
-        public IncrementorBase(int value)   : this()
+        protected IncrementorBase(int value)   : this()
         {
             Value = value;
         }

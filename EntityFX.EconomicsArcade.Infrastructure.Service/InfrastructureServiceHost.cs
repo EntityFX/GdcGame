@@ -1,12 +1,9 @@
 ﻿using Microsoft.Practices.Unity;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Description;
-using System.Text;
-using System.Threading.Tasks;
 using Unity.Wcf;
 
 namespace EntityFX.EconomicsArcade.Infrastructure.Service
@@ -45,7 +42,7 @@ namespace EntityFX.EconomicsArcade.Infrastructure.Service
             }
         }
 
-        public InfrastructureServiceHost(IUnityContainer container)
+        protected InfrastructureServiceHost(IUnityContainer container)
         {
             Container = container;
         }
@@ -62,7 +59,7 @@ namespace EntityFX.EconomicsArcade.Infrastructure.Service
 
         public void Open(Uri endpointAddress)
         {
-            _serviceHost = new UnityServiceHost(Container, Container.Resolve<T>().GetType(), new Uri[] { endpointAddress });
+            _serviceHost = new UnityServiceHost(Container, Container.Resolve<T>().GetType(), endpointAddress);
             CreateServiceEndpoint(_serviceHost);
             _serviceHost.Open();
         }

@@ -1,13 +1,9 @@
 ﻿using Microsoft.Practices.Unity;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Description;
-using System.Text;
 using System.Xml;
-using System.Threading.Tasks;
 
 namespace EntityFX.EconomicsArcade.Infrastructure.Service
 {

@@ -1,4 +1,4 @@
-﻿using EntityFX.EconomicsArcade.Contract.Game;
+﻿using EntityFX.EconomicsArcade.Contract.Game.Counters;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 
 namespace EntityFX.EconomicsArcade.Manager.Mappers

@@ -1,21 +1,14 @@
 ﻿using EntityFX.EconomicsArcade.Contract.Manager.SessionManager;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 using EntityFX.EconomicsArcade.Infrastructure.Service;
-using Microsoft.Practices.Unity;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using EntityFX.EconomicsArcade.Contract.Manager.GameManager;
 
 namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
 {
     public class ManagerStarter: ServiceStarterBase<ContainerBootstrapper>, IServiceStarter
     {
-        InfrastructureServiceHost<ISessionManager> _sessionManager;
-
-        private const string BASE_URL = "net.tcp://localhost/EntityFX.EconomicsArcade.Manager:8555/";
+        private const string BaseUrl = "net.tcp://localhost/EntityFX.EconomicsArcade.Manager:8555/";
 
         public ManagerStarter(ContainerBootstrapper container)
             :base(container)
@@ -27,7 +20,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
         {
             AddNetTcpService<ISessionManager>();
             AddNetTcpService<IGameManager>();
-            OpenServices(new Uri(BASE_URL));
+            OpenServices(new Uri(BaseUrl));
         }
 
         public override void StopService()

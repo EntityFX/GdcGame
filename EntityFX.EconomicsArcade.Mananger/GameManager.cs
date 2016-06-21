@@ -1,9 +1,5 @@
 ﻿using EntityFX.EconomicsArcade.Contract.Manager.GameManager;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using EntityFX.EconomicsArcade.Contract.Game;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 using EntityFX.EconomicsArcade.Manager.Mappers;

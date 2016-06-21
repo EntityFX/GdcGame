@@ -7,7 +7,7 @@ namespace EntityFX.EconomicsArcade.Test.EntityTest
     [TestClass]
     public class UserEntityTest
     {
-        private readonly static string _connString = "Data Source=.;Initial Catalog=EntityFX.EconomicsArcade.Database;Integrated Security=True";
+        private static readonly string ConnString = "Data Source=.;Initial Catalog=EntityFX.EconomicsArcade.Database;Integrated Security=True";
         
         [TestMethod]
         public void CreateUserEntity()
@@ -16,7 +16,7 @@ namespace EntityFX.EconomicsArcade.Test.EntityTest
                 Email = "email@mail.com",
                 CreateDateTime = DateTime.Now
             };
-            EconomicsArcadeDbContext ctx = new EconomicsArcadeDbContext(_connString);
+            EconomicsArcadeDbContext ctx = new EconomicsArcadeDbContext(ConnString);
             ctx.UserEntitySet.Add(entity);
             ctx.SaveChanges();
             //ctx.UserEntitySet.
@@ -25,7 +25,7 @@ namespace EntityFX.EconomicsArcade.Test.EntityTest
         [TestMethod]
         public void UpdateUserEntity()
         {
-            EconomicsArcadeDbContext ctx = new EconomicsArcadeDbContext(_connString);
+            EconomicsArcadeDbContext ctx = new EconomicsArcadeDbContext(ConnString);
             var userEntity = ctx.UserEntitySet.Find(1);
             userEntity.UpdateDateTime = DateTime.Now; 
             ctx.SaveChanges();

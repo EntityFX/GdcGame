@@ -1,11 +1,6 @@
 ﻿using EntityFx.EconomicsArcade.TestApplication.UssrSimulator;
 using EntityFX.EconomicsArcade.Contract.Game;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Timers;
 
 namespace EntityFx.EconomicsArcade.TestApplication
@@ -48,7 +43,7 @@ namespace EntityFx.EconomicsArcade.TestApplication
     {
         private readonly IGame _game = new UssrSimulatorGame();
 
-        private readonly System.Timers.Timer _timer = new System.Timers.Timer(1000);
+        private readonly Timer _timer = new Timer(1000);
 
         public GameRunner()
         {

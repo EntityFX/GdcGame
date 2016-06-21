@@ -1,18 +1,17 @@
-﻿using EntityFX.EconomicsArcade.Contract.Game;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
+using EntityFX.EconomicsArcade.Contract.Game;
+using EntityFX.EconomicsArcade.Contract.Game.Counters;
+using EntityFX.EconomicsArcade.Contract.Game.Funds;
+using EntityFX.EconomicsArcade.Contract.Game.Incrementors;
 
-namespace EntityFX.EconomicsArcade.Engine.GameEngine
+namespace EntityFX.EconomicArcade.Engine.GameEngine
 {
     public abstract class GameBase : IGame
     {
         private bool _isInitialized;
-
-        private bool _isStarted;
 
         public IDictionary<int, FundsDriver> FundsDrivers { get; private set; }
 
@@ -22,7 +21,7 @@ namespace EntityFX.EconomicsArcade.Engine.GameEngine
 
         public int ManualStepNumber { get; private set; }
 
-        public GameBase()
+        protected GameBase()
         {
         }
 
@@ -219,12 +218,13 @@ namespace EntityFX.EconomicsArcade.Engine.GameEngine
         {
             var genericCounters = FundsCounters.Counters.Values.OfType<GenericCounter>()
                 .Where(_ => _.IsUsedInAutoStep);
-            if (genericCounters.All(_ => _.Inflation == 0)) 
+            var enumerable = genericCounters as IList<GenericCounter> ?? genericCounters.ToList();
+            if (enumerable.All(_ => _.Inflation == 0)) 
             {
                 return;
             }
 
-            foreach (var genericCounter in genericCounters)
+            foreach (var genericCounter in enumerable)
             {
                 genericCounter.CurrentSteps = 0;
                 genericCounter.Inflation = genericCounter.CurrentSteps / genericCounter.StepsToIncreaseInflation;

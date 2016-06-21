@@ -1,5 +1,5 @@
 ﻿using EntityFX.EconomicsArcade.Contract.Common.Incrementors;
-using EntityFX.EconomicsArcade.Contract.Game;
+using EntityFX.EconomicsArcade.Contract.Game.Incrementors;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 using IncrementorTypeEnum = EntityFX.EconomicsArcade.Contract.Common.Incrementors.IncrementorTypeEnum;
 

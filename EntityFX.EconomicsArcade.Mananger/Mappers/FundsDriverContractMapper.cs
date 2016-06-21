@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using EntityFX.EconomicsArcade.Contract.Game;
+﻿using System.Linq;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 using EntityFX.EconomicsArcade.Contract.Common.Incrementors;
+using EntityFX.EconomicsArcade.Contract.Game.Funds;
+using EntityFX.EconomicsArcade.Contract.Game.Incrementors;
 
 namespace EntityFX.EconomicsArcade.Manager.Mappers
 {

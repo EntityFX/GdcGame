@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EntityFX.EconomicsArcade.Contract.Manager.SessionManager;
-using EntityFX.EconomicsArcade.Infrastructure.Service;
 using EntityFX.EconomicsArcade.Utils.ClientProxy.Manager;
 
 namespace EntityFX.EconomicsArcade.TestClient

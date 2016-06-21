@@ -1,10 +1,6 @@
 ﻿using EntityFX.EconomicsArcade.Infrastructure.Common;
 using Microsoft.Practices.Unity;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using EntityFX.EconomicsArcade.Contract.DataAccess.User;
 
 using EntityFX.EconomicsArcade.DataAccess.Model;

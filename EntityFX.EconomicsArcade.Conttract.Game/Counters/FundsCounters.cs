@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace EntityFX.EconomicsArcade.Contract.Game
+namespace EntityFX.EconomicsArcade.Contract.Game.Counters
 {
     public class FundsCounters
     {

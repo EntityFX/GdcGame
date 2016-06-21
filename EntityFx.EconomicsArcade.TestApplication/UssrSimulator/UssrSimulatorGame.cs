@@ -1,10 +1,9 @@
-﻿using EntityFX.EconomicsArcade.Contract.Game;
-using EntityFX.EconomicsArcade.Engine.GameEngine;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using EntityFX.EconomicArcade.Engine.GameEngine;
+using EntityFX.EconomicsArcade.Contract.Game.Counters;
+using EntityFX.EconomicsArcade.Contract.Game.Funds;
+using EntityFX.EconomicsArcade.Contract.Game.Incrementors;
 
 namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
 {
@@ -14,7 +13,7 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
         {
             get
             {
-                return this.FundsCounters.Counters[(int)UssrCounterEnum.Communism].SubValue;
+                return FundsCounters.Counters[(int)UssrCounterEnum.Communism].SubValue;
             }
         }
 
@@ -22,7 +21,7 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
         {
             get
             {
-                return this.FundsCounters.Counters[(int)UssrCounterEnum.Production].SubValue;
+                return FundsCounters.Counters[(int)UssrCounterEnum.Production].SubValue;
             }
         }
 
@@ -30,7 +29,7 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
         {
             get
             {
-                return this.FundsCounters.Counters[(int)UssrCounterEnum.Tax].SubValue;
+                return FundsCounters.Counters[(int)UssrCounterEnum.Tax].SubValue;
             }
         }
 
@@ -38,7 +37,7 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
         {
             get
             {
-                return this.FundsCounters.Counters[(int)UssrCounterEnum.FiveYearPlan].SubValue;
+                return FundsCounters.Counters[(int)UssrCounterEnum.FiveYearPlan].SubValue;
             }
         }
 
@@ -511,7 +510,7 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
             };
         }
 
-        private object _lockObject = new { };
+        private readonly object _lockObject = new { };
 
         protected override void PostPerformManualStep()
         {
@@ -542,29 +541,29 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
             lock (_lockObject)
             {
                 Console.SetCursorPosition(0, 0);
-                Console.WriteLine("Funds: {0:C}; Total Funds: {1:C}", this.FundsCounters.CurrentFunds, FundsCounters.TotalFunds);
+                Console.WriteLine("Funds: {0:C}; Total Funds: {1:C}", FundsCounters.CurrentFunds, FundsCounters.TotalFunds);
                 Console.WriteLine("Manual Steps: {0}, Automatic Steps: {1}", 
-                    this.ManualStepNumber, this.AutomaticStepNumber);
-                PrettyConsole.WriteLineColor(ConsoleColor.Red, "{1,15}: {0,12}", Communism, this.FundsCounters.Counters[(int)UssrCounterEnum.Communism].Name);
-                PrettyConsole.WriteLineColor(ConsoleColor.Cyan, "{1,15}: {0,12:C} ", Production, this.FundsCounters.Counters[(int)UssrCounterEnum.Production].Name);
+                    ManualStepNumber, AutomaticStepNumber);
+                PrettyConsole.WriteLineColor(ConsoleColor.Red, "{1,15}: {0,12}", Communism, FundsCounters.Counters[(int)UssrCounterEnum.Communism].Name);
+                PrettyConsole.WriteLineColor(ConsoleColor.Cyan, "{1,15}: {0,12:C} ", Production, FundsCounters.Counters[(int)UssrCounterEnum.Production].Name);
                 PrettyConsole.WriteLineColor(ConsoleColor.Cyan, "{1,15}: {0,12:C} ({2}%)"
-                    , ((GenericCounter)this.FundsCounters.Counters[(int)UssrCounterEnum.Production]).Bonus, "Bonus"
-                    , ((GenericCounter)this.FundsCounters.Counters[(int)UssrCounterEnum.Production]).BonusPercentage);
+                    , ((GenericCounter)FundsCounters.Counters[(int)UssrCounterEnum.Production]).Bonus, "Bonus"
+                    , ((GenericCounter)FundsCounters.Counters[(int)UssrCounterEnum.Production]).BonusPercentage);
                 PrettyConsole.WriteColor(ConsoleColor.Cyan, "{1,15}: {0,12}%"
-                    , ((GenericCounter)this.FundsCounters.Counters[(int)UssrCounterEnum.Production]).Inflation, "Inflation");
-                PrettyConsole.WriteLineColor(ConsoleColor.DarkGray, " StepsToIncrInflation: {0}, Current Steps: {1}", ((GenericCounter)this.FundsCounters.Counters[(int)UssrCounterEnum.Production]).StepsToIncreaseInflation, ((GenericCounter)this.FundsCounters.Counters[(int)UssrCounterEnum.Production]).CurrentSteps);
+                    , ((GenericCounter)FundsCounters.Counters[(int)UssrCounterEnum.Production]).Inflation, "Inflation");
+                PrettyConsole.WriteLineColor(ConsoleColor.DarkGray, " StepsToIncrInflation: {0}, Current Steps: {1}", ((GenericCounter)FundsCounters.Counters[(int)UssrCounterEnum.Production]).StepsToIncreaseInflation, ((GenericCounter)FundsCounters.Counters[(int)UssrCounterEnum.Production]).CurrentSteps);
                 PrettyConsole.WriteLineColor(ConsoleColor.Cyan, "{1,15}: {0,12:C}"
-                    , ((GenericCounter)this.FundsCounters.Counters[(int)UssrCounterEnum.Production]).Value, "Total");
-                PrettyConsole.WriteLineColor(ConsoleColor.Green, "{1,15}: {0,12:C}", Taxes, this.FundsCounters.Counters[(int)UssrCounterEnum.Tax].Name);
+                    , ((GenericCounter)FundsCounters.Counters[(int)UssrCounterEnum.Production]).Value, "Total");
+                PrettyConsole.WriteLineColor(ConsoleColor.Green, "{1,15}: {0,12:C}", Taxes, FundsCounters.Counters[(int)UssrCounterEnum.Tax].Name);
                 PrettyConsole.WriteLineColor(ConsoleColor.Green, "{1,15}: {0,12:C} ({2}%)"
-                    , ((GenericCounter)this.FundsCounters.Counters[(int)UssrCounterEnum.Tax]).Bonus, "Bonus"
-                    , ((GenericCounter)this.FundsCounters.Counters[(int)UssrCounterEnum.Tax]).BonusPercentage);
+                    , ((GenericCounter)FundsCounters.Counters[(int)UssrCounterEnum.Tax]).Bonus, "Bonus"
+                    , ((GenericCounter)FundsCounters.Counters[(int)UssrCounterEnum.Tax]).BonusPercentage);
                 PrettyConsole.WriteColor(ConsoleColor.Green, "{1,15}: {0,12}%"
-                    , ((GenericCounter)this.FundsCounters.Counters[(int)UssrCounterEnum.Tax]).Inflation, "Corruption");
-                PrettyConsole.WriteLineColor(ConsoleColor.DarkGray, " StepsToIncrInflation: {0}, Current Steps: {1}", ((GenericCounter)this.FundsCounters.Counters[(int)UssrCounterEnum.Tax]).StepsToIncreaseInflation, ((GenericCounter)this.FundsCounters.Counters[(int)UssrCounterEnum.Tax]).CurrentSteps);
+                    , ((GenericCounter)FundsCounters.Counters[(int)UssrCounterEnum.Tax]).Inflation, "Corruption");
+                PrettyConsole.WriteLineColor(ConsoleColor.DarkGray, " StepsToIncrInflation: {0}, Current Steps: {1}", ((GenericCounter)FundsCounters.Counters[(int)UssrCounterEnum.Tax]).StepsToIncreaseInflation, ((GenericCounter)FundsCounters.Counters[(int)UssrCounterEnum.Tax]).CurrentSteps);
                 PrettyConsole.WriteLineColor(ConsoleColor.Green, "{1,15}: {0,12:C}"
-                    , ((GenericCounter)this.FundsCounters.Counters[(int)UssrCounterEnum.Tax]).Value, "Total");
-                PrettyConsole.WriteLineColor(ConsoleColor.Magenta, "{1,15}: {0,12}", FiveYearPlan, this.FundsCounters.Counters[(int)UssrCounterEnum.FiveYearPlan].Name);
+                    , ((GenericCounter)FundsCounters.Counters[(int)UssrCounterEnum.Tax]).Value, "Total");
+                PrettyConsole.WriteLineColor(ConsoleColor.Magenta, "{1,15}: {0,12}", FiveYearPlan, FundsCounters.Counters[(int)UssrCounterEnum.FiveYearPlan].Name);
                 Console.WriteLine();
                 int charIndex = 65;
                 PrettyConsole.WriteLineColor(ConsoleColor.DarkYellow, "{0,2}:             Fight Against Corruption", "*");
@@ -590,7 +589,7 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
 
     internal static class PrettyConsole
     {
-        private static readonly object _lockObject = new { };
+        private static readonly object LockObject = new { };
 
         public static void WriteColor(ConsoleColor color, string text)
         {
