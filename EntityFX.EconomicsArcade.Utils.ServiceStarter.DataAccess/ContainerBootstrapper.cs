@@ -17,6 +17,10 @@ using EntityFX.EconomicsArcade.DataAccess.Repository.Mappers;
 using EntityFX.EconomicsArcade.DataAccess.Service;
 using EntityFX.EconomicsArcade.DataAccess.Repository.Criterions.User;
 using EntityFX.EconomicsArcade.DataAccess.Repository.Queries.User;
+using EntityFX.EconomicsArcade.DataAccess.Repository.Queries.FundsDriver;
+using EntityFX.EconomicsArcade.DataAccess.Repository.Criterions.FundsDriver;
+using EntityFX.EconomicsArcade.Contract.Common.Funds;
+using EntityFX.EconomicsArcade.Contract.Common.Incrementors;
 
 namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess
 {
@@ -32,10 +36,16 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess
 
             container.RegisterType<IQuery<GetUserByIdCriterion, UserEntity>, GetUserByIdQuery>();
             container.RegisterType<IQuery<GetAllUsersCriterion, IEnumerable<UserEntity>>, GetAllUsersQuery>();
+            container.RegisterType<IQuery<GetAllFundsDriversCriterion, IEnumerable<FundsDriverEntity>>, GetAllFundsDriversQuery>();
 
             container.RegisterType<IMapper<User, UserEntity>, UserEntityMapper>();
             container.RegisterType<IMapper<UserEntity, User>, UserContractMapper>();
+            container.RegisterType<IMapper<FundsDriverEntity, FundsDriver>, FundsDriverContractMapper>();
+            container.RegisterType<IMapper<IncrementorEntity, Incrementor>, IncrementorContractMapper>();
+
             container.RegisterType<IUserRepository, UserRepository>();
+            container.RegisterType<IFundsDriverRepository, FundsDriverRepository>();
+
             container.RegisterType<IUserDataAccessService, UserDataAccessService>();
 
             container.RegisterType<IFundsDriverRepository, FundsDriverRepository>();

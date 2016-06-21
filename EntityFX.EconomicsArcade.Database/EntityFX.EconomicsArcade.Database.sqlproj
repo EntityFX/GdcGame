@@ -79,4 +79,7 @@
     <None Include="Tables\dbo.Incrementor.sql" />
     <None Include="Tables\dbo.Counter.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="EntityFX.EconomicsArcade.Database.refactorlog" />
+  </ItemGroup>
 </Project>

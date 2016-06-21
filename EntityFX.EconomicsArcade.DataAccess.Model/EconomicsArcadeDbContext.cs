@@ -29,6 +29,11 @@ namespace EntityFX.EconomicsArcade.DataAccess.Model
                 .HasRequired<FundsDriverEntity>(_ => _.FundsDriver)
                 .WithMany(_ => _.Incrementors)
                 .HasForeignKey(_ => _.FundsDriverId);
+
+            modelBuilder.Entity<IncrementorEntity>()
+                .HasRequired<CounterEntity>(_ => _.Counter)
+                .WithMany(_ => _.Incrementors)
+                .HasForeignKey(_ => _.CounterId);
         }
     }
 }

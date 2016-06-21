@@ -30,7 +30,6 @@ namespace EntityFX.EconomicsArcade.Test.DataAccessTest
                 var user = proxy.FindById(1);
                 Assert.IsNotNull(user);
             }
-
         }
     }
 }

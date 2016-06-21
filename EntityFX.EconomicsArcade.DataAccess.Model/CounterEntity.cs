@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace EntityFX.EconomicsArcade.DataAccess.Model
 {
     [Table("Counter")]
-    class CounterEntity
+    public class CounterEntity
     {
         [Key]
         public int Id { get; set; }
@@ -20,5 +20,6 @@ namespace EntityFX.EconomicsArcade.DataAccess.Model
         public int? MiningTimeSeconds { get; set; }
         public decimal? DelayedValue { get; set; }
         public int Type { get; set; }
+        public virtual ICollection<IncrementorEntity> Incrementors { get; set; }
     }
 }

@@ -45,14 +45,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Criterions\FundsDriver\GetAllFundsDriversCriterion.cs" />
     <Compile Include="Criterions\User\GetAllUsersCriterion.cs" />
     <Compile Include="Criterions\User\GetUserByIdCriterion.cs" />
     <Compile Include="FundsDriverRepository.cs" />
     <Compile Include="IFundsDriverRepository.cs" />
     <Compile Include="IUserRepository.cs" />
+    <Compile Include="Mappers\FundsDriverContractMapper.cs" />
+    <Compile Include="Mappers\IncrementorContractMapper.cs" />
     <Compile Include="Mappers\UserContractMapper.cs" />
     <Compile Include="Mappers\UserEntityMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Queries\FundsDriver\GetAllFundsDriversQuery.cs" />
     <Compile Include="Queries\User\GetAllUsersQuery.cs" />
     <Compile Include="Queries\User\GetUserByIdQuery.cs" />
     <Compile Include="UserRepository.cs" />
@@ -79,6 +83,7 @@
       <Name>EntityFX.EconomicsArcade.Infrastructure.Repository</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

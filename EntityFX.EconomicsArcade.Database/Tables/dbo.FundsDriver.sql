@@ -5,5 +5,5 @@
 	[Description] NVARCHAR(150) NOT NULL,
 	[InitialValue] decimal NOT NULL,
 	[UnlockValue] decimal NOT NULL,
-	[InfltaionPercent] smallint NOT NULL
+	[InflationPercent] smallint NOT NULL
 )
