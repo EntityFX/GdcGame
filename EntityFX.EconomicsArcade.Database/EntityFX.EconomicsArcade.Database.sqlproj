@@ -82,4 +82,7 @@
   <ItemGroup>
     <RefactorLog Include="EntityFX.EconomicsArcade.Database.refactorlog" />
   </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Data\DataIncrementors.sql" />
+  </ItemGroup>
 </Project>
