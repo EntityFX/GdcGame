@@ -74,7 +74,8 @@ namespace EntityFX.EconomicsArcade.TestClient
 
         public void FightAgainstCorruption()
         {
-            _game.FightAgainstInflation();
+            //_game.FightAgainstInflation();
+            DisplayGameData(GetGameData());
         }
 
         public GameData GetGameData()

@@ -2,7 +2,10 @@
 using EntityFX.EconomicsArcade.Contract.Manager.SessionManager;
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using EntityFX.EconomicArcade.Engine.GameEngine.UssrSimulator;
+
 
 namespace EntityFX.EconomicsArcade.Manager
 {
@@ -13,9 +16,19 @@ namespace EntityFX.EconomicsArcade.Manager
 
         private static readonly IDictionary<Guid, Session> SessionsStorage = new Dictionary<Guid, Session>();
 
+        private static Timer _timer = new Timer(TimerCallback, null, 0, 1000 );
+
         public GameSessions(GameFactory gameFactory)
         {
             _gameFactory = gameFactory;
+        }
+
+        private static void TimerCallback(object state)
+        {
+            foreach (var gameSession in GameSessionsStorage)
+            {
+                gameSession.Value.PerformAutoStep();
+            }
         }
 
         public IGame GetGame(Guid sessionId)
