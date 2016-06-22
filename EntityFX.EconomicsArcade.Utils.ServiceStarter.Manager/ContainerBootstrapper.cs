@@ -31,15 +31,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
             container.RegisterType<IGame, UssrSimulatorGame>();
             container.RegisterType<FundsCountersContractMapper>();
             container.RegisterType<IGameManager, GameManager>();
-            container.RegisterType<IGameDataDataAccessService>(
-                new InjectionFactory(
-                    _ =>
-                    {
-                        var proxyFactory = _.Resolve<GameDataDataAccessProxyFactory>();
-                        return proxyFactory.OpenChannel(
-                            new Uri("net.tcp://localhost:8777/EntityFX.EconomicsArcade.DataAccess/EntityFX.EconomicsArcade.Contract.DataAccess.GameData.IGameDataDataAccessService")
-                         );
-                    }));
+            container.RegisterType<IGameDataDataAccessService, GameDataDataAccessClient>();
             return container;
         }
     }

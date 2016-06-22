@@ -11,13 +11,20 @@ namespace EntityFX.EconomicsArcade.Manager.Mappers
             var genericCounter = source as GenericCounter;
             if (genericCounter != null)
             {
-                destinationCounter = new Contract.Common.Counters.GenericCounter();
+                var genericDestination = new Contract.Common.Counters.GenericCounter
+                {
+                    Bonus = genericCounter.Bonus,
+                    BonusPercentage = genericCounter.BonusPercentage,
+                    SubValue = genericCounter.SubValue
+                };
+                destinationCounter = genericDestination;
+                destinationCounter.Value = genericCounter.Value;
             }
 
             var singleCounter = source as SingleCounter;
             if (singleCounter != null)
             {
-                destinationCounter = new Contract.Common.Counters.SingleCounter();
+                destinationCounter = new Contract.Common.Counters.SingleCounter {Value = singleCounter.Value};
             }
             if (destinationCounter != null)
             {
@@ -30,7 +37,6 @@ namespace EntityFX.EconomicsArcade.Manager.Mappers
         private void MapCommon(CounterBase source, Contract.Common.Counters.CounterBase destination)
         {
             destination.Name = source.Name;
-            destination.Value = source.Value;
         }
     }
 }

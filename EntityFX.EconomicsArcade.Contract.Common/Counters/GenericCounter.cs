@@ -13,5 +13,7 @@ namespace EntityFX.EconomicsArcade.Contract.Common.Counters
         public int Inflation { get; set; }
         [DataMember]
         public bool UseInAutoSteps { get; set; }
+        [DataMember]
+        public decimal SubValue { get; set; }
     }
 }

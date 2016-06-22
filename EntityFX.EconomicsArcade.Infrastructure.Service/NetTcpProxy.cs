@@ -3,7 +3,7 @@ using System.ServiceModel;
 
 namespace EntityFX.EconomicsArcade.Infrastructure.Service
 {
-    public class NetTcpProxyFactory<TServiceContract> : InfrastructureProxyFactory<TServiceContract>
+    public class NetTcpProxy<TServiceContract> : InfrastructureProxy<TServiceContract>
     {
         protected override System.ServiceModel.Channels.Binding GetBinding()
         {

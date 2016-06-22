@@ -4,17 +4,18 @@ using System.ServiceModel.Channels;
 
 namespace EntityFX.EconomicsArcade.Infrastructure.Service
 {
-    public abstract class InfrastructureProxyFactory<TServiceContract> : IDisposable
+    public abstract class InfrastructureProxy<TServiceContract> : IDisposable
     {
         private TServiceContract _clientProxy;
         private OperationContextScope _operationContextScope;
         private ChannelFactory<TServiceContract> _channelFactory;
 
-        protected virtual TServiceContract CreateProxy(Uri endpointAddress)
+        public virtual TServiceContract CreateChannel(Uri endpointAddress)
         {
             var binding = GetBinding();
             _channelFactory = new ChannelFactory<TServiceContract>(binding, new EndpointAddress(endpointAddress));
-            return _channelFactory.CreateChannel();
+            _clientProxy = _channelFactory.CreateChannel();
+            return _clientProxy;
         }
 
         protected abstract Binding GetBinding();
@@ -29,9 +30,12 @@ namespace EntityFX.EconomicsArcade.Infrastructure.Service
 
         }
 
-        public TServiceContract OpenChannel(Uri endpointAddress)
+        public TServiceContract ApplyContextScope()
         {
-            _clientProxy = CreateProxy(endpointAddress);
+            if (_clientProxy == null)
+            {
+                throw  new InvalidOperationException("Channel proxy is not created");
+            }
             _operationContextScope = CreateContextScope();
             ApplyOperationContext();
             return _clientProxy;
@@ -45,7 +49,7 @@ namespace EntityFX.EconomicsArcade.Infrastructure.Service
 
         public void Dispose()
         {
-            if (_clientProxy != null) _operationContextScope.Dispose();
+            if (_operationContextScope != null) _operationContextScope.Dispose();
             if (_clientProxy != null) ((IDisposable)_clientProxy).Dispose();
             if (_channelFactory != null) ((IDisposable)_channelFactory).Dispose();
         }

@@ -12,11 +12,13 @@ namespace EntityFX.EconomicsArcade.Test.DataAccessTest
         {
             using (var proxyFactory = new UserDataAccessProxyFactoy())
             {
-                var proxy = proxyFactory.OpenChannel(new Uri("net.tcp://localhost/EntityFX.EconomicsArcade.DataAccess:8777/EntityFX.EconomicsArcade.Contract.DataAccess.User.IUserDataAccessService"));
-                proxy.Create(new Contract.DataAccess.User.User()
+                
+                var channel = proxyFactory.CreateChannel(new Uri("net.tcp://localhost/EntityFX.EconomicsArcade.DataAccess:8777/EntityFX.EconomicsArcade.Contract.DataAccess.User.IUserDataAccessService"));
+                channel.Create(new Contract.DataAccess.User.User()
                 {
                     Email = "vasya2"
                 });
+                proxyFactory.CloseChannel();
             }
 
         }
@@ -26,8 +28,9 @@ namespace EntityFX.EconomicsArcade.Test.DataAccessTest
         {
             using (var proxyFactory = new UserDataAccessProxyFactoy())
             {
-                var proxy = proxyFactory.OpenChannel(new Uri("net.tcp://localhost/EntityFX.EconomicsArcade.DataAccess:8777/EntityFX.EconomicsArcade.Contract.DataAccess.User.IUserDataAccessService"));
-                var user = proxy.FindById(1);
+                var channel = proxyFactory.CreateChannel(new Uri("net.tcp://localhost/EntityFX.EconomicsArcade.DataAccess:8777/EntityFX.EconomicsArcade.Contract.DataAccess.User.IUserDataAccessService"));
+                var user = channel.FindById(1);
+                proxyFactory.CloseChannel();
                 Assert.IsNotNull(user);
             }
         }

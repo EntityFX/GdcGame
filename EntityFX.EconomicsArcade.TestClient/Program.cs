@@ -3,6 +3,7 @@ using System.Timers;
 using EntityFX.EconomicsArcade.Contract.Common;
 using EntityFX.EconomicsArcade.Contract.Common.Counters;
 using EntityFX.EconomicsArcade.Contract.Common.Funds;
+using EntityFX.EconomicsArcade.Contract.Common.Incrementors;
 using EntityFX.EconomicsArcade.Contract.Game;
 using EntityFX.EconomicsArcade.Contract.Manager.GameManager;
 using EntityFX.EconomicsArcade.Utils.ClientProxy.Manager;
@@ -19,10 +20,12 @@ namespace EntityFX.EconomicsArcade.TestClient
         static void MainLoop()
         {
             Guid ses;
-            using (var proxyFactory = new SessionManagerProxyFactory(Guid.Empty))
+            using (var proxy = new SessionManagerProxy(Guid.Empty))
             {
-                var proxy = proxyFactory.OpenChannel(new Uri("net.tcp://localhost:8555/EntityFX.EconomicsArcade.Manager/EntityFX.EconomicsArcade.Contract.Manager.SessionManager.ISessionManager"));
-                ses = proxy.AddSession("entityfx");
+                var channel = proxy.CreateChannel(new Uri("net.tcp://localhost:8555/EntityFX.EconomicsArcade.Manager/EntityFX.EconomicsArcade.Contract.Manager.SessionManager.ISessionManager"));
+                //proxy.ApplyContextScope();
+                ses = channel.AddSession("entityfx");
+                proxy.CloseChannel();
             }
 
             var gr = new GameRunner(ses);
@@ -54,7 +57,7 @@ namespace EntityFX.EconomicsArcade.TestClient
 
         public GameRunner(Guid sessionGuid)
         {
-            _game = new GameManagerProxy(new GameManagerProxyFactoy(sessionGuid));
+            _game = new GameManagerClient(sessionGuid);
         }
 
         public void PerformManualStep()
@@ -84,6 +87,17 @@ namespace EntityFX.EconomicsArcade.TestClient
             return fundsDriver.UnlockValue <= rootCounter.Value;
         }
 
+        private string GetIncrementorValueById(FundsDriver fundsDriver, int incrmentorId)
+        {
+            var incrementor = fundsDriver.Incrementors.ContainsKey(incrmentorId) ?
+                fundsDriver.Incrementors[incrmentorId] : null;
+            if (incrementor != null)
+            {
+                return String.Format("{0}{1}", incrementor.Value, incrementor.IncrementorType == IncrementorTypeEnum.PercentageIncrementor ? "%" : string.Empty);
+            }
+            return "0";
+        }
+
         public void DisplayGameData(GameData gameData)
         {
                 Console.SetCursorPosition(0, 0);
@@ -91,7 +105,7 @@ namespace EntityFX.EconomicsArcade.TestClient
                 Console.WriteLine("Manual Steps: {0}, Automatic Steps: {1}",
                     0, 0);
                 PrettyConsole.WriteLineColor(ConsoleColor.Red, "{1,15}: {0,12}", gameData.Counters.Counters[0].Value, gameData.Counters.Counters[0].Name);
-                PrettyConsole.WriteLineColor(ConsoleColor.Cyan, "{1,15}: {0,12:C} ", gameData.Counters.Counters[1].Value, gameData.Counters.Counters[1].Name);
+                PrettyConsole.WriteLineColor(ConsoleColor.Cyan, "{1,15}: {0,12:C} ", ((GenericCounter)gameData.Counters.Counters[1]).SubValue, gameData.Counters.Counters[1].Name);
                 PrettyConsole.WriteLineColor(ConsoleColor.Cyan, "{1,15}: {0,12:C} ({2}%)"
                     , ((GenericCounter)gameData.Counters.Counters[1]).Bonus, "Bonus"
                     , ((GenericCounter)gameData.Counters.Counters[1]).BonusPercentage);
@@ -100,7 +114,7 @@ namespace EntityFX.EconomicsArcade.TestClient
                 PrettyConsole.WriteLineColor(ConsoleColor.DarkGray, " StepsToIncrInflation: {0}, Current Steps: {1}", 0, 0);
                 PrettyConsole.WriteLineColor(ConsoleColor.Cyan, "{1,15}: {0,12:C}"
                     , ((GenericCounter)gameData.Counters.Counters[1]).Value, "Total");
-                PrettyConsole.WriteLineColor(ConsoleColor.Green, "{1,15}: {0,12:C}", gameData.Counters.Counters[2].Value, gameData.Counters.Counters[2].Name);
+                PrettyConsole.WriteLineColor(ConsoleColor.Green, "{1,15}: {0,12:C}", ((GenericCounter)gameData.Counters.Counters[2]).SubValue, gameData.Counters.Counters[2].Name);
                 PrettyConsole.WriteLineColor(ConsoleColor.Green, "{1,15}: {0,12:C} ({2}%)"
                     , ((GenericCounter)gameData.Counters.Counters[2]).Bonus, "Bonus"
                     , ((GenericCounter)gameData.Counters.Counters[2]).BonusPercentage);
@@ -124,9 +138,9 @@ namespace EntityFX.EconomicsArcade.TestClient
                     {
                         PrettyConsole.WriteColor(ConsoleColor.White, "{3,2}: {0,28} {1,15:C} x{2,-4} ", fundsDriver.Name, fundsDriver.Value, fundsDriver.BuyCount, ((char)charIndex).ToString());
                     }
-                    PrettyConsole.WriteColor(ConsoleColor.Red, "+{0, -4} ", fundsDriver.Incrementors[0].Value);
-                    PrettyConsole.WriteColor(ConsoleColor.Cyan, "+{0, -7} ", fundsDriver.Incrementors[1].Value);
-                    PrettyConsole.WriteColor(ConsoleColor.Green, "+{0,-7} ", fundsDriver.Incrementors[2].Value);
+                    PrettyConsole.WriteColor(ConsoleColor.Red, "+{0, -4} ", GetIncrementorValueById(fundsDriver, 0));
+                    PrettyConsole.WriteColor(ConsoleColor.Cyan, "+{0, -7} ",  GetIncrementorValueById(fundsDriver, 1));
+                    PrettyConsole.WriteColor(ConsoleColor.Green, "+{0,-7} ",  GetIncrementorValueById(fundsDriver, 2));
                     Console.WriteLine();
                     charIndex++;
                 }

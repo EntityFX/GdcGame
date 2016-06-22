@@ -44,9 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameManagerProxyFactoy.cs" />
     <Compile Include="GameManagerProxy.cs" />
-    <Compile Include="SessionManagerProxyFactory.cs" />
+    <Compile Include="GameManagerClient.cs" />
+    <Compile Include="SessionManagerProxy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

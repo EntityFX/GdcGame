@@ -3,7 +3,7 @@ using EntityFX.EconomicsArcade.Infrastructure.Service;
 
 namespace EntityFX.EconomicsArcade.Utils.ClientProxy.DataAccess
 {
-    public class UserDataAccessProxyFactoy : NetTcpProxyFactory<IUserDataAccessService>
+    public class UserDataAccessProxyFactoy : NetTcpProxy<IUserDataAccessService>
     {
 
         protected override void ApplyOperationContext()
