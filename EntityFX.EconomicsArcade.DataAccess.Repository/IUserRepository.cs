@@ -6,5 +6,6 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository
 {
     public interface IUserRepository : IRepository<User, GetUserByIdCriterion, GetAllUsersCriterion>
     {
+        User FindByName(GetUserByNameCriterion findByIdCriterion);
     }
 }

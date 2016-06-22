@@ -2,23 +2,30 @@
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 using System;
 using System.Diagnostics;
+using EntityFX.EconomicsArcade.Contract.DataAccess.User;
 
 namespace EntityFX.EconomicsArcade.Manager
 {
     public class SessionManager : ISessionManager
     {
         private readonly GameSessions _gameSessions;
+        private readonly IUserDataAccessService _userDataAccessService;
 
-        public SessionManager(GameSessions gameSessions)
+        public SessionManager(GameSessions gameSessions, IUserDataAccessService userDataAccessService)
         {
             _gameSessions = gameSessions;
+            _userDataAccessService = userDataAccessService;
         }
 
 
         public Guid AddSession(string login)
         {
             Debug.WriteLine("Login {0}", login);
-            return _gameSessions.AddSession(login);
+            var user = _userDataAccessService.FindByName(login);
+            if (user != null) return _gameSessions.AddSession(user);
+            _userDataAccessService.Create(new User() {Email = login});
+            user = _userDataAccessService.FindByName(login);
+            return _gameSessions.AddSession(user);
         }
 
         public Session GetSession()

@@ -14,6 +14,8 @@ namespace EntityFX.EconomicsArcade.Contract.DataAccess.User
         [OperationContract]
         User FindById(int userId);
         [OperationContract]
+        User FindByName(string name);
+        [OperationContract]
         User[] FindAll();
     }
 }

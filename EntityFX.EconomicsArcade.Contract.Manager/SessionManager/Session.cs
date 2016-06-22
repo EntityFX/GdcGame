@@ -7,5 +7,7 @@ namespace EntityFX.EconomicsArcade.Contract.Manager.SessionManager
         public Guid SessionIdentifier { get; set; }
 
         public string Login { get; set; }
+
+        public int UserId { get; set; }
     }
 }

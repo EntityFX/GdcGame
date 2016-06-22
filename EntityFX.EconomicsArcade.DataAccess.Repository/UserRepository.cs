@@ -71,7 +71,7 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository
                 var findQuery = uow.BuildQuery();
                 var entity = findQuery.For<UserEntity>()
                     .With(findByIdCriterion);
-                return _userContractMapper.Map(entity);
+                return entity != null ? _userContractMapper.Map(entity) : null;
             }
         }
 
@@ -84,6 +84,17 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository
                     .With(finalAllCriterion)
                     .Select(_ => _userContractMapper.Map(_))
                     .ToArray();
+            }
+        }
+
+        public User FindByName(GetUserByNameCriterion findByIdCriterion)
+        {
+            using (var uow = _unitOfWorkFactory.Create())
+            {
+                var findQuery = uow.BuildQuery();
+                var entity = findQuery.For<UserEntity>()
+                    .With(findByIdCriterion);
+                return entity != null ? _userContractMapper.Map(entity) : null;
             }
         }
     }

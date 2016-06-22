@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EntityFX.EconomicsArcade.Contract.Common;
 using EntityFX.EconomicsArcade.Contract.Game;
 using EntityFX.EconomicsArcade.Contract.Game.Counters;
 using EntityFX.EconomicsArcade.Contract.Game.Funds;
@@ -27,7 +28,7 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
 
         public void Initialize()
         {
-           PreInitialize();
+            PreInitialize();
             InitializeFundsCounters();
             InitializeFundsDrivers();
             PostInitialize();
@@ -68,13 +69,13 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
             if (!_isInitialized) throw new Exception("Game is not started");
             return await Task<int>.Factory.StartNew(() =>
             {
-                PerformAutoStepInternal();
-                PostPerformAutoStep();
+                var modifiedCounters =  PerformAutoStepInternal();
+                PostPerformAutoStep(modifiedCounters);
                 return 0;
             });
         }
 
-        private void PerformAutoStepInternal()
+        private IEnumerable<CounterBase> PerformAutoStepInternal()
         {
             var genericCounters = FundsCounters.Counters.Values.OfType<GenericCounter>()
                 .Where(_ => _.IsUsedInAutoStep);
@@ -93,9 +94,10 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
                 manualCounter.Inflation = manualCounter.CurrentSteps / manualCounter.StepsToIncreaseInflation;
             }
             AutomaticStepNumber++;
+            return genericCounters;
         }
 
-        private void PerformManualStepInternal()
+        private IEnumerable<CounterBase> PerformManualStepInternal()
         {
             var genericCounters = FundsCounters.Counters.Values.OfType<GenericCounter>()
                 .Where(_ => !_.IsUsedInAutoStep);
@@ -106,14 +108,15 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
                 genericCounter.Inflation = genericCounter.CurrentSteps / genericCounter.StepsToIncreaseInflation;
             }
             ManualStepNumber++;
+            return genericCounters;
         }
 
         public void PerformManualStep()
         {
             if (!_isInitialized) throw new Exception("Game is not started");
 
-                PerformManualStepInternal();
-                PostPerformManualStep();
+            var modifiedCounters = PerformManualStepInternal();
+            PostPerformManualStep(modifiedCounters);
 
         }
 
@@ -135,22 +138,22 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
                 fundDriver.BuyCount++;
                 IncrementCounters(fundDriver.Incrementors);
             }
-            PostByFundDriver(fundDriverId);
+            PostBuyFundDriver(fundDriver);
         }
 
-        protected virtual void PostPerformManualStep()
+        protected virtual void PostPerformManualStep(IEnumerable<CounterBase> modifiedCounters)
         {
 
         }
 
-        protected virtual void PostPerformAutoStep()
+        protected virtual void PostPerformAutoStep(IEnumerable<CounterBase> modifiedCounters)
         {
 
         }
 
-        protected virtual void PostByFundDriver(int fundDriverId)
+        protected virtual void PostBuyFundDriver(FundsDriver fundDriver)
         {
-
+            
         }
 
         protected virtual void PostInitialize()
@@ -171,9 +174,9 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
 
         protected virtual void IncrementCounters(IDictionary<int, IncrementorBase> incrementors)
         {
-            var incrementorsList = incrementors.ToList(); 
-            foreach (var counter in  FundsCounters.Counters)
-	        {
+            var incrementorsList = incrementors.ToList();
+            foreach (var counter in FundsCounters.Counters)
+            {
                 IncrementorBase incrementor;
                 incrementors.TryGetValue(counter.Key, out incrementor);
                 if (incrementor != null)
@@ -194,13 +197,13 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
                     else if (incrementor.IncrementorType == IncrementorTypeEnum.PercentageIncrementor)
                     {
                         var genericCounter = counter.Value as GenericCounter;
-                        if (genericCounter != null) 
+                        if (genericCounter != null)
                         {
                             genericCounter.BonusPercentage += incrementor.Value;
                         }
                     }
                 }
-	        }
+            }
         }
 
         protected string GetIncrementorValueById(FundsDriver fundsDriver, int incrmentorId)
@@ -225,7 +228,7 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
             var genericCounters = FundsCounters.Counters.Values.OfType<GenericCounter>()
                 .Where(_ => _.IsUsedInAutoStep);
             var enumerable = genericCounters as IList<GenericCounter> ?? genericCounters.ToList();
-            if (enumerable.All(_ => _.Inflation == 0)) 
+            if (enumerable.All(_ => _.Inflation == 0))
             {
                 return;
             }

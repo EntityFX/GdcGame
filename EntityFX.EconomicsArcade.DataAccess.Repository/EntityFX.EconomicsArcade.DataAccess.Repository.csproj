@@ -51,6 +51,7 @@
     <Compile Include="Criterions\FundsDriver\GetAllFundsDriversCriterion.cs" />
     <Compile Include="Criterions\User\GetAllUsersCriterion.cs" />
     <Compile Include="Criterions\User\GetUserByIdCriterion.cs" />
+    <Compile Include="Criterions\User\GetUserByNameCriterion.cs" />
     <Compile Include="FundsDriverRepository.cs" />
     <Compile Include="ICountersRepository.cs" />
     <Compile Include="IFundsDriverRepository.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="Queries\Counetrs\GetAllCountersQuery.cs" />
     <Compile Include="Queries\FundsDriver\GetAllFundsDriversQuery.cs" />
     <Compile Include="Queries\User\GetAllUsersQuery.cs" />
+    <Compile Include="Queries\User\GetUserByNameQuery.cs" />
     <Compile Include="Queries\User\GetUserByIdQuery.cs" />
     <Compile Include="UserRepository.cs" />
   </ItemGroup>

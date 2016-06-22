@@ -512,12 +512,12 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
 
         private readonly object _lockObject = new { };
 
-        protected override void PostPerformManualStep()
+        protected override void PostPerformManualStep(IEnumerable<CounterBase> modifiedCounters)
         {
             DisplayGameData();
         }
 
-        protected override void PostPerformAutoStep()
+        protected override void PostPerformAutoStep(IEnumerable<CounterBase> modifiedCounters)
         {
 
             DisplayGameData();
@@ -531,7 +531,7 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
             DisplayGameData();
         }
 
-        protected override void PostByFundDriver(int fundDriverId)
+        protected override void PostBuyFundDriver(FundsDriver fundDriverId)
         {
             DisplayGameData();
         }

@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="GameDataDataAccessClient.cs" />
     <Compile Include="GameDataDataAccessProxy.cs" />
+    <Compile Include="UserDataAccessClient.cs" />
     <Compile Include="UserDataAccessProxyFactoy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

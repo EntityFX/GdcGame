@@ -52,7 +52,7 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.UssrSimulator
 
         protected override IDictionary<int, FundsDriver> GetFundsDrivers()
         {
-           var result = new Dictionary<int, FundsDriver>();
+            var result = new Dictionary<int, FundsDriver>();
             foreach (var fundDriver in _gameData.FundsDrivers)
             {
                 var incrementors = new Dictionary<int, IncrementorBase>();
@@ -84,6 +84,7 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.UssrSimulator
 
                 result.Add(fundDriver.Id, new FundsDriver()
                 {
+                    Id = fundDriver.Id,
                     Name = fundDriver.Name,
                     InitialValue = fundDriver.Value,
                     UnlockValue = fundDriver.UnlockValue,
@@ -120,6 +121,7 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.UssrSimulator
                 {
                     destinationCouner.Name = sourceCounter.Name;
                     destinationCouner.SubValue = sourceCounter.Value;
+                    destinationCouner.Id = sourceCounter.Id;
                 }
                 counters.Add(inc, destinationCouner);
                 inc++;
@@ -133,18 +135,73 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.UssrSimulator
 
 
 
-        protected override void PostPerformManualStep()
+        protected override void PostPerformManualStep(IEnumerable<CounterBase> modifiedCounters)
         {
 
         }
 
-        protected override void PostPerformAutoStep()
+        protected override void PostPerformAutoStep(IEnumerable<CounterBase> modifiedCounters)
         {
-
-
 
         }
 
+        protected override void PostBuyFundDriver(FundsDriver fundDriver)
+        {
+            var counters = new EconomicsArcade.Contract.Common.Counters.CounterBase[FundsCounters.Counters.Count];
+            foreach (var sourceCounter in FundsCounters.Counters)
+            {
+                EconomicsArcade.Contract.Common.Counters.CounterBase destinationCouner = null;
+                var sourcenGenericCounter = sourceCounter.Value as GenericCounter;
+                if (sourcenGenericCounter != null)
+                {
+                    var destinationGenericCounter = new EconomicsArcade.Contract.Common.Counters.GenericCounter
+                    {
+                        BonusPercentage = sourcenGenericCounter.BonusPercentage,
+                        Inflation = sourcenGenericCounter.Inflation,
+                        CurrentSteps = sourcenGenericCounter.CurrentSteps,
+                        SubValue =  sourcenGenericCounter.SubValue
+                    };
+                    destinationCouner = destinationGenericCounter;
+                }
+                var sourceSingleCounter = sourceCounter.Value as SingleCounter;
+                if (sourceSingleCounter != null)
+                {
+                    destinationCouner = new EconomicsArcade.Contract.Common.Counters.SingleCounter();
+                }
+                                var sourceDelayedCounter = sourceCounter.Value as DelayedCounter;
+                if (sourceDelayedCounter != null)
+                {
+                    var destinationDelayedCounter = new EconomicsArcade.Contract.Common.Counters.DelayedCounter();
+                                        destinationCouner = destinationDelayedCounter;
+                }
+                if (destinationCouner != null)
+                {
+                    destinationCouner.Id = sourceCounter.Value.Id;
+                    destinationCouner.Value = sourceCounter.Value.Value;
+                }
+                if (destinationCouner != null) counters[destinationCouner.Id] = destinationCouner;
+            }
+
+
+            var gameData = new GameData()
+            {
+                Counters = new EconomicsArcade.Contract.Common.Counters.FundsCounters()
+                {
+                    CurrentFunds = FundsCounters.CurrentFunds,
+                    TotalFunds = FundsCounters.TotalFunds,
+                    Counters = counters
+                },
+                FundsDrivers = new[]{new EconomicsArcade.Contract.Common.Funds.FundsDriver()
+                {
+                    Id = fundDriver.Id,
+                    Name = fundDriver.Name,
+                    Value = fundDriver.CurrentValue,
+                    InflationPercent = fundDriver.InflationPercent,
+                    BuyCount = fundDriver.BuyCount
+                }}
+            };
+        }
+                                      
         protected override void PostInitialize()
         {
             //CashFunds(1500000);
@@ -155,11 +212,6 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.UssrSimulator
         {
             //CashFunds(1500000);
             _gameData = _gameDataDataAccessService.GetGameData();
-        }
-
-        protected override void PostByFundDriver(int fundDriverId)
-        {
-
         }
 
 

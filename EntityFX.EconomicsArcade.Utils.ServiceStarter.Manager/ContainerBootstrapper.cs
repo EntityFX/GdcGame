@@ -11,6 +11,7 @@ using EntityFX.EconomicsArcade.Manager.Mappers;
 using EntityFX.EconomicsArcade.Contract.Common;
 using EntityFX.EconomicsArcade.Contract.Common.Incrementors;
 using EntityFX.EconomicsArcade.Contract.DataAccess.GameData;
+using EntityFX.EconomicsArcade.Contract.DataAccess.User;
 using EntityFX.EconomicsArcade.Contract.Game.Counters;
 using EntityFX.EconomicsArcade.Contract.Game.Funds;
 using EntityFX.EconomicsArcade.Contract.Game.Incrementors;
@@ -33,6 +34,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
             container.RegisterType<FundsCountersContractMapper>();
             container.RegisterType<IGameManager, GameManager>();
             container.RegisterType<IGameDataDataAccessService, GameDataDataAccessClient>();
+            container.RegisterType<IUserDataAccessService, UserDataAccessClient>();
             return container;
         }
     }

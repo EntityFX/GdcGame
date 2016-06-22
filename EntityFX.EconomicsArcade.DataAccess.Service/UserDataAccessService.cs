@@ -33,6 +33,11 @@ namespace EntityFX.EconomicsArcade.DataAccess.Service
             return _userRepository.FindById(new GetUserByIdCriterion(userId));
         }
 
+        public User FindByName(string name)
+        {
+            return _userRepository.FindByName(new GetUserByNameCriterion(name));
+        }
+
         public User[] FindAll()
         {
             return _userRepository.FindAll(new GetAllUsersCriterion());

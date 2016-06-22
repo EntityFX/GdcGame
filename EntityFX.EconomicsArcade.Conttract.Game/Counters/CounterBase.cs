@@ -2,6 +2,8 @@
 {
     public class CounterBase
     {
+        public int Id { get; set; }
+
         public string Name { get; set; }
 
         public decimal SubValue { get; set; }

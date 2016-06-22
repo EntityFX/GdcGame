@@ -15,7 +15,8 @@ namespace EntityFX.EconomicsArcade.Manager.Mappers
                 {
                     Bonus = genericCounter.Bonus,
                     BonusPercentage = genericCounter.BonusPercentage,
-                    SubValue = genericCounter.SubValue
+                    SubValue = genericCounter.SubValue,
+                    Inflation = genericCounter.Inflation
                 };
                 destinationCounter = genericDestination;
                 destinationCounter.Value = genericCounter.Value;
@@ -36,6 +37,7 @@ namespace EntityFX.EconomicsArcade.Manager.Mappers
 
         private void MapCommon(CounterBase source, Contract.Common.Counters.CounterBase destination)
         {
+            destination.Id = source.Id;
             destination.Name = source.Name;
         }
     }

@@ -14,17 +14,27 @@ namespace EntityFX.EconomicsArcade.TestClient
     {
         static void Main(string[] args)
         {
-            MainLoop();
+            MainLoop(args);
         }
 
-        static void MainLoop()
+        static void MainLoop(string[] args)
         {
+            string userName;
+            if (args.Length < 1)
+            {
+                Console.Write("Please, enter user name: ");
+                userName = Console.ReadLine();
+            }
+            else
+            {
+                userName = args[0];
+            }
             Guid ses;
             using (var proxy = new SessionManagerProxy(Guid.Empty))
             {
                 var channel = proxy.CreateChannel(new Uri("net.tcp://localhost:8555/EntityFX.EconomicsArcade.Manager/EntityFX.EconomicsArcade.Contract.Manager.SessionManager.ISessionManager"));
                 //proxy.ApplyContextScope();
-                ses = channel.AddSession("entityfx");
+                ses = channel.AddSession(userName);
                 proxy.CloseChannel();
             }
 

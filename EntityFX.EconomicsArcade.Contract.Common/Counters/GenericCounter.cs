@@ -15,5 +15,7 @@ namespace EntityFX.EconomicsArcade.Contract.Common.Counters
         public bool UseInAutoSteps { get; set; }
         [DataMember]
         public decimal SubValue { get; set; }
+        [DataMember]
+        public int CurrentSteps { get; set; }
     }
 }

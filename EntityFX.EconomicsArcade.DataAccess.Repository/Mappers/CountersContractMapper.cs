@@ -33,6 +33,7 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository.Mappers
             destionation.Name = source.Name;
             destionation.Value = source.InitialValue;
             destionation.Type = source.Type;
+            destionation.Id = source.Id;
             return destionation;
         }
     }
