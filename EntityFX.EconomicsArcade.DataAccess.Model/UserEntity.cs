@@ -10,7 +10,7 @@ namespace EntityFX.EconomicsArcade.DataAccess.Model
         [Key]
         public int Id { get; set; }
 
-        [Index(IsUnique=true)]
+        //[Index(IsUnique=true)]
         public string Email { get; set; }
 
         public DateTime CreateDateTime { get; set; }

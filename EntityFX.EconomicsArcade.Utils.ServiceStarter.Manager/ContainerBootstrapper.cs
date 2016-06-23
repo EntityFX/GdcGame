@@ -24,9 +24,8 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
         //public 
         public IUnityContainer Configure(IUnityContainer container)
         {
-            container.RegisterType<ILogger, Logger>("Logger");
-            container.RegisterType<ILogger>(new InjectionFactory(_=> new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger")))));
-            container.RegisterType<ILogger, NLoggerAdapter>("LoggerAdapter");
+            
+            container.RegisterType<ILogger>(new InjectionFactory(_=> new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger<NLogLogger>()))));
 
             container.RegisterType<ISessionManager, SessionManager>();
             container.RegisterType<IMapper<IncrementorBase, Incrementor>, IncrementorContractMapper>();

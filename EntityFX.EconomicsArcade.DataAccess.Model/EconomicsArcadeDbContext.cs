@@ -7,7 +7,7 @@ namespace EntityFX.EconomicsArcade.DataAccess.Model
         public DbSet<UserEntity> UserEntitySet { get; set; }
 
         public EconomicsArcadeDbContext()
-            :base("EconomicsArcadeDbContext")
+            : base("EconomicsArcadeDbContext")
         {
 
         }
