@@ -5,7 +5,9 @@ namespace EntityFX.EconomicsArcade.Infrastructure.Common
 
     public interface ILogger
     {
-        void Log(string message);
+        void Trace(string message, params object[] args);
+        void Info(string message, params object[] args);
+        void Warning(string message, params object[] args);
         void Error(Exception exception);
     }
 }

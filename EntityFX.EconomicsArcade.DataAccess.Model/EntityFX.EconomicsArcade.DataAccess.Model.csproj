@@ -48,6 +48,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Unity.Wcf">
+      <HintPath>..\packages\Unity.WCF.4.1.0.2\lib\net45\Unity.Wcf.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CounterEntity.cs" />
@@ -59,6 +62,12 @@
     <Compile Include="UserEntity.cs" />
     <Compile Include="UserFundsDriverEntity.cs" />
     <Compile Include="UserGameCounterEntity.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
