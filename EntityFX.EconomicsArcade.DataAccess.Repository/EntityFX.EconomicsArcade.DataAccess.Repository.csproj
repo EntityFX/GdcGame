@@ -80,6 +80,8 @@
     <Compile Include="IUserFundsDriverRepository.cs" />
     <Compile Include="IUserGameCounterRepository.cs" />
     <Compile Include="IUserRepository.cs" />
+    <Compile Include="Mappers\UserFundsDriverEntityMapper.cs" />
+    <Compile Include="Mappers\UserCounterEntityMapper.cs" />
     <Compile Include="Mappers\CountersContractMapper.cs" />
     <Compile Include="Mappers\FundsDriverContractMapper.cs" />
     <Compile Include="Mappers\FundsDriverEntityMapper.cs" />
