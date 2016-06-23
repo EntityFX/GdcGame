@@ -10,9 +10,9 @@ namespace EntityFX.EconomicsArcade.Test.DataAccessTest
         [TestMethod]
         public void TestGelAllFundsDrivers()
         {
-            using (var proxyFactory = new GameDataDataAccessProxy())
+            using (var proxyFactory = new GameDataRetrieveDataAccessProxy())
             {
-                var proxy = proxyFactory.CreateChannel(new Uri("net.tcp://localhost/EntityFX.EconomicsArcade.DataAccess:8777/EntityFX.EconomicsArcade.Contract.DataAccess.GameData.IGameDataDataAccessService"));
+                var proxy = proxyFactory.CreateChannel(new Uri("net.tcp://localhost/EntityFX.EconomicsArcade.DataAccess:8777/EntityFX.EconomicsArcade.Contract.DataAccess.GameData.IGameDataRetrieveDataAccessService"));
                 var user = proxy.GetGameData();
                 proxyFactory.CloseChannel();
                 Assert.IsNotNull(user);

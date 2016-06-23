@@ -12,7 +12,7 @@ using System.ServiceModel.Description;
 
 namespace EntityFX.EconomicsArcade.Infrastructure.Service
 {
-    class NetMsmqServiceHost<T> : InfrastructureServiceHost<T>
+    public class NetMsmqServiceHost<T> : InfrastructureServiceHost<T>
     {
         public NetMsmqServiceHost(IUnityContainer container)
             :base(container)

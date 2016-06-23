@@ -5,8 +5,8 @@
 	[Value] decimal NOT NULL,
 	[FundsDriverId] INT NOT NULL,
 	[CounterId] [int] NULL,
-	CONSTRAINT FK_FundsDriver FOREIGN KEY ([FundsDriverId])
+	CONSTRAINT FK_Incrementor_FundsDriver FOREIGN KEY ([FundsDriverId])
 		REFERENCES [dbo].[FundsDriver] ([Id]),
-	CONSTRAINT FK_Counter FOREIGN KEY([CounterId])
+	CONSTRAINT FK_Incrementor_Counter FOREIGN KEY([CounterId])
 		REFERENCES [dbo].[Counter] ([Id])
 )

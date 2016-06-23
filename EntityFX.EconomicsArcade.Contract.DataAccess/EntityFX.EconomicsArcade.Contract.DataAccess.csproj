@@ -43,7 +43,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameData\IGameDataDataAccessService.cs" />
+    <Compile Include="GameData\IGameDataRetrieveDataAccessService.cs" />
+    <Compile Include="GameData\IGameDataStoreDataAccessService.cs" />
     <Compile Include="GameData\UserGameCounter.cs" />
     <Compile Include="User\IUserDataAccessService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

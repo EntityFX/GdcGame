@@ -37,7 +37,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
             container.RegisterType<IGame, UssrSimulatorGame>();
             container.RegisterType<FundsCountersContractMapper>();
             container.RegisterType<IGameManager, GameManager>();
-            container.RegisterType<IGameDataDataAccessService, GameDataDataAccessClient>();
+            container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessClient>();
             container.RegisterType<IUserDataAccessService, UserDataAccessClient>();
 
             return container;

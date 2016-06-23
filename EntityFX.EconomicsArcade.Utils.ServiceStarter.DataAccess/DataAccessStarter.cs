@@ -11,6 +11,8 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess
 
         private const string BaseUrl = "net.tcp://localhost:8777/EntityFX.EconomicsArcade.DataAccess/";
 
+        private const string BaseStoreUrl = "net.msmq://localhost/private/StoreGameData";
+
         public DataAccessStarter(ContainerBootstrapper container)
             :base(container)
         {
@@ -19,9 +21,10 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess
 
         public override void StartService()
         {
-            AddNetTcpService<IUserDataAccessService>();
-            AddNetTcpService<IGameDataDataAccessService>();
-            OpenServices(new Uri(BaseUrl));
+            AddNetTcpService<IUserDataAccessService>(new Uri(BaseUrl));
+            AddNetTcpService<IGameDataRetrieveDataAccessService>(new Uri(BaseUrl));
+            AddNetMsmqService<IGameDataStoreDataAccessService>(new Uri(BaseStoreUrl));
+            OpenServices();
         }
 
         public override void StopService()

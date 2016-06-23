@@ -10,12 +10,12 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.UssrSimulator
 {
     public class UssrSimulatorGame : GameBase
     {
-        private readonly IGameDataDataAccessService _gameDataDataAccessService;
+        private readonly IGameDataRetrieveDataAccessService _gameDataRetrieveDataAccessService;
         private GameData _gameData;
 
-        public UssrSimulatorGame(IGameDataDataAccessService gameDataDataAccessService)
+        public UssrSimulatorGame(IGameDataRetrieveDataAccessService gameDataRetrieveDataAccessService)
         {
-            _gameDataDataAccessService = gameDataDataAccessService;
+            _gameDataRetrieveDataAccessService = gameDataRetrieveDataAccessService;
         }
 
         public decimal Communism
@@ -211,7 +211,7 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.UssrSimulator
         protected override void PreInitialize()
         {
             //CashFunds(1500000);
-            _gameData = _gameDataDataAccessService.GetGameData();
+            _gameData = _gameDataRetrieveDataAccessService.GetGameData();
         }
 
 
