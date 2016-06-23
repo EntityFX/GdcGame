@@ -42,7 +42,7 @@
     <Compile Include="IMapper.cs" />
     <Compile Include="IServiceStarter.cs" />
     <Compile Include="Logger.cs" />
-    <Compile Include="NLogAdapter.cs" />
+    <Compile Include="NLoggerAdapter.cs" />
     <Compile Include="OperationContextHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

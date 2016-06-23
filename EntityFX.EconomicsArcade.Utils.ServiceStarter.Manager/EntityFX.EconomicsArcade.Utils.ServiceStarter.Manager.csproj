@@ -51,6 +51,16 @@
     <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention">
       <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
     </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.4.3.5\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="PortableLog.Core, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\PortableLog.Core.1.0.2\lib\portable-net45+wp80+win8+wpa81\PortableLog.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="PortableLog.NLog">
+      <HintPath>..\packages\PortableLog.NLog.1.0.2\lib\portable-net45+wp80+win8+wpa81\PortableLog.NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
