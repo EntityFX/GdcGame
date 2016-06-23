@@ -1,7 +1,8 @@
-﻿using EntityFX.EconomicsArcade.Contract.Common.Counters;
-using EntityFX.EconomicsArcade.Contract.DataAccess.GameData;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using EntityFX.EconomicsArcade.Contract.Common.Counters;
 using EntityFX.EconomicsArcade.DataAccess.Model;
-using EntityFX.EconomicsArcade.DataAccess.Repository.Criterions.User;
 using EntityFX.EconomicsArcade.DataAccess.Repository.Criterions.UserCounter;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 using EntityFX.EconomicsArcade.Infrastructure.Repository.UnitOfWork;
@@ -10,45 +11,73 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository
 {
     public class UserCounterRepository : IUserCounterRepository
     {
-         private readonly IUnitOfWorkFactory _unitOfWorkFactory;
+        private readonly IMapper<UserCounterEntity, CounterBase> _userCounterContractMapper;
+        // private readonly IMapper<FundsDriver, FundsDriverEntity> _fundsDriverEntityMapper;
+        private readonly IUnitOfWorkFactory _unitOfWorkFactory;
 
-        private readonly IMapper<UserGameCounterEntity, UserGameCounter> _userGameCounterContractMapper;
-
-        private readonly IMapper<UserGameCounter, UserGameCounterEntity> _userGameCounterEntityMapper;
-
-        public UserGameCounterRepository(IUnitOfWorkFactory unitOfWorkFactory
-            , IMapper<UserGameCounterEntity, UserGameCounter> userGameCounterContractMapper
-            , IMapper<UserGameCounter, UserGameCounterEntity> userGameCounterEntityMapper
+        public UserCounterRepository(IUnitOfWorkFactory unitOfWorkFactory,
+            IMapper<UserCounterEntity, CounterBase> userCounterContractMapper
             )
         {
             _unitOfWorkFactory = unitOfWorkFactory;
-            _userGameCounterContractMapper = userGameCounterContractMapper;
-            _userGameCounterEntityMapper = userGameCounterEntityMapper;
+            _userCounterContractMapper = userCounterContractMapper;
+            // _fundsDriverEntityMapper = fundsDriverEntityMapper;
         }
 
-        public int Create(CounterBase user)
+        public CounterBase[] FindByUserId(GetUserCountersByUserIdCriterion criterion)
         {
-            throw new System.NotImplementedException();
+            using (var uow = _unitOfWorkFactory.Create())
+            {
+                var findQuery = uow.BuildQuery();
+                return findQuery.For<IEnumerable<UserCounterEntity>>()
+                    .With(criterion)
+                    .Select(_ => _userCounterContractMapper.Map(_))
+                    .ToArray();
+            }
         }
 
-        public void Update(CounterBase user)
+        public void CreateForUser(int userId, CounterBase[] counterBases)
         {
-            throw new System.NotImplementedException();
+            foreach (var counterBase in counterBases)
+            {
+                using (var uow = _unitOfWorkFactory.Create())
+                {
+                    var userCounter = uow.CreateEntity<UserCounterEntity>();
+                    var genericCounter = (GenericCounter)counterBase;
+                    userCounter.UserId = userId;
+                    userCounter.Bonus = genericCounter.Bonus;
+                    userCounter.BonusPercentage = genericCounter.BonusPercentage;
+                    userCounter.CounterId = genericCounter.Id;
+                    userCounter.CreateDateTime = DateTime.Now;
+                    //userCounter.DelayedValue = genericCounter.SubValue;
+                    userCounter.Value = genericCounter.Value;
+                    userCounter.Inflation = genericCounter.Inflation;
+                    //userCounter.MiningTimeSecondsEllapsed=genericCounter
+                    uow.Commit();
+                }
+            }
         }
 
-        public void Delete(int id)
+        public void UpdateForUser(int userId, CounterBase[] counterBases)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public CounterBase FindById(GetUserCountersByUserIdCriterion findByIdCriterion)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public CounterBase[] FindAll(GetAllUsersCriterion finalAllCriterion)
-        {
-            throw new System.NotImplementedException();
+            foreach (var counterBase in counterBases)
+            {
+                using (var uow = _unitOfWorkFactory.Create())
+                {
+                    var userCounter = uow.AttachEntity(uow.CreateEntity<UserCounterEntity>());
+                    var genericCounter = (GenericCounter)counterBase;
+                    userCounter.UserId = userId;
+                    userCounter.Bonus = genericCounter.Bonus;
+                    userCounter.BonusPercentage = genericCounter.BonusPercentage;
+                    userCounter.CounterId = genericCounter.Id;
+                    userCounter.CreateDateTime = DateTime.Now;
+                    //userCounter.DelayedValue = genericCounter.SubValue;
+                    userCounter.Value = genericCounter.Value;
+                    userCounter.Inflation = genericCounter.Inflation;
+                    //userCounter.MiningTimeSecondsEllapsed=genericCounter
+                    uow.Commit();
+                }
+            }
         }
     }
 }

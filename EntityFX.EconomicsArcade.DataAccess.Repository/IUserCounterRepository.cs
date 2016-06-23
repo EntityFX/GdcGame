@@ -5,8 +5,11 @@ using EntityFX.EconomicsArcade.Infrastructure.Repository;
 
 namespace EntityFX.EconomicsArcade.DataAccess.Repository
 {
-    public interface IUserCounterRepository : IRepository<CounterBase, GetUserCountersByUserIdCriterion, GetAllUsersCriterion>
+    public interface IUserCounterRepository
     {
+        CounterBase[] FindByUserId(GetUserCountersByUserIdCriterion criterion);
+        void CreateForUser(int userId, CounterBase[] counterBases);
+        void UpdateForUser(int userId, CounterBase[] counterBases);
 
     }
 }
