@@ -6,6 +6,7 @@
 	[BonusPercentage] INT NOT NULL,
 	[Bonus] DECIMAL NOT NULL,
 	[Inflation] INT NOT NULL,
+	[CreateDateTime] DATETIME NOT NULL,
 	[MiningTimeSecondsEllapsed] INT NOT NULL,
 	[DelayedValue] DECIMAL NOT NULL,
 	PRIMARY KEY ([UserId],[CounterId]),

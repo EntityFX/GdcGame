@@ -7,12 +7,12 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository.Mappers
 {
     public class IncrementorContractMapper : IMapper<IncrementorEntity, Incrementor>
     {
-        public Incrementor Map(IncrementorEntity source, Incrementor destionation = null)
+        public Incrementor Map(IncrementorEntity source, Incrementor destination = null)
         {
-            destionation = destionation ?? new Incrementor();
-            destionation.IncrementorType = (IncrementorTypeEnum) source.Type;
-            destionation.Value = Convert.ToInt32(source.Value);
-            return destionation;
+            destination = destination ?? new Incrementor();
+            destination.IncrementorType = (IncrementorTypeEnum) source.Type;
+            destination.Value = Convert.ToInt32(source.Value);
+            return destination;
         }
     }
 }

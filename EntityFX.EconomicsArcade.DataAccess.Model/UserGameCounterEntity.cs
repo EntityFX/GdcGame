@@ -18,6 +18,7 @@ namespace EntityFX.EconomicsArcade.DataAccess.Model
         public int AutomaticStepsCount { get; set; }
         public decimal CategoryFunds { get; set; }
         public decimal DelayedFunds { get; set; }
+        public DateTime CreateDateTime { get; set; }
 
         [ForeignKey("FK_User")]
         public virtual UserEntity User { get; set; }

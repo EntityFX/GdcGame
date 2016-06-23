@@ -5,6 +5,7 @@
 	[ManualStepsCount] INT NOT NULL,
 	[AutomaticStepsCount] INT NOT NULL,
 	[CategoryFunds] DECIMAL NOT NULL,
+	[CreateDateTime] DATETIME NOT NULL,
 	[DelayedFunds] DECIMAL NOT NULL,
 	CONSTRAINT FK_User FOREIGN KEY ([Id])
 		REFERENCES [dbo].[User] ([Id])

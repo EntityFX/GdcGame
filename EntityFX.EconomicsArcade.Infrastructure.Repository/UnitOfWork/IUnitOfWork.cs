@@ -30,6 +30,14 @@ namespace EntityFX.EconomicsArcade.Infrastructure.Repository.UnitOfWork
         /// <param name="entity"></param>
         void DeleteEntity<TEntity>(TEntity entity) where TEntity : class;
 
+
+        /// <summary>
+        /// Attach an entity instance of type <see cref="TEntity"/>.
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="entity"></param>
+        TEntity AttachEntity<TEntity>(TEntity entity) where TEntity : class;
+
         IQueryBuilder BuildQuery();
     }
 }

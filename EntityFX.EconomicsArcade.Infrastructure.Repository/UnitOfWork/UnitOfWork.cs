@@ -31,6 +31,11 @@ namespace EntityFX.EconomicsArcade.Infrastructure.Repository.UnitOfWork
             _dbContext.Set<TEntity>().Remove(entity);
         }
 
+        public TEntity AttachEntity<TEntity>(TEntity entity) where TEntity : class
+        {
+            return _dbContext.Set<TEntity>().Attach(entity);
+        }
+
         public IQueryBuilder BuildQuery()
         {
             return _queryBuilder;

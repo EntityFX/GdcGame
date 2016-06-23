@@ -4,6 +4,7 @@
 	[Name] NVARCHAR(40) NOT NULL,
 	[Description] NVARCHAR(150) NOT NULL,
 	[InitialValue] decimal NOT NULL,
+	[CreateDateTime] DATETIME NOT NULL,
 	[UnlockValue] decimal NOT NULL,
 	[InflationPercent] smallint NOT NULL
 )

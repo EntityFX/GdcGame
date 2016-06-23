@@ -23,6 +23,7 @@ namespace EntityFX.EconomicsArcade.DataAccess.Model
         public int Inflation { get; set; }
         public int MiningTimeSecondsEllapsed { get; set; }
         public decimal DelayedValue { get; set; }
+        public DateTime CreateDateTime { get; set; }
 
         [ForeignKey("FK_User")]
         public virtual UserEntity User { get; set; }

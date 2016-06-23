@@ -2,11 +2,13 @@
 
 namespace EntityFX.EconomicsArcade.DataAccess.Repository.Criterions.UserGameCounter
 {
-    public class GetUserGameCounterByIdCriterion : GetByIdCriterion, ICriterion
+    public class GetUserGameCounterByIdCriterion : ICriterion
     {
-        public GetUserGameCounterByIdCriterion(int id)
-            : base(id)
+        public int UserId { get; private set; }
+
+        public GetUserGameCounterByIdCriterion(int userId)
         {
+            UserId = userId;
         }
     }
 }

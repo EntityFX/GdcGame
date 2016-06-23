@@ -15,21 +15,21 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository.Mappers
             _incrementorContractMapper = incrementorContractMapper;
         }
 
-        public FundsDriver Map(FundsDriverEntity source, FundsDriver destionation = null)
+        public FundsDriver Map(FundsDriverEntity source, FundsDriver destination = null)
         {
-            destionation = destionation ?? new FundsDriver();
-            destionation.BuyCount = 0;
-            destionation.Value = source.InitialValue;
-            destionation.UnlockValue = source.UnlockValue;
-            destionation.Name = source.Name;
-            destionation.Id = source.Id;
-            destionation.InflationPercent = source.InflationPercent;
-            destionation.Incrementors = new Dictionary<int, Incrementor>();
+            destination = destination ?? new FundsDriver();
+            destination.BuyCount = 0;
+            destination.Value = source.InitialValue;
+            destination.UnlockValue = source.UnlockValue;
+            destination.Name = source.Name;
+            destination.Id = source.Id;
+            destination.InflationPercent = source.InflationPercent;
+            destination.Incrementors = new Dictionary<int, Incrementor>();
             foreach (var incrementor in source.Incrementors)
             {
-                destionation.Incrementors.Add(incrementor.CounterId, _incrementorContractMapper.Map(incrementor));
+                destination.Incrementors.Add(incrementor.CounterId, _incrementorContractMapper.Map(incrementor));
             }
-            return destionation;
+            return destination;
         }
     }
 }
