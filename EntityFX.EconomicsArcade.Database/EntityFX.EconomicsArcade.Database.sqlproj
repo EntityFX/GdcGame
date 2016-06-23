@@ -73,13 +73,13 @@
     <None Include="Data\DataFundsDriver.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Build Include="Tables\dbo.UserFundsDriver.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Tables\dbo.Incrementor.sql" />
     <None Include="Tables\dbo.Counter.sql" />
     <None Include="Tables\dbo.UserGameCounter.sql" />
     <None Include="Tables\dbo.UserCounter.sql" />
+    <None Include="Tables\dbo.UserFundsDriver.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="EntityFX.EconomicsArcade.Database.refactorlog" />

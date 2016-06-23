@@ -11,6 +11,6 @@
 	PRIMARY KEY ([UserId],[CounterId]),
 	CONSTRAINT FK_User FOREIGN KEY ([UserId])
 		REFERENCES [dbo].[User] ([Id]),
-	CONSTRAINT [FK_Counter] FOREIGN KEY([CounterId])
+	CONSTRAINT FK_Counter FOREIGN KEY([CounterId])
 		REFERENCES [dbo].[Counter] ([Id])
 )
