@@ -49,6 +49,9 @@
     <Compile Include="CountersRepository.cs" />
     <Compile Include="Criterions\Counters\GetAllCountersCriterion.cs" />
     <Compile Include="Criterions\FundsDriver\GetAllFundsDriversCriterion.cs" />
+    <Compile Include="Criterions\UserCounter\GetUserCountersByUserIdCriterion.cs" />
+    <Compile Include="Criterions\UserFundsDriver\GetFundsDriverByUserIdCriterion.cs" />
+    <Compile Include="Criterions\UserGameCounter\GetUserGameCounterByIdCriterion.cs" />
     <Compile Include="Criterions\User\GetAllUsersCriterion.cs" />
     <Compile Include="Criterions\User\GetUserByIdCriterion.cs" />
     <Compile Include="Criterions\User\GetUserByNameCriterion.cs" />
@@ -67,6 +70,7 @@
     <Compile Include="Queries\User\GetAllUsersQuery.cs" />
     <Compile Include="Queries\User\GetUserByNameQuery.cs" />
     <Compile Include="Queries\User\GetUserByIdQuery.cs" />
+    <Compile Include="UserGameCounter.cs" />
     <Compile Include="UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
