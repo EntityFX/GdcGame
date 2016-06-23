@@ -12,17 +12,17 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository
     public class UserFundsDriverRepository : IUserFundsDriverRepository
     {
         private readonly IMapper<FundsDriverEntity, FundsDriver> _fundsDriverContractMapper;
-        private readonly IMapper<FundsDriver, FundsDriverEntity> _fundsDriverEntityMapper;
+        private readonly IMapper<FundsDriver, UserFundsDriverEntity> _userFundsDriverEntityMapper;
         private readonly IUnitOfWorkFactory _unitOfWorkFactory;
 
         public UserFundsDriverRepository(IUnitOfWorkFactory unitOfWorkFactory,
             IMapper<FundsDriverEntity, FundsDriver> fundsDriverContractMapper,
-            IMapper<FundsDriver, FundsDriverEntity> fundsDriverEntityMapper
+            IMapper<FundsDriver, UserFundsDriverEntity> userFundsDriverEntityMapper
             )
         {
             _unitOfWorkFactory = unitOfWorkFactory;
             _fundsDriverContractMapper = fundsDriverContractMapper;
-            _fundsDriverEntityMapper = fundsDriverEntityMapper;
+            _userFundsDriverEntityMapper = userFundsDriverEntityMapper;
         }
 
         public FundsDriver[] FindByUserId(GetFundsDriverByUserIdCriterion criterion)
@@ -42,11 +42,8 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository
             using (var uow = _unitOfWorkFactory.Create())
             {
                 var userFundsDriver = uow.CreateEntity<UserFundsDriverEntity>();
+                userFundsDriver = _userFundsDriverEntityMapper.Map(fundsDriver, userFundsDriver);
                 userFundsDriver.UserId = userId;
-                userFundsDriver.BuyCount = fundsDriver.BuyCount;
-                userFundsDriver.CreateDateTime = DateTime.Now;
-                userFundsDriver.FundsDriverId = fundsDriver.Id;
-                userFundsDriver.Value = fundsDriver.Value;
                 uow.Commit();
             }
         }
@@ -56,11 +53,8 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository
             using (var uow = _unitOfWorkFactory.Create())
             {
                 var userFundsDriver = uow.AttachEntity(uow.CreateEntity<UserFundsDriverEntity>());
+                userFundsDriver = _userFundsDriverEntityMapper.Map(fundsDriver, userFundsDriver);
                 userFundsDriver.UserId = userId;
-                userFundsDriver.BuyCount = fundsDriver.BuyCount;
-                userFundsDriver.CreateDateTime = DateTime.Now;
-                userFundsDriver.FundsDriverId = fundsDriver.Id;
-                userFundsDriver.Value = fundsDriver.Value;
                 uow.Commit();
             }
         }

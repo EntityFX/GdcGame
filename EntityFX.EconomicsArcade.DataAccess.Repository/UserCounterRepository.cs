@@ -11,17 +11,18 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository
 {
     public class UserCounterRepository : IUserCounterRepository
     {
-        private readonly IMapper<UserCounterEntity, CounterBase> _userCounterContractMapper;
-        // private readonly IMapper<FundsDriver, FundsDriverEntity> _fundsDriverEntityMapper;
+        private readonly IMapper<CounterEntity, CounterBase> _counterContractMapper;
+        private readonly IMapper<CounterBase, UserCounterEntity> _userCounterEntityMapper;
         private readonly IUnitOfWorkFactory _unitOfWorkFactory;
 
         public UserCounterRepository(IUnitOfWorkFactory unitOfWorkFactory,
-            IMapper<UserCounterEntity, CounterBase> userCounterContractMapper
+            IMapper<CounterEntity, CounterBase> counterContractMapper,
+            IMapper<CounterBase, UserCounterEntity> userCounterEntityMapper
             )
         {
             _unitOfWorkFactory = unitOfWorkFactory;
-            _userCounterContractMapper = userCounterContractMapper;
-            // _fundsDriverEntityMapper = fundsDriverEntityMapper;
+            _counterContractMapper = counterContractMapper;
+            _userCounterEntityMapper = userCounterEntityMapper;
         }
 
         public CounterBase[] FindByUserId(GetUserCountersByUserIdCriterion criterion)
@@ -29,9 +30,9 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository
             using (var uow = _unitOfWorkFactory.Create())
             {
                 var findQuery = uow.BuildQuery();
-                return findQuery.For<IEnumerable<UserCounterEntity>>()
+                return findQuery.For<IEnumerable<CounterEntity>>()
                     .With(criterion)
-                    .Select(_ => _userCounterContractMapper.Map(_))
+                    .Select(_ => _counterContractMapper.Map(_))
                     .ToArray();
             }
         }
@@ -43,16 +44,8 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository
                 using (var uow = _unitOfWorkFactory.Create())
                 {
                     var userCounter = uow.CreateEntity<UserCounterEntity>();
-                    var genericCounter = (GenericCounter)counterBase;
+                    userCounter = _userCounterEntityMapper.Map(counterBase, userCounter);
                     userCounter.UserId = userId;
-                    userCounter.Bonus = genericCounter.Bonus;
-                    userCounter.BonusPercentage = genericCounter.BonusPercentage;
-                    userCounter.CounterId = genericCounter.Id;
-                    userCounter.CreateDateTime = DateTime.Now;
-                    //userCounter.DelayedValue = genericCounter.SubValue;
-                    userCounter.Value = genericCounter.Value;
-                    userCounter.Inflation = genericCounter.Inflation;
-                    //userCounter.MiningTimeSecondsEllapsed=genericCounter
                     uow.Commit();
                 }
             }
@@ -60,23 +53,16 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository
 
         public void UpdateForUser(int userId, CounterBase[] counterBases)
         {
-            foreach (var counterBase in counterBases)
+            using (var uow = _unitOfWorkFactory.Create())
             {
-                using (var uow = _unitOfWorkFactory.Create())
+                foreach (var counterBase in counterBases)
                 {
                     var userCounter = uow.AttachEntity(uow.CreateEntity<UserCounterEntity>());
-                    var genericCounter = (GenericCounter)counterBase;
+                    userCounter = _userCounterEntityMapper.Map(counterBase, userCounter);
                     userCounter.UserId = userId;
-                    userCounter.Bonus = genericCounter.Bonus;
-                    userCounter.BonusPercentage = genericCounter.BonusPercentage;
-                    userCounter.CounterId = genericCounter.Id;
-                    userCounter.CreateDateTime = DateTime.Now;
-                    //userCounter.DelayedValue = genericCounter.SubValue;
-                    userCounter.Value = genericCounter.Value;
-                    userCounter.Inflation = genericCounter.Inflation;
-                    //userCounter.MiningTimeSecondsEllapsed=genericCounter
                     uow.Commit();
                 }
+                uow.Commit();
             }
         }
     }
