@@ -11,7 +11,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess
 
         private const string BaseUrl = "net.tcp://localhost:8777/EntityFX.EconomicsArcade.DataAccess/";
 
-        private const string BaseStoreUrl = "net.msmq://localhost/private/StoreGameData";
+        private const string BaseStoreUrl = "net.msmq://localhost/private/";
 
         public DataAccessStarter(ContainerBootstrapper container)
             :base(container)
