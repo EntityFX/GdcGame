@@ -6,6 +6,7 @@ using EntityFX.EconomicsArcade.Contract.DataAccess.User;
 using EntityFX.EconomicsArcade.DataAccess.Model;
 using EntityFX.EconomicsArcade.Infrastructure.Repository.UnitOfWork;
 using System.Data.Entity;
+using EntityFX.EconomicsArcade.Contract.Common;
 using EntityFX.EconomicsArcade.Contract.Common.Counters;
 using EntityFX.EconomicsArcade.Infrastructure.Repository.Query;
 using EntityFX.EconomicsArcade.Contract.DataAccess.GameData;
@@ -19,7 +20,12 @@ using EntityFX.EconomicsArcade.DataAccess.Repository.Criterions.FundsDriver;
 using EntityFX.EconomicsArcade.Contract.Common.Funds;
 using EntityFX.EconomicsArcade.Contract.Common.Incrementors;
 using EntityFX.EconomicsArcade.DataAccess.Repository.Criterions.Counters;
+using EntityFX.EconomicsArcade.DataAccess.Repository.Criterions.UserCounter;
+using EntityFX.EconomicsArcade.DataAccess.Repository.Criterions.UserGameCounter;
 using EntityFX.EconomicsArcade.DataAccess.Repository.Queries.Counetrs;
+using EntityFX.EconomicsArcade.DataAccess.Repository.Queries.UserCounter;
+using EntityFX.EconomicsArcade.DataAccess.Repository.Queries.UserGameCounter;
+using EntityFX.EconomicsArcade.DataAccess.Service.Mappers;
 
 namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess
 {
@@ -38,16 +44,26 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess
             container.RegisterType<IQuery<GetAllUsersCriterion, IEnumerable<UserEntity>>, GetAllUsersQuery>();
             container.RegisterType<IQuery<GetAllFundsDriversCriterion, IEnumerable<FundsDriverEntity>>, GetAllFundsDriversQuery>();
             container.RegisterType<IQuery<GetAllCountersCriterion, IEnumerable<CounterEntity>>, GetAllCountersQuery>();
+            container.RegisterType<IQuery<GetUserGameCounterByIdCriterion, UserGameCounterEntity>, GetUserGameCounterByIdQuery>();
+            container.RegisterType < IQuery<GetUserCountersByUserIdCriterion, IEnumerable<UserCounterEntity>>, GetUserCountersByUserIdQuery>();
 
             container.RegisterType<IMapper<User, UserEntity>, UserEntityMapper>();
             container.RegisterType<IMapper<UserEntity, User>, UserContractMapper>();
             container.RegisterType<IMapper<FundsDriverEntity, FundsDriver>, FundsDriverContractMapper>();
             container.RegisterType<IMapper<IncrementorEntity, Incrementor>, IncrementorContractMapper>();
             container.RegisterType<IMapper<CounterEntity, CounterBase>, CountersContractMapper>();
+            container.RegisterType<IMapper<UserGameCounter, UserGameCounterEntity>, UserGameCounterEntityMapper>();
+            container.RegisterType<IMapper<UserGameCounterEntity, UserGameCounter>, UserGameCounterContractMapper>();
+            container.RegisterType<IMapper<CounterBase, UserCounterEntity>, UserCounterEntityMapper>();
+            container.RegisterType<IMapper<UserCounterEntity, CounterBase>, UserCounterContractMapper>();
+
+            container.RegisterType<IMapper<GameData, UserGameCounter>, UserGameCounterMapper>();
 
             container.RegisterType<IUserRepository, UserRepository>();
             container.RegisterType<IFundsDriverRepository, FundsDriverRepository>();
             container.RegisterType<ICountersRepository, CountersRepository>();
+            container.RegisterType<IUserGameCounterRepository, UserGameCounterRepository>();
+            container.RegisterType<IUserCounterRepository, UserCounterRepository>();
 
             container.RegisterType<IUserDataAccessService, UserDataAccessService>();
             container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessService>();

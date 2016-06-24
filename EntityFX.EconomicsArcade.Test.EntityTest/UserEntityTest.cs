@@ -17,7 +17,7 @@ namespace EntityFX.EconomicsArcade.Test.EntityTest
                 CreateDateTime = DateTime.Now
             };
             EconomicsArcadeDbContext ctx = new EconomicsArcadeDbContext(ConnString);
-            ctx.UserEntitySet.Add(entity);
+            ctx.Users.Add(entity);
             ctx.SaveChanges();
             //ctx.UserEntitySet.
         }
@@ -26,7 +26,7 @@ namespace EntityFX.EconomicsArcade.Test.EntityTest
         public void UpdateUserEntity()
         {
             EconomicsArcadeDbContext ctx = new EconomicsArcadeDbContext(ConnString);
-            var userEntity = ctx.UserEntitySet.Find(1);
+            var userEntity = ctx.Users.Find(1);
             userEntity.UpdateDateTime = DateTime.Now; 
             ctx.SaveChanges();
             //ctx.UserEntitySet.

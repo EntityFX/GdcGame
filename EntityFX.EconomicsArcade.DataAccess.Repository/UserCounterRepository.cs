@@ -11,12 +11,12 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository
 {
     public class UserCounterRepository : IUserCounterRepository
     {
-        private readonly IMapper<CounterEntity, CounterBase> _counterContractMapper;
+        private readonly IMapper<UserCounterEntity, CounterBase> _counterContractMapper;
         private readonly IMapper<CounterBase, UserCounterEntity> _userCounterEntityMapper;
         private readonly IUnitOfWorkFactory _unitOfWorkFactory;
 
         public UserCounterRepository(IUnitOfWorkFactory unitOfWorkFactory,
-            IMapper<CounterEntity, CounterBase> counterContractMapper,
+            IMapper<UserCounterEntity, CounterBase> counterContractMapper,
             IMapper<CounterBase, UserCounterEntity> userCounterEntityMapper
             )
         {
@@ -30,7 +30,7 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository
             using (var uow = _unitOfWorkFactory.Create())
             {
                 var findQuery = uow.BuildQuery();
-                return findQuery.For<IEnumerable<CounterEntity>>()
+                return findQuery.For<IEnumerable<UserCounterEntity>>()
                     .With(criterion)
                     .Select(_ => _counterContractMapper.Map(_))
                     .ToArray();
@@ -39,15 +39,17 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository
 
         public void CreateForUser(int userId, CounterBase[] counterBases)
         {
-            foreach (var counterBase in counterBases)
+
+            using (var uow = _unitOfWorkFactory.Create())
             {
-                using (var uow = _unitOfWorkFactory.Create())
+                foreach (var counterBase in counterBases)
                 {
                     var userCounter = uow.CreateEntity<UserCounterEntity>();
                     userCounter = _userCounterEntityMapper.Map(counterBase, userCounter);
                     userCounter.UserId = userId;
-                    uow.Commit();
+                    userCounter.CreateDateTime = DateTime.Now;
                 }
+                uow.Commit();
             }
         }
 
@@ -57,10 +59,11 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository
             {
                 foreach (var counterBase in counterBases)
                 {
-                    var userCounter = uow.AttachEntity(uow.CreateEntity<UserCounterEntity>());
+                    var userCounter = uow.CreateEntity<UserCounterEntity>();
                     userCounter = _userCounterEntityMapper.Map(counterBase, userCounter);
                     userCounter.UserId = userId;
-                    uow.Commit();
+                    userCounter = uow.AttachEntity(userCounter);
+                    uow.ExcludeProperty(userCounter,_ => _.CreateDateTime);
                 }
                 uow.Commit();
             }

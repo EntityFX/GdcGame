@@ -1,5 +1,9 @@
-﻿using EntityFX.EconomicsArcade.Infrastructure.Repository.Query;
+﻿using System;
+using EntityFX.EconomicsArcade.Infrastructure.Repository.Query;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace EntityFX.EconomicsArcade.Infrastructure.Repository.UnitOfWork
 {
@@ -17,6 +21,13 @@ namespace EntityFX.EconomicsArcade.Infrastructure.Repository.UnitOfWork
         public void Commit()
         {
             _dbContext.SaveChanges();
+        }
+
+        public void ExcludeProperty<TEntity, TProperty>(TEntity entity, Expression<Func<TEntity, TProperty>> property) where TEntity : class
+        {
+            var entry = _dbContext.Entry(entity);
+            entry.State = EntityState.Modified;
+            entry.Property<TProperty>(property).IsModified = false;
         }
 
         public TEntity CreateEntity<TEntity>() where TEntity : class, new()

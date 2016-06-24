@@ -11,11 +11,14 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.UssrSimulator
     public class UssrSimulatorGame : GameBase
     {
         private readonly IGameDataRetrieveDataAccessService _gameDataRetrieveDataAccessService;
+        private readonly INotifyGameDataChanged _notifyGameDataChanged;
         private GameData _gameData;
 
-        public UssrSimulatorGame(IGameDataRetrieveDataAccessService gameDataRetrieveDataAccessService)
+        public UssrSimulatorGame(IGameDataRetrieveDataAccessService gameDataRetrieveDataAccessService
+            , INotifyGameDataChanged notifyGameDataChanged)
         {
             _gameDataRetrieveDataAccessService = gameDataRetrieveDataAccessService;
+            _notifyGameDataChanged = notifyGameDataChanged;
         }
 
         public decimal Communism
@@ -159,20 +162,23 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.UssrSimulator
                         BonusPercentage = sourcenGenericCounter.BonusPercentage,
                         Inflation = sourcenGenericCounter.Inflation,
                         CurrentSteps = sourcenGenericCounter.CurrentSteps,
-                        SubValue =  sourcenGenericCounter.SubValue
+                        SubValue = sourcenGenericCounter.SubValue
                     };
                     destinationCouner = destinationGenericCounter;
+                    destinationCouner.Type = 1;
                 }
                 var sourceSingleCounter = sourceCounter.Value as SingleCounter;
                 if (sourceSingleCounter != null)
                 {
                     destinationCouner = new EconomicsArcade.Contract.Common.Counters.SingleCounter();
+                    destinationCouner.Type = 0;
                 }
-                                var sourceDelayedCounter = sourceCounter.Value as DelayedCounter;
+                var sourceDelayedCounter = sourceCounter.Value as DelayedCounter;
                 if (sourceDelayedCounter != null)
                 {
                     var destinationDelayedCounter = new EconomicsArcade.Contract.Common.Counters.DelayedCounter();
-                                        destinationCouner = destinationDelayedCounter;
+                    destinationCouner = destinationDelayedCounter;
+                    destinationCouner.Type = 3;
                 }
                 if (destinationCouner != null)
                 {
@@ -198,10 +204,13 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.UssrSimulator
                     Value = fundDriver.CurrentValue,
                     InflationPercent = fundDriver.InflationPercent,
                     BuyCount = fundDriver.BuyCount
-                }}
+                }},
+                AutomaticStepsCount = AutomaticStepNumber,
+                ManualStepsCount = ManualStepNumber
             };
+            _notifyGameDataChanged.GameDataChanged(gameData);
         }
-                                      
+
         protected override void PostInitialize()
         {
             //CashFunds(1500000);

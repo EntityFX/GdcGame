@@ -4,12 +4,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EntityFX.EconomicsArcade.DataAccess.Model
 {
-    [Table("UserCounter")]
+
     public class UserCounterEntity
     {
+
         [Key]
+        [Column(Order = 0)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int UserId { get; set; }
+
         [Key]
+        [Column(Order = 1)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int CounterId { get; set; }
 
         public decimal Value { get; set; }
@@ -20,10 +26,9 @@ namespace EntityFX.EconomicsArcade.DataAccess.Model
         public decimal DelayedValue { get; set; }
         public DateTime CreateDateTime { get; set; }
 
-        [ForeignKey("FK_User")]
+
         public virtual UserEntity User { get; set; }
 
-        [ForeignKey("FK_Counter")]
         public virtual CounterEntity Counter { get; set; }
     }
 }

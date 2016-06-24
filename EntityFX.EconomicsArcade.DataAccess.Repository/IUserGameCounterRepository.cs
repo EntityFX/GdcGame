@@ -5,7 +5,7 @@ using EntityFX.EconomicsArcade.Infrastructure.Repository.Criterion;
 
 namespace EntityFX.EconomicsArcade.DataAccess.Repository
 {
-    interface IUserGameCounterRepository : IRepository<UserGameCounter, GetUserGameCounterByIdCriterion, GetAllCriterion>
+    public interface IUserGameCounterRepository : IRepository<UserGameCounter, GetUserGameCounterByIdCriterion, GetAllCriterion>
     {
 
     }

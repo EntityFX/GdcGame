@@ -33,7 +33,7 @@ namespace EntityFX.EconomicsArcade.Infrastructure.Service
                 MaxBufferPoolSize = 500000000,
                 MaxReceivedMessageSize = 500000000,
                 UseActiveDirectory = false,
-                ExactlyOnce = false,
+                ExactlyOnce = true,
                 Security = new NetMsmqSecurity()
                 {
                     Transport = new MsmqTransportSecurity()

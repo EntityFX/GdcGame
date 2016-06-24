@@ -16,20 +16,20 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository.Mappers
                     var singleCounter = (SingleCounter)source;
                     break;
                 case 1:
-                    break;
                 case 2:
                     var genericCounter = (GenericCounter)source;
                     destination.Bonus = genericCounter.Bonus;
                     destination.BonusPercentage = genericCounter.BonusPercentage;
                     destination.CounterId = genericCounter.Id;
                     destination.CreateDateTime = DateTime.Now;
-                    destination.Value = genericCounter.Value;
                     destination.Inflation = genericCounter.Inflation;
                     break;
                 case 3:
                     var delayedCounter = (DelayedCounter)source;
                     break;
             }
+            destination.CounterId = source.Id;
+            destination.Value = source.Value;
             return destination;
         }
     }

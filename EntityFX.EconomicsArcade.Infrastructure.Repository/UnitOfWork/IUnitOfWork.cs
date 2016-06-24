@@ -1,5 +1,6 @@
 ﻿using EntityFX.EconomicsArcade.Infrastructure.Repository.Query;
 using System;
+using System.Linq.Expressions;
 
 namespace EntityFX.EconomicsArcade.Infrastructure.Repository.UnitOfWork
 {
@@ -37,6 +38,9 @@ namespace EntityFX.EconomicsArcade.Infrastructure.Repository.UnitOfWork
         /// <typeparam name="TEntity"></typeparam>
         /// <param name="entity"></param>
         TEntity AttachEntity<TEntity>(TEntity entity) where TEntity : class;
+
+        void ExcludeProperty<TEntity, TProperty>(TEntity entity, Expression<Func<TEntity, TProperty>> property)
+            where TEntity : class;
 
         IQueryBuilder BuildQuery();
     }

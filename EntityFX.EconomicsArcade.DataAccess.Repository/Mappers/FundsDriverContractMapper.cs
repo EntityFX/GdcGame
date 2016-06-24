@@ -27,7 +27,7 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository.Mappers
             destination.Incrementors = new Dictionary<int, Incrementor>();
             foreach (var incrementor in source.Incrementors)
             {
-                destination.Incrementors.Add(incrementor.CounterId, _incrementorContractMapper.Map(incrementor));
+                destination.Incrementors.Add(incrementor.CounterId ?? 0, _incrementorContractMapper.Map(incrementor));
             }
             return destination;
         }

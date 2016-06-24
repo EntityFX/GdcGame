@@ -11,5 +11,9 @@ namespace EntityFX.EconomicsArcade.Contract.Common
         public FundsDriver[] FundsDrivers { get; set; }
         [DataMember]
         public FundsCounters Counters { get; set; }
+        [DataMember]
+        public int ManualStepsCount { get; set; }
+        [DataMember]
+        public int AutomaticStepsCount { get; set; }
     }
 }

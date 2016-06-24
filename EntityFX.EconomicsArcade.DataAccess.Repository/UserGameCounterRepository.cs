@@ -2,6 +2,7 @@ using System;
 using EntityFX.EconomicsArcade.Contract.DataAccess.GameData;
 using EntityFX.EconomicsArcade.Contract.DataAccess.User;
 using EntityFX.EconomicsArcade.DataAccess.Model;
+using EntityFX.EconomicsArcade.DataAccess.Repository.Criterions.User;
 using EntityFX.EconomicsArcade.DataAccess.Repository.Criterions.UserGameCounter;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 using EntityFX.EconomicsArcade.Infrastructure.Repository.Criterion;
@@ -41,10 +42,14 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository
 
         public void Update(UserGameCounter userGameCounter)
         {
+
             using (var uow = _unitOfWorkFactory.Create())
             {
-                var userGameCounterEntity = uow.AttachEntity(uow.CreateEntity<UserGameCounterEntity>());
+                var userGameCounterEntity = uow.CreateEntity<UserGameCounterEntity>();
                 userGameCounterEntity = _userGameCounterEntityMapper.Map(userGameCounter, userGameCounterEntity);
+                uow.AttachEntity(userGameCounterEntity);
+                uow.ExcludeProperty(userGameCounterEntity, entity => entity.CreateDateTime);
+                userGameCounterEntity.CreateDateTime = DateTime.Now;
                 uow.Commit();
             }
         }

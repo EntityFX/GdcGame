@@ -19,7 +19,7 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository.Mappers
                     case 2:
                         destination = new GenericCounter();
                         var genericDestionation = (GenericCounter) destination;
-                        genericDestionation.UseInAutoSteps = source.UseInAutoStep;
+                        genericDestionation.UseInAutoSteps = source.UseInAutostep;
                         genericDestionation.Inflation = 0;
                         genericDestionation.Bonus = 0;
                         genericDestionation.BonusPercentage = 0;

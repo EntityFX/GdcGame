@@ -1,20 +1,27 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
 namespace EntityFX.EconomicsArcade.DataAccess.Model
 {
-    [Table("User")]
-    public class UserEntity
+
+    public partial class UserEntity
     {
-        [Key]
         public int Id { get; set; }
 
-        [Index(IsUnique=true)]
         public string Email { get; set; }
+
+        public string Secret { get; set; }
+
+        public string Salt { get; set; }
 
         public DateTime CreateDateTime { get; set; }
 
         public DateTime? UpdateDateTime { get; set; }
+
+        public virtual UserGameCounterEntity UserGameCounter { get; set; }
+
+        public virtual ICollection<UserCounterEntity> UserCounters { get; set; }
     }
 }

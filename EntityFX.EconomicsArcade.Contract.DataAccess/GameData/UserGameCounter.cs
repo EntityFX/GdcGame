@@ -14,7 +14,7 @@ namespace EntityFX.EconomicsArcade.Contract.DataAccess.GameData
         [DataMember]
         public int AutomaticStepsCount { get; set; }
         [DataMember]
-        public decimal CategoryFunds { get; set; }
+        public decimal CurrentFunds { get; set; }
         [DataMember]
         public decimal DelayedFunds { get; set; }
     }

@@ -40,7 +40,7 @@ namespace EntityFX.EconomicsArcade.Manager
 
             if (!GameSessionsStorage.ContainsKey(session.Login))
             {
-                var game = BuildGame();
+                var game = BuildGame(session.UserId);
                 game.Initialize();
                 GameSessionsStorage.Add(session.Login, game);
             }
@@ -64,9 +64,9 @@ namespace EntityFX.EconomicsArcade.Manager
             return !SessionsStorage.ContainsKey(sessionId) ? null : SessionsStorage[sessionId];
         }
 
-        private IGame BuildGame()
+        private IGame BuildGame(int userId)
         {
-            return _gameFactory.BuildGame();
+            return _gameFactory.BuildGame(userId);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository.Mappers
             destination = destination ?? new UserGameCounterEntity();
             destination.UserId = source.UserId;
             destination.AutomaticStepsCount = source.AutomaticStepsCount;
-            destination.CategoryFunds = source.CategoryFunds;
+            destination.CurrentFunds = source.CurrentFunds;
             destination.DelayedFunds = source.DelayedFunds;
             destination.ManualStepsCount = source.ManualStepsCount;
             destination.TotalFunds = source.TotalFunds;

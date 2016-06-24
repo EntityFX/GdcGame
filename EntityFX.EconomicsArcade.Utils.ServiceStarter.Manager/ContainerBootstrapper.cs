@@ -24,21 +24,25 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
         //public 
         public IUnityContainer Configure(IUnityContainer container)
         {
-            container.RegisterType<ILogger, Logger>("Logger");
-            container.RegisterType<ILogger>(new InjectionFactory(_=> new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger")))));
-            container.RegisterType<ILogger, NLoggerAdapter>("LoggerAdapter");
+            container.RegisterType<ILogger>(new InjectionFactory(
+                _=> new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger")))));
 
             container.RegisterType<ISessionManager, SessionManager>();
+
+            container.RegisterType<INotifyGameDataChanged, NotifyGameDataChanged>();
+
+            container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessClient>();
+            container.RegisterType<IUserDataAccessService, UserDataAccessClient>();
+            container.RegisterType<IGameDataStoreDataAccessService, GameDataStoreDataAccessClient>();
+
             container.RegisterType<IMapper<IncrementorBase, Incrementor>, IncrementorContractMapper>();
             container.RegisterType<IMapper<CounterBase, Contract.Common.Counters.CounterBase>, CounterContractMapper>();
             container.RegisterType<IMapper<FundsCounters, Contract.Common.Counters.FundsCounters>, FundsCountersContractMapper>();
             container.RegisterType<IMapper<FundsDriver, Contract.Common.Funds.FundsDriver>, FundsDriverContractMapper>();
             container.RegisterType<IMapper<IGame, GameData>, GameDataContractMapper>();
             container.RegisterType<IGame, UssrSimulatorGame>();
-            container.RegisterType<FundsCountersContractMapper>();
             container.RegisterType<IGameManager, GameManager>();
-            container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessClient>();
-            container.RegisterType<IUserDataAccessService, UserDataAccessClient>();
+
 
             return container;
         }

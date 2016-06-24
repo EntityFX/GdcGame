@@ -3,19 +3,21 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EntityFX.EconomicsArcade.DataAccess.Model
 {
-    [Table("Incrementor")]
-    public class IncrementorEntity
+    public partial class IncrementorEntity
     {
-        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
+
         public short Type { get; set; }
+
         public decimal Value { get; set; }
+
         public int FundsDriverId { get; set; }
-        public int CounterId { get; set; }
-        [ForeignKey("FK_FundsDriver")]
-        public virtual FundsDriverEntity FundsDriver { get; set; }
-        [ForeignKey("FK_Counter")]
+
+        public int? CounterId { get; set; }
+
         public virtual CounterEntity Counter { get; set; }
 
+        public virtual FundsDriverEntity FundsDriver { get; set; }
     }
 }

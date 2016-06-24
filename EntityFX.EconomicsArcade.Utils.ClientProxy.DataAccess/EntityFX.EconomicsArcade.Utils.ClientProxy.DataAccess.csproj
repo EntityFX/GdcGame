@@ -66,6 +66,8 @@
   <ItemGroup>
     <Compile Include="GameDataRetrieveDataAccessClient.cs" />
     <Compile Include="GameDataRetrieveDataAccessProxy.cs" />
+    <Compile Include="GameDataStoreDataAccessClient.cs" />
+    <Compile Include="GameDataStoreDataAccessProxy.cs" />
     <Compile Include="UserDataAccessClient.cs" />
     <Compile Include="UserDataAccessProxyFactoy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

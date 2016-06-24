@@ -2,7 +2,7 @@
 (
 	[UserId] INT NOT NULL,
 	[FundsDriverId] INT NOT NULL,
-	[Value] DECIMAL NOT NULL,
+	[Value] MONEY NOT NULL,
 	[BuyCount] INT  NOT NULL,
 	PRIMARY KEY ([UserId],[FundsDriverId]),
 	CONSTRAINT FK_UserFundsDriver_User FOREIGN KEY ([UserId])
