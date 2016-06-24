@@ -13,6 +13,8 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.UssrSimulator
         private readonly IGameDataRetrieveDataAccessService _gameDataRetrieveDataAccessService;
         private readonly INotifyGameDataChanged _notifyGameDataChanged;
         private GameData _gameData;
+        private readonly int _stepsToPersist = 10;
+        private int _currentStepsToPersist;
 
         public UssrSimulatorGame(IGameDataRetrieveDataAccessService gameDataRetrieveDataAccessService
             , INotifyGameDataChanged notifyGameDataChanged)
@@ -143,12 +145,59 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.UssrSimulator
 
         }
 
+        private static object _syslock = new {};
+
         protected override void PostPerformAutoStep(IEnumerable<CounterBase> modifiedCounters)
         {
+            lock (_syslock)
+            {
+                if (_currentStepsToPersist == _stepsToPersist)
+                {
+                    _currentStepsToPersist = 0;
+                    var gameData = PrepareGameDataToPersist();
+                    _notifyGameDataChanged.GameDataChanged(gameData);
+                }
+                _currentStepsToPersist++;  
+            }
 
         }
 
         protected override void PostBuyFundDriver(FundsDriver fundDriver)
+        {
+            var gameData = PrepareGameDataToPersist(fundDriver);
+            _notifyGameDataChanged.GameDataChanged(gameData);
+        }
+
+        protected override void PostInitialize()
+        {
+            //CashFunds(1500000);
+
+        }
+
+        protected override void PreInitialize()
+        {
+            //CashFunds(1500000);
+            _gameData = _gameDataRetrieveDataAccessService.GetGameData();
+        }
+
+        private GameData PrepareGameDataToPersist(FundsDriver fundDriver = null)
+        {
+            return new GameData()
+            {
+                Counters = new EconomicsArcade.Contract.Common.Counters.FundsCounters()
+                {
+                    CurrentFunds = FundsCounters.CurrentFunds,
+                    TotalFunds = FundsCounters.TotalFunds,
+                    Counters = PrepareCountersToPersist()
+                },
+                FundsDrivers = fundDriver != null ? new[] {  PrepareFundDriverToPersist(fundDriver) } : new EconomicsArcade.Contract.Common.Funds.FundsDriver[] {},
+                AutomaticStepsCount = AutomaticStepNumber,
+                ManualStepsCount = ManualStepNumber
+            };
+        }
+
+
+        private EconomicsArcade.Contract.Common.Counters.CounterBase[] PrepareCountersToPersist()
         {
             var counters = new EconomicsArcade.Contract.Common.Counters.CounterBase[FundsCounters.Counters.Count];
             foreach (var sourceCounter in FundsCounters.Counters)
@@ -187,42 +236,20 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.UssrSimulator
                 }
                 if (destinationCouner != null) counters[destinationCouner.Id] = destinationCouner;
             }
+            return counters;
+        }
 
-
-            var gameData = new GameData()
+        private EconomicsArcade.Contract.Common.Funds.FundsDriver PrepareFundDriverToPersist(FundsDriver fundDriver)
+        {
+            return new EconomicsArcade.Contract.Common.Funds.FundsDriver()
             {
-                Counters = new EconomicsArcade.Contract.Common.Counters.FundsCounters()
-                {
-                    CurrentFunds = FundsCounters.CurrentFunds,
-                    TotalFunds = FundsCounters.TotalFunds,
-                    Counters = counters
-                },
-                FundsDrivers = new[]{new EconomicsArcade.Contract.Common.Funds.FundsDriver()
-                {
-                    Id = fundDriver.Id,
-                    Name = fundDriver.Name,
-                    Value = fundDriver.CurrentValue,
-                    InflationPercent = fundDriver.InflationPercent,
-                    BuyCount = fundDriver.BuyCount
-                }},
-                AutomaticStepsCount = AutomaticStepNumber,
-                ManualStepsCount = ManualStepNumber
+                Id = fundDriver.Id,
+                Name = fundDriver.Name,
+                Value = fundDriver.CurrentValue,
+                InflationPercent = fundDriver.InflationPercent,
+                BuyCount = fundDriver.BuyCount
             };
-            _notifyGameDataChanged.GameDataChanged(gameData);
         }
-
-        protected override void PostInitialize()
-        {
-            //CashFunds(1500000);
-
-        }
-
-        protected override void PreInitialize()
-        {
-            //CashFunds(1500000);
-            _gameData = _gameDataRetrieveDataAccessService.GetGameData();
-        }
-
 
     }
 
