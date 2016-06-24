@@ -18,9 +18,9 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
 
         public override void StartService()
         {
-            AddNetTcpService<ISessionManager>();
-            AddNetTcpService<IGameManager>();
-            OpenServices(new Uri(BaseUrl));
+            AddNetTcpService<ISessionManager>(new Uri(BaseUrl));
+            AddNetTcpService<IGameManager>(new Uri(BaseUrl));
+            OpenServices();
         }
 
         public override void StopService()

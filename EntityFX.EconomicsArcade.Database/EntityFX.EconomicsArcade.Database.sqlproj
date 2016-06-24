@@ -65,8 +65,12 @@
     <Folder Include="Data" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Tables\dbo.User.sql" />
-    <Build Include="Tables\dbo.FundsDriver.sql" />
+    <Build Include="Tables\dbo.User.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Build>
+    <Build Include="Tables\dbo.FundsDriver.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Build>
     <None Include="Data\DataCounters.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -75,16 +79,26 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Tables\dbo.Incrementor.sql" />
-    <None Include="Tables\dbo.Counter.sql" />
-    <None Include="Tables\dbo.UserGameCounter.sql" />
-    <None Include="Tables\dbo.UserCounter.sql" />
-    <None Include="Tables\dbo.UserFundsDriver.sql" />
+    <Build Include="Tables\dbo.Incrementor.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Build>
+    <Build Include="Tables\dbo.Counter.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Build>
+    <Build Include="Tables\dbo.UserGameCounter.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Build>
+    <Build Include="Tables\dbo.UserCounter.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Build>
+    <Build Include="Tables\dbo.UserFundsDriver.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Build>
+    <None Include="EntityFX.EconomicsArcade.Database.publish.xml" />
   </ItemGroup>
   <ItemGroup>
-    <RefactorLog Include="EntityFX.EconomicsArcade.Database.refactorlog" />
-  </ItemGroup>
-  <ItemGroup>
-    <PostDeploy Include="Data\DataIncrementors.sql" />
+    <None Include="Data\DataIncrementors.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

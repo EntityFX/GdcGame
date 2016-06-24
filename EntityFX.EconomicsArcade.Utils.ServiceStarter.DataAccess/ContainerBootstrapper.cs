@@ -50,7 +50,8 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess
             container.RegisterType<ICountersRepository, CountersRepository>();
 
             container.RegisterType<IUserDataAccessService, UserDataAccessService>();
-            container.RegisterType<IGameDataDataAccessService, GameDataDataAccessService>();
+            container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessService>();
+            container.RegisterType<IGameDataStoreDataAccessService, GameDataStoreDataAccessService>();
             return container;
         }
     }

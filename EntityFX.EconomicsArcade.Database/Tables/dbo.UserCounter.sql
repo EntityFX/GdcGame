@@ -10,8 +10,8 @@
 	[MiningTimeSecondsEllapsed] INT NOT NULL,
 	[DelayedValue] DECIMAL NOT NULL,
 	PRIMARY KEY ([UserId],[CounterId]),
-	CONSTRAINT FK_User FOREIGN KEY ([UserId])
+	CONSTRAINT FK_UserCounter_User FOREIGN KEY ([UserId])
 		REFERENCES [dbo].[User] ([Id]),
-	CONSTRAINT FK_Counter FOREIGN KEY([CounterId])
+	CONSTRAINT FK_UserCounter_Counter FOREIGN KEY([CounterId])
 		REFERENCES [dbo].[Counter] ([Id])
 )

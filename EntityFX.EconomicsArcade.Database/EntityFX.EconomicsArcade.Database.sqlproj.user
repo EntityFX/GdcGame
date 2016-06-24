@@ -3,5 +3,6 @@
   <PropertyGroup>
     <StartupScript>(Blank)</StartupScript>
     <StartAction>StartNone</StartAction>
+    <TargetConnectionString>Data Source=.;Initial Catalog=EntityFX.EconomicsArcade.Database;Integrated Security=True;Pooling=False</TargetConnectionString>
   </PropertyGroup>
 </Project>
