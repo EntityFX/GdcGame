@@ -12,6 +12,11 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
         private readonly Uri _endpointAddress = new Uri("net.tcp://localhost:8555/EntityFX.EconomicsArcade.Manager/EntityFX.EconomicsArcade.Contract.Manager.GameManager.IGameManager");
         private Guid _sesionGuid;
 
+        public void AddSession()///Delete this
+        {
+
+        }
+
         public GameManagerClient(Guid sesionGuid)
         {
             _sesionGuid = sesionGuid;

@@ -7,7 +7,8 @@ namespace EntityFX.EconomicsArcade.Test.EntityTest
     [TestClass]
     public class UserEntityTest
     {
-        private static readonly string ConnString = "Data Source=.;Initial Catalog=EntityFX.EconomicsArcade.Database;Integrated Security=True";
+        //private static readonly string ConnString = "Data Source=.;Initial Catalog=EntityFX.EconomicsArcade.Database;Integrated Security=True";
+        private static readonly string ConnString = "Data Source=amukintern.testrussia.local;Initial Catalog=IclServicesWcfTestLab;Persist Security Info=True;User ID=sa;Password=P@ssword;MultipleActiveResultSets=True;App=EntityFramework";
         
         [TestMethod]
         public void CreateUserEntity()
