@@ -6,6 +6,6 @@ namespace EntityFX.EconomicsArcade.Contract.DataAccess.GameData
     public interface IGameDataRetrieveDataAccessService
     {
         [OperationContract]
-        Common.GameData GetGameData();
+        Common.GameData GetGameData(int userId);
     }
 }

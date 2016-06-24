@@ -12,15 +12,17 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.UssrSimulator
     {
         private readonly IGameDataRetrieveDataAccessService _gameDataRetrieveDataAccessService;
         private readonly INotifyGameDataChanged _notifyGameDataChanged;
+        private readonly int _userId;
         private GameData _gameData;
         private readonly int _stepsToPersist = 10;
         private int _currentStepsToPersist;
 
         public UssrSimulatorGame(IGameDataRetrieveDataAccessService gameDataRetrieveDataAccessService
-            , INotifyGameDataChanged notifyGameDataChanged)
+            , INotifyGameDataChanged notifyGameDataChanged, int userId)
         {
             _gameDataRetrieveDataAccessService = gameDataRetrieveDataAccessService;
             _notifyGameDataChanged = notifyGameDataChanged;
+            _userId = userId;
         }
 
         public decimal Communism
@@ -154,8 +156,7 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.UssrSimulator
                 if (_currentStepsToPersist == _stepsToPersist)
                 {
                     _currentStepsToPersist = 0;
-                    var gameData = PrepareGameDataToPersist();
-                    _notifyGameDataChanged.GameDataChanged(gameData);
+                    _notifyGameDataChanged.GameDataChanged(this);
                 }
                 _currentStepsToPersist++;  
             }
@@ -164,91 +165,22 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.UssrSimulator
 
         protected override void PostBuyFundDriver(FundsDriver fundDriver)
         {
-            var gameData = PrepareGameDataToPersist(fundDriver);
-            _notifyGameDataChanged.GameDataChanged(gameData);
+            _notifyGameDataChanged.FundsDriverBought(this, fundDriver);
         }
 
         protected override void PostInitialize()
         {
             //CashFunds(1500000);
-
+            ManualStepNumber = _gameData.ManualStepsCount;
+            AutomaticStepNumber = _gameData.AutomaticStepsCount;
+            FundsCounters.CurrentFunds = _gameData.Counters.CurrentFunds;
+            FundsCounters.TotalFunds = _gameData.Counters.TotalFunds;
         }
 
         protected override void PreInitialize()
         {
             //CashFunds(1500000);
-            _gameData = _gameDataRetrieveDataAccessService.GetGameData();
-        }
-
-        private GameData PrepareGameDataToPersist(FundsDriver fundDriver = null)
-        {
-            return new GameData()
-            {
-                Counters = new EconomicsArcade.Contract.Common.Counters.FundsCounters()
-                {
-                    CurrentFunds = FundsCounters.CurrentFunds,
-                    TotalFunds = FundsCounters.TotalFunds,
-                    Counters = PrepareCountersToPersist()
-                },
-                FundsDrivers = fundDriver != null ? new[] {  PrepareFundDriverToPersist(fundDriver) } : new EconomicsArcade.Contract.Common.Funds.FundsDriver[] {},
-                AutomaticStepsCount = AutomaticStepNumber,
-                ManualStepsCount = ManualStepNumber
-            };
-        }
-
-
-        private EconomicsArcade.Contract.Common.Counters.CounterBase[] PrepareCountersToPersist()
-        {
-            var counters = new EconomicsArcade.Contract.Common.Counters.CounterBase[FundsCounters.Counters.Count];
-            foreach (var sourceCounter in FundsCounters.Counters)
-            {
-                EconomicsArcade.Contract.Common.Counters.CounterBase destinationCouner = null;
-                var sourcenGenericCounter = sourceCounter.Value as GenericCounter;
-                if (sourcenGenericCounter != null)
-                {
-                    var destinationGenericCounter = new EconomicsArcade.Contract.Common.Counters.GenericCounter
-                    {
-                        BonusPercentage = sourcenGenericCounter.BonusPercentage,
-                        Inflation = sourcenGenericCounter.Inflation,
-                        CurrentSteps = sourcenGenericCounter.CurrentSteps,
-                        SubValue = sourcenGenericCounter.SubValue
-                    };
-                    destinationCouner = destinationGenericCounter;
-                    destinationCouner.Type = 1;
-                }
-                var sourceSingleCounter = sourceCounter.Value as SingleCounter;
-                if (sourceSingleCounter != null)
-                {
-                    destinationCouner = new EconomicsArcade.Contract.Common.Counters.SingleCounter();
-                    destinationCouner.Type = 0;
-                }
-                var sourceDelayedCounter = sourceCounter.Value as DelayedCounter;
-                if (sourceDelayedCounter != null)
-                {
-                    var destinationDelayedCounter = new EconomicsArcade.Contract.Common.Counters.DelayedCounter();
-                    destinationCouner = destinationDelayedCounter;
-                    destinationCouner.Type = 3;
-                }
-                if (destinationCouner != null)
-                {
-                    destinationCouner.Id = sourceCounter.Value.Id;
-                    destinationCouner.Value = sourceCounter.Value.Value;
-                }
-                if (destinationCouner != null) counters[destinationCouner.Id] = destinationCouner;
-            }
-            return counters;
-        }
-
-        private EconomicsArcade.Contract.Common.Funds.FundsDriver PrepareFundDriverToPersist(FundsDriver fundDriver)
-        {
-            return new EconomicsArcade.Contract.Common.Funds.FundsDriver()
-            {
-                Id = fundDriver.Id,
-                Name = fundDriver.Name,
-                Value = fundDriver.CurrentValue,
-                InflationPercent = fundDriver.InflationPercent,
-                BuyCount = fundDriver.BuyCount
-            };
+            _gameData = _gameDataRetrieveDataAccessService.GetGameData(_userId);
         }
 
     }

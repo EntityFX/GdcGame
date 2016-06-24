@@ -17,7 +17,7 @@ namespace EntityFX.EconomicsArcade.Manager
         {
             var game = _unityContainer.Resolve<IGame>(
                 new ParameterOverride("notifyGameDataChanged", _unityContainer.Resolve<INotifyGameDataChanged>(
-                    new ParameterOverride("userId", userId))));
+                    new ParameterOverride("userId", userId))), new ParameterOverride("userId", userId));
             return game;
         }
     }

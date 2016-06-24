@@ -18,9 +18,9 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
 
         public FundsCounters FundsCounters { get; private set; }
 
-        public int AutomaticStepNumber { get; private set; }
+        public int AutomaticStepNumber { get; protected set; }
 
-        public int ManualStepNumber { get; private set; }
+        public int ManualStepNumber { get; protected set; }
 
         protected GameBase()
         {
