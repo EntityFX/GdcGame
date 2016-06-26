@@ -13,7 +13,7 @@ namespace EntityFX.EconomicsArcade.Test.DataAccessTest
             using (var proxyFactory = new GameDataRetrieveDataAccessProxy())
             {
                 var proxy = proxyFactory.CreateChannel(new Uri("net.tcp://localhost/EntityFX.EconomicsArcade.DataAccess:8777/EntityFX.EconomicsArcade.Contract.DataAccess.GameData.IGameDataRetrieveDataAccessService"));
-                var user = proxy.GetGameData();
+                var user = proxy.GetGameData(1);
                 proxyFactory.CloseChannel();
                 Assert.IsNotNull(user);
             }
