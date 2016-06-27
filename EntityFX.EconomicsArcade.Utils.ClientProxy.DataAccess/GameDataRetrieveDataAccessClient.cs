@@ -9,6 +9,11 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.DataAccess
         private const string Endpoint =
             "net.tcp://localhost:8777/EntityFX.EconomicsArcade.DataAccess/EntityFX.EconomicsArcade.Contract.DataAccess.GameData.IGameDataRetrieveDataAccessService";
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public GameData GetGameData(int userId)
         {
             GameData result;

@@ -23,5 +23,7 @@ namespace EntityFX.EconomicsArcade.DataAccess.Model
         public virtual UserGameCounterEntity UserGameCounter { get; set; }
 
         public virtual ICollection<UserCounterEntity> UserCounters { get; set; }
+
+        public virtual ICollection<UserFundsDriverEntity> UserFundsDrivers { get; set; }
     }
 }

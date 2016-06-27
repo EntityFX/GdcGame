@@ -10,6 +10,7 @@ namespace EntityFX.EconomicsArcade.DataAccess.Model
         public virtual DbSet<UserEntity> Users { get; set; }
         public virtual DbSet<UserGameCounterEntity> UserGameCounters { get; set; }
         public virtual DbSet<UserCounterEntity> UserCounters { get; set; }
+        public virtual DbSet<UserFundsDriverEntity> UserFundsDrivers { get; set; }
         public EconomicsArcadeDbContext()
             : base("EconomicsArcadeDbContext")
         {
@@ -65,6 +66,11 @@ namespace EntityFX.EconomicsArcade.DataAccess.Model
                 .WithRequired(e => e.FundsDriver)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<FundsDriverEntity>()
+                .HasMany(e => e.UserFundDrivers)
+                .WithRequired(e => e.FundsDriver)
+                .WillCascadeOnDelete(false);
+
 
             modelBuilder.Entity<IncrementorEntity>()
                 .ToTable("Incrementor")
@@ -83,10 +89,15 @@ namespace EntityFX.EconomicsArcade.DataAccess.Model
                 .WithRequired(e => e.User)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<UserEntity>()
+                 .HasMany(e => e.UserFundsDrivers)
+                .WithRequired(e => e.User)
+                .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<UserGameCounterEntity>()
                 .ToTable("UserGameCounter")
                 .HasKey(_ => _.UserId);
-            
+
             modelBuilder.Entity<UserGameCounterEntity>()
                 .Property(e => e.TotalFunds)
                 .HasColumnType("Money");
@@ -113,6 +124,9 @@ namespace EntityFX.EconomicsArcade.DataAccess.Model
             modelBuilder.Entity<UserCounterEntity>()
                 .Property(e => e.DelayedValue)
                 .HasColumnType("Money");
+
+            modelBuilder.Entity<UserFundsDriverEntity>()
+                .ToTable("UserFundsDriver");
 
             //.HasKey(_ => new {_.UserId, _.CounterId});
         }

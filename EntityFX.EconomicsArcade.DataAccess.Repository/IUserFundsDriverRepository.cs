@@ -5,8 +5,8 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository
 {
     public interface IUserFundsDriverRepository
     {
-        FundsDriver[] FindByUserId(GetFundsDriverByUserIdCriterion criterion);
-        void CreateForUser(int userId, FundsDriver fundsDriver);
-        void UpdateForUser(int userId, FundsDriver fundsDriver);
+        FundsDriver[] FindByUserId(GetUserFundsDriverByUserIdCriterion criterion);
+        void CreateForUser(int userId, FundsDriver[] fundsDrivers);
+        void UpdateForUser(int userId, FundsDriver[] fundsDrivers);
     }
 }

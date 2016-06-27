@@ -69,7 +69,7 @@
     <Compile Include="Criterions\Counters\GetAllCountersCriterion.cs" />
     <Compile Include="Criterions\FundsDriver\GetAllFundsDriversCriterion.cs" />
     <Compile Include="Criterions\UserCounter\GetUserCountersByUserIdCriterion.cs" />
-    <Compile Include="Criterions\UserFundsDriver\GetFundsDriverByUserIdCriterion.cs" />
+    <Compile Include="Criterions\UserFundsDriver\GetUserFundsDriverByUserIdCriterion.cs" />
     <Compile Include="Criterions\UserGameCounter\GetUserGameCounterByIdCriterion.cs" />
     <Compile Include="Criterions\User\GetAllUsersCriterion.cs" />
     <Compile Include="Criterions\User\GetUserByIdCriterion.cs" />
@@ -82,6 +82,7 @@
     <Compile Include="IUserGameCounterRepository.cs" />
     <Compile Include="IUserRepository.cs" />
     <Compile Include="Mappers\UserCounterContractMapper.cs" />
+    <Compile Include="Mappers\UserFundsDriverContractMapper.cs" />
     <Compile Include="Mappers\UserFundsDriverEntityMapper.cs" />
     <Compile Include="Mappers\UserCounterEntityMapper.cs" />
     <Compile Include="Mappers\CountersContractMapper.cs" />
@@ -96,7 +97,7 @@
     <Compile Include="Queries\Counetrs\GetAllCountersQuery.cs" />
     <Compile Include="Queries\FundsDriver\GetAllFundsDriversQuery.cs" />
     <Compile Include="Queries\UserCounter\GetUserCountersByUserIdQuery.cs" />
-    <Compile Include="Queries\UserFundsDriver\GetFundDriverByUserIdQuery.cs" />
+    <Compile Include="Queries\UserFundsDriver\GetUserFundDriverByUserIdQuery.cs" />
     <Compile Include="Queries\UserGameCounter\GetUserGameCounterByIdQuery.cs" />
     <Compile Include="Queries\User\GetAllUsersQuery.cs" />
     <Compile Include="Queries\User\GetUserByNameQuery.cs" />

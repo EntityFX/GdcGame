@@ -12,7 +12,7 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository.Mappers
         {
             destination = destination ?? new UserFundsDriverEntity();
             destination.BuyCount = source.BuyCount;
-            destination.CreateDateTime = DateTime.Now;
+            //destination.CreateDateTime = DateTime.Now;
             destination.FundsDriverId = source.Id;
             destination.Value = source.Value;
             return destination;

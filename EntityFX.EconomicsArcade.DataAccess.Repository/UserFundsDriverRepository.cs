@@ -11,50 +11,59 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository
 {
     public class UserFundsDriverRepository : IUserFundsDriverRepository
     {
-        private readonly IMapper<FundsDriverEntity, FundsDriver> _fundsDriverContractMapper;
+        private readonly IMapper<UserFundsDriverEntity, FundsDriver> _userFundsDriverContractMapper;
         private readonly IMapper<FundsDriver, UserFundsDriverEntity> _userFundsDriverEntityMapper;
         private readonly IUnitOfWorkFactory _unitOfWorkFactory;
 
         public UserFundsDriverRepository(IUnitOfWorkFactory unitOfWorkFactory,
-            IMapper<FundsDriverEntity, FundsDriver> fundsDriverContractMapper,
+            IMapper<UserFundsDriverEntity, FundsDriver> userFundsDriverContractMapper,
             IMapper<FundsDriver, UserFundsDriverEntity> userFundsDriverEntityMapper
             )
         {
             _unitOfWorkFactory = unitOfWorkFactory;
-            _fundsDriverContractMapper = fundsDriverContractMapper;
+            _userFundsDriverContractMapper = userFundsDriverContractMapper;
             _userFundsDriverEntityMapper = userFundsDriverEntityMapper;
         }
 
-        public FundsDriver[] FindByUserId(GetFundsDriverByUserIdCriterion criterion)
+        public FundsDriver[] FindByUserId(GetUserFundsDriverByUserIdCriterion criterion)
         {
             using (var uow = _unitOfWorkFactory.Create())
             {
                 var findQuery = uow.BuildQuery();
-                return findQuery.For<IEnumerable<FundsDriverEntity>>()
+                return findQuery.For<IEnumerable<UserFundsDriverEntity>>()
                     .With(criterion)
-                    .Select(_ => _fundsDriverContractMapper.Map(_))
+                    .Select(_ => _userFundsDriverContractMapper.Map(_))
                     .ToArray();
             }
         }
 
-        public void CreateForUser(int userId, FundsDriver fundsDriver)
+        public void CreateForUser(int userId, FundsDriver[] fundsDrivers)
         {
             using (var uow = _unitOfWorkFactory.Create())
             {
-                var userFundsDriver = uow.CreateEntity<UserFundsDriverEntity>();
-                userFundsDriver = _userFundsDriverEntityMapper.Map(fundsDriver, userFundsDriver);
-                userFundsDriver.UserId = userId;
+                foreach (var fundsDriver in fundsDrivers)
+                {
+                    var userFundsDriver = uow.CreateEntity<UserFundsDriverEntity>();
+                    userFundsDriver = _userFundsDriverEntityMapper.Map(fundsDriver, userFundsDriver);
+                    userFundsDriver.UserId = userId;
+                    //fundsDriver.CreateDateTime = DateTime.Now;
+                }
                 uow.Commit();
             }
         }
 
-        public void UpdateForUser(int userId, FundsDriver fundsDriver)
+        public void UpdateForUser(int userId, FundsDriver[] fundsDrivers)
         {
             using (var uow = _unitOfWorkFactory.Create())
             {
-                var userFundsDriver = uow.AttachEntity(uow.CreateEntity<UserFundsDriverEntity>());
-                userFundsDriver = _userFundsDriverEntityMapper.Map(fundsDriver, userFundsDriver);
-                userFundsDriver.UserId = userId;
+                foreach (var fundsDriver in fundsDrivers)
+                {
+                    var userFundsDriver = uow.CreateEntity<UserFundsDriverEntity>();
+                    userFundsDriver = _userFundsDriverEntityMapper.Map(fundsDriver, userFundsDriver);
+                    userFundsDriver.UserId = userId;
+                    userFundsDriver = uow.AttachEntity(userFundsDriver);
+                    //fundsDriver.CreateDateTime = DateTime.Now;
+                }
                 uow.Commit();
             }
         }
