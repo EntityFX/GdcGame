@@ -93,10 +93,11 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.UssrSimulator
                 {
                     Id = fundDriver.Id,
                     Name = fundDriver.Name,
-                    InitialValue = fundDriver.Value,
+                    InitialValue = fundDriver.InitialValue,
+                    CurrentValue = fundDriver.Value,
                     UnlockValue = fundDriver.UnlockValue,
                     InflationPercent = fundDriver.InflationPercent,
-                    BuyCount = 0,
+                    BuyCount = fundDriver.BuyCount,
                     Incrementors = incrementors
                 });
             }
@@ -113,8 +114,12 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.UssrSimulator
                 CounterBase destinationCouner = null;
                 if (sourceCounter.GetType() == typeof(EntityFX.EconomicsArcade.Contract.Common.Counters.GenericCounter))
                 {
-                    destinationCouner = new GenericCounter();
-                    destinationCouner.IsUsedInAutoStep = ((EntityFX.EconomicsArcade.Contract.Common.Counters.GenericCounter)sourceCounter).UseInAutoSteps;
+                    var destinationGenericCounter = new GenericCounter();
+                    var sourceGenericCounter =  (EconomicsArcade.Contract.Common.Counters.GenericCounter)sourceCounter;
+                    destinationGenericCounter.BonusPercentage = sourceGenericCounter.BonusPercentage;
+                    destinationGenericCounter.CurrentSteps = sourceGenericCounter.CurrentSteps;
+                    destinationGenericCounter.Inflation = sourceGenericCounter.Inflation;
+                    destinationCouner = destinationGenericCounter;
                 }
                 if (sourceCounter.GetType() == typeof(EntityFX.EconomicsArcade.Contract.Common.Counters.SingleCounter))
                 {
@@ -129,6 +134,7 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.UssrSimulator
                     destinationCouner.Name = sourceCounter.Name;
                     destinationCouner.SubValue = sourceCounter.Value;
                     destinationCouner.Id = sourceCounter.Id;
+                                        destinationCouner.IsUsedInAutoStep = destinationCouner.IsUsedInAutoStep;
                 }
                 counters.Add(inc, destinationCouner);
                 inc++;

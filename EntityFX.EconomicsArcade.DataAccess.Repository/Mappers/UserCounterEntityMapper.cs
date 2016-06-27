@@ -18,7 +18,6 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository.Mappers
                 case 1:
                 case 2:
                     var genericCounter = (GenericCounter)source;
-                    destination.Bonus = genericCounter.Bonus;
                     destination.BonusPercentage = genericCounter.BonusPercentage;
                     destination.CounterId = genericCounter.Id;
                     destination.CreateDateTime = DateTime.Now;

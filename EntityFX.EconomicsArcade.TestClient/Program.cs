@@ -114,7 +114,7 @@ namespace EntityFX.EconomicsArcade.TestClient
                 Console.SetCursorPosition(0, 0);
                 Console.WriteLine("Funds: {0:C}; Total Funds: {1:C}", gameData.Counters.CurrentFunds, gameData.Counters.TotalFunds);
                 Console.WriteLine("Manual Steps: {0}, Automatic Steps: {1}",
-                    0, 0);
+                    gameData.ManualStepsCount, gameData);
                 PrettyConsole.WriteLineColor(ConsoleColor.Red, "{1,15}: {0,12}", gameData.Counters.Counters[0].Value, gameData.Counters.Counters[0].Name);
                 PrettyConsole.WriteLineColor(ConsoleColor.Cyan, "{1,15}: {0,12:C} ", ((GenericCounter)gameData.Counters.Counters[1]).SubValue, gameData.Counters.Counters[1].Name);
                 PrettyConsole.WriteLineColor(ConsoleColor.Cyan, "{1,15}: {0,12:C} ({2}%)"

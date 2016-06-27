@@ -21,7 +21,6 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository.Mappers
                         var genericDestionation = (GenericCounter)destination;
                         genericDestionation.UseInAutoSteps = source.Counter.UseInAutostep;
                         genericDestionation.Inflation = source.Inflation;
-                        genericDestionation.Bonus = 0;
                         genericDestionation.BonusPercentage = source.BonusPercentage;
                         break;
                     case 3:
@@ -31,7 +30,7 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository.Mappers
             }
             if (destination == null) return null;
             destination.Name = source.Counter.Name;
-            destination.Value = source.Counter.InitialValue;
+            destination.Value = source.Value;
             destination.Type = source.Counter.Type;
             destination.Id = source.Counter.Id;
             return destination;

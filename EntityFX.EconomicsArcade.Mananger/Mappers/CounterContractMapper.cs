@@ -13,7 +13,6 @@ namespace EntityFX.EconomicsArcade.Manager.Mappers
             {
                 var genericDestination = new Contract.Common.Counters.GenericCounter
                 {
-                    Bonus = genericCounter.Bonus,
                     BonusPercentage = genericCounter.BonusPercentage,
                     SubValue = genericCounter.SubValue,
                     Inflation = genericCounter.Inflation

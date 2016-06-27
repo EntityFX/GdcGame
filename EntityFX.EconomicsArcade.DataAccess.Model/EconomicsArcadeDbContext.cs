@@ -67,7 +67,7 @@ namespace EntityFX.EconomicsArcade.DataAccess.Model
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<FundsDriverEntity>()
-                .HasMany(e => e.UserFundDrivers)
+                .HasMany(e => e.UserFundsDrivers)
                 .WithRequired(e => e.FundsDriver)
                 .WillCascadeOnDelete(false);
 
@@ -98,6 +98,9 @@ namespace EntityFX.EconomicsArcade.DataAccess.Model
                 .ToTable("UserGameCounter")
                 .HasKey(_ => _.UserId);
 
+            modelBuilder.Entity<UserFundsDriverEntity>()
+                .ToTable("UserFundsDriver");
+
             modelBuilder.Entity<UserGameCounterEntity>()
                 .Property(e => e.TotalFunds)
                 .HasColumnType("Money");
@@ -118,15 +121,8 @@ namespace EntityFX.EconomicsArcade.DataAccess.Model
                 .HasColumnType("Money");
 
             modelBuilder.Entity<UserCounterEntity>()
-                .Property(e => e.Bonus)
-                .HasColumnType("Money");
-
-            modelBuilder.Entity<UserCounterEntity>()
                 .Property(e => e.DelayedValue)
                 .HasColumnType("Money");
-
-            modelBuilder.Entity<UserFundsDriverEntity>()
-                .ToTable("UserFundsDriver");
 
             //.HasKey(_ => new {_.UserId, _.CounterId});
         }

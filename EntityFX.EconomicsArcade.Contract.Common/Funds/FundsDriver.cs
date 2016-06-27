@@ -12,9 +12,13 @@ namespace EntityFX.EconomicsArcade.Contract.Common.Funds
         [DataMember]
         public string Name { get; set; }
         [DataMember]
+        public decimal InitialValue { get; set; }
+        [DataMember]
         public decimal Value { get; set; }
         [DataMember]
         public int InflationPercent { get; set; }
+        [DataMember]
+        public int InflationSteps { get; set; }
         [DataMember]
         public decimal UnlockValue { get; set; }
         [DataMember]

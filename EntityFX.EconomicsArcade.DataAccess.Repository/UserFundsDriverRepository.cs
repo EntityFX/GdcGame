@@ -61,7 +61,7 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository
                     var userFundsDriver = uow.CreateEntity<UserFundsDriverEntity>();
                     userFundsDriver = _userFundsDriverEntityMapper.Map(fundsDriver, userFundsDriver);
                     userFundsDriver.UserId = userId;
-                    userFundsDriver = uow.AttachEntity(userFundsDriver);
+                    uow.AttachEntity(userFundsDriver);
                     //fundsDriver.CreateDateTime = DateTime.Now;
                 }
                 uow.Commit();

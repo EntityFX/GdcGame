@@ -44,7 +44,9 @@ namespace EntityFX.EconomicsArcade.Infrastructure.Repository.UnitOfWork
 
         public TEntity AttachEntity<TEntity>(TEntity entity) where TEntity : class
         {
-            return _dbContext.Set<TEntity>().Attach(entity);
+            _dbContext.Set<TEntity>().Attach(entity);
+            _dbContext.Entry(entity).State = EntityState.Modified;
+            return entity;
         }
 
         public IQueryBuilder BuildQuery()

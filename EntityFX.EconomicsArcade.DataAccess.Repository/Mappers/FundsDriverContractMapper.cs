@@ -19,7 +19,7 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository.Mappers
         {
             destination = destination ?? new FundsDriver();
             destination.BuyCount = 0;
-            destination.Value = source.InitialValue;
+            destination.InitialValue = source.InitialValue;
             destination.UnlockValue = source.UnlockValue;
             destination.Name = source.Name;
             destination.Id = source.Id;
