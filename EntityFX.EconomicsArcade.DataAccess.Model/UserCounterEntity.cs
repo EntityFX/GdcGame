@@ -20,6 +20,7 @@ namespace EntityFX.EconomicsArcade.DataAccess.Model
 
         public decimal Value { get; set; }
         public int BonusPercentage { get; set; }
+        public int CurrentStepsCount { get; set; }
         public int Inflation { get; set; }
         public int MiningTimeSecondsEllapsed { get; set; }
         public decimal DelayedValue { get; set; }

@@ -22,6 +22,7 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository.Mappers
                         genericDestionation.UseInAutoSteps = source.Counter.UseInAutostep;
                         genericDestionation.Inflation = source.Inflation;
                         genericDestionation.BonusPercentage = source.BonusPercentage;
+                        genericDestionation.CurrentSteps = source.CurrentStepsCount;
                         break;
                     case 3:
                         destination = new DelayedCounter();

@@ -22,6 +22,7 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository.Mappers
                     destination.CounterId = genericCounter.Id;
                     destination.CreateDateTime = DateTime.Now;
                     destination.Inflation = genericCounter.Inflation;
+                    destination.CurrentStepsCount = genericCounter.CurrentSteps;
                     break;
                 case 3:
                     var delayedCounter = (DelayedCounter)source;

@@ -119,6 +119,7 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.UssrSimulator
                     destinationGenericCounter.BonusPercentage = sourceGenericCounter.BonusPercentage;
                     destinationGenericCounter.CurrentSteps = sourceGenericCounter.CurrentSteps;
                     destinationGenericCounter.Inflation = sourceGenericCounter.Inflation;
+                    destinationGenericCounter.IsUsedInAutoStep = sourceGenericCounter.UseInAutoSteps;
                     destinationCouner = destinationGenericCounter;
                 }
                 if (sourceCounter.GetType() == typeof(EntityFX.EconomicsArcade.Contract.Common.Counters.SingleCounter))
@@ -134,7 +135,6 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.UssrSimulator
                     destinationCouner.Name = sourceCounter.Name;
                     destinationCouner.SubValue = sourceCounter.Value;
                     destinationCouner.Id = sourceCounter.Id;
-                                        destinationCouner.IsUsedInAutoStep = destinationCouner.IsUsedInAutoStep;
                 }
                 counters.Add(inc, destinationCouner);
                 inc++;

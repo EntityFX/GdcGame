@@ -3,6 +3,7 @@
 	[UserId] INT NOT NULL,
 	[CounterId] INT NOT NULL,
 	[Value] MONEY NOT NULL,
+	[CurrentStepsCount] INT NOT NULL,
 	[BonusPercentage] INT NOT NULL,
 	[Bonus] MONEY NOT NULL,
 	[Inflation] INT NOT NULL,
