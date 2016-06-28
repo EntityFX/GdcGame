@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Net.Http;
+using System.Web;
 using System.Web.Http;
+using System.Web.Http.Results;
 using EntityFX.EconomicsArcade.Contract.Common;
 using EntityFX.EconomicsArcade.Contract.Manager.GameManager;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
@@ -30,23 +33,26 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Controllers
         }
 
         [HttpPost]
-        [Route()]
         public void PerformManualStep()
         {
             _game.PerformManualStep();
         }
         [HttpPost]
-        [Route()]
         public void FightAgainstInflation()
         {
             _game.FightAgainstInflation();
         }
 
         [HttpGet]
-        [Route()]
-        public GameDataModel GetGameData(Guid sessionGuid)
+        public GameDataModel GetGameData(Guid? id)
         {
             return _gameDataModelMapper.Map(_game.GetGameData(), new GameDataModel());
+        }
+
+        [HttpGet]
+        public OkResult Get()
+        {
+            return Ok();
         }
     }
 
