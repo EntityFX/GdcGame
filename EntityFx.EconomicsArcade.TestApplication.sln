@@ -20,6 +20,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Engines Layer", "Engines Layer", "{970EB44D-38AF-479F-AFC1-CDDB9C17113A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D150B452-1254-4C2D-90DA-27765E2C7C0B}"
+	ProjectSection(SolutionItems) = preProject
+		EntityFX.EconomicsArcade.Presentation.WebApplication\Project_Readme.html = EntityFX.EconomicsArcade.Presentation.WebApplication\Project_Readme.html
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.EconomicsArcade.Infrastructure.Service", "EntityFX.EconomicsArcade.Infrastructure.Service\EntityFX.EconomicsArcade.Infrastructure.Service.csproj", "{2B414418-F3D8-4528-BA9F-6FEFA8B7AA03}"
 EndProject
@@ -73,6 +76,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{E9B9F1
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.EconomicsArcade.DataAccess.Repository", "EntityFX.EconomicsArcade.DataAccess.Repository\EntityFX.EconomicsArcade.DataAccess.Repository.csproj", "{D5A72A34-5DE5-41E1-B52E-8F70D19CB7BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.EconomicsArcade.Presentation.WebApplication", "EntityFX.EconomicsArcade.Presentation.WebApplication\EntityFX.EconomicsArcade.Presentation.WebApplication.csproj", "{223F66A2-74A2-4437-B6C6-5F84B28AD62A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.EconomicsArcade.Presentation.Models", "EntityFX.EconomicsArcade.Presentation.Models\EntityFX.EconomicsArcade.Presentation.Models.csproj", "{0F9C056A-DB5D-48ED-A688-BFD04ED4DFD7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -173,6 +180,14 @@ Global
 		{D5A72A34-5DE5-41E1-B52E-8F70D19CB7BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5A72A34-5DE5-41E1-B52E-8F70D19CB7BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5A72A34-5DE5-41E1-B52E-8F70D19CB7BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{223F66A2-74A2-4437-B6C6-5F84B28AD62A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{223F66A2-74A2-4437-B6C6-5F84B28AD62A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{223F66A2-74A2-4437-B6C6-5F84B28AD62A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{223F66A2-74A2-4437-B6C6-5F84B28AD62A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F9C056A-DB5D-48ED-A688-BFD04ED4DFD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F9C056A-DB5D-48ED-A688-BFD04ED4DFD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F9C056A-DB5D-48ED-A688-BFD04ED4DFD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F9C056A-DB5D-48ED-A688-BFD04ED4DFD7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -202,5 +217,7 @@ Global
 		{CEAD1C8C-20A4-4E48-969A-9AFCD104D109} = {2B7D0649-6899-491F-B4E7-70D163B1F72D}
 		{89F89C37-F564-47EB-839D-C45ACD9D012A} = {2ECE9623-BD00-47BF-A617-3104D0E03486}
 		{D5A72A34-5DE5-41E1-B52E-8F70D19CB7BF} = {71152D90-9B19-442E-AD44-F385A35B4DD2}
+		{223F66A2-74A2-4437-B6C6-5F84B28AD62A} = {AFA994D0-4315-495A-A14A-74BC79DA9A51}
+		{0F9C056A-DB5D-48ED-A688-BFD04ED4DFD7} = {AFA994D0-4315-495A-A14A-74BC79DA9A51}
 	EndGlobalSection
 EndGlobal

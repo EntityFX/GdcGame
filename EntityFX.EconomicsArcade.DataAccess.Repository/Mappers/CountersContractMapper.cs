@@ -8,33 +8,29 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository.Mappers
     {
         public CounterBase Map(CounterEntity source, CounterBase destination = null)
         {
-            if (destination == null)
+           destination = destination ?? new UserCounterEntity();
+            switch (source.Type)
             {
-                switch (source.Type)
-                {
-                    case 0:
-                        destination = new SingleCounter();
-                        break;
-                    case 1:
-                    case 2:
-                        destination = new GenericCounter();
-                        var genericDestionation = (GenericCounter) destination;
-                        genericDestionation.UseInAutoSteps = source.UseInAutostep;
-                        genericDestionation.Inflation = 0;
-                        genericDestionation.Bonus = 0;
-                        genericDestionation.BonusPercentage = 0;
-                        break;
-                    case 3:
-                        destination = new DelayedCounter();
-                        break;
-                }
+                case 0:
+                    var singleCounter = (SingleCounter)source;
+                    break;
+                case 1:
+                case 2:
+                    var genericCounter = (GenericCounter)source;
+                    destination.BonusPercentage = genericCounter.BonusPercentage;
+                    destination.CounterId = genericCounter.Id;
+                    destination.CreateDateTime = DateTime.Now;
+                    destination.Inflation = genericCounter.Inflation;
+                    destination.CurrentStepsCount = genericCounter.CurrentSteps;
+                    break;
+                case 3:
+                    var delayedCounter = (DelayedCounter)source;
+                    break;
             }
-            if (destination == null) return null;
-            destination.Name = source.Name;
-            destination.Value = source.InitialValue;
-            destination.Type = source.Type;
-            destination.Id = source.Id;
+            destination.CounterId = source.Id;
+            destination.Value = source.Value;
             return destination;
+        }
         }
     }
 }
