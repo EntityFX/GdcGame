@@ -15,6 +15,7 @@ using EntityFX.EconomicsArcade.Contract.DataAccess.User;
 using EntityFX.EconomicsArcade.Contract.Game.Counters;
 using EntityFX.EconomicsArcade.Contract.Game.Funds;
 using EntityFX.EconomicsArcade.Contract.Game.Incrementors;
+using EntityFX.EconomicsArcade.Contract.Manager.UserManager;
 using EntityFX.EconomicsArcade.Utils.ClientProxy.DataAccess;
 using PortableLog.NLog;
 namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
@@ -42,7 +43,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
             container.RegisterType<IMapper<IGame, GameData>, GameDataContractMapper>();
             container.RegisterType<IGame, UssrSimulatorGame>();
             container.RegisterType<IGameManager, GameManager>();
-
+            container.RegisterType<ISimpleUserManager, SimpleUserManager>();
 
             return container;
         }

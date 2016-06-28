@@ -30,15 +30,18 @@ namespace EntityFX.EconomicsArcade.TestClient
                 userName = args[0];
             }
             Guid ses;
-            using (var proxy = new SessionManagerProxy(Guid.Empty))
+
+            var simpleUserManagerClient = new SimpleUserManagerClient();
+            if (!simpleUserManagerClient.Exists(userName))
             {
-                var channel = proxy.CreateChannel(new Uri("net.tcp://localhost:8555/EntityFX.EconomicsArcade.Manager/EntityFX.EconomicsArcade.Contract.Manager.SessionManager.ISessionManager"));
-                //proxy.ApplyContextScope();
-                ses = channel.AddSession(userName);
-                proxy.CloseChannel();
+                simpleUserManagerClient.Create(userName);
             }
 
-            var gr = new GameRunner(ses);
+            var sessionManagerClient = new SessionManagerClient();
+            var sessionGuid = sessionManagerClient.AddSession(userName);
+
+
+            var gr = new GameRunner(sessionGuid);
             var gameData = gr.GetGameData();
             gr.DisplayGameData(gameData);
             ConsoleKeyInfo keyInfo;
