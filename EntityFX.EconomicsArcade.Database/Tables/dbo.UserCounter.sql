@@ -5,7 +5,6 @@
 	[Value] MONEY NOT NULL,
 	[CurrentStepsCount] INT NOT NULL,
 	[BonusPercentage] INT NOT NULL,
-	[Bonus] MONEY NOT NULL,
 	[Inflation] INT NOT NULL,
 	[CreateDateTime] DATETIME NOT NULL,
 	[MiningTimeSecondsEllapsed] INT NOT NULL,

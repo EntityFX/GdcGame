@@ -61,6 +61,17 @@ namespace EntityFX.EconomicsArcade.Infrastructure.Service
         {
             _serviceHost = new UnityServiceHost(Container, Container.Resolve<T>().GetType(), endpointAddress);
             CreateServiceEndpoint(_serviceHost);
+            var serviceDebugBehavior = _serviceHost.Description.Behaviors.Find<ServiceDebugBehavior>();
+            if (serviceDebugBehavior == null)
+            {
+                _serviceHost.Description.Behaviors
+                    .Add(new ServiceDebugBehavior() {IncludeExceptionDetailInFaults = true});
+            }
+            else
+            {
+                serviceDebugBehavior.IncludeExceptionDetailInFaults = true;
+            }
+
             _serviceHost.Open();
         }
 

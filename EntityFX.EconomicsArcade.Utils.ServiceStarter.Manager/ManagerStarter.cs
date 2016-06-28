@@ -3,6 +3,7 @@ using EntityFX.EconomicsArcade.Infrastructure.Common;
 using EntityFX.EconomicsArcade.Infrastructure.Service;
 using System;
 using EntityFX.EconomicsArcade.Contract.Manager.GameManager;
+using EntityFX.EconomicsArcade.Contract.Manager.UserManager;
 
 namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
 {
@@ -20,6 +21,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
         {
             AddNetTcpService<ISessionManager>(new Uri(BaseUrl));
             AddNetTcpService<IGameManager>(new Uri(BaseUrl));
+            AddNetTcpService<ISimpleUserManager>(new Uri(BaseUrl));
             OpenServices();
         }
 

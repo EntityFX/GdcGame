@@ -35,7 +35,7 @@ namespace EntityFX.EconomicsArcade.Manager
 
         public void FightAgainstInflation()
         {
-            throw new NotImplementedException();
+            GetSessionGame().FightAgainstInflation();
         }
 
         public void PlayLottery()
