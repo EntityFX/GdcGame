@@ -10,6 +10,7 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Controllers
     {
         public ActionResult Index()
         {
+
             return View();
         }
 
