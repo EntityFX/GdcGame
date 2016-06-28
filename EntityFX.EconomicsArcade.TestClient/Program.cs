@@ -32,7 +32,6 @@ namespace EntityFX.EconomicsArcade.TestClient
             {
                 userName = args[0];
             }
-            Guid ses;
 
             var simpleUserManagerClient = new SimpleUserManagerClient(
                 ConfigurationManager.AppSettings["ManagerEndpointAddress_UserManager"]
