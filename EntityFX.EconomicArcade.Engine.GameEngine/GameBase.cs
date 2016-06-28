@@ -238,6 +238,7 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
                 genericCounter.CurrentSteps = 0;
                 genericCounter.Inflation = genericCounter.CurrentSteps / genericCounter.StepsToIncreaseInflation;
             }
+            FundsCounters.RootCounter.SubValue += 1;
         }
 
         public LotteryResult PlayLottery()

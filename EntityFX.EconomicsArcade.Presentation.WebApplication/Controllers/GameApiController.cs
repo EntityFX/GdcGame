@@ -19,16 +19,16 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Controllers
 
         public GameApiController()
         {
-            var simpleUserManagerClient = new SimpleUserManagerClient("net.tcp://localhost:8555/EntityFX.EconomicsArcade.Manager/EntityFX.EconomicsArcade.Contract.Manager.UserManager.ISimpleUserManager");
+            var simpleUserManagerClient = new SimpleUserManagerClient(string.Empty);
             if (!simpleUserManagerClient.Exists(User.Identity.Name))
             {
                 simpleUserManagerClient.Create(User.Identity.Name);
             }
 
-            var sessionManagerClient = new SessionManagerClient("net.tcp://localhost:8555/EntityFX.EconomicsArcade.Manager/EntityFX.EconomicsArcade.Contract.Manager.SessionManager.ISessionManager");
+            var sessionManagerClient = new SessionManagerClient(string.Empty);
             var sessionGuid = sessionManagerClient.AddSession(User.Identity.Name);
 
-            _game = new GameManagerClient("net.tcp://localhost:8555/EntityFX.EconomicsArcade.Manager/EntityFX.EconomicsArcade.Contract.Manager.GameManager.IGameManager", sessionGuid);
+            _game = new GameManagerClient(string.Empty, sessionGuid);
             _gameDataModelMapper = new GameDataModelMapper();
         }
 
@@ -47,6 +47,12 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Controllers
         public GameDataModel GetGameData(Guid? id)
         {
             return _gameDataModelMapper.Map(_game.GetGameData(), new GameDataModel());
+        }
+
+        [HttpGet]
+        public OkResult Get()
+        {
+            return Ok();
         }
     }
 

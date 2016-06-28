@@ -22,6 +22,7 @@ namespace EntityFX.EconomicsArcade.Manager.Mappers
                 sourceIncrementor => _incrementorContractMapper.Map(sourceIncrementor.Value));
             return new Contract.Common.Funds.FundsDriver()
             {
+                Id = source.Id,
                 BuyCount = source.BuyCount,
                 Incrementors = destinationIncrementors,
                 InflationPercent = source.InflationPercent,
