@@ -16,14 +16,16 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Controllers
 
         public GameApiController()
         {
-            Guid ses;
-            using (var proxy = new SessionManagerProxy(Guid.Empty))
+            var simpleUserManagerClient = new SimpleUserManagerClient();
+            if (!simpleUserManagerClient.Exists(User.Identity.Name))
             {
-                var channel = proxy.CreateChannel(new Uri("net.tcp://localhost:8555/EntityFX.EconomicsArcade.Manager/EntityFX.EconomicsArcade.Contract.Manager.SessionManager.ISessionManager"));
-                ses = channel.AddSession(User.Identity.Name);
-                proxy.CloseChannel();
+                simpleUserManagerClient.Create(User.Identity.Name);
             }
-            _game = new GameManagerClient(ses);
+
+            var sessionManagerClient = new SessionManagerClient();
+            var sessionGuid = sessionManagerClient.AddSession(User.Identity.Name);
+
+            _game = new GameManagerClient(sessionGuid);
             _gameDataModelMapper = new GameDataModelMapper();
         }
 

@@ -29,7 +29,6 @@ namespace EntityFX.EconomicsArcade.TestClient
             {
                 userName = args[0];
             }
-            Guid ses;
 
             var simpleUserManagerClient = new SimpleUserManagerClient();
             if (!simpleUserManagerClient.Exists(userName))
