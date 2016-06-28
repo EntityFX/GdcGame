@@ -6,8 +6,13 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.DataAccess
 {
     public class GameDataRetrieveDataAccessClient : IGameDataRetrieveDataAccessService
     {
-        private const string Endpoint =
-            "net.tcp://localhost:8777/EntityFX.EconomicsArcade.DataAccess/EntityFX.EconomicsArcade.Contract.DataAccess.GameData.IGameDataRetrieveDataAccessService";
+        private readonly Uri _endpoint;// =
+            //"net.tcp://localhost:8777/EntityFX.EconomicsArcade.DataAccess/EntityFX.EconomicsArcade.Contract.DataAccess.GameData.IGameDataRetrieveDataAccessService";
+
+        public GameDataRetrieveDataAccessClient(string endpoint)
+        {
+            _endpoint = new Uri(endpoint);
+        }
 
         /// <summary>
         /// 
@@ -19,7 +24,7 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.DataAccess
             GameData result;
             using (var proxy = new GameDataRetrieveDataAccessProxy())
             {
-                var channel = proxy.CreateChannel(new Uri(Endpoint));
+                var channel = proxy.CreateChannel(_endpoint);
                 result = channel.GetGameData(userId);
                 proxy.CloseChannel();
             }

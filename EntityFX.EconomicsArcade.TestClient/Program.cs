@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Timers;
+
+using System.Configuration;
+
 using EntityFX.EconomicsArcade.Contract.Common;
 using EntityFX.EconomicsArcade.Contract.Common.Counters;
 using EntityFX.EconomicsArcade.Contract.Common.Funds;
@@ -31,13 +34,17 @@ namespace EntityFX.EconomicsArcade.TestClient
             }
             Guid ses;
 
-            var simpleUserManagerClient = new SimpleUserManagerClient();
+            var simpleUserManagerClient = new SimpleUserManagerClient(
+                ConfigurationManager.AppSettings["ManagerEndpointAddress_UserManager"]
+                );
             if (!simpleUserManagerClient.Exists(userName))
             {
                 simpleUserManagerClient.Create(userName);
             }
 
-            var sessionManagerClient = new SessionManagerClient();
+            var sessionManagerClient = new SessionManagerClient(
+                ConfigurationManager.AppSettings["ManagerEndpointAddress_SessionManager"]
+                );
             var sessionGuid = sessionManagerClient.AddSession(userName);
 
 
@@ -70,7 +77,10 @@ namespace EntityFX.EconomicsArcade.TestClient
 
         public GameRunner(Guid sessionGuid)
         {
-            _game = new GameManagerClient(sessionGuid);
+            _game = new GameManagerClient(
+                ConfigurationManager.AppSettings["ManagerEndpointAddress_GameManager"]
+                , sessionGuid
+                );
         }
 
         public void PerformManualStep()

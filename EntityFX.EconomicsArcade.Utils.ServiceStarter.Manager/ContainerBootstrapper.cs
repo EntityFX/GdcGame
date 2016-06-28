@@ -18,6 +18,7 @@ using EntityFX.EconomicsArcade.Contract.Game.Incrementors;
 using EntityFX.EconomicsArcade.Contract.Manager.UserManager;
 using EntityFX.EconomicsArcade.Utils.ClientProxy.DataAccess;
 using PortableLog.NLog;
+using System.Configuration;
 namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
 {
     public class ContainerBootstrapper : IContainerBootstrapper
@@ -32,9 +33,16 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
 
             container.RegisterType<INotifyGameDataChanged, NotifyGameDataChanged>();
 
-            container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessClient>();
+            //container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessClient>();
+            container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessClient>(
+                new InjectionConstructor(
+                    ConfigurationManager.AppSettings["ClentProxyAddress_GameDataRetrieveDataAccessService"]
+                    ));
             container.RegisterType<IUserDataAccessService, UserDataAccessClient>();
-            container.RegisterType<IGameDataStoreDataAccessService, GameDataStoreDataAccessClient>();
+            container.RegisterType<IGameDataStoreDataAccessService, GameDataStoreDataAccessClient>(
+                new InjectionConstructor(
+                    ConfigurationManager.AppSettings["ClentProxyAddress_GameDataStoreDataAccessService"]
+                    ));
 
             container.RegisterType<IMapper<IncrementorBase, Incrementor>, IncrementorContractMapper>();
             container.RegisterType<IMapper<CounterBase, Contract.Common.Counters.CounterBase>, CounterContractMapper>();

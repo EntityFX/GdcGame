@@ -5,14 +5,18 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
 {
     public class SessionManagerClient
     {
+        private readonly Uri _endpointAddress;// = "net.tcp://localhost:8555/EntityFX.EconomicsArcade.Manager/EntityFX.EconomicsArcade.Contract.Manager.SessionManager.ISessionManager";
 
-        private const string EndpointAddress = "net.tcp://localhost:8555/EntityFX.EconomicsArcade.Manager/EntityFX.EconomicsArcade.Contract.Manager.SessionManager.ISessionManager";
+        public SessionManagerClient(string endpointAddress)
+        {
+            _endpointAddress = new Uri(endpointAddress);
+        }
 
         public Guid AddSession(string login)
         {
             using (var proxy = new SessionManagerProxy(Guid.Empty))
             {
-                var channel = proxy.CreateChannel(new Uri(EndpointAddress));
+                var channel = proxy.CreateChannel(_endpointAddress);
                 proxy.ApplyContextScope();
                 var res = channel.AddSession(login);
                 proxy.CloseChannel();
@@ -24,7 +28,7 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
         {
             using (var proxy = new SessionManagerProxy(sessionGuid))
             {
-                var channel = proxy.CreateChannel(new Uri(EndpointAddress));
+                var channel = proxy.CreateChannel(_endpointAddress);
                 proxy.ApplyContextScope();
                 var res = channel.GetSession();
                 proxy.CloseChannel();

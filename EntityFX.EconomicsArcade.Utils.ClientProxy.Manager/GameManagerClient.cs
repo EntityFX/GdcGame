@@ -9,7 +9,7 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
     public class GameManagerClient : IGameManager
     {
 
-        private readonly Uri _endpointAddress = new Uri("net.tcp://localhost:8555/EntityFX.EconomicsArcade.Manager/EntityFX.EconomicsArcade.Contract.Manager.GameManager.IGameManager");
+        private readonly Uri _endpointAddress;// = new Uri("net.tcp://localhost:8555/EntityFX.EconomicsArcade.Manager/EntityFX.EconomicsArcade.Contract.Manager.GameManager.IGameManager");
         private Guid _sesionGuid;
 
         public void AddSession()///Delete this
@@ -17,9 +17,10 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
 
         }
 
-        public GameManagerClient(Guid sesionGuid)
+        public GameManagerClient(string endpointAddress, Guid sesionGuid)
         {
             _sesionGuid = sesionGuid;
+            _endpointAddress = new Uri(endpointAddress);
         }
 
         public void BuyFundDriver(int fundDriverId)

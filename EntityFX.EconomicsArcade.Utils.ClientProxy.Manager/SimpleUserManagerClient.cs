@@ -5,8 +5,13 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
 {
     public class SimpleUserManagerClient : ISimpleUserManager
     {
-        private readonly Uri _endpointAddress = new Uri("net.tcp://localhost:8555/EntityFX.EconomicsArcade.Manager/EntityFX.EconomicsArcade.Contract.Manager.UserManager.ISimpleUserManager");
-        
+        private readonly Uri _endpointAddress;// = new Uri("net.tcp://localhost:8555/EntityFX.EconomicsArcade.Manager/EntityFX.EconomicsArcade.Contract.Manager.UserManager.ISimpleUserManager");
+
+        public SimpleUserManagerClient(string endpointAddress)
+        {
+            _endpointAddress = new Uri(endpointAddress);
+        }
+
         public bool Exists(string login)
         {
             using (var proxy = new SimpleUserManagerProxy())

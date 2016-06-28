@@ -9,19 +9,19 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
 {
     public class ManagerStarter: ServiceStarterBase<ContainerBootstrapper>, IServiceStarter
     {
-        private const string BaseUrl = "net.tcp://localhost:8555/EntityFX.EconomicsArcade.Manager/";
+        private readonly Uri _baseUrl;// = "net.tcp://localhost:8555/EntityFX.EconomicsArcade.Manager/";
 
-        public ManagerStarter(ContainerBootstrapper container)
+        public ManagerStarter(ContainerBootstrapper container, string baseUrl)
             :base(container)
         {
-
+            _baseUrl = new Uri(baseUrl);
         }
 
         public override void StartService()
         {
-            AddNetTcpService<ISessionManager>(new Uri(BaseUrl));
-            AddNetTcpService<IGameManager>(new Uri(BaseUrl));
-            AddNetTcpService<ISimpleUserManager>(new Uri(BaseUrl));
+            AddNetTcpService<ISessionManager>(_baseUrl);
+            AddNetTcpService<IGameManager>(_baseUrl);
+            AddNetTcpService<ISimpleUserManager>(_baseUrl);
             OpenServices();
         }
 

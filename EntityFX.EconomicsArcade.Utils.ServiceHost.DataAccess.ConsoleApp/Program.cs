@@ -1,5 +1,6 @@
 ﻿using EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess;
 using System;
+using System.Configuration;
 
 namespace EntityFX.EconomicsArcade.Utils.ServiceHost.DataAccess.ConsoleApp
 {
@@ -8,7 +9,11 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceHost.DataAccess.ConsoleApp
         static void Main(string[] args)
         {
             var containerBootstrapper = new ContainerBootstrapper();
-            var ss = new DataAccessStarter(containerBootstrapper);
+            var ss = new DataAccessStarter(
+                containerBootstrapper
+                , ConfigurationManager.AppSettings["DataAccessHost_BaseUri"]
+                , ConfigurationManager.AppSettings["DataAccessHost_BaseStoreUri"]
+                );
             ss.StartService();
             Console.ReadKey();
         }
