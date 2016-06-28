@@ -16,16 +16,16 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Controllers
 
         public GameApiController()
         {
-            var simpleUserManagerClient = new SimpleUserManagerClient();
+            var simpleUserManagerClient = new SimpleUserManagerClient(string.Empty);
             if (!simpleUserManagerClient.Exists(User.Identity.Name))
             {
                 simpleUserManagerClient.Create(User.Identity.Name);
             }
 
-            var sessionManagerClient = new SessionManagerClient();
+            var sessionManagerClient = new SessionManagerClient(string.Empty);
             var sessionGuid = sessionManagerClient.AddSession(User.Identity.Name);
 
-            _game = new GameManagerClient(sessionGuid);
+            _game = new GameManagerClient(string.Empty, sessionGuid);
             _gameDataModelMapper = new GameDataModelMapper();
         }
 
