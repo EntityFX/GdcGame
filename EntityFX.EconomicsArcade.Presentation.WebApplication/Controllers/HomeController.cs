@@ -1,5 +1,7 @@
 ﻿using System.Configuration;
+using System.Web.Http.Results;
 using System.Web.Mvc;
+using System.Web.Mvc.Filters;
 using EntityFX.EconomicsArcade.Contract.Common;
 using EntityFX.EconomicsArcade.Contract.Manager.UserManager;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
@@ -16,61 +18,35 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Controllers
     {
         private readonly IGameDataProvider _gameDataProvider;
 
-        public HomeController()
+        /// <summary>Called before the action method is invoked.</summary>
+        /// <param name="filterContext">Information about the current request and action.</param>
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            _gameDataProvider = new GameDataProvider(
-                new GameClientFactory(UnityConfig.GetConfiguredContainer()),
-                //new SimpleUserManagerClient(ConfigurationManager.AppSettings["ManagerEndpointAddress_UserManager"]),
-                UnityConfig.GetConfiguredContainer().Resolve<ISimpleUserManager>(),
-                UnityConfig.GetConfiguredContainer().Resolve<SessionManagerClient>(),
-                //new SessionManagerClient(ConfigurationManager.AppSettings["ManagerEndpointAddress_SessionManager"]),
-                UnityConfig.GetConfiguredContainer().Resolve<IMapper<GameData, GameDataModel>>()
-                //new GameDataModelMapper()
-                );
+            _gameDataProvider.Initialize(User.Identity.Name);
+        }
+
+        public HomeController(IGameDataProvider gameDataProvider)
+        {
+            _gameDataProvider = gameDataProvider;
 
         }
 
         public ActionResult Index()
         {
-            _gameDataProvider.Initialize(User.Identity.Name);
+
             var gameModel = _gameDataProvider.GetGameData();
-            //if (Session["SessionGuid"] == null)
-            //{
-            //    var simpleUserManagerClient = new SimpleUserManagerClient(ConfigurationManager.AppSettings["ManagerEndpointAddress_UserManager"]);
-            //    if (!simpleUserManagerClient.Exists(User.Identity.Name))
-            //    {
-            //        simpleUserManagerClient.Create(User.Identity.Name);
-            //    }
-
-            //    var sessionManagerClient = new SessionManagerClient(ConfigurationManager.AppSettings["ManagerEndpointAddress_SessionManager"]);
-            //    Session["SessionGuid"] = sessionManagerClient.AddSession(User.Identity.Name);
-            //}
-            //Guid sessionGuid = (Guid)Session["SessionGuid"];
-
-            //var gameClient = new GameManagerClient(ConfigurationManager.AppSettings["ManagerEndpointAddress_GameManager"], sessionGuid);
-            //var gameData = gameClient.GetGameData();
-            //var gameModel = (new GameDataModelMapper()).Map(gameData);
-            //return View("Index", gameModel);
             return View("IndexAngular", gameModel);
         }
 
         public ActionResult BuyFundDriver(int id)
         {
-            _gameDataProvider.Initialize(User.Identity.Name);
             _gameDataProvider.BuyFundDriver(id);
-            //Guid sessionGuid = (Guid)Session["SessionGuid"];
-            //var gameClient = new GameManagerClient(ConfigurationManager.AppSettings["ManagerEndpointAddress_GameManager"], sessionGuid);
-            //gameClient.BuyFundDriver(id);
             return RedirectToAction("Index");
         }
 
         public ActionResult PerformManualStep()
         {
-            _gameDataProvider.Initialize(User.Identity.Name);
             _gameDataProvider.PerformManualStep();
-            //Guid sessionGuid = (Guid)Session["SessionGuid"];
-            //var gameClient = new GameManagerClient(ConfigurationManager.AppSettings["ManagerEndpointAddress_GameManager"], sessionGuid);
-            //gameClient.PerformManualStep();
             return RedirectToAction("Index");
         }
 
@@ -78,9 +54,6 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Controllers
         {
             _gameDataProvider.Initialize(User.Identity.Name);
             _gameDataProvider.FightAgainstInflation();
-            //Guid sessionGuid = (Guid)Session["SessionGuid"];
-            //var gameClient = new GameManagerClient(ConfigurationManager.AppSettings["ManagerEndpointAddress_GameManager"], sessionGuid);
-            //gameClient.FightAgainstInflation();
             return RedirectToAction("Index");
         }
     }

@@ -1,47 +1,29 @@
 using System;
 using System.Configuration;
+using Microsoft.Practices.Unity;
+using System.Web.Http;
 using EntityFX.EconomicsArcade.Contract.Common;
-using EntityFX.EconomicsArcade.Contract.Common.Incrementors;
 using EntityFX.EconomicsArcade.Contract.Manager.GameManager;
 using EntityFX.EconomicsArcade.Contract.Manager.UserManager;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 using EntityFX.EconomicsArcade.Presentation.Models;
+using EntityFX.EconomicsArcade.Presentation.WebApplication.Controllers;
+using EntityFX.EconomicsArcade.Presentation.WebApplication.Factories;
+using EntityFX.EconomicsArcade.Presentation.WebApplication.Providers;
 using EntityFX.EconomicsArcade.Utils.ClientProxy.Manager;
-using Microsoft.Practices.Unity;
-using Microsoft.Practices.Unity.Configuration;
+using Unity.WebApi;
 
-namespace EntityFX.EconomicsArcade.Presentation.WebApplication.App_Start
+namespace EntityFX.EconomicsArcade.Presentation.WebApplication
 {
-    /// <summary>
-    /// Specifies the Unity configuration for the main container.
-    /// </summary>
-    public class UnityConfig
+    public static class UnityConfig
     {
-        #region Unity Container
-        private static Lazy<IUnityContainer> container = new Lazy<IUnityContainer>(() =>
+        public static void RegisterComponents(IUnityContainer container)
         {
-            var container = new UnityContainer();
-            RegisterTypes(container);
-            return container;
-        });
 
-        /// <summary>
-        /// Gets the configured Unity container.
-        /// </summary>
-        public static IUnityContainer GetConfiguredContainer()
-        {
-            return container.Value;
-        }
-        #endregion
-
-        /// <summary>Registers the type mappings with the Unity container.</summary>
-        /// <param name="container">The unity container to configure.</param>
-        /// <remarks>There is no need to register concrete types such as controllers or API controllers (unless you want to 
-        /// change the defaults), as Unity allows resolving a concrete type even if it was not previously registered.</remarks>
-        public static void RegisterTypes(IUnityContainer container)
-        {
             // NOTE: To load from web.config uncomment the line below. Make sure to add a Microsoft.Practices.Unity.Configuration to the using statements.
             // container.LoadConfiguration();
+
+            container.RegisterType<IGameApiController, GameApiController>();
 
             // TODO: Register your types here
             // container.RegisterType<IProductRepository, ProductRepository>();
@@ -55,6 +37,8 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.App_Start
                 new InjectionConstructor(
                 ConfigurationManager.AppSettings["ManagerEndpointAddress_SessionManager"]));
             container.RegisterType<IMapper<GameData, GameDataModel>, GameDataModelMapper>();
+            container.RegisterType<IGameClientFactory, GameClientFactory>();
+            container.RegisterType<IGameDataProvider, GameDataProvider>();
         }
     }
 }

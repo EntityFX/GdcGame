@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Web.Http;
+using System.Web.Http.Controllers;
+using System.Web.Mvc;
 using EntityFX.EconomicsArcade.Contract.Common;
 using EntityFX.EconomicsArcade.Contract.Manager.UserManager;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
@@ -12,45 +14,59 @@ using Microsoft.Practices.Unity;
 
 namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Controllers
 {
-    public class GameApiController : ApiController
+    public class GameApiController : ApiController, IGameApiController
     {
         private readonly IGameDataProvider _gameDataProvider;
 
-        public GameApiController()
+        protected override void Initialize(HttpControllerContext controllerContext)
         {
-            _gameDataProvider = new GameDataProvider(
-                new GameClientFactory(UnityConfig.GetConfiguredContainer()),
-                UnityConfig.GetConfiguredContainer().Resolve<ISimpleUserManager>(),
-                UnityConfig.GetConfiguredContainer().Resolve<SessionManagerClient>(),
-                UnityConfig.GetConfiguredContainer().Resolve<IMapper<GameData, GameDataModel>>()
-                );
+            base.Initialize(controllerContext);
+            _gameDataProvider.Initialize(User.Identity.Name);
         }
 
-        [HttpPost]
-        public void PerformManualStep()
+        public GameApiController(IGameDataProvider gameDataProvider)
         {
-            _gameDataProvider.Initialize(User.Identity.Name);
+            _gameDataProvider = gameDataProvider;
+            //_gameDataProvider = new GameDataProvider(
+            //    new GameClientFactory(UnityConfig.GetConfiguredContainer()),
+            //    UnityConfig.GetConfiguredContainer().Resolve<ISimpleUserManager>(),
+            //    UnityConfig.GetConfiguredContainer().Resolve<SessionManagerClient>(),
+            //    UnityConfig.GetConfiguredContainer().Resolve<IMapper<GameData, GameDataModel>>()
+            //    );
+        }
+
+        [System.Web.Http.HttpPost]
+        public bool PerformManualStep()
+        {
             _gameDataProvider.PerformManualStep();
-        }
-        [HttpPost]
-        public void FightAgainstInflation()
-        {
-            _gameDataProvider.Initialize(User.Identity.Name);
-            _gameDataProvider.FightAgainstInflation();
+            return true;
         }
 
-        [HttpGet]
+        [System.Web.Http.HttpPost]
+        public bool FightAgainstInflation()
+        {
+            _gameDataProvider.FightAgainstInflation();
+            return true;
+        }
+
+        [System.Web.Http.HttpPost]
+        public bool ActivateDelayedCounter()
+        {
+            _gameDataProvider.FightAgainstInflation();
+            return true;
+        }
+
+        [System.Web.Http.HttpGet]
         public GameDataModel GetGameData(Guid? id)
         {
-            _gameDataProvider.Initialize(User.Identity.Name);
             return _gameDataProvider.GetGameData();
         }
 
-        [HttpPost]
-        public void BuyFundDriver([FromUri]int id)
+        [System.Web.Http.HttpPost]
+        public bool BuyFundDriver([FromUri]int id)
         {
-            _gameDataProvider.Initialize(User.Identity.Name);
             _gameDataProvider.BuyFundDriver(id);
+            return true;
         }
     }
 
