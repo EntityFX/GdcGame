@@ -54,6 +54,11 @@ namespace EntityFX.EconomicsArcade.Manager
             return gameData;
         }
 
+        public void ActivateDelayedCounter(int counterId)
+        {
+            GetSessionGame().ActivateDelayedCounter(counterId);
+        }
+
         private IGame GetSessionGame()
         {
             var sessionId = OperationContextHelper.Instance.SessionId ?? default(Guid);

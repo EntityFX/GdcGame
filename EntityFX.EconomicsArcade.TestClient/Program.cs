@@ -66,6 +66,14 @@ namespace EntityFX.EconomicsArcade.TestClient
                 {
                     gr.FightAgainstCorruption();
                 }
+                else if (keyInfo.Key == ConsoleKey.Add)
+                {
+                    gr.PerformFiveYearPlan();
+                }
+                else if (keyInfo.Key == ConsoleKey.F5)
+                {
+                    gr.DisplayGameData(gr.GetGameData());
+                }
             }
         }
     }
@@ -96,7 +104,7 @@ namespace EntityFX.EconomicsArcade.TestClient
 
         public void FightAgainstCorruption()
         {
-            //_game.FightAgainstInflation();
+            _game.FightAgainstInflation();
             DisplayGameData(GetGameData());
         }
 
@@ -105,9 +113,25 @@ namespace EntityFX.EconomicsArcade.TestClient
             return _game.GetGameData();
         }
 
-        protected bool IsFundsDriverAvailableForBuy(CounterBase rootCounter, FundsDriver fundsDriver)
+        public void PerformFiveYearPlan()
+        {
+            _game.ActivateDelayedCounter(3);
+            DisplayGameData(GetGameData());
+        }
+
+        private bool IsFundsDriverAvailableForBuy(CounterBase rootCounter, FundsDriver fundsDriver)
         {
             return fundsDriver.UnlockValue <= rootCounter.Value;
+        }
+
+        private bool IsCounterWithInflation(GenericCounter counter)
+        {
+            return counter.Inflation > 0;
+        }
+
+        private bool IsCounterIsMining(DelayedCounter counter)
+        {
+            return counter.SecondsRemaining > 0;
         }
 
         private string GetIncrementorValueById(FundsDriver fundsDriver, int incrmentorId)
@@ -146,11 +170,12 @@ namespace EntityFX.EconomicsArcade.TestClient
                 PrettyConsole.WriteLineColor(ConsoleColor.DarkGray, " StepsToIncrInflation: {0}, Current Steps: {1}", 0, ((GenericCounter)gameData.Counters.Counters[2]).CurrentSteps);
                 PrettyConsole.WriteLineColor(ConsoleColor.Green, "{1,15}: {0,12:C}"
                     , ((GenericCounter)gameData.Counters.Counters[2]).Value, "Total");
-            /*
-                PrettyConsole.WriteLineColor(ConsoleColor.Magenta, "{1,15}: {0,12}", FiveYearPlan, FundsCounters.Counters[(int)UssrCounterEnum.FiveYearPlan].Name);   */
+                PrettyConsole.WriteLineColor(ConsoleColor.Magenta, "{1,15}: +{0,12:C} {2}", gameData.Counters.Counters[3].Value, gameData.Counters.Counters[3].Name, TimeSpan.FromSeconds(((DelayedCounter)gameData.Counters.Counters[3]).SecondsRemaining));
+
                 Console.WriteLine();
                 int charIndex = 65;
-                PrettyConsole.WriteLineColor(ConsoleColor.DarkYellow, "{0,2}:             Fight Against Corruption", "*"); 
+                PrettyConsole.WriteLineColor(IsCounterWithInflation((GenericCounter)gameData.Counters.Counters[2]) ? ConsoleColor.Yellow : ConsoleColor.DarkYellow, "{0,2}:             Fight Against Corruption", "*");
+                PrettyConsole.WriteLineColor(IsCounterIsMining((DelayedCounter)gameData.Counters.Counters[3]) ? ConsoleColor.DarkMagenta : ConsoleColor.Magenta, "{0,2}:                    Do Five Year Plan", "+");
                 foreach (var fundsDriver in gameData.FundsDrivers)
                 {
                     if (!IsFundsDriverAvailableForBuy(gameData.Counters.Counters[0], fundsDriver))

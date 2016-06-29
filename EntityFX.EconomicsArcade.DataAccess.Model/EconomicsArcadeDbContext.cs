@@ -37,29 +37,21 @@ namespace EntityFX.EconomicsArcade.DataAccess.Model
                 .HasKey(_ => _.Id);
 
             modelBuilder.Entity<CounterEntity>()
-                .Property(e => e.InitialValue)
-                .HasPrecision(18, 0);
-
-            modelBuilder.Entity<CounterEntity>()
-                .Property(e => e.DelayedValue)
-                .HasPrecision(18, 0);
-
-            modelBuilder.Entity<CounterEntity>()
                 .HasMany(e => e.UserCounters)
                 .WithRequired(e => e.Counter)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<CounterEntity>()
+                .Property(e => e.InitialValue)
+                .HasColumnType("Money");           
+            
+            modelBuilder.Entity<CounterEntity>()
+                .Property(e => e.DelayedValue)
+                .HasColumnType("Money");
+
             modelBuilder.Entity<FundsDriverEntity>()
                 .ToTable("FundsDriver")
                 .HasKey(_ => _.Id);
-
-            modelBuilder.Entity<FundsDriverEntity>()
-                .Property(e => e.InitialValue)
-                .HasPrecision(18, 0);
-
-            modelBuilder.Entity<FundsDriverEntity>()
-                .Property(e => e.UnlockValue)
-                .HasPrecision(18, 0);
 
             modelBuilder.Entity<FundsDriverEntity>()
                 .HasMany(e => e.Incrementors)
@@ -71,6 +63,13 @@ namespace EntityFX.EconomicsArcade.DataAccess.Model
                 .WithRequired(e => e.FundsDriver)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<FundsDriverEntity>()
+                .Property(e => e.InitialValue)
+                .HasColumnType("Money");
+
+            modelBuilder.Entity<FundsDriverEntity>()
+                .Property(e => e.UnlockValue)
+                .HasColumnType("Money");
 
             modelBuilder.Entity<IncrementorEntity>()
                 .ToTable("Incrementor")
@@ -78,7 +77,7 @@ namespace EntityFX.EconomicsArcade.DataAccess.Model
 
             modelBuilder.Entity<IncrementorEntity>()
                 .Property(e => e.Value)
-                .HasPrecision(18, 0);
+                .HasColumnType("Money");
 
             modelBuilder.Entity<UserEntity>()
                 .HasOptional(e => e.UserGameCounter)

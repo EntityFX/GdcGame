@@ -26,6 +26,7 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository.Mappers
                     break;
                 case 3:
                     var delayedCounter = (DelayedCounter)source;
+                    destination.MiningTimeSecondsEllapsed = delayedCounter.SecondsRemaining;
                     break;
             }
             destination.CounterId = source.Id;

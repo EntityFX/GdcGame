@@ -33,6 +33,10 @@ namespace EntityFx.EconomicsArcade.TestApplication
                 else if (keyInfo.Key == ConsoleKey.Multiply)
                 {
                     gr.FightAgainstCorruption();
+                }                
+                else if (keyInfo.Key == ConsoleKey.Add)
+                {
+                    gr.PerformFiveYearPlan();
                 }
             }
         }
@@ -74,6 +78,11 @@ namespace EntityFx.EconomicsArcade.TestApplication
         public void FightAgainstCorruption()
         {
             _game.FightAgainstInflation();
+        }
+
+        public void PerformFiveYearPlan()
+        {
+            _game.ActivateDelayedCounter(3);
         }
     }
 }

@@ -81,5 +81,16 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
             }
             return gameData;
         }
+
+        public void ActivateDelayedCounter(int counterId)
+        {
+            using (var proxy = new GameManagerProxy(_sesionGuid))
+            {
+                var channel = proxy.CreateChannel(_endpointAddress);
+                proxy.ApplyContextScope();
+                channel.ActivateDelayedCounter(counterId);
+                proxy.CloseChannel();
+            }
+        }
     }
 }
