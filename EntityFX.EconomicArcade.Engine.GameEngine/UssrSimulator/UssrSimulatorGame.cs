@@ -46,7 +46,7 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.UssrSimulator
                                     UnlockValue = sourceDelayedCounter.UnlockValue,
                                     SecondsRemaining = sourceDelayedCounter.SecondsRemaining,
                                     SecondsToAchieve = sourceDelayedCounter.MiningTimeSeconds,
-                                    IsMining = sourceDelayedCounter.MiningTimeSeconds > 0
+                                    IsMining = sourceDelayedCounter.SecondsRemaining > 0
                                 };
                             }
                         }

@@ -41,6 +41,7 @@ namespace EntityFX.EconomicsArcade.Manager.Mappers
                     Value = delayedCounter.Value, 
                     MiningTimeSeconds = delayedCounter.SecondsToAchieve, 
                     SecondsRemaining = delayedCounter.SecondsRemaining,
+                    UnlockValue = delayedCounter.UnlockValue
                 };
             }
             if (destinationCounter != null)

@@ -268,7 +268,7 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
             {
                 return;
             }
-            if (delayedCounter.IsMining)
+            if (delayedCounter.IsMining | delayedCounter.UnlockValue > FundsCounters.RootCounter.Value)
             {
                 return;
             }

@@ -6,6 +6,5 @@
 	[UseInAutostep] bit NOT NULL,
 	[InflationIncreaseSteps] int NOT NULL,
 	[MiningTimeSeconds] int,
-	[DelayedValue] MONEY,
-	[Type] [int] NOT NULL,
+	[Type] [int] NOT NULL
 )

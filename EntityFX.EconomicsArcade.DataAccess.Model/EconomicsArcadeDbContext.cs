@@ -45,10 +45,6 @@ namespace EntityFX.EconomicsArcade.DataAccess.Model
                 .Property(e => e.InitialValue)
                 .HasColumnType("Money");           
             
-            modelBuilder.Entity<CounterEntity>()
-                .Property(e => e.DelayedValue)
-                .HasColumnType("Money");
-
             modelBuilder.Entity<FundsDriverEntity>()
                 .ToTable("FundsDriver")
                 .HasKey(_ => _.Id);
