@@ -12,11 +12,6 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
         private readonly Uri _endpointAddress;// = new Uri("net.tcp://localhost:8555/EntityFX.EconomicsArcade.Manager/EntityFX.EconomicsArcade.Contract.Manager.GameManager.IGameManager");
         private Guid _sesionGuid;
 
-        public void AddSession()///Delete this
-        {
-
-        }
-
         public GameManagerClient(string endpointAddress, Guid sesionGuid)
         {
             _sesionGuid = sesionGuid;
@@ -47,7 +42,13 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
 
         public void FightAgainstInflation()
         {
-            throw new System.NotImplementedException();
+            using (var proxy = new GameManagerProxy(_sesionGuid))
+            {
+                var channel = proxy.CreateChannel(_endpointAddress);
+                proxy.ApplyContextScope();
+                channel.FightAgainstInflation();
+                proxy.CloseChannel();
+            }
         }
 
         public void PlayLottery()
