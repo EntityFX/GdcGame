@@ -1,58 +1,56 @@
 ﻿using System;
-using System.Net.Http;
-using System.Web;
 using System.Web.Http;
-using System.Web.Http.Results;
 using EntityFX.EconomicsArcade.Contract.Common;
-using EntityFX.EconomicsArcade.Contract.Manager.GameManager;
+using EntityFX.EconomicsArcade.Contract.Manager.UserManager;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 using EntityFX.EconomicsArcade.Presentation.Models;
+using EntityFX.EconomicsArcade.Presentation.WebApplication.App_Start;
+using EntityFX.EconomicsArcade.Presentation.WebApplication.Factories;
+using EntityFX.EconomicsArcade.Presentation.WebApplication.Providers;
 using EntityFX.EconomicsArcade.Utils.ClientProxy.Manager;
+using Microsoft.Practices.Unity;
 
 namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Controllers
 {
     public class GameApiController : ApiController
     {
-        private readonly IGameManager _game;
-
-        private readonly IMapper<GameData, GameDataModel> _gameDataModelMapper;
+        private readonly IGameDataProvider _gameDataProvider;
 
         public GameApiController()
         {
-            var simpleUserManagerClient = new SimpleUserManagerClient(string.Empty);
-            if (!simpleUserManagerClient.Exists(User.Identity.Name))
-            {
-                simpleUserManagerClient.Create(User.Identity.Name);
-            }
-
-            var sessionManagerClient = new SessionManagerClient(string.Empty);
-            var sessionGuid = sessionManagerClient.AddSession(User.Identity.Name);
-
-            _game = new GameManagerClient(string.Empty, sessionGuid);
-            _gameDataModelMapper = new GameDataModelMapper();
+            _gameDataProvider = new GameDataProvider(
+                new GameClientFactory(UnityConfig.GetConfiguredContainer()),
+                UnityConfig.GetConfiguredContainer().Resolve<ISimpleUserManager>(),
+                UnityConfig.GetConfiguredContainer().Resolve<SessionManagerClient>(),
+                UnityConfig.GetConfiguredContainer().Resolve<IMapper<GameData, GameDataModel>>()
+                );
         }
 
         [HttpPost]
         public void PerformManualStep()
         {
-            _game.PerformManualStep();
+            _gameDataProvider.Initialize(User.Identity.Name);
+            _gameDataProvider.PerformManualStep();
         }
         [HttpPost]
         public void FightAgainstInflation()
         {
-            _game.FightAgainstInflation();
+            _gameDataProvider.Initialize(User.Identity.Name);
+            _gameDataProvider.FightAgainstInflation();
         }
 
         [HttpGet]
         public GameDataModel GetGameData(Guid? id)
         {
-            return _gameDataModelMapper.Map(_game.GetGameData(), new GameDataModel());
+            _gameDataProvider.Initialize(User.Identity.Name);
+            return _gameDataProvider.GetGameData();
         }
 
-        [HttpGet]
-        public OkResult Get()
+        [HttpPost]
+        public void BuyFundDriver([FromUri]int id)
         {
-            return Ok();
+            _gameDataProvider.Initialize(User.Identity.Name);
+            _gameDataProvider.BuyFundDriver(id);
         }
     }
 
