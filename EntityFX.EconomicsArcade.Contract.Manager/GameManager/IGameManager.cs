@@ -19,5 +19,7 @@ namespace EntityFX.EconomicsArcade.Contract.Manager.GameManager
         FundsCounters GetCounters();
         [OperationContract]
         GameData GetGameData();
+        [OperationContract]
+        void ActivateDelayedCounter(int counterId);
     }
 }

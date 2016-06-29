@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using EntityFX.EconomicsArcade.Contract.Common;
 using EntityFX.EconomicsArcade.Contract.DataAccess.GameData;
@@ -10,6 +12,47 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.UssrSimulator
 {
     public class UssrSimulatorGame : GameBase
     {
+        private static readonly IDictionary<Type, Func<EconomicsArcade.Contract.Common.Counters.CounterBase, CounterBase>> MappingDictionary
+            = new ReadOnlyDictionary<Type, Func<EconomicsArcade.Contract.Common.Counters.CounterBase, CounterBase>>(
+                new Dictionary<Type, Func<EconomicsArcade.Contract.Common.Counters.CounterBase, CounterBase>>
+                    {
+                        {
+                            typeof(EconomicsArcade.Contract.Common.Counters.GenericCounter),
+                            source =>
+                            {
+                                var sourceGenericCounter =  (EconomicsArcade.Contract.Common.Counters.GenericCounter)source;
+                                return new GenericCounter
+                                {
+                                    BonusPercentage =
+                                        sourceGenericCounter.BonusPercentage,
+                                    CurrentSteps = sourceGenericCounter.CurrentSteps,
+                                    Inflation = sourceGenericCounter.Inflation,
+                                    IsUsedInAutoStep =
+                                        sourceGenericCounter.UseInAutoSteps
+                                };
+                            }
+                        },
+                        {
+                            typeof(EconomicsArcade.Contract.Common.Counters.SingleCounter),
+                            source =>  new SingleCounter()
+                        },
+                        {
+                            typeof(EconomicsArcade.Contract.Common.Counters.DelayedCounter),
+                            source =>
+                            {
+                                var sourceDelayedCounter =  (EconomicsArcade.Contract.Common.Counters.DelayedCounter)source;
+                                return new DelayedCounter
+                                {
+                                    UnlockValue = sourceDelayedCounter.UnlockValue,
+                                    SecondsRemaining = sourceDelayedCounter.SecondsRemaining,
+                                    SecondsToAchieve = sourceDelayedCounter.MiningTimeSeconds,
+                                    IsMining = sourceDelayedCounter.SecondsRemaining > 0
+                                };
+                            }
+                        }
+                    }
+            );
+
         private readonly IGameDataRetrieveDataAccessService _gameDataRetrieveDataAccessService;
         private readonly INotifyGameDataChanged _notifyGameDataChanged;
         private readonly int _userId;
@@ -23,38 +66,6 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.UssrSimulator
             _gameDataRetrieveDataAccessService = gameDataRetrieveDataAccessService;
             _notifyGameDataChanged = notifyGameDataChanged;
             _userId = userId;
-        }
-
-        public decimal Communism
-        {
-            get
-            {
-                return FundsCounters.Counters[(int)UssrCounterEnum.Communism].SubValue;
-            }
-        }
-
-        public decimal Production
-        {
-            get
-            {
-                return FundsCounters.Counters[(int)UssrCounterEnum.Production].SubValue;
-            }
-        }
-
-        public decimal Taxes
-        {
-            get
-            {
-                return FundsCounters.Counters[(int)UssrCounterEnum.Tax].SubValue;
-            }
-        }
-
-        public decimal FiveYearPlan
-        {
-            get
-            {
-                return FundsCounters.Counters[(int)UssrCounterEnum.FiveYearPlan].SubValue;
-            }
         }
 
         protected override IDictionary<int, FundsDriver> GetFundsDrivers()
@@ -106,30 +117,13 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.UssrSimulator
 
         protected override FundsCounters GetFundsCounters()
         {
+
             var fundsCounters = _gameData.Counters;
             var counters = new Dictionary<int, CounterBase>();
             var inc = 0;
             foreach (var sourceCounter in fundsCounters.Counters)
             {
-                CounterBase destinationCouner = null;
-                if (sourceCounter.GetType() == typeof(EntityFX.EconomicsArcade.Contract.Common.Counters.GenericCounter))
-                {
-                    var destinationGenericCounter = new GenericCounter();
-                    var sourceGenericCounter =  (EconomicsArcade.Contract.Common.Counters.GenericCounter)sourceCounter;
-                    destinationGenericCounter.BonusPercentage = sourceGenericCounter.BonusPercentage;
-                    destinationGenericCounter.CurrentSteps = sourceGenericCounter.CurrentSteps;
-                    destinationGenericCounter.Inflation = sourceGenericCounter.Inflation;
-                    destinationGenericCounter.IsUsedInAutoStep = sourceGenericCounter.UseInAutoSteps;
-                    destinationCouner = destinationGenericCounter;
-                }
-                if (sourceCounter.GetType() == typeof(EntityFX.EconomicsArcade.Contract.Common.Counters.SingleCounter))
-                {
-                    destinationCouner = new SingleCounter();
-                }
-                if (sourceCounter.GetType() == typeof(EntityFX.EconomicsArcade.Contract.Common.Counters.DelayedCounter))
-                {
-                    destinationCouner = new DelayedCounter();
-                }
+                var destinationCouner = MappingDictionary[sourceCounter.GetType()](sourceCounter);
                 if (destinationCouner != null)
                 {
                     destinationCouner.Name = sourceCounter.Name;
@@ -153,7 +147,7 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.UssrSimulator
 
         }
 
-        private static object _syslock = new {};
+        private static object _syslock = new { };
 
         protected override void PostPerformAutoStep(IEnumerable<CounterBase> modifiedCounters)
         {
@@ -164,7 +158,7 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.UssrSimulator
                     _currentStepsToPersist = 0;
                     _notifyGameDataChanged.GameDataChanged(this);
                 }
-                _currentStepsToPersist++;  
+                _currentStepsToPersist++;
             }
 
         }

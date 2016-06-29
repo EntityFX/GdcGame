@@ -499,6 +499,11 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
                         (int)UssrCounterEnum.FiveYearPlan, 
                         new DelayedCounter {
                             Name = "Five Year Plan",
+                            UnlockValue = 10000,
+                            SecondsToAchieve = 10,
+                            SecondsRemaining = 0,
+                            IsMining = false,
+                            SubValue = 5000000
                         }   
                     },
                 };
@@ -563,10 +568,12 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
                 PrettyConsole.WriteLineColor(ConsoleColor.DarkGray, " StepsToIncrInflation: {0}, Current Steps: {1}", ((GenericCounter)FundsCounters.Counters[(int)UssrCounterEnum.Tax]).StepsToIncreaseInflation, ((GenericCounter)FundsCounters.Counters[(int)UssrCounterEnum.Tax]).CurrentSteps);
                 PrettyConsole.WriteLineColor(ConsoleColor.Green, "{1,15}: {0,12:C}"
                     , ((GenericCounter)FundsCounters.Counters[(int)UssrCounterEnum.Tax]).Value, "Total");
-                PrettyConsole.WriteLineColor(ConsoleColor.Magenta, "{1,15}: {0,12}", FiveYearPlan, FundsCounters.Counters[(int)UssrCounterEnum.FiveYearPlan].Name);
+                PrettyConsole.WriteLineColor(ConsoleColor.Magenta, "{1,15}: +{0,12:C} {2}", FiveYearPlan, FundsCounters.Counters[(int)UssrCounterEnum.FiveYearPlan].Name, TimeSpan.FromSeconds(((DelayedCounter)FundsCounters.Counters[(int)UssrCounterEnum.FiveYearPlan]).SecondsRemaining));
+                
                 Console.WriteLine();
                 int charIndex = 65;
                 PrettyConsole.WriteLineColor(ConsoleColor.DarkYellow, "{0,2}:             Fight Against Corruption", "*");
+                PrettyConsole.WriteLineColor(ConsoleColor.DarkYellow, "{0,2}:                    Do Five Year Plan", "+");
                 foreach (var fundsDriver in FundsDrivers)
                 {
                     if (!IsFundsDriverAvailableForBuy(fundsDriver.Value))

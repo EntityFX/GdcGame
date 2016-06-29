@@ -25,6 +25,8 @@ namespace EntityFX.EconomicsArcade.Contract.Game
 
         void FightAgainstInflation();
 
+        void ActivateDelayedCounter(int counterId);
+
         LotteryResult PlayLottery();
     }
 }

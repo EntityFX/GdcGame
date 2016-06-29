@@ -33,6 +33,22 @@ namespace EntityFX.EconomicsArcade.Manager.Mappers
                 MapCommon(source, destinationCounter);
             }
 
+            var delayedCounter = source as DelayedCounter;
+            if (delayedCounter != null)
+            {
+                destinationCounter = new Contract.Common.Counters.DelayedCounter()
+                {
+                    Value = delayedCounter.Value, 
+                    MiningTimeSeconds = delayedCounter.SecondsToAchieve, 
+                    SecondsRemaining = delayedCounter.SecondsRemaining,
+                    UnlockValue = delayedCounter.UnlockValue
+                };
+            }
+            if (destinationCounter != null)
+            {
+                MapCommon(source, destinationCounter);
+            }
+
             return  destinationCounter;
         }
 

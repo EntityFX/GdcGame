@@ -2,10 +2,9 @@
 (
 	[Id] INT NOT NULL PRIMARY KEY,
 	[Name] NVARCHAR(50) NOT NULL,
-	[InitialValue] decimal NOT NULL,
+	[InitialValue] MONEY NOT NULL,
 	[UseInAutostep] bit NOT NULL,
 	[InflationIncreaseSteps] int NOT NULL,
 	[MiningTimeSeconds] int,
-	[DelayedValue] decimal,
-	[Type] [int] NOT NULL,
+	[Type] [int] NOT NULL
 )

@@ -1,4 +1,7 @@
-﻿using EntityFX.EconomicsArcade.Contract.Common.Counters;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using EntityFX.EconomicsArcade.Contract.Common.Counters;
 using EntityFX.EconomicsArcade.DataAccess.Model;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 
@@ -6,29 +9,39 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository.Mappers
 {
     public class UserCounterContractMapper : IMapper<UserCounterEntity, CounterBase>
     {
+        private static readonly Func<UserCounterEntity, GenericCounter> GenericFunc = source => new GenericCounter
+        {
+            UseInAutoSteps = source.Counter.UseInAutostep,
+            Inflation = source.Inflation,
+            BonusPercentage = source.BonusPercentage,
+            CurrentSteps = source.CurrentStepsCount
+        };
+
+        private static readonly IDictionary<int, Func<UserCounterEntity, CounterBase>> MappingDictionary =
+    new ReadOnlyDictionary<int, Func<UserCounterEntity, CounterBase>>(new Dictionary<int, Func<UserCounterEntity, CounterBase>>(new Dictionary<int, Func<UserCounterEntity, CounterBase>>()
+            {
+                {
+                    0, entity => new SingleCounter()
+                },
+                {
+                    1, GenericFunc
+                },
+                {
+                    2, GenericFunc
+                },
+                {
+                    3, entity => new DelayedCounter
+                    {
+                        SecondsRemaining = entity.MiningTimeSecondsEllapsed,
+                        UnlockValue = 5000000,
+                        MiningTimeSeconds = entity.Counter.MiningTimeSeconds ?? 0
+                    }
+                }
+            }));
+
         public CounterBase Map(UserCounterEntity source, CounterBase destination = null)
         {
-            if (destination == null)
-            {
-                switch (source.Counter.Type)
-                {
-                    case 0:
-                        destination = new SingleCounter();
-                        break;
-                    case 1:
-                    case 2:
-                        destination = new GenericCounter();
-                        var genericDestionation = (GenericCounter)destination;
-                        genericDestionation.UseInAutoSteps = source.Counter.UseInAutostep;
-                        genericDestionation.Inflation = source.Inflation;
-                        genericDestionation.BonusPercentage = source.BonusPercentage;
-                        genericDestionation.CurrentSteps = source.CurrentStepsCount;
-                        break;
-                    case 3:
-                        destination = new DelayedCounter();
-                        break;
-                }
-            }
+            destination = MappingDictionary[source.Counter.Type](source);
             if (destination == null) return null;
             destination.Name = source.Counter.Name;
             destination.Value = source.Value;

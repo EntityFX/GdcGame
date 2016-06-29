@@ -55,7 +55,10 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
             FundsDrivers = GetFundsDrivers();
             foreach (var fundDriver in FundsDrivers)
             {
-                fundDriver.Value.CurrentValue = fundDriver.Value.InitialValue;
+                if (fundDriver.Value.CurrentValue == 0)
+                {
+                    fundDriver.Value.CurrentValue = fundDriver.Value.InitialValue;
+                }
                 fundDriver.Value.InflationPercent = 15;
             }
         }
@@ -93,6 +96,23 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
                 manualCounter.CurrentSteps--;
                 manualCounter.Inflation = manualCounter.CurrentSteps / manualCounter.StepsToIncreaseInflation;
             }
+
+            var delayedCounters = FundsCounters.Counters.Values.OfType<DelayedCounter>()
+                .Where(_ => _.IsMining);
+            foreach (var delayedCounter in delayedCounters)
+            {
+                if (delayedCounter.SecondsRemaining == 0)
+                {
+                    delayedCounter.IsMining = false;
+                    CashFunds(delayedCounter.Value);
+                    delayedCounter.SubValue *= 1.2m;
+                }
+                else
+                {
+                    delayedCounter.SecondsRemaining--; 
+                }
+            }
+
             AutomaticStepNumber++;
             return genericCounters;
         }
@@ -239,6 +259,21 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
                 genericCounter.Inflation = genericCounter.CurrentSteps / genericCounter.StepsToIncreaseInflation;
             }
             FundsCounters.RootCounter.SubValue += 1;
+        }
+
+        public void ActivateDelayedCounter(int counterId)
+        {
+            var delayedCounter = (DelayedCounter) FundsCounters.Counters[counterId];
+            if (delayedCounter == null)
+            {
+                return;
+            }
+            if (delayedCounter.IsMining | delayedCounter.UnlockValue > FundsCounters.RootCounter.Value)
+            {
+                return;
+            }
+            delayedCounter.IsMining = true;
+            delayedCounter.SecondsRemaining = delayedCounter.SecondsToAchieve;
         }
 
         public LotteryResult PlayLottery()

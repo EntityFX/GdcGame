@@ -74,7 +74,10 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.UssrSimulator
                 var sourceDelayedCounter = sourceCounter.Value as DelayedCounter;
                 if (sourceDelayedCounter != null)
                 {
-                    var destinationDelayedCounter = new EconomicsArcade.Contract.Common.Counters.DelayedCounter();
+                    var destinationDelayedCounter = new EconomicsArcade.Contract.Common.Counters.DelayedCounter()
+                    {
+                        SecondsRemaining = sourceDelayedCounter.SecondsRemaining
+                    };
                     destinationCouner = destinationDelayedCounter;
                     destinationCouner.Type = 3;
                 }
