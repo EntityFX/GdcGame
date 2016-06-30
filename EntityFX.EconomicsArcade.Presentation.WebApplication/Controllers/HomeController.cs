@@ -33,28 +33,7 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Controllers
 
         public ActionResult Index()
         {
-
-            var gameModel = _gameDataProvider.GetGameData();
-            return View("IndexAngular", gameModel);
-        }
-
-        public ActionResult BuyFundDriver(int id)
-        {
-            _gameDataProvider.BuyFundDriver(id);
-            return RedirectToAction("Index");
-        }
-
-        public ActionResult PerformManualStep()
-        {
-            _gameDataProvider.PerformManualStep();
-            return RedirectToAction("Index");
-        }
-
-        public ActionResult FightAgainstInflation()
-        {
-            _gameDataProvider.Initialize(User.Identity.Name);
-            _gameDataProvider.FightAgainstInflation();
-            return RedirectToAction("Index");
+            return View("Index");
         }
     }
 }

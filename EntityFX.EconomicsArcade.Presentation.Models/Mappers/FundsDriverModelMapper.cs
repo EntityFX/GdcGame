@@ -15,6 +15,7 @@ namespace EntityFX.EconomicsArcade.Presentation.Models
             destination.InflationPercent = source.InflationPercent;
             destination.Name = source.Name;
             destination.UnlockValue = source.UnlockValue;
+            destination.IsActive = source.IsActive;
             return destination;
         }
     }

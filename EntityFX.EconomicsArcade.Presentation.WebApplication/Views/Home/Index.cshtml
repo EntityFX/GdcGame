@@ -1,99 +1,82 @@
-﻿@using EntityFX.EconomicsArcade.Contract.Common.Incrementors
-@using EntityFX.EconomicsArcade.Presentation.Models
-@model EntityFX.EconomicsArcade.Presentation.Models.GameDataModel
-
-@{
-    ViewBag.Title = "Home Page";
-    var productionCounter = Model.Counters.Counters[1] as GenericCounterModel;
-    var taxCounter = Model.Counters.Counters[2] as GenericCounterModel;
+﻿@{
+    Layout = null;
 }
 
-<div class="row">
-    <div class="col-md-2">
-    </div>
-    <div class="col-md-8">
-        <dl class="dl-horizontal">
-            <dt>Баланс</dt>
-            <dd>@Model.Counters.CurrentFunds.ToString("c")</dd>
-            <dt>Всего заработано</dt>
-            <dd>@Model.Counters.TotalFunds.ToString("c")</dd>
-        </dl>
-        <dl class="dl-horizontal">
-            <dt>@Model.Counters.Counters[0].Name</dt>
-            <dd class="text-danger">@Model.Counters.Counters[0].Value.ToString("F0")</dd>
-            <dt>@productionCounter.Name</dt>
-            <dd class="text-primary">@productionCounter.Value.ToString("c") = @productionCounter.SubValue.ToString("c") + Bonus: @(productionCounter.BonusPercentage)% (@productionCounter.Bonus.ToString("c")) - Buthurt: @productionCounter.Inflation%</dd>
-            <dt>@taxCounter.Name</dt>
-            <dd class="text-success">@taxCounter.Value.ToString("c") = @taxCounter.SubValue.ToString("c") + Premium: @(taxCounter.BonusPercentage)% (@taxCounter.Bonus.ToString("c")) - Fatigue: @taxCounter.Inflation%</dd>
-        </dl>
-    </div>
-    <div class="col-md-2">
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12 text-center">
-        @Html.ActionLink("Work Hard!", "PerformManualStep", null, new {@class= "btn btn-danger btn-lg"})
-        @Html.ActionLink("Motivate!", "FightAgainstInflation", null, new {@class= "btn btn-warning"})
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-1">
-    </div>
-    <div class="col-md-8">
-        <div class="row">
-            @foreach (var fundDriver in Model.FundsDrivers)
-            {
-                <div class="col-md-3">
-                    <a class="thumbnail" href="@Url.Action("BuyFundDriver", new {id = fundDriver.Id})">
-                        <div class="row">
-                            <div class="col-md-4">
-                                @{ var incIndex = 0;}
-                                @foreach (var incrementor in fundDriver.Incrementors)
-                                {
-                                    <p class="@GetTextColor(incIndex)">
-                                        +@incrementor.Value.Value @(incrementor.Value.IncrementorType == IncrementorTypeEnum.PercentageIncrementor ? "%" : "")
-                                    </p>
-                                    incIndex++;
-                                }
-                            </div>
+<!DOCTYPE html>
 
-                            <div class="col-md-4">
-                                <span class="glyphicon glyphicon-check"></span>
-                            </div>
-                            <div class="col-md-4">
-                                x @fundDriver.BuyCount
-                            </div>
-                        </div>
-                        <div class="caption">
-                            <strong>@fundDriver.Name</strong>
-                            <div>@fundDriver.Value.ToString("c")</div>
-                        </div>
-                    </a>
-                </div>
-            }
+<html ng-app="gdCameApp">
+<head>
+    <title>title</title>
+    @Styles.Render("~/Content/css")
 
+</head>
+
+<body ng-controller="appGameController">
+    <nav class="navbar navbar-fixed-top navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Project name</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><p class="navbar-text">@User.Identity.Name</p></li>
+                </ul>
+            </div>
         </div>
-    </div>
+    </nav>
 
-    <div class="col-md-1">
-    </div>
-</div>
+    <section class="container-fluid jumbotron jumbotron-top">
+        <section class="row">
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-10">
+                <counters></counters>
+            </div>
+            <div class="col-md-1">
+            </div>
+        </section>
+        <section class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4 center-block">
 
-@functions
-{
+                <div class="btn-toolbar" role="toolbar" aria-label="...">
+                    <button type="button" class="btn btn-success" ng-click="fightAgainstInflation()" ng-disabled="gameData.Counters.Counters[2].Inflation == 0">Take a rest</button>
+                    <button type="button" class="btn btn-info btn-lg" ng-click="perfotmManulaStep()">WORK HARD !!</button>
+                    <button type="button" class="btn btn-danger" ng-disabled="gameData.Counters.Counters[3].UnlockValue > gameData.Counters.Counters[0].Value">Do quarter goal</button>
+                </div>
+            </div>
+            <div class="col-md-4">
+            </div>
+        </section>
+    </section>
 
-    string GetTextColor(int incrementorType)
-    {
-        switch (incrementorType)
-        {
-            case 0:
-                return "text-danger";
-            case 1:
-                return "text-primary";
-            case 2:
-                return "text-success";
-        }
-        return "text";
-    }
 
-}
+    <section class="container">
+
+        <section class="row scrollit">
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-10">
+                <fund-drivers></fund-drivers>
+            </div>
+            <div class="col-md-1">
+            </div>
+        </section>
+    </section>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/angular")
+    @Scripts.Render("~/app/app.js")
+    @Scripts.Render("~/app/gdCameData.service.js")
+    @Scripts.Render("~/app/counters/counters.component.js")
+    @Scripts.Render("~/app/fundDrivers/fundDrivers.component.js")
+</body>
+</html>

@@ -32,6 +32,20 @@ namespace EntityFX.EconomicsArcade.Presentation.Models
                 };
                 return genericCounterModel;
             }
+
+            var delayedCounter = source as DelayedCounter;
+            if (delayedCounter != null)
+            {
+                var genericCounterModel = new DelayedCounterModel
+                {
+                    SecondsRemaining = delayedCounter.SecondsRemaining,
+                    UnlockValue = delayedCounter.UnlockValue,
+                    Name = delayedCounter.Name,
+                    Value = delayedCounter.Value,
+                    Type = delayedCounter.Type
+                };
+                return genericCounterModel;
+            }
             return null;
         }
     }

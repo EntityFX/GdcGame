@@ -12,9 +12,9 @@ namespace EntityFX.EconomicsArcade.Presentation.Models
     {
         private readonly IMapper<CounterBase, CounterModelBase> _counterModelBaseMapper;
 
-        public FundsCounterModelMapper()
+        public FundsCounterModelMapper(IMapper<CounterBase, CounterModelBase> counterModelBaseMapper)
         {
-            _counterModelBaseMapper = new CounterModelMapper();
+            _counterModelBaseMapper = counterModelBaseMapper;
         }
 
         public FundsCounterModel Map(FundsCounters source, FundsCounterModel destination = null)

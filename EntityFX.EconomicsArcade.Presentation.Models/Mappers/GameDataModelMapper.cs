@@ -11,10 +11,12 @@ namespace EntityFX.EconomicsArcade.Presentation.Models
         private readonly IMapper<FundsDriver, FundsDriverModel> _fundsDriverModelMapper;
         private readonly IMapper<FundsCounters, FundsCounterModel> _fundsCounterModelMapper;
 
-        public GameDataModelMapper()
+        public GameDataModelMapper(
+            IMapper<FundsDriver, FundsDriverModel> fundsDriverModelMapper
+            , IMapper<FundsCounters, FundsCounterModel> fundsCounterModelMapper)
         {
-            _fundsDriverModelMapper = new FundsDriverModelMapper();
-            _fundsCounterModelMapper = new FundsCounterModelMapper();
+            _fundsDriverModelMapper = fundsDriverModelMapper;
+            _fundsCounterModelMapper = fundsCounterModelMapper;
         }
 
         public GameDataModel Map(GameData source, GameDataModel destination = null)

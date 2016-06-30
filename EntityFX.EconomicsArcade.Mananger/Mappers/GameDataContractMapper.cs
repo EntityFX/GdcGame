@@ -25,7 +25,13 @@ namespace EntityFX.EconomicsArcade.Manager.Mappers
         {
             return new GameData()
             {
-                FundsDrivers = source.FundsDrivers.Select(fundsDriver => _fundsDriversContractMapper.Map((fundsDriver.Value))).ToArray(),
+                FundsDrivers = source.FundsDrivers.Select(fundsDriver =>
+                {
+                    var destinationFundDriver = _fundsDriversContractMapper.Map((fundsDriver.Value));
+                    destinationFundDriver.IsActive = destinationFundDriver.UnlockValue <=
+                                                     source.FundsCounters.RootCounter.Value;
+                    return destinationFundDriver;
+                }).ToArray(),
                 Counters = _fundsCountersContractMapper.Map(source.FundsCounters),
                 AutomaticStepsCount = source.AutomaticStepNumber,
                 ManualStepsCount =  source.ManualStepNumber

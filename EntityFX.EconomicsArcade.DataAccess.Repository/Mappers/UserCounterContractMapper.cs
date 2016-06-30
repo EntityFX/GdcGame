@@ -33,7 +33,7 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository.Mappers
                     3, entity => new DelayedCounter
                     {
                         SecondsRemaining = entity.MiningTimeSecondsEllapsed,
-                        UnlockValue = 5000000,
+                        UnlockValue = 10000,
                         MiningTimeSeconds = entity.Counter.MiningTimeSeconds ?? 0
                     }
                 }

@@ -3,6 +3,8 @@ using System.Configuration;
 using Microsoft.Practices.Unity;
 using System.Web.Http;
 using EntityFX.EconomicsArcade.Contract.Common;
+using EntityFX.EconomicsArcade.Contract.Common.Counters;
+using EntityFX.EconomicsArcade.Contract.Common.Funds;
 using EntityFX.EconomicsArcade.Contract.Manager.GameManager;
 using EntityFX.EconomicsArcade.Contract.Manager.UserManager;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
@@ -25,8 +27,6 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication
 
             container.RegisterType<IGameApiController, GameApiController>();
 
-            // TODO: Register your types here
-            // container.RegisterType<IProductRepository, ProductRepository>();
             container.RegisterType<IGameManager, GameManagerClient>(
                 new InjectionConstructor(
                     ConfigurationManager.AppSettings["ManagerEndpointAddress_GameManager"], typeof(Guid)));
@@ -36,6 +36,9 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication
             container.RegisterType<SessionManagerClient, SessionManagerClient>(
                 new InjectionConstructor(
                 ConfigurationManager.AppSettings["ManagerEndpointAddress_SessionManager"]));
+            container.RegisterType<IMapper<FundsCounters, FundsCounterModel>, FundsCounterModelMapper>();
+            container.RegisterType<IMapper<CounterBase, CounterModelBase>, CounterModelMapper>();
+            container.RegisterType<IMapper<FundsDriver, FundsDriverModel>, FundsDriverModelMapper>();
             container.RegisterType<IMapper<GameData, GameDataModel>, GameDataModelMapper>();
             container.RegisterType<IGameClientFactory, GameClientFactory>();
             container.RegisterType<IGameDataProvider, GameDataProvider>();

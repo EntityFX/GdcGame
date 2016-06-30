@@ -57,13 +57,19 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Controllers
         }
 
         [System.Web.Http.HttpGet]
-        public GameDataModel GetGameData(Guid? id)
+        public GameDataModel GetGameData()
         {
             return _gameDataProvider.GetGameData();
         }
 
+        [System.Web.Http.HttpGet]
+        public FundsCounterModel GetCounters()
+        {
+            return _gameDataProvider.GetCounters();
+        }
+
         [System.Web.Http.HttpPost]
-        public bool BuyFundDriver([FromUri]int id)
+        public bool BuyFundDriver([FromBody]int id)
         {
             _gameDataProvider.BuyFundDriver(id);
             return true;

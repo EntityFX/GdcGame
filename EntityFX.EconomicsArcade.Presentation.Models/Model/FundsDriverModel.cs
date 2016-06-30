@@ -10,6 +10,7 @@ namespace EntityFX.EconomicsArcade.Presentation.Models
         public decimal Value { get; set; }
         public int InflationPercent { get; set; }
         public decimal UnlockValue { get; set; }
+        public bool IsActive { get; set; }
         public int BuyCount { get; set; }
         public IDictionary<int, Incrementor> Incrementors { get; set; } 
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web;
 using EntityFX.EconomicsArcade.Contract.Common;
+using EntityFX.EconomicsArcade.Contract.Common.Counters;
 using EntityFX.EconomicsArcade.Contract.Manager.GameManager;
 using EntityFX.EconomicsArcade.Contract.Manager.UserManager;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
@@ -17,18 +18,21 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Providers
         private readonly ISimpleUserManager _simpleUserManager;
         private readonly SessionManagerClient _sessionManagerClient;
         private readonly IMapper<GameData, GameDataModel> _gameDataModelMapper;
+        private readonly IMapper<FundsCounters, FundsCounterModel> _fundsCounterModelMapper;
         private readonly IGameClientFactory _gameClientFactory;
 
         public GameDataProvider(
             IGameClientFactory gameClientFactory,
             ISimpleUserManager simpleUserManager,
             SessionManagerClient sessionManagerClient,
-            IMapper<GameData, GameDataModel> gameDataModelMapper
+            IMapper<GameData, GameDataModel> gameDataModelMapper,
+            IMapper<FundsCounters, FundsCounterModel> fundsCounterModelMapper
             )
         {
             _simpleUserManager = simpleUserManager;
             _sessionManagerClient = sessionManagerClient;
             _gameDataModelMapper = gameDataModelMapper;
+            _fundsCounterModelMapper = fundsCounterModelMapper;
             _gameClientFactory = gameClientFactory;
         }
 
@@ -50,6 +54,11 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Providers
         public GameDataModel GetGameData()
         {
             return _gameDataModelMapper.Map(_gameManager.GetGameData());
+        }
+
+        public FundsCounterModel GetCounters()
+        {
+            return _fundsCounterModelMapper.Map(_gameManager.GetCounters());
         }
 
         public void BuyFundDriver(int id)

@@ -8,6 +8,7 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Providers
         Guid GameGuid { get; }
         void Initialize(string userName);
         GameDataModel GetGameData();
+        FundsCounterModel GetCounters();
         void BuyFundDriver(int id);
         void PerformManualStep();
         void FightAgainstInflation();

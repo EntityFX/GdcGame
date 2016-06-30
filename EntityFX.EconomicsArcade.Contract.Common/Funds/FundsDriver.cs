@@ -24,6 +24,8 @@ namespace EntityFX.EconomicsArcade.Contract.Common.Funds
         [DataMember]
         public int BuyCount { get; set; }
         [DataMember]
+        public bool IsActive { get; set; }
+        [DataMember]
         public IDictionary<int, Incrementor> Incrementors { get; set; } 
     }
 }

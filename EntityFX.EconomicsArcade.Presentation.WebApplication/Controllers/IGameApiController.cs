@@ -12,7 +12,9 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Controllers
 
         bool ActivateDelayedCounter();
 
-        GameDataModel GetGameData(Guid? id);
+        GameDataModel GetGameData();
+
+        FundsCounterModel GetCounters();
 
         bool BuyFundDriver(int id);
     }
