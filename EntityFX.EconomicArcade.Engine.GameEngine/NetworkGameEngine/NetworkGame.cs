@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using EntityFX.EconomicsArcade.Contract.Common;
 using EntityFX.EconomicsArcade.Contract.DataAccess.GameData;
 using EntityFX.EconomicsArcade.Contract.Game.Counters;
 using EntityFX.EconomicsArcade.Contract.Game.Funds;
 using EntityFX.EconomicsArcade.Contract.Game.Incrementors;
 
-namespace EntityFX.EconomicArcade.Engine.GameEngine.UssrSimulator
+namespace EntityFX.EconomicArcade.Engine.GameEngine.NetworkGameEngine
 {
-    public class UssrSimulatorGame : GameBase
+    public class NetworkGame : GameBase
     {
         private static readonly IDictionary<Type, Func<EconomicsArcade.Contract.Common.Counters.CounterBase, CounterBase>> MappingDictionary
             = new ReadOnlyDictionary<Type, Func<EconomicsArcade.Contract.Common.Counters.CounterBase, CounterBase>>(
@@ -60,7 +59,7 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.UssrSimulator
         private readonly int _stepsToPersist = 10;
         private int _currentStepsToPersist;
 
-        public UssrSimulatorGame(IGameDataRetrieveDataAccessService gameDataRetrieveDataAccessService
+        public NetworkGame(IGameDataRetrieveDataAccessService gameDataRetrieveDataAccessService
             , INotifyGameDataChanged notifyGameDataChanged, int userId)
         {
             _gameDataRetrieveDataAccessService = gameDataRetrieveDataAccessService;

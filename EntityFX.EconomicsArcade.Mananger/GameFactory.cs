@@ -1,4 +1,4 @@
-﻿using EntityFX.EconomicArcade.Engine.GameEngine.UssrSimulator;
+﻿using EntityFX.EconomicArcade.Engine.GameEngine.NetworkGameEngine;
 using EntityFX.EconomicsArcade.Contract.Game;
 using Microsoft.Practices.Unity;
 

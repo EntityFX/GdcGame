@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
-using EntityFX.EconomicArcade.Engine.GameEngine.UssrSimulator;
 using EntityFX.EconomicsArcade.Contract.Manager.SessionManager;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 using EntityFX.EconomicsArcade.Manager;
@@ -19,6 +18,8 @@ using EntityFX.EconomicsArcade.Contract.Manager.UserManager;
 using EntityFX.EconomicsArcade.Utils.ClientProxy.DataAccess;
 using PortableLog.NLog;
 using System.Configuration;
+using EntityFX.EconomicArcade.Engine.GameEngine.NetworkGameEngine;
+
 namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
 {
     public class ContainerBootstrapper : IContainerBootstrapper
@@ -49,7 +50,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
             container.RegisterType<IMapper<FundsCounters, Contract.Common.Counters.FundsCounters>, FundsCountersContractMapper>();
             container.RegisterType<IMapper<FundsDriver, Contract.Common.Funds.FundsDriver>, FundsDriverContractMapper>();
             container.RegisterType<IMapper<IGame, GameData>, GameDataContractMapper>();
-            container.RegisterType<IGame, UssrSimulatorGame>();
+            container.RegisterType<IGame, NetworkGame>();
             container.RegisterType<IGameManager, GameManager>();
             container.RegisterType<ISimpleUserManager, SimpleUserManager>();
 
