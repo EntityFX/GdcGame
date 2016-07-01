@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFx.EconomicsArcade.TestApplication", "EntityFx.EconomicsArcade.TestApplication\EntityFx.EconomicsArcade.TestApplication.csproj", "{24C8E95E-66EA-4E35-8584-C50171B68984}"
 EndProject
@@ -80,6 +80,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.EconomicsArcade.Presentation.WebApplication", "EntityFX.EconomicsArcade.Presentation.WebApplication\EntityFX.EconomicsArcade.Presentation.WebApplication.csproj", "{223F66A2-74A2-4437-B6C6-5F84B28AD62A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.EconomicsArcade.Presentation.Models", "EntityFX.EconomicsArcade.Presentation.Models\EntityFX.EconomicsArcade.Presentation.Models.csproj", "{0F9C056A-DB5D-48ED-A688-BFD04ED4DFD7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WindowsHost", "WindowsHost", "{F86972A8-665F-4493-B867-84DCFF67BB40}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.EconomicsArcade.Utils.ServiceHost.DataAccess.WindowsSrv", "EntityFX.EconomicsArcade.Utils.ServiceHost.DataAccess.WindowsSrv\EntityFX.EconomicsArcade.Utils.ServiceHost.DataAccess.WindowsSrv.csproj", "{E9168948-DCE6-4FBC-81E5-1B85419BC0EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.EconomicsArcade.Utils.ServiceHost.Mananger.WindowsSrv", "EntityFX.EconomicsArcade.Utils.ServiceHost.Mananger.WindowsSrv\EntityFX.EconomicsArcade.Utils.ServiceHost.Mananger.WindowsSrv.csproj", "{33195FAC-813F-4392-87BB-E9ADA9FAAE96}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -188,6 +194,14 @@ Global
 		{0F9C056A-DB5D-48ED-A688-BFD04ED4DFD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F9C056A-DB5D-48ED-A688-BFD04ED4DFD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F9C056A-DB5D-48ED-A688-BFD04ED4DFD7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9168948-DCE6-4FBC-81E5-1B85419BC0EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9168948-DCE6-4FBC-81E5-1B85419BC0EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9168948-DCE6-4FBC-81E5-1B85419BC0EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9168948-DCE6-4FBC-81E5-1B85419BC0EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33195FAC-813F-4392-87BB-E9ADA9FAAE96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33195FAC-813F-4392-87BB-E9ADA9FAAE96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33195FAC-813F-4392-87BB-E9ADA9FAAE96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33195FAC-813F-4392-87BB-E9ADA9FAAE96}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -219,5 +233,8 @@ Global
 		{D5A72A34-5DE5-41E1-B52E-8F70D19CB7BF} = {71152D90-9B19-442E-AD44-F385A35B4DD2}
 		{223F66A2-74A2-4437-B6C6-5F84B28AD62A} = {AFA994D0-4315-495A-A14A-74BC79DA9A51}
 		{0F9C056A-DB5D-48ED-A688-BFD04ED4DFD7} = {AFA994D0-4315-495A-A14A-74BC79DA9A51}
+		{F86972A8-665F-4493-B867-84DCFF67BB40} = {2B7D0649-6899-491F-B4E7-70D163B1F72D}
+		{E9168948-DCE6-4FBC-81E5-1B85419BC0EE} = {F86972A8-665F-4493-B867-84DCFF67BB40}
+		{33195FAC-813F-4392-87BB-E9ADA9FAAE96} = {F86972A8-665F-4493-B867-84DCFF67BB40}
 	EndGlobalSection
 EndGlobal
