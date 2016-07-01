@@ -100,5 +100,6 @@
     <None Include="Data\DataIncrementors.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="AmukInternPublish.xml" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseName>EntityFX.EconomicsArcade.Database</TargetDatabaseName>
+    <DeployScriptFileName>EntityFX.EconomicsArcade.Database.sql</DeployScriptFileName>
+    <BlockWhenDriftDetected>False</BlockWhenDriftDetected>
+    <RegisterDataTierApplication>False</RegisterDataTierApplication>
+    <TargetConnectionString>Data Source=10.10.139.72;User ID=sa;Pooling=False</TargetConnectionString>
+    <ProfileVersionNumber>1</ProfileVersionNumber>
+  </PropertyGroup>
+</Project>
