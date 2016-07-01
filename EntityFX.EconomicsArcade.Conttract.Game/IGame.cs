@@ -19,7 +19,7 @@ namespace EntityFX.EconomicsArcade.Contract.Game
 
         Task<int> PerformAutoStep();
 
-        void PerformManualStep();
+        ManualStepResult PerformManualStep(VerificationManualStepData verificationData);
 
         void BuyFundDriver(int fundDriverId);
 

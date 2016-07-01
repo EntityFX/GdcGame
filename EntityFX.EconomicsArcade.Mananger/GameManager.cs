@@ -11,16 +11,19 @@ namespace EntityFX.EconomicsArcade.Manager
     public class GameManager : IGameManager
     {
         private readonly GameSessions _gameSessions;
-        private readonly GameDataContractMapper _gameDataContractMapper;
-        private readonly FundsCountersContractMapper _countersContractMapper;
+        private readonly IMapper<IGame, GameData> _gameDataContractMapper;
+        private readonly IMapper<Contract.Game.Counters.FundsCounters, FundsCounters> _countersContractMapper;
+        private readonly IMapper<Contract.Game.ManualStepResult, Contract.Manager.GameManager.ManualStepResult> _manualStepResultMapper;
 
         public GameManager(GameSessions gameSessions
-            , GameDataContractMapper gameDataContractMapper
-            , FundsCountersContractMapper countersContractMapper)
+            , IMapper<IGame, GameData> gameDataContractMapper
+            , IMapper<Contract.Game.Counters.FundsCounters, FundsCounters> countersContractMapper
+            , IMapper<Contract.Game.ManualStepResult, Contract.Manager.GameManager.ManualStepResult> manualStepResultMapper)
         {
             _gameSessions = gameSessions;
             _gameDataContractMapper = gameDataContractMapper;
             _countersContractMapper = countersContractMapper;
+            _manualStepResultMapper = manualStepResultMapper;
         }
 
         public void BuyFundDriver(int fundDriverId)
@@ -28,9 +31,11 @@ namespace EntityFX.EconomicsArcade.Manager
             GetSessionGame().BuyFundDriver(fundDriverId);
         }
 
-        public void PerformManualStep()
+        public Contract.Manager.GameManager.ManualStepResult PerformManualStep(VerificationManualStepResult verificationManualStepResult)
         {
-            GetSessionGame().PerformManualStep();
+            var res = GetSessionGame().PerformManualStep(verificationManualStepResult != null 
+                ? new VerificationManualStepData() { ResultNumber = verificationManualStepResult.VerificationNumber} : null);
+            return _manualStepResultMapper.Map(res);
         }
 
         public void FightAgainstInflation()
@@ -61,6 +66,7 @@ namespace EntityFX.EconomicsArcade.Manager
 
         private IGame GetSessionGame()
         {
+            
             var sessionId = OperationContextHelper.Instance.SessionId ?? default(Guid);
             return _gameSessions.GetGame(sessionId);
         }

@@ -66,9 +66,24 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Providers
             _gameManager.BuyFundDriver(id);
         }
 
-        public void PerformManualStep()
+        public VerificationNumberModel PerformManualStep(int? verificationNumber)
         {
-            _gameManager.PerformManualStep();
+               var result =  _gameManager.PerformManualStep(
+                    verificationNumber != null ? new VerificationManualStepResult() { VerificationNumber = verificationNumber.Value} : null);
+            var verificationnumberResult = result as VerificationRequiredResult;
+            VerificationData verificationData = null;
+            if (verificationnumberResult != null)
+            {
+                verificationData = new VerificationData()
+                {
+                    FirstNumber = verificationnumberResult.FirstNumber,
+                    SecondNumber = verificationnumberResult.SecondNumber
+                };
+            }
+            return new VerificationNumberModel()
+            {
+                VerificationData = verificationData
+            };
         }
 
         public void FightAgainstInflation()

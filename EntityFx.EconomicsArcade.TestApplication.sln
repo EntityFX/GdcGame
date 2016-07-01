@@ -38,7 +38,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.EconomicsArcade.Ut
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ServiceHost", "ServiceHost", "{2B3C3D7D-D36A-47E8-9395-DB1AA2D271EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.EconomicsArcade.Utils.ServiceHost.Mananger.ConsoleApp", "EntityFX.EconomicsArcade.Utils.ServiceHost.Mananger.ConsoleApp\EntityFX.EconomicsArcade.Utils.ServiceHost.Mananger.ConsoleApp.csproj", "{B21B6E54-ED6B-401B-9460-328F9B3151C5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.EconomicsArcade.Utils.ServiceHost.Manager.ConsoleApp", "EntityFX.EconomicsArcade.Utils.ServiceHost.Mananger.ConsoleApp\EntityFX.EconomicsArcade.Utils.ServiceHost.Manager.ConsoleApp.csproj", "{B21B6E54-ED6B-401B-9460-328F9B3151C5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.EconomicsArcade.TestClient", "EntityFX.EconomicsArcade.TestClient\EntityFX.EconomicsArcade.TestClient.csproj", "{3D8D07C2-B2EB-4FD6-869D-1075FD5FB3C3}"
 EndProject
@@ -80,6 +80,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.EconomicsArcade.Presentation.WebApplication", "EntityFX.EconomicsArcade.Presentation.WebApplication\EntityFX.EconomicsArcade.Presentation.WebApplication.csproj", "{223F66A2-74A2-4437-B6C6-5F84B28AD62A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.EconomicsArcade.Presentation.Models", "EntityFX.EconomicsArcade.Presentation.Models\EntityFX.EconomicsArcade.Presentation.Models.csproj", "{0F9C056A-DB5D-48ED-A688-BFD04ED4DFD7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{A76DA6B5-F5DC-4E1F-8B1B-E89BA8216229}"
+	ProjectSection(SolutionItems) = preProject
+		EntityFX.EconomicsArcade.Test.Shared\GameRunnerBase.cs = EntityFX.EconomicsArcade.Test.Shared\GameRunnerBase.cs
+		EntityFX.EconomicsArcade.Test.Shared\PrettyConsole.cs = EntityFX.EconomicsArcade.Test.Shared\PrettyConsole.cs
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -219,5 +225,6 @@ Global
 		{D5A72A34-5DE5-41E1-B52E-8F70D19CB7BF} = {71152D90-9B19-442E-AD44-F385A35B4DD2}
 		{223F66A2-74A2-4437-B6C6-5F84B28AD62A} = {AFA994D0-4315-495A-A14A-74BC79DA9A51}
 		{0F9C056A-DB5D-48ED-A688-BFD04ED4DFD7} = {AFA994D0-4315-495A-A14A-74BC79DA9A51}
+		{A76DA6B5-F5DC-4E1F-8B1B-E89BA8216229} = {D150B452-1254-4C2D-90DA-27765E2C7C0B}
 	EndGlobalSection
 EndGlobal

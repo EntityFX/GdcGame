@@ -18,6 +18,7 @@ using EntityFX.EconomicsArcade.Contract.Manager.UserManager;
 using EntityFX.EconomicsArcade.Utils.ClientProxy.DataAccess;
 using PortableLog.NLog;
 using System.Configuration;
+using EntityFX.EconomicArcade.Engine.GameEngine.Mappers;
 using EntityFX.EconomicArcade.Engine.GameEngine.NetworkGameEngine;
 
 namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
@@ -31,8 +32,6 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
                 _=> new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger")))));
 
             container.RegisterType<ISessionManager, SessionManager>();
-
-            container.RegisterType<INotifyGameDataChanged, NotifyGameDataChanged>();
 
             //container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessClient>();
             container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessClient>(
@@ -50,9 +49,26 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
             container.RegisterType<IMapper<FundsCounters, Contract.Common.Counters.FundsCounters>, FundsCountersContractMapper>();
             container.RegisterType<IMapper<FundsDriver, Contract.Common.Funds.FundsDriver>, FundsDriverContractMapper>();
             container.RegisterType<IMapper<IGame, GameData>, GameDataContractMapper>();
+            container.RegisterType<IMapper<IGame, GameData>, GameDataMapper>("GameDataMapper");
+            container.RegisterType<IMapper<Contract.Game.ManualStepResult, Contract.Manager.GameManager.ManualStepResult>, ManualStepContractMapper>();
+            container.RegisterType<IMapper<Contract.Game.ManualStepResult, Contract.Manager.GameManager.ManualStepResult>, ManualStepContractMapper>();
+
+            container.RegisterType<IGameFactory, GameFactory>();
+
+
+            container.RegisterType<INotifyGameDataChanged, NotifyGameDataChanged>(
+                new InjectionConstructor(
+                    new ResolvedParameter<int>(),
+                    new ResolvedParameter<IGameDataStoreDataAccessService>(),
+                    new ResolvedParameter<IMapper<IGame, GameData>>("GameDataMapper"),
+                    new ResolvedParameter<IMapper<FundsDriver, Contract.Common.Funds.FundsDriver>>()
+                )
+            );
+
             container.RegisterType<IGame, NetworkGame>();
             container.RegisterType<IGameManager, GameManager>();
             container.RegisterType<ISimpleUserManager, SimpleUserManager>();
+
 
             return container;
         }

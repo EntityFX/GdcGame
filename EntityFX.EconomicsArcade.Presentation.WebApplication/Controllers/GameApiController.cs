@@ -36,10 +36,10 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Controllers
         }
 
         [System.Web.Http.HttpPost]
-        public bool PerformManualStep()
+        public VerificationNumberModel PerformManualStep()
         {
-            _gameDataProvider.PerformManualStep();
-            return true;
+            var res = _gameDataProvider.PerformManualStep(null);
+            return res;
         }
 
         [System.Web.Http.HttpPost]

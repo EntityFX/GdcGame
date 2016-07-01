@@ -67,6 +67,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\EntityFX.EconomicsArcade.Test.Shared\GameRunnerBase.cs">
+      <Link>GameRunnerBase.cs</Link>
+    </Compile>
+    <Compile Include="..\EntityFX.EconomicsArcade.Test.Shared\PrettyConsole.cs">
+      <Link>PrettyConsole.cs</Link>
+    </Compile>
+    <Compile Include="GameRunner.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

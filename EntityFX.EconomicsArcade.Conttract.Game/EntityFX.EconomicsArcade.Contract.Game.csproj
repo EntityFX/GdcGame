@@ -49,6 +49,7 @@
     <Compile Include="Incrementors\PercentageIncrementor.cs" />
     <Compile Include="Incrementors\ValueIncrementor.cs" />
     <Compile Include="LotteryResult.cs" />
+    <Compile Include="ManualStepResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

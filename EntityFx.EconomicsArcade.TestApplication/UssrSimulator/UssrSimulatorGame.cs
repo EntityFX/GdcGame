@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using EntityFx.EconomicsArcade.Test.Shared;
 using EntityFX.EconomicArcade.Engine.GameEngine;
 using EntityFX.EconomicsArcade.Contract.Game.Counters;
 using EntityFX.EconomicsArcade.Contract.Game.Funds;
@@ -476,12 +477,14 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
                     {
                         (int)UssrCounterEnum.Communism,
                         new SingleCounter {
+                            Id = 0,
                             Name = "Communism"
                         } 
                     },
                     {
                         (int)UssrCounterEnum.Production,  
                         new GenericCounter {
+                            Id = 1,
                             Name = "Production",
                             SubValue = 10,
                             StepsToIncreaseInflation = 1000
@@ -490,6 +493,7 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
                     { 
                         (int)UssrCounterEnum.Tax, 
                         new GenericCounter {
+                            Id = 2,
                             Name = "Tax",
                             IsUsedInAutoStep = true,
                             StepsToIncreaseInflation = 2000
@@ -498,6 +502,7 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
                     { 
                         (int)UssrCounterEnum.FiveYearPlan, 
                         new DelayedCounter {
+                            Id = 3,
                             Name = "Five Year Plan",
                             UnlockValue = 10000,
                             SecondsToAchieve = 10,
@@ -517,111 +522,29 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
 
         private readonly object _lockObject = new { };
 
+        private int verifyResult = -1;
+
         protected override void PostPerformManualStep(IEnumerable<CounterBase> modifiedCounters)
         {
-            DisplayGameData();
+
         }
 
         protected override void PostPerformAutoStep(IEnumerable<CounterBase> modifiedCounters)
         {
 
-            DisplayGameData();
 
         }
 
         protected override void PostInitialize()
         {
-            //CashFunds(1500000);
-            Console.CursorVisible = false;
-            DisplayGameData();
+
         }
 
         protected override void PostBuyFundDriver(FundsDriver fundDriverId)
         {
-            DisplayGameData();
+
         }
 
-        private void DisplayGameData()
-        {
-            lock (_lockObject)
-            {
-                Console.SetCursorPosition(0, 0);
-                Console.WriteLine("Funds: {0:C}; Total Funds: {1:C}", FundsCounters.CurrentFunds, FundsCounters.TotalFunds);
-                Console.WriteLine("Manual Steps: {0}, Automatic Steps: {1}", 
-                    ManualStepNumber, AutomaticStepNumber);
-                PrettyConsole.WriteLineColor(ConsoleColor.Red, "{1,15}: {0,12}", Communism, FundsCounters.Counters[(int)UssrCounterEnum.Communism].Name);
-                PrettyConsole.WriteLineColor(ConsoleColor.Cyan, "{1,15}: {0,12:C} ", Production, FundsCounters.Counters[(int)UssrCounterEnum.Production].Name);
-                PrettyConsole.WriteLineColor(ConsoleColor.Cyan, "{1,15}: {0,12:C} ({2}%)"
-                    , ((GenericCounter)FundsCounters.Counters[(int)UssrCounterEnum.Production]).Bonus, "Bonus"
-                    , ((GenericCounter)FundsCounters.Counters[(int)UssrCounterEnum.Production]).BonusPercentage);
-                PrettyConsole.WriteColor(ConsoleColor.Cyan, "{1,15}: {0,12}%"
-                    , ((GenericCounter)FundsCounters.Counters[(int)UssrCounterEnum.Production]).Inflation, "Inflation");
-                PrettyConsole.WriteLineColor(ConsoleColor.DarkGray, " StepsToIncrInflation: {0}, Current Steps: {1}", ((GenericCounter)FundsCounters.Counters[(int)UssrCounterEnum.Production]).StepsToIncreaseInflation, ((GenericCounter)FundsCounters.Counters[(int)UssrCounterEnum.Production]).CurrentSteps);
-                PrettyConsole.WriteLineColor(ConsoleColor.Cyan, "{1,15}: {0,12:C}"
-                    , ((GenericCounter)FundsCounters.Counters[(int)UssrCounterEnum.Production]).Value, "Total");
-                PrettyConsole.WriteLineColor(ConsoleColor.Green, "{1,15}: {0,12:C}", Taxes, FundsCounters.Counters[(int)UssrCounterEnum.Tax].Name);
-                PrettyConsole.WriteLineColor(ConsoleColor.Green, "{1,15}: {0,12:C} ({2}%)"
-                    , ((GenericCounter)FundsCounters.Counters[(int)UssrCounterEnum.Tax]).Bonus, "Bonus"
-                    , ((GenericCounter)FundsCounters.Counters[(int)UssrCounterEnum.Tax]).BonusPercentage);
-                PrettyConsole.WriteColor(ConsoleColor.Green, "{1,15}: {0,12}%"
-                    , ((GenericCounter)FundsCounters.Counters[(int)UssrCounterEnum.Tax]).Inflation, "Corruption");
-                PrettyConsole.WriteLineColor(ConsoleColor.DarkGray, " StepsToIncrInflation: {0}, Current Steps: {1}", ((GenericCounter)FundsCounters.Counters[(int)UssrCounterEnum.Tax]).StepsToIncreaseInflation, ((GenericCounter)FundsCounters.Counters[(int)UssrCounterEnum.Tax]).CurrentSteps);
-                PrettyConsole.WriteLineColor(ConsoleColor.Green, "{1,15}: {0,12:C}"
-                    , ((GenericCounter)FundsCounters.Counters[(int)UssrCounterEnum.Tax]).Value, "Total");
-                PrettyConsole.WriteLineColor(ConsoleColor.Magenta, "{1,15}: +{0,12:C} {2}", FiveYearPlan, FundsCounters.Counters[(int)UssrCounterEnum.FiveYearPlan].Name, TimeSpan.FromSeconds(((DelayedCounter)FundsCounters.Counters[(int)UssrCounterEnum.FiveYearPlan]).SecondsRemaining));
-                
-                Console.WriteLine();
-                int charIndex = 65;
-                PrettyConsole.WriteLineColor(ConsoleColor.DarkYellow, "{0,2}:             Fight Against Corruption", "*");
-                PrettyConsole.WriteLineColor(ConsoleColor.DarkYellow, "{0,2}:                    Do Five Year Plan", "+");
-                foreach (var fundsDriver in FundsDrivers)
-                {
-                    if (!IsFundsDriverAvailableForBuy(fundsDriver.Value))
-                    {
-                        PrettyConsole.WriteColor(ConsoleColor.DarkGray, "{0,2}:             Need money to buy:     {1,8}. x{2,-4} ", ((char)charIndex).ToString(), fundsDriver.Value.UnlockValue, fundsDriver.Value.BuyCount);
-                    }
-                    else
-                    {
-                        PrettyConsole.WriteColor(ConsoleColor.White, "{3,2}: {0,28} {1,15:C} x{2,-4} ", fundsDriver.Value.Name, fundsDriver.Value.CurrentValue, fundsDriver.Value.BuyCount, ((char)charIndex).ToString());
-                    }
-                    PrettyConsole.WriteColor(ConsoleColor.Red, "+{0, -4} ", GetIncrementorValueById(fundsDriver.Value, (int)UssrCounterEnum.Communism));
-                    PrettyConsole.WriteColor(ConsoleColor.Cyan, "+{0, -7} ", GetIncrementorValueById(fundsDriver.Value, (int)UssrCounterEnum.Production));
-                    PrettyConsole.WriteColor(ConsoleColor.Green, "+{0,-7} ", GetIncrementorValueById(fundsDriver.Value, (int)UssrCounterEnum.Tax));
-                    Console.WriteLine();
-                    charIndex++;
-                }
-            }
-        }
-    }
 
-    internal static class PrettyConsole
-    {
-        private static readonly object LockObject = new { };
-
-        public static void WriteColor(ConsoleColor color, string text)
-        {
-            WriteColor(color, text, null);
-        }
-
-        public static void WriteColor(ConsoleColor color, string text, params object[] args)
-        {
-            var fg = Console.ForegroundColor;
-            Console.ForegroundColor = color;
-            Console.Write(text, args);
-            Console.ForegroundColor = fg;
-        }
-
-        public static void WriteLineColor(ConsoleColor color, string text)
-        {
-            WriteLineColor(color, text, null);
-        }
-
-        public static void WriteLineColor(ConsoleColor color, string text, params object[] args)
-        {
-            var fg = Console.ForegroundColor;
-            Console.ForegroundColor = color;
-            Console.WriteLine(text, args);
-            Console.ForegroundColor = fg;
-        }
     }
 }

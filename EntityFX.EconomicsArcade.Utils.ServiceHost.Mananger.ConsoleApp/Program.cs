@@ -1,8 +1,8 @@
-﻿using EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager;
-using System;
+﻿using System;
 using System.Configuration;
+using EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager;
 
-namespace EntityFX.EconomicsArcade.Utils.ServiceHost.Mananger.ConsoleApp
+namespace EntityFX.EconomicsArcade.Utils.ServiceHost.Manager.ConsoleApp
 {
     class Program
     {

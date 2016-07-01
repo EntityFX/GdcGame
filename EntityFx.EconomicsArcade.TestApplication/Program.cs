@@ -1,7 +1,5 @@
-﻿using EntityFx.EconomicsArcade.TestApplication.UssrSimulator;
-using EntityFX.EconomicsArcade.Contract.Game;
-using System;
-using System.Timers;
+﻿using System;
+using EntityFX.EconomicArcade.Engine.GameEngine.Mappers;
 
 namespace EntityFx.EconomicsArcade.TestApplication
 {
@@ -16,11 +14,11 @@ namespace EntityFx.EconomicsArcade.TestApplication
 
         static void MainLoop()
         {
-            var gr = new GameRunner();
+            var gr = new GameRunner(new GameDataMapper(), new FundsDriverContractMapper(new IncrementorContractMapper()));
             gr.Run();
             ConsoleKeyInfo keyInfo;
             while ((keyInfo = Console.ReadKey(true)).Key != ConsoleKey.Escape)
-            //while ((keyInfo = new ConsoleKeyInfo(' ', ConsoleKey.Enter, false, false, false)).Key != ConsoleKey.Escape)
+
             {
                 if (keyInfo.Key == ConsoleKey.Enter)
                 {
@@ -41,48 +39,5 @@ namespace EntityFx.EconomicsArcade.TestApplication
             }
         }
 
-    }
-
-    class GameRunner
-    {
-        private readonly IGame _game = new UssrSimulatorGame();
-
-        private readonly Timer _timer = new Timer(1000);
-
-        public GameRunner()
-        {
-            _timer.Elapsed += _timer_Elapsed;
-        }
-
-        async void _timer_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            await _game.PerformAutoStep();
-        }
-
-        public void Run()
-        {
-            _game.Initialize();
-            _timer.Start();
-        }
-
-        public void PerformManualStep()
-        {
-            _game.PerformManualStep();
-        }
-
-        public void BuyFundDriver(ConsoleKeyInfo keyInfo)
-        {
-            _game.BuyFundDriver((int)keyInfo.Key - 64);
-        }
-
-        public void FightAgainstCorruption()
-        {
-            _game.FightAgainstInflation();
-        }
-
-        public void PerformFiveYearPlan()
-        {
-            _game.ActivateDelayedCounter(3);
-        }
     }
 }

@@ -12,14 +12,14 @@ namespace EntityFX.EconomicsArcade.Manager
 {
     public class GameSessions
     {
-        private readonly GameFactory _gameFactory;
+        private readonly IGameFactory _gameFactory;
         private static readonly IDictionary<string, IGame> GameSessionsStorage = new ConcurrentDictionary<string, IGame>();
 
         private static readonly IDictionary<Guid, Session> SessionsStorage = new ConcurrentDictionary<Guid, Session>();
 
         private static Timer _timer = new Timer(TimerCallback, null, 0, 1000 );
 
-        public GameSessions(GameFactory gameFactory)
+        public GameSessions(IGameFactory gameFactory)
         {
             _gameFactory = gameFactory;
         }

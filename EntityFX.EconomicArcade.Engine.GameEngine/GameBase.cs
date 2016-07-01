@@ -22,6 +22,19 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
 
         public int ManualStepNumber { get; protected set; }
 
+        private int _nextVerificationSteps = 0;
+
+        private int _currentVerificationSteps = 0;
+#if DEBUG 
+        private readonly int _stepsToVerify = 100;
+#else
+        private readonly int _stepsToVerify = 500;
+#endif
+
+        private ManualStepResult _manualStepVerificationRequiredResult;
+
+        private readonly Random _randomiserForVerification = new Random(Environment.TickCount);
+
         protected GameBase()
         {
         }
@@ -31,8 +44,22 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
             PreInitialize();
             InitializeFundsCounters();
             InitializeFundsDrivers();
+            InitializeVerificationSteps();
             PostInitialize();
             _isInitialized = true;
+        }
+
+        private ManualStepVerificationRequiredResult InitializeVerificationSteps()
+        {
+            var verificationManualStepResult = new ManualStepVerificationRequiredResult
+            {
+                FirstNumber = _randomiserForVerification.Next(1, 50),
+                SecondNumber = _randomiserForVerification.Next(1, 50),
+            };
+            _currentVerificationSteps = 0;
+            var delta = (int)(_stepsToVerify * 0.1);
+            _nextVerificationSteps = _stepsToVerify + _randomiserForVerification.Next(-1 * delta, delta);
+            return verificationManualStepResult;
         }
 
         protected virtual void PreInitialize()
@@ -72,7 +99,7 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
             if (!_isInitialized) throw new Exception("Game is not started");
             return await Task<int>.Factory.StartNew(() =>
             {
-                var modifiedCounters =  PerformAutoStepInternal();
+                var modifiedCounters = PerformAutoStepInternal();
                 PostPerformAutoStep(modifiedCounters);
                 return 0;
             });
@@ -109,7 +136,7 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
                 }
                 else
                 {
-                    delayedCounter.SecondsRemaining--; 
+                    delayedCounter.SecondsRemaining--;
                 }
             }
 
@@ -131,13 +158,59 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
             return genericCounters;
         }
 
-        public void PerformManualStep()
+        private ManualStepResult VerifyManualStep(VerificationManualStepData verificationData)
         {
-            if (!_isInitialized) throw new Exception("Game is not started");
+            if (_manualStepVerificationRequiredResult != null)
+            {
+                if (verificationData == null)
+                {
+                    return _manualStepVerificationRequiredResult;
+                }
+                var verficationRequiredResult =
+                    _manualStepVerificationRequiredResult as ManualStepVerificationRequiredResult;
 
-            var modifiedCounters = PerformManualStepInternal();
-            PostPerformManualStep(modifiedCounters);
+                ManualStepResult result = verficationRequiredResult != null && verficationRequiredResult.FirstNumber + verficationRequiredResult.SecondNumber ==
+                                          verificationData.ResultNumber ? (ManualStepResult) new ManualStepVerifiedResult(true) : InitializeVerificationSteps();
 
+
+
+                if (!result.IsVerificationRequired)
+                {
+                    _manualStepVerificationRequiredResult = null;
+                }
+                else
+                {
+                    _manualStepVerificationRequiredResult = result;
+                }
+                return result;
+            }
+
+            if (_currentVerificationSteps < _nextVerificationSteps)
+            {
+                _currentVerificationSteps++;
+            }
+            else
+            {
+                _manualStepVerificationRequiredResult = InitializeVerificationSteps();
+                return _manualStepVerificationRequiredResult;
+            }
+
+            return new ManualStepNoVerficationRequiredResult();
+        }
+
+        public ManualStepResult PerformManualStep(VerificationManualStepData verificationData)
+        {
+            if (!_isInitialized) throw new InvalidOperationException("Game is not started");
+
+            var verificationResult = VerifyManualStep(verificationData);
+            IEnumerable<CounterBase> modifiedCounters = null;
+
+            if (!verificationResult.IsVerificationRequired)
+            {
+                modifiedCounters = PerformManualStepInternal();
+                PostPerformManualStep(modifiedCounters);
+            }
+            return verificationResult;
         }
 
         public void BuyFundDriver(int fundDriverId)
@@ -173,7 +246,7 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
 
         protected virtual void PostBuyFundDriver(FundsDriver fundDriver)
         {
-            
+
         }
 
         protected virtual void PostInitialize()
@@ -263,7 +336,7 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
 
         public void ActivateDelayedCounter(int counterId)
         {
-            var delayedCounter = (DelayedCounter) FundsCounters.Counters[counterId];
+            var delayedCounter = (DelayedCounter)FundsCounters.Counters[counterId];
             if (delayedCounter == null)
             {
                 return;

@@ -6,7 +6,7 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Controllers
     public interface IGameApiController
     {
 
-        bool PerformManualStep();
+        VerificationNumberModel PerformManualStep();
 
         bool FightAgainstInflation();
 

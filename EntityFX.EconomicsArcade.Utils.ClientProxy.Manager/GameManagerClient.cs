@@ -29,14 +29,15 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
             }
         }
 
-        public void PerformManualStep()
+        public ManualStepResult PerformManualStep(VerificationManualStepResult verificationManualStepResult)
         {
             using (var proxy = new GameManagerProxy(_sesionGuid))
             {
                 var channel = proxy.CreateChannel(_endpointAddress);
                 proxy.ApplyContextScope();
-                channel.PerformManualStep();
+                var res = channel.PerformManualStep(verificationManualStepResult);
                 proxy.CloseChannel();
+                return res;
             }
         }
 

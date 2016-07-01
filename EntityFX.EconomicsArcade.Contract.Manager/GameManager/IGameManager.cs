@@ -10,7 +10,7 @@ namespace EntityFX.EconomicsArcade.Contract.Manager.GameManager
         [OperationContract]
         void BuyFundDriver(int fundDriverId);
         [OperationContract]
-        void PerformManualStep();
+        ManualStepResult PerformManualStep(VerificationManualStepResult verificationManualStepResult);
         [OperationContract]
         void FightAgainstInflation();
         [OperationContract]
