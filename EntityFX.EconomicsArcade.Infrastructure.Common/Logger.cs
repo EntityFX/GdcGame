@@ -17,7 +17,7 @@ namespace EntityFX.EconomicsArcade.Infrastructure.Common
 
         public void Trace(string message, params object[] args)
         {
-            _loggerAdapter.Trace(message);
+            _loggerAdapter.Trace(message, args);
         }
 
         public void Info(string message, params object[] args)
@@ -35,6 +35,6 @@ namespace EntityFX.EconomicsArcade.Infrastructure.Common
             _loggerAdapter.Error(exception);
         }
 
-        
+
     }
 }

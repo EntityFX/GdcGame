@@ -26,9 +26,9 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
 
         private int _currentVerificationSteps = 0;
 #if DEBUG 
-        private readonly int _stepsToVerify = 100;
-#else
         private readonly int _stepsToVerify = 500;
+#else
+        private readonly int _stepsToVerify = 700;
 #endif
 
         private ManualStepResult _manualStepVerificationRequiredResult;

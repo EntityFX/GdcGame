@@ -38,6 +38,10 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
+    <ProjectReference Include="..\EntityFX.EconomicsArcade.Application.NotifyConsumerService\EntityFX.EconomicsArcade.Application.NotifyConsumerService.csproj">
+      <Project>{560b4d9d-4f4c-4659-8860-1c628448d154}</Project>
+      <Name>EntityFX.EconomicsArcade.Application.NotifyConsumerService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EntityFX.EconomicsArcade.Contract.Common\EntityFX.EconomicsArcade.Contract.Common.csproj">
       <Project>{89F89C37-F564-47EB-839D-C45ACD9D012A}</Project>
       <Name>EntityFX.EconomicsArcade.Contract.Common</Name>
@@ -45,6 +49,10 @@
     <ProjectReference Include="..\EntityFX.EconomicsArcade.Contract.DataAccess\EntityFX.EconomicsArcade.Contract.DataAccess.csproj">
       <Project>{0932D8B3-29EB-4546-987A-B246421A9B87}</Project>
       <Name>EntityFX.EconomicsArcade.Contract.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.EconomicsArcade.Contract.NotifyConsumerService\EntityFX.EconomicsArcade.Contract.NotifyConsumerService.csproj">
+      <Project>{aa98b2be-929c-4bba-b352-e3095dbeb96b}</Project>
+      <Name>EntityFX.EconomicsArcade.Contract.NotifyConsumerService</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.EconomicsArcade.Conttract.Game\EntityFX.EconomicsArcade.Contract.Game.csproj">
       <Project>{beea0656-542b-4c48-a480-ceff662dd29f}</Project>

@@ -20,6 +20,9 @@ using PortableLog.NLog;
 using System.Configuration;
 using EntityFX.EconomicArcade.Engine.GameEngine.Mappers;
 using EntityFX.EconomicArcade.Engine.GameEngine.NetworkGameEngine;
+using EntityFX.EconomicsArcade.Application.NotifyConsumerService;
+using EntityFX.EconomicsArcade.Contract.NotifyConsumerService;
+using EntityFX.EconomicsArcade.Utils.ClientProxy.NotifyConsumer;
 
 namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
 {
@@ -29,7 +32,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
         public IUnityContainer Configure(IUnityContainer container)
         {
             container.RegisterType<ILogger>(new InjectionFactory(
-                _=> new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger")))));
+                _ => new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger")))));
 
             container.RegisterType<ISessionManager, SessionManager>();
 
@@ -43,6 +46,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
                 new InjectionConstructor(
                     ConfigurationManager.AppSettings["ClentProxyAddress_GameDataStoreDataAccessService"]
                     ));
+            
 
             container.RegisterType<IMapper<IncrementorBase, Incrementor>, IncrementorContractMapper>();
             container.RegisterType<IMapper<CounterBase, Contract.Common.Counters.CounterBase>, CounterContractMapper>();
@@ -61,13 +65,19 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
                     new ResolvedParameter<int>(),
                     new ResolvedParameter<IGameDataStoreDataAccessService>(),
                     new ResolvedParameter<IMapper<IGame, GameData>>("GameDataMapper"),
-                    new ResolvedParameter<IMapper<FundsDriver, Contract.Common.Funds.FundsDriver>>()
+                    new ResolvedParameter<IMapper<FundsDriver, Contract.Common.Funds.FundsDriver>>(),
+                    new ResolvedParameter<INotifyConsumerService>()
                 )
             );
 
             container.RegisterType<IGame, NetworkGame>();
             container.RegisterType<IGameManager, GameManager>();
             container.RegisterType<ISimpleUserManager, SimpleUserManager>();
+            //container.RegisterType<INotifyConsumerService, NotifyConsumerService>();
+            container.RegisterType<INotifyConsumerService, NotifyConsumerServiceClient>(
+             new InjectionConstructor(
+                 ConfigurationManager.AppSettings["ClientProxyAddress_NotifyConsumerService"]
+                 ));
 
 
             return container;

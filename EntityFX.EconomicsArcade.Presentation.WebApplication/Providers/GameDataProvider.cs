@@ -68,8 +68,8 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Providers
 
         public VerificationNumberModel PerformManualStep(int? verificationNumber)
         {
-               var result =  _gameManager.PerformManualStep(
-                    verificationNumber != null ? new VerificationManualStepResult() { VerificationNumber = verificationNumber.Value} : null);
+            var result = _gameManager.PerformManualStep(
+                 verificationNumber != null ? new VerificationManualStepResult() { VerificationNumber = verificationNumber.Value } : null);
             var verificationnumberResult = result as VerificationRequiredResult;
             VerificationData verificationData = null;
             if (verificationnumberResult != null)

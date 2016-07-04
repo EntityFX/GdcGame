@@ -1,35 +1,46 @@
 ﻿using System.Diagnostics.Contracts;
+using EntityFX.EconomicsArcade.Application.NotifyConsumerService;
 using EntityFX.EconomicsArcade.Contract.Common;
 using EntityFX.EconomicsArcade.Contract.DataAccess.GameData;
 using EntityFX.EconomicsArcade.Contract.Game;
 using EntityFX.EconomicsArcade.Contract.Game.Counters;
 using EntityFX.EconomicsArcade.Contract.Game.Funds;
+using EntityFX.EconomicsArcade.Contract.NotifyConsumerService;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 
 namespace EntityFX.EconomicArcade.Engine.GameEngine.NetworkGameEngine
 {
-    public  class NotifyGameDataChanged : INotifyGameDataChanged
+    public class NotifyGameDataChanged : INotifyGameDataChanged
     {
         private readonly int _userId;
         private readonly IGameDataStoreDataAccessService _gameDataStoreDataAccessService;
         private readonly IMapper<IGame, GameData> _gameDataMapper;
         private readonly IMapper<FundsDriver, EconomicsArcade.Contract.Common.Funds.FundsDriver> _fundsDriverMapper;
+        private readonly INotifyConsumerService _notifyConsumerService;
 
         public NotifyGameDataChanged(int userId
             , IGameDataStoreDataAccessService gameDataStoreDataAccessService
             , IMapper<IGame, GameData> gameDataMapper
-            , IMapper<FundsDriver, EconomicsArcade.Contract.Common.Funds.FundsDriver> fundsDriverMapper)
+            , IMapper<FundsDriver, EconomicsArcade.Contract.Common.Funds.FundsDriver> fundsDriverMapper
+            , INotifyConsumerService notifyConsumerService)
         {
             _userId = userId;
             _gameDataStoreDataAccessService = gameDataStoreDataAccessService;
             _gameDataMapper = gameDataMapper;
             _fundsDriverMapper = fundsDriverMapper;
+            _notifyConsumerService = notifyConsumerService;
         }
 
         public void GameDataChanged(IGame game)
         {
             var gameData = PrepareGameDataToPersist(game);
             _gameDataStoreDataAccessService.StoreGameDataForUser(_userId, gameData);
+        }
+
+        public void AutomaticRefreshed(IGame game)
+        {
+            var gameData = PrepareGameDataToPersist(game);
+            _notifyConsumerService.PushGameData(_userId, gameData);
         }
 
         public void FundsDriverBought(IGame game, FundsDriver fundsDriver)
@@ -43,7 +54,7 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.NetworkGameEngine
             var gameData = _gameDataMapper.Map(game);
             gameData.FundsDrivers = fundDriver != null
                 ? new[] { _fundsDriverMapper.Map(fundDriver) }
-                : new EconomicsArcade.Contract.Common.Funds.FundsDriver[] {};
+                : new EconomicsArcade.Contract.Common.Funds.FundsDriver[] { };
             return gameData;
         }
 

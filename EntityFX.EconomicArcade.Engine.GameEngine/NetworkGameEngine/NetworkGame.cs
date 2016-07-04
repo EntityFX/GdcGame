@@ -161,6 +161,7 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.NetworkGameEngine
                 _currentStepsToPersist++;
             }
 
+            _notifyGameDataChanged.AutomaticRefreshed(this);
         }
 
         protected override void PostBuyFundDriver(FundsDriver fundDriver)

@@ -87,6 +87,10 @@
       <Project>{19D1BC2F-D0EB-4012-BCF2-CED6F3B926B2}</Project>
       <Name>EntityFX.EconomicArcade.Engine.GameEngine</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EntityFX.EconomicsArcade.Application.NotifyConsumerService\EntityFX.EconomicsArcade.Application.NotifyConsumerService.csproj">
+      <Project>{560B4D9D-4F4C-4659-8860-1C628448D154}</Project>
+      <Name>EntityFX.EconomicsArcade.Application.NotifyConsumerService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EntityFX.EconomicsArcade.Contract.Common\EntityFX.EconomicsArcade.Contract.Common.csproj">
       <Project>{89f89c37-f564-47eb-839d-c45acd9d012a}</Project>
       <Name>EntityFX.EconomicsArcade.Contract.Common</Name>
@@ -98,6 +102,10 @@
     <ProjectReference Include="..\EntityFX.EconomicsArcade.Contract.Manager\EntityFX.EconomicsArcade.Contract.Manager.csproj">
       <Project>{41696f24-e345-4599-a0c7-0715f64946d8}</Project>
       <Name>EntityFX.EconomicsArcade.Contract.Manager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.EconomicsArcade.Contract.NotifyConsumerService\EntityFX.EconomicsArcade.Contract.NotifyConsumerService.csproj">
+      <Project>{AA98B2BE-929C-4BBA-B352-E3095DBEB96B}</Project>
+      <Name>EntityFX.EconomicsArcade.Contract.NotifyConsumerService</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.EconomicsArcade.Conttract.Game\EntityFX.EconomicsArcade.Contract.Game.csproj">
       <Project>{beea0656-542b-4c48-a480-ceff662dd29f}</Project>
@@ -118,6 +126,10 @@
     <ProjectReference Include="..\EntityFX.EconomicsArcade.Utils.ClientProxy.DataAccess\EntityFX.EconomicsArcade.Utils.ClientProxy.DataAccess.csproj">
       <Project>{CEAD1C8C-20A4-4E48-969A-9AFCD104D109}</Project>
       <Name>EntityFX.EconomicsArcade.Utils.ClientProxy.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.EconomicsArcade.Utils.ClientProxy.NotifyConsumer\EntityFX.EconomicsArcade.Utils.ClientProxy.NotifyConsumer.csproj">
+      <Project>{F1EC6494-BA8E-406D-BC6C-89E32FAB7769}</Project>
+      <Name>EntityFX.EconomicsArcade.Utils.ClientProxy.NotifyConsumer</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
