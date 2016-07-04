@@ -7,6 +7,7 @@ using Microsoft.AspNet.SignalR;
 
 namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Hubs
 {
+    [Authorize]
     public class GameDataHub : Hub
     {
         private readonly IMapper<GameData, GameDataModel> _gameDataModelMapper;

@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using EntityFX.EconomicsArcade.Utils.ServiceStarter.NotifyConsumer;
 
-namespace EntityFX.EconomicsArcade.Utils.ServiceHost.NotifyConsume.ConsoleApp
+namespace EntityFX.EconomicsArcade.Utils.ServiceHost.NotifyConsumer.ConsoleApp
 {
     class Program
     {

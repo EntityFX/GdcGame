@@ -93,7 +93,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.EconomicsArcade.Ap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.EconomicsArcade.Contract.NotifyConsumerService", "EntityFX.EconomicsArcade.Contract.NotifyConsumerService\EntityFX.EconomicsArcade.Contract.NotifyConsumerService.csproj", "{AA98B2BE-929C-4BBA-B352-E3095DBEB96B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.EconomicsArcade.Utils.ServiceHost.NotifyConsume.ConsoleApp", "EntityFX.EconomicsArcade.Utils.ServiceHost.NotifyConsume.ConsoleApp\EntityFX.EconomicsArcade.Utils.ServiceHost.NotifyConsume.ConsoleApp.csproj", "{AAB1EE6C-77C1-49E3-B55F-62F4980BE45B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.EconomicsArcade.Utils.ServiceHost.NotifyConsumer.ConsoleApp", "EntityFX.EconomicsArcade.Utils.ServiceHost.NotifyConsume.ConsoleApp\EntityFX.EconomicsArcade.Utils.ServiceHost.NotifyConsumer.ConsoleApp.csproj", "{AAB1EE6C-77C1-49E3-B55F-62F4980BE45B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.EconomicsArcade.Utils.ClientProxy.NotifyConsumer", "EntityFX.EconomicsArcade.Utils.ClientProxy.NotifyConsumer\EntityFX.EconomicsArcade.Utils.ClientProxy.NotifyConsumer.csproj", "{F1EC6494-BA8E-406D-BC6C-89E32FAB7769}"
 EndProject

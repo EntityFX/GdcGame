@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNet.SignalR;
+﻿using System.Threading.Tasks;
+using EntityFX.EconomicsArcade.Presentation.WebApplication;
+using Microsoft.AspNet.SignalR;
 using Microsoft.Owin;
+using Microsoft.Owin.Security;
 using Owin;
 
-[assembly: OwinStartup(typeof(EntityFX.EconomicsArcade.Presentation.WebApplication.Startup))]
+[assembly: OwinStartup(typeof(Startup))]
 
 namespace EntityFX.EconomicsArcade.Presentation.WebApplication
 {
@@ -10,7 +13,13 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication
     {
         public void Configuration(IAppBuilder app)
         {
-            app.MapSignalR();
+            app.MapSignalR(new HubConfiguration()
+            {
+                EnableDetailedErrors = true,
+                EnableJSONP = true
+            });
         }
     }
+
+
 }
