@@ -13,12 +13,12 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.NotifyConsumer
             _endpoint = new Uri(endpoint);
         }
 
-        public void PushGameData(int userId, GameData gameData)
+        public void PushGameData(UserContext userContext, GameData gameData)
         {
             using (var proxy = new NotifyConsumerServiceProxy())
             {
                 var channel = proxy.CreateChannel(_endpoint);
-                channel.PushGameData(userId, gameData);
+                channel.PushGameData(userContext, gameData);
                 proxy.CloseChannel();
             }
         }

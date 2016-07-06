@@ -1,13 +1,11 @@
-﻿using System.Web.Http.Controllers;
-using EntityFX.EconomicsArcade.Contract.Common;
+﻿using EntityFX.EconomicsArcade.Contract.Common;
+using EntityFX.EconomicsArcade.Contract.NotifyConsumerService;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 using EntityFX.EconomicsArcade.Presentation.Models;
-using EntityFX.EconomicsArcade.Presentation.WebApplication.Providers;
 using Microsoft.AspNet.SignalR;
 
-namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Hubs
+namespace EntityFX.EconomicsArcade.Application.NotifySignalrService
 {
-    [Authorize]
     public class GameDataHub : Hub
     {
         private readonly IMapper<GameData, GameDataModel> _gameDataModelMapper;
@@ -17,11 +15,11 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Hubs
             _gameDataModelMapper = gameDataModelMapper;
         }
 
-        public void GetGameData(GameData gameData)
+        public void GetGameData(GameData gameData, UserContext userContext)
         {
             var gameDataModel = _gameDataModelMapper.Map(gameData, null);
-            //Clients.
-            Clients.All.getGameData(gameDataModel);
+            //Clients.All.getGameData(gameDataModel);
+            Clients.Caller.getGameData(gameDataModel);
         }
     }
 }

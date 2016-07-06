@@ -44,6 +44,9 @@
       <HintPath>..\packages\Microsoft.AspNet.SignalR.Client.2.2.0\lib\portable-net45+sl5+netcore45+wp8+wp81\Microsoft.AspNet.SignalR.Client.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.2.0\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -62,6 +65,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EntityFX.EconomicsArcade.Application.NotifySignalrService\EntityFX.EconomicsArcade.Application.NotifySignalrService.csproj">
+      <Project>{6c13790d-5c7a-4d9f-9d8b-4cd28f3536f6}</Project>
+      <Name>EntityFX.EconomicsArcade.Application.NotifySignalrService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EntityFX.EconomicsArcade.Contract.Common\EntityFX.EconomicsArcade.Contract.Common.csproj">
       <Project>{89F89C37-F564-47EB-839D-C45ACD9D012A}</Project>
       <Name>EntityFX.EconomicsArcade.Contract.Common</Name>

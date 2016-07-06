@@ -99,6 +99,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.EconomicsArcade.Ut
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.EconomicsArcade.Utils.ServiceStarter.NotifyConsumer", "EntityFX.EconomicsArcade.Utils.ServiceStarter.NotifyConsumer\EntityFX.EconomicsArcade.Utils.ServiceStarter.NotifyConsumer.csproj", "{639B148B-D38B-46FA-AEC6-B3883A114C25}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.EconomicsArcade.Application.NotifySignalrService", "EntityFX.EconomicsArcade.Application.NotifySignalrService\EntityFX.EconomicsArcade.Application.NotifySignalrService.csproj", "{6C13790D-5C7A-4D9F-9D8B-4CD28F3536F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -226,6 +228,10 @@ Global
 		{639B148B-D38B-46FA-AEC6-B3883A114C25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{639B148B-D38B-46FA-AEC6-B3883A114C25}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{639B148B-D38B-46FA-AEC6-B3883A114C25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C13790D-5C7A-4D9F-9D8B-4CD28F3536F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C13790D-5C7A-4D9F-9D8B-4CD28F3536F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C13790D-5C7A-4D9F-9D8B-4CD28F3536F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C13790D-5C7A-4D9F-9D8B-4CD28F3536F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -263,5 +269,6 @@ Global
 		{AAB1EE6C-77C1-49E3-B55F-62F4980BE45B} = {2B3C3D7D-D36A-47E8-9395-DB1AA2D271EA}
 		{F1EC6494-BA8E-406D-BC6C-89E32FAB7769} = {2B7D0649-6899-491F-B4E7-70D163B1F72D}
 		{639B148B-D38B-46FA-AEC6-B3883A114C25} = {2B7D0649-6899-491F-B4E7-70D163B1F72D}
+		{6C13790D-5C7A-4D9F-9D8B-4CD28F3536F6} = {5FB81BA3-44E9-4E51-B46D-7EF7BB4C87C1}
 	EndGlobalSection
 EndGlobal

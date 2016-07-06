@@ -17,7 +17,7 @@ namespace EntityFX.EconomicsArcade.Manager
 
         private static readonly IDictionary<Guid, Session> SessionsStorage = new ConcurrentDictionary<Guid, Session>();
 
-        private static Timer _timer = new Timer(TimerCallback, null, 0, 1000 );
+        private static Timer _timer = new Timer(TimerCallback, null, 0, 1000);
 
         public GameSessions(IGameFactory gameFactory)
         {
@@ -39,7 +39,7 @@ namespace EntityFX.EconomicsArcade.Manager
 
             if (!GameSessionsStorage.ContainsKey(session.Login))
             {
-                var game = BuildGame(session.UserId);
+                var game = BuildGame(session.UserId, session.Login);
                 game.Initialize();
                 GameSessionsStorage.Add(session.Login, game);
             }
@@ -63,9 +63,9 @@ namespace EntityFX.EconomicsArcade.Manager
             return !SessionsStorage.ContainsKey(sessionId) ? null : SessionsStorage[sessionId];
         }
 
-        private IGame BuildGame(int userId)
+        private IGame BuildGame(int userId, string userName)
         {
-            return _gameFactory.BuildGame(userId);
+            return _gameFactory.BuildGame(userId, userName);
         }
     }
 }

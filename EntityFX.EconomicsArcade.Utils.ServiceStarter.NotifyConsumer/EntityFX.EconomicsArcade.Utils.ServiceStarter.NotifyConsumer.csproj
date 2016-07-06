@@ -81,6 +81,10 @@
       <Project>{560B4D9D-4F4C-4659-8860-1C628448D154}</Project>
       <Name>EntityFX.EconomicsArcade.Application.NotifyConsumerService</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EntityFX.EconomicsArcade.Contract.Common\EntityFX.EconomicsArcade.Contract.Common.csproj">
+      <Project>{89F89C37-F564-47EB-839D-C45ACD9D012A}</Project>
+      <Name>EntityFX.EconomicsArcade.Contract.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EntityFX.EconomicsArcade.Contract.NotifyConsumerService\EntityFX.EconomicsArcade.Contract.NotifyConsumerService.csproj">
       <Project>{AA98B2BE-929C-4BBA-B352-E3095DBEB96B}</Project>
       <Name>EntityFX.EconomicsArcade.Contract.NotifyConsumerService</Name>
@@ -92,6 +96,10 @@
     <ProjectReference Include="..\EntityFX.EconomicsArcade.Infrastructure.Service\EntityFX.EconomicsArcade.Infrastructure.Service.csproj">
       <Project>{2B414418-F3D8-4528-BA9F-6FEFA8B7AA03}</Project>
       <Name>EntityFX.EconomicsArcade.Infrastructure.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.EconomicsArcade.Presentation.Models\EntityFX.EconomicsArcade.Presentation.Models.csproj">
+      <Project>{0F9C056A-DB5D-48ED-A688-BFD04ED4DFD7}</Project>
+      <Name>EntityFX.EconomicsArcade.Presentation.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.EconomicsArcade.Utils.ClientProxy.NotifyConsumer\EntityFX.EconomicsArcade.Utils.ClientProxy.NotifyConsumer.csproj">
       <Project>{F1EC6494-BA8E-406D-BC6C-89E32FAB7769}</Project>

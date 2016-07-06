@@ -20,7 +20,6 @@ using PortableLog.NLog;
 using System.Configuration;
 using EntityFX.EconomicArcade.Engine.GameEngine.Mappers;
 using EntityFX.EconomicArcade.Engine.GameEngine.NetworkGameEngine;
-using EntityFX.EconomicsArcade.Application.NotifyConsumerService;
 using EntityFX.EconomicsArcade.Contract.NotifyConsumerService;
 using EntityFX.EconomicsArcade.Utils.ClientProxy.NotifyConsumer;
 
@@ -63,6 +62,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
             container.RegisterType<INotifyGameDataChanged, NotifyGameDataChanged>(
                 new InjectionConstructor(
                     new ResolvedParameter<int>(),
+                    new ResolvedParameter<string>(),
                     new ResolvedParameter<IGameDataStoreDataAccessService>(),
                     new ResolvedParameter<IMapper<IGame, GameData>>("GameDataMapper"),
                     new ResolvedParameter<IMapper<FundsDriver, Contract.Common.Funds.FundsDriver>>(),

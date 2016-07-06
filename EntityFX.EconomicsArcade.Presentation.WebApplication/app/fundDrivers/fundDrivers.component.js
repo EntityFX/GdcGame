@@ -8,6 +8,7 @@
                 $scope.fundsDrivers = data.FundsDrivers;
             });
 
+            $.connection.hub.start();
             $scope.buyFundDriver = function(fundDriverId) {
                 gdCameApiService.buyFundDriver(fundDriverId);
                 gdCameApiService.getGameData().then(function (value) {

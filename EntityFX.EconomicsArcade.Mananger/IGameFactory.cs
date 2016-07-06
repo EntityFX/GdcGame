@@ -4,6 +4,6 @@ namespace EntityFX.EconomicsArcade.Manager
 {
     public interface IGameFactory
     {
-        IGame BuildGame(int userId);
+        IGame BuildGame(int userId,string userName);
     }
 }

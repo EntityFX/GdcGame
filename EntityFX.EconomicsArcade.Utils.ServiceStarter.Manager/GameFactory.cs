@@ -14,11 +14,11 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
             _unityContainer = unityContainer;
         }
 
-        public IGame BuildGame(int userId)
+        public IGame BuildGame(int userId, string userName)
         {
             var game = _unityContainer.Resolve<IGame>(
                 new ParameterOverride("notifyGameDataChanged", _unityContainer.Resolve<INotifyGameDataChanged>(
-                    new ParameterOverride("userId", userId))), new ParameterOverride("userId", userId));
+                    new ParameterOverride("userId", userId), new ParameterOverride("userName", userName))), new ParameterOverride("userId", userId));
             return game;
         }
     }

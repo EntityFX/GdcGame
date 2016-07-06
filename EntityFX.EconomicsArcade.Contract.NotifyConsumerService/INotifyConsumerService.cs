@@ -8,6 +8,6 @@ namespace EntityFX.EconomicsArcade.Contract.NotifyConsumerService
     public interface INotifyConsumerService
     {
         [OperationContract(IsOneWay = true)]
-        void PushGameData(int userName, GameData gameData);
+        void PushGameData(UserContext userContext, GameData gameData);
     }
 }
