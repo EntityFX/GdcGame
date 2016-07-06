@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 using EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess;
 using System.Configuration;
+using System.Reflection;
 
 namespace EntityFX.EconomicsArcade.Utils.ServiceHost.DataAccess.WindowsSrv
 {
@@ -27,9 +28,11 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceHost.DataAccess.WindowsSrv
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[] 
             { 
-                new Service_ServiceHost_DataAccess(dataAccessStarter) 
+                new WindowsServiceHostDataAccess(dataAccessStarter) 
             };
             ServiceBase.Run(ServicesToRun);
         }
+
+        
     }
 }

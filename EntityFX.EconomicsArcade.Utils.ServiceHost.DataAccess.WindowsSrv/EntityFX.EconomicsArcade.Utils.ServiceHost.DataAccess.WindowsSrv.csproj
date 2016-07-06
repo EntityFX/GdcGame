@@ -54,24 +54,26 @@
     <Compile Include="ProjectInstaller.Designer.cs">
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </Compile>
-    <Compile Include="ServiceServiceHostDataAccess.cs">
+    <Compile Include="WindowsServiceHostDataAccess.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ServiceServiceHostDataAccess.Designer.cs">
-      <DependentUpon>ServiceServiceHostDataAccess.cs</DependentUpon>
+    <Compile Include="WindowsServiceHostDataAccess.Designer.cs">
+      <DependentUpon>WindowsServiceHostDataAccess.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ProjectInstaller.resx">
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ServiceServiceHostDataAccess.resx">
-      <DependentUpon>ServiceServiceHostDataAccess.cs</DependentUpon>
+    <EmbeddedResource Include="WindowsServiceHostDataAccess.resx">
+      <DependentUpon>WindowsServiceHostDataAccess.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

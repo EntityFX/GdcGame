@@ -119,7 +119,7 @@
       <Project>{2b414418-f3d8-4528-ba9f-6fefa8b7aa03}</Project>
       <Name>EntityFX.EconomicsArcade.Infrastructure.Service</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.EconomicsArcade.Mananger\EntityFX.EconomicsArcade.Manager.csproj">
+    <ProjectReference Include="..\EntityFX.EconomicsArcade.Manager\EntityFX.EconomicsArcade.Manager.csproj">
       <Project>{56a380de-2370-4c2d-8c8e-eaf3163c92ec}</Project>
       <Name>EntityFX.EconomicsArcade.Manager</Name>
     </ProjectReference>

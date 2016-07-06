@@ -33,7 +33,6 @@
             // 
             // serviceProcessInstallerMain
             // 
-            this.serviceProcessInstallerMain.Account = System.ServiceProcess.ServiceAccount.NetworkService;
             this.serviceProcessInstallerMain.Password = null;
             this.serviceProcessInstallerMain.Username = null;
             this.serviceProcessInstallerMain.AfterInstall += new System.Configuration.Install.InstallEventHandler(this.serviceProcessInstallerMain_AfterInstall);
