@@ -23,17 +23,9 @@ namespace EntityFX.EconomicsArcade.Application.NotifyConsumerService
 
         public void PushGameData(UserContext userContext, GameData gameData)
         {
+            _logger.Trace("{0}.PushGameData: Data receieved for userId: {1}, userName: {2}", GetType().FullName, userContext.UserId, userContext.UserName);
             var gameDataModel = _gameDataModelMapper.Map(gameData, null);
             _context.Clients.All.GetGameData(gameDataModel);
-            //var hubConnection = new HubConnection("http://localhost:8080/")
-            //{
-            //    Credentials = CredentialCache.DefaultNetworkCredentials
-            //};
-            //var hubProxy = hubConnection.CreateHubProxy("GameDataHub");
-
-            //hubConnection.Start().Wait();
-            _logger.Trace("{0}.PushGameData: Data receieved for userId: {1}, userName: {2}", GetType().FullName, userContext.UserId, userContext.UserName);
-            //hubProxy.Invoke("GetGameData", gameData);
         }
 
         public void Dispose()

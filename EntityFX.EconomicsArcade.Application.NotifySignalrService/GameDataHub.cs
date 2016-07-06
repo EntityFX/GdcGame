@@ -17,9 +17,12 @@ namespace EntityFX.EconomicsArcade.Application.NotifySignalrService
 
         public void GetGameData(GameData gameData, UserContext userContext)
         {
-            var gameDataModel = _gameDataModelMapper.Map(gameData, null);
-            //Clients.All.getGameData(gameDataModel);
-            Clients.Caller.getGameData(gameDataModel);
+            if (userContext.UserName == Context.User.Identity.Name)
+            {
+                var gameDataModel = _gameDataModelMapper.Map(gameData, null);
+                Clients.Caller.getGameData(gameDataModel);
+            }
+
         }
     }
 }
