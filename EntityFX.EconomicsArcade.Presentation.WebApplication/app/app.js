@@ -12,13 +12,17 @@ app.factory('gameData',
 
 app.controller('appGameController',
 [
-    '$rootScope', '$scope', '$interval', 'gameData', 'gdCameApiService',
-    function ($rootScope, $scope, $interval, gameData, gdCameApiService) {
+    '$rootScope', '$scope', '$interval', 'gameData', 'gdCameApiService', '$location',
+    function ($rootScope, $scope, $interval, gameData, gdCameApiService, $location) {
 
-        $.connection.hub.url = "http://localhost:8080/signalr";
+        $.connection.hub.url = $location.protocol() + "://" + $location.host() + ":8080/signalr";
         var hub = $.connection.gameDataHub;
         hub.client.getGameData = function (data) {
-            $rootScope.gameData = data;
+            $rootScope.$apply(function() {
+                $rootScope.gameData = data;
+                }
+            );
+
         };
         $.connection.hub.start();
 
@@ -27,23 +31,11 @@ app.controller('appGameController',
             
         });
 
-        $interval(function () {
-           // hub.client.getGameData(data);
-        },
-            1000);
-
-
         $scope.perfotmManulaStep = function () {
             gdCameApiService.performManualStep();
-            //gdCameApiService.getCounters().then(function (value) {
-            //    //  $rootScope.gameData.Counters = value.data;
-            //});
         }
 
         $scope.fightAgainstInflation = function () {
             gdCameApiService.fightAgainstInflation();
-            //gdCameApiService.getCounters().then(function (value) {
-            //    // $rootScope.gameData.Counters = value.data;
-            //});
         }
     }]);

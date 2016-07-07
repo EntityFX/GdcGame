@@ -1,10 +1,10 @@
 ﻿angular
     .module("gdCameApp")
-    .component('counters',
+    .component("counters",
     {
-        templateUrl: '/app/templates/counters.template.html',
-        controller: function CountersController($rootScope, $scope, gdCameApiService) {
-            $rootScope.$watch('gameData.Counters',
+        templateUrl: "/app/templates/counters.template.html",
+        controller: function CountersController($rootScope, $scope) {
+            $rootScope.$watch("gameData",
                 function () {
                     if ($rootScope.gameData !== undefined)
                         $scope.counters = $rootScope.gameData.Counters;
