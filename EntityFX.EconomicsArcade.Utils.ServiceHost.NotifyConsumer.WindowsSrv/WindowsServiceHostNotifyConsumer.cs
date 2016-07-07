@@ -29,14 +29,6 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceHost.NotifyConsumer.Temp
         {
             _notifyConsumerStarter.StartService();
 
-            string url = ConfigurationManager.AppSettings["NotifyConsumerSignalRHubEndpoint_AddressServiceUrl"];
-            using (WebApp.Start(url))
-            {
-                AddLog("Server running on " + url);
-                //Console.WriteLine("Server running on {0}", url);
-                //Console.ReadLine();
-            }
-
             AddLog("Service " + this.ServiceName + " is started");
         }
 

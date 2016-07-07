@@ -21,23 +21,15 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceHost.NotifyConsumer.Temp
         {
             var containerBootstrapper = new ContainerBootstrapper();
             var notifyConsumerStarter = new NotifyConsumerStarter(
-                containerBootstrapper, ConfigurationManager.AppSettings["NotifyConsumerEndpoint_BaseAddressServiceUrl"]
+                containerBootstrapper, ConfigurationManager.AppSettings["NotifyConsumerEndpoint_BaseAddressServiceUrl"],
+                 ConfigurationManager.AppSettings["NotifyConsumerSignalRHubEndpoint_AddressServiceUrl"]
                 );
 
-            ServiceBase[] ServicesToRun;
-            ServicesToRun = new ServiceBase[] 
+            var servicesToRun = new ServiceBase[] 
             { 
                 new WindowsServiceHostNotifyConsumer(notifyConsumerStarter) 
             };
-            ServiceBase.Run(ServicesToRun);
-        }
-        class Startup
-        {
-            public void Configuration(IAppBuilder app)
-            {
-                app.UseCors(CorsOptions.AllowAll);
-                app.MapSignalR();
-            }
+            ServiceBase.Run(servicesToRun);
         }
     }
 }
