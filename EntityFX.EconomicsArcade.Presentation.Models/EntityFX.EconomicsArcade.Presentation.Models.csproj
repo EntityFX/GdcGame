@@ -39,6 +39,10 @@
       <Project>{89f89c37-f564-47eb-839d-c45acd9d012a}</Project>
       <Name>EntityFX.EconomicsArcade.Contract.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EntityFX.EconomicsArcade.Contract.Manager\EntityFX.EconomicsArcade.Contract.Manager.csproj">
+      <Project>{41696F24-E345-4599-A0C7-0715F64946D8}</Project>
+      <Name>EntityFX.EconomicsArcade.Contract.Manager</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EntityFX.EconomicsArcade.Infrastructure.Common\EntityFX.EconomicsArcade.Infrastructure.Common.csproj">
       <Project>{924CC67D-9E2B-46BA-BE1D-6C6C780CCFBC}</Project>
       <Name>EntityFX.EconomicsArcade.Infrastructure.Common</Name>
@@ -47,16 +51,18 @@
   <ItemGroup>
     <Compile Include="Mappers\CounterModelMapper.cs" />
     <Compile Include="Mappers\FundsCounterModelMapper.cs" />
+    <Compile Include="Mappers\FundsDriverBuyInfoMapper.cs" />
     <Compile Include="Mappers\FundsDriverModelMapper.cs" />
     <Compile Include="Mappers\GameDataModelMapper.cs" />
     <Compile Include="Model\CounterModelBase.cs" />
     <Compile Include="Model\DelayedCounterModel.cs" />
     <Compile Include="Model\FundsCounterModel.cs" />
+    <Compile Include="Model\BuyDriverModel.cs" />
     <Compile Include="Model\FundsDriverModel.cs" />
     <Compile Include="Model\GameDataModel.cs" />
     <Compile Include="Model\GenericCounterModel.cs" />
     <Compile Include="Model\SingleCounterModel.cs" />
-    <Compile Include="Model\VerificationNumberModel.cs" />
+    <Compile Include="Model\ManualStepResultModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

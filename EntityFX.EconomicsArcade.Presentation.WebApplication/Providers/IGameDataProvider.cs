@@ -5,12 +5,11 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Providers
 {
     public interface IGameDataProvider
     {
-        Guid GameGuid { get; }
         void Initialize(string userName);
         GameDataModel GetGameData();
         FundsCounterModel GetCounters();
-        void BuyFundDriver(int id);
-        VerificationNumberModel PerformManualStep(int? verificationNumber);
+        BuyDriverModel BuyFundDriver(int id);
+        ManualStepResultModel PerformManualStep(int? verificationNumber);
         void FightAgainstInflation();
     }
 }

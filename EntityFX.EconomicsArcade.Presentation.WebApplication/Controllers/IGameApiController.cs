@@ -6,7 +6,7 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Controllers
     public interface IGameApiController
     {
 
-        VerificationNumberModel PerformManualStep();
+        ManualStepResultModel PerformManualStep();
 
         bool FightAgainstInflation();
 
@@ -16,6 +16,6 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Controllers
 
         FundsCounterModel GetCounters();
 
-        bool BuyFundDriver(int id);
+        BuyDriverModel BuyFundDriver(int id);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Serialization;
+using EntityFX.EconomicsArcade.Contract.Common.Counters;
 
 namespace EntityFX.EconomicsArcade.Contract.Manager.GameManager
 {
@@ -14,8 +15,8 @@ namespace EntityFX.EconomicsArcade.Contract.Manager.GameManager
     [DataContract]
     public class NoVerficationRequiredResult : ManualStepResult
     {
-
-
+        [DataMember]
+        public FundsCounters ModifiedCounters { get; set; }
     }
 
     [DataContract]

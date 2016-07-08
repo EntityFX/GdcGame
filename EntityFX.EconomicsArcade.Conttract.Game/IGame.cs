@@ -21,7 +21,7 @@ namespace EntityFX.EconomicsArcade.Contract.Game
 
         ManualStepResult PerformManualStep(VerificationManualStepData verificationData);
 
-        void BuyFundDriver(int fundDriverId);
+        BuyFundDriverResult BuyFundDriver(int fundDriverId);
 
         void FightAgainstInflation();
 

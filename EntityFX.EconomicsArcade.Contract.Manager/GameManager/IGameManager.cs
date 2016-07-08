@@ -8,7 +8,7 @@ namespace EntityFX.EconomicsArcade.Contract.Manager.GameManager
     public interface IGameManager
     {
         [OperationContract]
-        void BuyFundDriver(int fundDriverId);
+        BuyFundDriverResult BuyFundDriver(int fundDriverId);
         [OperationContract]
         ManualStepResult PerformManualStep(VerificationManualStepResult verificationManualStepResult);
         [OperationContract]

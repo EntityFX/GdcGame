@@ -37,6 +37,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="BuyFundDriverResult.cs" />
     <Compile Include="Counters\CounterBase.cs" />
     <Compile Include="Counters\DelayedCounter.cs" />
     <Compile Include="Counters\FundsCounters.cs" />

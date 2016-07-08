@@ -10,9 +10,18 @@
 
             $.connection.hub.start();
             $scope.buyFundDriver = function(fundDriverId) {
-                gdCameApiService.buyFundDriver(fundDriverId);
-                gdCameApiService.getGameData().then(function (value) {
-                    $scope.fundsDrivers = value.data.FundsDrivers;
+                gdCameApiService.buyFundDriver(fundDriverId)
+                .then(function (value) {
+                    var itemIndex;
+                    var oldFundDriver = $scope.fundsDrivers.filter(function (item, index) {
+                        itemIndex = index;
+                        return item.Id === value.data.FundsDriverBuyInfo.Id;
+                    })[0];
+
+                    if (oldFundDriver != undefined) {
+                        $scope.fundsDrivers[itemIndex] = value.data.FundsDriverBuyInfo;
+                        //$scope.$apply();
+                    }
                 });
             }
         }

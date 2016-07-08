@@ -37,6 +37,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="GameManager\BuyFundDriverResult.cs" />
     <Compile Include="GameManager\IGameManager.cs" />
     <Compile Include="GameManager\VerificationManualStepData.cs" />
     <Compile Include="GameManager\VerificationManualStepResult.cs" />

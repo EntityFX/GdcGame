@@ -1,8 +1,10 @@
 ﻿namespace EntityFX.EconomicsArcade.Presentation.Models
 {
-    public class VerificationNumberModel
+    public class ManualStepResultModel
     {
         public VerificationData VerificationData { get; set; }
+
+        public FundsCounterModel ModifiedCountersInfo { get; set; }
     }
 
     public class VerificationData
