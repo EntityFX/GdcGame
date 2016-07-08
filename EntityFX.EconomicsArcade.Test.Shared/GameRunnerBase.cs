@@ -45,9 +45,8 @@ namespace EntityFx.EconomicsArcade.Test.Shared
 
         public abstract GameData GetGameData();
 
-        public void DisplayGameData(GameData gameData)
+        public virtual void DisplayGameData(GameData gameData)
         {
-            Console.SetCursorPosition(0, 0);
             Console.WriteLine("Funds: {0:C}; Total Funds: {1:C}", gameData.Counters.CurrentFunds, gameData.Counters.TotalFunds);
             Console.WriteLine("Manual Steps: {0}, Automatic Steps: {1}",
                 gameData.ManualStepsCount, gameData.AutomaticStepsCount);
@@ -58,7 +57,7 @@ namespace EntityFx.EconomicsArcade.Test.Shared
                 , ((GenericCounter)gameData.Counters.Counters[1]).BonusPercentage);
             PrettyConsole.WriteColor(ConsoleColor.Cyan, "{1,15}: {0,12}%"
                 , ((GenericCounter)gameData.Counters.Counters[1]).Inflation, "Inflation");
-            PrettyConsole.WriteLineColor(ConsoleColor.DarkGray, " StepsToIncrInflation: {0}, Current Steps: {1}", 0, ((GenericCounter)gameData.Counters.Counters[1]).CurrentSteps);
+            PrettyConsole.WriteLineColor(ConsoleColor.DarkGray, " StepsToIncrInflation: {0}, Current Steps: {1}", ((GenericCounter)gameData.Counters.Counters[1]).InflationIncreaseSteps, ((GenericCounter)gameData.Counters.Counters[1]).CurrentSteps);
             PrettyConsole.WriteLineColor(ConsoleColor.Cyan, "{1,15}: {0,12:C}"
                 , ((GenericCounter)gameData.Counters.Counters[1]).Value, "Total");
             PrettyConsole.WriteLineColor(ConsoleColor.Green, "{1,15}: {0,12:C}", ((GenericCounter)gameData.Counters.Counters[2]).SubValue, gameData.Counters.Counters[2].Name);
@@ -67,7 +66,7 @@ namespace EntityFx.EconomicsArcade.Test.Shared
                 , ((GenericCounter)gameData.Counters.Counters[2]).BonusPercentage);
             PrettyConsole.WriteColor(ConsoleColor.Green, "{1,15}: {0,12}%"
                 , ((GenericCounter)gameData.Counters.Counters[2]).Inflation, "Corruption");
-            PrettyConsole.WriteLineColor(ConsoleColor.DarkGray, " StepsToIncrInflation: {0}, Current Steps: {1}", 0, ((GenericCounter)gameData.Counters.Counters[2]).CurrentSteps);
+            PrettyConsole.WriteLineColor(ConsoleColor.DarkGray, " StepsToIncrInflation: {0}, Current Steps: {1}", ((GenericCounter)gameData.Counters.Counters[2]).InflationIncreaseSteps, ((GenericCounter)gameData.Counters.Counters[2]).CurrentSteps);
             PrettyConsole.WriteLineColor(ConsoleColor.Green, "{1,15}: {0,12:C}"
                 , ((GenericCounter)gameData.Counters.Counters[2]).Value, "Total");
             PrettyConsole.WriteLineColor(ConsoleColor.Magenta, "{1,15}: +{0,12:C} {2}", gameData.Counters.Counters[3].Value, gameData.Counters.Counters[3].Name, TimeSpan.FromSeconds(((DelayedCounter)gameData.Counters.Counters[3]).SecondsRemaining));

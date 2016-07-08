@@ -26,6 +26,7 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.NetworkGameEngine
                                     BonusPercentage =
                                         sourceGenericCounter.BonusPercentage,
                                     CurrentSteps = sourceGenericCounter.CurrentSteps,
+                                    StepsToIncreaseInflation = sourceGenericCounter.InflationIncreaseSteps,
                                     Inflation = sourceGenericCounter.Inflation,
                                     IsUsedInAutoStep =
                                         sourceGenericCounter.UseInAutoSteps

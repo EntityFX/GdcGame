@@ -11,13 +11,17 @@ namespace EntityFX.EconomicsArcade.TestClient
 {
     public class GameRunner : GameRunnerBase
     {
+        private readonly Guid _sessionGuid;
+        private readonly string _user;
         private readonly IGameManager _game;
         private ILogger _logger;
 
-        public GameRunner(ILogger logger, Guid sessionGuid, IGameManager game)
+        public GameRunner(ILogger logger, string user, Guid sessionGuid, IGameManager game)
         {
             _logger = logger;
-            _game = game; 
+            _sessionGuid = sessionGuid;
+            _user = user;
+            _game = game;
         }
 
         public void PerformManualStep()
@@ -62,6 +66,14 @@ namespace EntityFX.EconomicsArcade.TestClient
             {
                 Console.WriteLine(exp);
             }
+        }
+        
+        public override void DisplayGameData(GameData gameData)
+        {
+            Console.SetCursorPosition(0, 0);
+            PrettyConsole.WriteLineColor(ConsoleColor.DarkRed, "User: {0}, Session: {1}", _user, _sessionGuid);
+            Console.SetCursorPosition(0, 1);
+            base.DisplayGameData(gameData);
         }
 
         public override  GameData GetGameData()

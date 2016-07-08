@@ -19,7 +19,7 @@
             }
             set
             {
-                _bonusPercentage = value > 0 ? (value <= 100 ? value : 100) : 0;
+                _bonusPercentage = value > 0 ? value : 0;
             }
         }
 

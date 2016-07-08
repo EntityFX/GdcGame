@@ -4,14 +4,17 @@
     {
         templateUrl: '/app/templates/fundDrivers.template.html',
         controller: function FundDriversController($rootScope, $scope, gameData, gdCameApiService) {
+            $scope.fundsDrivers = [];
+
             gameData.then(function (data) {
                 $scope.fundsDrivers = data.FundsDrivers;
             });
 
-            $.connection.hub.start();
+            //$.connection.hub.start();
             $scope.buyFundDriver = function(fundDriverId) {
                 gdCameApiService.buyFundDriver(fundDriverId)
                 .then(function (value) {
+                    if (value.data == undefined) return;
                     var itemIndex;
                     var oldFundDriver = $scope.fundsDrivers.filter(function (item, index) {
                         itemIndex = index;
@@ -19,8 +22,12 @@
                     })[0];
 
                     if (oldFundDriver != undefined) {
-                        $scope.fundsDrivers[itemIndex] = value.data.FundsDriverBuyInfo;
-                        //$scope.$apply();
+                        oldFundDriver.BuyCount = value.data.FundsDriverBuyInfo.BuyCount;
+                        oldFundDriver.Value = value.data.FundsDriverBuyInfo.Value;
+
+                        if (value.data.ModifiedCountersInfo != undefined) {
+                            $rootScope.$broadcast('counters.update', value.data.ModifiedCountersInfo);
+                        }
                     }
                 });
             }

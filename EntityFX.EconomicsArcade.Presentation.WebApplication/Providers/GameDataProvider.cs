@@ -76,8 +76,9 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Providers
         {
             _logger.Trace("Buying FundDriver");
             _logger.Info("Id is {0}", id);
+            var buyResult = _gameManager.BuyFundDriver(id);
+            return buyResult != null ?_fundsDriverBuyinfoModelMapper.Map(buyResult) : null;
 
-            return _fundsDriverBuyinfoModelMapper.Map(_gameManager.BuyFundDriver(id));
         }
 
         public ManualStepResultModel PerformManualStep(int? verificationNumber)

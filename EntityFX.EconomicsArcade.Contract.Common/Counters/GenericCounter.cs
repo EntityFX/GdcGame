@@ -17,5 +17,7 @@ namespace EntityFX.EconomicsArcade.Contract.Common.Counters
         public decimal SubValue { get; set; }
         [DataMember]
         public int CurrentSteps { get; set; }
+        [DataMember]
+        public int InflationIncreaseSteps { get; set; }
     }
 }
