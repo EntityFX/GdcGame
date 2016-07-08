@@ -2,6 +2,7 @@
 using EntityFX.EconomicsArcade.Contract.Common;
 using EntityFX.EconomicsArcade.Contract.Common.Counters;
 using EntityFX.EconomicsArcade.Contract.Manager.GameManager;
+using EntityFX.EconomicsArcade.Infrastructure.Common;
 using EntityFX.EconomicsArcade.Infrastructure.Service;
 
 namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
@@ -11,9 +12,11 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
 
         private readonly Uri _endpointAddress;// = new Uri("net.tcp://localhost:8555/EntityFX.EconomicsArcade.Manager/EntityFX.EconomicsArcade.Contract.Manager.GameManager.IGameManager");
         private Guid _sesionGuid;
+        private ILogger _logger;
 
         public GameManagerClient(string endpointAddress, Guid sesionGuid)
         {
+            //_logger = logger;
             _sesionGuid = sesionGuid;
             _endpointAddress = new Uri(endpointAddress);
         }

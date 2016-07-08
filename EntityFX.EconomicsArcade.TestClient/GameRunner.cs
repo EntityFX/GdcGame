@@ -14,11 +14,10 @@ namespace EntityFX.EconomicsArcade.TestClient
         private readonly Guid _sessionGuid;
         private readonly string _user;
         private readonly IGameManager _game;
-        private ILogger _logger;
 
-        public GameRunner(ILogger logger, string user, Guid sessionGuid, IGameManager game)
+        public GameRunner(string user, Guid sessionGuid, IGameManager game)
         {
-            _logger = logger;
+
             _sessionGuid = sessionGuid;
             _user = user;
             _game = game;
@@ -26,7 +25,7 @@ namespace EntityFX.EconomicsArcade.TestClient
 
         public void PerformManualStep()
         {
-            _logger.Trace("EntityFX.EconomicsArcade.TestClient.GameRunner.PerformManualStep():");
+
 
             try
             {
@@ -35,14 +34,12 @@ namespace EntityFX.EconomicsArcade.TestClient
             }
             catch (Exception exp)
             {
-                _logger.Error(exp);
+
             }
         }
 
         public void BuyFundDriver(ConsoleKeyInfo keyInfo)
         {
-            _logger.Trace("EntityFX.EconomicsArcade.TestClient.GameRunner.BuyFundDriver():");
-            _logger.Info("keyInfo.Key is {0}", keyInfo.Key);
 
             try
             {
@@ -51,7 +48,7 @@ namespace EntityFX.EconomicsArcade.TestClient
             }
             catch (Exception exp)
             {
-                _logger.Error(exp);
+
             }
         }
 

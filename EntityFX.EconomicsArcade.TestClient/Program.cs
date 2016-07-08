@@ -45,7 +45,7 @@ namespace EntityFX.EconomicsArcade.TestClient
                  , sessionGuid
                  );
 
-            var gr = new GameRunner(sessionGuid, userName, gameClient);
+            var gr = new GameRunner(userName, sessionGuid, gameClient);
             var gameData = gr.GetGameData();
             gr.DisplayGameData(gameData);
             ConsoleKeyInfo keyInfo;
