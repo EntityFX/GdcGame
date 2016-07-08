@@ -14,15 +14,16 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
         private Guid _sesionGuid;
         private ILogger _logger;
 
-        public GameManagerClient(string endpointAddress, Guid sesionGuid)
+        public GameManagerClient(ILogger logger, string endpointAddress, Guid sesionGuid)
         {
-            //_logger = logger;
+            _logger = logger;
             _sesionGuid = sesionGuid;
             _endpointAddress = new Uri(endpointAddress);
         }
 
         public BuyFundDriverResult BuyFundDriver(int fundDriverId)
         {
+            _logger.Trace("{0}.BuyFundDriver [fundDriverId={1}]", GetType().FullName, fundDriverId);
             using (var proxy = new GameManagerProxy(_sesionGuid))
             {
                 var channel = proxy.CreateChannel(_endpointAddress);

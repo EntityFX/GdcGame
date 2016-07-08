@@ -3,7 +3,9 @@ using System.Timers;
 
 using System.Configuration;
 using EntityFX.EconomicsArcade.Contract.Game;
+using EntityFX.EconomicsArcade.Infrastructure.Common;
 using EntityFX.EconomicsArcade.Utils.ClientProxy.Manager;
+using PortableLog.NLog;
 
 namespace EntityFX.EconomicsArcade.TestClient
 {
@@ -41,7 +43,8 @@ namespace EntityFX.EconomicsArcade.TestClient
             var sessionGuid = sessionManagerClient.AddSession(userName);
 
             var gameClient = new GameManagerClient(
-                 ConfigurationManager.AppSettings["ManagerEndpointAddress_GameManager"]
+                new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger")))
+                , ConfigurationManager.AppSettings["ManagerEndpointAddress_GameManager"]
                  , sessionGuid
                  );
 

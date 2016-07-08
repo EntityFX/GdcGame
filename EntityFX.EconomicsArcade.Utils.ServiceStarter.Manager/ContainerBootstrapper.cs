@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using EntityFX.EconomicsArcade.Contract.Manager.SessionManager;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
@@ -18,22 +19,58 @@ using EntityFX.EconomicsArcade.Contract.Manager.UserManager;
 using EntityFX.EconomicsArcade.Utils.ClientProxy.DataAccess;
 using PortableLog.NLog;
 using System.Configuration;
+using System.Linq;
 using EntityFX.EconomicArcade.Engine.GameEngine.Mappers;
 using EntityFX.EconomicArcade.Engine.GameEngine.NetworkGameEngine;
 using EntityFX.EconomicsArcade.Contract.NotifyConsumerService;
 using EntityFX.EconomicsArcade.Utils.ClientProxy.NotifyConsumer;
+using Microsoft.Practices.Unity.InterceptionExtension;
 
 namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
 {
+    public class LoggerInterceptor : IInterceptionBehavior
+    {
+        private readonly ILogger _logger;
+
+        public LoggerInterceptor(ILogger logger)
+        {
+            _logger = logger;
+        }
+
+        public IMethodReturn Invoke(IMethodInvocation input, GetNextInterceptionBehaviorDelegate getNext)
+        {
+            _logger.Trace("Interecptor: {0}, Call begin {1}", GetType(), input.MethodBase.ToString());
+            var result = getNext()(input, getNext);
+
+            if (result.Exception != null)
+            {
+                _logger.Error(result.Exception);
+            }
+            else
+            {
+                _logger.Trace("Interecptor: {0}, Call end {1} [Return={2}]", GetType(), input.MethodBase.ToString(), result.ReturnValue);
+            }
+            return result;
+        }
+
+        public IEnumerable<Type> GetRequiredInterfaces()
+        {
+            return Type.EmptyTypes;
+        }
+
+        public bool WillExecute { get { return true; } }
+    }
+
     public class ContainerBootstrapper : IContainerBootstrapper
     {
         //public 
         public IUnityContainer Configure(IUnityContainer container)
         {
+            container.AddNewExtension<Interception>();
+
+
             container.RegisterType<ILogger>(new InjectionFactory(
                 _ => new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger")))));
-
-            container.RegisterType<ISessionManager, SessionManager>();
 
             //container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessClient>();
             container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessClient>(
@@ -48,7 +85,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
                 new InjectionConstructor(
                     ConfigurationManager.AppSettings["ClentProxyAddress_GameDataStoreDataAccessService"]
                     ));
-            
+
 
             container.RegisterType<IMapper<IncrementorBase, Incrementor>, IncrementorContractMapper>();
             container.RegisterType<IMapper<CounterBase, Contract.Common.Counters.CounterBase>, CounterContractMapper>();
@@ -61,6 +98,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
 
             container.RegisterType<IGameFactory, GameFactory>();
 
+            container.RegisterType<ISessionManager, SessionManager>(new Interceptor<InterfaceInterceptor>(), new InterceptionBehavior<LoggerInterceptor>());
 
             container.RegisterType<INotifyGameDataChanged, NotifyGameDataChanged>(
                 new InjectionConstructor(
@@ -74,15 +112,13 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
             );
 
             container.RegisterType<IGame, NetworkGame>();
-            container.RegisterType<IGameManager, GameManager>();
-            container.RegisterType<ISimpleUserManager, SimpleUserManager>();
+            container.RegisterType<IGameManager, GameManager>(new Interceptor<InterfaceInterceptor>(), new InterceptionBehavior<LoggerInterceptor>());
+            container.RegisterType<ISimpleUserManager, SimpleUserManager>(new Interceptor<InterfaceInterceptor>(), new InterceptionBehavior<LoggerInterceptor>());
             //container.RegisterType<INotifyConsumerService, NotifyConsumerService>();
             container.RegisterType<INotifyConsumerService, NotifyConsumerServiceClient>(
              new InjectionConstructor(
                  ConfigurationManager.AppSettings["ClientProxyAddress_NotifyConsumerService"]
-                 ));
-
-
+                 ), new Interceptor<InterfaceInterceptor>(), new InterceptionBehavior<LoggerInterceptor>());
             return container;
         }
     }

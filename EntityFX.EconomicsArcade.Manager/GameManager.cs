@@ -35,8 +35,7 @@ namespace EntityFX.EconomicsArcade.Manager
 
         public BuyFundDriverResult BuyFundDriver(int fundDriverId)
         {
-            _logger.Trace("EntityFX.EconomicsArcade.Manager.GameManager.BuyFundDriver():");
-            _logger.Info("fundDriverId is {0}", fundDriverId);
+            _logger.Trace("{0}.BuyFundDriver [fundDriverId={1}]", GetType().FullName, fundDriverId);
 
             var buyFundDriverResult = GetSessionGame().BuyFundDriver(fundDriverId);
             if (buyFundDriverResult != null)
