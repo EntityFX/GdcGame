@@ -14,6 +14,7 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Providers
     public class GameDataProvider : IGameDataProvider
     {
         private Guid GameGuid { get; set; }
+        private ILogger _logger;
         private IGameManager _gameManager;
         private readonly ISimpleUserManager _simpleUserManager;
         private readonly SessionManagerClient _sessionManagerClient;
@@ -23,6 +24,7 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Providers
         private readonly IGameClientFactory _gameClientFactory;
 
         public GameDataProvider(
+            ILogger logger,
             IGameClientFactory gameClientFactory,
             ISimpleUserManager simpleUserManager,
             SessionManagerClient sessionManagerClient,
@@ -31,6 +33,7 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Providers
             IMapper<BuyFundDriverResult, BuyDriverModel> fundsDriverBuyinfoModelMapper
             )
         {
+            _logger = logger;
             _simpleUserManager = simpleUserManager;
             _sessionManagerClient = sessionManagerClient;
             _gameDataModelMapper = gameDataModelMapper;
@@ -41,6 +44,9 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Providers
 
         public void Initialize(string userName)
         {
+            _logger.Trace("EntityFX.EconomicsArcade.Presentation.WebApplication.GameDataProvider.Initialize():");
+            _logger.Info("UserName is {0}", userName);
+
             if (HttpContext.Current.Session["SessionGuid"] == null)
             {
                 if (!_simpleUserManager.Exists(userName))
@@ -52,6 +58,8 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Providers
             }
             GameGuid = (Guid)HttpContext.Current.Session["SessionGuid"];
             _gameManager = _gameClientFactory.BuildGameClient(GameGuid);
+
+            _logger.Trace("Initializating is finished");
         }
 
         public GameDataModel GetGameData()
@@ -66,11 +74,17 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Providers
 
         public BuyDriverModel BuyFundDriver(int id)
         {
+            _logger.Trace("Buying FundDriver");
+            _logger.Info("Id is {0}", id);
+
             return _fundsDriverBuyinfoModelMapper.Map(_gameManager.BuyFundDriver(id));
         }
 
         public ManualStepResultModel PerformManualStep(int? verificationNumber)
         {
+            _logger.Trace("EntityFX.EconomicsArcade.Presentation.WebApplication.GameDataProvider.PerformManualStep():");
+            _logger.Info("VerificationNumber is {0}", verificationNumber);
+
             var result = _gameManager.PerformManualStep(
                  verificationNumber != null ? new VerificationManualStepResult() { VerificationNumber = verificationNumber.Value } : null);
             var verificationnumberResult = result as VerificationRequiredResult;
@@ -100,6 +114,7 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Providers
 
         public void FightAgainstInflation()
         {
+            _logger.Trace("EntityFX.EconomicsArcade.Presentation.WebApplication.GameDataProvider.FightAgainstInflation():");
             _gameManager.FightAgainstInflation();
         }
 

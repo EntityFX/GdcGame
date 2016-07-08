@@ -13,6 +13,7 @@ using EntityFX.EconomicsArcade.Presentation.WebApplication.Controllers;
 using EntityFX.EconomicsArcade.Presentation.WebApplication.Factories;
 using EntityFX.EconomicsArcade.Presentation.WebApplication.Providers;
 using EntityFX.EconomicsArcade.Utils.ClientProxy.Manager;
+using PortableLog.NLog;
 using Unity.WebApi;
 
 namespace EntityFX.EconomicsArcade.Presentation.WebApplication
@@ -24,6 +25,9 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication
 
             // NOTE: To load from web.config uncomment the line below. Make sure to add a Microsoft.Practices.Unity.Configuration to the using statements.
             // container.LoadConfiguration();
+
+            container.RegisterType<ILogger>(new InjectionFactory(
+                _ => new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger")))));
 
             container.RegisterType<IGameApiController, GameApiController>();
 
