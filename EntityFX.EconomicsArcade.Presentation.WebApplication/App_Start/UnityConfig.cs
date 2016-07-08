@@ -33,6 +33,7 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication
 
             container.RegisterType<IGameManager, GameManagerClient>(
                 new InjectionConstructor(
+                    new ResolvedParameter<ILogger>(),
                     ConfigurationManager.AppSettings["ManagerEndpointAddress_GameManager"], typeof(Guid)));
             container.RegisterType<ISimpleUserManager, SimpleUserManagerClient>(
                 new InjectionConstructor(
