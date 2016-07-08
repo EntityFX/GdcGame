@@ -20,13 +20,19 @@
                 },
 
                 performManualStep: function () {
-                    $http.post(gameApiServiceBaseUri + "PerformManualStep/");
+                    return $http.post(gameApiServiceBaseUri + "PerformManualStep/")
+                        .then(function (result) {
+                            return result;
+                        });
                 },
 
                 buyFundDriver: function (fundDriverId) {
-                    $http.post(gameApiServiceBaseUri + "BuyFundDriver/", fundDriverId);
-                },                
-                
+                    return $http.post(gameApiServiceBaseUri + "BuyFundDriver/", fundDriverId)
+                        .then(function (result) {
+                            return result;
+                        });
+                },
+
                 fightAgainstInflation: function () {
                     $http.post(gameApiServiceBaseUri + "FightAgainstInflation/");
                 }

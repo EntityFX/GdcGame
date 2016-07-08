@@ -13,12 +13,13 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Providers
 {
     public class GameDataProvider : IGameDataProvider
     {
-        public Guid GameGuid { get; private set; }
+        private Guid GameGuid { get; set; }
         private IGameManager _gameManager;
         private readonly ISimpleUserManager _simpleUserManager;
         private readonly SessionManagerClient _sessionManagerClient;
         private readonly IMapper<GameData, GameDataModel> _gameDataModelMapper;
         private readonly IMapper<FundsCounters, FundsCounterModel> _fundsCounterModelMapper;
+        private readonly IMapper<BuyFundDriverResult, BuyDriverModel> _fundsDriverBuyinfoModelMapper;
         private readonly IGameClientFactory _gameClientFactory;
 
         public GameDataProvider(
@@ -26,13 +27,15 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Providers
             ISimpleUserManager simpleUserManager,
             SessionManagerClient sessionManagerClient,
             IMapper<GameData, GameDataModel> gameDataModelMapper,
-            IMapper<FundsCounters, FundsCounterModel> fundsCounterModelMapper
+            IMapper<FundsCounters, FundsCounterModel> fundsCounterModelMapper,
+            IMapper<BuyFundDriverResult, BuyDriverModel> fundsDriverBuyinfoModelMapper
             )
         {
             _simpleUserManager = simpleUserManager;
             _sessionManagerClient = sessionManagerClient;
             _gameDataModelMapper = gameDataModelMapper;
             _fundsCounterModelMapper = fundsCounterModelMapper;
+            _fundsDriverBuyinfoModelMapper = fundsDriverBuyinfoModelMapper;
             _gameClientFactory = gameClientFactory;
         }
 
@@ -61,17 +64,18 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Providers
             return _fundsCounterModelMapper.Map(_gameManager.GetCounters());
         }
 
-        public void BuyFundDriver(int id)
+        public BuyDriverModel BuyFundDriver(int id)
         {
-            _gameManager.BuyFundDriver(id);
+            return _fundsDriverBuyinfoModelMapper.Map(_gameManager.BuyFundDriver(id));
         }
 
-        public VerificationNumberModel PerformManualStep(int? verificationNumber)
+        public ManualStepResultModel PerformManualStep(int? verificationNumber)
         {
             var result = _gameManager.PerformManualStep(
                  verificationNumber != null ? new VerificationManualStepResult() { VerificationNumber = verificationNumber.Value } : null);
             var verificationnumberResult = result as VerificationRequiredResult;
             VerificationData verificationData = null;
+            FundsCounterModel modifiedCounters = null;
             if (verificationnumberResult != null)
             {
                 verificationData = new VerificationData()
@@ -80,9 +84,17 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Providers
                     SecondNumber = verificationnumberResult.SecondNumber
                 };
             }
-            return new VerificationNumberModel()
+
+            var noVerficationRequiredResult = result as NoVerficationRequiredResult;
+            if (noVerficationRequiredResult != null)
             {
-                VerificationData = verificationData
+                modifiedCounters = _fundsCounterModelMapper.Map(noVerficationRequiredResult.ModifiedCounters);
+            }
+
+            return new ManualStepResultModel()
+            {
+                VerificationData = verificationData,
+                ModifiedCountersInfo = modifiedCounters
             };
         }
 

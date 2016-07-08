@@ -18,14 +18,15 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
             _endpointAddress = new Uri(endpointAddress);
         }
 
-        public void BuyFundDriver(int fundDriverId)
+        public BuyFundDriverResult BuyFundDriver(int fundDriverId)
         {
             using (var proxy = new GameManagerProxy(_sesionGuid))
             {
                 var channel = proxy.CreateChannel(_endpointAddress);
                 proxy.ApplyContextScope();
-                channel.BuyFundDriver(fundDriverId);
+                var result = channel.BuyFundDriver(fundDriverId);
                 proxy.CloseChannel();
+                return result;
             }
         }
 

@@ -14,6 +14,7 @@ namespace EntityFX.EconomicsArcade.Presentation.Models
                 destination.Name = source.Name;
                 destination.Value = source.Value;
                 destination.Type = source.Type;
+                destination.Id = source.Id;
                 return destination;
             }
 
@@ -28,7 +29,8 @@ namespace EntityFX.EconomicsArcade.Presentation.Models
                     SubValue = genericCounter.SubValue,
                     Name = genericCounter.Name,
                     Value = genericCounter.Value,
-                    Type = genericCounter.Type
+                    Type = genericCounter.Type,
+                    Id = genericCounter.Id
                 };
                 return genericCounterModel;
             }
@@ -42,7 +44,8 @@ namespace EntityFX.EconomicsArcade.Presentation.Models
                     UnlockValue = delayedCounter.UnlockValue,
                     Name = delayedCounter.Name,
                     Value = delayedCounter.Value,
-                    Type = delayedCounter.Type
+                    Type = delayedCounter.Type,
+                    Id = delayedCounter.Id
                 };
                 return genericCounterModel;
             }

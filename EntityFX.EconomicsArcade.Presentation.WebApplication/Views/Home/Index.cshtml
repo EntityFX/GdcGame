@@ -47,9 +47,9 @@
             <div class="col-md-4 center-block">
 
                 <div class="btn-toolbar" role="toolbar" aria-label="...">
-                    <button type="button" class="btn btn-success" ng-click="fightAgainstInflation()" ng-disabled="gameData.Counters.Counters[2].Inflation == 0">Take a rest</button>
+                    <button type="button" class="btn btn-success" ng-click="fightAgainstInflation()" ng-disabled="gameData.Counters.ModifiedCounters[2].Inflation == 0">Take a rest</button>
                     <button type="button" class="btn btn-info btn-lg" ng-click="perfotmManulaStep()">WORK HARD !!</button>
-                    <button type="button" class="btn btn-danger" ng-disabled="gameData.Counters.Counters[3].UnlockValue > gameData.Counters.Counters[0].Value">Do quarter goal</button>
+                    <button type="button" class="btn btn-danger" ng-disabled="gameData.Counters.ModifiedCounters[3].UnlockValue > gameData.ModifiedCounters.ModifiedCounters[0].Value">Do quarter goal</button>
                 </div>
             </div>
             <div class="col-md-4">

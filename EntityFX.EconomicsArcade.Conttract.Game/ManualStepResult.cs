@@ -1,4 +1,6 @@
-﻿namespace EntityFX.EconomicsArcade.Contract.Game
+﻿using EntityFX.EconomicsArcade.Contract.Game.Counters;
+
+namespace EntityFX.EconomicsArcade.Contract.Game
 {
     public abstract class ManualStepResult
     {
@@ -13,6 +15,7 @@
 
     public class ManualStepNoVerficationRequiredResult : ManualStepResult
     {
+        public FundsCounters ModifiedFundsCounters { get; set; }
 
         public ManualStepNoVerficationRequiredResult()
         {

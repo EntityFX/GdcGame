@@ -32,7 +32,24 @@ app.controller('appGameController',
         });
 
         $scope.perfotmManulaStep = function () {
-            gdCameApiService.performManualStep();
+            gdCameApiService.performManualStep()
+                .then(function (value) {
+                    if (value.data.ModifiedCountersInfo != undefined) {
+                        $rootScope.gameData.Counters.TotalFunds = value.data.ModifiedCountersInfo.TotalFunds;
+                        $rootScope.gameData.Counters.CurrentFunds = value.data.ModifiedCountersInfo.CurrentFunds;
+                        value.data.ModifiedCountersInfo.Counters.forEach(function (item) {
+                            var oldCounter = $rootScope.gameData.Counters.Counters.filter(function (counter) {
+                                return counter.Id === item.Id;
+                            })[0];
+
+                            if (oldCounter != undefined) {
+
+                                oldCounter = item;
+                            }
+                        });
+                    }
+
+                });
         }
 
         $scope.fightAgainstInflation = function () {

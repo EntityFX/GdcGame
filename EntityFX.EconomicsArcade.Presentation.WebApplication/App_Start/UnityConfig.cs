@@ -40,6 +40,7 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication
             container.RegisterType<IMapper<CounterBase, CounterModelBase>, CounterModelMapper>();
             container.RegisterType<IMapper<FundsDriver, FundsDriverModel>, FundsDriverModelMapper>();
             container.RegisterType<IMapper<GameData, GameDataModel>, GameDataModelMapper>();
+            container.RegisterType<IMapper<BuyFundDriverResult, BuyDriverModel>, FundsDriverBuyInfoMapper>();
             container.RegisterType<IGameClientFactory, GameClientFactory>();
             container.RegisterType<IGameDataProvider, GameDataProvider>();
         }

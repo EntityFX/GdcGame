@@ -36,7 +36,7 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Controllers
         }
 
         [System.Web.Http.HttpPost]
-        public VerificationNumberModel PerformManualStep()
+        public ManualStepResultModel PerformManualStep()
         {
             var res = _gameDataProvider.PerformManualStep(null);
             return res;
@@ -69,10 +69,9 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Controllers
         }
 
         [System.Web.Http.HttpPost]
-        public bool BuyFundDriver([FromBody]int id)
+        public BuyDriverModel BuyFundDriver([FromBody]int id)
         {
-            _gameDataProvider.BuyFundDriver(id);
-            return true;
+            return _gameDataProvider.BuyFundDriver(id);
         }
     }
 

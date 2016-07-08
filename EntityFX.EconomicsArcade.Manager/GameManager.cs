@@ -5,6 +5,8 @@ using EntityFX.EconomicsArcade.Infrastructure.Common;
 using EntityFX.EconomicsArcade.Manager.Mappers;
 using FundsCounters = EntityFX.EconomicsArcade.Contract.Common.Counters.FundsCounters;
 using EntityFX.EconomicsArcade.Contract.Common;
+using EntityFX.EconomicsArcade.Contract.Common.Funds;
+using BuyFundDriverResult = EntityFX.EconomicsArcade.Contract.Manager.GameManager.BuyFundDriverResult;
 
 namespace EntityFX.EconomicsArcade.Manager
 {
@@ -13,22 +15,34 @@ namespace EntityFX.EconomicsArcade.Manager
         private readonly GameSessions _gameSessions;
         private readonly IMapper<IGame, GameData> _gameDataContractMapper;
         private readonly IMapper<Contract.Game.Counters.FundsCounters, FundsCounters> _countersContractMapper;
+        private readonly IMapper<Contract.Game.Funds.FundsDriver, FundsDriver> _fundsDriverContractMapper;
         private readonly IMapper<Contract.Game.ManualStepResult, Contract.Manager.GameManager.ManualStepResult> _manualStepResultMapper;
 
         public GameManager(GameSessions gameSessions
             , IMapper<IGame, GameData> gameDataContractMapper
             , IMapper<Contract.Game.Counters.FundsCounters, FundsCounters> countersContractMapper
+            , IMapper<Contract.Game.Funds.FundsDriver, FundsDriver> fundsDriverContractMapper
             , IMapper<Contract.Game.ManualStepResult, Contract.Manager.GameManager.ManualStepResult> manualStepResultMapper)
         {
             _gameSessions = gameSessions;
             _gameDataContractMapper = gameDataContractMapper;
             _countersContractMapper = countersContractMapper;
+            _fundsDriverContractMapper = fundsDriverContractMapper;
             _manualStepResultMapper = manualStepResultMapper;
         }
 
-        public void BuyFundDriver(int fundDriverId)
+        public BuyFundDriverResult BuyFundDriver(int fundDriverId)
         {
-            GetSessionGame().BuyFundDriver(fundDriverId);
+            var buyFundDriverResult = GetSessionGame().BuyFundDriver(fundDriverId);
+            if (buyFundDriverResult != null)
+            {
+                return new BuyFundDriverResult()
+                {
+                    ModifiedFundsCounters = _countersContractMapper.Map(buyFundDriverResult.ModifiedFundsCounters),
+                    ModifiedFundsDriver = _fundsDriverContractMapper.Map(buyFundDriverResult.ModifiedFundsDriver)
+                };
+            }
+            return null;
         }
 
         public Contract.Manager.GameManager.ManualStepResult PerformManualStep(VerificationManualStepResult verificationManualStepResult)

@@ -19,7 +19,7 @@ namespace EntityFX.EconomicsArcade.TestClient
 
         public void PerformManualStep()
         {
-            _game.PerformManualStep(null);
+            var result = _game.PerformManualStep(null);
             DisplayGameData(GetGameData());
         }
 

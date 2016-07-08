@@ -208,30 +208,56 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
             if (!verificationResult.IsVerificationRequired)
             {
                 modifiedCounters = PerformManualStepInternal();
-                PostPerformManualStep(modifiedCounters);
+                var noVerificationResult = verificationResult as ManualStepNoVerficationRequiredResult;
+                var counters = modifiedCounters as CounterBase[] ?? modifiedCounters.ToArray();
+                if (noVerificationResult != null)
+                {
+                    noVerificationResult.ModifiedFundsCounters = new FundsCounters()
+                    {
+                        Counters = counters.ToDictionary(_ => _.Id, counter => counter),
+                        CurrentFunds = FundsCounters.CurrentFunds,
+                        RootCounter = FundsCounters.RootCounter,
+                        TotalFunds = FundsCounters.TotalFunds
+                    };
+                    verificationResult = noVerificationResult;
+                }
+                PostPerformManualStep(counters);
             }
             return verificationResult;
         }
 
-        public void BuyFundDriver(int fundDriverId)
+        public BuyFundDriverResult BuyFundDriver(int fundDriverId)
         {
             if (!FundsDrivers.ContainsKey(fundDriverId))
             {
-                return;
+                throw new InvalidOperationException(string.Format("Fund driver {0} not found", fundDriverId));
             }
             var fundDriver = FundsDrivers[fundDriverId];
+            BuyFundDriverResult result = null;
             if (!IsFundsDriverAvailableForBuy(fundDriver))
             {
-                return;
+                throw new InvalidOperationException(string.Format("Fund driver {0} not available to buy ", fundDriverId));
             }
             if (FundsCounters.CurrentFunds >= fundDriver.CurrentValue)
             {
                 PayWithFunds(fundDriver.CurrentValue);
                 fundDriver.CurrentValue = fundDriver.CurrentValue + fundDriver.CurrentValue * fundDriver.InflationPercent / 100.0m;
                 fundDriver.BuyCount++;
-                IncrementCounters(fundDriver.Incrementors);
+                var changedCounters = IncrementCounters(fundDriver.Incrementors);
+                result = new BuyFundDriverResult()
+                {
+                    ModifiedFundsDriver = fundDriver,
+                    ModifiedFundsCounters = new FundsCounters()
+                    {
+                        Counters = changedCounters,
+                        CurrentFunds = FundsCounters.CurrentFunds,
+                        TotalFunds = FundsCounters.TotalFunds,
+                        RootCounter = FundsCounters.RootCounter
+                    }
+                };
             }
             PostBuyFundDriver(fundDriver);
+            return result;
         }
 
         protected virtual void PostPerformManualStep(IEnumerable<CounterBase> modifiedCounters)
@@ -265,9 +291,9 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
             FundsCounters.CurrentFunds -= value;
         }
 
-        protected virtual void IncrementCounters(IDictionary<int, IncrementorBase> incrementors)
+        protected IDictionary<int, CounterBase> IncrementCounters(IDictionary<int, IncrementorBase> incrementors)
         {
-            var incrementorsList = incrementors.ToList();
+            IDictionary<int, CounterBase> result = new Dictionary<int, CounterBase>();
             foreach (var counter in FundsCounters.Counters)
             {
                 IncrementorBase incrementor;
@@ -295,8 +321,10 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
                             genericCounter.BonusPercentage += incrementor.Value;
                         }
                     }
+                    result.Add(counter);
                 }
             }
+            return result;
         }
 
         protected string GetIncrementorValueById(FundsDriver fundsDriver, int incrmentorId)
