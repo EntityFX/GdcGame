@@ -5,16 +5,21 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.DataAccess
 {
     public class UserDataAccessClient : IUserDataAccessService
     {
-        private const string Endpoint =
-    "net.tcp://localhost:8777/EntityFX.EconomicsArcade.DataAccess/EntityFX.EconomicsArcade.Contract.DataAccess.User.IUserDataAccessService";
+    //"net.tcp://localhost:8777/EntityFX.EconomicsArcade.DataAccess/EntityFX.EconomicsArcade.Contract.DataAccess.User.IUserDataAccessService";
 
+        private readonly Uri _endpoint;
+
+        public UserDataAccessClient(string endpoint)
+        {
+            _endpoint = new Uri(endpoint);
+        }
 
         public int Create(User user)
         {
             int result;
             using (var proxy = new UserDataAccessProxyFactoy())
             {
-                var channel = proxy.CreateChannel(new Uri(Endpoint));
+                var channel = proxy.CreateChannel(_endpoint);
                 result = channel.Create(user);
                 proxy.CloseChannel();
             }
@@ -25,7 +30,7 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.DataAccess
         {
             using (var proxy = new UserDataAccessProxyFactoy())
             {
-                var channel = proxy.CreateChannel(new Uri(Endpoint));
+                var channel = proxy.CreateChannel(_endpoint);
                 channel.Update(user);
                 proxy.CloseChannel();
             }
@@ -35,7 +40,7 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.DataAccess
         {
             using (var proxy = new UserDataAccessProxyFactoy())
             {
-                var channel = proxy.CreateChannel(new Uri(Endpoint));
+                var channel = proxy.CreateChannel(_endpoint);
                 channel.Delete(userId);
                 proxy.CloseChannel();
             }
@@ -46,7 +51,7 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.DataAccess
             User result;
             using (var proxy = new UserDataAccessProxyFactoy())
             {
-                var channel = proxy.CreateChannel(new Uri(Endpoint));
+                var channel = proxy.CreateChannel(_endpoint);
                 result = channel.FindById(userId);
                 proxy.CloseChannel();
             }
@@ -58,7 +63,7 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.DataAccess
             User result;
             using (var proxy = new UserDataAccessProxyFactoy())
             {
-                var channel = proxy.CreateChannel(new Uri(Endpoint));
+                var channel = proxy.CreateChannel(_endpoint);
                 result = channel.FindByName(name);
                 proxy.CloseChannel();
             }
@@ -70,7 +75,7 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.DataAccess
             User[] result;
             using (var proxy = new UserDataAccessProxyFactoy())
             {
-                var channel = proxy.CreateChannel(new Uri(Endpoint));
+                var channel = proxy.CreateChannel(_endpoint);
                 result = channel.FindAll();
                 proxy.CloseChannel();
             }
