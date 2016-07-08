@@ -57,7 +57,7 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.Mappers
                         SecondsRemaining = sourceDelayedCounter.SecondsRemaining
                     };
                     destinationCouner = destinationDelayedCounter;
-                    destinationCouner.Type = 3;
+                    destinationCouner.Type = 2;
                 }
                 if (destinationCouner != null)
                 {

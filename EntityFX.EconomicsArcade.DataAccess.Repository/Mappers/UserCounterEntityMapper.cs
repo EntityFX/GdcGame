@@ -16,7 +16,6 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository.Mappers
                     var singleCounter = (SingleCounter)source;
                     break;
                 case 1:
-                case 2:
                     var genericCounter = (GenericCounter)source;
                     destination.BonusPercentage = genericCounter.BonusPercentage;
                     destination.CounterId = genericCounter.Id;
@@ -24,7 +23,7 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository.Mappers
                     destination.Inflation = genericCounter.Inflation;
                     destination.CurrentStepsCount = genericCounter.CurrentSteps;
                     break;
-                case 3:
+                case 2:
                     var delayedCounter = (DelayedCounter)source;
                     destination.MiningTimeSecondsEllapsed = delayedCounter.SecondsRemaining;
                     break;

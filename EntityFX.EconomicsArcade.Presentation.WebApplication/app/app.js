@@ -17,14 +17,16 @@ app.controller('appGameController',
 
         $.connection.hub.url = $location.protocol() + "://" + $location.host() + ":8080/signalr";
         var hub = $.connection.gameDataHub;
-        hub.client.getGameData = function (data) {
-            $rootScope.$apply(function() {
-                $rootScope.gameData = data;
+        if (hub != null) {
+            hub.client.getGameData = function (data) {
+                $rootScope.$apply(function () {
+                    $rootScope.gameData = data;
                 }
-            );
+                );
 
-        };
-        $.connection.hub.start();
+            };
+            $.connection.hub.start();
+        }
 
         gameData.then(function (data) {
             $rootScope.gameData = data;
@@ -35,18 +37,11 @@ app.controller('appGameController',
             gdCameApiService.performManualStep()
                 .then(function (value) {
                     if (value.data.ModifiedCountersInfo != undefined) {
-                        $rootScope.gameData.Counters.TotalFunds = value.data.ModifiedCountersInfo.TotalFunds;
-                        $rootScope.gameData.Counters.CurrentFunds = value.data.ModifiedCountersInfo.CurrentFunds;
-                        value.data.ModifiedCountersInfo.Counters.forEach(function (item) {
-                            var oldCounter = $rootScope.gameData.Counters.Counters.filter(function (counter) {
-                                return counter.Id === item.Id;
-                            })[0];
 
-                            if (oldCounter != undefined) {
+                        if (value.data.ModifiedCountersInfo != undefined) {
+                            $rootScope.$broadcast('counters.update', value.data.ModifiedCountersInfo);
+                        }
 
-                                oldCounter = item;
-                            }
-                        });
                     }
 
                 });

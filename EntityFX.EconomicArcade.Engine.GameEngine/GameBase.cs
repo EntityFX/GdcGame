@@ -25,7 +25,7 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
         private int _nextVerificationSteps = 0;
 
         private int _currentVerificationSteps = 0;
-#if DEBUG 
+#if DEBUG
         private readonly int _stepsToVerify = 500;
 #else
         private readonly int _stepsToVerify = 700;
@@ -34,6 +34,8 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
         private ManualStepResult _manualStepVerificationRequiredResult;
 
         private readonly Random _randomiserForVerification = new Random(Environment.TickCount);
+
+        private static readonly object _lockState = new { };
 
         protected GameBase()
         {
@@ -170,7 +172,7 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
                     _manualStepVerificationRequiredResult as ManualStepVerificationRequiredResult;
 
                 ManualStepResult result = verficationRequiredResult != null && verficationRequiredResult.FirstNumber + verficationRequiredResult.SecondNumber ==
-                                          verificationData.ResultNumber ? (ManualStepResult) new ManualStepVerifiedResult(true) : InitializeVerificationSteps();
+                                          verificationData.ResultNumber ? (ManualStepResult)new ManualStepVerifiedResult(true) : InitializeVerificationSteps();
 
 
 
@@ -212,9 +214,10 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
                 var counters = modifiedCounters as CounterBase[] ?? modifiedCounters.ToArray();
                 if (noVerificationResult != null)
                 {
+                    var genericCounters = FundsCounters.Counters.Values.OfType<GenericCounter>().Cast<CounterBase>();
                     noVerificationResult.ModifiedFundsCounters = new FundsCounters()
                     {
-                        Counters = counters.ToDictionary(_ => _.Id, counter => counter),
+                        Counters = genericCounters.ToDictionary(_ => _.Id, counter => counter),
                         CurrentFunds = FundsCounters.CurrentFunds,
                         RootCounter = FundsCounters.RootCounter,
                         TotalFunds = FundsCounters.TotalFunds
@@ -225,6 +228,7 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
             }
             return verificationResult;
         }
+
 
         public BuyFundDriverResult BuyFundDriver(int fundDriverId)
         {

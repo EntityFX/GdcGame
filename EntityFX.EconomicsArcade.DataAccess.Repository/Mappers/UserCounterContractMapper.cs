@@ -12,9 +12,10 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository.Mappers
         private static readonly Func<UserCounterEntity, GenericCounter> GenericFunc = source => new GenericCounter
         {
             UseInAutoSteps = source.Counter.UseInAutostep,
+            InflationIncreaseSteps = source.Counter.InflationIncreaseSteps,
             Inflation = source.Inflation,
             BonusPercentage = source.BonusPercentage,
-            CurrentSteps = source.CurrentStepsCount
+            CurrentSteps = source.CurrentStepsCount,
         };
 
         private static readonly IDictionary<int, Func<UserCounterEntity, CounterBase>> MappingDictionary =
@@ -27,10 +28,7 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository.Mappers
                     1, GenericFunc
                 },
                 {
-                    2, GenericFunc
-                },
-                {
-                    3, entity => new DelayedCounter
+                    2, entity => new DelayedCounter
                     {
                         SecondsRemaining = entity.MiningTimeSecondsEllapsed,
                         UnlockValue = 10000,

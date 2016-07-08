@@ -17,16 +17,17 @@ namespace EntityFX.EconomicsArcade.Manager.Mappers
                     BonusPercentage = genericCounter.BonusPercentage,
                     CurrentSteps = genericCounter.CurrentSteps,
                     SubValue = genericCounter.SubValue,
-                    Inflation = genericCounter.Inflation
+                    Inflation = genericCounter.Inflation,
+                    InflationIncreaseSteps = genericCounter.StepsToIncreaseInflation,
+                    Type = 1
                 };
                 destinationCounter = genericDestination;
-                destinationCounter.Value = genericCounter.Value;
             }
 
             var singleCounter = source as SingleCounter;
             if (singleCounter != null)
             {
-                destinationCounter = new Contract.Common.Counters.SingleCounter {Value = singleCounter.Value};
+                destinationCounter = new Contract.Common.Counters.SingleCounter { Value = singleCounter.Value, Type = 0 };
             }
             if (destinationCounter != null)
             {
@@ -38,10 +39,10 @@ namespace EntityFX.EconomicsArcade.Manager.Mappers
             {
                 destinationCounter = new Contract.Common.Counters.DelayedCounter()
                 {
-                    Value = delayedCounter.Value, 
                     MiningTimeSeconds = delayedCounter.SecondsToAchieve, 
                     SecondsRemaining = delayedCounter.SecondsRemaining,
-                    UnlockValue = delayedCounter.UnlockValue
+                    UnlockValue = delayedCounter.UnlockValue,
+                    Type = 2
                 };
             }
             if (destinationCounter != null)
@@ -56,6 +57,7 @@ namespace EntityFX.EconomicsArcade.Manager.Mappers
         {
             destination.Id = source.Id;
             destination.Name = source.Name;
+            destination.Value = source.Value;
         }
     }
 }
