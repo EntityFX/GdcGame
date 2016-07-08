@@ -18,21 +18,10 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Factories
 
         public IGameManager BuildGameClient(Guid sessionGuid)
         {
-            _logger.Trace("EntityFX.EconomicsArcade.Presentation.WebApplication.GameClientFactory.BuildGameClient():");
-            _logger.Info("sessionGuid is {0}", sessionGuid.ToString());
-            try
-            {
-                var game = _unityContainer.Resolve<IGameManager>(
-                    new ParameterOverride("sesionGuid", sessionGuid));
-                _logger.Trace("Success");
+            var game = _unityContainer.Resolve<IGameManager>(
+                new ParameterOverride("sesionGuid", sessionGuid));
 
-                return game;
-            }
-            catch (Exception exp)
-            {
-                _logger.Error(exp);
-                throw;
-            }
+            return game;
         }
     }
 }

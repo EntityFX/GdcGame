@@ -24,15 +24,13 @@ namespace EntityFX.EconomicsArcade.Manager
 
         public void Create(string login)
         {
-            _logger.Trace("EntityFX.EconomicsArcade.Manager.SimpleUserManager.Create():");
-            _logger.Info("Login is {0}", login);
             try
             {
                 _userDataAccess.Create(new User() { Email = login });
             }
             catch (Exception exp)
             {
-                _logger.Warning("Can't create new User. Reason: {0}", exp.Message);
+                
             }
         }
     }

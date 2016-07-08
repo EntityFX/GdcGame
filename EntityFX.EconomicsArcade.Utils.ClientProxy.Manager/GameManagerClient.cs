@@ -23,7 +23,6 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
 
         public BuyFundDriverResult BuyFundDriver(int fundDriverId)
         {
-            _logger.Trace("{0}.BuyFundDriver [fundDriverId={1}]", GetType().FullName, fundDriverId);
             using (var proxy = new GameManagerProxy(_sesionGuid))
             {
                 var channel = proxy.CreateChannel(_endpointAddress);

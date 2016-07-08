@@ -44,9 +44,6 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Providers
 
         public void Initialize(string userName)
         {
-            _logger.Trace("EntityFX.EconomicsArcade.Presentation.WebApplication.GameDataProvider.Initialize():");
-            _logger.Info("UserName is {0}", userName);
-
             if (HttpContext.Current.Session["SessionGuid"] == null)
             {
                 if (!_simpleUserManager.Exists(userName))
@@ -58,8 +55,6 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Providers
             }
             GameGuid = (Guid)HttpContext.Current.Session["SessionGuid"];
             _gameManager = _gameClientFactory.BuildGameClient(GameGuid);
-
-            _logger.Trace("Initializating is finished");
         }
 
         public GameDataModel GetGameData()
@@ -74,8 +69,6 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Providers
 
         public BuyDriverModel BuyFundDriver(int id)
         {
-            _logger.Trace("Buying FundDriver");
-            _logger.Info("Id is {0}", id);
             var buyResult = _gameManager.BuyFundDriver(id);
             return buyResult != null ?_fundsDriverBuyinfoModelMapper.Map(buyResult) : null;
 
@@ -83,9 +76,6 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Providers
 
         public ManualStepResultModel PerformManualStep(int? verificationNumber)
         {
-            _logger.Trace("EntityFX.EconomicsArcade.Presentation.WebApplication.GameDataProvider.PerformManualStep():");
-            _logger.Info("VerificationNumber is {0}", verificationNumber);
-
             var result = _gameManager.PerformManualStep(
                  verificationNumber != null ? new VerificationManualStepResult() { VerificationNumber = verificationNumber.Value } : null);
             var verificationnumberResult = result as VerificationRequiredResult;
@@ -115,7 +105,6 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Providers
 
         public void FightAgainstInflation()
         {
-            _logger.Trace("EntityFX.EconomicsArcade.Presentation.WebApplication.GameDataProvider.FightAgainstInflation():");
             _gameManager.FightAgainstInflation();
         }
 

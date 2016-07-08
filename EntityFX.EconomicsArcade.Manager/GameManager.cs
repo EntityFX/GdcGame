@@ -35,8 +35,6 @@ namespace EntityFX.EconomicsArcade.Manager
 
         public BuyFundDriverResult BuyFundDriver(int fundDriverId)
         {
-            _logger.Trace("{0}.BuyFundDriver [fundDriverId={1}]", GetType().FullName, fundDriverId);
-
             var buyFundDriverResult = GetSessionGame().BuyFundDriver(fundDriverId);
             if (buyFundDriverResult != null)
             {
@@ -51,8 +49,6 @@ namespace EntityFX.EconomicsArcade.Manager
 
         public Contract.Manager.GameManager.ManualStepResult PerformManualStep(VerificationManualStepResult verificationManualStepResult)
         {
-            _logger.Trace("EntityFX.EconomicsArcade.Manager.GameManager.PerformManualStep():");
-
             var res = GetSessionGame().PerformManualStep(verificationManualStepResult != null 
                 ? new VerificationManualStepData() { ResultNumber = verificationManualStepResult.VerificationNumber} : null);
             return _manualStepResultMapper.Map(res);
@@ -60,8 +56,6 @@ namespace EntityFX.EconomicsArcade.Manager
 
         public void FightAgainstInflation()
         {
-            _logger.Trace("EntityFX.EconomicsArcade.Manager.GameManager.FightAgainstInflation():");
-
             try
             {
                 GetSessionGame().FightAgainstInflation();
@@ -74,8 +68,6 @@ namespace EntityFX.EconomicsArcade.Manager
 
         public void PlayLottery()
         {
-            _logger.Trace("EntityFX.EconomicsArcade.Manager.GameManager.PlayLottery():");
-
             throw new NotImplementedException();
         }
 
@@ -92,9 +84,6 @@ namespace EntityFX.EconomicsArcade.Manager
 
         public void ActivateDelayedCounter(int counterId)
         {
-            _logger.Trace("EntityFX.EconomicsArcade.Manager.GameManager.ActivateDelayedCounter():");
-            _logger.Info("counterId is {0}", counterId);
-
             try
             {
                 GetSessionGame().ActivateDelayedCounter(counterId);
