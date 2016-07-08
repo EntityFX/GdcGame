@@ -40,7 +40,10 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
                 new InjectionConstructor(
                     ConfigurationManager.AppSettings["ClentProxyAddress_GameDataRetrieveDataAccessService"]
                     ));
-            container.RegisterType<IUserDataAccessService, UserDataAccessClient>();
+            container.RegisterType<IUserDataAccessService, UserDataAccessClient>(
+                new InjectionConstructor(
+                    ConfigurationManager.AppSettings["ClentProxyAddress_UserDataAccessService"]
+                    ));
             container.RegisterType<IGameDataStoreDataAccessService, GameDataStoreDataAccessClient>(
                 new InjectionConstructor(
                     ConfigurationManager.AppSettings["ClentProxyAddress_GameDataStoreDataAccessService"]

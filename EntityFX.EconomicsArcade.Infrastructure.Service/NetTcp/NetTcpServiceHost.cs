@@ -1,5 +1,6 @@
 ﻿using Microsoft.Practices.Unity;
 using System;
+using System.Net.Security;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Description;
@@ -24,8 +25,12 @@ namespace EntityFX.EconomicsArcade.Infrastructure.Service
                 OpenTimeout = new TimeSpan(0, 0, 10, 0, 0),
                 CloseTimeout = new TimeSpan(0, 0, 10, 0, 0),
                 MaxBufferPoolSize = 500000000,
-                MaxReceivedMessageSize = 500000000
+                MaxReceivedMessageSize = 500000000,
             };
+            binding.Security.Mode = SecurityMode.None;
+           /* binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.None;
+            binding.Security.Transport.ProtectionLevel = ProtectionLevel.None;
+            binding.Security.Message.ClientCredentialType = MessageCredentialType.None;*/
 
             var myReaderQuotas = new XmlDictionaryReaderQuotas
             {

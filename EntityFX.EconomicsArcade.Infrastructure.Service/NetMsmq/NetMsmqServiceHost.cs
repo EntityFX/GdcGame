@@ -34,6 +34,7 @@ namespace EntityFX.EconomicsArcade.Infrastructure.Service
                 MaxReceivedMessageSize = 500000000,
                 UseActiveDirectory = false,
                 ExactlyOnce = true,
+                QueueTransferProtocol = System.ServiceModel.QueueTransferProtocol.Srmp,
                 Security = new NetMsmqSecurity()
                 {
                     Transport = new MsmqTransportSecurity()
