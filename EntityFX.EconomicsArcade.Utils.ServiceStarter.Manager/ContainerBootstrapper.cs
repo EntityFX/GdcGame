@@ -20,46 +20,18 @@ using EntityFX.EconomicsArcade.Utils.ClientProxy.DataAccess;
 using PortableLog.NLog;
 using System.Configuration;
 using System.Linq;
+
+
 using EntityFX.EconomicArcade.Engine.GameEngine.Mappers;
 using EntityFX.EconomicArcade.Engine.GameEngine.NetworkGameEngine;
 using EntityFX.EconomicsArcade.Contract.NotifyConsumerService;
+using EntityFX.EconomicsArcade.Infrastructure.Service.Logger;
 using EntityFX.EconomicsArcade.Utils.ClientProxy.NotifyConsumer;
 using Microsoft.Practices.Unity.InterceptionExtension;
 
 namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
 {
-    public class LoggerInterceptor : IInterceptionBehavior
-    {
-        private readonly ILogger _logger;
-
-        public LoggerInterceptor(ILogger logger)
-        {
-            _logger = logger;
-        }
-
-        public IMethodReturn Invoke(IMethodInvocation input, GetNextInterceptionBehaviorDelegate getNext)
-        {
-            _logger.Trace("Interecptor: {0}, Call begin {1}", GetType(), input.MethodBase.ToString());
-            var result = getNext()(input, getNext);
-
-            if (result.Exception != null)
-            {
-                _logger.Error(result.Exception);
-            }
-            else
-            {
-                _logger.Trace("Interecptor: {0}, Call end {1} [Return={2}]", GetType(), input.MethodBase.ToString(), result.ReturnValue);
-            }
-            return result;
-        }
-
-        public IEnumerable<Type> GetRequiredInterfaces()
-        {
-            return Type.EmptyTypes;
-        }
-
-        public bool WillExecute { get { return true; } }
-    }
+    
 
     public class ContainerBootstrapper : IContainerBootstrapper
     {
@@ -76,15 +48,24 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
             container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessClient>(
                 new InjectionConstructor(
                     ConfigurationManager.AppSettings["ClentProxyAddress_GameDataRetrieveDataAccessService"]
-                    ));
+                    )
+                , new Interceptor<InterfaceInterceptor>()
+                , new InterceptionBehavior<LoggerInterceptor>()
+                    );
             container.RegisterType<IUserDataAccessService, UserDataAccessClient>(
                 new InjectionConstructor(
                     ConfigurationManager.AppSettings["ClentProxyAddress_UserDataAccessService"]
-                    ));
+                    )
+                , new Interceptor<InterfaceInterceptor>()
+                , new InterceptionBehavior<LoggerInterceptor>()
+                    );
             container.RegisterType<IGameDataStoreDataAccessService, GameDataStoreDataAccessClient>(
                 new InjectionConstructor(
                     ConfigurationManager.AppSettings["ClentProxyAddress_GameDataStoreDataAccessService"]
-                    ));
+                    )
+                , new Interceptor<InterfaceInterceptor>()
+                , new InterceptionBehavior<LoggerInterceptor>()
+                );
 
 
             container.RegisterType<IMapper<IncrementorBase, Incrementor>, IncrementorContractMapper>();
@@ -98,7 +79,9 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
 
             container.RegisterType<IGameFactory, GameFactory>();
 
-            container.RegisterType<ISessionManager, SessionManager>(new Interceptor<InterfaceInterceptor>(), new InterceptionBehavior<LoggerInterceptor>());
+            container.RegisterType<ISessionManager, SessionManager>(
+                new Interceptor<InterfaceInterceptor>()
+                , new InterceptionBehavior<LoggerInterceptor>());
 
             container.RegisterType<INotifyGameDataChanged, NotifyGameDataChanged>(
                 new InjectionConstructor(
@@ -109,16 +92,32 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
                     new ResolvedParameter<IMapper<FundsDriver, Contract.Common.Funds.FundsDriver>>(),
                     new ResolvedParameter<INotifyConsumerService>()
                 )
+                , new Interceptor<InterfaceInterceptor>()
+                , new InterceptionBehavior<LoggerInterceptor>("GameDataChanged")
+                , new InterceptionBehavior<LoggerInterceptor>("FundsDriverBought")
             );
 
-            container.RegisterType<IGame, NetworkGame>();
-            container.RegisterType<IGameManager, GameManager>(new Interceptor<InterfaceInterceptor>(), new InterceptionBehavior<LoggerInterceptor>());
-            container.RegisterType<ISimpleUserManager, SimpleUserManager>(new Interceptor<InterfaceInterceptor>(), new InterceptionBehavior<LoggerInterceptor>());
+            container.RegisterType<IGame, NetworkGame>(
+                new Interceptor<InterfaceInterceptor>()
+                , new InterceptionBehavior<LoggerInterceptor>("PostPerformAutoStep")
+                , new InterceptionBehavior<LoggerInterceptor>("PostBuyFundDriver")
+                );
+            container.RegisterType<IGameManager, GameManager>(
+                new Interceptor<InterfaceInterceptor>()
+                , new InterceptionBehavior<LoggerInterceptor>());
+            container.RegisterType<ISimpleUserManager, SimpleUserManager>(
+                new Interceptor<InterfaceInterceptor>()
+                , new InterceptionBehavior<LoggerInterceptor>("Create"));
             //container.RegisterType<INotifyConsumerService, NotifyConsumerService>();
             container.RegisterType<INotifyConsumerService, NotifyConsumerServiceClient>(
              new InjectionConstructor(
                  ConfigurationManager.AppSettings["ClientProxyAddress_NotifyConsumerService"]
-                 ), new Interceptor<InterfaceInterceptor>(), new InterceptionBehavior<LoggerInterceptor>());
+                 )
+            , new Interceptor<InterfaceInterceptor>()
+            , new InterceptionBehavior<LoggerInterceptor>("ejahwkfcxkf"));
+
+
+
             return container;
         }
     }

@@ -28,6 +28,8 @@ using EntityFX.EconomicsArcade.DataAccess.Repository.Queries.UserCounter;
 using EntityFX.EconomicsArcade.DataAccess.Repository.Queries.UserFundsDriver;
 using EntityFX.EconomicsArcade.DataAccess.Repository.Queries.UserGameCounter;
 using EntityFX.EconomicsArcade.DataAccess.Service.Mappers;
+using EntityFX.EconomicsArcade.Infrastructure.Service.Logger;
+using Microsoft.Practices.Unity.InterceptionExtension;
 
 namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess
 {
@@ -36,6 +38,8 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess
         //public 
         public IUnityContainer Configure(IUnityContainer container)
         {
+            container.AddNewExtension<Interception>();
+
             container.RegisterType<DbContext, EconomicsArcadeDbContext>(new InjectionConstructor("name=EconomicsArcadeDbContext"));
             container.RegisterType<IQueryBuilder, QueryBuilder>();
             container.RegisterType<IUnitOfWork, UnitOfWork>();
@@ -71,9 +75,21 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess
             container.RegisterType<IUserCounterRepository, UserCounterRepository>();
             container.RegisterType<IUserFundsDriverRepository, UserFundsDriverRepository>();
 
-            container.RegisterType<IUserDataAccessService, UserDataAccessService>();
-            container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessService>();
-            container.RegisterType<IGameDataStoreDataAccessService, GameDataStoreDataAccessService>();
+            container.RegisterType<IUserDataAccessService, UserDataAccessService>(
+                new Interceptor<InterfaceInterceptor>()
+                , new InterceptionBehavior<LoggerInterceptor>()
+                );
+            container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessService>(
+                new Interceptor<InterfaceInterceptor>()
+                , new InterceptionBehavior<LoggerInterceptor>()
+                );
+            container.RegisterType<IGameDataStoreDataAccessService, GameDataStoreDataAccessService>(
+                new Interceptor<InterfaceInterceptor>()
+                , new InterceptionBehavior<LoggerInterceptor>()
+                );
+
+
+
             return container;
         }
     }

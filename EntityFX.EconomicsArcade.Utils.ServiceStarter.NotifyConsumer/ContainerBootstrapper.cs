@@ -5,9 +5,11 @@ using EntityFX.EconomicsArcade.Contract.Common.Counters;
 using EntityFX.EconomicsArcade.Contract.Common.Funds;
 using EntityFX.EconomicsArcade.Contract.NotifyConsumerService;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
+using EntityFX.EconomicsArcade.Infrastructure.Service.Logger;
 using EntityFX.EconomicsArcade.Presentation.Models;
 using Microsoft.AspNet.SignalR;
 using Microsoft.Practices.Unity;
+using Microsoft.Practices.Unity.InterceptionExtension;
 using PortableLog.NLog;
 
 namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.NotifyConsumer
@@ -34,7 +36,10 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.NotifyConsumer
                 new ResolvedParameter<ILogger>(),
                 new ResolvedParameter<IMapper<GameData, GameDataModel>>(),
                 new ResolvedParameter<IHubContext>()
-                ));
+                )
+                , new Interceptor<InterfaceInterceptor>()
+                , new InterceptionBehavior<LoggerInterceptor>()
+                );
 
 
 
