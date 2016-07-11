@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>EntityFX.EconomicsArcade.Infrastructure.Repository</name>
+    </assembly>
+    <members>
+        <member name="T:EntityFX.EconomicsArcade.Infrastructure.Repository.Criterion.ICriterion">
+            <summary>
+            A contract to mark a class that it represents a criterion for the query.
+            </summary>
+        </member>
+        <member name="T:EntityFX.EconomicsArcade.Infrastructure.Repository.UnitOfWork.IUnitOfWork">
+            <summary>
+            An abstraction for unit of work pattern.
+            </summary>
+            <remarks>
+            The main goal of unit of work is to separate one set of changes from another. Eack unit of work represents a single transaction.
+            </remarks>
+        </member>
+        <member name="M:EntityFX.EconomicsArcade.Infrastructure.Repository.UnitOfWork.IUnitOfWork.Commit">
+            <summary>
+            Commits any changed made during unit of work scope.
+            </summary>
+        </member>
+        <member name="M:EntityFX.EconomicsArcade.Infrastructure.Repository.UnitOfWork.IUnitOfWork.CreateEntity``1">
+            <summary>
+            Creates a new entity instance of type <see cref="!:TEntity"/>. A new instance would participate inside unit of work.
+            </summary>
+            <typeparam name="TEntity">Returns a new instance of type <see cref="!:TEntity"/>. </typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:EntityFX.EconomicsArcade.Infrastructure.Repository.UnitOfWork.IUnitOfWork.DeleteEntity``1(``0)">
+            <summary>
+            Deletes an entity instance of type <see cref="!:TEntity"/>.
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <param name="entity"></param>
+        </member>
+        <member name="M:EntityFX.EconomicsArcade.Infrastructure.Repository.UnitOfWork.IUnitOfWork.AttachEntity``1(``0)">
+            <summary>
+            Attach an entity instance of type <see cref="!:TEntity"/>.
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <param name="entity"></param>
+        </member>
+    </members>
+</doc>

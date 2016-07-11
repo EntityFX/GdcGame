@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>EntityFX.EconomicsArcade.Contract.Manager</name>
+    </assembly>
+    <members>
+        <member name="T:EntityFX.EconomicsArcade.Contract.Manager.UserManager.ISimpleUserManager">
+            <summary>
+            
+            </summary>
+        </member>
+    </members>
+</doc>

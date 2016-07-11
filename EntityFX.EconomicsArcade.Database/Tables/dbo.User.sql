@@ -1,9 +1,0 @@
-﻿CREATE TABLE [dbo].[User]
-(
-	[Id] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-	[Email] NVARCHAR(255) NOT NULL UNIQUE,
-	[Secret] NVARCHAR(255) NULL,
-	[Salt] NVARCHAR(255) NULL,
-	[CreateDateTime] DATETIME NOT NULL,
-	[UpdateDateTime] DATETIME,
-)
