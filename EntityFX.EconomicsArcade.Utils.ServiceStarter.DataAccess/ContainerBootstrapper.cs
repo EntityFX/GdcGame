@@ -28,14 +28,17 @@ using EntityFX.EconomicsArcade.DataAccess.Repository.Queries.UserCounter;
 using EntityFX.EconomicsArcade.DataAccess.Repository.Queries.UserFundsDriver;
 using EntityFX.EconomicsArcade.DataAccess.Repository.Queries.UserGameCounter;
 using EntityFX.EconomicsArcade.DataAccess.Service.Mappers;
+using Microsoft.Practices.Unity.InterceptionExtension;
 
 namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess
 {
     public class ContainerBootstrapper : IContainerBootstrapper
     {
+
         //public 
         public IUnityContainer Configure(IUnityContainer container)
         {
+            container.AddNewExtension<Interception>();
             container.RegisterType<DbContext, EconomicsArcadeDbContext>(new InjectionConstructor("name=EconomicsArcadeDbContext"));
             container.RegisterType<IQueryBuilder, QueryBuilder>();
             container.RegisterType<IUnitOfWork, UnitOfWork>();
@@ -72,7 +75,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess
             container.RegisterType<IUserFundsDriverRepository, UserFundsDriverRepository>();
 
             container.RegisterType<IUserDataAccessService, UserDataAccessService>();
-            container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessService>();
+            container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessService>(new Interceptor<InterfaceInterceptor>(), new InterceptionBehavior<GameDataCachingInterceptionBehavior>());
             container.RegisterType<IGameDataStoreDataAccessService, GameDataStoreDataAccessService>();
             return container;
         }
