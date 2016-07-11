@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<nlog xmlns="http://www.nlog-project.org/schemas/NLog.xsd"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <!-- 
+  See https://github.com/nlog/nlog/wiki/Configuration-file 
+  for information on customizing logging rules and outputs.
+   -->
+  <targets>
+    <!-- add your targets here -->
+    
+    <!--
+    <target xsi:type="File" name="f" fileName="${basedir}/logs/${shortdate}.log"
+            layout="${longdate} ${uppercase:${level}} ${message}" />
+    -->
+    <target name="logfile" xsi:type="File" fileName="${basedir}/logs/${processname}-${shortdate}.log" />
+    <!--<target name="eventLogFatal" xsi:type="EventLog" layout="${longdate} ${message} ${exception:format=tostring}" />
+    <target name="fileFatal" xsi:type="File" fileName="${basedir}/logs/errors.log"  layout="${longdate} ${message} ${exception:format=tostring}" />
+    <target name="inputDebug" xsi:type="File" fileName="${basedir}/logs/input_${machinename}_${logger}_${shortdate}.log"  layout="${longdate} ${message}" />
+    <target name="debugData" xsi:type="File" fileName="${basedir}/logs/debug_${machinename}_${logger}_${shortdate}.log"  layout="${longdate} ${message}" />-->
+  </targets>
+
+  <rules>
+    <!-- add your logging rules here -->
+    
+    <!--
+    <logger name="*" minlevel="Trace" writeTo="f" />
+    -->
+    <logger name="*" minlevel="Trace" writeTo="logfile" />
+    <!--<logger name="*" minlevel="Error" writeTo="eventLogFatal" />
+    <logger name="*" minlevel="Error" writeTo="fileFatal" />
+    <logger name="VibroTester.BusinessLogic.BusinessLogicFacade" level="Debug" writeTo="debugData"/>
+    <logger name="VibroTester.UI.Application.View.Controls.PlotViewExtension" level="Debug" writeTo="debugData"/>
+    <logger name="VibroTester.UI.Application.App" level="Debug" writeTo="debugData"/>
+    <logger name="VibroTester.DataAccess.Sensors.Providers.CM4SensorDataProvider" level="Debug" writeTo="debugData"/>-->
+  </rules>
+</nlog>
