@@ -36,6 +36,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess
 {
     public class ContainerBootstrapper : IContainerBootstrapper
     {
+
         //public 
         public IUnityContainer Configure(IUnityContainer container)
         {
@@ -79,6 +80,10 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess
             container.RegisterType<IUserCounterRepository, UserCounterRepository>();
             container.RegisterType<IUserFundsDriverRepository, UserFundsDriverRepository>();
 
+            container.RegisterType<IUserDataAccessService, UserDataAccessService>();
+            container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessService>(new Interceptor<InterfaceInterceptor>(), new InterceptionBehavior<GameDataCachingInterceptionBehavior>());
+            container.RegisterType<IGameDataStoreDataAccessService, GameDataStoreDataAccessService>();
+            
             container.RegisterType<IUserDataAccessService, UserDataAccessService>(
                 new Interceptor<InterfaceInterceptor>()
                 , new InterceptionBehavior<LoggerInterceptor>()
@@ -91,9 +96,6 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess
                 new Interceptor<InterfaceInterceptor>()
                 , new InterceptionBehavior<LoggerInterceptor>()
                 );
-
-
-
             return container;
         }
     }
