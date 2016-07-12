@@ -1,9 +1,8 @@
 ﻿using System;
-using EntityFX.EconomicsArcade.Application.NotifySignalrService;
 using EntityFX.EconomicsArcade.Contract.Common;
 using EntityFX.EconomicsArcade.Contract.NotifyConsumerService;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
-using EntityFX.EconomicsArcade.Presentation.Models;
+using EntityFX.EconomicsArcade.Model.Common.Model;
 using Microsoft.AspNet.SignalR;
 
 namespace EntityFX.EconomicsArcade.Application.NotifyConsumerService

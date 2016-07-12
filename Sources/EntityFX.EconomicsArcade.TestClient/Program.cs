@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Timers;
-
 using System.Configuration;
-using EntityFX.EconomicsArcade.Contract.Game;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 using EntityFX.EconomicsArcade.Utils.ClientProxy.Manager;
 using PortableLog.NLog;

@@ -31,35 +31,53 @@
         </div>
     </nav>
 
-    <section class="container-fluid jumbotron jumbotron-top">
-        <section class="row">
-            <div class="col-md-1">
-            </div>
-            <div class="col-md-10">
-                <counters></counters>
-            </div>
-            <div class="col-md-1">
-            </div>
-        </section>
-        <section class="row">
-            <div class="col-md-4">
-            </div>
-            <div class="col-md-4 center-block">
-
-                <div class="btn-toolbar" role="toolbar" aria-label="...">
-                    <button type="button" class="btn btn-success" ng-click="fightAgainstInflation()" ng-disabled="gameData.Counters.Counters[2].Inflation == 0">Take a rest</button>
-                    <button type="button" class="btn btn-info btn-lg" ng-click="perfotmManulaStep()">WORK HARD !!</button>
-                    <button type="button" class="btn btn-danger" ng-disabled="gameData.Counters.Counters[3].UnlockValue > gameData.Counters.Counters[0].Value">Do quarter goal</button>
-                </div>
-            </div>
-            <div class="col-md-4">
-            </div>
-        </section>
+<section class="container-fluid jumbotron jumbotron-top">
+    <section class="row">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-10">
+            <counters></counters>
+        </div>
+        <div class="col-md-1">
+        </div>
     </section>
+    <section class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4 center-block">
 
+            <div class="btn-toolbar" role="toolbar" aria-label="...">
+                <button type="button" class="btn btn-success btn-lg" ng-click="fightAgainstInflation()" ng-disabled="gameData.Counters.Counters[2].Inflation == 0">Take a rest</button>
+                <button type="button" class="btn btn-info btn-lg" ng-click="performManualStep()">WORK HARD !!</button>
+                <button type="button" class="btn btn-danger btn-lg" ng-disabled="gameData.Counters.Counters[3].UnlockValue > gameData.Counters.Counters[0].Value">Do quarter goal</button>
+            </div>
+        </div>
+        <div class="col-md-4">
+        </div>
+    </section>
+    <section class="row" ng-show="visibility">
+        <br/>
+        <br/>
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4 center-block">
+            <form class="form-inline">
+                <label>{{VerificationData.FirstNumber}}</label>
+                +
+                <label>{{VerificationData.SecondNumber}}</label>
+                =
+                <div class="form-group">
+                    <input type="text" class="input-small" ng-model="verificationNumber">
+                    <button type="button" class="btn btn-info btn-lg" ng-click="performManualStep()">Send</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-4">
+        </div>
+    </section>
+</section>
 
     <section class="container">
-
         <section class="row scrollit">
             <div class="col-md-1">
             </div>

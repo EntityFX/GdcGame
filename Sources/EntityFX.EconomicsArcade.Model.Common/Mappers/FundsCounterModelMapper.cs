@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using EntityFX.EconomicsArcade.Contract.Common.Counters;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
+using EntityFX.EconomicsArcade.Model.Common.Model;
 
-namespace EntityFX.EconomicsArcade.Presentation.Models
+namespace EntityFX.EconomicsArcade.Model.Common.Mappers
 {
     public class FundsCounterModelMapper : IMapper<FundsCounters, FundsCounterModel>
     {

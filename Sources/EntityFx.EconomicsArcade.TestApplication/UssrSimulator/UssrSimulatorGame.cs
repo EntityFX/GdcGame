@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using EntityFx.EconomicsArcade.Test.Shared;
+﻿using System.Collections.Generic;
 using EntityFX.EconomicArcade.Engine.GameEngine;
 using EntityFX.EconomicsArcade.Contract.Game.Counters;
 using EntityFX.EconomicsArcade.Contract.Game.Funds;

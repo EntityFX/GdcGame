@@ -14,7 +14,6 @@ app.controller('appGameController',
 [
     '$rootScope', '$scope', '$interval', 'gameData', 'gdCameApiService', '$location',
     function ($rootScope, $scope, $interval, gameData, gdCameApiService, $location) {
-
         $.connection.hub.url = $location.protocol() + "://" + $location.host() + ":8080/signalr";
         var hub = $.connection.gameDataHub;
         if (hub != null) {
@@ -30,18 +29,26 @@ app.controller('appGameController',
 
         gameData.then(function (data) {
             $rootScope.gameData = data;
-            
+
         });
 
-        $scope.perfotmManulaStep = function () {
-            gdCameApiService.performManualStep()
+        $scope.performManualStep = function () {
+            gdCameApiService.performManualStep($scope.verificationNumber)
                 .then(function (value) {
                     if (value.data.ModifiedCountersInfo != undefined) {
 
                         if (value.data.ModifiedCountersInfo != undefined) {
                             $rootScope.$broadcast('counters.update', value.data.ModifiedCountersInfo);
                         }
+                    }
 
+                    $scope.VerificationData = value.data.VerificationData;
+
+                    if ($scope.VerificationData != null) {
+                        $scope.visibility = true;
+                        $scope.verificationNumber = null;
+                    } else {
+                        $scope.visibility = false;
                     }
 
                 });

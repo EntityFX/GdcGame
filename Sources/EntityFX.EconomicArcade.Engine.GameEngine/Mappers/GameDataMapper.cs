@@ -1,8 +1,6 @@
-﻿using System.Linq;
-using EntityFX.EconomicsArcade.Contract.Common;
+﻿using EntityFX.EconomicsArcade.Contract.Common;
 using EntityFX.EconomicsArcade.Contract.Game;
 using EntityFX.EconomicsArcade.Contract.Game.Counters;
-using EntityFX.EconomicsArcade.Contract.Game.Funds;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 
 namespace EntityFX.EconomicArcade.Engine.GameEngine.Mappers
@@ -20,7 +18,7 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.Mappers
                     Counters = PrepareCountersToPersist(source)
                 },
                 AutomaticStepsCount = source.AutomaticStepNumber,
-                ManualStepsCount =  source.ManualStepNumber
+                ManualStepsCount = source.ManualStepNumber
             };
         }
 
@@ -54,13 +52,15 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.Mappers
                 {
                     var destinationDelayedCounter = new EconomicsArcade.Contract.Common.Counters.DelayedCounter()
                     {
-                        SecondsRemaining = sourceDelayedCounter.SecondsRemaining
+                        SecondsRemaining = sourceDelayedCounter.SecondsRemaining,
+                        UnlockValue = sourceDelayedCounter.UnlockValue
                     };
                     destinationCouner = destinationDelayedCounter;
                     destinationCouner.Type = 2;
                 }
                 if (destinationCouner != null)
                 {
+                    destinationCouner.Name = sourceCounter.Value.Name;
                     destinationCouner.Id = sourceCounter.Value.Id;
                     destinationCouner.Value = sourceCounter.Value.Value;
                 }

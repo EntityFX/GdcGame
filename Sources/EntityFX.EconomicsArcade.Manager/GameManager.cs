@@ -2,7 +2,6 @@
 using System;
 using EntityFX.EconomicsArcade.Contract.Game;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
-using EntityFX.EconomicsArcade.Manager.Mappers;
 using FundsCounters = EntityFX.EconomicsArcade.Contract.Common.Counters.FundsCounters;
 using EntityFX.EconomicsArcade.Contract.Common;
 using EntityFX.EconomicsArcade.Contract.Common.Funds;

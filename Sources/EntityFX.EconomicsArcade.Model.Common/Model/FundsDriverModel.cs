@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using EntityFX.EconomicsArcade.Contract.Common.Incrementors;
 
-namespace EntityFX.EconomicsArcade.Presentation.Models
+namespace EntityFX.EconomicsArcade.Model.Common.Model
 {
     public class FundsDriverModel
     {

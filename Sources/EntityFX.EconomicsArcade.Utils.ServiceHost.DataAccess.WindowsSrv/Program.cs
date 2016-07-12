@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using System.ServiceProcess;
 using EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess;
 using System.Configuration;
-using System.Reflection;
 
 namespace EntityFX.EconomicsArcade.Utils.ServiceHost.DataAccess.WindowsSrv
 {

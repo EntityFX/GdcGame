@@ -1,4 +1,4 @@
-using System;
+using EntityFX.EconomicsArcade.Model.Common.Model;
 using EntityFX.EconomicsArcade.Presentation.Models;
 
 namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Providers

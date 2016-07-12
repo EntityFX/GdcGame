@@ -47,22 +47,13 @@
       <Project>{924CC67D-9E2B-46BA-BE1D-6C6C780CCFBC}</Project>
       <Name>EntityFX.EconomicsArcade.Infrastructure.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EntityFX.EconomicsArcade.Model.Common\EntityFX.EconomicsArcade.Model.Common.csproj">
+      <Project>{3B44AFC0-F207-44E4-9F91-7F24E1F4D342}</Project>
+      <Name>EntityFX.EconomicsArcade.Model.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Mappers\CounterModelMapper.cs" />
-    <Compile Include="Mappers\FundsCounterModelMapper.cs" />
-    <Compile Include="Mappers\FundsDriverBuyInfoMapper.cs" />
-    <Compile Include="Mappers\FundsDriverModelMapper.cs" />
-    <Compile Include="Mappers\GameDataModelMapper.cs" />
-    <Compile Include="Model\CounterModelBase.cs" />
-    <Compile Include="Model\DelayedCounterModel.cs" />
-    <Compile Include="Model\FundsCounterModel.cs" />
-    <Compile Include="Model\BuyDriverModel.cs" />
-    <Compile Include="Model\FundsDriverModel.cs" />
-    <Compile Include="Model\GameDataModel.cs" />
-    <Compile Include="Model\GenericCounterModel.cs" />
-    <Compile Include="Model\SingleCounterModel.cs" />
-    <Compile Include="Model\ManualStepResultModel.cs" />
+    <Compile Include="ManualStepResultModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
