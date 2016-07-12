@@ -2,6 +2,7 @@
 [Dd]ebug*/
 */[Pp]ackages/*
 */[Tt]rash/*
+*/obj/*
 *.suo
 *.bak
 *.cache
@@ -10,4 +11,5 @@
 
 /DevOPS/Deploy
 /DevOPS/DeployScripts/Trash/
+/Sources/*/obj/*
 EntityFx.EconomicsArcade.TestApplication.v12.suo
