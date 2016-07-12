@@ -19,12 +19,6 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Controllers
         public GameApiController(IGameDataProvider gameDataProvider)
         {
             _gameDataProvider = gameDataProvider;
-            //_gameDataProvider = new GameDataProvider(
-            //    new GameClientFactory(UnityConfig.GetConfiguredContainer()),
-            //    UnityConfig.GetConfiguredContainer().Resolve<ISimpleUserManager>(),
-            //    UnityConfig.GetConfiguredContainer().Resolve<SessionManagerClient>(),
-            //    UnityConfig.GetConfiguredContainer().Resolve<IMapper<GameData, GameDataModel>>()
-            //    );
         }
 
         [System.Web.Http.HttpPost]
