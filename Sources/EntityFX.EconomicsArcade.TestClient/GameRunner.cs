@@ -1,11 +1,7 @@
 ﻿using System;
 using EntityFx.EconomicsArcade.Test.Shared;
 using EntityFX.EconomicsArcade.Contract.Common;
-using EntityFX.EconomicsArcade.Contract.Common.Counters;
-using EntityFX.EconomicsArcade.Contract.Common.Funds;
-using EntityFX.EconomicsArcade.Contract.Common.Incrementors;
 using EntityFX.EconomicsArcade.Contract.Manager.GameManager;
-using EntityFX.EconomicsArcade.Infrastructure.Common;
 
 namespace EntityFX.EconomicsArcade.TestClient
 {

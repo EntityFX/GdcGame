@@ -1,9 +1,6 @@
-﻿using System.Diagnostics.Contracts;
-using EntityFX.EconomicsArcade.Application.NotifyConsumerService;
-using EntityFX.EconomicsArcade.Contract.Common;
+﻿using EntityFX.EconomicsArcade.Contract.Common;
 using EntityFX.EconomicsArcade.Contract.DataAccess.GameData;
 using EntityFX.EconomicsArcade.Contract.Game;
-using EntityFX.EconomicsArcade.Contract.Game.Counters;
 using EntityFX.EconomicsArcade.Contract.Game.Funds;
 using EntityFX.EconomicsArcade.Contract.NotifyConsumerService;
 using EntityFX.EconomicsArcade.Infrastructure.Common;

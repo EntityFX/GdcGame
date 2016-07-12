@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Security;
 using System.ServiceModel;
 using System.ServiceModel.Security;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EntityFX.EconomicsArcade.Infrastructure.Service
 {

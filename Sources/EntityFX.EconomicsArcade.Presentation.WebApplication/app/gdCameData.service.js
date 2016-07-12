@@ -19,8 +19,8 @@
                         });
                 },
 
-                performManualStep: function () {
-                    return $http.post(gameApiServiceBaseUri + "PerformManualStep/")
+                performManualStep: function (data) {
+                    return $http.post(gameApiServiceBaseUri + "PerformManualStep/", data)
                         .then(function (result) {
                             return result;
                         });

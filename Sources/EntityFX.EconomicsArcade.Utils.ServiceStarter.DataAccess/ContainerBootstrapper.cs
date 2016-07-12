@@ -81,20 +81,21 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess
             container.RegisterType<IUserFundsDriverRepository, UserFundsDriverRepository>();
 
             container.RegisterType<IUserDataAccessService, UserDataAccessService>();
-            container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessService>(new Interceptor<InterfaceInterceptor>(), new InterceptionBehavior<GameDataCachingInterceptionBehavior>());
+
             container.RegisterType<IGameDataStoreDataAccessService, GameDataStoreDataAccessService>();
-            
+
             container.RegisterType<IUserDataAccessService, UserDataAccessService>(
-                new Interceptor<InterfaceInterceptor>()
-                , new InterceptionBehavior<LoggerInterceptor>()
+                new Interceptor<InterfaceInterceptor>(),
+                new InterceptionBehavior<LoggerInterceptor>()
                 );
             container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessService>(
-                new Interceptor<InterfaceInterceptor>()
-                , new InterceptionBehavior<LoggerInterceptor>()
+                new Interceptor<InterfaceInterceptor>(),
+                new InterceptionBehavior<LoggerInterceptor>(),
+                new InterceptionBehavior<GameDataCachingInterceptionBehavior>()
                 );
             container.RegisterType<IGameDataStoreDataAccessService, GameDataStoreDataAccessService>(
-                new Interceptor<InterfaceInterceptor>()
-                , new InterceptionBehavior<LoggerInterceptor>()
+                new Interceptor<InterfaceInterceptor>(),
+                new InterceptionBehavior<LoggerInterceptor>()
                 );
             return container;
         }

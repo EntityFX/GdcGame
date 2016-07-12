@@ -1,16 +1,5 @@
-﻿using System.Configuration;
-using System.Web.Http.Results;
-using System.Web.Mvc;
-using System.Web.Mvc.Filters;
-using EntityFX.EconomicsArcade.Contract.Common;
-using EntityFX.EconomicsArcade.Contract.Manager.UserManager;
-using EntityFX.EconomicsArcade.Infrastructure.Common;
-using EntityFX.EconomicsArcade.Presentation.Models;
-using EntityFX.EconomicsArcade.Presentation.WebApplication.App_Start;
-using EntityFX.EconomicsArcade.Presentation.WebApplication.Factories;
+﻿using System.Web.Mvc;
 using EntityFX.EconomicsArcade.Presentation.WebApplication.Providers;
-using EntityFX.EconomicsArcade.Utils.ClientProxy.Manager;
-using Microsoft.Practices.Unity;
 
 namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Controllers
 {

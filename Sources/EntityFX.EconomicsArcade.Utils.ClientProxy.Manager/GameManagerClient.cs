@@ -3,7 +3,6 @@ using EntityFX.EconomicsArcade.Contract.Common;
 using EntityFX.EconomicsArcade.Contract.Common.Counters;
 using EntityFX.EconomicsArcade.Contract.Manager.GameManager;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
-using EntityFX.EconomicsArcade.Infrastructure.Service;
 
 namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
 {

@@ -1,4 +1,6 @@
-﻿namespace EntityFX.EconomicsArcade.Presentation.Models
+﻿using EntityFX.EconomicsArcade.Model.Common.Model;
+
+namespace EntityFX.EconomicsArcade.Presentation.Models
 {
     public class ManualStepResultModel
     {

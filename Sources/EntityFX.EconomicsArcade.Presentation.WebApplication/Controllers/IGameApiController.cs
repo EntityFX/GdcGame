@@ -1,4 +1,4 @@
-﻿using System;
+﻿using EntityFX.EconomicsArcade.Model.Common.Model;
 using EntityFX.EconomicsArcade.Presentation.Models;
 
 namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Controllers
@@ -6,7 +6,7 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Controllers
     public interface IGameApiController
     {
 
-        ManualStepResultModel PerformManualStep();
+        ManualStepResultModel PerformManualStep(int? id);
 
         bool FightAgainstInflation();
 

@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using System.ServiceProcess;
 using EntityFX.EconomicsArcade.Utils.ServiceStarter.NotifyConsumer;
 using System.Configuration;
-using Owin;
-using Microsoft.Owin.Cors;
 
 namespace EntityFX.EconomicsArcade.Utils.ServiceHost.NotifyConsumer.Temp
 {

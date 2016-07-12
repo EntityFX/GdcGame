@@ -1,5 +1,4 @@
-﻿using System;
-using EntityFX.EconomicsArcade.Contract.Common.Funds;
+﻿using EntityFX.EconomicsArcade.Contract.Common.Funds;
 using EntityFX.EconomicsArcade.DataAccess.Model;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFx.EconomicsArcade.TestApplication", "EntityFX.EconomicsArcade.TestApplication\EntityFx.EconomicsArcade.TestApplication.csproj", "{24C8E95E-66EA-4E35-8584-C50171B68984}"
 EndProject
@@ -108,6 +108,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.EconomicsArcade.Utils.ServiceHost.Manager.WindowsSrv", "EntityFX.EconomicsArcade.Utils.ServiceHost.Manager.WindowsSrv\EntityFX.EconomicsArcade.Utils.ServiceHost.Manager.WindowsSrv.csproj", "{D9F1BFE6-F564-4401-97D1-45758359B432}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.EconomicsArcade.Utils.ServiceHost.NotifyConsumer.WindowsSrv", "EntityFX.EconomicsArcade.Utils.ServiceHost.NotifyConsumer.WindowsSrv\EntityFX.EconomicsArcade.Utils.ServiceHost.NotifyConsumer.WindowsSrv.csproj", "{E5B88D3E-F8F5-4DDE-81D2-6381CF3FD3EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.EconomicsArcade.Model.Common", "EntityFX.EconomicsArcade.Model.Common\EntityFX.EconomicsArcade.Model.Common.csproj", "{3B44AFC0-F207-44E4-9F91-7F24E1F4D342}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -252,6 +254,10 @@ Global
 		{E5B88D3E-F8F5-4DDE-81D2-6381CF3FD3EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5B88D3E-F8F5-4DDE-81D2-6381CF3FD3EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E5B88D3E-F8F5-4DDE-81D2-6381CF3FD3EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B44AFC0-F207-44E4-9F91-7F24E1F4D342}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B44AFC0-F207-44E4-9F91-7F24E1F4D342}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B44AFC0-F207-44E4-9F91-7F24E1F4D342}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B44AFC0-F207-44E4-9F91-7F24E1F4D342}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -294,5 +300,6 @@ Global
 		{E9168948-DCE6-4FBC-81E5-1B85419BC0EE} = {7E755489-4971-4475-8018-CE2ACC8D182D}
 		{D9F1BFE6-F564-4401-97D1-45758359B432} = {7E755489-4971-4475-8018-CE2ACC8D182D}
 		{E5B88D3E-F8F5-4DDE-81D2-6381CF3FD3EA} = {7E755489-4971-4475-8018-CE2ACC8D182D}
+		{3B44AFC0-F207-44E4-9F91-7F24E1F4D342} = {2ECE9623-BD00-47BF-A617-3104D0E03486}
 	EndGlobalSection
 EndGlobal

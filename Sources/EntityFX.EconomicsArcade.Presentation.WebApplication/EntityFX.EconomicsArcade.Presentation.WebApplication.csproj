@@ -1056,6 +1056,10 @@
       <Project>{2b414418-f3d8-4528-ba9f-6fefa8b7aa03}</Project>
       <Name>EntityFX.EconomicsArcade.Infrastructure.Service</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EntityFX.EconomicsArcade.Model.Common\EntityFX.EconomicsArcade.Model.Common.csproj">
+      <Project>{3B44AFC0-F207-44E4-9F91-7F24E1F4D342}</Project>
+      <Name>EntityFX.EconomicsArcade.Model.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EntityFX.EconomicsArcade.Presentation.Models\EntityFX.EconomicsArcade.Presentation.Models.csproj">
       <Project>{0f9c056a-db5d-48ed-a688-bfd04ed4dfd7}</Project>
       <Name>EntityFX.EconomicsArcade.Presentation.Models</Name>

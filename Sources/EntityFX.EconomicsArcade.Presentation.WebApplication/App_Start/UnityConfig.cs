@@ -1,7 +1,6 @@
 using System;
 using System.Configuration;
 using Microsoft.Practices.Unity;
-using System.Web.Http;
 using EntityFX.EconomicsArcade.Contract.Common;
 using EntityFX.EconomicsArcade.Contract.Common.Counters;
 using EntityFX.EconomicsArcade.Contract.Common.Funds;
@@ -9,14 +8,14 @@ using EntityFX.EconomicsArcade.Contract.Manager.GameManager;
 using EntityFX.EconomicsArcade.Contract.Manager.UserManager;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 using EntityFX.EconomicsArcade.Infrastructure.Service.Logger;
-using EntityFX.EconomicsArcade.Presentation.Models;
+using EntityFX.EconomicsArcade.Model.Common.Mappers;
+using EntityFX.EconomicsArcade.Model.Common.Model;
 using EntityFX.EconomicsArcade.Presentation.WebApplication.Controllers;
 using EntityFX.EconomicsArcade.Presentation.WebApplication.Factories;
 using EntityFX.EconomicsArcade.Presentation.WebApplication.Providers;
 using EntityFX.EconomicsArcade.Utils.ClientProxy.Manager;
 using Microsoft.Practices.Unity.InterceptionExtension;
 using PortableLog.NLog;
-using Unity.WebApi;
 
 namespace EntityFX.EconomicsArcade.Presentation.WebApplication
 {

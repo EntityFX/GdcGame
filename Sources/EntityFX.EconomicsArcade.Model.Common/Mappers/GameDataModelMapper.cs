@@ -3,8 +3,9 @@ using EntityFX.EconomicsArcade.Contract.Common;
 using EntityFX.EconomicsArcade.Contract.Common.Counters;
 using EntityFX.EconomicsArcade.Contract.Common.Funds;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
+using EntityFX.EconomicsArcade.Model.Common.Model;
 
-namespace EntityFX.EconomicsArcade.Presentation.Models
+namespace EntityFX.EconomicsArcade.Model.Common.Mappers
 {
     public class GameDataModelMapper : IMapper<GameData, GameDataModel>
     {

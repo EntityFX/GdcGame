@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using EntityFX.EconomicsArcade.Contract.Manager.SessionManager;
+﻿using EntityFX.EconomicsArcade.Contract.Manager.SessionManager;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 using EntityFX.EconomicsArcade.Manager;
 using Microsoft.Practices.Unity;
@@ -19,9 +16,6 @@ using EntityFX.EconomicsArcade.Contract.Manager.UserManager;
 using EntityFX.EconomicsArcade.Utils.ClientProxy.DataAccess;
 using PortableLog.NLog;
 using System.Configuration;
-using System.Linq;
-
-
 using EntityFX.EconomicArcade.Engine.GameEngine.Mappers;
 using EntityFX.EconomicArcade.Engine.GameEngine.NetworkGameEngine;
 using EntityFX.EconomicsArcade.Contract.NotifyConsumerService;

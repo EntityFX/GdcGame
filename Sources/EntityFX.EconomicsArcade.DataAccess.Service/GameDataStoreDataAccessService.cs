@@ -1,10 +1,7 @@
 ﻿using System.Linq;
 using EntityFX.EconomicsArcade.Contract.Common;
-using EntityFX.EconomicsArcade.Contract.Common.Counters;
-using EntityFX.EconomicsArcade.Contract.Common.Funds;
 using EntityFX.EconomicsArcade.Contract.DataAccess.GameData;
 using EntityFX.EconomicsArcade.DataAccess.Repository;
-using EntityFX.EconomicsArcade.DataAccess.Repository.Criterions.User;
 using EntityFX.EconomicsArcade.DataAccess.Repository.Criterions.UserCounter;
 using EntityFX.EconomicsArcade.DataAccess.Repository.Criterions.UserFundsDriver;
 using EntityFX.EconomicsArcade.DataAccess.Repository.Criterions.UserGameCounter;

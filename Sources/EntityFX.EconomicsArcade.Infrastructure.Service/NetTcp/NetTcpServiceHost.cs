@@ -1,6 +1,5 @@
 ﻿using Microsoft.Practices.Unity;
 using System;
-using System.Net.Security;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Description;

@@ -1,4 +1,4 @@
-﻿namespace EntityFX.EconomicsArcade.Presentation.Models
+﻿namespace EntityFX.EconomicsArcade.Model.Common.Model
 {
     public class CounterModelBase
     {

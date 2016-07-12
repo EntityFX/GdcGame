@@ -1,8 +1,6 @@
 ﻿using System;
 using EntityFX.EconomicsArcade.Infrastructure.Repository.Query;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
 using System.Linq.Expressions;
 
 namespace EntityFX.EconomicsArcade.Infrastructure.Repository.UnitOfWork

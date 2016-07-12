@@ -5,6 +5,7 @@ using EntityFX.EconomicsArcade.Contract.Common.Counters;
 using EntityFX.EconomicsArcade.Contract.Manager.GameManager;
 using EntityFX.EconomicsArcade.Contract.Manager.UserManager;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
+using EntityFX.EconomicsArcade.Model.Common.Model;
 using EntityFX.EconomicsArcade.Presentation.Models;
 using EntityFX.EconomicsArcade.Presentation.WebApplication.Factories;
 using EntityFX.EconomicsArcade.Utils.ClientProxy.Manager;

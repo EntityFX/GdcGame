@@ -1,8 +1,6 @@
 using System;
 using EntityFX.EconomicsArcade.Contract.DataAccess.GameData;
-using EntityFX.EconomicsArcade.Contract.DataAccess.User;
 using EntityFX.EconomicsArcade.DataAccess.Model;
-using EntityFX.EconomicsArcade.DataAccess.Repository.Criterions.User;
 using EntityFX.EconomicsArcade.DataAccess.Repository.Criterions.UserGameCounter;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 using EntityFX.EconomicsArcade.Infrastructure.Repository.Criterion;

@@ -1,9 +1,7 @@
 ﻿using EntityFX.EconomicsArcade.Contract.Manager.SessionManager;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 using System;
-using System.Diagnostics;
 using System.ServiceModel;
-using System.ServiceModel.Channels;
 using EntityFX.EconomicsArcade.Contract.DataAccess.User;
 
 namespace EntityFX.EconomicsArcade.Manager

@@ -1,16 +1,8 @@
-﻿using System;
-using System.Web.Http;
+﻿using System.Web.Http;
 using System.Web.Http.Controllers;
-using System.Web.Mvc;
-using EntityFX.EconomicsArcade.Contract.Common;
-using EntityFX.EconomicsArcade.Contract.Manager.UserManager;
-using EntityFX.EconomicsArcade.Infrastructure.Common;
+using EntityFX.EconomicsArcade.Model.Common.Model;
 using EntityFX.EconomicsArcade.Presentation.Models;
-using EntityFX.EconomicsArcade.Presentation.WebApplication.App_Start;
-using EntityFX.EconomicsArcade.Presentation.WebApplication.Factories;
 using EntityFX.EconomicsArcade.Presentation.WebApplication.Providers;
-using EntityFX.EconomicsArcade.Utils.ClientProxy.Manager;
-using Microsoft.Practices.Unity;
 
 namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Controllers
 {
@@ -36,9 +28,9 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Controllers
         }
 
         [System.Web.Http.HttpPost]
-        public ManualStepResultModel PerformManualStep()
+        public ManualStepResultModel PerformManualStep([FromBody]int? verificationNumber)
         {
-            var res = _gameDataProvider.PerformManualStep(null);
+            var res = _gameDataProvider.PerformManualStep(verificationNumber);
             return res;
         }
 
