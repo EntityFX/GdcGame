@@ -1,9 +1,13 @@
 [Bb]in
 [Dd]ebug*/
 */[Pp]ackages/*
+*/[Tt]rash/*
 *.suo
 *.bak
 *.cache
 *.vspscc
 *.orig
+
+/DevOPS/Deploy
+/DevOPS/DeployScripts/Trash/
 EntityFx.EconomicsArcade.TestApplication.v12.suo
