@@ -46,11 +46,11 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication
                 , new Interceptor<InterfaceInterceptor>()
                 , new InterceptionBehavior<LoggerInterceptor>()
                     );
-            container.RegisterType<SessionManagerClient, SessionManagerClient>(
+            container.RegisterType<SessionManagerClient>(
                 new InjectionConstructor(
                 ConfigurationManager.AppSettings["ManagerEndpointAddress_SessionManager"])
-                //, new Interceptor<InterfaceInterceptor>()
-                //, new InterceptionBehavior<LoggerInterceptor>()
+                , new Interceptor<InterfaceInterceptor>()
+                , new InterceptionBehavior<LoggerInterceptor>()
                     );
             container.RegisterType<IMapper<FundsCounters, FundsCounterModel>, FundsCounterModelMapper>();
             container.RegisterType<IMapper<CounterBase, CounterModelBase>, CounterModelMapper>();

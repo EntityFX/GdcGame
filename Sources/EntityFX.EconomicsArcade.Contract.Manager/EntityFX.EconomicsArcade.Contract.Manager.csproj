@@ -37,6 +37,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AdminManager\IAdminManager.cs" />
+    <Compile Include="AdminManager\UserSessionsInfo.cs" />
     <Compile Include="GameManager\BuyFundDriverResult.cs" />
     <Compile Include="GameManager\IGameManager.cs" />
     <Compile Include="GameManager\VerificationManualStepData.cs" />

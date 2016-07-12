@@ -44,6 +44,10 @@ namespace EntityFX.EconomicsArcade.Manager
             }
             return GameSessionsStorage[session.Login];
         }
+        public IGame GetGame(string username)
+        {
+            return GameSessionsStorage.ContainsKey(username) ? GameSessionsStorage[username] : null;
+        }
 
         public Guid AddSession(User user)
         {
@@ -62,9 +66,24 @@ namespace EntityFX.EconomicsArcade.Manager
             return !SessionsStorage.ContainsKey(sessionId) ? null : SessionsStorage[sessionId];
         }
 
+        public bool RemoveSession(Guid sessionId)
+        {
+            return SessionsStorage.Remove(sessionId);
+        }
+
         private IGame BuildGame(int userId, string userName)
         {
             return _gameFactory.BuildGame(userId, userName);
+        }
+
+        internal IDictionary<Guid, Session> Sessions
+        {
+            get { return new ConcurrentDictionary<Guid, Session>(SessionsStorage); }
+        }
+
+        internal IDictionary<string, IGame> Games
+        {
+            get { return new ConcurrentDictionary<string, IGame>(GameSessionsStorage); }
         }
     }
 }

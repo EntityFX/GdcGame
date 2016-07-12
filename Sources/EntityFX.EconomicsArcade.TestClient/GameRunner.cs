@@ -80,5 +80,10 @@ namespace EntityFX.EconomicsArcade.TestClient
             DisplayGameData(GetGameData());
         }
 
+        public void Invalidate()
+        {
+            DisplayGameData(GetGameData());
+        }
+
     }
 }
