@@ -17,14 +17,10 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceHost.NotifyConsumer.Temp
             InitializeComponent();
         }
 
-        private void checkAndCreateMsmqQueue()
+        private void CheckAndCreateMsmqQueue()
         {
 
             var config = ConfigurationManager.OpenExeConfiguration(Assembly.GetAssembly(typeof(ProjectInstaller)).Location);
-
-            Console.WriteLine(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile);
-            Console.WriteLine("AppConfig count", ConfigurationManager.AppSettings.Keys.Count);
-            Console.WriteLine(ConfigurationManager.AppSettings.Keys.Count);
 
             try
             {
@@ -34,12 +30,6 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceHost.NotifyConsumer.Temp
                 int msmqMaximumJournalSize = Convert.ToInt32(config.AppSettings.Settings["DataAccessHost_MsmqMaximumJournalSize"].Value);
                 int msmqMaximumQueueSize = Convert.ToInt32(config.AppSettings.Settings["DataAccessHost_MsmqMaximumQueueSize"].Value);
                 bool isTransational = true;
-                //string msmqHandlingPath = ConfigurationManager.AppSettings["DataAccessHost_MsmqHandlingPath"];
-                //string msmqLabel = ConfigurationManager.AppSettings["DataAccessHost_MsmqLabel"];
-                //bool msmqUseJournalQueue = Convert.ToBoolean( ConfigurationManager.AppSettings["DataAccessHost_MsmqUseJournalQueue"] );
-                //int msmqMaximumJournalSize = Convert.ToInt32( ConfigurationManager.AppSettings["DataAccessHost_MsmqMaximumJournalSize"] );
-                //int msmqMaximumQueueSize = Convert.ToInt32( ConfigurationManager.AppSettings["DataAccessHost_MsmqMaximumQueueSize"] );
-                //bool isTransational = true;
 
                 Console.WriteLine("msmqHandlingPath is {0}", msmqHandlingPath);
                 Console.WriteLine("msmqLabel is {0}", msmqLabel);
@@ -60,9 +50,9 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceHost.NotifyConsumer.Temp
 
         private void serviceInstallerMain_AfterInstall(object sender, InstallEventArgs e)
         {
-            Console.WriteLine("!!!INSTALLING!!!");
-            checkAndCreateMsmqQueue();
-            Console.WriteLine("!!!FINISHED!!!");
+            Console.WriteLine("!!!Creating MSMQ!!!");
+            CheckAndCreateMsmqQueue();
+            Console.WriteLine("!!!Finishing creating MSMQ!!!");
         }
     }
 }
