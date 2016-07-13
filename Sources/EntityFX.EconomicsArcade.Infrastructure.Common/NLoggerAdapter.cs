@@ -13,6 +13,11 @@ namespace EntityFX.EconomicsArcade.Infrastructure.Common
             _nLogLogger = nLogLogger;
         }
 
+        public void Debug(string message, params object[] args)
+        {
+            _nLogLogger.DebugFormat(message, args);
+        }
+
         public void Trace(string message, params object[] args)
         {
             _nLogLogger.TraceFormat(message, args);

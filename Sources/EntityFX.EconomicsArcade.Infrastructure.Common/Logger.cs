@@ -11,6 +11,11 @@ namespace EntityFX.EconomicsArcade.Infrastructure.Common
             _loggerAdapter = adapter;
         }
 
+        public void Debug(string message, params object[] args)
+        {
+            _loggerAdapter.Debug(message, args);
+        }
+
         public void Trace(string message, params object[] args)
         {
             _loggerAdapter.Trace(message, args);

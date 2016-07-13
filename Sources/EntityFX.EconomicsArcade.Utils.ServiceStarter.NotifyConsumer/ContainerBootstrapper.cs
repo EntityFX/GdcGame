@@ -19,6 +19,8 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.NotifyConsumer
     {
         public IUnityContainer Configure(IUnityContainer container)
         {
+            container.AddNewExtension<Interception>();
+            
             GlobalHost.DependencyResolver = new SignalRDependencyResolver(container);
             container.RegisterType<ILogger>(new InjectionFactory(
                 _ => new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger")))));

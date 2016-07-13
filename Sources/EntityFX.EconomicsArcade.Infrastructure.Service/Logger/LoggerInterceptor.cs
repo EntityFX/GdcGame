@@ -17,7 +17,7 @@ namespace EntityFX.EconomicsArcade.Infrastructure.Service.Logger
         public IMethodReturn Invoke(IMethodInvocation input, GetNextInterceptionBehaviorDelegate getNext)
         {
 
-            _logger.Trace("Interecptor: {0}, Call begin {1}", GetType(), input.GetType().ToString(), input.MethodBase.ToString());
+            _logger.Debug("Interecptor: {0}, Call begin {1}", GetType(), input.GetType().ToString(), input.MethodBase.ToString());
             var result = getNext()(input, getNext);
 
             if (result.Exception != null)
@@ -26,7 +26,7 @@ namespace EntityFX.EconomicsArcade.Infrastructure.Service.Logger
             }
             else
             {
-                _logger.Trace("Interecptor: {0}, Call end {1} [Return={2}]", GetType(), input.MethodBase.ToString(), result.ReturnValue);
+                _logger.Debug("Interecptor: {0}, Call end {1} [Return={2}]", GetType(), input.MethodBase.ToString(), result.ReturnValue);
             }
             return result;
         }
