@@ -1,4 +1,7 @@
-﻿using EntityFX.EconomicsArcade.Contract.Common;
+﻿using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+using EntityFX.EconomicsArcade.Contract.Common;
+using EntityFX.EconomicsArcade.Contract.Common.Funds;
 using EntityFX.EconomicsArcade.Contract.Game;
 using EntityFX.EconomicsArcade.Contract.Game.Counters;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
@@ -9,7 +12,7 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.Mappers
     {
         public GameData Map(IGame source, GameData destination = null)
         {
-            return new GameData()
+            var gameData = new GameData()
             {
                 Counters = new EconomicsArcade.Contract.Common.Counters.FundsCounters()
                 {
@@ -18,8 +21,9 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.Mappers
                     Counters = PrepareCountersToPersist(source)
                 },
                 AutomaticStepsCount = source.AutomaticStepNumber,
-                ManualStepsCount = source.ManualStepNumber
+                ManualStepsCount = source.ManualStepNumber,
             };
+            return gameData;
         }
 
         private EconomicsArcade.Contract.Common.Counters.CounterBase[] PrepareCountersToPersist(IGame game)

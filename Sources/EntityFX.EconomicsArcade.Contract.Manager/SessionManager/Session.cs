@@ -9,5 +9,7 @@ namespace EntityFX.EconomicsArcade.Contract.Manager.SessionManager
         public string Login { get; set; }
 
         public int UserId { get; set; }
+
+        public DateTime LastActivity { get; set; }
     }
 }

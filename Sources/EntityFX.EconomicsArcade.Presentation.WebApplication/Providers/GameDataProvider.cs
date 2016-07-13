@@ -60,7 +60,12 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Providers
 
         public GameDataModel GetGameData()
         {
-            return _gameDataModelMapper.Map(_gameManager.GetGameData());
+            var gameData = _gameDataModelMapper.Map(_gameManager.GetGameData());
+            foreach (var fundsDriverModel in gameData.FundsDrivers)
+            {
+                fundsDriverModel.IsActive = gameData.Counters.Counters[0].Value >= fundsDriverModel.UnlockValue;
+            }
+            return gameData;
         }
 
         public FundsCounterModel GetCounters()
@@ -71,7 +76,7 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Providers
         public BuyDriverModel BuyFundDriver(int id)
         {
             var buyResult = _gameManager.BuyFundDriver(id);
-            return buyResult != null ?_fundsDriverBuyinfoModelMapper.Map(buyResult) : null;
+            return buyResult != null ? _fundsDriverBuyinfoModelMapper.Map(buyResult) : null;
 
         }
 

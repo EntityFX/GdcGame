@@ -1,4 +1,5 @@
-﻿using EntityFX.EconomicsArcade.Contract.Common;
+﻿using System.Collections.Generic;
+using EntityFX.EconomicsArcade.Contract.Common;
 using EntityFX.EconomicsArcade.Contract.DataAccess.GameData;
 using EntityFX.EconomicsArcade.Contract.Game;
 using EntityFX.EconomicsArcade.Contract.Game.Funds;
@@ -39,7 +40,7 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.NetworkGameEngine
 
         public void AutomaticRefreshed(IGame game)
         {
-            var gameData = PrepareGameDataToPersist(game);
+            var gameData = PrepareGameDataToRefresh(game);
             _notifyConsumerService.PushGameData(new UserContext() { UserId = _userId, UserName = _userName }, gameData);
         }
 
@@ -55,6 +56,21 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.NetworkGameEngine
             gameData.FundsDrivers = fundDriver != null
                 ? new[] { _fundsDriverMapper.Map(fundDriver) }
                 : new EconomicsArcade.Contract.Common.Funds.FundsDriver[] { };
+            return gameData;
+        }
+
+        private GameData PrepareGameDataToRefresh(IGame game)
+        {
+            var gameData = _gameDataMapper.Map(game);
+
+            var fundsDrivers = new List<EconomicsArcade.Contract.Common.Funds.FundsDriver>();
+            foreach (var fundDriver in game.FundsDrivers)
+            {
+                var fundDriverMapped = _fundsDriverMapper.Map(fundDriver.Value);
+                fundDriverMapped.IsActive = gameData.Counters.Counters[0].Value >= fundDriverMapped.UnlockValue;
+                fundsDrivers.Add(fundDriverMapped);
+            }
+            gameData.FundsDrivers = fundsDrivers.ToArray();
             return gameData;
         }
 

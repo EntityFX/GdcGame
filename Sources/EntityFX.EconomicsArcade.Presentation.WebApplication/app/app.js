@@ -18,18 +18,19 @@ app.controller('appGameController',
         var hub = $.connection.gameDataHub;
         if (hub != null) {
             hub.client.getGameData = function (data) {
+               
                 $rootScope.$apply(function () {
                     $rootScope.gameData = data;
                 }
                 );
-
+                $scope.$broadcast('update.fundsDrivers', $rootScope.gameData);
             };
             $.connection.hub.start();
+           
         }
 
         gameData.then(function (data) {
             $rootScope.gameData = data;
-
         });
 
         $scope.performManualStep = function () {

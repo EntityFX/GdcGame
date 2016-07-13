@@ -10,8 +10,12 @@
                 $scope.fundsDrivers = data.FundsDrivers;
             });
 
-            //$.connection.hub.start();
-            $scope.buyFundDriver = function(fundDriverId) {
+            $scope.$on('update.fundsDrivers',
+                function (event, value) {
+                    $scope.fundsDrivers = value.FundsDrivers;
+                });
+
+            $scope.buyFundDriver = function (fundDriverId) {
                 gdCameApiService.buyFundDriver(fundDriverId)
                 .then(function (value) {
                     if (value.data == undefined) return;

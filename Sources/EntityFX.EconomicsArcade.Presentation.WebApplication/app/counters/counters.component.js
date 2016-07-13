@@ -12,7 +12,7 @@
 
 
             $scope.$on('counters.update',
-                function(event, value) {
+                function (event, value) {
                     $scope.counters.TotalFunds = value.TotalFunds;
                     $scope.counters.CurrentFunds = value.CurrentFunds;
 
@@ -29,6 +29,9 @@
                                 oldCounter.BonusPercentage = item.BonusPercentage;
                                 oldCounter.Bonus = item.Bonus;
                                 oldCounter.Inflation = item.Inflation;
+                            }
+                            if (item.Type = 2) {
+                                oldCounter.UnlockValue = item.UnlockValue;
                             }
                         }
                     });

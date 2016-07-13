@@ -45,7 +45,8 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Controllers
         [System.Web.Http.HttpGet]
         public GameDataModel GetGameData()
         {
-            return _gameDataProvider.GetGameData();
+            var gameData = _gameDataProvider.GetGameData();
+            return gameData;
         }
 
         [System.Web.Http.HttpGet]

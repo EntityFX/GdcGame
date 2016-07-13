@@ -32,7 +32,7 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository.Mappers
                     {
                         MiningTimeSeconds = entity.MiningTimeSeconds ?? 0,
                         SecondsRemaining = 0,
-                        UnlockValue = 5000000
+                        UnlockValue = 10000
                     }
                 }
             }));
