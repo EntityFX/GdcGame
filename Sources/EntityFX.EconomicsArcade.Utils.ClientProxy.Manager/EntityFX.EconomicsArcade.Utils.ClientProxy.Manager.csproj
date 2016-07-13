@@ -70,6 +70,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminManagerClient.cs" />
+    <Compile Include="AdminManagerProxy.cs" />
     <Compile Include="GameManagerProxy.cs" />
     <Compile Include="GameManagerClient.cs" />
     <Compile Include="SessionManagerClient.cs" />

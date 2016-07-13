@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EntityFX.EconomicsArcade.Contract.Manager.AdminManager;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 using EntityFX.EconomicsArcade.TestClient;
 using EntityFX.EconomicsArcade.Utils.ClientProxy.Manager;
@@ -16,7 +17,8 @@ namespace IclServices.WcfTest.TestClient
 {
     class UIConsole
     {
-        private string[] _args;
+        private readonly IAdminManager _adminManagerClient;
+
         Dictionary<int, string> _menu;
         //Dictionary<string, Delegate> _menu;
         bool _exitFlag;
@@ -25,9 +27,9 @@ namespace IclServices.WcfTest.TestClient
 
         delegate void CallDelegate();
 
-        public UIConsole(string[] args)
+        public UIConsole(IAdminManager adminManagerClient)
         {
-            _args = args;
+            _adminManagerClient = adminManagerClient;
 
             InitMenu();
         }
@@ -39,9 +41,9 @@ namespace IclServices.WcfTest.TestClient
             //CallDelegate abc = new CallDelegate(CreateUser);
             _menu.Add(1, "Get active sessions and games");
             //new CallDelegate(CreateUser));
-            _menu.Add(2, "Get ???");
-            _menu.Add(3, "Reset session from GUID");
-            _menu.Add(4, "Reset session from username");
+            _menu.Add(2, "Close session by GUID");
+            _menu.Add(3, "Close session by username and position of GUID");
+            _menu.Add(4, "CloseAllUserSessions");
             _menu.Add(5, "Wipe user");
             _menu.Add(6, "Exit");
         }
@@ -63,7 +65,15 @@ namespace IclServices.WcfTest.TestClient
                 }
                 catch (Exception exp)
                 {
-                    GetAssociatedDelegate(-1).Invoke();
+                    Console.WriteLine(exp.Message);
+                    Console.WriteLine(exp.StackTrace);
+                    //GetAssociatedDelegate(-1).Invoke();
+                }
+
+                if (!_exitFlag)
+                {
+                    Pause();
+                    Console.Clear();
                 }
             }
         }
@@ -78,18 +88,24 @@ namespace IclServices.WcfTest.TestClient
             }
         }
 
+        private void Pause()
+        {
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadLine();
+        }
+
         private CallDelegate GetAssociatedDelegate(int numberOfRow)
         {
             switch (numberOfRow)
             {
                 case 1:
-                    return new CallDelegate(GetActiveSessionsAndGames);
+                    return new CallDelegate(GetActiveSessions);
                 case 2:
-                    return new CallDelegate(GetNothing);
+                    return new CallDelegate(CloseSessionByGuid);
                 case 3:
-                    return new CallDelegate(ResetSessionFromGUID);
+                    return new CallDelegate(CloseSessionByUserNameAndPositionOfGuid);
                 case 4:
-                    return new CallDelegate(ResetSessionFromUsername);
+                    return new CallDelegate(CloseAllUserSessions);
                 case 5:
                     return new CallDelegate(WipeUser);
                 default:
@@ -97,25 +113,110 @@ namespace IclServices.WcfTest.TestClient
             }
         }
 
-        void GetActiveSessionsAndGames()
+        void GetActiveSessions()
         {
-            
+            Console.Clear();
+
+            try
+            {
+                UserSessionsInfo[] activeSessionsInfos = _adminManagerClient.GetActiveSessions();
+                foreach (var activeSessionsInfo in activeSessionsInfos)
+                {
+                    Console.WriteLine("Username: {0}", activeSessionsInfo.UserName);
+
+                    int i = 0;
+                    foreach (var userSession in activeSessionsInfo.UserSessions)
+                    {
+                        Console.WriteLine("\tSession №{0}. GUID: {1}", i, userSession.SessionIdentifier);
+                        i++;
+                    }
+                }
+            }
+            catch (Exception exp)
+            {
+                Console.WriteLine(exp);
+            }
         }
-        void GetNothing()
+        void CloseSessionByGuid()
         {
-            
+            Console.Clear();
+            Console.WriteLine("Please enter session guid for close:");
+
+            try
+            {
+                Guid guid = new Guid(Console.ReadLine());
+
+                _adminManagerClient.CloseSessionByGuid(guid);
+                Console.WriteLine("Session {0} is closed", guid);
+            }
+            catch (Exception exp)
+            {
+                Console.WriteLine(exp);
+            }
         }
-        void ResetSessionFromGUID()
+        void CloseSessionByUserNameAndPositionOfGuid()
         {
-            
+            Console.Clear();
+
+            try
+            {
+                Console.WriteLine("Please enter username:");
+                string username = Console.ReadLine();
+
+                Console.WriteLine("Please enter position(№) of GUID:");
+                int position = Convert.ToInt32(Console.ReadLine());
+
+                var guid =
+                    _adminManagerClient
+                        .GetActiveSessions()
+                        .First(user => user.UserName == username)
+                        .UserSessions[position].SessionIdentifier;
+                _adminManagerClient.CloseSessionByGuid(guid);
+
+                Console.WriteLine("Session {0} of user {1} is closed", guid, username);
+            }
+            catch (Exception exp)
+            {
+                Console.WriteLine(exp);
+            }
         }
-        void ResetSessionFromUsername()
+        void CloseAllUserSessions()
         {
-            
+            Console.Clear();
+            Console.WriteLine("Please enter username for close his sessions:");
+
+            try
+            {
+                string username = Console.ReadLine();
+
+                _adminManagerClient.CloseAllUserSessions(username);
+            }
+            catch (Exception exp)
+            {
+                Console.WriteLine(exp);
+            }
         }
         void WipeUser()
         {
-            
+            Console.Clear();
+            Console.WriteLine("Please enter username for wipe him:");
+
+            try
+            {
+                string username = Console.ReadLine();
+
+                Console.WriteLine("All proress will LOSTED. Do you sure??? (Y/N):");
+                if (Console.ReadLine().ToUpper() != "Y")
+                    return;
+
+                _adminManagerClient.WipeUser(username);
+
+                Console.WriteLine("Progress of user {0} is wiped", username);
+            }
+            catch (Exception exp)
+            {
+                Console.WriteLine(exp);
+            }
         }
 
         private void Exit()

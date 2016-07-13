@@ -48,6 +48,10 @@ namespace EntityFX.EconomicsArcade.TestClient
                  , sessionGuid
                  );
 
+            var adminManagerClient = new AdminManagerClient(
+                ConfigurationManager.AppSettings["ManagerEndpointAddress_AdminManager"]
+                );
+
             var gr = new GameRunner(userName, sessionGuid, gameClient);
             var gameData = gr.GetGameData();
             gr.DisplayGameData(gameData);
@@ -77,7 +81,7 @@ namespace EntityFX.EconomicsArcade.TestClient
                 }
                 else if (keyInfo.Key == ConsoleKey.F2)
                 {
-                    var terminal = new UIConsole(args);
+                    var terminal = new UIConsole(adminManagerClient);
                     terminal.StartMenu();
 
                     gr.Invalidate();
