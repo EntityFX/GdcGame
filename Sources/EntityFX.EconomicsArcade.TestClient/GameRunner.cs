@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using EntityFx.EconomicsArcade.Test.Shared;
 using EntityFX.EconomicsArcade.Contract.Common;
 using EntityFX.EconomicsArcade.Contract.Manager.GameManager;
@@ -19,19 +20,17 @@ namespace EntityFX.EconomicsArcade.TestClient
             _game = game;
         }
 
-        public void PerformManualStep()
+        public async void PerformManualStep()
         {
-
-
             try
             {
-                var result = _game.PerformManualStep(null);
-                DisplayGameData(GetGameData());
+                await Task.Run(() => _game.PerformManualStep(null));
             }
             catch (Exception exp)
             {
 
             }
+            DisplayGameData(GetGameData());
         }
 
         public void BuyFundDriver(ConsoleKeyInfo keyInfo)
@@ -40,12 +39,12 @@ namespace EntityFX.EconomicsArcade.TestClient
             try
             {
                 _game.BuyFundDriver((int)keyInfo.Key - 64);
-                DisplayGameData(GetGameData());
             }
             catch (Exception exp)
             {
 
             }
+            DisplayGameData(GetGameData());
         }
 
         public void FightAgainstCorruption()
@@ -53,20 +52,25 @@ namespace EntityFX.EconomicsArcade.TestClient
             try
             {
                 _game.FightAgainstInflation();
-                DisplayGameData(GetGameData());
             }
             catch (Exception exp)
             {
                 Console.WriteLine(exp);
             }
+            DisplayGameData(GetGameData());
         }
-        
+
+        private static readonly object _stdLock = new {};
+
         public override void DisplayGameData(GameData gameData)
         {
-            Console.SetCursorPosition(0, 0);
-            PrettyConsole.WriteLineColor(ConsoleColor.DarkRed, "User: {0}, Session: {1}", _user, _sessionGuid);
-            Console.SetCursorPosition(0, 1);
-            base.DisplayGameData(gameData);
+            lock (_stdLock)
+            {
+                Console.SetCursorPosition(0, 0);
+                PrettyConsole.WriteLineColor(ConsoleColor.DarkRed, "User: {0}, Session: {1}", _user, _sessionGuid);
+                Console.SetCursorPosition(0, 1);
+                base.DisplayGameData(gameData);
+            }
         }
 
         public override  GameData GetGameData()

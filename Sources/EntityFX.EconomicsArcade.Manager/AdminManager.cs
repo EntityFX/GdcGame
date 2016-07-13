@@ -9,9 +9,9 @@ using EntityFX.EconomicsArcade.Contract.Manager.SessionManager;
 
 namespace EntityFX.EconomicsArcade.Manager
 {
-    class AdminManager : IAdminManager
+    public class AdminManager : IAdminManager
     {
-        private GameSessions _gameSessions;
+        private readonly GameSessions _gameSessions;
 
         public AdminManager(GameSessions gameSessions)
         {
@@ -30,17 +30,10 @@ namespace EntityFX.EconomicsArcade.Manager
             }
 
 
-            var sessionsOfUsers = new List<UserSessionsInfo>();
-            foreach (var sessionsOfUser in sessionsOfUsersTemp)
-                sessionsOfUsers.Add(
-                    new UserSessionsInfo
-                    {
-                        UserName = sessionsOfUser.Key,
-                        UserSessions = sessionsOfUser.Value.ToArray()
-                    }
-                    );
-
-            return sessionsOfUsers.ToArray();
+            return sessionsOfUsersTemp.Select(sessionsOfUser => new UserSessionsInfo
+            {
+                UserName = sessionsOfUser.Key, UserSessions = sessionsOfUser.Value.ToArray()
+            }).ToArray();
         }
 
         public void CloseSessionByGuid(Guid guid)

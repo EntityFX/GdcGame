@@ -18,6 +18,7 @@ using PortableLog.NLog;
 using System.Configuration;
 using EntityFX.EconomicArcade.Engine.GameEngine.Mappers;
 using EntityFX.EconomicArcade.Engine.GameEngine.NetworkGameEngine;
+using EntityFX.EconomicsArcade.Contract.Manager.AdminManager;
 using EntityFX.EconomicsArcade.Contract.NotifyConsumerService;
 using EntityFX.EconomicsArcade.Infrastructure.Service.Logger;
 using EntityFX.EconomicsArcade.Utils.ClientProxy.NotifyConsumer;
@@ -100,7 +101,9 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
             container.RegisterType<ISimpleUserManager, SimpleUserManager>(
                 new Interceptor<InterfaceInterceptor>()
                 , new InterceptionBehavior<LoggerInterceptor>());
-            //container.RegisterType<INotifyConsumerService, NotifyConsumerService>();
+            container.RegisterType<IAdminManager, AdminManager>(
+                new Interceptor<InterfaceInterceptor>()
+                , new InterceptionBehavior<LoggerInterceptor>());
             container.RegisterType<INotifyConsumerService, NotifyConsumerServiceClient>(
              new InjectionConstructor(
                  ConfigurationManager.AppSettings["ClientProxyAddress_NotifyConsumerService"]
