@@ -28,5 +28,7 @@ namespace EntityFX.EconomicsArcade.Contract.Game
         void ActivateDelayedCounter(int counterId);
 
         LotteryResult PlayLottery();
+
+        void Reset();
     }
 }

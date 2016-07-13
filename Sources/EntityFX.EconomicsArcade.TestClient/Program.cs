@@ -2,6 +2,7 @@
 using System.Configuration;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 using EntityFX.EconomicsArcade.Utils.ClientProxy.Manager;
+using IclServices.WcfTest.TestClient;
 using PortableLog.NLog;
 
 namespace EntityFX.EconomicsArcade.TestClient
@@ -11,6 +12,8 @@ namespace EntityFX.EconomicsArcade.TestClient
         static void Main(string[] args)
         {
             MainLoop(args);
+
+            //Console.ReadKey();
         }
 
         static void MainLoop(string[] args)
@@ -45,6 +48,10 @@ namespace EntityFX.EconomicsArcade.TestClient
                  , sessionGuid
                  );
 
+            var adminManagerClient = new AdminManagerClient(
+                ConfigurationManager.AppSettings["ManagerEndpointAddress_AdminManager"]
+                );
+
             var gr = new GameRunner(userName, sessionGuid, gameClient);
             var gameData = gr.GetGameData();
             gr.DisplayGameData(gameData);
@@ -71,6 +78,13 @@ namespace EntityFX.EconomicsArcade.TestClient
                 else if (keyInfo.Key == ConsoleKey.F5)
                 {
                     gr.DisplayGameData(gr.GetGameData());
+                }
+                else if (keyInfo.Key == ConsoleKey.F2)
+                {
+                    var terminal = new UIConsole(adminManagerClient);
+                    terminal.StartMenu();
+
+                    gr.Invalidate();
                 }
             }
         }

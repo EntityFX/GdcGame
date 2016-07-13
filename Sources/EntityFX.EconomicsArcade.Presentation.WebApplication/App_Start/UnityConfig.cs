@@ -23,7 +23,7 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication
     {
         public static void RegisterComponents(IUnityContainer container)
         {
-            container.AddNewExtension<Interception>();
+            //container.AddNewExtension<Interception>();
 
             // NOTE: To load from web.config uncomment the line below. Make sure to add a Microsoft.Practices.Unity.Configuration to the using statements.
             // container.LoadConfiguration();
@@ -46,9 +46,11 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication
                 , new Interceptor<InterfaceInterceptor>()
                 , new InterceptionBehavior<LoggerInterceptor>()
                     );
-            container.RegisterType<SessionManagerClient, SessionManagerClient>(
+            container.RegisterType<SessionManagerClient>(
                 new InjectionConstructor(
                 ConfigurationManager.AppSettings["ManagerEndpointAddress_SessionManager"])
+                , new Interceptor<InterfaceInterceptor>()
+                , new InterceptionBehavior<LoggerInterceptor>()
                     );
             container.RegisterType<IMapper<FundsCounters, FundsCounterModel>, FundsCounterModelMapper>();
             container.RegisterType<IMapper<CounterBase, CounterModelBase>, CounterModelMapper>();

@@ -384,5 +384,10 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
         {
             throw new NotImplementedException();
         }
+
+        public void Reset()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

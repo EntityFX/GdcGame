@@ -1,19 +1,19 @@
 ﻿<div class="row">
-    <div class="col-md-3" ng-repeat="fundsDriver in fundsDrivers">
-        <a class="thumbnail" href="#{{fundsDriver.Id}}" data-id="{{fundsDriver.Id}}" ng-click="buyFundDriver(fundsDriver.Id)">
+    <div class="col-md-3 col-xs-6" ng-repeat="fundsDriver in fundsDrivers">
+        <a class="thumbnail fund-driver-block" href="#{{fundsDriver.Id}}" data-id="{{fundsDriver.Id}}" ng-click="buyFundDriver(fundsDriver.Id)">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-xs-4">
                     <div ng-repeat="incrementor in fundsDriver.Incrementors track by $index">
-                        <p class="incrementor" ng-class="{'text-danger':$index == 0,'text-primary':$index == 1,'text-success':$index == 2}">
+                        <p class="incrementor" ng-class="{'text-primary':$index == 0,'text-info':$index == 1,'text-success':$index == 2}">
                             +{{incrementor.Value}}<span ng-if="incrementor.IncrementorType == 1">%</span>
                         </p>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <span class="glyphicon glyphicon-check"></span>
+                <div class="col-xs-4">
+                    <img src="/Content/Images/water.svg" alt="water" />
                 </div>
-                <div class="col-md-4">
-                    <span class="buy-vount-multiplier">x{{fundsDriver.BuyCount}}</span>
+                <div class="col-xs-4">
+                    <p class="buy-vount-multiplier text-right">x{{fundsDriver.BuyCount}}</p>
                 </div>
             </div>
             <div class="caption" ng-if="fundsDriver.IsActive">
