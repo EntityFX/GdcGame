@@ -8,15 +8,31 @@ namespace EntityFX.EconomicsArcade.TestClient
 {
     public class GameRunner : GameRunnerBase
     {
-        private readonly Guid _sessionGuid;
-        private readonly string _user;
-        private readonly IGameManager _game;
+        private Guid _sessionGuid;
+        private string _user;
+        private IGameManager _game;
 
         public GameRunner(string user, Guid sessionGuid, IGameManager game)
         {
-
             _sessionGuid = sessionGuid;
             _user = user;
+            _game = game;
+        }
+
+        public Guid SessionGuid
+        {
+            get { return _sessionGuid; }
+            set { _sessionGuid = value; }
+        }
+
+        public string User
+        {
+            get { return _user; }
+            set { _user = value; }
+        }
+
+        public void SetGameClient(IGameManager game)
+        {
             _game = game;
         }
 
@@ -68,7 +84,9 @@ namespace EntityFX.EconomicsArcade.TestClient
             {
                 Console.SetCursorPosition(0, 0);
                 PrettyConsole.WriteLineColor(ConsoleColor.DarkRed, "User: {0}, Session: {1}", _user, _sessionGuid);
-                Console.SetCursorPosition(0, 1);
+                PrettyConsole.WriteLineColor(ConsoleColor.DarkGreen, "F2 - Admin settings");
+                PrettyConsole.WriteLineColor(ConsoleColor.DarkGreen, "F3 - Logout");
+                Console.SetCursorPosition(0, 3);
                 base.DisplayGameData(gameData);
             }
         }

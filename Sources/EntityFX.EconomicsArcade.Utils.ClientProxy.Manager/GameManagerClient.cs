@@ -75,7 +75,7 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
 
         public GameData GetGameData()
         {
-            GameData gameData;
+            GameData gameData = null;
             using (var proxy = new GameManagerProxy(_sesionGuid))
             {
                 var channel = proxy.CreateChannel(_endpointAddress);

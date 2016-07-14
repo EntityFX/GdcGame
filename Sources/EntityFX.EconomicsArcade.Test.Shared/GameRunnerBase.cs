@@ -51,8 +51,6 @@ namespace EntityFx.EconomicsArcade.Test.Shared
         {
             lock (_stdLock)
             {
-
-
                 Console.WriteLine("Funds: {0:C}; Total Funds: {1:C}", gameData.Counters.CurrentFunds, gameData.Counters.TotalFunds);
                 Console.WriteLine("Manual Steps: {0}, Automatic Steps: {1}",
                     gameData.ManualStepsCount, gameData.AutomaticStepsCount);

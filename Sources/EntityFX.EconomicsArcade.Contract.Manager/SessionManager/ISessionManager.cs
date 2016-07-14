@@ -9,6 +9,8 @@ namespace EntityFX.EconomicsArcade.Contract.Manager.SessionManager
         [OperationContract]
         Guid AddSession(string login);
         [OperationContract]
+        bool CloseSession();
+        [OperationContract]
         Session GetSession();
     }
 }

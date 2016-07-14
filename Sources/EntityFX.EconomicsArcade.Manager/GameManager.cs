@@ -1,6 +1,7 @@
 ﻿using EntityFX.EconomicsArcade.Contract.Manager.GameManager;
 using System;
 using System.Collections.Concurrent;
+using System.ServiceModel;
 using EntityFX.EconomicsArcade.Contract.Game;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 using FundsCounters = EntityFX.EconomicsArcade.Contract.Common.Counters.FundsCounters;
@@ -100,7 +101,22 @@ namespace EntityFX.EconomicsArcade.Manager
         {
             
             var sessionId = OperationContextHelper.Instance.SessionId ?? default(Guid);
-            return _gameSessions.GetGame(sessionId);
+            IGame game = null;
+            try
+            {
+                game = _gameSessions.GetGame(sessionId);
+            }
+            catch (InvalidSessionException invalidSessionException)
+            {
+                _logger.Error(invalidSessionException);
+                throw new FaultException<InvalidSessionFault>(new InvalidSessionFault { SessionGuid = invalidSessionException.SessionGuid }
+                    , new FaultReason(invalidSessionException.Message), new FaultCode("InvalidSession"), "GetSessionGame");
+            }
+            catch (Exception exp)
+            {
+                _logger.Error(exp);
+            }
+            return game;
         }
     }
 }

@@ -34,7 +34,10 @@ namespace EntityFX.EconomicsArcade.Manager
         public IGame GetGame(Guid sessionId)
         {
             var session = GetSession(sessionId);
-            if (session == null) return null;
+            if (session == null)
+            {
+                throw new InvalidSessionException(string.Format("Session {0} doesn't exists",sessionId), sessionId);
+            }
 
             if (!GameSessionsStorage.ContainsKey(session.Login))
             {

@@ -35,5 +35,17 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
                 return res;
             }
         }
+
+        public bool CloseSession(Guid sessionGuid)
+        {
+            using (var proxy = new SessionManagerProxy(sessionGuid))
+            {
+                var channel = proxy.CreateChannel(_endpointAddress);
+                proxy.ApplyContextScope();
+                var res = channel.CloseSession();
+                proxy.CloseChannel();
+                return res;
+            }
+        }
     }
 }

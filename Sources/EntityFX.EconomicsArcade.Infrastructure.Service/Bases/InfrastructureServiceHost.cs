@@ -54,7 +54,8 @@ namespace EntityFX.EconomicsArcade.Infrastructure.Service
 
         protected virtual ServiceEndpoint CreateServiceEndpoint(ServiceHost serviceHost)
         {
-            return serviceHost.AddServiceEndpoint(typeof(T), GetBinding(), string.Empty);
+            var endpoint = serviceHost.AddServiceEndpoint(typeof(T), GetBinding(), string.Empty);
+            return endpoint;
         }
 
         public void Open(Uri endpointAddress)
@@ -65,13 +66,12 @@ namespace EntityFX.EconomicsArcade.Infrastructure.Service
             if (serviceDebugBehavior == null)
             {
                 _serviceHost.Description.Behaviors
-                    .Add(new ServiceDebugBehavior() {IncludeExceptionDetailInFaults = true});
+                    .Add(new ServiceDebugBehavior() { IncludeExceptionDetailInFaults = true });
             }
             else
             {
                 serviceDebugBehavior.IncludeExceptionDetailInFaults = true;
             }
-
             _serviceHost.Open();
         }
 
