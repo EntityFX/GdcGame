@@ -5,7 +5,7 @@ using EntityFX.EconomicsArcade.Contract.Common.Counters;
 using EntityFX.EconomicsArcade.Contract.Common.Funds;
 using EntityFX.EconomicsArcade.Contract.NotifyConsumerService;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
-using EntityFX.EconomicsArcade.Infrastructure.Service.Logger;
+using EntityFX.EconomicsArcade.Infrastructure.Service;
 using EntityFX.EconomicsArcade.Model.Common.Mappers;
 using EntityFX.EconomicsArcade.Model.Common.Model;
 using Microsoft.AspNet.SignalR;

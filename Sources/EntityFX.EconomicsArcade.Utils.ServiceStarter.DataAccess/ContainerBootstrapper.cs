@@ -28,7 +28,7 @@ using EntityFX.EconomicsArcade.DataAccess.Repository.Queries.UserCounter;
 using EntityFX.EconomicsArcade.DataAccess.Repository.Queries.UserFundsDriver;
 using EntityFX.EconomicsArcade.DataAccess.Repository.Queries.UserGameCounter;
 using EntityFX.EconomicsArcade.DataAccess.Service.Mappers;
-using EntityFX.EconomicsArcade.Infrastructure.Service.Logger;
+using EntityFX.EconomicsArcade.Infrastructure.Service;
 using Microsoft.Practices.Unity.InterceptionExtension;
 using PortableLog.NLog;
 

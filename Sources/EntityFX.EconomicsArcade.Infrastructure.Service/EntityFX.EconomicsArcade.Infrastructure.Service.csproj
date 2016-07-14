@@ -85,7 +85,7 @@
     <Compile Include="Bases\InfrastructureProxy.cs" />
     <Compile Include="Bases\InfrastructureServiceHost.cs" />
     <Compile Include="Interfaces\IServiceHost.cs" />
-    <Compile Include="Logger\LoggerInterceptor.cs" />
+    <Compile Include="LoggerInterceptor.cs" />
     <Compile Include="NetMsmq\NetMsmqProxy.cs" />
     <Compile Include="NetMsmq\NetMsmqServiceHost.cs" />
     <Compile Include="NetTcp\NetTcpProxy.cs" />
