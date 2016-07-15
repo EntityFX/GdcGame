@@ -63,6 +63,7 @@
     <Folder Include="Properties" />
     <Folder Include="Tables" />
     <Folder Include="Data" />
+    <Folder Include="Data\GdCame" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\dbo.User.sql">
@@ -75,6 +76,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Data\DataFundsDriver.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\GdCame\DataIncrementors.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -101,5 +105,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="AmukInternPublish.xml" />
+    <None Include="Data\GdCame\DataCounters.sql" />
+    <None Include="Data\GdCame\DataFundsDrivers.sql" />
   </ItemGroup>
 </Project>
