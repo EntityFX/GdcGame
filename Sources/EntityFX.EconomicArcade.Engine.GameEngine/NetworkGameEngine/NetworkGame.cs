@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using EntityFX.EconomicArcade.Engine.GameEngine.CustomRules;
 using EntityFX.EconomicsArcade.Contract.Common;
 using EntityFX.EconomicsArcade.Contract.DataAccess.GameData;
+using EntityFX.EconomicsArcade.Contract.Game;
 using EntityFX.EconomicsArcade.Contract.Game.Counters;
 using EntityFX.EconomicsArcade.Contract.Game.Funds;
 using EntityFX.EconomicsArcade.Contract.Game.Incrementors;
@@ -140,7 +142,15 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.NetworkGameEngine
             };
         }
 
-
+        protected override IDictionary<int, ICustomRule> GetCustomRules()
+        {
+            return new ReadOnlyDictionary<int, ICustomRule>(new Dictionary<int, ICustomRule>()
+            {
+                {1, new DelayedCounterCustomRule()},
+                {2, new ReduceFundDriverPriceCustomRule()},
+                {3, new IncreaseFundDriverIncrementorsCustomRule()},
+            });
+        }
 
         protected override void PostPerformManualStep(IEnumerable<CounterBase> modifiedCounters)
         {

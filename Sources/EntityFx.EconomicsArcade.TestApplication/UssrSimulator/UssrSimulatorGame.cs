@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using EntityFX.EconomicArcade.Engine.GameEngine;
+using EntityFX.EconomicArcade.Engine.GameEngine.CustomRules;
+using EntityFX.EconomicsArcade.Contract.Game;
 using EntityFX.EconomicsArcade.Contract.Game.Counters;
 using EntityFX.EconomicsArcade.Contract.Game.Funds;
 using EntityFX.EconomicsArcade.Contract.Game.Incrementors;
@@ -97,7 +100,8 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
                                 new ValueIncrementor(2)
                             } ,
                         },
-                        Name = "Beer"
+                        Name = "Beer",
+                        CustomRuleId = 1
                     }   
                 },
                 {
@@ -115,7 +119,8 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
                                 new ValueIncrementor(40)
                             },
                         },
-                        Name = "Voice Of America"
+                        Name = "Voice Of America",
+                        CustomRuleId = 2
                     }   
                 },
                 {
@@ -129,7 +134,8 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
                                 new ValueIncrementor(160)
                             } ,
                         },
-                        Name = "Dissidence On Flat"
+                        Name = "Dissidence On Flat",
+                        CustomRuleId = 3
                     }   
                 },
                 {
@@ -503,7 +509,7 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
                             Id = 3,
                             Name = "Five Year Plan",
                             UnlockValue = 10000,
-                            SecondsToAchieve = 10,
+                            SecondsToAchieve = 14400,
                             SecondsRemaining = 0,
                             IsMining = false,
                             SubValue = 5000000
@@ -516,6 +522,16 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
                 Counters = counters,
                 RootCounter = counters[(int)UssrCounterEnum.Communism]
             };
+        }
+
+        protected override IDictionary<int, ICustomRule> GetCustomRules()
+        {
+            return new ReadOnlyDictionary<int, ICustomRule>(new Dictionary<int, ICustomRule>()
+            {
+                {1, new DelayedCounterCustomRule()},
+                {2, new ReduceFundDriverPriceCustomRule()},
+                {3, new IncreaseFundDriverIncrementorsCustomRule()},
+            });
         }
 
         private readonly object _lockObject = new { };

@@ -44,6 +44,7 @@
     <Compile Include="Counters\GenericCounter.cs" />
     <Compile Include="Counters\SingleCounter.cs" />
     <Compile Include="Funds\FundsDriver.cs" />
+    <Compile Include="ICustomRule.cs" />
     <Compile Include="IGame.cs" />
     <Compile Include="Incrementors\IncrementorBase.cs" />
     <Compile Include="Incrementors\IncrementorTypeEnum.cs" />

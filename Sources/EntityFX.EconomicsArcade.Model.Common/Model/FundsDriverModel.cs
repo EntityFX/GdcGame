@@ -12,6 +12,7 @@ namespace EntityFX.EconomicsArcade.Model.Common.Model
         public decimal UnlockValue { get; set; }
         public bool IsActive { get; set; }
         public int BuyCount { get; set; }
+        public string Picture { get; set; }
         public IDictionary<int, Incrementor> Incrementors { get; set; } 
     }
 }

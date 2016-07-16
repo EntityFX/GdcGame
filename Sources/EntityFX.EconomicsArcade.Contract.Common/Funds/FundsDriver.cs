@@ -26,6 +26,10 @@ namespace EntityFX.EconomicsArcade.Contract.Common.Funds
         [DataMember]
         public bool IsActive { get; set; }
         [DataMember]
+        public string Picture { get; set; }
+        [DataMember]
+        public int? CustomRuleId { get; set; }
+        [DataMember]
         public IDictionary<int, Incrementor> Incrementors { get; set; } 
     }
 }

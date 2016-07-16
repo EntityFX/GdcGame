@@ -84,6 +84,7 @@
   <ItemGroup>
     <Compile Include="Bases\InfrastructureProxy.cs" />
     <Compile Include="Bases\InfrastructureServiceHost.cs" />
+    <Compile Include="ErrorHandlerBehavior.cs" />
     <Compile Include="Interfaces\IServiceHost.cs" />
     <Compile Include="LoggerInterceptor.cs" />
     <Compile Include="NetMsmq\NetMsmqProxy.cs" />

@@ -6,7 +6,7 @@
 
         protected abstract IncrementorTypeEnum GetIncrementorType();
 
-        public int Value { get; private set; }
+        public int Value { get; set; }
 
         private IncrementorBase()
         {

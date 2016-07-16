@@ -17,6 +17,7 @@ namespace EntityFX.EconomicsArcade.Model.Common.Mappers
             destination.Name = source.Name;
             destination.UnlockValue = source.UnlockValue;
             destination.IsActive = source.IsActive;
+            destination.Picture = source.Picture;
             return destination;
         }
     }

@@ -72,7 +72,13 @@ namespace EntityFX.EconomicsArcade.Infrastructure.Service
             {
                 serviceDebugBehavior.IncludeExceptionDetailInFaults = true;
             }
+            BeforeServiceOpen(_serviceHost);
             _serviceHost.Open();
+        }
+
+        protected virtual void BeforeServiceOpen(ServiceHost serviceHost)
+        {
+            
         }
 
         public void Close()

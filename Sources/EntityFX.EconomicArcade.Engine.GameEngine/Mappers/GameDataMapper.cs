@@ -57,6 +57,7 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.Mappers
                     var destinationDelayedCounter = new EconomicsArcade.Contract.Common.Counters.DelayedCounter()
                     {
                         SecondsRemaining = sourceDelayedCounter.SecondsRemaining,
+                        MiningTimeSeconds = sourceDelayedCounter.SecondsToAchieve,
                         UnlockValue = sourceDelayedCounter.UnlockValue
                     };
                     destinationCouner = destinationDelayedCounter;

@@ -22,7 +22,7 @@ namespace EntityFx.EconomicsArcade.TestApplication
 
         private int? _verificationResult;
 
-        public GameRunner(IMapper<IGame, GameData> gameDataMapper ,IMapper<FundsDriver, EntityFX.EconomicsArcade.Contract.Common.Funds.FundsDriver> fundsDriverMapper)
+        public GameRunner(IMapper<IGame, GameData> gameDataMapper, IMapper<FundsDriver, EntityFX.EconomicsArcade.Contract.Common.Funds.FundsDriver> fundsDriverMapper)
         {
             _gameDataMapper = gameDataMapper;
             _fundsDriverMapper = fundsDriverMapper;
@@ -43,6 +43,16 @@ namespace EntityFx.EconomicsArcade.TestApplication
         }
 
         private ManualStepResult _manualStepResult;
+
+        public override void DisplayGameData(GameData gameData)
+        {
+            lock (_stdLock)
+            {
+                Console.SetCursorPosition(0, 0);
+                base.DisplayGameData(gameData);
+            }
+
+        }
 
         public override GameData GetGameData()
         {

@@ -23,6 +23,10 @@ namespace EntityFX.EconomicsArcade.DataAccess.Model
 
         public short InflationPercent { get; set; }
 
+        public string Picture { get; set; }
+
+        public int? CustomRuleId { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<IncrementorEntity> Incrementors { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.ServiceModel;
 using EntityFX.EconomicsArcade.Contract.Manager.GameManager;
+using EntityFX.EconomicsArcade.Contract.Manager.SessionManager;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 using EntityFX.EconomicsArcade.Utils.ClientProxy.Manager;
 using IclServices.WcfTest.TestClient;
@@ -119,7 +120,7 @@ namespace EntityFX.EconomicsArcade.TestClient
                         gr.DisplayGameData(gr.GetGameData());
                     }
                 }
-                catch (FaultException faultException)
+                catch (FaultException<InvalidSessionException> faultException)
                 {
                     var res = UserLogin(null);
                     _sessionGuid = res.Item1;

@@ -64,6 +64,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomRules\DelayedCounterCustomRule.cs" />
+    <Compile Include="CustomRules\IncreaseFundDriverIncrementorsCustomRule.cs" />
+    <Compile Include="CustomRules\ReduceFundDriverPriceCustomRule.cs" />
     <Compile Include="GameBase.cs" />
     <Compile Include="Mappers\GameDataMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

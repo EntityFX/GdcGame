@@ -24,6 +24,8 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository.Mappers
             destination.Id = source.Id;
             destination.InflationPercent = (short)source.InflationPercent;
             destination.Incrementors = new List<IncrementorEntity>();
+            destination.Picture = source.Picture;
+            destination.CustomRuleId = source.CustomRuleId;
             foreach (var incrementor in source.Incrementors)
             {
                 destination.Incrementors.Add(_incrementorContractMapper.Map(incrementor.Value));

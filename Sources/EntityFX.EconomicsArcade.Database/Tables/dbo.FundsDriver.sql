@@ -5,5 +5,7 @@
 	[Description] NVARCHAR(150) NOT NULL,
 	[InitialValue] money NOT NULL,
 	[UnlockValue] money NOT NULL,
-	[InflationPercent] smallint NOT NULL
+	[InflationPercent] smallint NOT NULL, 
+    [Picture] NVARCHAR(50) NULL, 
+    [CustomRuleId] INT NULL
 )

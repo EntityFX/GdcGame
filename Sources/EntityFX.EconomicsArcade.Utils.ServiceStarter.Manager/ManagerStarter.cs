@@ -2,9 +2,12 @@
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 using EntityFX.EconomicsArcade.Infrastructure.Service;
 using System;
+using System.ServiceModel;
+using EntityFX.EconomicsArcade.Contract.Manager;
 using EntityFX.EconomicsArcade.Contract.Manager.AdminManager;
 using EntityFX.EconomicsArcade.Contract.Manager.GameManager;
 using EntityFX.EconomicsArcade.Contract.Manager.UserManager;
+using Microsoft.Practices.Unity;
 
 namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
 {
@@ -21,9 +24,9 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
         public override void StartService()
         {
             AddNetTcpService<ISessionManager>(_baseUrl);
-            AddNetTcpService<IGameManager>(_baseUrl);
             AddNetTcpService<ISimpleUserManager>(_baseUrl);
             AddNetTcpService<IAdminManager>(_baseUrl);
+            AddCustomService<GameManagerServiceHost>(_baseUrl);
             OpenServices();
         }
 
@@ -35,6 +38,19 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
         protected override void OnServiceOpened(IServiceHost service)
         {
             ServiceInfoHelper.PrintServiceHostInfo(service.ServiceHost);
+        }
+
+        private class GameManagerServiceHost : NetTcpServiceHost<IGameManager>
+        {
+            public GameManagerServiceHost(IUnityContainer container)
+                : base(container)
+            {
+            }
+
+            protected override void BeforeServiceOpen(ServiceHost serviceHost)
+            {
+                serviceHost.Description.Behaviors.Add(new ErrorHandlerBehavior(new InvalidSessionFaultHandler()));
+            }
         }
     }
 }

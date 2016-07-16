@@ -109,8 +109,7 @@ namespace EntityFX.EconomicsArcade.Manager
             catch (InvalidSessionException invalidSessionException)
             {
                 _logger.Error(invalidSessionException);
-                throw new FaultException<InvalidSessionFault>(new InvalidSessionFault { SessionGuid = invalidSessionException.SessionGuid }
-                    , new FaultReason(invalidSessionException.Message), new FaultCode("InvalidSession"), "GetSessionGame");
+                throw;
             }
             catch (Exception exp)
             {

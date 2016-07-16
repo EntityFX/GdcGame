@@ -17,6 +17,8 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
 
         public FundsCounters FundsCounters { get; private set; }
 
+        public IDictionary<int, ICustomRule> CustomRules { get; private set; }
+
         public int AutomaticStepNumber { get; protected set; }
 
         public int ManualStepNumber { get; protected set; }
@@ -46,6 +48,7 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
             InitializeFundsCounters();
             InitializeFundsDrivers();
             InitializeVerificationSteps();
+            InitializeCustomRules();
             PostInitialize();
             _isInitialized = true;
         }
@@ -91,9 +94,16 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
             }
         }
 
+        private void InitializeCustomRules()
+        {
+            CustomRules = GetCustomRules();
+        }
+
         protected abstract IDictionary<int, FundsDriver> GetFundsDrivers();
 
         protected abstract FundsCounters GetFundsCounters();
+
+        protected abstract IDictionary<int, ICustomRule> GetCustomRules();
 
         public async Task<int> PerformAutoStep()
         {
@@ -247,6 +257,7 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
                 fundDriver.CurrentValue = fundDriver.CurrentValue + fundDriver.CurrentValue * fundDriver.InflationPercent / 100.0m;
                 fundDriver.BuyCount++;
                 var changedCounters = IncrementCounters(fundDriver.Incrementors);
+                PerformBuyFundDriverCustomRule(fundDriver);
                 result = new BuyFundDriverResult()
                 {
                     ModifiedFundsDriver = fundDriver,
@@ -261,6 +272,14 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
             }
             PostBuyFundDriver(fundDriver);
             return result;
+        }
+
+        private void PerformBuyFundDriverCustomRule(FundsDriver fundDriver)
+        {
+            if (fundDriver.CustomRuleId != null && CustomRules.ContainsKey(fundDriver.CustomRuleId.Value))
+            {
+                CustomRules[fundDriver.CustomRuleId.Value].PerformRuleWhenBuyFundDriver(this);
+            }
         }
 
         protected virtual void PostPerformManualStep(IEnumerable<CounterBase> modifiedCounters)

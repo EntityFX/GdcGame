@@ -24,6 +24,8 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository.Mappers
             destination.Name = source.Name;
             destination.Id = source.Id;
             destination.InflationPercent = source.InflationPercent;
+            destination.Picture = source.Picture;
+            destination.CustomRuleId = source.CustomRuleId;
             destination.Incrementors = new Dictionary<int, Incrementor>();
             foreach (var incrementor in source.Incrementors)
             {

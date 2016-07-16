@@ -45,7 +45,7 @@ namespace EntityFx.EconomicsArcade.Test.Shared
 
         public abstract GameData GetGameData();
 
-        private static readonly object _stdLock = new { };
+        protected static readonly object _stdLock = new { };
 
         public virtual void DisplayGameData(GameData gameData)
         {
@@ -73,7 +73,9 @@ namespace EntityFx.EconomicsArcade.Test.Shared
                 PrettyConsole.WriteLineColor(ConsoleColor.DarkGray, " StepsToIncrInflation: {0}, Current Steps: {1}", ((GenericCounter)gameData.Counters.Counters[2]).InflationIncreaseSteps, ((GenericCounter)gameData.Counters.Counters[2]).CurrentSteps);
                 PrettyConsole.WriteLineColor(ConsoleColor.Green, "{1,15}: {0,12:C}"
                     , ((GenericCounter)gameData.Counters.Counters[2]).Value, "Total");
-                PrettyConsole.WriteLineColor(ConsoleColor.Magenta, "{1,15}: +{0,12:C} {2}", gameData.Counters.Counters[3].Value, gameData.Counters.Counters[3].Name, TimeSpan.FromSeconds(((DelayedCounter)gameData.Counters.Counters[3]).SecondsRemaining));
+                PrettyConsole.WriteLineColor(ConsoleColor.Magenta, "{1,15}: +{0,12:C} {2}/{3}", gameData.Counters.Counters[3].Value, gameData.Counters.Counters[3].Name
+                    , TimeSpan.FromSeconds(((DelayedCounter)gameData.Counters.Counters[3]).SecondsRemaining)
+                    , TimeSpan.FromSeconds(((DelayedCounter)gameData.Counters.Counters[3]).MiningTimeSeconds));
 
                 Console.WriteLine();
                 int charIndex = 65;
