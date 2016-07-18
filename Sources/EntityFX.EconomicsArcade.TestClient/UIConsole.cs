@@ -196,6 +196,21 @@ namespace IclServices.WcfTest.TestClient
                 Console.WriteLine(exp);
             }
         }
+        void CloseAllSessions()
+        {
+            Console.Clear();
+            Console.WriteLine("Trying to close al sessions...");
+
+            try
+            {
+                _adminManagerClient.CloseAllSessions();
+                Console.WriteLine("Success!");
+            }
+            catch (Exception exp)
+            {
+                Console.WriteLine(exp);
+            }
+        }
         void WipeUser()
         {
             Console.Clear();

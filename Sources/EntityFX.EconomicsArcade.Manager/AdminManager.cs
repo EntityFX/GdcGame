@@ -50,6 +50,14 @@ namespace EntityFX.EconomicsArcade.Manager
             }
         }
 
+        public void CloseAllSessions()
+        {
+            foreach (var session in _gameSessions.Sessions)
+            {
+                _gameSessions.RemoveSession(session.Key);
+            }
+        }
+
         public void WipeUser(string username)
         {
             _gameSessions.GetGame(username).Reset();

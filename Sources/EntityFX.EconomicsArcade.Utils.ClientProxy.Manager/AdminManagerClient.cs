@@ -50,6 +50,17 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
             }
         }
 
+        public void CloseAllSessions()
+        {
+            using (var proxy = new AdminManagerProxy())
+            {
+                var channel = proxy.CreateChannel(_endpointAddress);
+                proxy.ApplyContextScope();
+                channel.CloseAllSessions();
+                proxy.CloseChannel();
+            }
+        }
+
         public void WipeUser(string username)
         {
             using (var proxy = new AdminManagerProxy())

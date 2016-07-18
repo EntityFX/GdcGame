@@ -17,6 +17,8 @@ namespace EntityFX.EconomicsArcade.Contract.Manager.AdminManager
         [OperationContract]
         void CloseAllUserSessions(string username);
         [OperationContract]
+        void CloseAllSessions();
+        [OperationContract]
         void WipeUser(string username);
     }
 }
