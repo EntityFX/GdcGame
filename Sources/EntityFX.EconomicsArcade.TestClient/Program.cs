@@ -120,7 +120,7 @@ namespace EntityFX.EconomicsArcade.TestClient
                         gr.DisplayGameData(gr.GetGameData());
                     }
                 }
-                catch (FaultException<InvalidSessionException> faultException)
+                catch (FaultException<InvalidSessionFault> faultException)
                 {
                     var res = UserLogin(null);
                     _sessionGuid = res.Item1;

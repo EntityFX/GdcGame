@@ -1,5 +1,7 @@
 using System.Linq;
+using System.ServiceModel.Dispatcher;
 using System.Web.Http;
+using System.Web.Http.ExceptionHandling;
 using System.Web.Mvc;
 using EntityFX.EconomicsArcade.Presentation.WebApplication.Factories;
 using Microsoft.Practices.Unity;
@@ -20,10 +22,10 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.App_Start
             UnityConfig.RegisterComponents(container);
             FilterProviders.Providers.Remove(FilterProviders.Providers.OfType<FilterAttributeFilterProvider>().First());
             FilterProviders.Providers.Add(new UnityFilterAttributeFilterProvider(container));
-
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
             GlobalConfiguration.Configuration.DependencyResolver = new Unity.WebApi.UnityDependencyResolver(container);
             ControllerBuilder.Current.SetControllerFactory(new UnityControllerFactory(container));
+            GlobalConfiguration.Configuration.Services.Replace(typeof(IExceptionHandler), container.Resolve<InvalidSessionExceptionHandler>());
             // TODO: Uncomment if you want to use PerRequestLifetimeManager
             // Microsoft.Web.Infrastructure.DynamicModuleHelper.DynamicModuleUtility.RegisterModule(typeof(UnityPerRequestHttpModule));
         }

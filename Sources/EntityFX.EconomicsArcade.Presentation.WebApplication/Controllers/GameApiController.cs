@@ -1,5 +1,7 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.Web.Http;
 using System.Web.Http.Controllers;
+using System.Web.Mvc;
 using EntityFX.EconomicsArcade.Model.Common.Model;
 using EntityFX.EconomicsArcade.Presentation.Models;
 using EntityFX.EconomicsArcade.Presentation.WebApplication.Providers;
@@ -13,7 +15,7 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Controllers
         protected override void Initialize(HttpControllerContext controllerContext)
         {
             base.Initialize(controllerContext);
-            _gameDataProvider.Initialize(User.Identity.Name);
+            _gameDataProvider.InitializeSession(User.Identity.Name);
         }
 
         public GameApiController(IGameDataProvider gameDataProvider)
@@ -61,6 +63,7 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Controllers
         {
             return _gameDataProvider.BuyFundDriver(id);
         }
+
     }
 
 }

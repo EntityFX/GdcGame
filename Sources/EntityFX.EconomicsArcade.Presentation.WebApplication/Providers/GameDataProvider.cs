@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ServiceModel;
 using System.Web;
+using System.Web.Mvc;
 using EntityFX.EconomicsArcade.Contract.Common;
 using EntityFX.EconomicsArcade.Contract.Common.Counters;
 using EntityFX.EconomicsArcade.Contract.Manager.GameManager;
@@ -44,53 +45,8 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Providers
             _gameClientFactory = gameClientFactory;
         }
 
-        public void Initialize(string userName)
+        public void InitializeSession(string userName)
         {
-            //if (HttpContext.Current.Session["SessionGuid"] == null)
-            //{
-            //    if (!_simpleUserManager.Exists(userName))
-            //    {
-            //        _simpleUserManager.Create(userName);
-            //    }
-
-            //    HttpContext.Current.Session["SessionGuid"] = _sessionManagerClient.AddSession(userName);
-
-            //}
-            //GameGuid = (Guid)HttpContext.Current.Session["SessionGuid"];
-            //_gameManager = _gameClientFactory.BuildGameClient(GameGuid);
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-            //try
-            //{
-            //    if (HttpContext.Current.Session["SessionGuid"] == null)
-            //    {
-            //        if (!_simpleUserManager.Exists(userName))
-            //        {
-            //            _simpleUserManager.Create(userName);
-            //        }
-            //        HttpContext.Current.Session["SessionGuid"] = _sessionManagerClient.AddSession(userName);
-            //    }
-
-            //    HttpContext.Current.Session["SessionGuid"] = _sessionManagerClient.AddSession(userName);
-            //    GameGuid = (Guid)HttpContext.Current.Session["SessionGuid"];
-            //    _gameManager = _gameClientFactory.BuildGameClient(GameGuid);
-
-            //    _gameManager.GetGameData();
-            //}
-            //catch (FaultException exception)
-            //{
-            //    if (!_simpleUserManager.Exists(userName))
-            //    {
-            //        _simpleUserManager.Create(userName);
-            //    }
-
-            //    HttpContext.Current.Session["SessionGuid"] = _sessionManagerClient.AddSession(userName);
-            //    GameGuid = (Guid)HttpContext.Current.Session["SessionGuid"];
-            //    _gameManager = _gameClientFactory.BuildGameClient(GameGuid);
-            //}
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
             if (HttpContext.Current.Session["SessionGuid"] == null)
             {
                 if (!_simpleUserManager.Exists(userName))
@@ -103,16 +59,12 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Providers
             }
             GameGuid = (Guid)HttpContext.Current.Session["SessionGuid"];
             _gameManager = _gameClientFactory.BuildGameClient(GameGuid);
+        }
 
-            try
-            {
-                _gameManager.GetGameData();
-            }
-            catch (FaultException exception)
-            {
-                HttpContext.Current.Session["SessionGuid"] = null;
-                Initialize(userName);
-            }
+        public void ClearSession()
+        {
+            HttpContext.Current.Session.Clear();
+            HttpContext.Current.Session.Abandon();
         }
 
         public GameDataModel GetGameData()

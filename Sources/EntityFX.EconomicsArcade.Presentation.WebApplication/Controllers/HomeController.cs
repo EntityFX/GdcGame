@@ -11,13 +11,12 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Controllers
         /// <param name="filterContext">Information about the current request and action.</param>
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            _gameDataProvider.Initialize(User.Identity.Name);
+            _gameDataProvider.InitializeSession(User.Identity.Name);
         }
 
         public HomeController(IGameDataProvider gameDataProvider)
         {
             _gameDataProvider = gameDataProvider;
-
         }
 
         public ActionResult Index()

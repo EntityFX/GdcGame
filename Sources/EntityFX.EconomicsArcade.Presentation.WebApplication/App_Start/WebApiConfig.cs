@@ -28,6 +28,7 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication
                 routeTemplate: WebApiConfig.UrlPrefix + "/{controller}/{action}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
         }
     }
 }

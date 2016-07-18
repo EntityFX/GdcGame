@@ -5,7 +5,8 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Providers
 {
     public interface IGameDataProvider
     {
-        void Initialize(string userName);
+        void InitializeSession(string userName);
+        void ClearSession();
         GameDataModel GetGameData();
         FundsCounterModel GetCounters();
         BuyDriverModel BuyFundDriver(int id);
