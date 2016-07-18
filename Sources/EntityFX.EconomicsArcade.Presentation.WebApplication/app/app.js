@@ -58,4 +58,8 @@ app.controller('appGameController',
         $scope.fightAgainstInflation = function () {
             gdCameApiService.fightAgainstInflation();
         }
+
+        $scope.activateDelayedCounter = function () {
+            gdCameApiService.activateDelayedCounter($rootScope.gameData.Counters.Counters[3].Id);
+        }
     }]);

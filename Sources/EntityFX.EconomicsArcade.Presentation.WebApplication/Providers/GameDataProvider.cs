@@ -114,5 +114,9 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Providers
             _gameManager.FightAgainstInflation();
         }
 
+        public void ActivateDelayedCounter(int counterId)
+        {
+            _gameManager.ActivateDelayedCounter(counterId);
+        }
     }
 }

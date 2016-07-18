@@ -36,9 +36,10 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Controllers
         }
 
         [System.Web.Http.HttpPost]
-        public bool ActivateDelayedCounter()
+        public bool ActivateDelayedCounter([FromBody]int counterId)
         {
-            _gameDataProvider.FightAgainstInflation();
+            _gameDataProvider.ActivateDelayedCounter(counterId);
+            //_gameDataProvider.FightAgainstInflation();
             return true;
         }
 

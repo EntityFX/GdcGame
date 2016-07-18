@@ -11,5 +11,6 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Providers
         BuyDriverModel BuyFundDriver(int id);
         ManualStepResultModel PerformManualStep(int? verificationNumber);
         void FightAgainstInflation();
+        void ActivateDelayedCounter(int counterId);
     }
 }

@@ -35,7 +35,13 @@
 
                 fightAgainstInflation: function () {
                     $http.post(gameApiServiceBaseUri + "FightAgainstInflation/");
+                },
+
+                activateDelayedCounter: function (counterId) {
+                    $http.post(gameApiServiceBaseUri + "ActivateDelayedCounter/", counterId);
                 }
+
+
             }
 
             return gdCameApiServiceFactory;

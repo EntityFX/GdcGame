@@ -10,7 +10,7 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Controllers
 
         bool FightAgainstInflation();
 
-        bool ActivateDelayedCounter();
+        bool ActivateDelayedCounter(int counterId);
 
         GameDataModel GetGameData();
 
