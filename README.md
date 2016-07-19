@@ -1,1 +1,1 @@
-# GdcGame
+# GDCame
