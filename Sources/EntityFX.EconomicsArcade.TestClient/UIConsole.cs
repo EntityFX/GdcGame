@@ -18,6 +18,7 @@ namespace IclServices.WcfTest.TestClient
     class UIConsole
     {
         private readonly IAdminManager _adminManagerClient;
+        private readonly Guid _currentGuid;
 
         Dictionary<int, string> _menu;
         //Dictionary<string, Delegate> _menu;
@@ -27,9 +28,10 @@ namespace IclServices.WcfTest.TestClient
 
         delegate void CallDelegate();
 
-        public UIConsole(IAdminManager adminManagerClient)
+        public UIConsole(IAdminManager adminManagerClient, Guid currentGuid)
         {
             _adminManagerClient = adminManagerClient;
+            _currentGuid = currentGuid;
 
             InitMenu();
         }
@@ -43,9 +45,11 @@ namespace IclServices.WcfTest.TestClient
             //new CallDelegate(CreateUser));
             _menu.Add(2, "Close session by GUID");
             _menu.Add(3, "Close session by username and position of GUID");
-            _menu.Add(4, "CloseAllUserSessions");
-            _menu.Add(5, "Wipe user");
-            _menu.Add(6, "Exit");
+            _menu.Add(4, "Close all user sessions");
+            _menu.Add(5, "Close all sessions");
+            _menu.Add(6, "Close all sessions exlude this");
+            _menu.Add(7, "Wipe user");
+            _menu.Add(8, "Exit");
         }
         public void StartMenu()
         {
@@ -107,6 +111,10 @@ namespace IclServices.WcfTest.TestClient
                 case 4:
                     return new CallDelegate(CloseAllUserSessions);
                 case 5:
+                    return new CallDelegate(CloseAllSessions);
+                case 6:
+                    return new CallDelegate(CloseAllSessionsExludeThis);
+                case 7:
                     return new CallDelegate(WipeUser);
                 default:
                     return new CallDelegate(Exit);
@@ -199,11 +207,23 @@ namespace IclServices.WcfTest.TestClient
         void CloseAllSessions()
         {
             Console.Clear();
-            Console.WriteLine("Trying to close al sessions...");
+            Console.WriteLine("Trying to close all sessions...");
 
             try
             {
                 _adminManagerClient.CloseAllSessions();
+                Console.WriteLine("Success!");
+            }
+            catch (Exception exp)
+            {
+                Console.WriteLine(exp);
+            }
+        }
+        void CloseAllSessionsExludeThis()
+        {
+            try
+            {
+                _adminManagerClient.CloseAllSessionsExcludeThis(_currentGuid);
                 Console.WriteLine("Success!");
             }
             catch (Exception exp)

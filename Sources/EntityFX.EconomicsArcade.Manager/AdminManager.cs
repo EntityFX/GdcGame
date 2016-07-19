@@ -58,6 +58,15 @@ namespace EntityFX.EconomicsArcade.Manager
             }
         }
 
+        public void CloseAllSessionsExcludeThis(Guid guid)
+        {
+            var sessionsToRemove = _gameSessions.Sessions.Where(_ => _.Key != guid);
+            foreach (var sessionToRemove in sessionsToRemove)
+            {
+                _gameSessions.RemoveSession(sessionToRemove.Key);
+            }
+        }
+
         public void WipeUser(string username)
         {
             _gameSessions.GetGame(username).Reset();

@@ -109,7 +109,7 @@ namespace EntityFX.EconomicsArcade.TestClient
                     }
                     else if (keyInfo.Key == ConsoleKey.F2)
                     {
-                        var terminal = new UIConsole(adminManagerClient);
+                        var terminal = new UIConsole(adminManagerClient, _sessionGuid);
                         terminal.StartMenu();
 
                         gr.Invalidate();
