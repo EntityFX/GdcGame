@@ -9,7 +9,6 @@ app.factory('gameData',
         return deferred.promise;
     });
 
-
 app.controller('appGameController',
 [
     '$rootScope', '$scope', '$interval', 'gameData', 'gdCameApiService', '$location',

@@ -1,10 +1,9 @@
 ﻿using System;
-using System.ServiceModel;
 using System.Web;
-using System.Web.Mvc;
 using EntityFX.EconomicsArcade.Contract.Common;
 using EntityFX.EconomicsArcade.Contract.Common.Counters;
 using EntityFX.EconomicsArcade.Contract.Manager.GameManager;
+using EntityFX.EconomicsArcade.Contract.Manager.RatingManager;
 using EntityFX.EconomicsArcade.Contract.Manager.UserManager;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 using EntityFX.EconomicsArcade.Model.Common.Model;
@@ -25,6 +24,7 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Providers
         private readonly IMapper<FundsCounters, FundsCounterModel> _fundsCounterModelMapper;
         private readonly IMapper<BuyFundDriverResult, BuyDriverModel> _fundsDriverBuyinfoModelMapper;
         private readonly IGameClientFactory _gameClientFactory;
+        private readonly IRatingManager _ratingManager;
 
         public GameDataProvider(
             ILogger logger,
@@ -33,7 +33,8 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Providers
             SessionManagerClient sessionManagerClient,
             IMapper<GameData, GameDataModel> gameDataModelMapper,
             IMapper<FundsCounters, FundsCounterModel> fundsCounterModelMapper,
-            IMapper<BuyFundDriverResult, BuyDriverModel> fundsDriverBuyinfoModelMapper
+            IMapper<BuyFundDriverResult, BuyDriverModel> fundsDriverBuyinfoModelMapper,
+            IRatingManager ratingManager
             )
         {
             _logger = logger;
@@ -43,6 +44,7 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Providers
             _fundsCounterModelMapper = fundsCounterModelMapper;
             _fundsDriverBuyinfoModelMapper = fundsDriverBuyinfoModelMapper;
             _gameClientFactory = gameClientFactory;
+            _ratingManager = ratingManager;
         }
 
         public void InitializeSession(string userName)
@@ -126,6 +128,21 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Providers
         public void ActivateDelayedCounter(int counterId)
         {
             _gameManager.ActivateDelayedCounter(counterId);
+        }
+
+        public UserRating[] GetUsersRatingByCount(int count)
+        {
+            return _ratingManager.GetUsersRatingByCount(count);
+        }
+
+        public UserRating FindUserRatingByUserName(string userName)
+        {
+            return _ratingManager.FindUserRatingByUserName(userName);
+        }
+
+        public UserRating[] FindUserRatingByUserNameAndAroundUsers(string userName, int count)
+        {
+            return _ratingManager.FindUserRatingByUserNameAndAroundUsers(userName, count);
         }
     }
 }

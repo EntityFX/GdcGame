@@ -6,6 +6,7 @@ using System.ServiceModel;
 using EntityFX.EconomicsArcade.Contract.Manager;
 using EntityFX.EconomicsArcade.Contract.Manager.AdminManager;
 using EntityFX.EconomicsArcade.Contract.Manager.GameManager;
+using EntityFX.EconomicsArcade.Contract.Manager.RatingManager;
 using EntityFX.EconomicsArcade.Contract.Manager.UserManager;
 using Microsoft.Practices.Unity;
 
@@ -26,6 +27,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
             AddNetTcpService<ISessionManager>(_baseUrl);
             AddNetTcpService<ISimpleUserManager>(_baseUrl);
             AddNetTcpService<IAdminManager>(_baseUrl);
+            AddNetTcpService<IRatingManager>(_baseUrl);
             AddCustomService<GameManagerServiceHost>(_baseUrl);
             OpenServices();
         }

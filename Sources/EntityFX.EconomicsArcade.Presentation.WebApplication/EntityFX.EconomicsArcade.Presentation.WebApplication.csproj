@@ -175,8 +175,10 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\RatingApiController.cs" />
     <Compile Include="Controllers\GameApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IRatingApiController.cs" />
     <Compile Include="Controllers\IGameApiController.cs" />
     <Compile Include="Factories\GameClientFactory.cs" />
     <Compile Include="Factories\IGameClientFactory.cs" />
@@ -190,6 +192,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\fundDrivers\fundDrivers.component.js" />
+    <Content Include="app\gdCameRating.service.js" />
+    <Content Include="app\rating\rating.component.js" />
+    <Content Include="app\templates\rating.template.html" />
     <Content Include="app\templates\fundDrivers.template.html" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />

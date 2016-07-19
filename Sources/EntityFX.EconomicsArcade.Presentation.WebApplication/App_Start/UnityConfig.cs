@@ -5,6 +5,7 @@ using EntityFX.EconomicsArcade.Contract.Common;
 using EntityFX.EconomicsArcade.Contract.Common.Counters;
 using EntityFX.EconomicsArcade.Contract.Common.Funds;
 using EntityFX.EconomicsArcade.Contract.Manager.GameManager;
+using EntityFX.EconomicsArcade.Contract.Manager.RatingManager;
 using EntityFX.EconomicsArcade.Contract.Manager.UserManager;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 using EntityFX.EconomicsArcade.Infrastructure.Service;
@@ -32,6 +33,7 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication
                 _ => new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger")))));
 
             container.RegisterType<IGameApiController, GameApiController>();
+            container.RegisterType<IRatingApiController, RatingApiController>();
 
             container.RegisterType<IGameManager, GameManagerClient>(
                 new InjectionConstructor(
@@ -45,6 +47,13 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication
                     ConfigurationManager.AppSettings["ManagerEndpointAddress_UserManager"])
                 , new Interceptor<InterfaceInterceptor>()
                 , new InterceptionBehavior<LoggerInterceptor>()
+                    );
+
+            container.RegisterType<IRatingManager, RatingManagerClient>(
+                new InjectionConstructor(
+                    ConfigurationManager.AppSettings["ManagerEndpointAddress_RatingManager"]),
+                    new Interceptor<InterfaceInterceptor>(),
+                    new InterceptionBehavior<LoggerInterceptor>()
                     );
             container.RegisterType<SessionManagerClient>(
                 new InjectionConstructor(

@@ -1,0 +1,18 @@
+﻿<div class="row" ng-show="ratings">
+    <table class="table">
+        <thead>
+        <tr>
+            <td>Username</td>
+            <td>Total Funds</td>
+            <td>Gdc Points</td>
+            <td>Clicked</td>
+        </tr>
+        </thead>
+        <tr ng-repeat="rating in ratings">
+            <td>{{rating.UserName}}</td>
+            <td>{{rating.TotalFunds}}</td>
+            <td>{{rating.GdcPoints}}</td>
+            <td>{{rating.ManualStepsCount}}</td>
+        </tr>
+    </table>
+</div>

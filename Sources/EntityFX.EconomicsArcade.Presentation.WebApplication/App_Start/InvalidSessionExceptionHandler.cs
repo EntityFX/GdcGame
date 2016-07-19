@@ -28,7 +28,7 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication
             if (context.Exception is FaultException<InvalidSessionFault>)
             {
                 _gameDataProvider.ClearSession();
-                //_gameDataProvider.InitializeSession(context.RequestContext.Principal.Identity.Name);
+              //  _gameDataProvider.InitializeSession(context.RequestContext.Principal.Identity.Name);
             }
         }
     }

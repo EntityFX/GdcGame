@@ -74,6 +74,8 @@
     <Compile Include="AdminManagerProxy.cs" />
     <Compile Include="GameManagerProxy.cs" />
     <Compile Include="GameManagerClient.cs" />
+    <Compile Include="RatingManagerClient.cs" />
+    <Compile Include="RatingManagerProxy.cs" />
     <Compile Include="SessionManagerClient.cs" />
     <Compile Include="SessionManagerProxy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

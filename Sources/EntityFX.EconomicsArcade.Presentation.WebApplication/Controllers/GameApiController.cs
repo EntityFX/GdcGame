@@ -1,7 +1,5 @@
-﻿using System;
-using System.Web.Http;
+﻿using System.Web.Http;
 using System.Web.Http.Controllers;
-using System.Web.Mvc;
 using EntityFX.EconomicsArcade.Model.Common.Model;
 using EntityFX.EconomicsArcade.Presentation.Models;
 using EntityFX.EconomicsArcade.Presentation.WebApplication.Providers;
@@ -41,7 +39,6 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Controllers
         public bool ActivateDelayedCounter([FromBody]int counterId)
         {
             _gameDataProvider.ActivateDelayedCounter(counterId);
-            //_gameDataProvider.FightAgainstInflation();
             return true;
         }
 
@@ -63,7 +60,6 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Controllers
         {
             return _gameDataProvider.BuyFundDriver(id);
         }
-
     }
 
 }

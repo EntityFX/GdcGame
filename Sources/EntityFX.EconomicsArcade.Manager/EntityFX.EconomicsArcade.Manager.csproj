@@ -75,6 +75,7 @@
     <Compile Include="Mappers\IncrementorContractMapper.cs" />
     <Compile Include="Mappers\ManualStepContractMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RatingManager.cs" />
     <Compile Include="SessionManager.cs" />
     <Compile Include="SimpleUserManager.cs" />
   </ItemGroup>

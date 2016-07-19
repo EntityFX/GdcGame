@@ -40,8 +40,6 @@
                 activateDelayedCounter: function (counterId) {
                     $http.post(gameApiServiceBaseUri + "ActivateDelayedCounter/", counterId);
                 }
-
-
             }
 
             return gdCameApiServiceFactory;
