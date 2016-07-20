@@ -44,11 +44,13 @@
     <Compile Include="GameManager\VerificationManualStepData.cs" />
     <Compile Include="GameManager\VerificationManualStepResult.cs" />
     <Compile Include="RatingManager\IRatingManager.cs" />
+    <Compile Include="RatingManager\UserRating.cs" />
     <Compile Include="SessionManager\InvalidSessionException.cs" />
     <Compile Include="SessionManager\InvalidSessionFault.cs" />
     <Compile Include="SessionManager\ISessionManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SessionManager\Session.cs" />
+    <Compile Include="UserGameSessionStatus.cs" />
     <Compile Include="UserManager\ISimpleUserManager.cs" />
   </ItemGroup>
   <ItemGroup>

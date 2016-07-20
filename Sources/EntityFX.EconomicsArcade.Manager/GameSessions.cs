@@ -3,8 +3,10 @@ using EntityFX.EconomicsArcade.Contract.Manager.SessionManager;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using EntityFX.EconomicsArcade.Contract.DataAccess.User;
+using EntityFX.EconomicsArcade.Contract.Manager;
 
 
 namespace EntityFX.EconomicsArcade.Manager
@@ -47,9 +49,23 @@ namespace EntityFX.EconomicsArcade.Manager
             }
             return GameSessionsStorage[session.Login];
         }
+
         public IGame GetGame(string username)
         {
             return GameSessionsStorage.ContainsKey(username) ? GameSessionsStorage[username] : null;
+        }
+
+        public UserGameSessionStatus GetGameSessionStatus(string username)
+        {
+            if (Sessions.Count(_ => _.Login == username) > 0)
+            {
+                return UserGameSessionStatus.Online;
+            }
+            if (!GameSessionsStorage.ContainsKey(username))
+            {
+                return UserGameSessionStatus.GameNotStarted;
+            }
+            return UserGameSessionStatus.Offline;
         }
 
         public Guid AddSession(User user)
@@ -74,19 +90,19 @@ namespace EntityFX.EconomicsArcade.Manager
             return SessionsStorage.Remove(sessionId);
         }
 
+        public void RemoveAllSessions()
+        {
+            SessionsStorage.Clear();
+        }
+
         private IGame BuildGame(int userId, string userName)
         {
             return _gameFactory.BuildGame(userId, userName);
         }
 
-        internal IDictionary<Guid, Session> Sessions
+        internal IEnumerable<Session> Sessions
         {
-            get { return new ConcurrentDictionary<Guid, Session>(SessionsStorage); }
-        }
-
-        internal IDictionary<string, IGame> Games
-        {
-            get { return new ConcurrentDictionary<string, IGame>(GameSessionsStorage); }
+            get { return SessionsStorage.Values; }
         }
     }
 }

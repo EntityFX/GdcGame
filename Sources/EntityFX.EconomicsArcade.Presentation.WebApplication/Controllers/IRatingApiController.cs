@@ -1,5 +1,6 @@
 ﻿using System.Web.Http;
 using EntityFX.EconomicsArcade.Contract.Common;
+using EntityFX.EconomicsArcade.Contract.Manager.RatingManager;
 
 namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Controllers
 {

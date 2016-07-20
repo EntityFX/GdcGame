@@ -10,12 +10,14 @@ namespace EntityFX.EconomicsArcade.Manager
 {
     public class RatingManager : IRatingManager
     {
+        private readonly GameSessions _gameSessions;
         private readonly IUserDataAccessService _userDataAccess;
         private readonly IGameDataRetrieveDataAccessService _gameDataRetrieveDataAccessService;
 
-        public RatingManager(IUserDataAccessService userDataAccess,
+        public RatingManager(GameSessions gameSessions, IUserDataAccessService userDataAccess,
             IGameDataRetrieveDataAccessService gameDataRetrieveDataAccessService)
         {
+            _gameSessions = gameSessions;
             _userDataAccess = userDataAccess;
             _gameDataRetrieveDataAccessService = gameDataRetrieveDataAccessService;
         }
@@ -41,7 +43,7 @@ namespace EntityFX.EconomicsArcade.Manager
                     GdcPoints = gameData.Counters.Counters[0].Value,
                     ManualStepsCount = gameData.ManualStepsCount,
                     TotalFunds = gameData.Counters.TotalFunds,
-                    UserName = user.Email
+                    UserName = user.Email, Status = _gameSessions.GetGameSessionStatus(user.Email)
                 });
             }
             return usersRatings.OrderByDescending(_ => _.GdcPoints).ThenByDescending(_ => _.TotalFunds).Take(count).ToArray();

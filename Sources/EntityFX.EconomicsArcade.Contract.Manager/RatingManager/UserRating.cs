@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace EntityFX.EconomicsArcade.Contract.Common
+namespace EntityFX.EconomicsArcade.Contract.Manager.RatingManager
 {
     [DataContract]
     public class UserRating
@@ -13,5 +13,7 @@ namespace EntityFX.EconomicsArcade.Contract.Common
         public decimal GdcPoints { get; set; }
         [DataMember]
         public int ManualStepsCount { get; set; }
+        [DataMember]
+        public UserGameSessionStatus Status { get; set; }
     }
 }

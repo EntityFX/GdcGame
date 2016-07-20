@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using EntityFx.EconomicsArcade.Test.Shared;
 using EntityFX.EconomicsArcade.Contract.Common;
+using EntityFX.EconomicsArcade.Contract.Game;
 using EntityFX.EconomicsArcade.Contract.Manager.GameManager;
+using ManualStepResult = EntityFX.EconomicsArcade.Contract.Manager.GameManager.ManualStepResult;
 
 namespace EntityFX.EconomicsArcade.TestClient
 {
@@ -40,11 +43,29 @@ namespace EntityFX.EconomicsArcade.TestClient
         {
             try
             {
-                await Task.Run(() => _game.PerformManualStep(null));
+                _manualStepResult = await Task.Run(() => _game.PerformManualStep(_manualStepResult == null ? null : new VerificationManualStepResult() { VerificationNumber = _verificationResult ?? 0 }));
+
+                if (_manualStepResult is NoVerficationRequiredResult)
+                {
+                    _manualStepResult = null;
+                }
+
+                if (_manualStepResult is VerificationRequiredResult)
+                {
+                    Thread.Sleep(100);
+                    Console.Clear();
+                    var manualVerificationResult = _manualStepResult as VerificationRequiredResult;
+                    Console.WriteLine("Verification required: {0} + {1} = "
+                        , manualVerificationResult.FirstNumber, manualVerificationResult.SecondNumber);
+                    int parseResult;
+                    var readString = Console.ReadLine();
+                    int.TryParse(readString, out parseResult);
+                    _verificationResult = parseResult == 0 ? default(int?) : parseResult;
+                }
             }
             catch (Exception exp)
             {
-
+                PrettyConsole.WriteLineColor(ConsoleColor.Red, "Error: {0}", exp);
             }
             DisplayGameData(GetGameData());
         }
@@ -76,7 +97,8 @@ namespace EntityFX.EconomicsArcade.TestClient
             DisplayGameData(GetGameData());
         }
 
-        private static readonly object _stdLock = new {};
+        private ManualStepResult _manualStepResult;
+        private int? _verificationResult;
 
         public override void DisplayGameData(GameData gameData)
         {

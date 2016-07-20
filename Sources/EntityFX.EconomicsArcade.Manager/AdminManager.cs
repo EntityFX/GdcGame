@@ -20,19 +20,9 @@ namespace EntityFX.EconomicsArcade.Manager
 
         public UserSessionsInfo[] GetActiveSessions()
         {
-            var sessionsOfUsersTemp = new Dictionary<string, List<Session>>();
-            foreach (var session in _gameSessions.Sessions)
+            return _gameSessions.Sessions.GroupBy(_ => _.Login).Select(sessionsOfUser => new UserSessionsInfo
             {
-                if (!sessionsOfUsersTemp.ContainsKey(session.Value.Login))
-                    sessionsOfUsersTemp.Add(session.Value.Login, new List<Session>());
-
-                sessionsOfUsersTemp[session.Value.Login].Add(session.Value);
-            }
-
-
-            return sessionsOfUsersTemp.Select(sessionsOfUser => new UserSessionsInfo
-            {
-                UserName = sessionsOfUser.Key, UserSessions = sessionsOfUser.Value.ToArray()
+                UserName = sessionsOfUser.Key, UserSessions = sessionsOfUser.ToArray()
             }).ToArray();
         }
 
@@ -43,28 +33,19 @@ namespace EntityFX.EconomicsArcade.Manager
 
         public void CloseAllUserSessions(string username)
         {
-            var userSessions = _gameSessions.Sessions.Where(_ => _.Value.Login == username);
-            foreach (var userSession in userSessions)
-            {
-                _gameSessions.RemoveSession(userSession.Key);
-            }
+            _gameSessions.Sessions.Where(_ => _.Login == username).AsParallel()
+                .ForAll(_ => _gameSessions.RemoveSession(_.SessionIdentifier));
         }
 
         public void CloseAllSessions()
         {
-            foreach (var session in _gameSessions.Sessions)
-            {
-                _gameSessions.RemoveSession(session.Key);
-            }
+            _gameSessions.RemoveAllSessions();
         }
 
         public void CloseAllSessionsExcludeThis(Guid guid)
         {
-            var sessionsToRemove = _gameSessions.Sessions.Where(_ => _.Key != guid);
-            foreach (var sessionToRemove in sessionsToRemove)
-            {
-                _gameSessions.RemoveSession(sessionToRemove.Key);
-            }
+            _gameSessions.Sessions.Where(_ => _.SessionIdentifier != guid).AsParallel()
+                .ForAll(_ => _gameSessions.RemoveSession(_.SessionIdentifier));
         }
 
         public void WipeUser(string username)
