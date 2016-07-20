@@ -1,4 +1,5 @@
-﻿using EntityFX.EconomicsArcade.Infrastructure.Common;
+﻿using System;
+using EntityFX.EconomicsArcade.Infrastructure.Common;
 using Microsoft.Practices.Unity;
 using System.Collections.Generic;
 using EntityFX.EconomicsArcade.Contract.DataAccess.User;
@@ -29,6 +30,7 @@ using EntityFX.EconomicsArcade.DataAccess.Repository.Queries.UserFundsDriver;
 using EntityFX.EconomicsArcade.DataAccess.Repository.Queries.UserGameCounter;
 using EntityFX.EconomicsArcade.DataAccess.Service.Mappers;
 using EntityFX.EconomicsArcade.Infrastructure.Service;
+using EntityFX.EconomicsArcade.Infrastructure.Service.Interfaces;
 using Microsoft.Practices.Unity.InterceptionExtension;
 using PortableLog.NLog;
 
@@ -97,6 +99,16 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess
                 new Interceptor<InterfaceInterceptor>(),
                 new InterceptionBehavior<LoggerInterceptor>()
                 );
+
+            if (!Environment.UserInteractive)
+            {
+                container.RegisterType<IServiceInfoHelper, ServiceInfoHelperLogger>();
+            }
+            else
+            {
+                container.RegisterType<IServiceInfoHelper, ServiceInfoHelperConsole>();
+            }
+
             return container;
         }
     }

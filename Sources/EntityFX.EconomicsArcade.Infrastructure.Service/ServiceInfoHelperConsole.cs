@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Linq;
 using System.ServiceModel;
+using EntityFX.EconomicsArcade.Infrastructure.Service.Interfaces;
 
 namespace EntityFX.EconomicsArcade.Infrastructure.Service
 {
-    public static class ServiceInfoHelper
+    public class ServiceInfoHelperConsole : IServiceInfoHelper
     {
-        public static void PrintServiceHostInfo(ServiceHost serviceHost)
+        public void PrintServiceHostInfo(ServiceHost serviceHost)
         {
             Console.WriteLine("Service {0}", serviceHost.Description.Name);
             serviceHost.Description.Endpoints.ToList().ForEach(_ =>

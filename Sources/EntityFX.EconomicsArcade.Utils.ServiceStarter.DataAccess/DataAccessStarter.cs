@@ -3,6 +3,8 @@ using EntityFX.EconomicsArcade.Infrastructure.Service;
 using System;
 using EntityFX.EconomicsArcade.Contract.DataAccess.User;
 using EntityFX.EconomicsArcade.Contract.DataAccess.GameData;
+using EntityFX.EconomicsArcade.Infrastructure.Service.Interfaces;
+using Microsoft.Practices.Unity;
 
 namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess
 {
@@ -35,7 +37,10 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess
 
         protected override void OnServiceOpened(IServiceHost service)
         {
-            ServiceInfoHelper.PrintServiceHostInfo(service.ServiceHost);
+            var serviceInfoHelper = _container.Resolve<IServiceInfoHelper>();
+            serviceInfoHelper.PrintServiceHostInfo(service.ServiceHost);
+            //ServiceInfoHelperConsole.PrintServiceHostInfo(service.ServiceHost);
+
         }
     }
 }

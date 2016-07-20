@@ -8,7 +8,7 @@ namespace EntityFX.EconomicsArcade.Infrastructure.Service
     public abstract class ServiceStarterBase<TBootstrapper> : IServiceStarter
         where TBootstrapper : IContainerBootstrapper, new()
     {
-        private readonly IUnityContainer _container;
+        protected readonly IUnityContainer _container;
         private readonly IDictionary<string, ServiceHostInfo> _serviceHosts = new Dictionary<string, ServiceHostInfo>();
 
         protected IDictionary<string, ServiceHostInfo> ServiceHosts

@@ -3,9 +3,11 @@ using System.Net;
 using EntityFX.EconomicsArcade.Contract.NotifyConsumerService;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 using EntityFX.EconomicsArcade.Infrastructure.Service;
+using EntityFX.EconomicsArcade.Infrastructure.Service.Interfaces;
 using Microsoft.AspNet.SignalR;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.Hosting;
+using Microsoft.Practices.Unity;
 using Owin;
 
 namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.NotifyConsumer
@@ -51,7 +53,8 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.NotifyConsumer
 
         protected override void OnServiceOpened(IServiceHost service)
         {
-            ServiceInfoHelper.PrintServiceHostInfo(service.ServiceHost);
+            var serviceInfoHelper = _container.Resolve<IServiceInfoHelper>();
+            serviceInfoHelper.PrintServiceHostInfo(service.ServiceHost);
         }
 
         public void Dispose()

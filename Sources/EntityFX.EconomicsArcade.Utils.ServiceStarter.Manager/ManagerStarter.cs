@@ -8,6 +8,7 @@ using EntityFX.EconomicsArcade.Contract.Manager.AdminManager;
 using EntityFX.EconomicsArcade.Contract.Manager.GameManager;
 using EntityFX.EconomicsArcade.Contract.Manager.RatingManager;
 using EntityFX.EconomicsArcade.Contract.Manager.UserManager;
+using EntityFX.EconomicsArcade.Infrastructure.Service.Interfaces;
 using Microsoft.Practices.Unity;
 
 namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
@@ -39,7 +40,8 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
 
         protected override void OnServiceOpened(IServiceHost service)
         {
-            ServiceInfoHelper.PrintServiceHostInfo(service.ServiceHost);
+            var serviceInfoHelper = _container.Resolve<IServiceInfoHelper>();
+            serviceInfoHelper.PrintServiceHostInfo(service.ServiceHost);
         }
 
         private class GameManagerServiceHost : NetTcpServiceHost<IGameManager>

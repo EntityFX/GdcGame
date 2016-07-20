@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 using EntityFX.EconomicArcade.Engine.GameEngine.Mappers;
 using EntityFX.EconomicArcade.Engine.GameEngine.NetworkGameEngine;
 using EntityFX.EconomicsArcade.Contract.Common;
@@ -18,6 +19,7 @@ using EntityFX.EconomicsArcade.Contract.Manager.UserManager;
 using EntityFX.EconomicsArcade.Contract.NotifyConsumerService;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 using EntityFX.EconomicsArcade.Infrastructure.Service;
+using EntityFX.EconomicsArcade.Infrastructure.Service.Interfaces;
 using EntityFX.EconomicsArcade.Manager;
 using EntityFX.EconomicsArcade.Manager.Mappers;
 using EntityFX.EconomicsArcade.Utils.ClientProxy.DataAccess;
@@ -127,6 +129,15 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
                 .AddPolicy("logging")
                 .AddCallHandler<LoggerCallHandler>(new ContainerControlledLifetimeManager())
                 .AddMatchingRule<NamespaceMatchingRule>(new InjectionConstructor("EntityFX.EconomicsArcade.*", true));
+            }
+
+            if (!Environment.UserInteractive)
+            {
+                container.RegisterType<IServiceInfoHelper, ServiceInfoHelperLogger>();
+            }
+            else
+            {
+                container.RegisterType<IServiceInfoHelper, ServiceInfoHelperConsole>();
             }
 
 
