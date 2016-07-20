@@ -23,5 +23,10 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Controllers
         {
             return View("Index");
         }
+
+        public ActionResult Rating()
+        {
+            return View("Rating");
+        }
     }
 }

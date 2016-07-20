@@ -1,14 +1,19 @@
-﻿<div class="row" ng-show="ratings">
+﻿<div ng-if="!ratings">
+    Loading...
+</div>
+<div class="row" ng-show="ratings">
     <table class="table">
         <thead>
-        <tr>
-            <td>Username</td>
-            <td>Total Funds</td>
-            <td>Gdc Points</td>
-            <td>Clicked</td>
-        </tr>
+            <tr>
+                <td>#</td>
+                <td>Имя пользователя</td>
+                <td>Всего заработано</td>
+                <td>Gdc Points</td>
+                <td>Накликано</td>
+            </tr>
         </thead>
-        <tr ng-repeat="rating in ratings">
+        <tr ng-repeat="rating in ratings track by $index">
+            <td>{{$index+1}}</td>
             <td>{{rating.UserName}}</td>
             <td>{{rating.TotalFunds}}</td>
             <td>{{rating.GdcPoints}}</td>

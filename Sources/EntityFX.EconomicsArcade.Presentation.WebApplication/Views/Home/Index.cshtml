@@ -1,106 +1,61 @@
 ﻿@{
-    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml"; ;
 }
+<section class="container-fluid jumbotron jumbotron-top">
+    <section class="row">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-10">
+            <counters></counters>
+        </div>
+        <div class="col-md-1">
+        </div>
+    </section>
+    <section class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4 center-block">
 
-<!DOCTYPE html>
-
-<html ng-app="gdCameApp">
-<head>
-    <title>GDCame</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    @Styles.Render("~/Content/css")
-
-</head>
-
-<body ng-controller="appGameController">
-    <nav class="navbar navbar-fixed-top navbar-default">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">GDCame</a>
-            </div>
-            <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><p class="navbar-text">@User.Identity.Name</p></li>
-                </ul>
+            <div class="btn-toolbar" role="toolbar" aria-label="...">
+                <button type="button" class="btn btn-success btn-lg" ng-click="fightAgainstInflation()" ng-disabled="gameData.Counters.Counters[2].Inflation == 0">Take a rest</button>
+                <button type="button" class="btn btn-info btn-lg" ng-click="performManualStep()">WORK HARD !!</button>
+                <button type="button" class="btn btn-danger btn-lg" ng-click="activateDelayedCounter()" ng-disabled="gameData.Counters.Counters[3].UnlockValue > gameData.Counters.Counters[0].Value">Do quarter goal</button>
             </div>
         </div>
-    </nav>
+        <div class="col-md-4">
 
-    <section class="container-fluid jumbotron jumbotron-top">
-        <section class="row">
-            <div class="col-md-1">
-            </div>
-            <div class="col-md-10">
-                <counters></counters>
-            </div>
-            <div class="col-md-1">
-            </div>
-        </section>
-        <section class="row">
-            <div class="col-md-4">
-            </div>
-            <div class="col-md-4 center-block">
-
-                <div class="btn-toolbar" role="toolbar" aria-label="...">
-                    <button type="button" class="btn btn-success btn-lg" ng-click="fightAgainstInflation()" ng-disabled="gameData.Counters.Counters[2].Inflation == 0">Take a rest</button>
-                    <button type="button" class="btn btn-info btn-lg" ng-click="performManualStep()">WORK HARD !!</button>
-                    <button type="button" class="btn btn-danger btn-lg" ng-click="activateDelayedCounter()" ng-disabled="gameData.Counters.Counters[3].UnlockValue > gameData.Counters.Counters[0].Value">Do quarter goal</button>
+        </div>
+    </section>
+    <section class="row" ng-show="visibility">
+        <br />
+        <br />
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4 center-block">
+            <form class="form-inline">
+                <label>{{VerificationData.FirstNumber}}</label>
+                +
+                <label>{{VerificationData.SecondNumber}}</label>
+                =
+                <div class="form-group">
+                    <input type="text" class="input-small" ng-model="verificationNumber">
+                    <button type="button" class="btn btn-info btn-lg" ng-click="performManualStep()">Send</button>
                 </div>
-            </div>
-            <div class="col-md-4">
-              
-            </div>
-        </section>
-        <section class="row" ng-show="visibility">
-            <br />
-            <br />
-            <div class="col-md-4">
-            </div>
-            <div class="col-md-4 center-block">
-                <form class="form-inline">
-                    <label>{{VerificationData.FirstNumber}}</label>
-                    +
-                    <label>{{VerificationData.SecondNumber}}</label>
-                    =
-                    <div class="form-group">
-                        <input type="text" class="input-small" ng-model="verificationNumber">
-                        <button type="button" class="btn btn-info btn-lg" ng-click="performManualStep()">Send</button>
-                    </div>
-                </form>
-            </div>
-            <div class="col-md-4">
-            </div>
-        </section>
+            </form>
+        </div>
+        <div class="col-md-4">
+        </div>
     </section>
+</section>
 
-    <section class="container">
-        <section class="row scrollit">
-            <div class="col-md-1">
-            </div>
-            <div class="col-md-10">
-                <fund-drivers></fund-drivers>
-            </div>
-            <div class="col-md-1">
-                <rating></rating>
-            </div>
-        </section>
+<section class="container">
+    <section class="row scrollit">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-10">
+            <fund-drivers></fund-drivers>
+        </div>
+        <div class="col-md-1">
+        </div>
     </section>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/angular")
-    @Scripts.Render("~/bundles/signalr")
-    @Scripts.Render("~/app/app.js")
-    @Scripts.Render("~/app/gdCameData.service.js")
-    @Scripts.Render("~/app/gdCameRating.service.js")
-    @Scripts.Render("~/app/counters/counters.component.js")
-    @Scripts.Render("~/app/fundDrivers/fundDrivers.component.js")
-    @Scripts.Render("~/app/rating/rating.component.js")
-    @Scripts.Render("http://localhost:8080/signalr/hubs")
-</body>
-</html>
+</section>

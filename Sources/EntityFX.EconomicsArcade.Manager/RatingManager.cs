@@ -23,16 +23,27 @@ namespace EntityFX.EconomicsArcade.Manager
         public UserRating[] GetUsersRatingByCount(int count)
         {
             var users = _userDataAccess.FindAll();
-            var usersRatings = (from user in users
-                                let gameData = _gameDataRetrieveDataAccessService.GetGameData(user.Id)
-                                select new UserRating()
-                                {
-                                    GdcPoints = gameData.Counters.Counters[0].Value,
-                                    ManualStepsCount = gameData.ManualStepsCount,
-                                    TotalFunds = gameData.Counters.TotalFunds,
-                                    UserName = user.Email
-                                });
-
+            //var usersRatings = (from user in users
+            //                    let gameData = _gameDataRetrieveDataAccessService.GetGameData(user.Id)
+            //                    select new UserRating()
+            //                    {
+            //                        GdcPoints = gameData.Counters.Counters[0].Value,
+            //                        ManualStepsCount = gameData.ManualStepsCount,
+            //                        TotalFunds = gameData.Counters.TotalFunds,
+            //                        UserName = user.Email
+            //                    });
+            var usersRatings = new List<UserRating>();
+            foreach (var user in users)
+            {
+                var gameData = _gameDataRetrieveDataAccessService.GetGameData(user.Id);
+                usersRatings.Add(new UserRating()
+                {
+                    GdcPoints = gameData.Counters.Counters[0].Value,
+                    ManualStepsCount = gameData.ManualStepsCount,
+                    TotalFunds = gameData.Counters.TotalFunds,
+                    UserName = user.Email
+                });
+            }
             return usersRatings.OrderByDescending(_ => _.GdcPoints).ThenByDescending(_ => _.TotalFunds).Take(count).ToArray();
         }
 
@@ -45,7 +56,7 @@ namespace EntityFX.EconomicsArcade.Manager
                 GdcPoints = gameData.Counters.Counters[0].Value,
                 ManualStepsCount = gameData.ManualStepsCount,
                 TotalFunds = gameData.Counters.TotalFunds,
-                UserName = user.Email 
+                UserName = user.Email
             };
         }
         public UserRating[] FindUserRatingByUserNameAndAroundUsers(string userName, int count)
