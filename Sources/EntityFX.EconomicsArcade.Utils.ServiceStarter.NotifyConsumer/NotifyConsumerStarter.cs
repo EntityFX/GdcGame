@@ -12,7 +12,7 @@ using Owin;
 
 namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.NotifyConsumer
 {
-    public class NotifyConsumerStarter : ServiceStarterBase<ContainerBootstrapper>, IServiceStarter, IDisposable
+    public class NotifyConsumerStarter : ServicesStarterBase<ContainerBootstrapper>, IServicesStarter, IDisposable
     {
         private readonly string _signalRHost;
         private readonly Uri _baseUrl;
@@ -25,7 +25,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.NotifyConsumer
             _baseUrl = new Uri(baseUrl);
         }
 
-        public override void StartService()
+        public override void StartServices()
         {
             AddNetMsmqService<INotifyConsumerService>(_baseUrl);
             OpenServices();
@@ -46,7 +46,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.NotifyConsumer
 
         }
 
-        public override void StopService()
+        public override void StopServices()
         {
             CloseServices();
         }

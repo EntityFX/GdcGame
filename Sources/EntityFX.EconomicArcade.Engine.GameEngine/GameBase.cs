@@ -27,9 +27,9 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
 
         private int _currentVerificationSteps = 0;
 #if DEBUG
-        private readonly int _stepsToVerify = 500;
+        private readonly int _stepsToVerify = 200;
 #else
-        private readonly int _stepsToVerify = 700;
+        private readonly int _stepsToVerify = 200;
 #endif
 
         private ManualStepResult _manualStepVerificationRequiredResult;
@@ -378,8 +378,9 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
 
             foreach (var genericCounter in enumerable)
             {
-                genericCounter.CurrentSteps = 0;
+                genericCounter.CurrentSteps -= genericCounter.StepsToIncreaseInflation;
                 genericCounter.Inflation = genericCounter.CurrentSteps / genericCounter.StepsToIncreaseInflation;
+                CashFunds(genericCounter.Value);
             }
             FundsCounters.RootCounter.SubValue += 1;
         }

@@ -38,6 +38,7 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.Mappers
                     var destinationGenericCounter = new EconomicsArcade.Contract.Common.Counters.GenericCounter
                     {
                         BonusPercentage = sourcenGenericCounter.BonusPercentage,
+                        Bonus = sourcenGenericCounter.Bonus,
                         Inflation = sourcenGenericCounter.Inflation,
                         CurrentSteps = sourcenGenericCounter.CurrentSteps,
                         SubValue = sourcenGenericCounter.SubValue

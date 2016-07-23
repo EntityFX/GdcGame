@@ -41,7 +41,7 @@
     <Compile Include="IContainerBootstrapper.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="IMapper.cs" />
-    <Compile Include="IServiceStarter.cs" />
+    <Compile Include="IServicesStarter.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="NLoggerAdapter.cs" />
     <Compile Include="OperationContextHelper.cs" />

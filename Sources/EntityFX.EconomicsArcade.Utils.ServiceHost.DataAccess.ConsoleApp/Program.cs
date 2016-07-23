@@ -14,7 +14,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceHost.DataAccess.ConsoleApp
                 , ConfigurationManager.AppSettings["DataAccessHost_BaseUri"]
                 , ConfigurationManager.AppSettings["DataAccessHost_BaseStoreUri"]
                 );
-            ss.StartService();
+            ss.StartServices();
             Console.ReadKey();
         }
     }

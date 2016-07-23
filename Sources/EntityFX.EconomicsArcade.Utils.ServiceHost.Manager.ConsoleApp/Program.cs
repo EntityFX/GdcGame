@@ -13,7 +13,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceHost.Manager.ConsoleApp
                 containerBootstrapper
                 , ConfigurationManager.AppSettings["ManagerEndpoint_BaseAddressServiceUrl"]
                 );
-            ss.StartService();
+            ss.StartServices();
             Console.ReadKey();
         }
     }

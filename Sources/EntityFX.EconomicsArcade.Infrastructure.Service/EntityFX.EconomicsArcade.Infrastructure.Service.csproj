@@ -94,7 +94,7 @@
     <Compile Include="NetTcp\NetTcpServiceHost.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceInfoHelperConsole.cs" />
-    <Compile Include="Bases\ServiceStarterBase.cs" />
+    <Compile Include="Bases\ServicesStarterBase.cs" />
     <Compile Include="ServiceInfoHelperLogger.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -16,13 +16,17 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository.Mappers
             Inflation = source.Inflation,
             BonusPercentage = source.BonusPercentage,
             CurrentSteps = source.CurrentStepsCount,
+            SubValue = source.Value
         };
 
         private static readonly IDictionary<int, Func<UserCounterEntity, CounterBase>> MappingDictionary =
     new ReadOnlyDictionary<int, Func<UserCounterEntity, CounterBase>>(new Dictionary<int, Func<UserCounterEntity, CounterBase>>(new Dictionary<int, Func<UserCounterEntity, CounterBase>>()
             {
                 {
-                    0, entity => new SingleCounter()
+                    0, entity => new SingleCounter 
+                    {
+                        Value =entity.Value
+                    }
                 },
                 {
                     1, GenericFunc
@@ -32,7 +36,8 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository.Mappers
                     {
                         SecondsRemaining = entity.MiningTimeSecondsEllapsed,
                         UnlockValue = 10000,
-                        MiningTimeSeconds = entity.Counter.MiningTimeSeconds ?? 0
+                        MiningTimeSeconds = entity.Counter.MiningTimeSeconds ?? 0,
+                         Value =entity.Value
                     }
                 }
             }));
@@ -42,7 +47,6 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository.Mappers
             destination = MappingDictionary[source.Counter.Type](source);
             if (destination == null) return null;
             destination.Name = source.Counter.Name;
-            destination.Value = source.Value;
             destination.Type = source.Counter.Type;
             destination.Id = source.Counter.Id;
             return destination;

@@ -17,14 +17,14 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceHost.NotifyConsumer.Temp
 
         protected override void OnStart(string[] args)
         {
-            _notifyConsumerStarter.StartService();
+            _notifyConsumerStarter.StartServices();
 
             AddLog("Service " + this.ServiceName + " is started");
         }
 
         protected override void OnStop()
         {
-            _notifyConsumerStarter.StopService();
+            _notifyConsumerStarter.StopServices();
 
             AddLog("Service " + this.ServiceName + " is stoped");
         }

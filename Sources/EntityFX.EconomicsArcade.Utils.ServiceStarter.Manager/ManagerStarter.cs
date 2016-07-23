@@ -13,7 +13,7 @@ using Microsoft.Practices.Unity;
 
 namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
 {
-    public class ManagerStarter: ServiceStarterBase<ContainerBootstrapper>, IServiceStarter
+    public class ManagerStarter: ServicesStarterBase<ContainerBootstrapper>, IServicesStarter
     {
         private readonly Uri _baseUrl;// = "net.tcp://localhost:8555/EntityFX.EconomicsArcade.Manager/";
 
@@ -23,7 +23,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
             _baseUrl = new Uri(baseUrl);
         }
 
-        public override void StartService()
+        public override void StartServices()
         {
             AddNetTcpService<ISessionManager>(_baseUrl);
             AddNetTcpService<ISimpleUserManager>(_baseUrl);
@@ -33,7 +33,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
             OpenServices();
         }
 
-        public override void StopService()
+        public override void StopServices()
         {
             CloseServices();
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 using Microsoft.Practices.Unity;
 using System.Collections.Generic;
@@ -82,23 +83,27 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess
             container.RegisterType<IUserCounterRepository, UserCounterRepository>();
             container.RegisterType<IUserFundsDriverRepository, UserFundsDriverRepository>();
 
-            container.RegisterType<IUserDataAccessService, UserDataAccessService>();
-
-            container.RegisterType<IGameDataStoreDataAccessService, GameDataStoreDataAccessService>();
-
             container.RegisterType<IUserDataAccessService, UserDataAccessService>(
-                new Interceptor<InterfaceInterceptor>(),
-                new InterceptionBehavior<LoggerInterceptor>()
+                new InterceptionBehavior<PolicyInjectionBehavior>()
+                , new Interceptor<InterfaceInterceptor>()
                 );
             container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessService>(
-                new Interceptor<InterfaceInterceptor>(),
-                new InterceptionBehavior<LoggerInterceptor>(),
+                new InterceptionBehavior<PolicyInjectionBehavior>()
+                , new Interceptor<InterfaceInterceptor>(),
                 new InterceptionBehavior<GameDataCachingInterceptionBehavior>()
                 );
             container.RegisterType<IGameDataStoreDataAccessService, GameDataStoreDataAccessService>(
-                new Interceptor<InterfaceInterceptor>(),
-                new InterceptionBehavior<LoggerInterceptor>()
+                new InterceptionBehavior<PolicyInjectionBehavior>()
+                , new Interceptor<InterfaceInterceptor>()
                 );
+
+            if (ConfigurationManager.AppSettings["UseLoggerInterceptor"] == "True")
+            {
+                container.Configure<Interception>()
+                .AddPolicy("logging")
+                .AddCallHandler<LoggerCallHandler>(new ContainerControlledLifetimeManager())
+                .AddMatchingRule<NamespaceMatchingRule>(new InjectionConstructor("EntityFX.EconomicsArcade.*", true));
+            }
 
             if (!Environment.UserInteractive)
             {

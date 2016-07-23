@@ -17,14 +17,14 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceHost.Mananger.WindowsSrv
 
         protected override void OnStart(string[] args)
         {
-            _managerStarter.StartService();
+            _managerStarter.StartServices();
 
             AddLog("Service " + this.ServiceName + " is started");
         }
 
         protected override void OnStop()
         {
-            _managerStarter.StopService();
+            _managerStarter.StopServices();
 
             AddLog("Service " + this.ServiceName + " is stoped");
         }

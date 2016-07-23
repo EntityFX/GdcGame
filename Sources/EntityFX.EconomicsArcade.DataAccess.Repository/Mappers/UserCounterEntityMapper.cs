@@ -14,6 +14,7 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository.Mappers
             {
                 case 0:
                     var singleCounter = (SingleCounter)source;
+                    destination.Value = singleCounter.Value;
                     break;
                 case 1:
                     var genericCounter = (GenericCounter)source;
@@ -22,14 +23,15 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository.Mappers
                     destination.CreateDateTime = DateTime.Now;
                     destination.Inflation = genericCounter.Inflation;
                     destination.CurrentStepsCount = genericCounter.CurrentSteps;
+                    destination.Value = genericCounter.SubValue;
                     break;
                 case 2:
                     var delayedCounter = (DelayedCounter)source;
                     destination.MiningTimeSecondsEllapsed = delayedCounter.SecondsRemaining;
+                    destination.Value = delayedCounter.Value;
                     break;
             }
             destination.CounterId = source.Id;
-            destination.Value = source.Value;
             return destination;
         }
     }

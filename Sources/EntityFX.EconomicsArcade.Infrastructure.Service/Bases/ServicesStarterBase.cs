@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace EntityFX.EconomicsArcade.Infrastructure.Service
 {
-    public abstract class ServiceStarterBase<TBootstrapper> : IServiceStarter
+    public abstract class ServicesStarterBase<TBootstrapper> : IServicesStarter
         where TBootstrapper : IContainerBootstrapper, new()
     {
         protected readonly IUnityContainer _container;
@@ -16,7 +16,7 @@ namespace EntityFX.EconomicsArcade.Infrastructure.Service
             get { return _serviceHosts; }
         }
 
-        protected ServiceStarterBase(TBootstrapper bootstrapper)
+        protected ServicesStarterBase(TBootstrapper bootstrapper)
         {
             _container = bootstrapper.Configure(new UnityContainer());
         }
@@ -66,9 +66,9 @@ namespace EntityFX.EconomicsArcade.Infrastructure.Service
             }
         }
 
-        public abstract void StopService();
+        public abstract void StopServices();
 
-        public abstract void StartService();
+        public abstract void StartServices();
 
         protected virtual void OnServiceOpened(IServiceHost service) {
 

@@ -14,7 +14,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceHost.NotifyConsumer.ConsoleApp
                 containerBootstrapper, ConfigurationManager.AppSettings["NotifyConsumerEndpoint_BaseAddressServiceUrl"],
                  ConfigurationManager.AppSettings["NotifyConsumerSignalRHubEndpoint_AddressServiceUrl"]
                 );
-            ss.StartService();
+            ss.StartServices();
             Console.ReadKey();
         }
     }

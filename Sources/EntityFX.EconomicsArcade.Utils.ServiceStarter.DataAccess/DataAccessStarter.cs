@@ -8,7 +8,7 @@ using Microsoft.Practices.Unity;
 
 namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess
 {
-    public class DataAccessStarter: ServiceStarterBase<ContainerBootstrapper>, IServiceStarter
+    public class DataAccessStarter: ServicesStarterBase<ContainerBootstrapper>, IServicesStarter
     {
 
         private readonly Uri _baseUrl;// = "net.tcp://localhost:8777/EntityFX.EconomicsArcade.DataAccess/";
@@ -22,7 +22,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess
             _baseStoreUrl = new Uri(baseStoreUrl);
         }
 
-        public override void StartService()
+        public override void StartServices()
         {
             AddNetTcpService<IUserDataAccessService>(_baseUrl);
             AddNetTcpService<IGameDataRetrieveDataAccessService>(_baseUrl);
@@ -30,7 +30,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess
             OpenServices();
         }
 
-        public override void StopService()
+        public override void StopServices()
         {
             CloseServices();
         }

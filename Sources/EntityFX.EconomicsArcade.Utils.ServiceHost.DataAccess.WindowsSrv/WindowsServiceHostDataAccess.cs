@@ -17,14 +17,14 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceHost.DataAccess.WindowsSrv
 
         protected override void OnStart(string[] args)
         {
-            _dataAccessStarter.StartService();
+            _dataAccessStarter.StartServices();
 
             AddLog("Service " + this.ServiceName + " is started");
         }
 
         protected override void OnStop()
         {
-            _dataAccessStarter.StopService();
+            _dataAccessStarter.StopServices();
 
             AddLog("Service " + this.ServiceName + " is stoped");
         }

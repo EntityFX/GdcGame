@@ -29,6 +29,7 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.NetworkGameEngine
                                     CurrentSteps = sourceGenericCounter.CurrentSteps,
                                     StepsToIncreaseInflation = sourceGenericCounter.InflationIncreaseSteps,
                                     Inflation = sourceGenericCounter.Inflation,
+                                    SubValue = sourceGenericCounter.SubValue,
                                     IsUsedInAutoStep =
                                         sourceGenericCounter.UseInAutoSteps
                                 };
@@ -36,7 +37,10 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.NetworkGameEngine
                         },
                         {
                             typeof(EconomicsArcade.Contract.Common.Counters.SingleCounter),
-                            source =>  new SingleCounter()
+                            source =>  new SingleCounter 
+                            {
+                                                    SubValue = source.Value
+                            }
                         },
                         {
                             typeof(EconomicsArcade.Contract.Common.Counters.DelayedCounter),
@@ -46,6 +50,7 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.NetworkGameEngine
                                 return new DelayedCounter
                                 {
                                     UnlockValue = sourceDelayedCounter.UnlockValue,
+                                    SubValue = sourceDelayedCounter.Value,
                                     SecondsRemaining = sourceDelayedCounter.SecondsRemaining,
                                     SecondsToAchieve = sourceDelayedCounter.MiningTimeSeconds,
                                     IsMining = sourceDelayedCounter.SecondsRemaining > 0
@@ -129,7 +134,6 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.NetworkGameEngine
                 if (destinationCouner != null)
                 {
                     destinationCouner.Name = sourceCounter.Name;
-                    destinationCouner.SubValue = sourceCounter.Value;
                     destinationCouner.Id = sourceCounter.Id;
                 }
                 counters.Add(inc, destinationCouner);
