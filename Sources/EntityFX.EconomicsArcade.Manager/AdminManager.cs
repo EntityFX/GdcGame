@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using EntityFX.EconomicsArcade.Contract.Manager;
 using EntityFX.EconomicsArcade.Contract.Manager.AdminManager;
 using EntityFX.EconomicsArcade.Contract.Manager.SessionManager;
+using EntityFX.EconomicsArcade.Infrastructure.Common;
 
 namespace EntityFX.EconomicsArcade.Manager
 {
@@ -22,7 +23,8 @@ namespace EntityFX.EconomicsArcade.Manager
         {
             return _gameSessions.Sessions.GroupBy(_ => _.Login).Select(sessionsOfUser => new UserSessionsInfo
             {
-                UserName = sessionsOfUser.Key, UserSessions = sessionsOfUser.ToArray()
+                UserName = sessionsOfUser.Key,
+                UserSessions = sessionsOfUser.ToArray()
             }).ToArray();
         }
 
@@ -39,6 +41,7 @@ namespace EntityFX.EconomicsArcade.Manager
 
         public void CloseAllSessions()
         {
+            var sessionId = OperationContextHelper.Instance.SessionId;
             _gameSessions.RemoveAllSessions();
         }
 
@@ -51,6 +54,11 @@ namespace EntityFX.EconomicsArcade.Manager
         public void WipeUser(string username)
         {
             _gameSessions.GetGame(username).Reset();
+        }
+
+        public void ReloadGame(string username)
+        {
+            throw new NotImplementedException();
         }
     }
 }

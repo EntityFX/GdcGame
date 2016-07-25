@@ -22,7 +22,7 @@ namespace EntityFX.EconomicsArcade.Manager
         }
 
 
-        public Guid AddSession(string login)
+        public Guid OpenSession(string login)
         {
             User user;
             try
@@ -38,12 +38,12 @@ namespace EntityFX.EconomicsArcade.Manager
             if (user != null)
             {
                 var result = _gameSessions.AddSession(user);
-                _logger.Info("EntityFX.EconomicsArcade.Manager.SessionManager.AddSession: Session {0} added for login: {1}", result, login);
+                _logger.Info("EntityFX.EconomicsArcade.Manager.SessionManager.OpenSession: Session {0} added for login: {1}", result, login);
                 return result;
             }
             var message = string.Format("User with login {0} not found", login);
             _logger.Warning(message);
-            throw new FaultException(new FaultReason(message), new FaultCode("AddSession"), "AddSession");
+            throw new FaultException(new FaultReason(message), new FaultCode("OpenSession"), "OpenSession");
         }
 
         public bool CloseSession()

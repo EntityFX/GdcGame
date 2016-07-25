@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Configuration;
 using System.ServiceModel;
+using EntityFX.EconomicsArcade.Contract.Manager;
+using EntityFX.EconomicsArcade.Contract.Manager.AdminManager;
 using EntityFX.EconomicsArcade.Contract.Manager.GameManager;
 using EntityFX.EconomicsArcade.Contract.Manager.SessionManager;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
@@ -63,6 +65,13 @@ namespace EntityFX.EconomicsArcade.TestClient
                 );
         }
 
+        private static IAdminManager GetAdminClient(Guid sessionGuid)
+        {
+            return new AdminManagerClient(
+                ConfigurationManager.AppSettings["ManagerEndpointAddress_AdminManager"], _sessionGuid
+                );
+        }
+
         private static void MainLoop(string[] args)
         {
             if (args.Length > 0)
@@ -75,11 +84,10 @@ namespace EntityFX.EconomicsArcade.TestClient
             _userName = loginResult.Item2;
             var gameClient = GetGameClient(_sessionGuid);
 
-            var adminManagerClient = new AdminManagerClient(
-                ConfigurationManager.AppSettings["ManagerEndpointAddress_AdminManager"]
-                );
+            var adminManagerClient = GetAdminClient(_sessionGuid);
 
             var gr = new GameRunner(_userName, _sessionGuid, gameClient);
+            var ac = new AdminConsole(adminManagerClient, _sessionGuid);
             var gameData = gr.GetGameData();
             gr.DisplayGameData(gameData);
             ConsoleKeyInfo keyInfo;
@@ -109,8 +117,7 @@ namespace EntityFX.EconomicsArcade.TestClient
                     }
                     else if (keyInfo.Key == ConsoleKey.F2)
                     {
-                        var terminal = new UIConsole(adminManagerClient, _sessionGuid);
-                        terminal.StartMenu();
+                        ac.StartMenu();
 
                         gr.Invalidate();
                     }                   
@@ -126,8 +133,10 @@ namespace EntityFX.EconomicsArcade.TestClient
                     _sessionGuid = res.Item1;
                     _userName = res.Item2;
                     gr.SessionGuid = _sessionGuid;
+                    ac.SessionGuid = _sessionGuid;
                     gr.User = _userName;
                     gr.SetGameClient(GetGameClient(_sessionGuid));
+                    ac.SetAdminClient(GetAdminClient(_sessionGuid));
                     gr.DisplayGameData(gr.GetGameData());
                 }
             }

@@ -1,4 +1,5 @@
-﻿using EntityFX.EconomicsArcade.Contract.Manager.SessionManager;
+﻿using System.ServiceModel.Description;
+using EntityFX.EconomicsArcade.Contract.Manager.SessionManager;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 using EntityFX.EconomicsArcade.Infrastructure.Service;
 using System;
@@ -9,6 +10,7 @@ using EntityFX.EconomicsArcade.Contract.Manager.GameManager;
 using EntityFX.EconomicsArcade.Contract.Manager.RatingManager;
 using EntityFX.EconomicsArcade.Contract.Manager.UserManager;
 using EntityFX.EconomicsArcade.Infrastructure.Service.Interfaces;
+using EntityFX.EconomicsArcade.Manager;
 using Microsoft.Practices.Unity;
 
 namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
@@ -27,9 +29,9 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
         {
             AddNetTcpService<ISessionManager>(_baseUrl);
             AddNetTcpService<ISimpleUserManager>(_baseUrl);
-            AddNetTcpService<IAdminManager>(_baseUrl);
             AddNetTcpService<IRatingManager>(_baseUrl);
             AddCustomService<GameManagerServiceHost>(_baseUrl);
+            AddCustomService<AdminManagerServiceHost>(_baseUrl);
             OpenServices();
         }
 
@@ -54,6 +56,26 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
             protected override void BeforeServiceOpen(ServiceHost serviceHost)
             {
                 serviceHost.Description.Behaviors.Add(new ErrorHandlerBehavior(new InvalidSessionFaultHandler()));
+            }
+        }
+
+        private class AdminManagerServiceHost : NetTcpServiceHost<IAdminManager>
+        {
+            public AdminManagerServiceHost(IUnityContainer container)
+                : base(container)
+            {
+            }
+
+            protected override void BeforeServiceOpen(ServiceHost serviceHost)
+            {
+                var serviceEndpointCollection = serviceHost.Description.Endpoints;
+                foreach (var serviceEndpoint in serviceEndpointCollection)
+                {
+                    foreach (var operation in serviceEndpoint.Contract.Operations)
+                    {
+                        operation.Behaviors.Add(new CheckRolePermissionsOperationBehavior(Container.Resolve<GameSessions>()));
+                    }
+                }
             }
         }
     }

@@ -38,8 +38,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AdminManager\IAdminManager.cs" />
-    <Compile Include="AdminManager\InsufficientPermissionsException.cs" />
+    <Compile Include="AdminManager\InsufficientPermissionsFault.cs" />
     <Compile Include="AdminManager\UserSessionsInfo.cs" />
+    <Compile Include="CustomPrincipalPermissionAttribute.cs" />
     <Compile Include="GameManager\BuyFundDriverResult.cs" />
     <Compile Include="GameManager\IGameManager.cs" />
     <Compile Include="GameManager\VerificationManualStepData.cs" />
@@ -47,7 +48,7 @@
     <Compile Include="RatingManager\IRatingManager.cs" />
     <Compile Include="RatingManager\UserRating.cs" />
     <Compile Include="SessionManager\InvalidSessionException.cs" />
-    <Compile Include="SessionManager\InvalidSessionFault.cs" />
+    <Compile Include="InvalidSessionFault.cs" />
     <Compile Include="SessionManager\ISessionManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SessionManager\Session.cs" />

@@ -7,7 +7,7 @@ namespace EntityFX.EconomicsArcade.Contract.Manager.SessionManager
     public interface ISessionManager
     {
         [OperationContract]
-        Guid AddSession(string login);
+        Guid OpenSession(string login);
         [OperationContract]
         bool CloseSession();
         [OperationContract]

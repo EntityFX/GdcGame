@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using System.Security.Principal;
 
 namespace EntityFX.EconomicsArcade.Contract.Manager.SessionManager
 {
@@ -13,8 +14,10 @@ namespace EntityFX.EconomicsArcade.Contract.Manager.SessionManager
         [DataMember]
         public int UserId { get; set; }
         [DataMember]
-        public UserRole UserRole { get; set; }
+        public UserRole[] UserRoles { get; set; }
 
         public DateTime LastActivity { get; set; }
+
+        public IIdentity Identity { get; set; }
     }
 }

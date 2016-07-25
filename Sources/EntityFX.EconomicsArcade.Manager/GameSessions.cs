@@ -75,7 +75,8 @@ namespace EntityFX.EconomicsArcade.Manager
                 Login = user.Email,
                 UserId = user.Id,
                 SessionIdentifier = Guid.NewGuid(),
-                UserRole = user.IsAdmin ? UserRole.Admin : UserRole.GenericUser
+                UserRoles = user.IsAdmin ? new[] { UserRole.GenericUser, UserRole.Admin} : new[] {UserRole.GenericUser },
+                Identity = new CustomGameIdentity() { AuthenticationType = "Auto", IsAuthenticated = true, Name = user.Email}
             };
             SessionsStorage.Add(session.SessionIdentifier, session);
             return session.SessionIdentifier;

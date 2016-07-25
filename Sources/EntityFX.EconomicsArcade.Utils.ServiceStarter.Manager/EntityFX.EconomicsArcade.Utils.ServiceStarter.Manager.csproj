@@ -84,6 +84,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CheckRolePermissionsOperationBehavior.cs" />
     <Compile Include="ContainerBootstrapper.cs" />
     <Compile Include="GameFactory.cs" />
     <Compile Include="InvalidSessionFaultHandler.cs" />

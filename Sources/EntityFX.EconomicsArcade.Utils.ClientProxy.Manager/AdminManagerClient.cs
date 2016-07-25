@@ -9,16 +9,18 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
 {
     public class AdminManagerClient : IAdminManager
     {
+        private readonly Guid _sessionGuid;
         private readonly Uri _endpointAddress;
 
-        public AdminManagerClient(string endpointAddress)
+        public AdminManagerClient(string endpointAddress, Guid sessionGuid)
         {
+            _sessionGuid = sessionGuid;
             _endpointAddress = new Uri(endpointAddress);
         }
 
         public UserSessionsInfo[] GetActiveSessions()
         {
-            using (var proxy = new AdminManagerProxy())
+            using (var proxy = new AdminManagerProxy(_sessionGuid))
             {
                 var channel = proxy.CreateChannel(_endpointAddress);
                 proxy.ApplyContextScope();
@@ -30,7 +32,7 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
 
         public void CloseSessionByGuid(Guid guid)
         {
-            using (var proxy = new AdminManagerProxy())
+            using (var proxy = new AdminManagerProxy(_sessionGuid))
             {
                 var channel = proxy.CreateChannel(_endpointAddress);
                 proxy.ApplyContextScope();
@@ -41,7 +43,7 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
 
         public void CloseAllUserSessions(string username)
         {
-            using (var proxy = new AdminManagerProxy())
+            using (var proxy = new AdminManagerProxy(_sessionGuid))
             {
                 var channel = proxy.CreateChannel(_endpointAddress);
                 proxy.ApplyContextScope();
@@ -52,7 +54,7 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
 
         public void CloseAllSessions()
         {
-            using (var proxy = new AdminManagerProxy())
+            using (var proxy = new AdminManagerProxy(_sessionGuid))
             {
                 var channel = proxy.CreateChannel(_endpointAddress);
                 proxy.ApplyContextScope();
@@ -63,7 +65,7 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
 
         public void CloseAllSessionsExcludeThis(Guid guid)
         {
-            using (var proxy = new AdminManagerProxy())
+            using (var proxy = new AdminManagerProxy(_sessionGuid))
             {
                 var channel = proxy.CreateChannel(_endpointAddress);
                 proxy.ApplyContextScope();
@@ -74,11 +76,22 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
 
         public void WipeUser(string username)
         {
-            using (var proxy = new AdminManagerProxy())
+            using (var proxy = new AdminManagerProxy(_sessionGuid))
             {
                 var channel = proxy.CreateChannel(_endpointAddress);
                 proxy.ApplyContextScope();
                 channel.WipeUser(username);
+                proxy.CloseChannel();
+            }
+        }
+
+        public void ReloadGame(string username)
+        {
+            using (var proxy = new AdminManagerProxy(_sessionGuid))
+            {
+                var channel = proxy.CreateChannel(_endpointAddress);
+                proxy.ApplyContextScope();
+                channel.ReloadGame(username);
                 proxy.CloseChannel();
             }
         }

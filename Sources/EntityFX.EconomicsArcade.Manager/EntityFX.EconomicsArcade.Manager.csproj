@@ -65,7 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminManager.cs" />
-    <Compile Include="CheckRolePermissionsAttribute.cs" />
+    <Compile Include="CustomGameIdentity.cs" />
     <Compile Include="GameManager.cs" />
     <Compile Include="GameSessions.cs" />
     <Compile Include="IGameFactory.cs" />

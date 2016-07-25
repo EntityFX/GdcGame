@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace EntityFX.EconomicsArcade.Contract.Manager.SessionManager
+namespace EntityFX.EconomicsArcade.Contract.Manager
 {
     [DataContract]
     public class InvalidSessionFault

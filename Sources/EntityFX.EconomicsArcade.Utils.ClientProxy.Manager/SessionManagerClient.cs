@@ -18,7 +18,7 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
             {
                 var channel = proxy.CreateChannel(_endpointAddress);
                 proxy.ApplyContextScope();
-                var res = channel.AddSession(login);
+                var res = channel.OpenSession(login);
                 proxy.CloseChannel();
                 return res;
             }

@@ -15,25 +15,34 @@ using PortableLog.NLog;
 
 namespace IclServices.WcfTest.TestClient
 {
-    class UIConsole
+    class AdminConsole
     {
-        private readonly IAdminManager _adminManagerClient;
-        private readonly Guid _currentGuid;
+        private IAdminManager _adminManagerClient;
+        private Guid _currentGuid;
 
         Dictionary<int, string> _menu;
         //Dictionary<string, Delegate> _menu;
         bool _exitFlag;
 
-
+        public Guid SessionGuid
+        {
+            get { return _currentGuid; }
+            set { _currentGuid = value; }
+        }
 
         delegate void CallDelegate();
 
-        public UIConsole(IAdminManager adminManagerClient, Guid currentGuid)
+        public AdminConsole(IAdminManager adminManagerClient, Guid currentGuid)
         {
             _adminManagerClient = adminManagerClient;
             _currentGuid = currentGuid;
 
             InitMenu();
+        }
+
+        public void SetAdminClient(IAdminManager adminManagerClient)
+        {
+            _adminManagerClient = adminManagerClient;
         }
 
         private void InitMenu()
