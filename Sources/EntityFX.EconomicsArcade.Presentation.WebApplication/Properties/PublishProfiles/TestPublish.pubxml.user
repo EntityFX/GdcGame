@@ -6,56 +6,71 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>C:\Users\MubarakzyanovN\Desktop\GdcGame</_PublishTargetUrl>
+    <_PublishTargetUrl>C:\Users\MubarakzyanovN\Source\Repos\GdcGame\Sources\EntityFX.EconomicsArcade.Presentation.WebApplication\..\..\bin\WebServer\GdCame</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
     <File Include="app/app.js">
-      <publishTime>07/12/2016 15:38:38</publishTime>
+      <publishTime>07/20/2016 13:59:01</publishTime>
     </File>
     <File Include="app/counters/counters.component.js">
-      <publishTime>07/08/2016 19:21:55</publishTime>
+      <publishTime>07/18/2016 16:38:00</publishTime>
     </File>
     <File Include="app/fundDrivers/fundDrivers.component.js">
-      <publishTime>07/08/2016 19:21:55</publishTime>
+      <publishTime>07/13/2016 19:39:48</publishTime>
     </File>
     <File Include="app/gdCameData.service.js">
-      <publishTime>07/12/2016 15:38:38</publishTime>
+      <publishTime>07/20/2016 13:59:01</publishTime>
+    </File>
+    <File Include="app/gdCameRating.service.js">
+      <publishTime>07/20/2016 13:59:01</publishTime>
+    </File>
+    <File Include="app/rating/rating.component.js">
+      <publishTime>07/20/2016 13:59:01</publishTime>
     </File>
     <File Include="app/templates/counters.template.html">
-      <publishTime>07/08/2016 19:21:55</publishTime>
+      <publishTime>07/18/2016 17:43:53</publishTime>
     </File>
     <File Include="app/templates/fundDrivers.template.html">
-      <publishTime>07/01/2016 12:56:44</publishTime>
+      <publishTime>07/13/2016 13:19:10</publishTime>
+    </File>
+    <File Include="app/templates/rating.template.html">
+      <publishTime>07/25/2016 14:20:42</publishTime>
     </File>
     <File Include="bin/Antlr3.Runtime.dll">
       <publishTime>02/22/2013 08:43:40</publishTime>
     </File>
+    <File Include="bin/App_global.asax.compiled">
+      <publishTime>07/25/2016 15:14:11</publishTime>
+    </File>
+    <File Include="bin/App_global.asax.dll">
+      <publishTime>07/25/2016 15:14:11</publishTime>
+    </File>
     <File Include="bin/EntityFX.EconomicsArcade.Contract.Common.dll">
-      <publishTime>07/12/2016 15:21:31</publishTime>
+      <publishTime>07/25/2016 14:46:58</publishTime>
     </File>
     <File Include="bin/EntityFX.EconomicsArcade.Contract.Manager.dll">
-      <publishTime>07/12/2016 15:21:33</publishTime>
+      <publishTime>07/25/2016 14:46:59</publishTime>
     </File>
     <File Include="bin/EntityFX.EconomicsArcade.Infrastructure.Common.dll">
-      <publishTime>07/12/2016 16:59:16</publishTime>
+      <publishTime>07/25/2016 14:46:58</publishTime>
     </File>
     <File Include="bin/EntityFX.EconomicsArcade.Infrastructure.Service.dll">
-      <publishTime>07/12/2016 16:59:17</publishTime>
+      <publishTime>07/25/2016 14:47:00</publishTime>
     </File>
     <File Include="bin/EntityFX.EconomicsArcade.Model.Common.dll">
-      <publishTime>07/12/2016 16:59:18</publishTime>
+      <publishTime>07/25/2016 14:47:00</publishTime>
     </File>
     <File Include="bin/EntityFX.EconomicsArcade.Presentation.Models.dll">
-      <publishTime>07/12/2016 16:59:19</publishTime>
+      <publishTime>07/25/2016 14:47:01</publishTime>
     </File>
     <File Include="bin/EntityFX.EconomicsArcade.Presentation.WebApplication.dll">
-      <publishTime>07/12/2016 16:59:20</publishTime>
+      <publishTime>07/25/2016 15:13:12</publishTime>
     </File>
     <File Include="bin/EntityFX.EconomicsArcade.Presentation.WebApplication.dll.nlog">
       <publishTime>07/08/2016 21:38:25</publishTime>
     </File>
     <File Include="bin/EntityFX.EconomicsArcade.Utils.ClientProxy.Manager.dll">
-      <publishTime>07/12/2016 16:59:18</publishTime>
+      <publishTime>07/25/2016 14:47:01</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNet.SignalR.Client.dll">
       <publishTime>12/15/2014 01:51:18</publishTime>
@@ -138,14 +153,35 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/WebGrease.dll">
       <publishTime>07/17/2013 17:03:52</publishTime>
     </File>
+    <File Include="Content/bootstrap-theme.css">
+      <publishTime>07/06/2016 22:06:22</publishTime>
+    </File>
+    <File Include="Content/bootstrap-theme.css.map">
+      <publishTime>07/06/2016 22:06:22</publishTime>
+    </File>
+    <File Include="Content/bootstrap-theme.min.css">
+      <publishTime>07/06/2016 22:06:22</publishTime>
+    </File>
+    <File Include="Content/bootstrap-theme.min.css.map">
+      <publishTime>07/06/2016 22:06:22</publishTime>
+    </File>
     <File Include="Content/bootstrap.css">
+      <publishTime>07/06/2016 22:06:22</publishTime>
+    </File>
+    <File Include="Content/bootstrap.css.map">
       <publishTime>07/06/2016 22:06:22</publishTime>
     </File>
     <File Include="Content/bootstrap.min.css">
       <publishTime>06/28/2016 15:47:56</publishTime>
     </File>
+    <File Include="Content/bootstrap.min.css.map">
+      <publishTime>07/06/2016 22:06:22</publishTime>
+    </File>
+    <File Include="Content/Images/water.svg">
+      <publishTime>07/13/2016 13:19:10</publishTime>
+    </File>
     <File Include="Content/Site.css">
-      <publishTime>07/01/2016 12:56:44</publishTime>
+      <publishTime>07/13/2016 13:19:10</publishTime>
     </File>
     <File Include="Content/ui-bootstrap-csp.css">
       <publishTime>07/06/2016 22:06:22</publishTime>
@@ -168,11 +204,239 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="fonts/glyphicons-halflings-regular.woff">
       <publishTime>06/28/2016 15:47:56</publishTime>
     </File>
+    <File Include="fonts/glyphicons-halflings-regular.woff2">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/LICENSE.txt">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-Black.eot">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-Black.svg">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-Black.ttf">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-Black.woff">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-Black.woff2">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-BlackItalic.eot">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-BlackItalic.svg">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-BlackItalic.ttf">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-BlackItalic.woff">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-BlackItalic.woff2">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-Bold.eot">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-Bold.svg">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-Bold.ttf">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-Bold.woff">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-Bold.woff2">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-BoldItalic.eot">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-BoldItalic.svg">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-BoldItalic.ttf">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-BoldItalic.woff">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-BoldItalic.woff2">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-Italic.ttf">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-Light.eot">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-Light.svg">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-Light.ttf">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-Light.woff">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-Light.woff2">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-LightItalic.eot">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-LightItalic.svg">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-LightItalic.ttf">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-LightItalic.woff">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-LightItalic.woff2">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-Medium.eot">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-Medium.svg">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-Medium.ttf">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-Medium.woff">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-Medium.woff2">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-MediumItalic.eot">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-MediumItalic.svg">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-MediumItalic.ttf">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-MediumItalic.woff">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-MediumItalic.woff2">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-Regular.eot">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-Regular.svg">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-Regular.ttf">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-Regular.woff">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-Regular.woff2">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-RegularItalic.eot">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-RegularItalic.svg">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-RegularItalic.ttf">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-RegularItalic.woff">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-RegularItalic.woff2">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-Thin.eot">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-Thin.svg">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-Thin.ttf">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-Thin.woff">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-Thin.woff2">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-ThinItalic.eot">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-ThinItalic.svg">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-ThinItalic.ttf">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-ThinItalic.woff">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto/Roboto-ThinItalic.woff2">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto_Condensed/LICENSE.txt">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto_Condensed/RobotoCondensed-Bold.ttf">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto_Condensed/RobotoCondensed-BoldItalic.ttf">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto_Condensed/RobotoCondensed-Italic.ttf">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto_Condensed/RobotoCondensed-Light.ttf">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto_Condensed/RobotoCondensed-LightItalic.ttf">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Roboto_Condensed/RobotoCondensed-Regular.ttf">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Rouble/rouble.eot">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Rouble/rouble.otf">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Rouble/rouble.svg">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Rouble/rouble.ttf">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
+    <File Include="fonts/Rouble/rouble.woff">
+      <publishTime>07/01/2016 12:56:44</publishTime>
+    </File>
     <File Include="Global.asax">
       <publishTime>06/28/2016 15:47:56</publishTime>
     </File>
     <File Include="packages.config">
       <publishTime>07/11/2016 14:58:10</publishTime>
+    </File>
+    <File Include="PrecompiledApp.config">
+      <publishTime>07/25/2016 15:14:07</publishTime>
     </File>
     <File Include="Scripts/angular-animate.js">
       <publishTime>06/28/2016 20:25:57</publishTime>
@@ -2584,16 +2848,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/28/2016 20:25:57</publishTime>
     </File>
     <File Include="Scripts/_references.js">
-      <publishTime>07/12/2016 15:38:40</publishTime>
+      <publishTime>07/20/2016 13:59:01</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>07/12/2016 15:38:38</publishTime>
+      <publishTime>07/20/2016 13:59:01</publishTime>
+    </File>
+    <File Include="Views/Home/Rating.cshtml">
+      <publishTime>07/20/2016 13:59:01</publishTime>
     </File>
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>06/28/2016 15:47:56</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>07/01/2016 12:56:44</publishTime>
+      <publishTime>07/20/2016 15:29:17</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>06/28/2016 15:47:56</publishTime>
@@ -2602,7 +2869,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/28/2016 15:47:56</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>07/12/2016 15:21:37</publishTime>
+      <publishTime>07/25/2016 14:47:04</publishTime>
     </File>
   </ItemGroup>
 </Project>
