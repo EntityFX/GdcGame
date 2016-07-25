@@ -12,6 +12,8 @@ namespace EntityFX.EconomicsArcade.Contract.Manager.SessionManager
         public string Login { get; set; }
         [DataMember]
         public int UserId { get; set; }
+        [DataMember]
+        public UserRole UserRole { get; set; }
 
         public DateTime LastActivity { get; set; }
     }

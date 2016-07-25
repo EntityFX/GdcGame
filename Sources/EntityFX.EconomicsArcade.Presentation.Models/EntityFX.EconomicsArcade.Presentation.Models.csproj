@@ -53,7 +53,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BuyDriverModel.cs" />
     <Compile Include="ManualStepResultModel.cs" />
+    <Compile Include="Mappers\FundsDriverBuyInfoMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

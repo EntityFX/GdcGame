@@ -26,7 +26,7 @@ namespace EntityFX.EconomicsArcade.Manager
         {
             try
             {
-                _userDataAccess.Create(new User() { Email = login });
+                _userDataAccess.Create(new User() { Email = login, IsAdmin = false });
             }
             catch (Exception exp)
             {

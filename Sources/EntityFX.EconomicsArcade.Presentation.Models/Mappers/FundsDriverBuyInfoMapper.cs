@@ -4,7 +4,7 @@ using EntityFX.EconomicsArcade.Contract.Manager.GameManager;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 using EntityFX.EconomicsArcade.Model.Common.Model;
 
-namespace EntityFX.EconomicsArcade.Model.Common.Mappers
+namespace EntityFX.EconomicsArcade.Presentation.Models.Mappers
 {
     public class FundsDriverBuyInfoMapper : IMapper<BuyFundDriverResult, BuyDriverModel>
     {
