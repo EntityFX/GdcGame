@@ -5,5 +5,6 @@
 	[Secret] NVARCHAR(255) NULL,
 	[Salt] NVARCHAR(255) NULL,
 	[CreateDateTime] DATETIME NOT NULL,
-	[UpdateDateTime] DATETIME,
+	[UpdateDateTime] DATETIME, 
+    [IsAdmin] BIT NOT NULL DEFAULT 0,
 )

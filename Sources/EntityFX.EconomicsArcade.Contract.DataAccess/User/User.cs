@@ -9,5 +9,7 @@ namespace EntityFX.EconomicsArcade.Contract.DataAccess.User
         public int Id { get; set; }
         [DataMember]
         public string Email { get; set; }
+        [DataMember]
+        public bool IsAdmin { get; set; }
     }
 }

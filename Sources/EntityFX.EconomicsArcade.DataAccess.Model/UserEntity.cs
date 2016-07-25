@@ -14,6 +14,8 @@ namespace EntityFX.EconomicsArcade.DataAccess.Model
 
         public string Salt { get; set; }
 
+        public bool IsAdmin { get; set; }
+
         public DateTime CreateDateTime { get; set; }
 
         public DateTime? UpdateDateTime { get; set; }

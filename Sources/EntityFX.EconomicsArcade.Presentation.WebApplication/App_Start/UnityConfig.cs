@@ -1,5 +1,7 @@
 using System;
 using System.Configuration;
+using EntityFX.EconomicsArcade.Presentation.Models;
+using EntityFX.EconomicsArcade.Presentation.Models.Mappers;
 using Microsoft.Practices.Unity;
 using EntityFX.EconomicsArcade.Contract.Common;
 using EntityFX.EconomicsArcade.Contract.Common.Counters;
