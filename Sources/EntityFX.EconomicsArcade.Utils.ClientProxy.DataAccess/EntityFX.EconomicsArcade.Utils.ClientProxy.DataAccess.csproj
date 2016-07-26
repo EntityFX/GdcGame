@@ -82,6 +82,10 @@
       <Project>{0932d8b3-29eb-4546-987a-b246421a9b87}</Project>
       <Name>EntityFX.EconomicsArcade.Contract.DataAccess</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EntityFX.EconomicsArcade.Contract.Manager\EntityFX.EconomicsArcade.Contract.Manager.csproj">
+      <Project>{41696F24-E345-4599-A0C7-0715F64946D8}</Project>
+      <Name>EntityFX.EconomicsArcade.Contract.Manager</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EntityFX.EconomicsArcade.Infrastructure.Common\EntityFX.EconomicsArcade.Infrastructure.Common.csproj">
       <Project>{924cc67d-9e2b-46ba-be1d-6c6c780ccfbc}</Project>
       <Name>EntityFX.EconomicsArcade.Infrastructure.Common</Name>

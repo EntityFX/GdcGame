@@ -2,12 +2,14 @@
 using System.Linq;
 using EntityFX.EconomicsArcade.Contract.Common.Counters;
 using EntityFX.EconomicsArcade.Contract.DataAccess.GameData;
+using EntityFX.EconomicsArcade.Contract.Manager.RatingManager;
 using EntityFX.EconomicsArcade.DataAccess.Repository;
 using EntityFX.EconomicsArcade.DataAccess.Repository.Criterions.Counters;
 using EntityFX.EconomicsArcade.DataAccess.Repository.Criterions.FundsDriver;
 using EntityFX.EconomicsArcade.DataAccess.Repository.Criterions.UserCounter;
 using EntityFX.EconomicsArcade.DataAccess.Repository.Criterions.UserFundsDriver;
 using EntityFX.EconomicsArcade.DataAccess.Repository.Criterions.UserGameCounter;
+using EntityFX.EconomicsArcade.DataAccess.Repository.Criterions.UserRating;
 
 namespace EntityFX.EconomicsArcade.DataAccess.Service
 {
@@ -18,19 +20,27 @@ namespace EntityFX.EconomicsArcade.DataAccess.Service
         private readonly IUserGameCounterRepository _userGameCounterRepository;
         private readonly IUserCounterRepository _userCounterRepository;
         private readonly IUserFundsDriverRepository _userFundsDriverRepository;
+        private readonly IUserRatingRepository _userRatingRepository;
 
         public GameDataRetrieveDataAccessService(
-            IFundsDriverRepository fundsDriverRepository
-            , ICountersRepository countersRepository
-            , IUserGameCounterRepository userGameCounterRepository
-            , IUserCounterRepository userCounterRepository
-            , IUserFundsDriverRepository userFundsDriverRepository)
+            IFundsDriverRepository fundsDriverRepository,
+            ICountersRepository countersRepository,
+            IUserGameCounterRepository userGameCounterRepository,
+            IUserCounterRepository userCounterRepository,
+            IUserFundsDriverRepository userFundsDriverRepository,
+            IUserRatingRepository userRatingRepository)
         {
             _fundsDriverRepository = fundsDriverRepository;
             _countersRepository = countersRepository;
             _userGameCounterRepository = userGameCounterRepository;
             _userCounterRepository = userCounterRepository;
             _userFundsDriverRepository = userFundsDriverRepository;
+            _userRatingRepository = userRatingRepository;
+        }
+
+        public UserRating[] GetUserRatings()
+        {
+            return _userRatingRepository.GetAllUserRatings(new GetAllUsersRatingsCriterion()).ToArray();
         }
 
         public Contract.Common.GameData GetGameData(int userId)
@@ -71,7 +81,7 @@ namespace EntityFX.EconomicsArcade.DataAccess.Service
                     TotalFunds = userGameCounters != null ? userGameCounters.TotalFunds : 100
                 },
                 AutomaticStepsCount = userGameCounters != null ? userGameCounters.AutomaticStepsCount : 0,
-                ManualStepsCount = userGameCounters != null ?  userGameCounters.ManualStepsCount : 0
+                ManualStepsCount = userGameCounters != null ? userGameCounters.ManualStepsCount : 0
             };
         }
     }

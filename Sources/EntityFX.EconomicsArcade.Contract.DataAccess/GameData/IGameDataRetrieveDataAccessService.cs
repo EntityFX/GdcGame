@@ -1,4 +1,5 @@
 ﻿using System.ServiceModel;
+using EntityFX.EconomicsArcade.Contract.Manager.RatingManager;
 
 namespace EntityFX.EconomicsArcade.Contract.DataAccess.GameData
 {
@@ -7,5 +8,7 @@ namespace EntityFX.EconomicsArcade.Contract.DataAccess.GameData
     {
         [OperationContract]
         Common.GameData GetGameData(int userId);
+        [OperationContract]
+        UserRating[] GetUserRatings();
     }
 }

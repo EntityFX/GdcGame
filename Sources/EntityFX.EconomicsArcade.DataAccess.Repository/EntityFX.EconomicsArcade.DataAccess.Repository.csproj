@@ -71,6 +71,7 @@
     <Compile Include="Criterions\UserCounter\GetUserCountersByUserIdCriterion.cs" />
     <Compile Include="Criterions\UserFundsDriver\GetUserFundsDriverByUserIdCriterion.cs" />
     <Compile Include="Criterions\UserGameCounter\GetUserGameCounterByIdCriterion.cs" />
+    <Compile Include="Criterions\UserRating\GetAllUsersRatingsCriterion.cs" />
     <Compile Include="Criterions\User\GetAllUsersCriterion.cs" />
     <Compile Include="Criterions\User\GetUserByIdCriterion.cs" />
     <Compile Include="Criterions\User\GetUserByNameCriterion.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="IUserCounterRepository.cs" />
     <Compile Include="IUserFundsDriverRepository.cs" />
     <Compile Include="IUserGameCounterRepository.cs" />
+    <Compile Include="IUserRatingRepository.cs" />
     <Compile Include="IUserRepository.cs" />
     <Compile Include="Mappers\UserCounterContractMapper.cs" />
     <Compile Include="Mappers\UserFundsDriverContractMapper.cs" />
@@ -99,12 +101,14 @@
     <Compile Include="Queries\UserCounter\GetUserCountersByUserIdQuery.cs" />
     <Compile Include="Queries\UserFundsDriver\GetUserFundDriverByUserIdQuery.cs" />
     <Compile Include="Queries\UserGameCounter\GetUserGameCounterByIdQuery.cs" />
+    <Compile Include="Queries\UserRating\GetAllUsersRatingsQuery.cs" />
     <Compile Include="Queries\User\GetAllUsersQuery.cs" />
     <Compile Include="Queries\User\GetUserByNameQuery.cs" />
     <Compile Include="Queries\User\GetUserByIdQuery.cs" />
     <Compile Include="UserCounterRepository.cs" />
     <Compile Include="UserFundsDriverRepository.cs" />
     <Compile Include="UserGameCounterRepository.cs" />
+    <Compile Include="UserRatingRepository.cs" />
     <Compile Include="UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -115,6 +119,10 @@
     <ProjectReference Include="..\EntityFX.EconomicsArcade.Contract.DataAccess\EntityFX.EconomicsArcade.Contract.DataAccess.csproj">
       <Project>{0932d8b3-29eb-4546-987a-b246421a9b87}</Project>
       <Name>EntityFX.EconomicsArcade.Contract.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.EconomicsArcade.Contract.Manager\EntityFX.EconomicsArcade.Contract.Manager.csproj">
+      <Project>{41696F24-E345-4599-A0C7-0715F64946D8}</Project>
+      <Name>EntityFX.EconomicsArcade.Contract.Manager</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.EconomicsArcade.DataAccess.Model\EntityFX.EconomicsArcade.DataAccess.Model.csproj">
       <Project>{de1d1c25-f30a-461c-b572-00bfa1c7161e}</Project>

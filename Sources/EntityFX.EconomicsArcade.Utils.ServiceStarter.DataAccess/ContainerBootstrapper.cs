@@ -21,14 +21,17 @@ using EntityFX.EconomicsArcade.DataAccess.Repository.Queries.FundsDriver;
 using EntityFX.EconomicsArcade.DataAccess.Repository.Criterions.FundsDriver;
 using EntityFX.EconomicsArcade.Contract.Common.Funds;
 using EntityFX.EconomicsArcade.Contract.Common.Incrementors;
+using EntityFX.EconomicsArcade.Contract.Manager.RatingManager;
 using EntityFX.EconomicsArcade.DataAccess.Repository.Criterions.Counters;
 using EntityFX.EconomicsArcade.DataAccess.Repository.Criterions.UserCounter;
 using EntityFX.EconomicsArcade.DataAccess.Repository.Criterions.UserFundsDriver;
 using EntityFX.EconomicsArcade.DataAccess.Repository.Criterions.UserGameCounter;
+using EntityFX.EconomicsArcade.DataAccess.Repository.Criterions.UserRating;
 using EntityFX.EconomicsArcade.DataAccess.Repository.Queries.Counetrs;
 using EntityFX.EconomicsArcade.DataAccess.Repository.Queries.UserCounter;
 using EntityFX.EconomicsArcade.DataAccess.Repository.Queries.UserFundsDriver;
 using EntityFX.EconomicsArcade.DataAccess.Repository.Queries.UserGameCounter;
+using EntityFX.EconomicsArcade.DataAccess.Repository.Queries.UserRating;
 using EntityFX.EconomicsArcade.DataAccess.Service.Mappers;
 using EntityFX.EconomicsArcade.Infrastructure.Service;
 using EntityFX.EconomicsArcade.Infrastructure.Service.Interfaces;
@@ -56,6 +59,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess
             container.RegisterType<IQuery<GetUserByIdCriterion, UserEntity>, GetUserByIdQuery>();
             container.RegisterType<IQuery<GetUserByNameCriterion, UserEntity>, GetUserByNameQuery>();
             container.RegisterType<IQuery<GetAllUsersCriterion, IEnumerable<UserEntity>>, GetAllUsersQuery>();
+            container.RegisterType<IQuery<GetAllUsersRatingsCriterion, IEnumerable<UserRating>>, GetAllUsersRatingsQuery>();
             container.RegisterType<IQuery<GetAllFundsDriversCriterion, IEnumerable<FundsDriverEntity>>, GetAllFundsDriversQuery>();
             container.RegisterType<IQuery<GetAllCountersCriterion, IEnumerable<CounterEntity>>, GetAllCountersQuery>();
             container.RegisterType<IQuery<GetUserGameCounterByIdCriterion, UserGameCounterEntity>, GetUserGameCounterByIdQuery>();
@@ -82,6 +86,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess
             container.RegisterType<IUserGameCounterRepository, UserGameCounterRepository>();
             container.RegisterType<IUserCounterRepository, UserCounterRepository>();
             container.RegisterType<IUserFundsDriverRepository, UserFundsDriverRepository>();
+            container.RegisterType<IUserRatingRepository, UserRatingRepository>();
 
             container.RegisterType<IUserDataAccessService, UserDataAccessService>(
                 new InterceptionBehavior<PolicyInjectionBehavior>()
