@@ -97,6 +97,11 @@ namespace EntityFX.EconomicsArcade.Manager
             }
         }
 
+        public bool Ping()
+        {
+            return true;
+        }
+
         private IGame GetSessionGame()
         {
             

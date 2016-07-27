@@ -103,5 +103,18 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
                 proxy.CloseChannel();
             }
         }
+
+        public bool Ping()
+        {
+            bool result = false;
+            using (var proxy = new TInfrastructureProxy())
+            {
+                var channel = proxy.CreateChannel(_endpointAddress);
+                proxy.ApplyContextScope(operationContext, _sesionGuid);
+                channel.Ping();
+                proxy.CloseChannel();
+            }
+            return result;
+        }
     }
 }

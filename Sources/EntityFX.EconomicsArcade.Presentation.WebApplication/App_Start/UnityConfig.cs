@@ -3,6 +3,7 @@ using System.Configuration;
 using EntityFX.EconomicsArcade.Contract.Manager.SessionManager;
 using EntityFX.EconomicsArcade.Presentation.Models;
 using EntityFX.EconomicsArcade.Presentation.Models.Mappers;
+using EntityFX.EconomicsArcade.Utils.Common;
 using Microsoft.Practices.Unity;
 using EntityFX.EconomicsArcade.Contract.Common;
 using EntityFX.EconomicsArcade.Contract.Common.Counters;
@@ -58,9 +59,9 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication
                     new Interceptor<InterfaceInterceptor>(),
                     new InterceptionBehavior<LoggerInterceptor>()
                     );
-            container.RegisterType<SessionManagerClient<NetTcpProxy<ISessionManager>>>(
+            container.RegisterType<ISessionManager, SessionManagerClient<NetTcpProxy<ISessionManager>>>(
                 new InjectionConstructor(
-                ConfigurationManager.AppSettings["ManagerEndpointAddress_SessionManager"])
+                ConfigurationManager.AppSettings["ManagerEndpointAddress_SessionManager"], new ResolvedParameter<Guid>())
                 , new Interceptor<InterfaceInterceptor>()
                 , new InterceptionBehavior<LoggerInterceptor>()
                     );
@@ -70,6 +71,7 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication
             container.RegisterType<IMapper<GameData, GameDataModel>, GameDataModelMapper>();
             container.RegisterType<IMapper<BuyFundDriverResult, BuyDriverModel>, FundsDriverBuyInfoMapper>();
             container.RegisterType<IGameClientFactory, GameClientFactory>();
+            container.RegisterType<ISessionManagerClientFactory, SessionManagerClientFactory>();
             container.RegisterType<IGameDataProvider, GameDataProvider>();
         }
     }

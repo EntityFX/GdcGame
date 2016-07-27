@@ -21,21 +21,18 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.NotifyConsumer
     {
         public IUnityContainer Configure(IUnityContainer container)
         {
+            var childBootstrappers = new IContainerBootstrapper[]
+            {
+                new EconomicsArcade.Application.NotifyConsumerService.ContainerBootstrapper(),
+            };
+            Array.ForEach(childBootstrappers, _ => _.Configure(container));
+            
             container.AddNewExtension<Interception>();
             
             GlobalHost.DependencyResolver = new SignalRDependencyResolver(container);
             container.RegisterType<ILogger>(new InjectionFactory(
                 _ => new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger")))));
 
-            container.RegisterType<IMapper<FundsCounters, FundsCounterModel>, FundsCounterModelMapper>();
-            container.RegisterType<IMapper<CounterBase, CounterModelBase>, CounterModelMapper>();
-            container.RegisterType<IMapper<FundsDriver, FundsDriverModel>, FundsDriverModelMapper>();
-            container.RegisterType<IMapper<GameData, GameDataModel>, GameDataModelMapper>();
-
-            container.RegisterType<GameDataHub>();
-
-            container.RegisterType<IHubContext>(
-                new InjectionFactory(_ => GlobalHost.ConnectionManager.GetHubContext<GameDataHub>()));
 
             container.RegisterType<INotifyConsumerService, NotifyConsumerService>(new InjectionConstructor(
                 new ResolvedParameter<ILogger>(),

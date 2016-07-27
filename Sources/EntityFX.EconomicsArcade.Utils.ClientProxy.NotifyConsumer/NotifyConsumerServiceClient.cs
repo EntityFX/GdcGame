@@ -1,10 +1,12 @@
 ﻿using System;
 using EntityFX.EconomicsArcade.Contract.Common;
 using EntityFX.EconomicsArcade.Contract.NotifyConsumerService;
+using EntityFX.EconomicsArcade.Infrastructure.Service;
 
 namespace EntityFX.EconomicsArcade.Utils.ClientProxy.NotifyConsumer
 {
-    public class NotifyConsumerServiceClient : INotifyConsumerService
+    public class NotifyConsumerServiceClient<TInfrastructureProxy> : INotifyConsumerService
+                                        where TInfrastructureProxy : InfrastructureProxy<INotifyConsumerService>, new()
     {
         private readonly Uri _endpoint;
 
@@ -15,7 +17,7 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.NotifyConsumer
 
         public void PushGameData(UserContext userContext, GameData gameData)
         {
-            using (var proxy = new NotifyConsumerServiceProxy())
+            using (var proxy = new TInfrastructureProxy())
             {
                 var channel = proxy.CreateChannel(_endpoint);
                 channel.PushGameData(userContext, gameData);

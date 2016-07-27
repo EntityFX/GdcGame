@@ -15,9 +15,9 @@ namespace EntityFX.EconomicsArcade.Manager
     public class GameSessions
     {
         private readonly IGameFactory _gameFactory;
-        private static readonly IDictionary<string, IGame> GameSessionsStorage = new ConcurrentDictionary<string, IGame>();
+        private static readonly ConcurrentDictionary<string, IGame> GameSessionsStorage = new ConcurrentDictionary<string, IGame>();
 
-        private static readonly IDictionary<Guid, Session> SessionsStorage = new ConcurrentDictionary<Guid, Session>();
+        private static readonly ConcurrentDictionary<Guid, Session> SessionsStorage = new ConcurrentDictionary<Guid, Session>();
 
         private static Timer _timer = new Timer(TimerCallback, null, 0, 1000);
 
@@ -46,7 +46,7 @@ namespace EntityFX.EconomicsArcade.Manager
             {
                 var game = BuildGame(session.UserId, session.Login);
                 game.Initialize();
-                GameSessionsStorage.Add(session.Login, game);
+                GameSessionsStorage.TryAdd(session.Login, game);
             }
             return GameSessionsStorage[session.Login];
         }
@@ -79,7 +79,7 @@ namespace EntityFX.EconomicsArcade.Manager
                 UserRoles = user.IsAdmin ? new[] { UserRole.GenericUser, UserRole.Admin} : new[] {UserRole.GenericUser },
                 Identity = new CustomGameIdentity() { AuthenticationType = "Auto", IsAuthenticated = true, Name = user.Email}
             };
-            SessionsStorage.Add(session.SessionIdentifier, session);
+            SessionsStorage.TryAdd(session.SessionIdentifier, session);
             return session.SessionIdentifier;
         }
 
@@ -90,7 +90,8 @@ namespace EntityFX.EconomicsArcade.Manager
 
         public bool RemoveSession(Guid sessionId)
         {
-            return SessionsStorage.Remove(sessionId);
+            Session session;
+            return SessionsStorage.TryRemove(sessionId, out session);
         }
 
         public void RemoveAllSessions()

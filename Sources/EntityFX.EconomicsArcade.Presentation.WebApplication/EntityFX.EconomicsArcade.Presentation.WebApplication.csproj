@@ -1159,6 +1159,10 @@
       <Project>{234EB70F-3E7D-4F66-82B0-2B506518B027}</Project>
       <Name>EntityFX.EconomicsArcade.Utils.ClientProxy.Manager</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EntityFX.EconomicsArcade.Utils.Common\EntityFX.EconomicsArcade.Utils.Common.csproj">
+      <Project>{2AE99E38-4B45-4D8B-B9D5-840B21F82A43}</Project>
+      <Name>EntityFX.EconomicsArcade.Utils.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

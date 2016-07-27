@@ -75,7 +75,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
                 , new Interceptor<InterfaceInterceptor>()
                 );
 
-            container.RegisterType<INotifyConsumerService, NotifyConsumerServiceClient>(
+            container.RegisterType<INotifyConsumerService, NotifyConsumerServiceClient<NetMsmqProxy<INotifyConsumerService>>>(
                 new InjectionConstructor(
                     ConfigurationManager.AppSettings["ClientProxyAddress_NotifyConsumerService"]
                     )

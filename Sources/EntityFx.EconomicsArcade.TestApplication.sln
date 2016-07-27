@@ -83,6 +83,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.EconomicsArcade.Pr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{A76DA6B5-F5DC-4E1F-8B1B-E89BA8216229}"
 	ProjectSection(SolutionItems) = preProject
+		EntityFX.EconomicsArcade.Test.Shared\ContainerBootstrapper.cs = EntityFX.EconomicsArcade.Test.Shared\ContainerBootstrapper.cs
 		EntityFX.EconomicsArcade.Test.Shared\GameRunnerBase.cs = EntityFX.EconomicsArcade.Test.Shared\GameRunnerBase.cs
 		EntityFX.EconomicsArcade.Test.Shared\PrettyConsole.cs = EntityFX.EconomicsArcade.Test.Shared\PrettyConsole.cs
 	EndProjectSection
@@ -116,6 +117,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.EconomicsArcade.Utils.ServiceHost.Collapsed.ConsoleApp", "EntityFX.EconomicsArcade.Utils.ServiceHost.Collapsed.ConsoleApp\EntityFX.EconomicsArcade.Utils.ServiceHost.Collapsed.ConsoleApp.csproj", "{66C8CFB3-A50F-42C3-A8B8-9B3ACA054340}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.EconomicsArcade.Utils.Common", "EntityFX.EconomicsArcade.Utils.Common\EntityFX.EconomicsArcade.Utils.Common.csproj", "{2AE99E38-4B45-4D8B-B9D5-840B21F82A43}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.EconomicsArcade.Test.MultiClientManagerTest", "EntityFX.EconomicsArcade.Test.MultiClientManagerTest\EntityFX.EconomicsArcade.Test.MultiClientManagerTest.csproj", "{6BA728A2-4566-4D55-AFA0-E52E5D749287}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -276,6 +279,10 @@ Global
 		{2AE99E38-4B45-4D8B-B9D5-840B21F82A43}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2AE99E38-4B45-4D8B-B9D5-840B21F82A43}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2AE99E38-4B45-4D8B-B9D5-840B21F82A43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BA728A2-4566-4D55-AFA0-E52E5D749287}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BA728A2-4566-4D55-AFA0-E52E5D749287}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BA728A2-4566-4D55-AFA0-E52E5D749287}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BA728A2-4566-4D55-AFA0-E52E5D749287}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -322,5 +329,6 @@ Global
 		{D017E82C-12BF-4EBD-AE66-E88611CE94E4} = {2B7D0649-6899-491F-B4E7-70D163B1F72D}
 		{66C8CFB3-A50F-42C3-A8B8-9B3ACA054340} = {2B3C3D7D-D36A-47E8-9395-DB1AA2D271EA}
 		{2AE99E38-4B45-4D8B-B9D5-840B21F82A43} = {2B7D0649-6899-491F-B4E7-70D163B1F72D}
+		{6BA728A2-4566-4D55-AFA0-E52E5D749287} = {D150B452-1254-4C2D-90DA-27765E2C7C0B}
 	EndGlobalSection
 EndGlobal

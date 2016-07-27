@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using System.ServiceModel;
 using EntityFX.EconomicsArcade.Contract.Manager;
 using EntityFX.EconomicsArcade.Contract.Manager.AdminManager;
@@ -8,8 +10,10 @@ using EntityFX.EconomicsArcade.Contract.Manager.SessionManager;
 using EntityFX.EconomicsArcade.Contract.Manager.UserManager;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 using EntityFX.EconomicsArcade.Infrastructure.Service;
+using EntityFx.EconomicsArcade.Test.Shared;
 using EntityFX.EconomicsArcade.Utils.ClientProxy.Manager;
 using IclServices.WcfTest.TestClient;
+using Microsoft.Practices.Unity;
 using PortableLog.NLog;
 
 namespace EntityFX.EconomicsArcade.TestClient
@@ -19,11 +23,23 @@ namespace EntityFX.EconomicsArcade.TestClient
         private static Guid _sessionGuid;
 
         private static string _userName;
+        private static UnityContainer _container;
 
         private static void Main(string[] args)
         {
-            MainLoop(args);
-
+            var listArgs = args.ToList();
+            bool isCollapsed = false;
+            if (args.Length > 0)
+            {
+                foreach (var arg in args)
+                {
+                    isCollapsed = arg.Contains("IsCollapsed");
+                    listArgs.Remove(arg);
+                }
+            }
+            _container = new UnityContainer();
+            var containerBootstrapper = new ContainerBootstrapper(isCollapsed).Configure(_container);
+            MainLoop(listArgs);
             //Console.ReadKey();
         }
 
@@ -36,49 +52,37 @@ namespace EntityFX.EconomicsArcade.TestClient
                 userName = Console.ReadLine();
             }
 
-            var simpleUserManagerClient = new SimpleUserManagerClient<NetTcpProxy<ISimpleUserManager>> (
-                ConfigurationManager.AppSettings["ManagerEndpointAddress_UserManager"]
-                );
+            var simpleUserManagerClient = _container.Resolve<ISimpleUserManager>();
             if (!simpleUserManagerClient.Exists(userName))
             {
                 simpleUserManagerClient.Create(userName);
             }
 
-            var sessionManagerClient = new SessionManagerClient<NetTcpProxy<ISessionManager>>(
-                ConfigurationManager.AppSettings["ManagerEndpointAddress_SessionManager"], Guid.Empty
-                );
+            var sessionManagerClient = _container.Resolve<ISessionManager>(new ParameterOverride("sessionGuid", Guid.Empty));
             return new Tuple<Guid, string>(sessionManagerClient.OpenSession(userName), userName);
         }
 
         private static bool UserLogout(Guid session)
         {
-            var sessionManagerClient = new SessionManagerClient<NetTcpProxy<ISessionManager>>(
-                ConfigurationManager.AppSettings["ManagerEndpointAddress_SessionManager"], session
-                );
+            var sessionManagerClient = _container.Resolve<ISessionManager>(new ParameterOverride("sessionGuid", session));
             return sessionManagerClient.CloseSession();
         }
 
         private static IGameManager GetGameClient(Guid sessionGuid)
         {
-            return new GameManagerClient<NetTcpProxy<IGameManager>>(
-                new Logger(new NLoggerAdapter(new NLogLogExFactory().GetLogger("logger")))
-                , ConfigurationManager.AppSettings["ManagerEndpointAddress_GameManager"]
-                , sessionGuid
-                );
+            return _container.Resolve<IGameManager>(new ParameterOverride("sesionGuid", sessionGuid));
         }
 
         private static IAdminManager GetAdminClient(Guid sessionGuid)
         {
-            return new AdminManagerClient<NetTcpProxy<IAdminManager>>(
-                ConfigurationManager.AppSettings["ManagerEndpointAddress_AdminManager"], _sessionGuid
-                );
+            return _container.Resolve<IAdminManager>(new ParameterOverride("sessionGuid", sessionGuid));
         }
 
-        private static void MainLoop(string[] args)
+        private static void MainLoop(IEnumerable<string> args)
         {
-            if (args.Length > 0)
+            if (args.Any())
             {
-                _userName = args[0];
+                _userName = args.First();
             }
 
             var loginResult = UserLogin(_userName);

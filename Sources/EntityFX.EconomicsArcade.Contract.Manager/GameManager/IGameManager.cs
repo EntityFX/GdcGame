@@ -29,5 +29,8 @@ namespace EntityFX.EconomicsArcade.Contract.Manager.GameManager
         [OperationContract]
         [FaultContract(typeof(InvalidSessionFault))]
         void ActivateDelayedCounter(int counterId);
+        [OperationContract]
+        [FaultContract(typeof(InvalidSessionFault))]
+        bool Ping();
     }
 }
