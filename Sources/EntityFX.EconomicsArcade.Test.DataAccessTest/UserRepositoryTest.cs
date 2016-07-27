@@ -1,4 +1,6 @@
 ﻿using System;
+using EntityFX.EconomicsArcade.Contract.DataAccess.User;
+using EntityFX.EconomicsArcade.Infrastructure.Service;
 using EntityFX.EconomicsArcade.Utils.ClientProxy.DataAccess;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -10,15 +12,16 @@ namespace EntityFX.EconomicsArcade.Test.DataAccessTest
         [TestMethod]
         public void TestCreateUser()
         {
-            using (var proxyFactory = new UserDataAccessProxyFactoy())
+            var proxyFactory =
+                new UserDataAccessClient<NetTcpProxy<IUserDataAccessService>>(
+                    "net.tcp://localhost/EntityFX.EconomicsArcade.DataAccess:8777/EntityFX.EconomicsArcade.Contract.DataAccess.User.IUserDataAccessService");
             {
                 
-                var channel = proxyFactory.CreateChannel(new Uri("net.tcp://localhost/EntityFX.EconomicsArcade.DataAccess:8777/EntityFX.EconomicsArcade.Contract.DataAccess.User.IUserDataAccessService"));
-                channel.Create(new Contract.DataAccess.User.User()
+                proxyFactory.Create(new Contract.DataAccess.User.User()
                 {
                     Email = "vasya2"
                 });
-                proxyFactory.CloseChannel();
+
             }
 
         }
@@ -26,13 +29,12 @@ namespace EntityFX.EconomicsArcade.Test.DataAccessTest
         [TestMethod]
         public void TestFindByIdUser()
         {
-            using (var proxyFactory = new UserDataAccessProxyFactoy())
-            {
-                var channel = proxyFactory.CreateChannel(new Uri("net.tcp://localhost/EntityFX.EconomicsArcade.DataAccess:8777/EntityFX.EconomicsArcade.Contract.DataAccess.User.IUserDataAccessService"));
-                var user = channel.FindById(1);
-                proxyFactory.CloseChannel();
+            var proxyFactory =
+                new UserDataAccessClient<NetTcpProxy<IUserDataAccessService>>(
+                    "net.tcp://localhost/EntityFX.EconomicsArcade.DataAccess:8777/EntityFX.EconomicsArcade.Contract.DataAccess.User.IUserDataAccessService");
+                var user = proxyFactory.FindById(1);
                 Assert.IsNotNull(user);
             }
         }
     }
-}
+

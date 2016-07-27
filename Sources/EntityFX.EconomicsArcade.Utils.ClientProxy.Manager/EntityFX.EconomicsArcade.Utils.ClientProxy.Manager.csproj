@@ -71,16 +71,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminManagerClient.cs" />
-    <Compile Include="AdminManagerProxy.cs" />
-    <Compile Include="GameManagerProxy.cs" />
     <Compile Include="GameManagerClient.cs" />
+    <Compile Include="ISessionManagerClientFactory.cs" />
     <Compile Include="RatingManagerClient.cs" />
-    <Compile Include="RatingManagerProxy.cs" />
     <Compile Include="SessionManagerClient.cs" />
-    <Compile Include="SessionManagerProxy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimpleUserManagerClient.cs" />
-    <Compile Include="SimpleUserManagerProxy.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

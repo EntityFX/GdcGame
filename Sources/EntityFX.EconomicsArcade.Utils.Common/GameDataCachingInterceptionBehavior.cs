@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.Caching;
 using Microsoft.Practices.Unity.InterceptionExtension;
 
-namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess
+namespace EntityFX.EconomicsArcade.Utils.Common
 {
     public class GameDataCachingInterceptionBehavior : IInterceptionBehavior
     {

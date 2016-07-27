@@ -1,5 +1,6 @@
 using System;
 using System.Configuration;
+using EntityFX.EconomicsArcade.Contract.Manager.SessionManager;
 using EntityFX.EconomicsArcade.Presentation.Models;
 using EntityFX.EconomicsArcade.Presentation.Models.Mappers;
 using Microsoft.Practices.Unity;
@@ -37,27 +38,27 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication
             container.RegisterType<IGameApiController, GameApiController>();
             container.RegisterType<IRatingApiController, RatingApiController>();
 
-            container.RegisterType<IGameManager, GameManagerClient>(
+            container.RegisterType<IGameManager, GameManagerClient<NetTcpProxy<IGameManager>>>(
                 new InjectionConstructor(
                     new ResolvedParameter<ILogger>(),
                     ConfigurationManager.AppSettings["ManagerEndpointAddress_GameManager"], typeof(Guid))
                 , new Interceptor<InterfaceInterceptor>()
                 , new InterceptionBehavior<LoggerInterceptor>()
                     );
-            container.RegisterType<ISimpleUserManager, SimpleUserManagerClient>(
+            container.RegisterType<ISimpleUserManager, SimpleUserManagerClient<NetTcpProxy<ISimpleUserManager>>>(
                 new InjectionConstructor(
                     ConfigurationManager.AppSettings["ManagerEndpointAddress_UserManager"])
                 , new Interceptor<InterfaceInterceptor>()
                 , new InterceptionBehavior<LoggerInterceptor>()
                     );
 
-            container.RegisterType<IRatingManager, RatingManagerClient>(
+            container.RegisterType<IRatingManager, RatingManagerClient<NetTcpProxy<IRatingManager>>>(
                 new InjectionConstructor(
                     ConfigurationManager.AppSettings["ManagerEndpointAddress_RatingManager"]),
                     new Interceptor<InterfaceInterceptor>(),
                     new InterceptionBehavior<LoggerInterceptor>()
                     );
-            container.RegisterType<SessionManagerClient>(
+            container.RegisterType<SessionManagerClient<NetTcpProxy<ISessionManager>>>(
                 new InjectionConstructor(
                 ConfigurationManager.AppSettings["ManagerEndpointAddress_SessionManager"])
                 , new Interceptor<InterfaceInterceptor>()

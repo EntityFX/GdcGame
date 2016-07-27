@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using EntityFX.EconomicsArcade.Contract.Common.Counters;
+using EntityFX.EconomicsArcade.Contract.Common.UserRating;
 using EntityFX.EconomicsArcade.Contract.DataAccess.GameData;
 using EntityFX.EconomicsArcade.Contract.Manager.RatingManager;
 using EntityFX.EconomicsArcade.DataAccess.Repository;

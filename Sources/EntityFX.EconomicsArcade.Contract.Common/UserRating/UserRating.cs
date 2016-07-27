@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace EntityFX.EconomicsArcade.Contract.Manager.RatingManager
+namespace EntityFX.EconomicsArcade.Contract.Common.UserRating
 {
     [DataContract]
     public class UserRating

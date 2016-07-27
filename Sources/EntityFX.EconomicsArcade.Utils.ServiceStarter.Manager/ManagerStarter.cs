@@ -11,6 +11,7 @@ using EntityFX.EconomicsArcade.Contract.Manager.RatingManager;
 using EntityFX.EconomicsArcade.Contract.Manager.UserManager;
 using EntityFX.EconomicsArcade.Infrastructure.Service.Interfaces;
 using EntityFX.EconomicsArcade.Manager;
+using EntityFX.EconomicsArcade.Utils.Common;
 using Microsoft.Practices.Unity;
 
 namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager

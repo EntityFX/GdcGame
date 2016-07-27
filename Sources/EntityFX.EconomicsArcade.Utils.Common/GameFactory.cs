@@ -3,7 +3,7 @@ using EntityFX.EconomicsArcade.Contract.Game;
 using EntityFX.EconomicsArcade.Manager;
 using Microsoft.Practices.Unity;
 
-namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
+namespace EntityFX.EconomicsArcade.Utils.Common
 {
     public class GameFactory : IGameFactory
     {

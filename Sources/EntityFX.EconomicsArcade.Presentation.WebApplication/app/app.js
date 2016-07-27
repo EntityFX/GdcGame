@@ -14,18 +14,22 @@ app.controller('appGameController',
     '$rootScope', '$scope', '$interval', 'gameData', 'gdCameApiService', '$location',
     function ($rootScope, $scope, $interval, gameData, gdCameApiService, $location) {
         $.connection.hub.url = $location.protocol() + "://" + $location.host() + ":8080/signalr";
+        $scope.isTakeRestDisabled = true;
+        $scope.isDoQuarterGoalDisabled = true;
         var hub = $.connection.gameDataHub;
         if (hub != null) {
             hub.client.getGameData = function (data) {
-               
+
                 $rootScope.$apply(function () {
-                    $rootScope.gameData = data;
-                }
+                        $rootScope.gameData = data;
+                        $scope.isTakeRestDisabled = isTakeRestActive();
+                        $scope.isDoQuarterGoalDisabled = isDoQuarterGoalActive();
+                    }
                 );
                 $scope.$broadcast('update.fundsDrivers', $rootScope.gameData);
             };
             $.connection.hub.start();
-           
+
         }
 
         gameData.then(function (data) {
@@ -54,11 +58,25 @@ app.controller('appGameController',
                 });
         }
 
+        $scope.$on('counters.update',
+            function (event, value) {
+                $scope.isTakeRestDisabled = isTakeRestActive();
+            });
+
         $scope.fightAgainstInflation = function () {
             gdCameApiService.fightAgainstInflation();
         }
 
         $scope.activateDelayedCounter = function () {
             gdCameApiService.activateDelayedCounter($rootScope.gameData.Counters.Counters[3].Id);
+        }
+
+        function isTakeRestActive() {
+            return $rootScope.gameData.Counters.Counters[2].Inflation == 0;
+        }
+
+        function isDoQuarterGoalActive() {
+            return $rootScope.gameData.Counters.Counters[3].UnlockValue > $rootScope.gameData.Counters.Counters[0].Value
+                || $rootScope.gameData.Counters.Counters[3].SecondsRemaining > 0;
         }
     }]);

@@ -50,6 +50,10 @@
     <Reference Include="Microsoft.Practices.Unity.Configuration">
       <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Unity.Interception.4.0.1\lib\Net45\Microsoft.Practices.Unity.Interception.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention">
       <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
     </Reference>
@@ -66,6 +70,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContainerBootstrapper.cs" />
     <Compile Include="GameDataRetrieveDataAccessService.cs" />
     <Compile Include="GameDataStoreDataAccessService.cs" />
     <Compile Include="Mappers\UserGameCounterMapper.cs" />
@@ -104,6 +109,10 @@
     <ProjectReference Include="..\EntityFX.EconomicsArcade.Infrastructure.Service\EntityFX.EconomicsArcade.Infrastructure.Service.csproj">
       <Project>{2b414418-f3d8-4528-ba9f-6fefa8b7aa03}</Project>
       <Name>EntityFX.EconomicsArcade.Infrastructure.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.EconomicsArcade.Utils.Common\EntityFX.EconomicsArcade.Utils.Common.csproj">
+      <Project>{2AE99E38-4B45-4D8B-B9D5-840B21F82A43}</Project>
+      <Name>EntityFX.EconomicsArcade.Utils.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

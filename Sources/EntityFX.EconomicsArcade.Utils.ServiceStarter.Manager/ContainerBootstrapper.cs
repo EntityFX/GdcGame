@@ -20,10 +20,12 @@ using EntityFX.EconomicsArcade.Contract.NotifyConsumerService;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 using EntityFX.EconomicsArcade.Infrastructure.Service;
 using EntityFX.EconomicsArcade.Infrastructure.Service.Interfaces;
+using EntityFX.EconomicsArcade.Infrastructure.Service.NetNamedPipe;
 using EntityFX.EconomicsArcade.Manager;
 using EntityFX.EconomicsArcade.Manager.Mappers;
 using EntityFX.EconomicsArcade.Utils.ClientProxy.DataAccess;
 using EntityFX.EconomicsArcade.Utils.ClientProxy.NotifyConsumer;
+using EntityFX.EconomicsArcade.Utils.Common;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
 using PortableLog.NLog;
@@ -36,6 +38,12 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
         //public 
         public IUnityContainer Configure(IUnityContainer container)
         {
+            var childBootstrappers = new IContainerBootstrapper[]
+            {
+                new EconomicsArcade.Manager.ContainerBootstrapper(),
+            };
+            Array.ForEach(childBootstrappers, _ => _.Configure(container));
+            
             container.AddNewExtension<Interception>();
 
 
@@ -43,7 +51,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
                 _ => new Logger(new NLoggerAdapter(new NLogLogExFactory().GetLogger("logger")))));
 
             //container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessClient>();
-            container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessClient>(
+            container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessClient<NetTcpProxy<IGameDataRetrieveDataAccessService>>>(
                 new InjectionConstructor(
                     ConfigurationManager.AppSettings["ClentProxyAddress_GameDataRetrieveDataAccessService"]
                     )
@@ -51,7 +59,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
                 new InterceptionBehavior<PolicyInjectionBehavior>()
                 , new Interceptor<InterfaceInterceptor>()
                 );
-            container.RegisterType<IUserDataAccessService, UserDataAccessClient>(
+            container.RegisterType<IUserDataAccessService, UserDataAccessClient<NetTcpProxy<IUserDataAccessService>>>(
                 new InjectionConstructor(
                     ConfigurationManager.AppSettings["ClentProxyAddress_UserDataAccessService"]
                     )
@@ -59,7 +67,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
                 new InterceptionBehavior<PolicyInjectionBehavior>()
                 , new Interceptor<InterfaceInterceptor>()
                 );
-            container.RegisterType<IGameDataStoreDataAccessService, GameDataStoreDataAccessClient>(
+            container.RegisterType<IGameDataStoreDataAccessService, GameDataStoreDataAccessClient<NetMsmqProxy<IGameDataStoreDataAccessService>>>(
                 new InjectionConstructor(
                     ConfigurationManager.AppSettings["ClentProxyAddress_GameDataStoreDataAccessService"]
                     ),
@@ -67,23 +75,13 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
                 , new Interceptor<InterfaceInterceptor>()
                 );
 
-
-            container.RegisterType<IMapper<IncrementorBase, Incrementor>, IncrementorContractMapper>();
-            container.RegisterType<IMapper<CounterBase, Contract.Common.Counters.CounterBase>, CounterContractMapper>();
-            container
-                .RegisterType
-                <IMapper<FundsCounters, Contract.Common.Counters.FundsCounters>, FundsCountersContractMapper>();
-            container.RegisterType<IMapper<FundsDriver, Contract.Common.Funds.FundsDriver>, FundsDriverContractMapper>();
-            container.RegisterType<IMapper<IGame, GameData>, GameDataContractMapper>();
-            container.RegisterType<IMapper<IGame, GameData>, GameDataMapper>("GameDataMapper");
-            container
-                .RegisterType
-                <IMapper<ManualStepResult, Contract.Manager.GameManager.ManualStepResult>, ManualStepContractMapper>();
-            container
-                .RegisterType
-                <IMapper<ManualStepResult, Contract.Manager.GameManager.ManualStepResult>, ManualStepContractMapper>();
-
-            container.RegisterType<IGame, NetworkGame>();
+            container.RegisterType<INotifyConsumerService, NotifyConsumerServiceClient>(
+                new InjectionConstructor(
+                    ConfigurationManager.AppSettings["ClientProxyAddress_NotifyConsumerService"]
+                    )
+                , new InterceptionBehavior<PolicyInjectionBehavior>()
+                , new Interceptor<InterfaceInterceptor>()
+                );
 
             container.RegisterType<IGameFactory, GameFactory>();
 
@@ -98,31 +96,6 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
                     )
                 );
 
-
-            container.RegisterType<ISessionManager, SessionManager>(
-                new InterceptionBehavior<PolicyInjectionBehavior>(),
-                new Interceptor<InterfaceInterceptor>());
-
-            container.RegisterType<IRatingManager, RatingManager>(
-                new InterceptionBehavior<PolicyInjectionBehavior>(),
-                new Interceptor<InterfaceInterceptor>());
-
-            container.RegisterType<IGameManager, GameManager>(
-                new InterceptionBehavior<PolicyInjectionBehavior>()
-                , new Interceptor<InterfaceInterceptor>());
-            container.RegisterType<ISimpleUserManager, SimpleUserManager>(
-                new InterceptionBehavior<PolicyInjectionBehavior>()
-                , new Interceptor<InterfaceInterceptor>());
-            container.RegisterType<IAdminManager, AdminManager>(
-                new InterceptionBehavior<PolicyInjectionBehavior>()
-                , new Interceptor<InterfaceInterceptor>());
-            container.RegisterType<INotifyConsumerService, NotifyConsumerServiceClient>(
-                new InjectionConstructor(
-                    ConfigurationManager.AppSettings["ClientProxyAddress_NotifyConsumerService"]
-                    )
-                , new InterceptionBehavior<PolicyInjectionBehavior>()
-                , new Interceptor<InterfaceInterceptor>()
-                );
             if (ConfigurationManager.AppSettings["UseLoggerInterceptor"] == "True")
             {
                 container.Configure<Interception>()

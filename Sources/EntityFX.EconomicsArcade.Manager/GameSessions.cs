@@ -1,4 +1,5 @@
-﻿using EntityFX.EconomicsArcade.Contract.Game;
+﻿using EntityFX.EconomicsArcade.Contract.Common;
+using EntityFX.EconomicsArcade.Contract.Game;
 using EntityFX.EconomicsArcade.Contract.Manager.SessionManager;
 using System;
 using System.Collections.Concurrent;

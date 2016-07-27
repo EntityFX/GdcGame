@@ -65,6 +65,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContainerBootstrapper.cs" />
     <Compile Include="CountersRepository.cs" />
     <Compile Include="Criterions\Counters\GetAllCountersCriterion.cs" />
     <Compile Include="Criterions\FundsDriver\GetAllFundsDriversCriterion.cs" />

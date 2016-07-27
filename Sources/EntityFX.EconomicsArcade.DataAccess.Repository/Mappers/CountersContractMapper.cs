@@ -15,7 +15,8 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository.Mappers
             InflationIncreaseSteps = source.InflationIncreaseSteps,
             Inflation = 0,
             Bonus = 0,
-            BonusPercentage = 0
+            BonusPercentage = 0,
+            SubValue = source.InitialValue
         };
 
         private static readonly IDictionary<int, Func<CounterEntity, CounterBase>> MappingDictionary =

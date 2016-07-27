@@ -1,4 +1,5 @@
 ﻿using EntityFX.EconomicsArcade.Infrastructure.Common;
+using EntityFX.EconomicsArcade.Infrastructure.Service.NetNamedPipe;
 using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Collections.Generic;
 namespace EntityFX.EconomicsArcade.Infrastructure.Service
 {
     public abstract class ServicesStarterBase<TBootstrapper> : IServicesStarter
-        where TBootstrapper : IContainerBootstrapper, new()
+        where TBootstrapper : IContainerBootstrapper
     {
         protected readonly IUnityContainer _container;
         private readonly IDictionary<string, ServiceHostInfo> _serviceHosts = new Dictionary<string, ServiceHostInfo>();
@@ -33,6 +34,12 @@ namespace EntityFX.EconomicsArcade.Infrastructure.Service
         protected void AddNetTcpService<T>(Uri endpointAddress) where T : class
         {
             var service = new NetTcpServiceHost<T>(_container);
+            AddServiceHost(service, endpointAddress);
+        }
+
+        protected void AddNetNamedPipeService<T>(Uri endpointAddress) where T : class
+        {
+            var service = new NetNamedPipeServiceHost<T>(_container);
             AddServiceHost(service, endpointAddress);
         }
 

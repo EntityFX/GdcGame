@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Configuration;
+using System.Linq;
+using EntityFX.EconomicsArcade.Contract.Common.UserRating;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
+using EntityFX.EconomicsArcade.Utils.Common;
+using Microsoft.Practices.ObjectBuilder2;
 using Microsoft.Practices.Unity;
 using System.Collections.Generic;
 using EntityFX.EconomicsArcade.Contract.DataAccess.User;
@@ -46,61 +50,17 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess
         //public 
         public IUnityContainer Configure(IUnityContainer container)
         {
+            var childBootstrappers = new IContainerBootstrapper[]
+            {
+                new EconomicsArcade.DataAccess.Repository.ContainerBootstrapper(),
+                new EconomicsArcade.DataAccess.Service.ContainerBootstrapper()
+            };
+
+            childBootstrappers.ForEach(_ => _.Configure(container));
             container.AddNewExtension<Interception>();
 
             container.RegisterType<ILogger>(new InjectionFactory(
                _ => new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger")))));
-
-            container.RegisterType<DbContext, EconomicsArcadeDbContext>(new InjectionConstructor("name=EconomicsArcadeDbContext"));
-            container.RegisterType<IQueryBuilder, QueryBuilder>();
-            container.RegisterType<IUnitOfWork, UnitOfWork>();
-            container.RegisterType<IUnitOfWorkFactory, UnitOfWorkFactory>();
-
-            container.RegisterType<IQuery<GetUserByIdCriterion, UserEntity>, GetUserByIdQuery>();
-            container.RegisterType<IQuery<GetUserByNameCriterion, UserEntity>, GetUserByNameQuery>();
-            container.RegisterType<IQuery<GetAllUsersCriterion, IEnumerable<UserEntity>>, GetAllUsersQuery>();
-            container.RegisterType<IQuery<GetAllUsersRatingsCriterion, IEnumerable<UserRating>>, GetAllUsersRatingsQuery>();
-            container.RegisterType<IQuery<GetAllFundsDriversCriterion, IEnumerable<FundsDriverEntity>>, GetAllFundsDriversQuery>();
-            container.RegisterType<IQuery<GetAllCountersCriterion, IEnumerable<CounterEntity>>, GetAllCountersQuery>();
-            container.RegisterType<IQuery<GetUserGameCounterByIdCriterion, UserGameCounterEntity>, GetUserGameCounterByIdQuery>();
-            container.RegisterType<IQuery<GetUserCountersByUserIdCriterion, IEnumerable<UserCounterEntity>>, GetUserCountersByUserIdQuery>();
-            container.RegisterType<IQuery<GetUserFundsDriverByUserIdCriterion, IEnumerable<UserFundsDriverEntity>>, GetUserFundDriverByUserIdQuery>();
-
-            container.RegisterType<IMapper<User, UserEntity>, UserEntityMapper>();
-            container.RegisterType<IMapper<UserEntity, User>, UserContractMapper>();
-            container.RegisterType<IMapper<FundsDriverEntity, FundsDriver>, FundsDriverContractMapper>();
-            container.RegisterType<IMapper<IncrementorEntity, Incrementor>, IncrementorContractMapper>();
-            container.RegisterType<IMapper<CounterEntity, CounterBase>, CountersContractMapper>();
-            container.RegisterType<IMapper<UserGameCounter, UserGameCounterEntity>, UserGameCounterEntityMapper>();
-            container.RegisterType<IMapper<UserGameCounterEntity, UserGameCounter>, UserGameCounterContractMapper>();
-            container.RegisterType<IMapper<CounterBase, UserCounterEntity>, UserCounterEntityMapper>();
-            container.RegisterType<IMapper<UserCounterEntity, CounterBase>, UserCounterContractMapper>();
-            container.RegisterType<IMapper<FundsDriver, UserFundsDriverEntity>, UserFundsDriverEntityMapper>();
-            container.RegisterType<IMapper<UserFundsDriverEntity, FundsDriver>, UserFundsDriverContractMapper>();
-
-            container.RegisterType<IMapper<GameData, UserGameCounter>, UserGameCounterMapper>();
-
-            container.RegisterType<IUserRepository, UserRepository>();
-            container.RegisterType<IFundsDriverRepository, FundsDriverRepository>();
-            container.RegisterType<ICountersRepository, CountersRepository>();
-            container.RegisterType<IUserGameCounterRepository, UserGameCounterRepository>();
-            container.RegisterType<IUserCounterRepository, UserCounterRepository>();
-            container.RegisterType<IUserFundsDriverRepository, UserFundsDriverRepository>();
-            container.RegisterType<IUserRatingRepository, UserRatingRepository>();
-
-            container.RegisterType<IUserDataAccessService, UserDataAccessService>(
-                new InterceptionBehavior<PolicyInjectionBehavior>()
-                , new Interceptor<InterfaceInterceptor>()
-                );
-            container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessService>(
-                new InterceptionBehavior<PolicyInjectionBehavior>()
-                , new Interceptor<InterfaceInterceptor>(),
-                new InterceptionBehavior<GameDataCachingInterceptionBehavior>()
-                );
-            container.RegisterType<IGameDataStoreDataAccessService, GameDataStoreDataAccessService>(
-                new InterceptionBehavior<PolicyInjectionBehavior>()
-                , new Interceptor<InterfaceInterceptor>()
-                );
 
             if (ConfigurationManager.AppSettings["UseLoggerInterceptor"] == "True")
             {

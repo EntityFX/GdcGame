@@ -1,11 +1,11 @@
 ﻿using System;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
-using System.ServiceModel.Configuration;
 using System.ServiceModel.Dispatcher;
+using EntityFX.EconomicsArcade.Contract.Manager;
 using EntityFX.EconomicsArcade.Contract.Manager.SessionManager;
 
-namespace EntityFX.EconomicsArcade.Contract.Manager
+namespace EntityFX.EconomicsArcade.Utils.Common
 {
     public class InvalidSessionFaultHandler : IErrorHandler
     {

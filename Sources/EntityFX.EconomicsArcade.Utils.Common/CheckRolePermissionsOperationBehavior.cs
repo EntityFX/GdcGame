@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using System.ServiceModel;
@@ -12,9 +11,9 @@ using EntityFX.EconomicsArcade.Contract.Manager.SessionManager;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 using EntityFX.EconomicsArcade.Manager;
 
-namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
+namespace EntityFX.EconomicsArcade.Utils.Common
 {
-    internal class CheckRolePermissionsOperationBehavior   : IOperationBehavior
+    public class CheckRolePermissionsOperationBehavior   : IOperationBehavior
     {
         private readonly GameSessions _gameSessions;
 

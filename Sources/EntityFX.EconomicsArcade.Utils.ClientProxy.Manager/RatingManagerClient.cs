@@ -1,10 +1,13 @@
 ﻿using System;
 using EntityFX.EconomicsArcade.Contract.Common;
+using EntityFX.EconomicsArcade.Contract.Common.UserRating;
 using EntityFX.EconomicsArcade.Contract.Manager.RatingManager;
+using EntityFX.EconomicsArcade.Infrastructure.Service;
 
 namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
 {
-    public class RatingManagerClient : IRatingManager
+    public class RatingManagerClient<TInfrastructureProxy> : IRatingManager
+                        where TInfrastructureProxy : InfrastructureProxy<IRatingManager>, new()
     {
         private readonly Uri _endpointAddress;
 
@@ -15,7 +18,7 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
 
         public UserRating[] GetUsersRatingByCount(int count)
         {
-            using (var proxy = new RatingManagerProxy())
+            using (var proxy = new TInfrastructureProxy())
             {
                 var channel = proxy.CreateChannel(_endpointAddress);
                 proxy.ApplyContextScope();
@@ -27,7 +30,7 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
 
         public UserRating FindUserRatingByUserName(string userName)
         {
-            using (var proxy = new RatingManagerProxy())
+            using (var proxy = new TInfrastructureProxy())
             {
                 var channel = proxy.CreateChannel(_endpointAddress);
                 proxy.ApplyContextScope();
@@ -39,7 +42,7 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
 
         public UserRating[] FindUserRatingByUserNameAndAroundUsers(string userName, int count)
         {
-            using (var proxy = new RatingManagerProxy())
+            using (var proxy = new TInfrastructureProxy())
             {
                 var channel = proxy.CreateChannel(_endpointAddress);
                 proxy.ApplyContextScope();

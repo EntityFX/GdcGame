@@ -84,10 +84,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CheckRolePermissionsOperationBehavior.cs" />
     <Compile Include="ContainerBootstrapper.cs" />
-    <Compile Include="GameFactory.cs" />
-    <Compile Include="InvalidSessionFaultHandler.cs" />
     <Compile Include="ManagerStarter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -139,6 +136,10 @@
     <ProjectReference Include="..\EntityFX.EconomicsArcade.Utils.ClientProxy.NotifyConsumer\EntityFX.EconomicsArcade.Utils.ClientProxy.NotifyConsumer.csproj">
       <Project>{F1EC6494-BA8E-406D-BC6C-89E32FAB7769}</Project>
       <Name>EntityFX.EconomicsArcade.Utils.ClientProxy.NotifyConsumer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.EconomicsArcade.Utils.Common\EntityFX.EconomicsArcade.Utils.Common.csproj">
+      <Project>{2AE99E38-4B45-4D8B-B9D5-840B21F82A43}</Project>
+      <Name>EntityFX.EconomicsArcade.Utils.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,6 @@
 ﻿using System.ServiceModel;
 using EntityFX.EconomicsArcade.Contract.Common;
+using EntityFX.EconomicsArcade.Contract.Common.UserRating;
 
 namespace EntityFX.EconomicsArcade.Contract.Manager.RatingManager
 {

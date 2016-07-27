@@ -10,19 +10,19 @@ using EntityFX.EconomicsArcade.Infrastructure.Repository.Query;
 namespace EntityFX.EconomicsArcade.DataAccess.Repository.Queries.UserRating
 {
     public class GetAllUsersRatingsQuery : QueryBase,
-        IQuery<GetAllUsersRatingsCriterion, IEnumerable<Contract.Manager.RatingManager.UserRating>>
+        IQuery<GetAllUsersRatingsCriterion, IEnumerable<Contract.Common.UserRating.UserRating>>
     {
         public GetAllUsersRatingsQuery(DbContext dbContext)
             : base(dbContext)
         {
         }
 
-        public IEnumerable<Contract.Manager.RatingManager.UserRating> Execute(GetAllUsersRatingsCriterion criterion)
+        public IEnumerable<Contract.Common.UserRating.UserRating> Execute(GetAllUsersRatingsCriterion criterion)
         {
             var userRatings = from user in DbContext.Set<UserEntity>().ToArray()
                               join gameData in DbContext.Set<UserGameCounterEntity>().ToArray() on user.Id equals gameData.UserId
                               select
-                                  new Contract.Manager.RatingManager.UserRating()
+                                  new Contract.Common.UserRating.UserRating()
                                   {
                                       UserName = user.Email,
                                       GdcPoints = user.UserCounters.ToArray()[0].Value,

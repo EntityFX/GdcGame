@@ -2,8 +2,10 @@
 using System.Web;
 using EntityFX.EconomicsArcade.Contract.Common;
 using EntityFX.EconomicsArcade.Contract.Common.Counters;
+using EntityFX.EconomicsArcade.Contract.Common.UserRating;
 using EntityFX.EconomicsArcade.Contract.Manager.GameManager;
 using EntityFX.EconomicsArcade.Contract.Manager.RatingManager;
+using EntityFX.EconomicsArcade.Contract.Manager.SessionManager;
 using EntityFX.EconomicsArcade.Contract.Manager.UserManager;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 using EntityFX.EconomicsArcade.Model.Common.Model;
@@ -19,7 +21,7 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Providers
         private ILogger _logger;
         private IGameManager _gameManager;
         private readonly ISimpleUserManager _simpleUserManager;
-        private readonly SessionManagerClient _sessionManagerClient;
+        private readonly ISessionManagerClientFactory _sessionManagerClient;
         private readonly IMapper<GameData, GameDataModel> _gameDataModelMapper;
         private readonly IMapper<FundsCounters, FundsCounterModel> _fundsCounterModelMapper;
         private readonly IMapper<BuyFundDriverResult, BuyDriverModel> _fundsDriverBuyinfoModelMapper;
@@ -30,7 +32,7 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Providers
             ILogger logger,
             IGameClientFactory gameClientFactory,
             ISimpleUserManager simpleUserManager,
-            SessionManagerClient sessionManagerClient,
+            ISessionManagerClientFactory sessionManagerClient,
             IMapper<GameData, GameDataModel> gameDataModelMapper,
             IMapper<FundsCounters, FundsCounterModel> fundsCounterModelMapper,
             IMapper<BuyFundDriverResult, BuyDriverModel> fundsDriverBuyinfoModelMapper,
@@ -56,7 +58,7 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Providers
                     _simpleUserManager.Create(userName);
                 }
 
-                HttpContext.Current.Session["SessionGuid"] = _sessionManagerClient.AddSession(userName);
+                HttpContext.Current.Session["SessionGuid"] = _sessionManagerClient.BuildSessionManagerClient(Guid.Empty).OpenSession(userName);
 
             }
             GameGuid = (Guid)HttpContext.Current.Session["SessionGuid"];

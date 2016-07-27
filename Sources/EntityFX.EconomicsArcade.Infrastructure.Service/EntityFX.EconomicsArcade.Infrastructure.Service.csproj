@@ -90,6 +90,8 @@
     <Compile Include="LoggerInterceptor.cs" />
     <Compile Include="NetMsmq\NetMsmqProxy.cs" />
     <Compile Include="NetMsmq\NetMsmqServiceHost.cs" />
+    <Compile Include="NetNamedPipe\NetNamedPipeProxy.cs" />
+    <Compile Include="NetNamedPipe\NetNamedPipeServiceHost.cs" />
     <Compile Include="NetTcp\NetTcpProxy.cs" />
     <Compile Include="NetTcp\NetTcpServiceHost.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

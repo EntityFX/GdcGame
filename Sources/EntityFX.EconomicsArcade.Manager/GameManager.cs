@@ -114,6 +114,7 @@ namespace EntityFX.EconomicsArcade.Manager
             catch (Exception exp)
             {
                 _logger.Error(exp);
+                throw;
             }
             return game;
         }

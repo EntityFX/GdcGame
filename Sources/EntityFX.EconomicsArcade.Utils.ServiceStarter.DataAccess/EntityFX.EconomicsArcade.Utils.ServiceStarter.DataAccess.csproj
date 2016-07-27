@@ -81,7 +81,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameDataCachingInterceptionBehavior.cs" />
     <Compile Include="ContainerBootstrapper.cs" />
     <Compile Include="DataAccessStarter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -122,6 +121,10 @@
     <ProjectReference Include="..\EntityFX.EconomicsArcade.Infrastructure.Service\EntityFX.EconomicsArcade.Infrastructure.Service.csproj">
       <Project>{2b414418-f3d8-4528-ba9f-6fefa8b7aa03}</Project>
       <Name>EntityFX.EconomicsArcade.Infrastructure.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.EconomicsArcade.Utils.Common\EntityFX.EconomicsArcade.Utils.Common.csproj">
+      <Project>{2AE99E38-4B45-4D8B-B9D5-840B21F82A43}</Project>
+      <Name>EntityFX.EconomicsArcade.Utils.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

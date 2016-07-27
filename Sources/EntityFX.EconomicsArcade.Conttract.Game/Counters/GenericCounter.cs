@@ -47,7 +47,7 @@
             }
             set
             {
-                _currentSteps = value > 0 ? value : 0;
+                _currentSteps = value > 0 ? (value <= StepsToIncreaseInflation * 100 ? value : StepsToIncreaseInflation * 100) : 0;
             }
         }
 

@@ -25,19 +25,24 @@ namespace EntityFX.EconomicsArcade.Infrastructure.Service
             return new OperationContextScope((IContextChannel)_clientProxy);
         }
 
-        protected virtual void ApplyOperationContext()
+        protected virtual void ApplyOperationContext(dynamic contextData)
         {
 
         }
 
         public TServiceContract ApplyContextScope()
         {
+            return ApplyContextScope<dynamic>(ApplyOperationContext, null);
+        }
+
+        public TServiceContract ApplyContextScope<TContextType>(Action<TContextType> applyContextAction, TContextType contextData) 
+        {
             if (_clientProxy == null)
             {
-                throw  new InvalidOperationException("Channel proxy is not created");
+                throw new InvalidOperationException("Channel proxy is not created");
             }
             _operationContextScope = CreateContextScope();
-            ApplyOperationContext();
+            applyContextAction(contextData);
             return _clientProxy;
         }
 

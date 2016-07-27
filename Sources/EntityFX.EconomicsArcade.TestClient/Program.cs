@@ -5,7 +5,9 @@ using EntityFX.EconomicsArcade.Contract.Manager;
 using EntityFX.EconomicsArcade.Contract.Manager.AdminManager;
 using EntityFX.EconomicsArcade.Contract.Manager.GameManager;
 using EntityFX.EconomicsArcade.Contract.Manager.SessionManager;
+using EntityFX.EconomicsArcade.Contract.Manager.UserManager;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
+using EntityFX.EconomicsArcade.Infrastructure.Service;
 using EntityFX.EconomicsArcade.Utils.ClientProxy.Manager;
 using IclServices.WcfTest.TestClient;
 using PortableLog.NLog;
@@ -34,7 +36,7 @@ namespace EntityFX.EconomicsArcade.TestClient
                 userName = Console.ReadLine();
             }
 
-            var simpleUserManagerClient = new SimpleUserManagerClient(
+            var simpleUserManagerClient = new SimpleUserManagerClient<NetTcpProxy<ISimpleUserManager>> (
                 ConfigurationManager.AppSettings["ManagerEndpointAddress_UserManager"]
                 );
             if (!simpleUserManagerClient.Exists(userName))
@@ -42,23 +44,23 @@ namespace EntityFX.EconomicsArcade.TestClient
                 simpleUserManagerClient.Create(userName);
             }
 
-            var sessionManagerClient = new SessionManagerClient(
-                ConfigurationManager.AppSettings["ManagerEndpointAddress_SessionManager"]
+            var sessionManagerClient = new SessionManagerClient<NetTcpProxy<ISessionManager>>(
+                ConfigurationManager.AppSettings["ManagerEndpointAddress_SessionManager"], Guid.Empty
                 );
-            return new Tuple<Guid, string>(sessionManagerClient.AddSession(userName), userName);
+            return new Tuple<Guid, string>(sessionManagerClient.OpenSession(userName), userName);
         }
 
         private static bool UserLogout(Guid session)
         {
-            var sessionManagerClient = new SessionManagerClient(
-                ConfigurationManager.AppSettings["ManagerEndpointAddress_SessionManager"]
+            var sessionManagerClient = new SessionManagerClient<NetTcpProxy<ISessionManager>>(
+                ConfigurationManager.AppSettings["ManagerEndpointAddress_SessionManager"], session
                 );
-            return sessionManagerClient.CloseSession(session);
+            return sessionManagerClient.CloseSession();
         }
 
         private static IGameManager GetGameClient(Guid sessionGuid)
         {
-            return new GameManagerClient(
+            return new GameManagerClient<NetTcpProxy<IGameManager>>(
                 new Logger(new NLoggerAdapter(new NLogLogExFactory().GetLogger("logger")))
                 , ConfigurationManager.AppSettings["ManagerEndpointAddress_GameManager"]
                 , sessionGuid
@@ -67,7 +69,7 @@ namespace EntityFX.EconomicsArcade.TestClient
 
         private static IAdminManager GetAdminClient(Guid sessionGuid)
         {
-            return new AdminManagerClient(
+            return new AdminManagerClient<NetTcpProxy<IAdminManager>>(
                 ConfigurationManager.AppSettings["ManagerEndpointAddress_AdminManager"], _sessionGuid
                 );
         }
