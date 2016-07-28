@@ -11,6 +11,7 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository.Mappers
             destination.Id = source.Id;
             destination.Email = source.Email;
             destination.IsAdmin = source.IsAdmin;
+            destination.Secret = source.PasswordHash;
             return destination;
         }
     }

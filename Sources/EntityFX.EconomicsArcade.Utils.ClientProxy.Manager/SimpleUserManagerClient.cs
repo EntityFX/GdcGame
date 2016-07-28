@@ -1,4 +1,5 @@
 ﻿using System;
+using EntityFX.EconomicsArcade.Contract.DataAccess.User;
 using EntityFX.EconomicsArcade.Contract.Manager.UserManager;
 using EntityFX.EconomicsArcade.Infrastructure.Service;
 
@@ -26,13 +27,48 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
             }
         }
 
-        public void Create(string login)
+        public UserData FindById(int id)
+        {
+            using (var proxy = new TInfrastructureProxy())
+            {
+                var channel = proxy.CreateChannel(_endpointAddress);
+                proxy.ApplyContextScope();
+                var res = channel.FindById(id);
+                proxy.CloseChannel();
+                return res;
+            }
+        }
+
+        public UserData Find(string login)
+        {
+            using (var proxy = new TInfrastructureProxy())
+            {
+                var channel = proxy.CreateChannel(_endpointAddress);
+                proxy.ApplyContextScope();
+                var res = channel.Find(login);
+                proxy.CloseChannel();
+                return res;
+            }
+        }
+
+        public void Create(UserData login)
         {
             using (var proxy = new TInfrastructureProxy())
             {
                 var channel = proxy.CreateChannel(_endpointAddress);
                 proxy.ApplyContextScope();
                 channel.Create(login);
+                proxy.CloseChannel();
+            }
+        }
+
+        public void Delete(int id)
+        {
+            using (var proxy = new TInfrastructureProxy())
+            {
+                var channel = proxy.CreateChannel(_endpointAddress);
+                proxy.ApplyContextScope();
+                channel.Delete(id);
                 proxy.CloseChannel();
             }
         }

@@ -53,6 +53,7 @@
     <Compile Include="SessionManager\Session.cs" />
     <Compile Include="SessionManager\UserRole.cs" />
     <Compile Include="UserManager\ISimpleUserManager.cs" />
+    <Compile Include="UserManager\UserData.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EntityFX.EconomicsArcade.Contract.Common\EntityFX.EconomicsArcade.Contract.Common.csproj">

@@ -22,16 +22,33 @@ namespace EntityFX.EconomicsArcade.Manager
             return user != null;
         }
 
-        public void Create(string login)
+        public UserData FindById(int id)
+        {
+            var user = _userDataAccess.FindById(id);
+            return user != null ? new UserData() { Id = user.Id, Login = user.Email, PasswordHash = user.PasswordHash } : null;
+        }
+
+        public UserData Find(string login)
+        {
+            var user = _userDataAccess.FindByName(login);
+            return user != null ? new UserData() { Id = user.Id, Login = user.Email, PasswordHash = user.PasswordHash } : null;
+        }
+
+        public void Create(UserData login)
         {
             try
             {
-                _userDataAccess.Create(new User() { Email = login, IsAdmin = false });
+                _userDataAccess.Create(new User() { Email = login.Login, IsAdmin = false, PasswordHash = login.PasswordHash});
             }
             catch (Exception exp)
             {
                 
             }
+        }
+
+        public void Delete(int id)
+        {
+            _userDataAccess.Delete(id);
         }
     }
 }

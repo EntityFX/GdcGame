@@ -1,14 +1,14 @@
-using EntityFX.EconomicsArcade.Contract.Common;
+using System;
 using EntityFX.EconomicsArcade.Contract.Common.UserRating;
-using EntityFX.EconomicsArcade.Contract.Manager.RatingManager;
 using EntityFX.EconomicsArcade.Model.Common.Model;
 using EntityFX.EconomicsArcade.Presentation.Models;
 
-namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Providers
+namespace EntityFX.EconomicsArcade.Presentation.Providers.Providers
 {
     public interface IGameDataProvider
     {
         void InitializeSession(string userName);
+        void InitializeGameContext(Guid gameGuid);
         void ClearSession();
         GameDataModel GetGameData();
         FundsCounterModel GetCounters();

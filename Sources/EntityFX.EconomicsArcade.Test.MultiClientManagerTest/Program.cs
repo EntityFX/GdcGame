@@ -175,7 +175,7 @@ namespace EntityFX.EconomicsArcade.Test.MultiClientManagerTest
             var simpleUserManagerClient = _container.Resolve<ISimpleUserManager>();
             if (!simpleUserManagerClient.Exists(userName))
             {
-                simpleUserManagerClient.Create(userName);
+                simpleUserManagerClient.Create(new UserData(){Login = userName});
             }
 
             var sessionManagerClient = _container.Resolve<ISessionManager>(new ParameterOverride("sessionGuid", Guid.Empty));

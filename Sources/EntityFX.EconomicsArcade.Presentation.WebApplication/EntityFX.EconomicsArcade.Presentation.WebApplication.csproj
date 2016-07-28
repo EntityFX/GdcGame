@@ -175,20 +175,12 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\RatingApiController.cs" />
-    <Compile Include="Controllers\GameApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\IRatingApiController.cs" />
-    <Compile Include="Controllers\IGameApiController.cs" />
-    <Compile Include="Factories\GameClientFactory.cs" />
-    <Compile Include="Factories\IGameClientFactory.cs" />
     <Compile Include="Factories\UnityControllerFactory.cs" />
-    <Compile Include="Providers\GameDataProvider.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Providers\IGameDataProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\fundDrivers\fundDrivers.component.js" />
@@ -1151,9 +1143,17 @@
       <Project>{3B44AFC0-F207-44E4-9F91-7F24E1F4D342}</Project>
       <Name>EntityFX.EconomicsArcade.Model.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EntityFX.EconomicsArcade.Presentation.Controllers\EntityFX.EconomicsArcade.Presentation.Controllers.csproj">
+      <Project>{892D6D25-857F-4CA9-A518-526BBF05C011}</Project>
+      <Name>EntityFX.EconomicsArcade.Presentation.Controllers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EntityFX.EconomicsArcade.Presentation.Models\EntityFX.EconomicsArcade.Presentation.Models.csproj">
       <Project>{0f9c056a-db5d-48ed-a688-bfd04ed4dfd7}</Project>
       <Name>EntityFX.EconomicsArcade.Presentation.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.EconomicsArcade.Presentation.Providers\EntityFX.EconomicsArcade.Presentation.Providers.csproj">
+      <Project>{A6F59753-3065-4BB3-85A8-1E0778205407}</Project>
+      <Name>EntityFX.EconomicsArcade.Presentation.Providers</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.EconomicsArcade.Utils.ClientProxy.Manager\EntityFX.EconomicsArcade.Utils.ClientProxy.Manager.csproj">
       <Project>{234EB70F-3E7D-4F66-82B0-2B506518B027}</Project>

@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http.ExceptionHandling;
 using EntityFX.EconomicsArcade.Contract.Manager;
-using EntityFX.EconomicsArcade.Contract.Manager.SessionManager;
-using EntityFX.EconomicsArcade.Presentation.WebApplication.Providers;
+using EntityFX.EconomicsArcade.Presentation.Providers.Providers;
 
 namespace EntityFX.EconomicsArcade.Presentation.WebApplication
 {

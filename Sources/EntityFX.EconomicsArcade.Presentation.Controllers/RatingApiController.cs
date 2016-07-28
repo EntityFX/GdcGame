@@ -1,11 +1,9 @@
 ﻿using System.Web.Http;
 using System.Web.Http.Controllers;
-using EntityFX.EconomicsArcade.Contract.Common;
 using EntityFX.EconomicsArcade.Contract.Common.UserRating;
-using EntityFX.EconomicsArcade.Contract.Manager.RatingManager;
-using EntityFX.EconomicsArcade.Presentation.WebApplication.Providers;
+using EntityFX.EconomicsArcade.Presentation.Providers.Providers;
 
-namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Controllers
+namespace EntityFX.EconomicsArcade.Presentation.Controllers
 {
     public class RatingApiController : ApiController, IRatingApiController
     {

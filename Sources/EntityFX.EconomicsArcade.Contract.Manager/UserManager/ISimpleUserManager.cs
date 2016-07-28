@@ -1,4 +1,5 @@
-﻿using System.ServiceModel;
+﻿using System;
+using System.ServiceModel;
 
 namespace EntityFX.EconomicsArcade.Contract.Manager.UserManager
 {
@@ -11,6 +12,12 @@ namespace EntityFX.EconomicsArcade.Contract.Manager.UserManager
         [OperationContract]
         bool Exists(string login);
         [OperationContract]
-        void Create(string login);
+        UserData FindById(int id);
+        [OperationContract]
+        UserData Find(string login);
+        [OperationContract]
+        void Create(UserData login);
+        [OperationContract]
+        void Delete(int id);
     }
 }

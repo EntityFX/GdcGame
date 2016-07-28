@@ -5,16 +5,13 @@ using EntityFX.EconomicsArcade.Contract.Common.Counters;
 using EntityFX.EconomicsArcade.Contract.Common.UserRating;
 using EntityFX.EconomicsArcade.Contract.Manager.GameManager;
 using EntityFX.EconomicsArcade.Contract.Manager.RatingManager;
-using EntityFX.EconomicsArcade.Contract.Manager.SessionManager;
 using EntityFX.EconomicsArcade.Contract.Manager.UserManager;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 using EntityFX.EconomicsArcade.Model.Common.Model;
 using EntityFX.EconomicsArcade.Presentation.Models;
-using EntityFX.EconomicsArcade.Presentation.WebApplication.Factories;
-using EntityFX.EconomicsArcade.Utils.ClientProxy.Manager;
 using EntityFX.EconomicsArcade.Utils.Common;
 
-namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Providers
+namespace EntityFX.EconomicsArcade.Presentation.Providers.Providers
 {
     public class GameDataProvider : IGameDataProvider
     {
@@ -56,13 +53,18 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Providers
             {
                 if (!_simpleUserManager.Exists(userName))
                 {
-                    _simpleUserManager.Create(userName);
+                    _simpleUserManager.Create(new UserData() {Login = userName});
                 }
 
                 HttpContext.Current.Session["SessionGuid"] = _sessionManagerClient.BuildSessionManagerClient(Guid.Empty).OpenSession(userName);
 
             }
-            GameGuid = (Guid)HttpContext.Current.Session["SessionGuid"];
+            InitializeGameContext((Guid) HttpContext.Current.Session["SessionGuid"]);
+        }
+
+        public void InitializeGameContext(Guid gameGuid)
+        {
+            GameGuid = gameGuid;
             _gameManager = _gameClientFactory.BuildGameClient(GameGuid);
         }
 

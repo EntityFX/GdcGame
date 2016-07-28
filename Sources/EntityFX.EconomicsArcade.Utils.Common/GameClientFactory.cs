@@ -3,9 +3,9 @@ using EntityFX.EconomicsArcade.Contract.Manager.GameManager;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 using Microsoft.Practices.Unity;
 
-namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Factories
+namespace EntityFX.EconomicsArcade.Utils.Common
 {
-    class GameClientFactory : IGameClientFactory
+    public class GameClientFactory : IGameClientFactory
     {
         private ILogger _logger;
         private readonly IUnityContainer _unityContainer;

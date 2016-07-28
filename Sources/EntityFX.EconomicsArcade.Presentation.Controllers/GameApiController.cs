@@ -1,11 +1,15 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.Security.Claims;
+using System.Security.Principal;
+using System.Web.Http;
 using System.Web.Http.Controllers;
 using EntityFX.EconomicsArcade.Model.Common.Model;
 using EntityFX.EconomicsArcade.Presentation.Models;
-using EntityFX.EconomicsArcade.Presentation.WebApplication.Providers;
+using EntityFX.EconomicsArcade.Presentation.Providers.Providers;
 
-namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Controllers
+namespace EntityFX.EconomicsArcade.Presentation.Controllers
 {
+    [Authorize]
     public class GameApiController : ApiController, IGameApiController
     {
         private readonly IGameDataProvider _gameDataProvider;
@@ -13,7 +17,18 @@ namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Controllers
         protected override void Initialize(HttpControllerContext controllerContext)
         {
             base.Initialize(controllerContext);
-            _gameDataProvider.InitializeSession(User.Identity.Name);
+            var windowsIdentity = User.Identity as WindowsIdentity;
+            if (windowsIdentity != null)
+            {
+                _gameDataProvider.InitializeSession(User.Identity.Name);
+                return;
+            }
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            if (claimsIdentity != null)
+            {
+                _gameDataProvider.InitializeGameContext(Guid.Parse(claimsIdentity.FindFirst("gameSession").Value));
+            }
+
         }
 
         public GameApiController(IGameDataProvider gameDataProvider)

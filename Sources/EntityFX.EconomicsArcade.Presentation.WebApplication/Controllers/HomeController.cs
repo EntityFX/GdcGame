@@ -1,5 +1,5 @@
 ﻿using System.Web.Mvc;
-using EntityFX.EconomicsArcade.Presentation.WebApplication.Providers;
+using EntityFX.EconomicsArcade.Presentation.Providers.Providers;
 
 namespace EntityFX.EconomicsArcade.Presentation.WebApplication.Controllers
 {
