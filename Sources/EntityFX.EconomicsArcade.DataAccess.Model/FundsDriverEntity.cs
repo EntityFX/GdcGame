@@ -27,6 +27,8 @@ namespace EntityFX.EconomicsArcade.DataAccess.Model
 
         public int? CustomRuleId { get; set; }
 
+        public virtual CustomRuleEntity CustomRule { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<IncrementorEntity> Incrementors { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

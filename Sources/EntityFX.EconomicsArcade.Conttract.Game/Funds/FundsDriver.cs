@@ -19,7 +19,7 @@ namespace EntityFX.EconomicsArcade.Contract.Game.Funds
 
         public int BuyCount { get; set; }
 
-        public int? CustomRuleId { get; set; }
+        public CustomRuleInfo CustomRuleInfo { get; set; }
 
         public IDictionary<int, IncrementorBase> Incrementors { get; set; }
     }

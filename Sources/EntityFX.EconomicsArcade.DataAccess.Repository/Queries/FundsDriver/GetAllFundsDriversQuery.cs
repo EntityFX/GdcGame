@@ -18,6 +18,7 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository.Queries.FundsDriver
         {
             return DbContext.Set<FundsDriverEntity>()
                 .Include("Incrementors")
+                .Include("CustomRule")
                 .ToArray();
         }
     }

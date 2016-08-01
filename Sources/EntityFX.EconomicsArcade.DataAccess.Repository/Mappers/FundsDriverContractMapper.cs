@@ -9,10 +9,12 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository.Mappers
     public class FundsDriverContractMapper : IMapper<FundsDriverEntity, FundsDriver>
     {
         private readonly IMapper<IncrementorEntity, Incrementor> _incrementorContractMapper;
+        private readonly IMapper<CustomRuleEntity, CustomRule> _customRuleContractMapper;
 
-        public FundsDriverContractMapper(IMapper<IncrementorEntity, Incrementor> incrementorContractMapper)
+        public FundsDriverContractMapper(IMapper<IncrementorEntity, Incrementor> incrementorContractMapper, IMapper<CustomRuleEntity, CustomRule> customRuleContractMapper)
         {
             _incrementorContractMapper = incrementorContractMapper;
+            _customRuleContractMapper = customRuleContractMapper;
         }
 
         public FundsDriver Map(FundsDriverEntity source, FundsDriver destination = null)
@@ -25,7 +27,7 @@ namespace EntityFX.EconomicsArcade.DataAccess.Repository.Mappers
             destination.Id = source.Id;
             destination.InflationPercent = source.InflationPercent;
             destination.Picture = source.Picture;
-            destination.CustomRuleId = source.CustomRuleId;
+            destination.CustomRuleInfo = source.CustomRule != null ? new CustomRuleInfo() { CustomRuleId = source.CustomRule.Id} : null;
             destination.Incrementors = new Dictionary<int, Incrementor>();
             foreach (var incrementor in source.Incrementors)
             {

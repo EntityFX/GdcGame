@@ -101,7 +101,10 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
                             } ,
                         },
                         Name = "Beer",
-                        CustomRuleId = 1
+                        CustomRuleInfo = new CustomRuleInfo()
+                        {
+                            CustomRule = CustomRules[1]
+                        }
                     }   
                 },
                 {
@@ -120,7 +123,10 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
                             },
                         },
                         Name = "Voice Of America",
-                        CustomRuleId = 2
+                        CustomRuleInfo = new CustomRuleInfo()
+                        {
+                            CustomRule = CustomRules[2]
+                        }
                     }   
                 },
                 {
@@ -135,7 +141,10 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
                             } ,
                         },
                         Name = "Dissidence On Flat",
-                        CustomRuleId = 3
+                        CustomRuleInfo = new CustomRuleInfo()
+                        {
+                            CustomRule = CustomRules[3]
+                        }
                     }   
                 },
                 {
@@ -528,9 +537,9 @@ namespace EntityFx.EconomicsArcade.TestApplication.UssrSimulator
         {
             return new ReadOnlyDictionary<int, ICustomRule>(new Dictionary<int, ICustomRule>()
             {
-                {1, new DelayedCounterCustomRule()},
-                {2, new ReduceFundDriverPriceCustomRule()},
-                {3, new IncreaseFundDriverIncrementorsCustomRule()},
+                {1, new DelayedCounterCustomRule() { Id = 1}},
+                {2, new ReduceFundDriverPriceCustomRule() { Id = 2}},
+                {3, new IncreaseFundDriverIncrementorsCustomRule() { Id = 3}},
             });
         }
 

@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using EntityFX.EconomicsArcade.Contract.Common;
 using EntityFX.EconomicsArcade.Contract.DataAccess.GameData;
 using EntityFX.EconomicsArcade.Contract.Game;
 using EntityFX.EconomicsArcade.Contract.Game.Funds;
 using EntityFX.EconomicsArcade.Contract.NotifyConsumerService;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
+using Microsoft.Practices.ObjectBuilder2;
 
 namespace EntityFX.EconomicArcade.Engine.GameEngine.NetworkGameEngine
 {
@@ -46,16 +48,15 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.NetworkGameEngine
 
         public void FundsDriverBought(IGame game, FundsDriver fundsDriver)
         {
-            var gameData = PrepareGameDataToPersist(game, fundsDriver);
-            _gameDataStoreDataAccessService.StoreGameDataForUser(_userId, gameData);
+            //var gameData = PrepareGameDataToPersist(game);
+            //_gameDataStoreDataAccessService.StoreGameDataForUser(_userId, gameData);
         }
 
-        private GameData PrepareGameDataToPersist(IGame game, FundsDriver fundDriver = null)
+        private GameData PrepareGameDataToPersist(IGame game)
         {
             var gameData = _gameDataMapper.Map(game);
-            gameData.FundsDrivers = fundDriver != null
-                ? new[] { _fundsDriverMapper.Map(fundDriver) }
-                : new EconomicsArcade.Contract.Common.Funds.FundsDriver[] { };
+            gameData.FundsDrivers = game.ModifiedFundsDrivers.Values.Select(_ => _fundsDriverMapper.Map(_)).ToArray();
+            game.ModifiedFundsDrivers.Clear();
             return gameData;
         }
 

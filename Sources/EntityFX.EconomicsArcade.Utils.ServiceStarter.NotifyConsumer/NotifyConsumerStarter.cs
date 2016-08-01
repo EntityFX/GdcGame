@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Net;
+using System.ServiceModel;
+using System.ServiceModel.Channels;
 using EntityFX.EconomicsArcade.Contract.NotifyConsumerService;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 using EntityFX.EconomicsArcade.Infrastructure.Service;
@@ -27,7 +29,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.NotifyConsumer
 
         public override void StartServices()
         {
-            AddNetMsmqService<INotifyConsumerService>(_baseUrl);
+            AddCustomService<NotifyConsumerServiceHost>(_baseUrl);
             OpenServices();
 
             _webApp = WebApp.Start(_signalRHost, builder =>
@@ -60,6 +62,21 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.NotifyConsumer
         public void Dispose()
         {
             _webApp.Dispose();
+        }
+
+        private class NotifyConsumerServiceHost : NetMsmqServiceHost<INotifyConsumerService>
+        {
+            public NotifyConsumerServiceHost(IUnityContainer container) : base(container)
+            {
+            }
+
+            protected override Binding GetBinding()
+            {
+                var binding = (NetMsmqBinding)base.GetBinding();
+                binding.ExactlyOnce = false;
+                binding.Durable = false;
+                return binding;
+            }
         }
     }
 }

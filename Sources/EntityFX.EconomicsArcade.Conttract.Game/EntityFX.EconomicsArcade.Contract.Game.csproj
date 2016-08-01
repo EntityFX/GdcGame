@@ -43,6 +43,7 @@
     <Compile Include="Counters\FundsCounters.cs" />
     <Compile Include="Counters\GenericCounter.cs" />
     <Compile Include="Counters\SingleCounter.cs" />
+    <Compile Include="Funds\CustomRuleInfo.cs" />
     <Compile Include="Funds\FundsDriver.cs" />
     <Compile Include="ICustomRule.cs" />
     <Compile Include="IGame.cs" />

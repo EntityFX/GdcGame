@@ -12,6 +12,8 @@ namespace EntityFX.EconomicsArcade.Contract.Common
         [DataMember]
         public FundsCounters Counters { get; set; }
         [DataMember]
+        public CustomRule[] CustomRules { get; set; }
+        [DataMember]
         public int ManualStepsCount { get; set; }
         [DataMember]
         public int AutomaticStepsCount { get; set; }

@@ -28,7 +28,7 @@ namespace EntityFX.EconomicsArcade.Contract.Common.Funds
         [DataMember]
         public string Picture { get; set; }
         [DataMember]
-        public int? CustomRuleId { get; set; }
+        public CustomRuleInfo CustomRuleInfo { get; set; }
         [DataMember]
         public IDictionary<int, Incrementor> Incrementors { get; set; } 
     }

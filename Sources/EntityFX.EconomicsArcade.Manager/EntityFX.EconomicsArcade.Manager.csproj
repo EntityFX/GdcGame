@@ -71,6 +71,7 @@
     <Compile Include="GameSessions.cs" />
     <Compile Include="IGameFactory.cs" />
     <Compile Include="Mappers\CounterContractMapper.cs" />
+    <Compile Include="Mappers\CustomRuleInfoContractMapper.cs" />
     <Compile Include="Mappers\FundsCountersContractMapper.cs" />
     <Compile Include="Mappers\FundsDriverContractMapper.cs" />
     <Compile Include="Mappers\GameDataContractMapper.cs" />

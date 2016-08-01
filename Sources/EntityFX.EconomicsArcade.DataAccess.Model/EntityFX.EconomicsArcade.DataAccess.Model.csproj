@@ -58,11 +58,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CounterEntity.cs" />
+    <Compile Include="CustomRuleEntity.cs" />
     <Compile Include="EconomicsArcadeDbContext.cs" />
     <Compile Include="FundsDriverEntity.cs" />
     <Compile Include="IncrementorEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserCounterEntity.cs" />
+    <Compile Include="UserCustomRuleEntity.cs" />
     <Compile Include="UserEntity.cs" />
     <Compile Include="UserFundsDriverEntity.cs" />
     <Compile Include="UserGameCounterEntity.cs" />

@@ -9,6 +9,8 @@ namespace EntityFX.EconomicsArcade.Contract.Game
     {
         IDictionary<int, FundsDriver> FundsDrivers { get; }
 
+        IDictionary<int, FundsDriver> ModifiedFundsDrivers { get; }
+
         FundsCounters FundsCounters { get; }
 
         int AutomaticStepNumber { get; }

@@ -15,6 +15,8 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
 
         public IDictionary<int, FundsDriver> FundsDrivers { get; private set; }
 
+        public IDictionary<int, FundsDriver> ModifiedFundsDrivers { get; private set; }
+
         public FundsCounters FundsCounters { get; private set; }
 
         public IDictionary<int, ICustomRule> CustomRules { get; private set; }
@@ -40,15 +42,16 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
 
         protected GameBase()
         {
+            ModifiedFundsDrivers = new Dictionary<int, FundsDriver>();
         }
 
         public void Initialize()
         {
             PreInitialize();
             InitializeFundsCounters();
+            InitializeCustomRules();
             InitializeFundsDrivers();
             InitializeVerificationSteps();
-            InitializeCustomRules();
             PostInitialize();
             _isInitialized = true;
         }
@@ -269,6 +272,7 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
                         RootCounter = FundsCounters.RootCounter
                     }
                 };
+                ModifiedFundsDrivers[fundDriverId] = fundDriver;
             }
             PostBuyFundDriver(fundDriver);
             return result;
@@ -276,9 +280,9 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine
 
         private void PerformBuyFundDriverCustomRule(FundsDriver fundDriver)
         {
-            if (fundDriver.CustomRuleId != null && CustomRules.ContainsKey(fundDriver.CustomRuleId.Value))
+            if (fundDriver.CustomRuleInfo != null && CustomRules.ContainsKey(fundDriver.CustomRuleInfo.CustomRule.Id))
             {
-                CustomRules[fundDriver.CustomRuleId.Value].PerformRuleWhenBuyFundDriver(this);
+                CustomRules[fundDriver.CustomRuleInfo.CustomRule.Id].PerformRuleWhenBuyFundDriver(this, fundDriver.CustomRuleInfo);
             }
         }
 

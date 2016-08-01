@@ -1,28 +1,32 @@
 ﻿using System.Linq;
 using EntityFX.EconomicsArcade.Contract.Game;
 using EntityFX.EconomicsArcade.Contract.Game.Counters;
+using EntityFX.EconomicsArcade.Contract.Game.Funds;
 
 namespace EntityFX.EconomicArcade.Engine.GameEngine.CustomRules
 {
     public class IncreaseFundDriverIncrementorsCustomRule : ICustomRule
     {
         private const int INCREASE_TIMES = 2;
-        private int? _fundsDriverIndex;
 
-        public void PerformRuleWhenBuyFundDriver(IGame game)
+        public void PerformRuleWhenBuyFundDriver(IGame game, CustomRuleInfo customRuleInfo)
         {
-            if (_fundsDriverIndex == null)
+            if (customRuleInfo.CurrentIndex == null)
             {
-                _fundsDriverIndex = game.FundsDrivers.First().Key;
+                customRuleInfo.CurrentIndex = game.FundsDrivers.First().Key;
             }
-            var incrementors = game.FundsDrivers[_fundsDriverIndex.Value].Incrementors.Where(_ => _.Key != 0);
+            var incrementors = game.FundsDrivers[customRuleInfo.CurrentIndex.Value].Incrementors.Where(_ => _.Key != 0);
 
             foreach (var incrementor in incrementors)
             {
                 incrementor.Value.Value *= INCREASE_TIMES;
             }
-            var nextItem = game.FundsDrivers.FirstOrDefault(_ => _.Key > _fundsDriverIndex.Value);
-            _fundsDriverIndex = nextItem.Key != 0 ? nextItem.Key : game.FundsDrivers.First().Key;
+            game.ModifiedFundsDrivers[customRuleInfo.CurrentIndex.Value] = game.FundsDrivers[customRuleInfo.CurrentIndex.Value];
+            var nextItem = game.FundsDrivers.FirstOrDefault(_ => _.Key > customRuleInfo.CurrentIndex.Value);
+            customRuleInfo.CurrentIndex = nextItem.Key != 0 ? nextItem.Key : game.FundsDrivers.First().Key;
+            customRuleInfo.CurrentIndex = customRuleInfo.CurrentIndex;
         }
+
+        public int Id { get; set; }
     }
 }

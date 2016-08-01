@@ -7,5 +7,6 @@
 	[UnlockValue] money NOT NULL,
 	[InflationPercent] smallint NOT NULL, 
     [Picture] NVARCHAR(50) NULL, 
-    [CustomRuleId] INT NULL
+    [CustomRuleId] INT NULL,
+	CONSTRAINT FK_FundsDriver_CustomRule_Id FOREIGN KEY (CustomRuleId) REFERENCES dbo.CustomRule (Id)
 )

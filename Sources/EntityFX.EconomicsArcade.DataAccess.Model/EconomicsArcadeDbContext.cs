@@ -11,6 +11,7 @@ namespace EntityFX.EconomicsArcade.DataAccess.Model
         public virtual DbSet<UserGameCounterEntity> UserGameCounters { get; set; }
         public virtual DbSet<UserCounterEntity> UserCounters { get; set; }
         public virtual DbSet<UserFundsDriverEntity> UserFundsDrivers { get; set; }
+        public virtual DbSet<UserCustomRuleEntity> UserCustomRules { get; set; }
         public EconomicsArcadeDbContext()
             : base("EconomicsArcadeDbContext")
         {
@@ -89,6 +90,11 @@ namespace EntityFX.EconomicsArcade.DataAccess.Model
                 .WithRequired(e => e.User)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<UserEntity>()
+                 .HasMany(e => e.UserCustomRules)
+                .WithRequired(e => e.User)
+                .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<UserGameCounterEntity>()
                 .ToTable("UserGameCounter")
                 .HasKey(_ => _.UserId);
@@ -118,6 +124,18 @@ namespace EntityFX.EconomicsArcade.DataAccess.Model
             modelBuilder.Entity<UserCounterEntity>()
                 .Property(e => e.DelayedValue)
                 .HasColumnType("Money");
+
+
+            modelBuilder.Entity<CustomRuleEntity>()
+                .ToTable("CustomRule");
+
+            modelBuilder.Entity<CustomRuleEntity>()
+                 .HasMany(e => e.FundsDrivers)
+                .WithOptional(e => e.CustomRule)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<UserCustomRuleEntity>()
+                .ToTable("UserCustomRule");
 
             //.HasKey(_ => new {_.UserId, _.CounterId});
         }

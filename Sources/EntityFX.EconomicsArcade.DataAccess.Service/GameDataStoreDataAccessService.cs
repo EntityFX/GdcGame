@@ -1,10 +1,12 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using EntityFX.EconomicsArcade.Contract.Common;
 using EntityFX.EconomicsArcade.Contract.DataAccess.GameData;
 using EntityFX.EconomicsArcade.DataAccess.Repository;
 using EntityFX.EconomicsArcade.DataAccess.Repository.Criterions.UserCounter;
 using EntityFX.EconomicsArcade.DataAccess.Repository.Criterions.UserFundsDriver;
 using EntityFX.EconomicsArcade.DataAccess.Repository.Criterions.UserGameCounter;
+using EntityFX.EconomicsArcade.DataAccess.Repository.Queries.UserCustomRuleInfo;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 
 namespace EntityFX.EconomicsArcade.DataAccess.Service
@@ -15,16 +17,19 @@ namespace EntityFX.EconomicsArcade.DataAccess.Service
         private readonly IMapper<GameData, UserGameCounter> _userGameCounterMapper;
         private readonly IUserCounterRepository _userCounterRepository;
         private readonly IUserFundsDriverRepository _userFundsDriverRepository;
+        private readonly IUserCustomRuleRepository _userCustomRuleRepository;
 
         public GameDataStoreDataAccessService(IUserGameCounterRepository userGameCounterRepository
             , IMapper<GameData, UserGameCounter> userGameCounterMapper
             , IUserCounterRepository userCounterRepository
-            , IUserFundsDriverRepository userFundsDriverRepository )
+            , IUserFundsDriverRepository userFundsDriverRepository
+            , IUserCustomRuleRepository userCustomRuleRepository )
         {
             _userGameCounterRepository = userGameCounterRepository;
             _userGameCounterMapper = userGameCounterMapper;
             _userCounterRepository = userCounterRepository;
             _userFundsDriverRepository = userFundsDriverRepository;
+            _userCustomRuleRepository = userCustomRuleRepository;
         }
 
         public void StoreGameDataForUser(int userId, GameData gameData)
@@ -69,6 +74,20 @@ namespace EntityFX.EconomicsArcade.DataAccess.Service
                 _userFundsDriverRepository.UpdateForUser(userId, userFundsDriverToUpdate);
                 var userFundsDriverToCreate = gameData.FundsDrivers.Except(userFundsDriverToUpdate).ToArray();
                 _userFundsDriverRepository.CreateForUser(userId, userFundsDriverToCreate);
+            }
+
+            var userCustomRules = _userCustomRuleRepository.FindByUserId(new GetUserCustomRuleInfoByUserIdCriterion(userId));
+
+            if (userCustomRules == null || userCustomRules.Length == 0)
+            {
+                _userCustomRuleRepository.CreateForUser(userId, gameData.FundsDrivers.Where(_ => _.CustomRuleInfo != null).Select(_ => _.CustomRuleInfo).ToArray());
+            }
+            else
+            {
+                var userCustomRulesToUpdate = gameData.FundsDrivers.Where(_ => _.CustomRuleInfo != null).Select(_ => _.CustomRuleInfo).Where(s => userCustomRules.Any(d => s.CustomRuleId == d.CustomRuleId && s.FundsDriverId == d.FundsDriverId)).ToArray();
+                _userCustomRuleRepository.UpdateForUser(userId, userCustomRulesToUpdate);
+                var userCustomRulesToCreate = gameData.FundsDrivers.Where(_ => _.CustomRuleInfo != null).Select(_ => _.CustomRuleInfo).Except(userCustomRulesToUpdate).ToArray();
+                _userCustomRuleRepository.CreateForUser(userId, userCustomRulesToCreate);
             }
         }
     }

@@ -116,7 +116,12 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.NetworkGameEngine
                     UnlockValue = fundDriver.UnlockValue,
                     InflationPercent = fundDriver.InflationPercent,
                     BuyCount = fundDriver.BuyCount,
-                    Incrementors = incrementors
+                    Incrementors = incrementors,
+                    CustomRuleInfo = fundDriver.CustomRuleInfo != null ? new CustomRuleInfo()
+                    {
+                        CustomRule = CustomRules[fundDriver.CustomRuleInfo.CustomRuleId],
+                        CurrentIndex = fundDriver.CustomRuleInfo.CurrentIndex
+                    } : null
                 });
             }
             return result;
@@ -148,12 +153,16 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.NetworkGameEngine
 
         protected override IDictionary<int, ICustomRule> GetCustomRules()
         {
-            return new ReadOnlyDictionary<int, ICustomRule>(new Dictionary<int, ICustomRule>()
+            var customRuleDictionary = new Dictionary<int, ICustomRule>();
+            foreach (var customRule in _gameData.CustomRules)
             {
-                {1, new DelayedCounterCustomRule()},
-                {2, new ReduceFundDriverPriceCustomRule()},
-                {3, new IncreaseFundDriverIncrementorsCustomRule()},
-            });
+                var customRuleInstance = (ICustomRule) Activator.CreateInstance(
+                    Type.GetType("EntityFX.EconomicArcade.Engine.GameEngine.CustomRules." + customRule.Name));
+                customRuleInstance.Id = customRule.Id;
+                customRuleDictionary.Add(customRule.Id, customRuleInstance
+                    );
+            }
+            return new ReadOnlyDictionary<int, ICustomRule>(customRuleDictionary);
         }
 
         protected override void PostPerformManualStep(IEnumerable<CounterBase> modifiedCounters)

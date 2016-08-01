@@ -8,16 +8,19 @@ namespace EntityFX.EconomicArcade.Engine.GameEngine.CustomRules
     public class ReduceFundDriverPriceCustomRule : ICustomRule
     {
         private const int REDUCE_TIMES = 3;
-        private int? _fundsDriverIndex;
-        public void PerformRuleWhenBuyFundDriver(IGame game)
+        public void PerformRuleWhenBuyFundDriver(IGame game, CustomRuleInfo customRuleInfo)
         {
-            if (_fundsDriverIndex == null)
+            if (customRuleInfo.CurrentIndex == null)
             {
-                _fundsDriverIndex = game.FundsDrivers.First().Key;
+                customRuleInfo.CurrentIndex = game.FundsDrivers.First().Key;
             }
-            game.FundsDrivers[_fundsDriverIndex.Value].CurrentValue /= REDUCE_TIMES;
-            var nextItem = game.FundsDrivers.FirstOrDefault(_ => _.Key > _fundsDriverIndex.Value);
-            _fundsDriverIndex = nextItem.Key != 0 ? nextItem.Key : game.FundsDrivers.First().Key;
+            game.FundsDrivers[customRuleInfo.CurrentIndex.Value].CurrentValue /= REDUCE_TIMES;
+            game.ModifiedFundsDrivers[customRuleInfo.CurrentIndex.Value] = game.FundsDrivers[customRuleInfo.CurrentIndex.Value];
+            var nextItem = game.FundsDrivers.FirstOrDefault(_ => _.Key > customRuleInfo.CurrentIndex.Value);
+            customRuleInfo.CurrentIndex = nextItem.Key != 0 ? nextItem.Key : game.FundsDrivers.First().Key;
+            customRuleInfo.CurrentIndex = customRuleInfo.CurrentIndex;
         }
+
+        public int Id { get; set; }
     }
 }

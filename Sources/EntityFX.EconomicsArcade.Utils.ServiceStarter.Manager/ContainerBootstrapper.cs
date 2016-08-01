@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Configuration;
+using System.ServiceModel;
+using System.ServiceModel.Channels;
 using EntityFX.EconomicArcade.Engine.GameEngine.Mappers;
 using EntityFX.EconomicArcade.Engine.GameEngine.NetworkGameEngine;
 using EntityFX.EconomicsArcade.Contract.Common;
@@ -75,7 +77,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
                 , new Interceptor<InterfaceInterceptor>()
                 );
 
-            container.RegisterType<INotifyConsumerService, NotifyConsumerServiceClient<NetMsmqProxy<INotifyConsumerService>>>(
+            container.RegisterType<INotifyConsumerService, NotifyConsumerServiceClient<NotifyConsumerProxy>>(
                 new InjectionConstructor(
                     ConfigurationManager.AppSettings["ClientProxyAddress_NotifyConsumerService"]
                     )
@@ -115,6 +117,17 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
 
 
             return container;
+        }
+
+        private class NotifyConsumerProxy : NetMsmqProxy<INotifyConsumerService>
+        {
+            protected override Binding GetBinding()
+            {
+                var binding = (NetMsmqBinding) base.GetBinding();
+                binding.Durable = false;
+                binding.ExactlyOnce = false;
+                return binding;
+            }
         }
     }
 }

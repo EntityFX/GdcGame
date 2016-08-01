@@ -81,6 +81,9 @@
     <None Include="Data\GdCame\DataIncrementors.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Build Include="Tables\dbo.CustomRule.sql" />
+    <Build Include="Data\GdCame\CustomRule.sql" />
+    <Build Include="Tables\dbo.UserCustomRule.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\dbo.Incrementor.sql">

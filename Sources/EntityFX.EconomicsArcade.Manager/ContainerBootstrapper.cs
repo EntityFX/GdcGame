@@ -30,6 +30,7 @@ namespace EntityFX.EconomicsArcade.Manager
                 .RegisterType
                 <IMapper<FundsCounters, Contract.Common.Counters.FundsCounters>, FundsCountersContractMapper>();
             container.RegisterType<IMapper<FundsDriver, Contract.Common.Funds.FundsDriver>, FundsDriverContractMapper>();
+            container.RegisterType<IMapper<CustomRuleInfo, Contract.Common.Funds.CustomRuleInfo>, CustomRuleInfoContractMapper>();
             container.RegisterType<IMapper<IGame, GameData>, GameDataContractMapper>();
             container.RegisterType<IMapper<IGame, GameData>, GameDataMapper>("GameDataMapper");
             container
