@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Net;
-using EntityFX.EconomicsArcade.Contract.DataAccess.GameData;
-using EntityFX.EconomicsArcade.Contract.DataAccess.User;
 using EntityFX.EconomicsArcade.Contract.Manager.RatingManager;
 using EntityFX.EconomicsArcade.Contract.Manager.SessionManager;
 using EntityFX.EconomicsArcade.Contract.Manager.UserManager;
@@ -17,31 +15,24 @@ using Owin;
 
 namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Collapsed
 {
-    public class CollapsedServiceStarter : ServicesStarterBase<WcfContainerBootstrapper>, IServicesStarter, IDisposable
+    public class NoWcfServiceStarter : ServicesStarterBase<NoWcfContainerBootstrapper>, IServicesStarter, IDisposable
     {
         private readonly Uri _baseUrl = new Uri("net.pipe://localhost/");
-        private readonly Uri _baseMsmqUrl = new Uri("net.msmq://localhost/private/");
         private readonly string _signalRHost = "http://+:8080";
         private IDisposable _webApp;
-
-        public CollapsedServiceStarter(WcfContainerBootstrapper bootstrapper)
-            : base(bootstrapper)
+        
+        public NoWcfServiceStarter(NoWcfContainerBootstrapper bootstrapper) : base(bootstrapper)
         {
         }
 
         public override void StartServices()
         {
-            AddNetNamedPipeService<IUserDataAccessService>(_baseUrl);
-            AddNetNamedPipeService<IGameDataRetrieveDataAccessService>(_baseUrl);
-            AddNetMsmqService<IGameDataStoreDataAccessService>(_baseMsmqUrl);
-
             AddNetNamedPipeService<ISessionManager>(_baseUrl);
             AddNetNamedPipeService<ISimpleUserManager>(_baseUrl);
             AddNetNamedPipeService<IRatingManager>(_baseUrl);
             AddCustomService<GameManagerServiceHost>(_baseUrl);
             AddCustomService<AdminManagerServiceHost>(_baseUrl);
-
-            AddNetMsmqService<INotifyConsumerService>(_baseMsmqUrl);
+            AddNetNamedPipeService<INotifyConsumerService>(_baseUrl);
 
             _webApp = WebApp.Start(_signalRHost, builder =>
             {
@@ -76,10 +67,5 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Collapsed
         {
             _webApp.Dispose();
         }
-
-
-
-
-
     }
 }

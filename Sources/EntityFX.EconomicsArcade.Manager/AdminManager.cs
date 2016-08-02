@@ -13,10 +13,11 @@ namespace EntityFX.EconomicsArcade.Manager
     public class AdminManager : IAdminManager
     {
         private readonly GameSessions _gameSessions;
-
-        public AdminManager(GameSessions gameSessions)
+        private IOperationContextHelper _operationContextHelper;
+        public AdminManager(IOperationContextHelper operationContextHelper, GameSessions gameSessions)
         {
             _gameSessions = gameSessions;
+            _operationContextHelper = operationContextHelper;
         }
 
         public UserSessionsInfo[] GetActiveSessions()
@@ -41,7 +42,7 @@ namespace EntityFX.EconomicsArcade.Manager
 
         public void CloseAllSessions()
         {
-            var sessionId = OperationContextHelper.Instance.SessionId;
+            var sessionId = _operationContextHelper.Instance.SessionId;
             _gameSessions.RemoveAllSessions();
         }
 

@@ -82,8 +82,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminManagerServiceHost.cs" />
     <Compile Include="CollapsedServiceStarter.cs" />
-    <Compile Include="ContainerBootstrapper.cs" />
+    <Compile Include="NoWcfContainerBootstrapper.cs" />
+    <Compile Include="WcfContainerBootstrapper.cs" />
+    <Compile Include="GameManagerServiceHost.cs" />
+    <Compile Include="NoWcfServiceStarter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -15,10 +15,12 @@ namespace EntityFX.EconomicsArcade.Utils.Common
 {
     public class CheckRolePermissionsOperationBehavior   : IOperationBehavior
     {
+        private readonly IOperationContextHelper _operationContextHelper;
         private readonly GameSessions _gameSessions;
 
-        public CheckRolePermissionsOperationBehavior(GameSessions gameSessions)
+        public CheckRolePermissionsOperationBehavior(IOperationContextHelper operationContextHelper,GameSessions gameSessions)
         {
+            _operationContextHelper = operationContextHelper;
             _gameSessions = gameSessions;
         }
 
@@ -29,7 +31,7 @@ namespace EntityFX.EconomicsArcade.Utils.Common
 
         public void ApplyDispatchBehavior(OperationDescription operationDescription, DispatchOperation dispatchOperation)
         {
-            dispatchOperation.Invoker = new CheckRolePermissionsInvoker(_gameSessions, dispatchOperation.Invoker, operationDescription.SyncMethod);
+            dispatchOperation.Invoker = new CheckRolePermissionsInvoker(_gameSessions, _operationContextHelper, dispatchOperation.Invoker, operationDescription.SyncMethod);
         }
 
         public void ApplyClientBehavior(OperationDescription operationDescription, ClientOperation clientOperation)
@@ -48,9 +50,12 @@ namespace EntityFX.EconomicsArcade.Utils.Common
         private readonly IOperationInvoker _invoker;
         private readonly MethodInfo _methodInfo;
         private readonly GameSessions _gameSessions;
-        public CheckRolePermissionsInvoker(GameSessions gameSessions, IOperationInvoker invoker, MethodInfo methodInfo)
+        private readonly IOperationContextHelper _operationContextHelper;
+
+        public CheckRolePermissionsInvoker(GameSessions gameSessions, IOperationContextHelper operationContextHelper, IOperationInvoker invoker, MethodInfo methodInfo)
         {
             _gameSessions = gameSessions;
+            _operationContextHelper = operationContextHelper;
             _invoker = invoker;
             _methodInfo = methodInfo;
         }
@@ -65,7 +70,7 @@ namespace EntityFX.EconomicsArcade.Utils.Common
             var attr = _methodInfo.GetCustomAttribute<CustomPrincipalPermissionAttribute>();
             if (attr != null)
             {
-                var sessionId = OperationContextHelper.Instance.SessionId ?? default(Guid);
+                var sessionId = _operationContextHelper.Instance.SessionId ?? default(Guid);
                 var session = _gameSessions.GetSession(sessionId);
                 if (!attr.AllowedRoles.Any(_ => session.UserRoles.Contains(_)))
                 {

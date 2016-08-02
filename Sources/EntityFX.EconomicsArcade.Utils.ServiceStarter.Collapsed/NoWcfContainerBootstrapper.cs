@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Configuration;
-using System.Net.Mime;
 using EntityFX.EconomicArcade.Engine.GameEngine.NetworkGameEngine;
 using EntityFX.EconomicsArcade.Application.NotifyConsumerService;
 using EntityFX.EconomicsArcade.Contract.Common;
@@ -9,6 +8,7 @@ using EntityFX.EconomicsArcade.Contract.DataAccess.User;
 using EntityFX.EconomicsArcade.Contract.Game;
 using EntityFX.EconomicsArcade.Contract.Game.Funds;
 using EntityFX.EconomicsArcade.Contract.NotifyConsumerService;
+using EntityFX.EconomicsArcade.DataAccess.Service;
 using EntityFX.EconomicsArcade.Infrastructure.Common;
 using EntityFX.EconomicsArcade.Infrastructure.Service;
 using EntityFX.EconomicsArcade.Infrastructure.Service.Interfaces;
@@ -24,7 +24,7 @@ using PortableLog.NLog;
 
 namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Collapsed
 {
-    public class ContainerBootstrapper : IContainerBootstrapper
+    public class NoWcfContainerBootstrapper : IContainerBootstrapper
     {
         public IUnityContainer Configure(IUnityContainer container)
         {
@@ -41,37 +41,23 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Collapsed
             container.RegisterType<ILogger>(new InjectionFactory(
                _ => new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger")))));
 
-            container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessClient<NetTcpProxy<IGameDataRetrieveDataAccessService>>>("GameDataRetrieveDataAccessClient",
-               new InjectionConstructor(
-                   "net.pipe://localhost/EntityFX.EconomicsArcade.DataAccess/EntityFX.EconomicsArcade.Contract.DataAccess.GameData.IGameDataRetrieveDataAccessService"
-                   )
-               ,
+            container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessService>(
                new InterceptionBehavior<PolicyInjectionBehavior>()
                , new Interceptor<InterfaceInterceptor>()
                );
-            container.RegisterType<IUserDataAccessService, UserDataAccessClient<NetTcpProxy<IUserDataAccessService>>>("UserDataAccessClient",
-                new InjectionConstructor(
-                    "net.pipe://localhost/EntityFX.EconomicsArcade.DataAccess/EntityFX.EconomicsArcade.Contract.DataAccess.User.IUserDataAccessService"
-                    )
-                ,
+            container.RegisterType<IUserDataAccessService, UserDataAccessService>(
                 new InterceptionBehavior<PolicyInjectionBehavior>()
                 , new Interceptor<InterfaceInterceptor>()
                 );
-            container.RegisterType<IGameDataStoreDataAccessService, GameDataStoreDataAccessClient<NetMsmqProxy<IGameDataStoreDataAccessService>>>("GameDataStoreDataAccessClient",
-                new InjectionConstructor(
-                    "net.msmq://localhost/private/EntityFX.EconomicsArcade.Contract.DataAccess.GameData.IGameDataStoreDataAccessService"
-                    ),
+            container.RegisterType<IGameDataStoreDataAccessService, GameDataStoreDataAccessService>(
                 new InterceptionBehavior<PolicyInjectionBehavior>()
                 , new Interceptor<InterfaceInterceptor>()
                 );
 
             container.RegisterType<IGameFactory, GameFactory>();
 
-            container.RegisterType<INotifyConsumerService, NotifyConsumerServiceClient<NetMsmqProxy<INotifyConsumerService>>>("NotifyConsumerServiceClient",
-                new InjectionConstructor(
-                    "net.msmq://localhost/private/EntityFX.EconomicsArcade.Contract.NotifyConsumerService.INotifyConsumerService"
-                    )
-                , new InterceptionBehavior<PolicyInjectionBehavior>()
+            container.RegisterType<INotifyConsumerService, NotifyConsumerService>(
+                 new InterceptionBehavior<PolicyInjectionBehavior>()
                 , new Interceptor<InterfaceInterceptor>()
                 );
 

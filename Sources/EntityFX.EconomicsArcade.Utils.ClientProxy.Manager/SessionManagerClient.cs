@@ -9,18 +9,17 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
     public class SessionManagerClient<TInfrastructureProxy>     : ISessionManager
                         where TInfrastructureProxy : InfrastructureProxy<ISessionManager>, new()
     {
+        private readonly IOperationContextHelper _operationContextHelper;
         private readonly Guid _sessionGuid;
         private readonly Uri _endpointAddress;// = "net.tcp://localhost:8555/EntityFX.EconomicsArcade.Manager/EntityFX.EconomicsArcade.Contract.Manager.SessionManager.ISessionManager";
+        private readonly Action<Guid> operationContext;
 
-        private static readonly Action<Guid> operationContext = (_) =>
-        {
-            OperationContextHelper.Instance.SessionId = _;
-        };
-
-        public SessionManagerClient(string endpointAddress, Guid sessionGuid)
+        public SessionManagerClient(IOperationContextHelper operationContextHelper, string endpointAddress, Guid sessionGuid)
         {
             _sessionGuid = sessionGuid;
             _endpointAddress = new Uri(endpointAddress);
+            _operationContextHelper = operationContextHelper;
+            operationContext = _ => _operationContextHelper.Instance.SessionId = _;
         }
 
         public Guid OpenSession(string login)

@@ -15,15 +15,18 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
         private readonly Guid _sesionGuid;
         private readonly Uri _endpointAddress;
 
-        private static readonly Action<Guid> operationContext = (_) =>
-        {
-            OperationContextHelper.Instance.SessionId = _;
-        };
 
-        public AdminManagerClient(string endpointAddress, Guid sessionGuid)
+        private readonly Action<Guid> operationContext;
+        private ILogger _logger;
+        private IOperationContextHelper _operationContextHelper;
+
+
+        public AdminManagerClient(IOperationContextHelper operationContextHelper, string endpointAddress, Guid sessionGuid)
         {
             _sesionGuid = sessionGuid;
             _endpointAddress = new Uri(endpointAddress);
+            _operationContextHelper = operationContextHelper;
+            operationContext = _ => _operationContextHelper.Instance.SessionId = _;
         }
 
         public UserSessionsInfo[] GetActiveSessions()
@@ -31,7 +34,7 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
             using (var proxy = new TInfrastructureProxy())
             {
                 var channel = proxy.CreateChannel(_endpointAddress);
-                                proxy.ApplyContextScope(operationContext, _sesionGuid);
+                proxy.ApplyContextScope(operationContext, _sesionGuid);
                 var res = channel.GetActiveSessions();
                 proxy.CloseChannel();
                 return res;
@@ -43,7 +46,7 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
             using (var proxy = new TInfrastructureProxy())
             {
                 var channel = proxy.CreateChannel(_endpointAddress);
-                                proxy.ApplyContextScope(operationContext, _sesionGuid);
+                proxy.ApplyContextScope(operationContext, _sesionGuid);
                 channel.CloseSessionByGuid(guid);
                 proxy.CloseChannel();
             }
@@ -54,7 +57,7 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
             using (var proxy = new TInfrastructureProxy())
             {
                 var channel = proxy.CreateChannel(_endpointAddress);
-                                proxy.ApplyContextScope(operationContext, _sesionGuid);
+                proxy.ApplyContextScope(operationContext, _sesionGuid);
                 channel.CloseAllUserSessions(username);
                 proxy.CloseChannel();
             }
@@ -65,7 +68,7 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
             using (var proxy = new TInfrastructureProxy())
             {
                 var channel = proxy.CreateChannel(_endpointAddress);
-                                proxy.ApplyContextScope(operationContext, _sesionGuid);
+                proxy.ApplyContextScope(operationContext, _sesionGuid);
                 channel.CloseAllSessions();
                 proxy.CloseChannel();
             }
@@ -76,7 +79,7 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
             using (var proxy = new TInfrastructureProxy())
             {
                 var channel = proxy.CreateChannel(_endpointAddress);
-                                proxy.ApplyContextScope(operationContext, _sesionGuid);
+                proxy.ApplyContextScope(operationContext, _sesionGuid);
                 channel.CloseAllSessionsExcludeThis(guid);
                 proxy.CloseChannel();
             }
@@ -87,7 +90,7 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
             using (var proxy = new TInfrastructureProxy())
             {
                 var channel = proxy.CreateChannel(_endpointAddress);
-                                proxy.ApplyContextScope(operationContext, _sesionGuid);
+                proxy.ApplyContextScope(operationContext, _sesionGuid);
                 channel.WipeUser(username);
                 proxy.CloseChannel();
             }
@@ -98,7 +101,7 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
             using (var proxy = new TInfrastructureProxy())
             {
                 var channel = proxy.CreateChannel(_endpointAddress);
-                                proxy.ApplyContextScope(operationContext, _sesionGuid);
+                proxy.ApplyContextScope(operationContext, _sesionGuid);
                 channel.ReloadGame(username);
                 proxy.CloseChannel();
             }

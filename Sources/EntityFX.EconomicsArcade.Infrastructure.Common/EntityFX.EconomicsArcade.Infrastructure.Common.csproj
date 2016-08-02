@@ -41,10 +41,10 @@
     <Compile Include="IContainerBootstrapper.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="IMapper.cs" />
+    <Compile Include="IOperationContextHelper.cs" />
     <Compile Include="IServicesStarter.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="NLoggerAdapter.cs" />
-    <Compile Include="OperationContextHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

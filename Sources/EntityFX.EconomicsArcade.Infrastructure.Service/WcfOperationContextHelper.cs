@@ -1,19 +1,20 @@
 ﻿using System;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
+using EntityFX.EconomicsArcade.Infrastructure.Common;
 
-namespace EntityFX.EconomicsArcade.Infrastructure.Common
+namespace EntityFX.EconomicsArcade.Infrastructure.Service
 {
-    public class OperationContextHelper
+    public class WcfOperationContextHelper : IOperationContext, IOperationContextHelper
     {
-        private static readonly Lazy<OperationContextHelper> ObjInstance =
-            new Lazy<OperationContextHelper>(() => new OperationContextHelper());
+        private static readonly Lazy<WcfOperationContextHelper> ObjInstance =
+            new Lazy<WcfOperationContextHelper>(() => new WcfOperationContextHelper());
 
         private const string HeaderNs = "http://entityfx.ru";
 
         private const string SessionIdKey = "SessionId";
 
-        public static OperationContextHelper Instance
+        public IOperationContext Instance
         {
             get { return ObjInstance.Value; }
         }

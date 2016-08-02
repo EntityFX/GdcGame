@@ -94,6 +94,7 @@
     <Compile Include="NetNamedPipe\NetNamedPipeServiceHost.cs" />
     <Compile Include="NetTcp\NetTcpProxy.cs" />
     <Compile Include="NetTcp\NetTcpServiceHost.cs" />
+    <Compile Include="WcfOperationContextHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceInfoHelperConsole.cs" />
     <Compile Include="Bases\ServicesStarterBase.cs" />

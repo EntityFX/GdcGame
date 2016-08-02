@@ -8,32 +8,35 @@ using EntityFX.EconomicsArcade.Infrastructure.Service;
 namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
 {
     public class GameManagerClient<TInfrastructureProxy> : IGameManager
-                                where TInfrastructureProxy : InfrastructureProxy<IGameManager>, new()
+        where TInfrastructureProxy : InfrastructureProxy<IGameManager>, new()
     {
+        private readonly Uri _endpointAddress;
+            // = new Uri("net.tcp://localhost:8555/EntityFX.EconomicsArcade.Manager/EntityFX.EconomicsArcade.Contract.Manager.GameManager.IGameManager");
 
-        private readonly Uri _endpointAddress;// = new Uri("net.tcp://localhost:8555/EntityFX.EconomicsArcade.Manager/EntityFX.EconomicsArcade.Contract.Manager.GameManager.IGameManager");
-        private Guid _sesionGuid;
+        private readonly IOperationContextHelper _operationContextHelper;
+        private readonly Guid _sesionGuid;
+
+
+        private readonly Action<Guid> operationContext;
         private ILogger _logger;
 
-        private static readonly Action<Guid> operationContext = (_) =>
-        {
-            OperationContextHelper.Instance.SessionId = _;
-        };
-
-        public GameManagerClient(ILogger logger, string endpointAddress, Guid sesionGuid)
+        public GameManagerClient(ILogger logger, IOperationContextHelper operationContextHelper, string endpointAddress,
+            Guid sesionGuid)
         {
             _logger = logger;
+            _operationContextHelper = operationContextHelper;
             _sesionGuid = sesionGuid;
             _endpointAddress = new Uri(endpointAddress);
+            operationContext = _ => _operationContextHelper.Instance.SessionId = _;
         }
 
         public BuyFundDriverResult BuyFundDriver(int fundDriverId)
         {
             using (var proxy = new TInfrastructureProxy())
             {
-                var channel = proxy.CreateChannel(_endpointAddress);
+                IGameManager channel = proxy.CreateChannel(_endpointAddress);
                 proxy.ApplyContextScope(operationContext, _sesionGuid);
-                var result = channel.BuyFundDriver(fundDriverId);
+                BuyFundDriverResult result = channel.BuyFundDriver(fundDriverId);
                 proxy.CloseChannel();
                 return result;
             }
@@ -43,9 +46,9 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
         {
             using (var proxy = new TInfrastructureProxy())
             {
-                var channel = proxy.CreateChannel(_endpointAddress);
+                IGameManager channel = proxy.CreateChannel(_endpointAddress);
                 proxy.ApplyContextScope(operationContext, _sesionGuid);
-                var res = channel.PerformManualStep(verificationManualStepResult);
+                ManualStepResult res = channel.PerformManualStep(verificationManualStepResult);
                 proxy.CloseChannel();
                 return res;
             }
@@ -55,7 +58,7 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
         {
             using (var proxy = new TInfrastructureProxy())
             {
-                var channel = proxy.CreateChannel(_endpointAddress);
+                IGameManager channel = proxy.CreateChannel(_endpointAddress);
                 proxy.ApplyContextScope(operationContext, _sesionGuid);
                 channel.FightAgainstInflation();
                 proxy.CloseChannel();
@@ -64,7 +67,7 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
 
         public void PlayLottery()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public FundsCounters GetCounters()
@@ -72,7 +75,7 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
             FundsCounters counters;
             using (var proxy = new TInfrastructureProxy())
             {
-                var channel = proxy.CreateChannel(_endpointAddress);
+                IGameManager channel = proxy.CreateChannel(_endpointAddress);
                 proxy.ApplyContextScope(operationContext, _sesionGuid);
                 counters = channel.GetCounters();
                 proxy.CloseChannel();
@@ -85,7 +88,7 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
             GameData gameData = null;
             using (var proxy = new TInfrastructureProxy())
             {
-                var channel = proxy.CreateChannel(_endpointAddress);
+                IGameManager channel = proxy.CreateChannel(_endpointAddress);
                 proxy.ApplyContextScope(operationContext, _sesionGuid);
                 gameData = channel.GetGameData();
                 proxy.CloseChannel();
@@ -97,7 +100,7 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
         {
             using (var proxy = new TInfrastructureProxy())
             {
-                var channel = proxy.CreateChannel(_endpointAddress);
+                IGameManager channel = proxy.CreateChannel(_endpointAddress);
                 proxy.ApplyContextScope(operationContext, _sesionGuid);
                 channel.ActivateDelayedCounter(counterId);
                 proxy.CloseChannel();
@@ -109,7 +112,7 @@ namespace EntityFX.EconomicsArcade.Utils.ClientProxy.Manager
             bool result = false;
             using (var proxy = new TInfrastructureProxy())
             {
-                var channel = proxy.CreateChannel(_endpointAddress);
+                IGameManager channel = proxy.CreateChannel(_endpointAddress);
                 proxy.ApplyContextScope(operationContext, _sesionGuid);
                 channel.Ping();
                 proxy.CloseChannel();

@@ -11,11 +11,11 @@ namespace EntityFX.EconomicsArcade.Manager
         private readonly GameSessions _gameSessions;
         private readonly IUserDataAccessService _userDataAccessService;
         private readonly ILogger _logger;
-
-        public SessionManager(ILogger logger, GameSessions gameSessions, IUserDataAccessService userDataAccessService)
+        private readonly IOperationContextHelper _operationContextHelper;
+        public SessionManager(ILogger logger, IOperationContextHelper operationContextHelper, GameSessions gameSessions, IUserDataAccessService userDataAccessService)
         {
             _logger = logger;
-
+            _operationContextHelper = operationContextHelper;
             _gameSessions = gameSessions;
             _userDataAccessService = userDataAccessService;
            
@@ -48,7 +48,7 @@ namespace EntityFX.EconomicsArcade.Manager
 
         public bool CloseSession()
         {
-            var sessionId = OperationContextHelper.Instance.SessionId ?? default(Guid);
+            var sessionId = _operationContextHelper.Instance.SessionId ?? default(Guid);
             var session = _gameSessions.GetSession(sessionId);
             if (session == null)
             {
@@ -61,7 +61,7 @@ namespace EntityFX.EconomicsArcade.Manager
 
         public Session GetSession()
         {
-            var sessionId = OperationContextHelper.Instance.SessionId ?? default(Guid);
+            var sessionId = _operationContextHelper.Instance.SessionId ?? default(Guid);
             var session = _gameSessions.GetSession(sessionId);
             if (session == null)
             {

@@ -17,18 +17,20 @@ namespace EntityFX.EconomicsArcade.Manager
     {
         private readonly GameSessions _gameSessions;
         private ILogger _logger;
+        private readonly IOperationContextHelper _operationContextHelper;
         private readonly IMapper<IGame, GameData> _gameDataContractMapper;
         private readonly IMapper<Contract.Game.Counters.FundsCounters, FundsCounters> _countersContractMapper;
         private readonly IMapper<Contract.Game.Funds.FundsDriver, FundsDriver> _fundsDriverContractMapper;
         private readonly IMapper<Contract.Game.ManualStepResult, Contract.Manager.GameManager.ManualStepResult> _manualStepResultMapper;
 
-        public GameManager(ILogger logger, GameSessions gameSessions
+        public GameManager(ILogger logger, IOperationContextHelper operationContextHelper,GameSessions gameSessions
             , IMapper<IGame, GameData> gameDataContractMapper
             , IMapper<Contract.Game.Counters.FundsCounters, FundsCounters> countersContractMapper
             , IMapper<Contract.Game.Funds.FundsDriver, FundsDriver> fundsDriverContractMapper
             , IMapper<Contract.Game.ManualStepResult, Contract.Manager.GameManager.ManualStepResult> manualStepResultMapper)
         {
             _logger = logger;
+            _operationContextHelper = operationContextHelper;
             _gameSessions = gameSessions;
             _gameDataContractMapper = gameDataContractMapper;
             _countersContractMapper = countersContractMapper;
@@ -104,8 +106,8 @@ namespace EntityFX.EconomicsArcade.Manager
 
         private IGame GetSessionGame()
         {
-            
-            var sessionId = OperationContextHelper.Instance.SessionId ?? default(Guid);
+
+            var sessionId = _operationContextHelper.Instance.SessionId ?? default(Guid);
             IGame game = null;
             try
             {

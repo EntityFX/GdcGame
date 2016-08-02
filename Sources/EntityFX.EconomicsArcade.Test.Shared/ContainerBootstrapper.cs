@@ -29,12 +29,14 @@ namespace EntityFx.EconomicsArcade.Test.Shared
             container.RegisterType<ILogger>(new InjectionFactory(
                 _ => new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger")))));
 
+            container.RegisterType<IOperationContextHelper, WcfOperationContextHelper>();
+
             if (!_isCollapsed)
             {
                 container.RegisterType<IGameManager, GameManagerClient<NetTcpProxy<IGameManager>>>(
                     new InjectionConstructor(
-                        new ResolvedParameter<ILogger>(),
-                        ConfigurationManager.AppSettings["ManagerEndpointAddress_GameManager"], typeof (Guid))
+                        new ResolvedParameter<ILogger>(), new ResolvedParameter<IOperationContextHelper>(),
+                        ConfigurationManager.AppSettings["ManagerEndpointAddress_GameManager"], typeof(Guid))
                     , new Interceptor<InterfaceInterceptor>()
                     , new InterceptionBehavior<LoggerInterceptor>()
                     );
@@ -47,6 +49,7 @@ namespace EntityFx.EconomicsArcade.Test.Shared
 
                 container.RegisterType<IAdminManager, AdminManagerClient<NetTcpProxy<IAdminManager>>>(
                     new InjectionConstructor(
+                         new ResolvedParameter<IOperationContextHelper>(),
                         ConfigurationManager.AppSettings["ManagerEndpointAddress_AdminManager"],
                         new ResolvedParameter<Guid>()),
                     new Interceptor<InterfaceInterceptor>(),
@@ -54,6 +57,7 @@ namespace EntityFx.EconomicsArcade.Test.Shared
                     );
                 container.RegisterType<ISessionManager, SessionManagerClient<NetTcpProxy<ISessionManager>>>(
                     new InjectionConstructor(
+                        new ResolvedParameter<IOperationContextHelper>(),
                         ConfigurationManager.AppSettings["ManagerEndpointAddress_SessionManager"],
                         new ResolvedParameter<Guid>())
                     , new Interceptor<InterfaceInterceptor>()
@@ -66,8 +70,9 @@ namespace EntityFx.EconomicsArcade.Test.Shared
                 container.RegisterType<IGameManager, GameManagerClient<NetNamedPipeProxy<IGameManager>>>(
                     new InjectionConstructor(
                         new ResolvedParameter<ILogger>(),
+                        new ResolvedParameter<IOperationContextHelper>(),
                         "net.pipe://localhost/EntityFX.EconomicsArcade.Contract.Manager.GameManager.IGameManager",
-                        typeof (Guid))
+                        typeof(Guid))
                     , new Interceptor<InterfaceInterceptor>()
                     , new InterceptionBehavior<LoggerInterceptor>()
                     );
@@ -82,6 +87,7 @@ namespace EntityFx.EconomicsArcade.Test.Shared
 
                 container.RegisterType<IAdminManager, AdminManagerClient<NetNamedPipeProxy<IAdminManager>>>(
                     new InjectionConstructor(
+                        new ResolvedParameter<IOperationContextHelper>(),
                         "net.pipe://localhost/EntityFX.EconomicsArcade.Contract.Manager.AdminManager.IAdminManager",
                         new ResolvedParameter<Guid>()),
                     new Interceptor<InterfaceInterceptor>(),
@@ -89,6 +95,7 @@ namespace EntityFx.EconomicsArcade.Test.Shared
                     );
                 container.RegisterType<ISessionManager, SessionManagerClient<NetNamedPipeProxy<ISessionManager>>>(
                     new InjectionConstructor(
+                        new ResolvedParameter<IOperationContextHelper>(),
                         "net.pipe://localhost/EntityFX.EconomicsArcade.Contract.Manager.SessionManager.ISessionManager",
                         new ResolvedParameter<Guid>())
                     , new Interceptor<InterfaceInterceptor>()
