@@ -1,8 +1,7 @@
-﻿using EntityFX.EconomicsArcade.Contract.DataAccess.GameData;
-using EntityFX.EconomicsArcade.Infrastructure.Service;
-using EntityFX.EconomicsArcade.Utils.ClientProxy.DataAccess;
+﻿using EntityFX.Gdcame.DataAccess.Contract.GameData;
+using EntityFX.Gdcame.Infrastructure.Service.NetTcp;
+using EntityFX.Gdcame.Utils.ClientProxy.DataAccess;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace EntityFX.EconomicsArcade.Test.DataAccessTest
 {

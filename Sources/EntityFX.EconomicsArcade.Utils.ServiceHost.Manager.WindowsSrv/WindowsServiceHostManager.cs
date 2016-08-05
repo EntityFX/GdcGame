@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 using System.ServiceProcess;
-using EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager;
+using EntityFX.Gdcame.Utils.ServiceStarter.Manager;
 
 namespace EntityFX.EconomicsArcade.Utils.ServiceHost.Mananger.WindowsSrv
 {

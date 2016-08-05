@@ -1,6 +1,6 @@
 ﻿using System;
+using EntityFX.Gdcame.DataAccess.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using EntityFX.EconomicsArcade.DataAccess.Model;
 
 namespace EntityFX.EconomicsArcade.Test.EntityTest
 {

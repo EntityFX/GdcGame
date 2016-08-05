@@ -3,13 +3,11 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Timers;
-using EntityFX.EconomicsArcade.Contract.Manager.GameManager;
-using EntityFX.EconomicsArcade.Contract.Manager.SessionManager;
-using EntityFX.EconomicsArcade.Contract.Manager.UserManager;
 using EntityFx.EconomicsArcade.Test.Shared;
+using EntityFX.Gdcame.Manager.Contract.GameManager;
+using EntityFX.Gdcame.Manager.Contract.SessionManager;
+using EntityFX.Gdcame.Manager.Contract.UserManager;
 using Microsoft.Practices.Unity;
 
 namespace EntityFX.EconomicsArcade.Test.MultiClientManagerTest

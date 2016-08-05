@@ -1,6 +1,6 @@
 ﻿using System.ServiceProcess;
-using EntityFX.EconomicsArcade.Utils.ServiceStarter.NotifyConsumer;
 using System.Configuration;
+using EntityFX.Gdcame.Utils.ServiceStarter.NotifyConsumer;
 
 namespace EntityFX.EconomicsArcade.Utils.ServiceHost.NotifyConsumer.Temp
 {

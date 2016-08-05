@@ -84,17 +84,17 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EntityFX.EconomicsArcade.Infrastructure.Common\EntityFX.EconomicsArcade.Infrastructure.Common.csproj">
-      <Project>{924cc67d-9e2b-46ba-be1d-6c6c780ccfbc}</Project>
-      <Name>EntityFX.EconomicsArcade.Infrastructure.Common</Name>
+    <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Common\EntityFX.Gdcame.Infrastructure.Common.csproj">
+      <Project>{924CC67D-9E2B-46BA-BE1D-6C6C780CCFBC}</Project>
+      <Name>EntityFX.Gdcame.Infrastructure.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.EconomicsArcade.Infrastructure.Service\EntityFX.EconomicsArcade.Infrastructure.Service.csproj">
-      <Project>{2b414418-f3d8-4528-ba9f-6fefa8b7aa03}</Project>
-      <Name>EntityFX.EconomicsArcade.Infrastructure.Service</Name>
+    <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Service\EntityFX.Gdcame.Infrastructure.Service.csproj">
+      <Project>{2B414418-F3D8-4528-BA9F-6FEFA8B7AA03}</Project>
+      <Name>EntityFX.Gdcame.Infrastructure.Service</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess\EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess.csproj">
-      <Project>{1515c66c-c963-4249-b1ac-a1a1110eaf6a}</Project>
-      <Name>EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess</Name>
+    <ProjectReference Include="..\EntityFX.Gdcame.Utils.ServiceStarter.DataAccess\EntityFX.Gdcame.Utils.ServiceStarter.DataAccess.csproj">
+      <Project>{1515C66C-C963-4249-B1AC-A1A1110EAF6A}</Project>
+      <Name>EntityFX.Gdcame.Utils.ServiceStarter.DataAccess</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

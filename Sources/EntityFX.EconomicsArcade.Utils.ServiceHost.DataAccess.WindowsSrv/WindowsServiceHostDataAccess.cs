@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 using System.ServiceProcess;
-using EntityFX.EconomicsArcade.Utils.ServiceStarter.DataAccess;
+using EntityFX.Gdcame.Utils.ServiceStarter.DataAccess;
 
 namespace EntityFX.EconomicsArcade.Utils.ServiceHost.DataAccess.WindowsSrv
 {

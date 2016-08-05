@@ -80,25 +80,21 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EntityFX.EconomicsArcade.Contract.Common\EntityFX.EconomicsArcade.Contract.Common.csproj">
-      <Project>{89f89c37-f564-47eb-839d-c45acd9d012a}</Project>
-      <Name>EntityFX.EconomicsArcade.Contract.Common</Name>
+    <ProjectReference Include="..\EntityFX.Gdcame.Common.Contract\EntityFX.Gdcame.Common.Contract.csproj">
+      <Project>{89F89C37-F564-47EB-839D-C45ACD9D012A}</Project>
+      <Name>EntityFX.Gdcame.Common.Contract</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.EconomicsArcade.Contract.DataAccess\EntityFX.EconomicsArcade.Contract.DataAccess.csproj">
-      <Project>{0932d8b3-29eb-4546-987a-b246421a9b87}</Project>
-      <Name>EntityFX.EconomicsArcade.Contract.DataAccess</Name>
+    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Contract\EntityFX.Gdcame.DataAccess.Contract.csproj">
+      <Project>{0932D8B3-29EB-4546-987A-B246421A9B87}</Project>
+      <Name>EntityFX.Gdcame.DataAccess.Contract</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.EconomicsArcade.Infrastructure.Common\EntityFX.EconomicsArcade.Infrastructure.Common.csproj">
-      <Project>{924cc67d-9e2b-46ba-be1d-6c6c780ccfbc}</Project>
-      <Name>EntityFX.EconomicsArcade.Infrastructure.Common</Name>
+    <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Service\EntityFX.Gdcame.Infrastructure.Service.csproj">
+      <Project>{2B414418-F3D8-4528-BA9F-6FEFA8B7AA03}</Project>
+      <Name>EntityFX.Gdcame.Infrastructure.Service</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.EconomicsArcade.Infrastructure.Service\EntityFX.EconomicsArcade.Infrastructure.Service.csproj">
-      <Project>{2b414418-f3d8-4528-ba9f-6fefa8b7aa03}</Project>
-      <Name>EntityFX.EconomicsArcade.Infrastructure.Service</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EntityFX.EconomicsArcade.Utils.ClientProxy.DataAccess\EntityFX.EconomicsArcade.Utils.ClientProxy.DataAccess.csproj">
-      <Project>{cead1c8c-20a4-4e48-969a-9afcd104d109}</Project>
-      <Name>EntityFX.EconomicsArcade.Utils.ClientProxy.DataAccess</Name>
+    <ProjectReference Include="..\EntityFX.Gdcame.Utils.ClientProxy.DataAccess\EntityFX.Gdcame.Utils.ClientProxy.DataAccess.csproj">
+      <Project>{CEAD1C8C-20A4-4E48-969A-9AFCD104D109}</Project>
+      <Name>EntityFX.Gdcame.Utils.ClientProxy.DataAccess</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

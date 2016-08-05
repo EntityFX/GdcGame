@@ -96,17 +96,17 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EntityFX.EconomicsArcade.Infrastructure.Common\EntityFX.EconomicsArcade.Infrastructure.Common.csproj">
-      <Project>{924cc67d-9e2b-46ba-be1d-6c6c780ccfbc}</Project>
-      <Name>EntityFX.EconomicsArcade.Infrastructure.Common</Name>
+    <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Common\EntityFX.Gdcame.Infrastructure.Common.csproj">
+      <Project>{924CC67D-9E2B-46BA-BE1D-6C6C780CCFBC}</Project>
+      <Name>EntityFX.Gdcame.Infrastructure.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.EconomicsArcade.Infrastructure.Service\EntityFX.EconomicsArcade.Infrastructure.Service.csproj">
-      <Project>{2b414418-f3d8-4528-ba9f-6fefa8b7aa03}</Project>
-      <Name>EntityFX.EconomicsArcade.Infrastructure.Service</Name>
+    <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Service\EntityFX.Gdcame.Infrastructure.Service.csproj">
+      <Project>{2B414418-F3D8-4528-BA9F-6FEFA8B7AA03}</Project>
+      <Name>EntityFX.Gdcame.Infrastructure.Service</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager\EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager.csproj">
-      <Project>{f025d4a4-cdc8-437d-848c-5b71a8249bd2}</Project>
-      <Name>EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager</Name>
+    <ProjectReference Include="..\EntityFX.Gdcame.Utils.ServiceStarter.Manager\EntityFX.Gdcame.Utils.ServiceStarter.Manager.csproj">
+      <Project>{F025D4A4-CDC8-437D-848C-5B71A8249BD2}</Project>
+      <Name>EntityFX.Gdcame.Utils.ServiceStarter.Manager</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

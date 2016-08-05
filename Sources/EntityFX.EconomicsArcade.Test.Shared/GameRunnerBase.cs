@@ -1,8 +1,9 @@
 ﻿using System;
-using EntityFX.EconomicsArcade.Contract.Common;
-using EntityFX.EconomicsArcade.Contract.Common.Counters;
-using EntityFX.EconomicsArcade.Contract.Common.Funds;
-using EntityFX.EconomicsArcade.Contract.Common.Incrementors;
+using EntityFX.Gdcame.Common.Contract;
+using EntityFX.Gdcame.Common.Contract.Counters;
+using EntityFX.Gdcame.Common.Contract.Funds;
+using EntityFX.Gdcame.Common.Contract.Incrementors;
+
 
 namespace EntityFx.EconomicsArcade.Test.Shared
 {

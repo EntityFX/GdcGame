@@ -1,0 +1,1 @@
+﻿EntityFX.EconomicsArcade.TestClient.exe IsCollapsed
