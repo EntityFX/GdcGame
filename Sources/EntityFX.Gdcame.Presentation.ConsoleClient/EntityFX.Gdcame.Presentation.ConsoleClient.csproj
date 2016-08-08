@@ -104,7 +104,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
-    <None Include="TestClient-IsCollapsed.cmd">
+    <None Include="EntityFX.Gdcame.Presentation.ConsoleClient_OneMachine.cmd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

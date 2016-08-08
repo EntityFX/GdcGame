@@ -42,6 +42,8 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
             container.RegisterType<ILogger>(new InjectionFactory(
                _ => new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger")))));
 
+            GameSessions.Logger = container.Resolve<ILogger>();
+
             container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessService>(
                new InterceptionBehavior<PolicyInjectionBehavior>()
                , new Interceptor<InterfaceInterceptor>()
@@ -62,8 +64,8 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
                 new ResolvedParameter<IMapper<GameData, GameDataModel>>(),
                 new ResolvedParameter<IHubContext>()
                 )
+                , new InterceptionBehavior<PolicyInjectionBehavior>()
                 , new Interceptor<InterfaceInterceptor>()
-                , new InterceptionBehavior<LoggerInterceptor>()
                 );
 
             container.RegisterType<INotifyGameDataChanged, NotifyGameDataChanged>(

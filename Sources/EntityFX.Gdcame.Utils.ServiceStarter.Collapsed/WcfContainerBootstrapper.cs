@@ -45,6 +45,8 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
             container.RegisterType<ILogger>(new InjectionFactory(
                _ => new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger")))));
 
+            GameSessions.Logger = container.Resolve<ILogger>();
+
             container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessClient<NetTcpProxy<IGameDataRetrieveDataAccessService>>>("GameDataRetrieveDataAccessClient",
                new InjectionConstructor(
                    "net.pipe://localhost/EntityFX.Gdcame.DataAccess/EntityFX.Gdcame.DataAccess.Contract.GameData.IGameDataRetrieveDataAccessService"

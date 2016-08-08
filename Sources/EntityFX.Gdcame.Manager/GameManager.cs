@@ -99,6 +99,7 @@ namespace EntityFX.Gdcame.Manager
 
         public bool Ping()
         {
+            GetSessionGame();
             return true;
         }
 

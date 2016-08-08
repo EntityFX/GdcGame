@@ -73,7 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="EntityFX.EconomicsArcade.Utils.ServiceHost.Collapsed.NoWcfConsole.nlog">
+    <None Include="EntityFX.Gdcame.Utils.ConsoleHostApp.FullCollapsed.exe.nlog">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />

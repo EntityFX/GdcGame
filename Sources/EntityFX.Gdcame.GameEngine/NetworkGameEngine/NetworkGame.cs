@@ -64,7 +64,7 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
         private readonly INotifyGameDataChanged _notifyGameDataChanged;
         private readonly int _userId;
         private GameData _gameData;
-        private readonly int _stepsToPersist = 10;
+        private readonly int _stepsToPersist = 30;
         private int _currentStepsToPersist;
 
         public NetworkGame(IGameDataRetrieveDataAccessService gameDataRetrieveDataAccessService
@@ -172,17 +172,22 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
 
         private static object _syslock = new { };
 
+        public void PerformGameDataChanged()
+        {
+            _notifyGameDataChanged.GameDataChanged(this);
+        }   
+
         protected override void PostPerformAutoStep(IEnumerable<CounterBase> modifiedCounters)
         {
-            lock (_syslock)
-            {
-                if (_currentStepsToPersist == _stepsToPersist)
-                {
-                    _currentStepsToPersist = 0;
-                    _notifyGameDataChanged.GameDataChanged(this);
-                }
-                _currentStepsToPersist++;
-            }
+            /*lock (_syslock)
+            {   */
+                //if (_currentStepsToPersist == _stepsToPersist)
+                //{
+                //    _currentStepsToPersist = 0;
+                //    _notifyGameDataChanged.GameDataChanged(this);
+                //}
+                //_currentStepsToPersist++;
+            /*}  */
 
             _notifyGameDataChanged.AutomaticRefreshed(this);
         }
