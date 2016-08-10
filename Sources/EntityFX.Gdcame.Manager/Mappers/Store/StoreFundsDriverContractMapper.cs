@@ -20,17 +20,16 @@ namespace EntityFX.Gdcame.Manager.Mappers
 
         public StoreFundsDriver Map(FundsDriver source, StoreFundsDriver destination)
         {
-            var destinationIncrementors = source.Incrementors.ToDictionary(
-                sourceIncrementor => sourceIncrementor.Key,
-                sourceIncrementor => _incrementorContractMapper.Map(sourceIncrementor.Value));
+            var destinationIncrementors = source.Incrementors.Values.Select(
+                sourceIncrementor => _incrementorContractMapper.Map(sourceIncrementor));
             var customRuleInfo = source.CustomRuleInfo != null ? _customRuleInfoMapper.Map(source.CustomRuleInfo) : null;
             return new StoreFundsDriver()
             {
                 Id = source.Id,
                 BuyCount = source.BuyCount,
-                Incrementors = destinationIncrementors,
+                Incrementors = destinationIncrementors.ToArray(),
                 Value = source.CurrentValue,
-                CustomRuleInfo = customRuleInfo
+                CustomRule = customRuleInfo
             };
         }
     }

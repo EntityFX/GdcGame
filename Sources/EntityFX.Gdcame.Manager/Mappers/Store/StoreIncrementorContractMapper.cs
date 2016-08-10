@@ -12,7 +12,8 @@ namespace EntityFX.Gdcame.Manager.Mappers
         {
             return new StoreIncrementor()
             {
-                Value = source.Value
+                Value = source.Value,
+                Type = (EntityFX.Gdcame.Common.Contract.Incrementors.IncrementorTypeEnum)(int)source.IncrementorType
             };
         }
     }

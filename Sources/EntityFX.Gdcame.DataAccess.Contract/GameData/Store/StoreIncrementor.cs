@@ -7,6 +7,8 @@ namespace EntityFX.Gdcame.DataAccess.Contract.GameData
     public class StoreIncrementor
     {
         [DataMember]
+        public int Id { get; set; }
+        [DataMember]
         public IncrementorTypeEnum Type { get; set; }
         [DataMember]
         public int Value { get; set; }

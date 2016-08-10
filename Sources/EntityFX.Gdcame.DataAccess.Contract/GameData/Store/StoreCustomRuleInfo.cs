@@ -6,7 +6,7 @@ namespace EntityFX.Gdcame.DataAccess.Contract.GameData
     public class StoreCustomRuleInfo
     {
         [DataMember]
-        public int CustomRuleId { get; set; }
+        public int Id { get; set; }
 
         [DataMember]
         public int? CurrentIndex { get; set; }

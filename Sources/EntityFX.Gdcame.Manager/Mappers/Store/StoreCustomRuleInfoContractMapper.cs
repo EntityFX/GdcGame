@@ -12,7 +12,7 @@ namespace EntityFX.Gdcame.Manager.Mappers
         {
             return new StoreCustomRuleInfo()
             {
-                CustomRuleId = source.CustomRule.Id,
+                Id = source.CustomRule.Id,
                 CurrentIndex = source.CurrentIndex
             };
         }

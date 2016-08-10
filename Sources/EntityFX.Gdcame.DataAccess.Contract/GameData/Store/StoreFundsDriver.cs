@@ -11,8 +11,8 @@ namespace EntityFX.Gdcame.DataAccess.Contract.GameData
 
         public int BuyCount { get; set; }
 
-        public StoreCustomRuleInfo CustomRuleInfo { get; set; }
+        public StoreCustomRuleInfo CustomRule { get; set; }
 
-        public IDictionary<int, StoreIncrementor> Incrementors { get; set; }
+        public StoreIncrementor[] Incrementors { get; set; }
     }
 }

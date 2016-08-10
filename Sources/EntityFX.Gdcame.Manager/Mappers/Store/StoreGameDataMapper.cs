@@ -37,11 +37,9 @@ namespace EntityFX.Gdcame.GameEngine.Mappers
                 {
                     var destinationGenericCounter = new EntityFX.Gdcame.DataAccess.Contract.GameData.StoreGenericCounter
                     {
-                        BonusPercentage = sourcenGenericCounter.BonusPercentage,
-                        Bonus = sourcenGenericCounter.Bonus,
+                        BonusPercent = sourcenGenericCounter.BonusPercentage,
                         Inflation = sourcenGenericCounter.Inflation,
-                        CurrentSteps = sourcenGenericCounter.CurrentSteps,
-                        SubValue = sourcenGenericCounter.SubValue
+                        CurrentSteps = sourcenGenericCounter.CurrentSteps
                     };
                     destinationCouner = destinationGenericCounter;
                     destinationCouner.Type = 1;
@@ -58,7 +56,7 @@ namespace EntityFX.Gdcame.GameEngine.Mappers
                     var destinationDelayedCounter = new EntityFX.Gdcame.DataAccess.Contract.GameData.StoreDelayedCounter()
                     {
                         SecondsRemaining = sourceDelayedCounter.SecondsRemaining,
-                        UnlockValue = sourceDelayedCounter.UnlockValue
+                        DelayedValue = sourceDelayedCounter.SubValue
                     };
                     destinationCouner = destinationDelayedCounter;
                     destinationCouner.Type = 2;

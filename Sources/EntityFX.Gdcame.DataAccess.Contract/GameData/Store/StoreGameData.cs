@@ -10,8 +10,6 @@ namespace EntityFX.Gdcame.DataAccess.Contract.GameData
         [DataMember]
         public StoreFundsCounters Counters { get; set; }
         [DataMember]
-        public StoreCustomRuleInfo[] CustomRules { get; set; }
-        [DataMember]
         public int ManualStepsCount { get; set; }
         [DataMember]
         public int AutomaticStepsCount { get; set; }

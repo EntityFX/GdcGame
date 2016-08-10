@@ -62,17 +62,6 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
         {
             var gameData = _gameDataPersistMapper.Map(game);
             gameData.FundsDrivers = game.FundsDrivers.Values.Select(_ => _fundsDriverPersistMapper.Map(_)).ToArray();
-
-
-            gameData.CustomRules = game.CustomRules.Select(_ =>
-            {
-                var ruleName = _.Value.GetType().Name;
-                return new StoreCustomRuleInfo()
-                {
-                    CurrentIndex = -1,
-                    CustomRuleId =  -1
-                };
-            }).ToArray();
             game.ModifiedFundsDrivers.Clear();
             return gameData;
         }

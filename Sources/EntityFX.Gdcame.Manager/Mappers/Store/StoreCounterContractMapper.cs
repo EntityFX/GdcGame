@@ -14,12 +14,9 @@ namespace EntityFX.Gdcame.Manager.Mappers
             {
                 var genericDestination = new StoreGenericCounter
                 {
-                    Bonus = genericCounter.Bonus,
-                    BonusPercentage = genericCounter.BonusPercentage,
+                    BonusPercent = genericCounter.BonusPercentage,
                     CurrentSteps = genericCounter.CurrentSteps,
-                    SubValue = genericCounter.SubValue,
                     Inflation = genericCounter.Inflation,
-                    InflationIncreaseSteps = genericCounter.StepsToIncreaseInflation,
                     Type = 1
                 };
                 destinationCounter = genericDestination;
@@ -40,9 +37,8 @@ namespace EntityFX.Gdcame.Manager.Mappers
             {
                 destinationCounter = new StoreDelayedCounter()
                 {
-                    MiningTimeSeconds = delayedCounter.SecondsToAchieve,
                     SecondsRemaining = delayedCounter.SecondsRemaining,
-                    UnlockValue = delayedCounter.UnlockValue,
+                    DelayedValue = delayedCounter.SubValue,
                     Type = 2
                 };
             }
