@@ -30,16 +30,25 @@ namespace EntityFX.Gdcame.Manager
                 .RegisterType
                 <IMapper<FundsCounters, Gdcame.Common.Contract.Counters.FundsCounters>, FundsCountersContractMapper>();
             container.RegisterType<IMapper<FundsDriver, Gdcame.Common.Contract.Funds.FundsDriver>, FundsDriverContractMapper>();
-            container.RegisterType<IMapper<StoreFundsDriver, Gdcame.Common.Contract.Funds.StoreFundsDriver>, StoreFundsDriverContractMapper>();
             container.RegisterType<IMapper<CustomRuleInfo, Gdcame.Common.Contract.Funds.CustomRuleInfo>, CustomRuleInfoContractMapper>();
             container.RegisterType<IMapper<IGame, GameData>, GameDataContractMapper>();
             container.RegisterType<IMapper<IGame, GameData>, GameDataMapper>("GameDataMapper");
-            container.RegisterType<IMapper<IGame, GameData>, StoreGameDataMapper>("StoreGameDataMapper");
             container
                 .RegisterType
                 <IMapper<ManualStepResult, Gdcame.Manager.Contract.GameManager.ManualStepResult>, ManualStepContractMapper>();
 
             container.RegisterType<IGame, NetworkGame>();
+
+            //Store
+            container.RegisterType<IMapper<IncrementorBase, EntityFX.Gdcame.DataAccess.Contract.GameData.StoreIncrementor>, StoreIncrementorContractMapper>();
+            container.RegisterType<IMapper<CounterBase, EntityFX.Gdcame.DataAccess.Contract.GameData.StoreCounterBase>, StoreCounterContractMapper>();
+            container
+                .RegisterType
+                <IMapper<FundsCounters, EntityFX.Gdcame.DataAccess.Contract.GameData.StoreFundsCounters>, StoreFundsCountersContractMapper>();
+            container.RegisterType<IMapper<StoreFundsDriver, Gdcame.Common.Contract.Funds.StoreFundsDriver>, StoreFundsDriverContractMapper>();
+            container.RegisterType<IMapper<CustomRuleInfo, Gdcame.Common.Contract.Funds.CustomRuleInfo>, CustomRuleInfoContractMapper>();
+            container.RegisterType<IMapper<IGame, GameData>, StoreGameDataMapper>("StoreGameDataMapper");
+            /////
 
 
 

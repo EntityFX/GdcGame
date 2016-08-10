@@ -18,7 +18,7 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
         private readonly IMapper<IGame, StoreGameData> _gameDataPersistMapper;
         private readonly IMapper<IGame, GameData> _gameDataRefreshMapper;
         private readonly IMapper<FundsDriver, Gdcame.Common.Contract.Funds.FundsDriver> _fundsDriverPersistMapper;
-        private readonly IMapper<FundsDriver, Gdcame.Common.Contract.Funds.FundsDriver> _fundsDriverRefreshMapper;
+        private readonly IMapper<StoreFundsDriver, Gdcame.Common.Contract.Funds.StoreFundsDriver> _fundsDriverRefreshMapper;
         private readonly INotifyConsumerClientFactory _notifyConsumerService;
 
         public NotifyGameDataChanged(int userId
@@ -27,7 +27,7 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
             , IMapper<IGame, StoreGameData> gameDataPersistMapper
             , IMapper<IGame, GameData> gameDataRefreshMapper
             , IMapper<FundsDriver, Gdcame.Common.Contract.Funds.FundsDriver> fundsDriverPersistMapper
-            , IMapper<FundsDriver, Gdcame.Common.Contract.Funds.FundsDriver> fundsDriverRefreshMapper
+            , IMapper<StoreFundsDriver, Gdcame.Common.Contract.Funds.StoreFundsDriver> fundsDriverRefreshMapper
             , INotifyConsumerClientFactory notifyConsumerService)
         {
             _userId = userId;

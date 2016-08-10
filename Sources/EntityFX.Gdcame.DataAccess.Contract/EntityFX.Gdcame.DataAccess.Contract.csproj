@@ -46,6 +46,16 @@
   <ItemGroup>
     <Compile Include="GameData\IGameDataRetrieveDataAccessService.cs" />
     <Compile Include="GameData\IGameDataStoreDataAccessService.cs" />
+    <Compile Include="GameData\Store\StoreCounterBase.cs" />
+    <Compile Include="GameData\Store\StoreCustomRule.cs" />
+    <Compile Include="GameData\Store\StoreCustomRuleInfo.cs" />
+    <Compile Include="GameData\Store\StoreDelayedCounter.cs" />
+    <Compile Include="GameData\Store\StoreFundsCounters.cs" />
+    <Compile Include="GameData\Store\StoreFundsDriver.cs" />
+    <Compile Include="GameData\Store\StoreGameData.cs" />
+    <Compile Include="GameData\Store\StoreGenericCounter.cs" />
+    <Compile Include="GameData\Store\StoreIncrementor.cs" />
+    <Compile Include="GameData\Store\StoreSingleCounter.cs" />
     <Compile Include="GameData\UserGameCounter.cs" />
     <Compile Include="User\IUserDataAccessService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
