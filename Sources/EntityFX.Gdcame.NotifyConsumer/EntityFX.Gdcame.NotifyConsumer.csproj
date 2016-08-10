@@ -36,7 +36,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Connections.cs" />
     <Compile Include="ContainerBootstrapper.cs" />
+    <Compile Include="IHubContextAccessor.cs" />
     <Compile Include="NotifyConsumerService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -12,20 +12,26 @@ namespace EntityFX.Gdcame.NotifyConsumer
     {
         private readonly ILogger _logger;
         private readonly IMapper<GameData, GameDataModel> _gameDataModelMapper;
-        private readonly IHubContext _hubContext;
+        private readonly Lazy<IHubContext> _hubContext;
+        private readonly IConnections _connections;
 
-        public NotifyConsumerService(ILogger logger, IMapper<GameData, GameDataModel> gameDataModelMapper, IHubContext hubContext)
+        public NotifyConsumerService(ILogger logger, IMapper<GameData, GameDataModel> gameDataModelMapper, IHubContextAccessor hubContext, IConnections connections)
         {
             _logger = logger;
             _gameDataModelMapper = gameDataModelMapper;
-            _hubContext = hubContext;
+            _hubContext = new Lazy<IHubContext>(hubContext.GetHubContext);
+            _connections = connections;
         }
 
         public void PushGameData(UserContext userContext, GameData gameData)
         {
             _logger.Trace("{0}.PushGameData: Data receieved for userId: {1}, userName: {2}", GetType().FullName, userContext.UserId, userContext.UserName);
-            var gameDataModel = _gameDataModelMapper.Map(gameData);
-            _hubContext.Clients.Group(userContext.UserName).GetGameData(gameDataModel);
+            if (_connections.ActiveConnections.ContainsKey(userContext.UserName))
+            {
+                var gameDataModel = _gameDataModelMapper.Map(gameData);
+                _hubContext.Value.Clients.Group(userContext.UserName).GetGameData(gameDataModel);
+            }
+
         }
 
         public void Dispose()

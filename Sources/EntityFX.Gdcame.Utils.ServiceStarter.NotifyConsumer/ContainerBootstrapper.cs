@@ -33,7 +33,8 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.NotifyConsumer
             container.RegisterType<INotifyConsumerService, NotifyConsumerService>(new InjectionConstructor(
                 new ResolvedParameter<ILogger>(),
                 new ResolvedParameter<IMapper<GameData, GameDataModel>>(),
-                new ResolvedParameter<IHubContext>()
+                new ResolvedParameter<IHubContextAccessor>(),
+                                new ResolvedParameter<IConnections>()
                 )
                 , new Interceptor<InterfaceInterceptor>()
                 , new InterceptionBehavior<LoggerInterceptor>()

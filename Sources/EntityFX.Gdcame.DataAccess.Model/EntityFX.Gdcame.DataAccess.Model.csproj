@@ -67,6 +67,7 @@
     <Compile Include="UserEntity.cs" />
     <Compile Include="UserFundsDriverEntity.cs" />
     <Compile Include="UserGameCounterEntity.cs" />
+    <Compile Include="UserGameDataSnapshotEntity.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Readme.txt" />

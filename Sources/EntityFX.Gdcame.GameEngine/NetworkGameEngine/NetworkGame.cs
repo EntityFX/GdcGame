@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.DataAccess.Contract.GameData;
 using EntityFX.Gdcame.GameEngine.Contract;
 using EntityFX.Gdcame.GameEngine.Contract.Counters;
 using EntityFX.Gdcame.GameEngine.Contract.Funds;
 using EntityFX.Gdcame.GameEngine.Contract.Incrementors;
+using EntityFX.Gdcame.Infrastructure.Common;
 using IncrementorTypeEnum = EntityFX.Gdcame.Common.Contract.Incrementors.IncrementorTypeEnum;
 
 namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
@@ -60,6 +62,7 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
                     }
             );
 
+        private readonly ILogger _logger;
         private readonly IGameDataRetrieveDataAccessService _gameDataRetrieveDataAccessService;
         private readonly INotifyGameDataChanged _notifyGameDataChanged;
         private readonly int _userId;
@@ -67,9 +70,10 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
         private readonly int _stepsToPersist = 30;
         private int _currentStepsToPersist;
 
-        public NetworkGame(IGameDataRetrieveDataAccessService gameDataRetrieveDataAccessService
+        public NetworkGame(ILogger logger, IGameDataRetrieveDataAccessService gameDataRetrieveDataAccessService
             , INotifyGameDataChanged notifyGameDataChanged, int userId)
         {
+            _logger = logger;
             _gameDataRetrieveDataAccessService = gameDataRetrieveDataAccessService;
             _notifyGameDataChanged = notifyGameDataChanged;
             _userId = userId;
@@ -175,9 +179,9 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
         public void PerformGameDataChanged()
         {
             _notifyGameDataChanged.GameDataChanged(this);
-        }   
+        }
 
-        protected override void PostPerformAutoStep(IEnumerable<CounterBase> modifiedCounters)
+        protected override void PostPerformAutoStep(IEnumerable<CounterBase> modifiedCounters, int iterations)
         {
             /*lock (_syslock)
             {   */
@@ -209,7 +213,10 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
         protected override void PreInitialize()
         {
             //CashFunds(1500000);
+            var sw = new Stopwatch();
+            sw.Start();
             _gameData = _gameDataRetrieveDataAccessService.GetGameData(_userId);
+            _logger.Info("Perform PreInitialize: {0}", sw.Elapsed);
         }
 
     }

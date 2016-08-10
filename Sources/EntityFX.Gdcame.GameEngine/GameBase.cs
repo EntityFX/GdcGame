@@ -39,6 +39,9 @@ namespace EntityFX.Gdcame.GameEngine
         private readonly Random _randomiserForVerification = new Random(Environment.TickCount);
 
         private static readonly object _lockState = new { };
+        private IEnumerable<GenericCounter> _autoGenericCounters;
+        private IEnumerable<GenericCounter> _manualGenericCounters;
+        private IEnumerable<DelayedCounter> _delayedCounters;
 
         protected GameBase()
         {
@@ -77,24 +80,28 @@ namespace EntityFX.Gdcame.GameEngine
         private void InitializeFundsCounters()
         {
             FundsCounters = GetFundsCounters();
-            var genericCounters = FundsCounters.Counters.Values.OfType<GenericCounter>();
+            var genericCounters = FundsCounters.Counters.Values.OfType<GenericCounter>().ToArray();
             foreach (var fundCounter in genericCounters)
             {
                 fundCounter.StepsToIncreaseInflation = fundCounter.StepsToIncreaseInflation == 0 ? 1000 : fundCounter.StepsToIncreaseInflation;
             }
+
+            _autoGenericCounters = genericCounters.Where(_ => _.IsUsedInAutoStep).ToArray();
+            _manualGenericCounters = genericCounters.Where(_ => !_.IsUsedInAutoStep).ToArray();
+            _delayedCounters = FundsCounters.Counters.Values.OfType<DelayedCounter>().ToArray();
         }
 
         private void InitializeFundsDrivers()
         {
             FundsDrivers = GetFundsDrivers();
-            foreach (var fundDriver in FundsDrivers)
+            FundsDrivers.AsParallel().ForAll(pair =>
             {
-                if (fundDriver.Value.CurrentValue == 0)
+                if (pair.Value.CurrentValue == 0)
                 {
-                    fundDriver.Value.CurrentValue = fundDriver.Value.InitialValue;
+                    pair.Value.CurrentValue = pair.Value.InitialValue;
                 }
-                fundDriver.Value.InflationPercent = 15;
-            }
+                pair.Value.InflationPercent = 15;
+            });
         }
 
         private void InitializeCustomRules()
@@ -108,45 +115,43 @@ namespace EntityFX.Gdcame.GameEngine
 
         protected abstract IDictionary<int, ICustomRule> GetCustomRules();
 
-        public async Task<int> PerformAutoStep()
+        public async Task<int> PerformAutoStep(int iterations = 1)
         {
             if (!_isInitialized) throw new Exception("Game is not started");
             return await Task<int>.Factory.StartNew(() =>
             {
-                var modifiedCounters = PerformAutoStepInternal();
-                PostPerformAutoStep(modifiedCounters);
+                var modifiedCounters = PerformAutoStepInternal(iterations);
+                PostPerformAutoStep(modifiedCounters, iterations);
                 return 0;
             });
         }
 
-        private IEnumerable<CounterBase> PerformAutoStepInternal()
+        private IEnumerable<CounterBase> PerformAutoStepInternal(int iterations = 1)
         {
-            var genericCounters = FundsCounters.Counters.Values.OfType<GenericCounter>()
-                .Where(_ => _.IsUsedInAutoStep);
-            foreach (var genericCounter in genericCounters)
+            foreach (var autoGenericCounter in _autoGenericCounters)
             {
-                CashFunds(genericCounter.Value);
-                genericCounter.CurrentSteps++;
-                genericCounter.Inflation = genericCounter.CurrentSteps / genericCounter.StepsToIncreaseInflation;
-            }
-
-            var genericManualCounters = FundsCounters.Counters.Values.OfType<GenericCounter>()
-                .Where(_ => !_.IsUsedInAutoStep);
-            foreach (var manualCounter in genericManualCounters)
+                CashFunds(autoGenericCounter.Value * iterations);
+                autoGenericCounter.CurrentSteps = autoGenericCounter.CurrentSteps + autoGenericCounter.CurrentSteps * iterations;
+                autoGenericCounter.Inflation = autoGenericCounter.CurrentSteps / autoGenericCounter.StepsToIncreaseInflation;
+            };
+            foreach (var manualGenericCounter in _manualGenericCounters)
             {
-                manualCounter.CurrentSteps--;
-                manualCounter.Inflation = manualCounter.CurrentSteps / manualCounter.StepsToIncreaseInflation;
-            }
 
-            var delayedCounters = FundsCounters.Counters.Values.OfType<DelayedCounter>()
-                .Where(_ => _.IsMining);
+                manualGenericCounter.CurrentSteps = manualGenericCounter.CurrentSteps +
+                                 manualGenericCounter.CurrentSteps * iterations;
+                manualGenericCounter.Inflation = manualGenericCounter.CurrentSteps /
+                              manualGenericCounter.StepsToIncreaseInflation;
+            };
+
+
+            var delayedCounters = _delayedCounters.Where(_ => _.IsMining);
             foreach (var delayedCounter in delayedCounters)
             {
                 if (delayedCounter.SecondsRemaining == 0)
                 {
                     delayedCounter.IsMining = false;
-                    CashFunds(delayedCounter.Value);
-                    delayedCounter.SubValue *= 1.2m;
+                    CashFunds(delayedCounter.Value * iterations);
+                    delayedCounter.SubValue *= 1.2m * iterations;
                 }
                 else
                 {
@@ -154,8 +159,9 @@ namespace EntityFX.Gdcame.GameEngine
                 }
             }
 
-            AutomaticStepNumber++;
-            return genericCounters;
+
+            AutomaticStepNumber = AutomaticStepNumber + AutomaticStepNumber * iterations;
+            return _autoGenericCounters;
         }
 
         private IEnumerable<CounterBase> PerformManualStepInternal()
@@ -291,7 +297,7 @@ namespace EntityFX.Gdcame.GameEngine
 
         }
 
-        protected virtual void PostPerformAutoStep(IEnumerable<CounterBase> modifiedCounters)
+        protected virtual void PostPerformAutoStep(IEnumerable<CounterBase> modifiedCounters, int iterations)
         {
 
         }

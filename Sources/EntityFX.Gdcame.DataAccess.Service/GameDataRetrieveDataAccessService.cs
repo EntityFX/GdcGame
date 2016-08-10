@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
+using System.Runtime.Caching;
 using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.Common.Contract.Counters;
+using EntityFX.Gdcame.Common.Contract.Funds;
 using EntityFX.Gdcame.Common.Contract.UserRating;
 using EntityFX.Gdcame.DataAccess.Contract.GameData;
 using EntityFX.Gdcame.DataAccess.Repository;
@@ -12,15 +14,66 @@ using EntityFX.Gdcame.DataAccess.Repository.Criterions.UserCounter;
 using EntityFX.Gdcame.DataAccess.Repository.Criterions.UserCustomRuleInfo;
 using EntityFX.Gdcame.DataAccess.Repository.Criterions.UserFundsDriver;
 using EntityFX.Gdcame.DataAccess.Repository.Criterions.UserGameCounter;
+using EntityFX.Gdcame.DataAccess.Repository.Criterions.UserGameSnapshot;
 using EntityFX.Gdcame.DataAccess.Repository.Criterions.UserRating;
 
 namespace EntityFX.Gdcame.DataAccess.Service
 {
-    public class GameDataRetrieveDataAccessService : IGameDataRetrieveDataAccessService
+    public abstract class GameDataRetrieveDataAccessBase
     {
+        private readonly ObjectCache _cache = MemoryCache.Default;
+        private object _stdLock = new object();
         private readonly IFundsDriverRepository _fundsDriverRepository;
         private readonly ICountersRepository _countersRepository;
         private readonly ICustomRuleRepository _customRuleRepository;
+
+        public GameDataRetrieveDataAccessBase(
+            IFundsDriverRepository fundsDriverRepository,
+            ICountersRepository countersRepository,
+            ICustomRuleRepository customRuleRepository)
+        {
+            _fundsDriverRepository = fundsDriverRepository;
+            _countersRepository = countersRepository;
+            _customRuleRepository = customRuleRepository;
+        }
+
+
+        protected FundsDriver[] GetFundDrivers()
+        {
+            if (!_cache.Contains("FundDrivers"))
+            {
+                _cache.Set("FundDrivers"
+                    , _fundsDriverRepository.FindAll(new GetAllFundsDriversCriterion())
+                    , new CacheItemPolicy { AbsoluteExpiration = new DateTimeOffset(DateTime.Now.AddDays(1)) });
+            }
+            return _cache.Get("FundDrivers") as FundsDriver[];
+        }
+
+        protected CounterBase[] GetCounters()
+        {
+            if (!_cache.Contains("Counters"))
+            {
+                _cache.Set("Counters"
+                    , _countersRepository.FindAll(new GetAllCountersCriterion())
+                    , new CacheItemPolicy { AbsoluteExpiration = new DateTimeOffset(DateTime.Now.AddDays(1)) });
+            }
+            return _cache.Get("Counters") as CounterBase[];
+        }
+
+        protected CustomRule[] GetCsutomRules()
+        {
+            if (!_cache.Contains("CustomRules"))
+            {
+                _cache.Set("CustomRules"
+                    , _customRuleRepository.FindAll(new GetAllCustomRulesCriterion())
+                    , new CacheItemPolicy { AbsoluteExpiration = new DateTimeOffset(DateTime.Now.AddDays(1)) });
+            }
+            return _cache.Get("CustomRules") as CustomRule[];
+        }
+    }
+
+    public class GameDataRetrieveDataAccessService : GameDataRetrieveDataAccessBase, IGameDataRetrieveDataAccessService
+    {
         private readonly IUserGameCounterRepository _userGameCounterRepository;
         private readonly IUserCounterRepository _userCounterRepository;
         private readonly IUserFundsDriverRepository _userFundsDriverRepository;
@@ -36,10 +89,9 @@ namespace EntityFX.Gdcame.DataAccess.Service
             IUserFundsDriverRepository userFundsDriverRepository,
             IUserRatingRepository userRatingRepository,
             IUserCustomRuleRepository userCustomRuleRepository)
+            : base(fundsDriverRepository, countersRepository, customRuleRepository)
         {
-            _fundsDriverRepository = fundsDriverRepository;
-            _countersRepository = countersRepository;
-            _customRuleRepository = customRuleRepository;
+
             _userGameCounterRepository = userGameCounterRepository;
             _userCounterRepository = userCounterRepository;
             _userFundsDriverRepository = userFundsDriverRepository;
@@ -54,45 +106,51 @@ namespace EntityFX.Gdcame.DataAccess.Service
 
         public GameData GetGameData(int userId)
         {
-            var fundsDrivers = _fundsDriverRepository.FindAll(new GetAllFundsDriversCriterion());
-            var counters = _countersRepository.FindAll(new GetAllCountersCriterion());
-            var customRules = _customRuleRepository.FindAll(new GetAllCustomRulesCriterion());
+            var fundsDrivers = (FundsDriver[])GetFundDrivers().Clone();
+            var counters = (CounterBase[])GetCounters().Clone();
+            var customRules = (CustomRule[])GetCsutomRules().Clone();
             var userGameCounters = _userGameCounterRepository.FindById(new GetUserGameCounterByIdCriterion(userId));
             var userCounters = _userCounterRepository.FindByUserId(new GetUserCountersByUserIdCriterion(userId));
             if (userCounters != null)
             {
-                foreach (var userCounter in userCounters)
+                userCounters.AsParallel().ForAll(_ =>
                 {
-                    var originalCounter = counters.SingleOrDefault(_ => _.Id == userCounter.Id);
-                    if (originalCounter == null) continue;
-                    var indexOfOriginalCounter = Array.IndexOf(counters, originalCounter);
-                    counters[indexOfOriginalCounter] = userCounter;
-                }
+                    var originalCounter = counters.SingleOrDefault(f => f.Id == _.Id);
+                    if (originalCounter == null) return;
+                    var indexOfOriginalCounter = 0;
+
+                    indexOfOriginalCounter = Array.IndexOf(counters, originalCounter);
+
+
+                    counters[indexOfOriginalCounter] = _;
+                });
+
             }
             var userFundsDrivers =
                 _userFundsDriverRepository.FindByUserId(new GetUserFundsDriverByUserIdCriterion(userId));
             if (userFundsDrivers != null)
             {
-                foreach (var userFundsDriver in userFundsDrivers)
+                userFundsDrivers.AsParallel().ForAll(_ =>
                 {
-                    var originalFundDriver = fundsDrivers.SingleOrDefault(_ => _.Id == userFundsDriver.Id);
-                    if (originalFundDriver == null) continue;
-                    originalFundDriver.BuyCount = userFundsDriver.BuyCount;
-                    originalFundDriver.Value = userFundsDriver.Value;
-                }
+                    var originalFundDriver = fundsDrivers.SingleOrDefault(f => f.Id == _.Id);
+                    if (originalFundDriver == null) return;
+                    originalFundDriver.BuyCount = _.BuyCount;
+                    originalFundDriver.Value = _.Value;
+                });
             }
             var userCustomRuleCounters =
                 _userCustomRuleRepository.FindByUserId(new GetUserCustomRuleInfoByUserIdCriterion(userId));
             if (userCustomRuleCounters != null)
             {
-                foreach (var userCustomRuleCounter in userCustomRuleCounters)
+                userCustomRuleCounters.AsParallel().ForAll(_ =>
                 {
                     var originalFundDriver =
-                        fundsDrivers.SingleOrDefault(_ => _.Id == userCustomRuleCounter.FundsDriverId);
-                    if (originalFundDriver == null) continue;
-                    originalFundDriver.CustomRuleInfo.CurrentIndex = userCustomRuleCounter.CurrentIndex;
-                    originalFundDriver.CustomRuleInfo.FundsDriverId = userCustomRuleCounter.FundsDriverId;
-                }
+  fundsDrivers.SingleOrDefault(cr => cr.Id == _.FundsDriverId);
+                    if (originalFundDriver == null) return;
+                    originalFundDriver.CustomRuleInfo.CurrentIndex = _.CurrentIndex;
+                    originalFundDriver.CustomRuleInfo.FundsDriverId = _.FundsDriverId;
+                });
+
             }
             return new GameData()
             {
@@ -107,6 +165,50 @@ namespace EntityFX.Gdcame.DataAccess.Service
                 AutomaticStepsCount = userGameCounters != null ? userGameCounters.AutomaticStepsCount : 0,
                 ManualStepsCount = userGameCounters != null ? userGameCounters.ManualStepsCount : 0
             };
+        }
+    }
+
+    public class GameDataRetrieveDataAccessDocumentService : GameDataRetrieveDataAccessBase, IGameDataRetrieveDataAccessService
+    {
+        private readonly IUserGameSnapshotRepository _userGameSnapshotRepository;
+
+        public GameDataRetrieveDataAccessDocumentService(IUserGameSnapshotRepository userGameSnapshotRepository, IFundsDriverRepository fundsDriverRepository,
+    ICountersRepository countersRepository,
+    ICustomRuleRepository customRuleRepository)
+            : base(fundsDriverRepository, countersRepository, customRuleRepository)
+        {
+            _userGameSnapshotRepository = userGameSnapshotRepository;
+
+        }
+
+        public GameData GetGameData(int userId)
+        {
+            var userGameData = _userGameSnapshotRepository.FindByUserId(new GetUserGameSnapshotByIdCriterion(userId));
+            if (userGameData == null)
+            {
+                var fundsDrivers = (FundsDriver[])GetFundDrivers().Clone();
+                var counters = (CounterBase[])GetCounters().Clone();
+                var customRules = (CustomRule[])GetCsutomRules().Clone();
+                return new GameData()
+                {
+                    FundsDrivers = fundsDrivers,
+                    Counters = new FundsCounters()
+                    {
+                        Counters = counters,
+                        CurrentFunds = 100,
+                        TotalFunds = 100
+                    },
+                    CustomRules = customRules,
+                    AutomaticStepsCount =  0,
+                    ManualStepsCount =  0
+                };
+            }
+            return userGameData;
+        }
+
+        public UserRating[] GetUserRatings()
+        {
+            return new UserRating[0];
         }
     }
 }

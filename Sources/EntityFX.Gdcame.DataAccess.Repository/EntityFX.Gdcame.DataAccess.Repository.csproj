@@ -55,6 +55,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -74,6 +75,7 @@
     <Compile Include="Criterions\UserCustomRuleInfo\GetUserCustomRuleInfoByUserIdCriterion.cs" />
     <Compile Include="Criterions\UserFundsDriver\GetUserFundsDriverByUserIdCriterion.cs" />
     <Compile Include="Criterions\UserGameCounter\GetUserGameCounterByIdCriterion.cs" />
+    <Compile Include="Criterions\UserGameSnapshot\GetUserGameSnapshotByIdCriterion.cs" />
     <Compile Include="Criterions\UserRating\GetAllUsersRatingsCriterion.cs" />
     <Compile Include="Criterions\User\GetAllUsersCriterion.cs" />
     <Compile Include="Criterions\User\GetUserByIdCriterion.cs" />
@@ -87,6 +89,7 @@
     <Compile Include="IUserCustomRuleRepository.cs" />
     <Compile Include="IUserFundsDriverRepository.cs" />
     <Compile Include="IUserGameCounterRepository.cs" />
+    <Compile Include="IUserGameSnapshotRepository.cs" />
     <Compile Include="IUserRatingRepository.cs" />
     <Compile Include="IUserRepository.cs" />
     <Compile Include="Mappers\CustomRuleContractMapper.cs" />
@@ -112,6 +115,7 @@
     <Compile Include="Queries\UserCustomRuleInfo\GetUserCustomRuleInfoByUserIdQuery.cs" />
     <Compile Include="Queries\UserFundsDriver\GetUserFundDriverByUserIdQuery.cs" />
     <Compile Include="Queries\UserGameCounter\GetUserGameCounterByIdQuery.cs" />
+    <Compile Include="Queries\UserGameSnapshot\GetUserGameSnapshotByIdQuery.cs" />
     <Compile Include="Queries\UserRating\GetAllUsersRatingsQuery.cs" />
     <Compile Include="Queries\User\GetAllUsersQuery.cs" />
     <Compile Include="Queries\User\GetUserByNameQuery.cs" />
@@ -120,6 +124,7 @@
     <Compile Include="UserCustomRuleRepository.cs" />
     <Compile Include="UserFundsDriverRepository.cs" />
     <Compile Include="UserGameCounterRepository.cs" />
+    <Compile Include="UserGameSnapshotRepository.cs" />
     <Compile Include="UserRatingRepository.cs" />
     <Compile Include="UserRepository.cs" />
   </ItemGroup>

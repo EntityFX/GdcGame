@@ -19,12 +19,11 @@ namespace EntityFX.Gdcame.DataAccess.Service
                new InterceptionBehavior<PolicyInjectionBehavior>()
                , new Interceptor<InterfaceInterceptor>()
                );
-            container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessService>(
+            container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessDocumentService>(
                 new InterceptionBehavior<PolicyInjectionBehavior>()
-                , new Interceptor<InterfaceInterceptor>(),
-                new InterceptionBehavior<GameDataCachingInterceptionBehavior>()
+                , new Interceptor<InterfaceInterceptor>()
                 );
-            container.RegisterType<IGameDataStoreDataAccessService, GameDataStoreDataAccessService>(
+            container.RegisterType<IGameDataStoreDataAccessService, GameDataStoreDataAccessDocumentService>(
                 new InterceptionBehavior<PolicyInjectionBehavior>()
                 , new Interceptor<InterfaceInterceptor>()
                 );

@@ -12,6 +12,7 @@ namespace EntityFX.Gdcame.DataAccess.Model
         public virtual DbSet<UserCounterEntity> UserCounters { get; set; }
         public virtual DbSet<UserFundsDriverEntity> UserFundsDrivers { get; set; }
         public virtual DbSet<UserCustomRuleEntity> UserCustomRules { get; set; }
+        public virtual DbSet<UserGameDataSnapshotEntity> UserGameDataSnapshot { get; set; }
         public EconomicsArcadeDbContext()
             : base("EconomicsArcadeDbContext")
         {
@@ -144,6 +145,10 @@ namespace EntityFX.Gdcame.DataAccess.Model
 
             modelBuilder.Entity<UserCustomRuleEntity>()
                 .ToTable("UserCustomRule");
+
+            modelBuilder.Entity<UserGameDataSnapshotEntity>()
+                .ToTable("UserGameDataSnapshot")
+                .HasKey(_ => _.UserId);
 
             //.HasKey(_ => new {_.UserId, _.CounterId});
         }

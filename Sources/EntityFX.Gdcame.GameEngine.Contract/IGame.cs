@@ -13,13 +13,15 @@ namespace EntityFX.Gdcame.GameEngine.Contract
 
         FundsCounters FundsCounters { get; }
 
+        IDictionary<int, ICustomRule> CustomRules { get; }
+
         int AutomaticStepNumber { get; }
 
         int ManualStepNumber { get; }
 
         void Initialize();
 
-        Task<int> PerformAutoStep();
+        Task<int> PerformAutoStep(int iterations = 1);
 
         ManualStepResult PerformManualStep(VerificationManualStepData verificationData);
 

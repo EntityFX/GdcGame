@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Configuration;
 using EntityFX.Gdcame.Utils.ServiceStarter.Collapsed;
+
 
 namespace EntityFX.Gdcame.Utils.ConsoleHostApp.FullCollapsed
 {
@@ -9,7 +11,8 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.FullCollapsed
         {
             var containerBootstrapper = new NoWcfContainerBootstrapper();
             var ss = new NoWcfServiceStarter(
-                containerBootstrapper
+                containerBootstrapper,
+                 ConfigurationManager.AppSettings["NotifyConsumerSignalRHubEndpoint_AddressServiceUrl"]
                 );
             ss.StartServices();
             Console.ReadKey();

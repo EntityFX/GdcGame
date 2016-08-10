@@ -1,9 +1,11 @@
-﻿using EntityFX.Gdcame.Common.Contract;
+﻿using System;
+using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.Common.Contract.Counters;
 using EntityFX.Gdcame.Common.Contract.Funds;
 using EntityFX.Gdcame.Common.Presentation.Model;
 using EntityFX.Gdcame.Common.Presentation.Model.Mappers;
 using EntityFX.Gdcame.Infrastructure.Common;
+using EntityFX.Gdcame.NotifyConsumer.Contract;
 using EntityFX.Gdcame.NotifyConsumer.Signalr;
 using Microsoft.AspNet.SignalR;
 using Microsoft.Practices.Unity;
@@ -20,9 +22,8 @@ namespace EntityFX.Gdcame.NotifyConsumer
             container.RegisterType<IMapper<GameData, GameDataModel>, GameDataModelMapper>();
 
             container.RegisterType<GameDataHub>();
-
-            container.RegisterType<IHubContext>(
-                new InjectionFactory(_ => GlobalHost.ConnectionManager.GetHubContext<GameDataHub>()));
+            container.RegisterType<IHubContextAccessor, HubContextAccessor>();
+            container.RegisterInstance<IConnections>(new Connections());
 
             return container;
 

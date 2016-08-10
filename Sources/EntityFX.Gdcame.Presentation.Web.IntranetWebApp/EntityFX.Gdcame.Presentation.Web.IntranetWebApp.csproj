@@ -263,7 +263,7 @@
     <Content Include="Scripts\angular-sanitize.min.js.map" />
     <Content Include="Scripts\angular-touch.min.js.map" />
     <Content Include="Scripts\angular.min.js.map" />
-    <Content Include="EntityFX.EconomicsArcade.Presentation.WebApplication.dll.nlog">
+    <Content Include="EntityFX.Gdcame.Presentation.Web.IntranetWebApp.dll.nlog">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

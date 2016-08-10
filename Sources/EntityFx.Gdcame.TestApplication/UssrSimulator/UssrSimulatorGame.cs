@@ -552,7 +552,7 @@ namespace EntityFx.Gdcame.TestApplication.UssrSimulator
 
         }
 
-        protected override void PostPerformAutoStep(IEnumerable<CounterBase> modifiedCounters)
+        protected override void PostPerformAutoStep(IEnumerable<CounterBase> modifiedCounters, int iterations)
         {
 
 

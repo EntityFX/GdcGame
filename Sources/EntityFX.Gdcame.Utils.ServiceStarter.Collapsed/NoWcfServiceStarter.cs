@@ -17,11 +17,12 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
     public class NoWcfServiceStarter : ServicesStarterBase<NoWcfContainerBootstrapper>, IServicesStarter, IDisposable
     {
         private readonly Uri _baseUrl = new Uri("net.pipe://localhost/");
-        private readonly string _signalRHost = "http://+:8080";
+        private readonly string _signalRHost;
         private IDisposable _webApp;
         
-        public NoWcfServiceStarter(NoWcfContainerBootstrapper bootstrapper) : base(bootstrapper)
+        public NoWcfServiceStarter(NoWcfContainerBootstrapper bootstrapper, string signalRHost) : base(bootstrapper)
         {
+            _signalRHost = signalRHost;
         }
 
         public override void StartServices()

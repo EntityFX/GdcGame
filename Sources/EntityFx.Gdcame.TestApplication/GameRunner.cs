@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Timers;
@@ -31,7 +32,10 @@ namespace EntityFx.Gdcame.TestApplication
 
         async void _timer_Elapsed(object sender, ElapsedEventArgs e)
         {
+            var sw = new Stopwatch();
+             sw.Start();
             await _game.PerformAutoStep();
+            Console.WriteLine(sw.Elapsed);
             DisplayGameData(GetGameData());
         }
 

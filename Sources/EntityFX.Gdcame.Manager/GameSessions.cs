@@ -11,6 +11,7 @@ using EntityFX.Gdcame.GameEngine.Contract;
 using EntityFX.Gdcame.GameEngine.NetworkGameEngine;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager.Contract.SessionManager;
+using Microsoft.Practices.ObjectBuilder2;
 
 namespace EntityFX.Gdcame.Manager
 {
@@ -18,38 +19,41 @@ namespace EntityFX.Gdcame.Manager
     {
         private readonly ILogger _logger;
         private readonly IGameFactory _gameFactory;
-        private static readonly ConcurrentDictionary<string, IGame> GameSessionsStorage = new ConcurrentDictionary<string, IGame>();
+        private readonly ConcurrentDictionary<string, IGame> GameSessionsStorage = new ConcurrentDictionary<string, IGame>();
 
-        private static readonly ConcurrentDictionary<Guid, Session> SessionsStorage = new ConcurrentDictionary<Guid, Session>();
+        private readonly ConcurrentDictionary<Guid, Session> SessionsStorage = new ConcurrentDictionary<Guid, Session>();
 
-        private static Timer _timer = new Timer(TimerCallback, null, 0, 1000);
+        private readonly Timer _gameTimer;
 
-        private static Timer _persisTimertimer = new Timer(GamePersistCallback, null, 0, 30000);
+        private readonly Timer _persisTimertimer;
 
-        private static void GamePersistCallback(object state)
+        private void GamePersistCallback(object state)
         {
             var sw = new Stopwatch();
             sw.Start();
-            GameSessionsStorage.AsParallel().ForAll(_ => Task.Run(() => ((NetworkGame)_.Value).PerformGameDataChanged()));
-            if (Logger != null)
-                Logger.Info("Perform persist for {0} game sessions: {1}", GameSessionsStorage.ToList().Count, sw.Elapsed);
+            //GameSessionsStorage.Ta
+            GameSessionsStorage.AsParallel().ForAll(_ => ((NetworkGame)_.Value).PerformGameDataChanged());
+            //GameSessionsStorage.ForEach(_ => Task.Run(() => ((NetworkGame)_.Value).PerformGameDataChanged()));
+            if (_logger != null)
+                _logger.Info("Perform persist for {0} game sessions: {1}", GameSessionsStorage.ToList().Count, sw.Elapsed);
         }
 
         public GameSessions(ILogger logger, IGameFactory gameFactory)
         {
             _logger = logger;
             _gameFactory = gameFactory;
+            _gameTimer = new Timer(TimerCallback, null, 0, 1000);
+
+            _persisTimertimer = new Timer(GamePersistCallback, null, 0, 30000);
         }
 
-        public static ILogger Logger { get; set; }
-
-        private static void TimerCallback(object state)
+        private void TimerCallback(object state)
         {
             var sw = new Stopwatch();
             sw.Start();
-            GameSessionsStorage.AsParallel().ForAll(_ => Task.Run(() => _.Value.PerformAutoStep()));
-            if (Logger != null)
-                Logger.Info("Perform steps for {0} game sessions: {1}", GameSessionsStorage.ToList().Count, sw.Elapsed);
+            GameSessionsStorage.AsParallel().ForAll(_ => _.Value.PerformAutoStep());
+            if (_logger != null)
+                _logger.Info("Perform steps for {0} game sessions: {1}", GameSessionsStorage.Count, sw.Elapsed);
         }
 
         public IGame GetGame(Guid sessionId)
@@ -57,9 +61,9 @@ namespace EntityFX.Gdcame.Manager
             var session = GetSession(sessionId);
             if (session == null)
             {
-                throw new InvalidSessionException(string.Format("Session {0} doesn't exists",sessionId), sessionId);
+                throw new InvalidSessionException(string.Format("Session {0} doesn't exists", sessionId), sessionId);
             }
-
+            session.LastActivity = DateTime.Now;
             if (!GameSessionsStorage.ContainsKey(session.Login))
             {
                 var game = BuildGame(session.UserId, session.Login);
@@ -94,8 +98,8 @@ namespace EntityFX.Gdcame.Manager
                 Login = user.Email,
                 UserId = user.Id,
                 SessionIdentifier = Guid.NewGuid(),
-                UserRoles = user.IsAdmin ? new[] { UserRole.GenericUser, UserRole.Admin} : new[] {UserRole.GenericUser },
-                Identity = new CustomGameIdentity() { AuthenticationType = "Auto", IsAuthenticated = true, Name = user.Email}
+                UserRoles = user.IsAdmin ? new[] { UserRole.GenericUser, UserRole.Admin } : new[] { UserRole.GenericUser },
+                Identity = new CustomGameIdentity() { AuthenticationType = "Auto", IsAuthenticated = true, Name = user.Email }
             };
             SessionsStorage.TryAdd(session.SessionIdentifier, session);
             return session.SessionIdentifier;

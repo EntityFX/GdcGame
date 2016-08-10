@@ -39,6 +39,8 @@ namespace EntityFX.Gdcame.Manager
             container.RegisterType<IGame, NetworkGame>();
 
 
+
+
             container.RegisterType<ISessionManager, SessionManager>(
                 new InterceptionBehavior<PolicyInjectionBehavior>(),
                 new Interceptor<InterfaceInterceptor>());

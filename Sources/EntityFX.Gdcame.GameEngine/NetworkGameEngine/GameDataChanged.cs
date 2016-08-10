@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using EntityFX.Gdcame.Common.Contract;
+using EntityFX.Gdcame.Common.Contract.Funds;
 using EntityFX.Gdcame.DataAccess.Contract.GameData;
 using EntityFX.Gdcame.GameEngine.Contract;
-using EntityFX.Gdcame.GameEngine.Contract.Funds;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.NotifyConsumer.Contract;
+using FundsDriver = EntityFX.Gdcame.GameEngine.Contract.Funds.FundsDriver;
 
 namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
 {
@@ -54,7 +55,18 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
         private GameData PrepareGameDataToPersist(IGame game)
         {
             var gameData = _gameDataMapper.Map(game);
-            gameData.FundsDrivers = game.ModifiedFundsDrivers.Values.Select(_ => _fundsDriverMapper.Map(_)).ToArray();
+            gameData.FundsDrivers = game.FundsDrivers.Values.Select(_ => _fundsDriverMapper.Map(_)).ToArray();
+
+
+            gameData.CustomRules = game.CustomRules.Select(_ =>
+            {
+                var ruleName = _.Value.GetType().Name;
+                return new CustomRule()
+                {
+                    Name = ruleName,
+                    Id =  _.Key
+                };
+            }).ToArray();
             game.ModifiedFundsDrivers.Clear();
             return gameData;
         }

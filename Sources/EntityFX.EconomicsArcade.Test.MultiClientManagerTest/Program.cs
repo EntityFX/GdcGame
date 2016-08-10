@@ -189,12 +189,22 @@ namespace EntityFX.EconomicsArcade.Test.MultiClientManagerTest
             var sessionsNumberString = Console.ReadLine();
             var sessionsNumber = 1;
             Int32.TryParse(sessionsNumberString, out sessionsNumber);
+            List<long> watches = new List<long>();
+            var sw2 = new Stopwatch();
+            sw2.Start();
             Parallel.For(0, sessionsNumber, _ =>
             {
                 var userName = "multi-test-user-" + _;
+                var sw1 = new Stopwatch();
+                sw1.Start();
                 var userInfo = UserLogin(userName);
                 GetGameClient(userInfo.Item1).Ping();
+                watches.Add(sw1.ElapsedMilliseconds);
+                sw1.Stop();
             });
+            Console.WriteLine("Total: {0}, Avg={1}, Min={2}, Max={3}", sw2.ElapsedMilliseconds , watches.Average(), watches.Min(), watches.Max());
+            sw2.Stop();
+            watches.Clear();
         }
 
 

@@ -45,7 +45,7 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
             container.RegisterType<ILogger>(new InjectionFactory(
                _ => new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger")))));
 
-            GameSessions.Logger = container.Resolve<ILogger>();
+
 
             container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessClient<NetTcpProxy<IGameDataRetrieveDataAccessService>>>("GameDataRetrieveDataAccessClient",
                new InjectionConstructor(
@@ -73,6 +73,8 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
 
             container.RegisterType<IGameFactory, GameFactory>();
 
+            container.RegisterInstance<GameSessions>(new GameSessions(container.Resolve<ILogger>(), container.Resolve<IGameFactory>()));
+
             container.RegisterType<INotifyConsumerService, NotifyConsumerServiceClient<NotifyConsumerProxy>>("NotifyConsumerServiceClient",
                 new InjectionConstructor(
                     "net.msmq://localhost/private/EntityFX.Gdcame.NotifyConsumer.Contract.INotifyConsumerService"
@@ -84,7 +86,8 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
             container.RegisterType<INotifyConsumerService, NotifyConsumerService>(new InjectionConstructor(
                 new ResolvedParameter<ILogger>(),
                 new ResolvedParameter<IMapper<GameData, GameDataModel>>(),
-                new ResolvedParameter<IHubContext>()
+                new ResolvedParameter<IHubContextAccessor>(),
+                                new ResolvedParameter<IConnections>()
                 )
                 , new Interceptor<InterfaceInterceptor>()
                 , new InterceptionBehavior<LoggerInterceptor>()
@@ -102,7 +105,7 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
                 );
 
 
-            container.RegisterType<INotifyConsumerClientFactory, NotifyConsumerClientFactory>(  new InjectionConstructor(
+            container.RegisterType<INotifyConsumerClientFactory, NotifyConsumerClientFactory>(new InjectionConstructor(
                     new ResolvedParameter<IUnityContainer>(),
                     "NotifyConsumerServiceClient"));
 

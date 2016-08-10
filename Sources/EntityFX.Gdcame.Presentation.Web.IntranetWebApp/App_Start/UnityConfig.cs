@@ -81,27 +81,27 @@ namespace EntityFX.Gdcame.Presentation.Web.IntranetWebApp
                     new InjectionConstructor(
                         new ResolvedParameter<ILogger>(),
                         new ResolvedParameter<IOperationContextHelper>(),
-                        "net.pipe://localhost/EntityFX.EconomicsArcade.Contract.Manager.GameManager.IGameManager", typeof(Guid))
+                        "net.pipe://localhost/EntityFX.Gdcame.Manager.Contract.GameManager.IGameManager", typeof(Guid))
                     , new Interceptor<InterfaceInterceptor>()
                     , new InterceptionBehavior<LoggerInterceptor>()
                     );
                 container.RegisterType<ISimpleUserManager, SimpleUserManagerClient<NetNamedPipeProxy<ISimpleUserManager>>>(
                     new InjectionConstructor(
-                        "net.pipe://localhost/EntityFX.EconomicsArcade.Contract.Manager.UserManager.ISimpleUserManager")
+                        "net.pipe://localhost/EntityFX.Gdcame.Manager.Contract.UserManager.ISimpleUserManager")
                     , new Interceptor<InterfaceInterceptor>()
                     , new InterceptionBehavior<LoggerInterceptor>()
                     );
 
                 container.RegisterType<IRatingManager, RatingManagerClient<NetNamedPipeProxy<IRatingManager>>>(
                     new InjectionConstructor(
-                        "net.pipe://localhost/EntityFX.EconomicsArcade.Contract.Manager.RatingManager.IRatingManager"),
+                        "net.pipe://localhost/EntityFX.Gdcame.Manager.Contract.RatingManager.IRatingManager"),
                     new Interceptor<InterfaceInterceptor>(),
                     new InterceptionBehavior<LoggerInterceptor>()
                     );
                 container.RegisterType<ISessionManager, SessionManagerClient<NetNamedPipeProxy<ISessionManager>>>(
                     new InjectionConstructor(
                         new ResolvedParameter<IOperationContextHelper>(),
-                        "net.pipe://localhost/EntityFX.EconomicsArcade.Contract.Manager.SessionManager.ISessionManager",
+                        "net.pipe://localhost/EntityFX.Gdcame.Manager.Contract.SessionManager.ISessionManager",
                         new ResolvedParameter<Guid>())
                     , new Interceptor<InterfaceInterceptor>()
                     , new InterceptionBehavior<LoggerInterceptor>()
