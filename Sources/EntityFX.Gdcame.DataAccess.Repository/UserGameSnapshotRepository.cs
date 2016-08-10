@@ -7,6 +7,7 @@ using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.DataAccess.Model;
 using EntityFX.Gdcame.DataAccess.Repository.Criterions.UserGameSnapshot;
 using EntityFX.Gdcame.Infrastructure.Repository.UnitOfWork;
+using EntityFX.Gdcame.DataAccess.Contract.GameData;
 
 namespace EntityFX.Gdcame.DataAccess.Repository
 {
@@ -34,7 +35,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository
             }
         }
 
-        public void CreateForUser(int userId, GameData gameData)
+        public void CreateForUser(int userId, StoreGameData gameData)
         {
             using (var uow = _unitOfWorkFactory.Create())
             {
@@ -46,7 +47,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository
 
         }
 
-        public void UpdateForUser(int userId, GameData gameData)
+        public void UpdateForUser(int userId, StoreGameData gameData)
         {
             using (var uow = _unitOfWorkFactory.Create())
             {

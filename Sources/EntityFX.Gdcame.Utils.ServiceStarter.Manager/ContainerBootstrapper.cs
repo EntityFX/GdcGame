@@ -85,8 +85,10 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.Manager
                     new ResolvedParameter<int>(),
                     new ResolvedParameter<string>(),
                     new ResolvedParameter<IGameDataStoreDataAccessService>(),
+                    new ResolvedParameter<IMapper<IGame, GameData>>("StoreGameDataMapper"),
                     new ResolvedParameter<IMapper<IGame, GameData>>("GameDataMapper"),
                     new ResolvedParameter<IMapper<FundsDriver, Gdcame.Common.Contract.Funds.FundsDriver>>(),
+                    new ResolvedParameter<IMapper<StoreFundsDriver, Gdcame.Common.Contract.Funds.StoreFundsDriver>>(),
                     new ResolvedParameter<INotifyConsumerClientFactory>()
                     )
                 );
