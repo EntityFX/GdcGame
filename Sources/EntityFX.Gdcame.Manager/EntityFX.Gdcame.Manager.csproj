@@ -77,8 +77,8 @@
     <Compile Include="Mappers\GameDataContractMapper.cs" />
     <Compile Include="Mappers\IncrementorContractMapper.cs" />
     <Compile Include="Mappers\ManualStepContractMapper.cs" />
-    <Compile Include="Mappers\Store\CustomRuleInfoContractMapper.cs" />
-    <Compile Include="Mappers\Store\IncrementorContractMapper.cs" />
+    <Compile Include="Mappers\Store\StoreCustomRuleInfoContractMapper.cs" />
+    <Compile Include="Mappers\Store\StoreIncrementorContractMapper.cs" />
     <Compile Include="Mappers\Store\StoreGameDataMapper.cs" />
     <Compile Include="Mappers\Store\StoreCounterContractMapper.cs" />
     <Compile Include="Mappers\Store\StoreFundsCountersContractMapper.cs" />

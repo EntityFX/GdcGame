@@ -183,7 +183,7 @@ namespace EntityFX.Gdcame.DataAccess.Service
 
         public GameData GetGameData(int userId)
         {
-            var userGameData = _userGameSnapshotRepository.FindByUserId(new GetUserGameSnapshotByIdCriterion(userId));
+            GameData userGameData = null;// _userGameSnapshotRepository.FindByUserId(new GetUserGameSnapshotByIdCriterion(userId));
             if (userGameData == null)
             {
                 var fundsDrivers = (FundsDriver[])GetFundDrivers().Clone();

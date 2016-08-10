@@ -17,8 +17,8 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
         private readonly IGameDataStoreDataAccessService _gameDataStoreDataAccessService;
         private readonly IMapper<IGame, StoreGameData> _gameDataPersistMapper;
         private readonly IMapper<IGame, GameData> _gameDataRefreshMapper;
-        private readonly IMapper<FundsDriver, Gdcame.Common.Contract.Funds.FundsDriver> _fundsDriverPersistMapper;
-        private readonly IMapper<StoreFundsDriver, Gdcame.Common.Contract.Funds.StoreFundsDriver> _fundsDriverRefreshMapper;
+        private readonly IMapper<FundsDriver, StoreFundsDriver> _fundsDriverPersistMapper;
+        private readonly IMapper<FundsDriver, Gdcame.Common.Contract.Funds.FundsDriver> _fundsDriverRefreshMapper;
         private readonly INotifyConsumerClientFactory _notifyConsumerService;
 
         public NotifyGameDataChanged(int userId
@@ -26,15 +26,17 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
             , IGameDataStoreDataAccessService gameDataStoreDataAccessService
             , IMapper<IGame, StoreGameData> gameDataPersistMapper
             , IMapper<IGame, GameData> gameDataRefreshMapper
-            , IMapper<FundsDriver, Gdcame.Common.Contract.Funds.FundsDriver> fundsDriverPersistMapper
-            , IMapper<StoreFundsDriver, Gdcame.Common.Contract.Funds.StoreFundsDriver> fundsDriverRefreshMapper
+            , IMapper<FundsDriver, StoreFundsDriver> fundsDriverPersistMapper
+            , IMapper<FundsDriver, Gdcame.Common.Contract.Funds.FundsDriver> fundsDriverRefreshMapper
             , INotifyConsumerClientFactory notifyConsumerService)
         {
             _userId = userId;
             _userName = userName;
             _gameDataStoreDataAccessService = gameDataStoreDataAccessService;
-            _gameDataMapper = gameDataMapper;
-            _fundsDriverMapper = fundsDriverMapper;
+            _gameDataPersistMapper = gameDataPersistMapper;
+            _gameDataRefreshMapper = gameDataRefreshMapper;
+            _fundsDriverPersistMapper = fundsDriverPersistMapper;
+            _fundsDriverRefreshMapper = fundsDriverRefreshMapper;
             _notifyConsumerService = notifyConsumerService;
         }
 
@@ -65,10 +67,10 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
             gameData.CustomRules = game.CustomRules.Select(_ =>
             {
                 var ruleName = _.Value.GetType().Name;
-                return new CustomRule()
+                return new StoreCustomRuleInfo()
                 {
-                    Name = ruleName,
-                    Id =  _.Key
+                    CurrentIndex = -1,
+                    CustomRuleId =  -1
                 };
             }).ToArray();
             game.ModifiedFundsDrivers.Clear();

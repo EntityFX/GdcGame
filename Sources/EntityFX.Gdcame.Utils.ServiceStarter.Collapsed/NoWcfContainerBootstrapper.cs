@@ -20,6 +20,10 @@ using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
 using PortableLog.NLog;
 using ContainerBootstrapper = EntityFX.Gdcame.DataAccess.Repository.ContainerBootstrapper;
+using EntityFX.Gdcame.Manager.Mappers;
+using EntityFX.Gdcame.GameEngine.Mappers;
+using EntityFX.Gdcame.GameEngine.Contract.Counters;
+using EntityFX.Gdcame.GameEngine.Contract.Incrementors;
 
 namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
 {
@@ -55,6 +59,17 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
                 , new Interceptor<InterfaceInterceptor>()
                 );
 
+            //Store
+            container.RegisterType<IMapper<IncrementorBase, StoreIncrementor>, StoreIncrementorContractMapper>();
+            container.RegisterType<IMapper<CounterBase, StoreCounterBase>, StoreCounterContractMapper>();
+            container
+                .RegisterType
+                <IMapper<FundsCounters, StoreFundsCounters>, StoreFundsCountersContractMapper>();
+            container.RegisterType<IMapper<FundsDriver, StoreFundsDriver>, StoreFundsDriverContractMapper>();
+            container.RegisterType<IMapper<CustomRuleInfo, StoreCustomRuleInfo>, StoreCustomRuleInfoContractMapper>();
+            container.RegisterType<IMapper<IGame, StoreGameData>, StoreGameDataMapper>("StoreGameDataMapper");
+            /////
+
             container.RegisterType<IGameFactory, GameFactory>();
 
             container.RegisterInstance<GameSessions>(new GameSessions(container.Resolve<ILogger>(), container.Resolve<IGameFactory>()));
@@ -74,7 +89,9 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
                     new ResolvedParameter<int>(),
                     new ResolvedParameter<string>(),
                     new ResolvedParameter<IGameDataStoreDataAccessService>(),
+                    new ResolvedParameter<IMapper<IGame, StoreGameData>>("StoreGameDataMapper"),
                     new ResolvedParameter<IMapper<IGame, GameData>>("GameDataMapper"),
+                                        new ResolvedParameter<IMapper<FundsDriver, StoreFundsDriver>>(),
                     new ResolvedParameter<IMapper<FundsDriver, Gdcame.Common.Contract.Funds.FundsDriver>>(),
                     new ResolvedParameter<INotifyConsumerClientFactory>()
                     )

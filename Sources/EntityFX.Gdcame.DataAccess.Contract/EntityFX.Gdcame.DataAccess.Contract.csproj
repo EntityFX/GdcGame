@@ -47,7 +47,6 @@
     <Compile Include="GameData\IGameDataRetrieveDataAccessService.cs" />
     <Compile Include="GameData\IGameDataStoreDataAccessService.cs" />
     <Compile Include="GameData\Store\StoreCounterBase.cs" />
-    <Compile Include="GameData\Store\StoreCustomRule.cs" />
     <Compile Include="GameData\Store\StoreCustomRuleInfo.cs" />
     <Compile Include="GameData\Store\StoreDelayedCounter.cs" />
     <Compile Include="GameData\Store\StoreFundsCounters.cs" />

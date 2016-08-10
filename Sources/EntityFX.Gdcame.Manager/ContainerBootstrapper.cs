@@ -40,14 +40,14 @@ namespace EntityFX.Gdcame.Manager
             container.RegisterType<IGame, NetworkGame>();
 
             //Store
-            container.RegisterType<IMapper<IncrementorBase, EntityFX.Gdcame.DataAccess.Contract.GameData.StoreIncrementor>, StoreIncrementorContractMapper>();
-            container.RegisterType<IMapper<CounterBase, EntityFX.Gdcame.DataAccess.Contract.GameData.StoreCounterBase>, StoreCounterContractMapper>();
+            container.RegisterType<IMapper<IncrementorBase, StoreIncrementor>, StoreIncrementorContractMapper>();
+            container.RegisterType<IMapper<CounterBase, StoreCounterBase>, StoreCounterContractMapper>();
             container
                 .RegisterType
-                <IMapper<FundsCounters, EntityFX.Gdcame.DataAccess.Contract.GameData.StoreFundsCounters>, StoreFundsCountersContractMapper>();
-            container.RegisterType<IMapper<StoreFundsDriver, Gdcame.Common.Contract.Funds.StoreFundsDriver>, StoreFundsDriverContractMapper>();
-            container.RegisterType<IMapper<CustomRuleInfo, Gdcame.Common.Contract.Funds.CustomRuleInfo>, CustomRuleInfoContractMapper>();
-            container.RegisterType<IMapper<IGame, GameData>, StoreGameDataMapper>("StoreGameDataMapper");
+                <IMapper<FundsCounters, StoreFundsCounters>, StoreFundsCountersContractMapper>();
+            container.RegisterType<IMapper<FundsDriver, StoreFundsDriver>, StoreFundsDriverContractMapper>();
+            container.RegisterType<IMapper<CustomRuleInfo, StoreCustomRuleInfo>, StoreCustomRuleInfoContractMapper>();
+            container.RegisterType<IMapper<IGame, StoreGameData>, StoreGameDataMapper>("StoreGameDataMapper");
             /////
 
 

@@ -11,7 +11,7 @@ using EntityFX.Gdcame.Infrastructure.Common;
 
 namespace EntityFX.Gdcame.DataAccess.Service
 {
-    public class GameDataStoreDataAccessService : IGameDataStoreDataAccessService
+    public class GameDataStoreDataAccessService //: IGameDataStoreDataAccessService //Uncomment to use
     {
         private readonly IUserGameCounterRepository _userGameCounterRepository;
         private readonly IMapper<GameData, UserGameCounter> _userGameCounterMapper;

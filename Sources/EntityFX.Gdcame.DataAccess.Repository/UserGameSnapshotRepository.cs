@@ -8,6 +8,7 @@ using EntityFX.Gdcame.DataAccess.Model;
 using EntityFX.Gdcame.DataAccess.Repository.Criterions.UserGameSnapshot;
 using EntityFX.Gdcame.Infrastructure.Repository.UnitOfWork;
 using EntityFX.Gdcame.DataAccess.Contract.GameData;
+using Newtonsoft.Json;
 
 namespace EntityFX.Gdcame.DataAccess.Repository
 {
@@ -23,7 +24,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository
 
         }
 
-        public GameData FindByUserId(GetUserGameSnapshotByIdCriterion criterion)
+        public StoreGameData FindByUserId(GetUserGameSnapshotByIdCriterion criterion)
         {
             using (var uow = _unitOfWorkFactory.Create())
             {
@@ -31,12 +32,13 @@ namespace EntityFX.Gdcame.DataAccess.Repository
                 var entity = findQuery.For<UserGameDataSnapshotEntity>()
                     .With(criterion);
                 if (entity == null) return null;
-                return (GameData)Deserialize(entity.Data, typeof(GameData));
+                return Deserialize(entity.Data);
             }
         }
 
         public void CreateForUser(int userId, StoreGameData gameData)
         {
+
             using (var uow = _unitOfWorkFactory.Create())
             {
                 var userEntity = uow.CreateEntity<UserGameDataSnapshotEntity>();
@@ -61,24 +63,14 @@ namespace EntityFX.Gdcame.DataAccess.Repository
             }
         }
 
-        public static string Serialize(object obj)
+        public static string Serialize(StoreGameData obj)
         {
-            using (MemoryStream memoryStream = new MemoryStream())
-            {
-                DataContractSerializer serializer = new DataContractSerializer(obj.GetType());
-                serializer.WriteObject(memoryStream, obj);
-                return Encoding.UTF8.GetString(memoryStream.ToArray());
-            }
+            return JsonConvert.SerializeObject(obj);
         }
 
-        public static object Deserialize(string xml, Type toType)
+        public static StoreGameData Deserialize(string json)
         {
-            using (MemoryStream memoryStream = new MemoryStream(Encoding.UTF8.GetBytes(xml)))
-            {
-                XmlDictionaryReader reader = XmlDictionaryReader.CreateTextReader(memoryStream, Encoding.UTF8, new XmlDictionaryReaderQuotas(), null);
-                DataContractSerializer serializer = new DataContractSerializer(toType);
-                return serializer.ReadObject(reader);
-            }
+            return JsonConvert.DeserializeObject<StoreGameData>(json);
         }
     }
 }

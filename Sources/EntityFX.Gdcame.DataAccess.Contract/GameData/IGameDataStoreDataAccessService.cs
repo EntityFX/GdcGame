@@ -6,6 +6,6 @@ namespace EntityFX.Gdcame.DataAccess.Contract.GameData
     public interface IGameDataStoreDataAccessService
     {
         [OperationContract(IsOneWay = true)]
-        void StoreGameDataForUser(int userId, Common.Contract.GameData gameData);
+        void StoreGameDataForUser(int userId, StoreGameData gameData);
     }
 }
