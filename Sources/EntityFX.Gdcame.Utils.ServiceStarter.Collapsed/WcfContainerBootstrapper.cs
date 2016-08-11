@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Configuration;
-using EntityFX.EconomicsArcade.Utils.ClientProxy.NotifyConsumer;
 using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.Common.Presentation.Model;
 using EntityFX.Gdcame.DataAccess.Contract.GameData;
@@ -17,6 +16,7 @@ using EntityFX.Gdcame.Manager;
 using EntityFX.Gdcame.NotifyConsumer;
 using EntityFX.Gdcame.NotifyConsumer.Contract;
 using EntityFX.Gdcame.Utils.ClientProxy.DataAccess;
+using EntityFX.Gdcame.Utils.ClientProxy.NotifyConsumer;
 using EntityFX.Gdcame.Utils.Common;
 using Microsoft.AspNet.SignalR;
 using Microsoft.Practices.Unity;

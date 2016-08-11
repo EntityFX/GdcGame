@@ -7,8 +7,8 @@
     <ProjectGuid>{66C8CFB3-A50F-42C3-A8B8-9B3ACA054340}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EntityFX.EconomicsArcade.Utils.ServiceHost.Collapsed.ConsoleApp</RootNamespace>
-    <AssemblyName>EntityFX.EconomicsArcade.Utils.ServiceHost.Collapsed.ConsoleApp</AssemblyName>
+    <RootNamespace>EntityFX.Gdcame.Utils.ServiceHost.Collapsed.ConsoleApp</RootNamespace>
+    <AssemblyName>EntityFX.Gdcame.Utils.ServiceHost.Collapsed.ConsoleApp</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

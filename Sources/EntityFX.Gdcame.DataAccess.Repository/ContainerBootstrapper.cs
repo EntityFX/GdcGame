@@ -26,6 +26,7 @@ using EntityFX.Gdcame.DataAccess.Repository.Queries.UserCounter;
 using EntityFX.Gdcame.DataAccess.Repository.Queries.UserCustomRuleInfo;
 using EntityFX.Gdcame.DataAccess.Repository.Queries.UserFundsDriver;
 using EntityFX.Gdcame.DataAccess.Repository.Queries.UserGameCounter;
+using EntityFX.Gdcame.DataAccess.Repository.Queries.UserGameSnapshot;
 using EntityFX.Gdcame.DataAccess.Repository.Queries.UserRating;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Infrastructure.Repository.Query;
@@ -38,7 +39,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository
     {
         public IUnityContainer Configure(IUnityContainer container)
         {
-            container.RegisterType<DbContext, EconomicsArcadeDbContext>(new InjectionConstructor("name=EconomicsArcadeDbContext"));
+            container.RegisterType<DbContext, GdcameDbContext>(new InjectionConstructor("name=EconomicsArcadeDbContext"));
             container.RegisterType<IQueryBuilder, QueryBuilder>();
             container.RegisterType<IUnitOfWork, UnitOfWork>();
             container.RegisterType<IUnitOfWorkFactory, UnitOfWorkFactory>();

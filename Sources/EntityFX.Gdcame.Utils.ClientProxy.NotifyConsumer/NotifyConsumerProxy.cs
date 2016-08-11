@@ -3,7 +3,7 @@ using System.ServiceModel.Channels;
 using EntityFX.Gdcame.Infrastructure.Service.NetMsmq;
 using EntityFX.Gdcame.NotifyConsumer.Contract;
 
-namespace EntityFX.EconomicsArcade.Utils.ClientProxy.NotifyConsumer
+namespace EntityFX.Gdcame.Utils.ClientProxy.NotifyConsumer
 {
     public class NotifyConsumerProxy : NetMsmqProxy<INotifyConsumerService>
     {

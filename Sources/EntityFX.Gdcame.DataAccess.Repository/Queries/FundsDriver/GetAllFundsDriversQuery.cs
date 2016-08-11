@@ -9,7 +9,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Queries.FundsDriver
     public class GetAllFundsDriversQuery : QueryBase,
         IQuery<GetAllFundsDriversCriterion, IEnumerable<FundsDriverEntity>>
     {
-        public GetAllFundsDriversQuery(EconomicsArcadeDbContext dbContext)
+        public GetAllFundsDriversQuery(GdcameDbContext dbContext)
             : base(dbContext)
         {
         }

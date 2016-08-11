@@ -3,7 +3,7 @@ using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.Infrastructure.Service.Bases;
 using EntityFX.Gdcame.NotifyConsumer.Contract;
 
-namespace EntityFX.EconomicsArcade.Utils.ClientProxy.NotifyConsumer
+namespace EntityFX.Gdcame.Utils.ClientProxy.NotifyConsumer
 {
     public class NotifyConsumerServiceClient<TInfrastructureProxy> : INotifyConsumerService
                                         where TInfrastructureProxy : InfrastructureProxy<INotifyConsumerService>, new()

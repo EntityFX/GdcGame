@@ -77,9 +77,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="EntityFX.EconomicsArcade.Utils.ServiceHost.Manager.ConsoleApp.exe.nlog">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <None Include="EntityFX.Gdcame.Utils.ServiceHost.Manager.ConsoleApp.exe.nlog" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

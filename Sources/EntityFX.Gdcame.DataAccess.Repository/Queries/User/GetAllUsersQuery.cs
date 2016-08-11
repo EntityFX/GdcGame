@@ -8,7 +8,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Queries.User
 {
     public class GetAllUsersQuery : QueryBase, IQuery<GetAllUsersCriterion, IEnumerable<UserEntity>>
     {
-        public GetAllUsersQuery(EconomicsArcadeDbContext dbContext)
+        public GetAllUsersQuery(GdcameDbContext dbContext)
             : base(dbContext)
         {
         }

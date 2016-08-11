@@ -7,8 +7,6 @@ using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.DataAccess.Model;
 using EntityFX.Gdcame.DataAccess.Repository.Criterions.UserGameSnapshot;
 using EntityFX.Gdcame.Infrastructure.Repository.UnitOfWork;
-using EntityFX.Gdcame.DataAccess.Contract.GameData;
-using Newtonsoft.Json;
 
 namespace EntityFX.Gdcame.DataAccess.Repository
 {
@@ -24,7 +22,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository
 
         }
 
-        public StoreGameData FindByUserId(GetUserGameSnapshotByIdCriterion criterion)
+        public GameData FindByUserId(GetUserGameSnapshotByIdCriterion criterion)
         {
             using (var uow = _unitOfWorkFactory.Create())
             {
@@ -32,13 +30,12 @@ namespace EntityFX.Gdcame.DataAccess.Repository
                 var entity = findQuery.For<UserGameDataSnapshotEntity>()
                     .With(criterion);
                 if (entity == null) return null;
-                return Deserialize(entity.Data);
+                return (GameData)Deserialize(entity.Data, typeof(GameData));
             }
         }
 
-        public void CreateForUser(int userId, StoreGameData gameData)
+        public void CreateForUser(int userId, GameData gameData)
         {
-
             using (var uow = _unitOfWorkFactory.Create())
             {
                 var userEntity = uow.CreateEntity<UserGameDataSnapshotEntity>();
@@ -49,7 +46,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository
 
         }
 
-        public void UpdateForUser(int userId, StoreGameData gameData)
+        public void UpdateForUser(int userId, GameData gameData)
         {
             using (var uow = _unitOfWorkFactory.Create())
             {
@@ -63,14 +60,24 @@ namespace EntityFX.Gdcame.DataAccess.Repository
             }
         }
 
-        public static string Serialize(StoreGameData obj)
+        public static string Serialize(object obj)
         {
-            return JsonConvert.SerializeObject(obj);
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                DataContractSerializer serializer = new DataContractSerializer(obj.GetType());
+                serializer.WriteObject(memoryStream, obj);
+                return Encoding.UTF8.GetString(memoryStream.ToArray());
+            }
         }
 
-        public static StoreGameData Deserialize(string json)
+        public static object Deserialize(string xml, Type toType)
         {
-            return JsonConvert.DeserializeObject<StoreGameData>(json);
+            using (MemoryStream memoryStream = new MemoryStream(Encoding.UTF8.GetBytes(xml)))
+            {
+                XmlDictionaryReader reader = XmlDictionaryReader.CreateTextReader(memoryStream, Encoding.UTF8, new XmlDictionaryReaderQuotas(), null);
+                DataContractSerializer serializer = new DataContractSerializer(toType);
+                return serializer.ReadObject(reader);
+            }
         }
     }
 }

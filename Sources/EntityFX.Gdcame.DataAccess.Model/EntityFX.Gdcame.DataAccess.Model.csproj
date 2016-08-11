@@ -58,7 +58,7 @@
   <ItemGroup>
     <Compile Include="CounterEntity.cs" />
     <Compile Include="CustomRuleEntity.cs" />
-    <Compile Include="EconomicsArcadeDbContext.cs" />
+    <Compile Include="GdcameDbContext.cs" />
     <Compile Include="FundsDriverEntity.cs" />
     <Compile Include="IncrementorEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

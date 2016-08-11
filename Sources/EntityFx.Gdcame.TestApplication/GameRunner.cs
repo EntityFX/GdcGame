@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Timers;
-using EntityFx.EconomicsArcade.Test.Shared;
 using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.GameEngine.Contract;
 using EntityFX.Gdcame.GameEngine.Contract.Funds;

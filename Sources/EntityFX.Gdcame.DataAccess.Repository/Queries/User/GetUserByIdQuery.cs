@@ -7,7 +7,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Queries.User
 {
     public class GetUserByIdQuery : QueryBase, IQuery<GetUserByIdCriterion, UserEntity>
     {
-        public GetUserByIdQuery(EconomicsArcadeDbContext dbContext)
+        public GetUserByIdQuery(GdcameDbContext dbContext)
             : base(dbContext)
         {
         }

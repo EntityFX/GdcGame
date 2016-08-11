@@ -1,6 +1,6 @@
-﻿using EntityFX.EconomicsArcade.Infrastructure.Repository;
-using EntityFX.Gdcame.DataAccess.Contract.User;
+﻿using EntityFX.Gdcame.DataAccess.Contract.User;
 using EntityFX.Gdcame.DataAccess.Repository.Criterions.User;
+using EntityFX.Gdcame.Infrastructure.Repository;
 
 namespace EntityFX.Gdcame.DataAccess.Repository
 {

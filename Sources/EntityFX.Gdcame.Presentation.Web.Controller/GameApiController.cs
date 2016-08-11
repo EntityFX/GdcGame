@@ -4,11 +4,10 @@ using System.Security.Principal;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using EntityFX.Gdcame.Common.Presentation.Model;
-using EntityFX.Gdcame.Presentation.Web.Controller;
 using EntityFX.Gdcame.Presentation.Web.Model;
 using EntityFX.Gdcame.Presentation.Web.Providers.Providers;
 
-namespace EntityFX.Gdcame.Presentation.Web.Controllers
+namespace EntityFX.Gdcame.Presentation.Web.Controller
 {
     [Authorize]
     public class GameApiController : ApiController, IGameApiController

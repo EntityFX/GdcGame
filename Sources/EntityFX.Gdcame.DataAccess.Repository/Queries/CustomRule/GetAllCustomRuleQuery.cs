@@ -9,7 +9,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Queries.CustomRule
     public class GetAllCustomRuleQuery : QueryBase,
         IQuery<GetAllCustomRulesCriterion, IEnumerable<CustomRuleEntity>>
     {
-        public GetAllCustomRuleQuery(EconomicsArcadeDbContext dbContext)
+        public GetAllCustomRuleQuery(GdcameDbContext dbContext)
             : base(dbContext)
         {
         }

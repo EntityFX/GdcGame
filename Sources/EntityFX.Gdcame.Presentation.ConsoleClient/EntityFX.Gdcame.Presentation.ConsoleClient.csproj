@@ -84,25 +84,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\EntityFX.EconomicsArcade.Test.Shared\ContainerBootstrapper.cs">
-      <Link>ContainerBootstrapper.cs</Link>
-    </Compile>
-    <Compile Include="..\EntityFX.EconomicsArcade.Test.Shared\GameRunnerBase.cs">
-      <Link>GameRunnerBase.cs</Link>
-    </Compile>
-    <Compile Include="..\EntityFX.EconomicsArcade.Test.Shared\PrettyConsole.cs">
-      <Link>PrettyConsole.cs</Link>
-    </Compile>
+    <Compile Include="ContainerBootstrapper.cs" />
     <Compile Include="GameRunner.cs" />
+    <Compile Include="GameRunnerBase.cs" />
+    <Compile Include="PrettyConsole.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AdminConsole.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="EntityFX.EconomicsArcade.TestClient.exe.nlog">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <None Include="EntityFX.Gdcame.TestClient.exe.nlog" />
     <None Include="packages.config" />
     <None Include="EntityFX.Gdcame.Presentation.ConsoleClient_OneMachine.cmd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

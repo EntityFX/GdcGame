@@ -90,9 +90,7 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="EntityFX.EconomicsArcade.Utils.ServiceHost.DataAccess.ConsoleApp.exe.nlog">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <None Include="EntityFX.Gdcame.Utils.ServiceHost.DataAccess.ConsoleApp.exe.nlog" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

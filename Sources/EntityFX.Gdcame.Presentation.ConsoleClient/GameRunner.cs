@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using EntityFx.EconomicsArcade.Test.Shared;
 using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.Manager.Contract.GameManager;
 

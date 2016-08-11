@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Configuration;
-using EntityFX.EconomicsArcade.Utils.ClientProxy.NotifyConsumer;
 using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.DataAccess.Contract.GameData;
 using EntityFX.Gdcame.DataAccess.Contract.User;
@@ -15,6 +14,7 @@ using EntityFX.Gdcame.Infrastructure.Service.NetTcp;
 using EntityFX.Gdcame.Manager;
 using EntityFX.Gdcame.NotifyConsumer.Contract;
 using EntityFX.Gdcame.Utils.ClientProxy.DataAccess;
+using EntityFX.Gdcame.Utils.ClientProxy.NotifyConsumer;
 using EntityFX.Gdcame.Utils.Common;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
@@ -85,10 +85,8 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.Manager
                     new ResolvedParameter<int>(),
                     new ResolvedParameter<string>(),
                     new ResolvedParameter<IGameDataStoreDataAccessService>(),
-                    new ResolvedParameter<IMapper<IGame, GameData>>("StoreGameDataMapper"),
                     new ResolvedParameter<IMapper<IGame, GameData>>("GameDataMapper"),
                     new ResolvedParameter<IMapper<FundsDriver, Gdcame.Common.Contract.Funds.FundsDriver>>(),
-                    new ResolvedParameter<IMapper<FundsDriver, StoreFundsDriver>>(),
                     new ResolvedParameter<INotifyConsumerClientFactory>()
                     )
                 );

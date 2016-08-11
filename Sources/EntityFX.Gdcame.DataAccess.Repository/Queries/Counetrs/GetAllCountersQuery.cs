@@ -9,7 +9,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Queries.Counetrs
     public class GetAllCountersQuery : QueryBase,
         IQuery<GetAllCountersCriterion, IEnumerable<CounterEntity>>
     {
-        public GetAllCountersQuery(EconomicsArcadeDbContext dbContext)
+        public GetAllCountersQuery(GdcameDbContext dbContext)
             : base(dbContext)
         {
         }

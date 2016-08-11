@@ -1,11 +1,10 @@
 ﻿using System.Data.Entity;
 using System.Linq;
 using EntityFX.Gdcame.DataAccess.Model;
-using EntityFX.Gdcame.DataAccess.Repository.Criterions.UserGameCounter;
 using EntityFX.Gdcame.DataAccess.Repository.Criterions.UserGameSnapshot;
 using EntityFX.Gdcame.Infrastructure.Repository.Query;
 
-namespace EntityFX.Gdcame.DataAccess.Repository.Queries.UserGameCounter
+namespace EntityFX.Gdcame.DataAccess.Repository.Queries.UserGameSnapshot
 {
     public class GetUserGameSnapshotByIdQuery : QueryBase, IQuery<GetUserGameSnapshotByIdCriterion, UserGameDataSnapshotEntity>
     {

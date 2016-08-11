@@ -11,7 +11,7 @@ using EntityFX.Gdcame.Infrastructure.Common;
 
 namespace EntityFX.Gdcame.DataAccess.Service
 {
-    public class GameDataStoreDataAccessService //: IGameDataStoreDataAccessService //Uncomment to use
+    public class GameDataStoreDataAccessService : IGameDataStoreDataAccessService
     {
         private readonly IUserGameCounterRepository _userGameCounterRepository;
         private readonly IMapper<GameData, UserGameCounter> _userGameCounterMapper;
@@ -101,7 +101,7 @@ namespace EntityFX.Gdcame.DataAccess.Service
             _userGameSnapshotRepository = userGameSnapshotRepository;
         }
 
-        public void StoreGameDataForUser(int userId, StoreGameData gameData)
+        public void StoreGameDataForUser(int userId, GameData gameData)
         {
             var userGame = _userGameSnapshotRepository.FindByUserId(new GetUserGameSnapshotByIdCriterion(userId));
 
@@ -111,7 +111,7 @@ namespace EntityFX.Gdcame.DataAccess.Service
             }
             else
             {
-                _userGameSnapshotRepository.UpdateForUser(userId, gameData);
+                _userGameSnapshotRepository.UpdateForUser(userId, userGame);
             }
         }
     } 

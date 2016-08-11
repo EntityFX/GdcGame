@@ -101,7 +101,6 @@
     <Build Include="Tables\dbo.UserFundsDriver.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Build>
-    <None Include="EntityFX.EconomicsArcade.Database.publish.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Data\DataIncrementors.sql">
@@ -110,5 +109,6 @@
     <None Include="AmukInternPublish.xml" />
     <None Include="Data\GdCame\DataCounters.sql" />
     <None Include="Data\GdCame\DataFundsDrivers.sql" />
+    <None Include="EntityFX.Gdcame.Database.dacpac" />
   </ItemGroup>
 </Project>

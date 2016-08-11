@@ -15,28 +15,22 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
         private readonly int _userId;
         private readonly string _userName;
         private readonly IGameDataStoreDataAccessService _gameDataStoreDataAccessService;
-        private readonly IMapper<IGame, StoreGameData> _gameDataPersistMapper;
-        private readonly IMapper<IGame, GameData> _gameDataRefreshMapper;
-        private readonly IMapper<FundsDriver, StoreFundsDriver> _fundsDriverPersistMapper;
-        private readonly IMapper<FundsDriver, Gdcame.Common.Contract.Funds.FundsDriver> _fundsDriverRefreshMapper;
+        private readonly IMapper<IGame, GameData> _gameDataMapper;
+        private readonly IMapper<FundsDriver, Gdcame.Common.Contract.Funds.FundsDriver> _fundsDriverMapper;
         private readonly INotifyConsumerClientFactory _notifyConsumerService;
 
         public NotifyGameDataChanged(int userId
             , string userName
             , IGameDataStoreDataAccessService gameDataStoreDataAccessService
-            , IMapper<IGame, StoreGameData> gameDataPersistMapper
-            , IMapper<IGame, GameData> gameDataRefreshMapper
-            , IMapper<FundsDriver, StoreFundsDriver> fundsDriverPersistMapper
-            , IMapper<FundsDriver, Gdcame.Common.Contract.Funds.FundsDriver> fundsDriverRefreshMapper
+            , IMapper<IGame, GameData> gameDataMapper
+            , IMapper<FundsDriver, Gdcame.Common.Contract.Funds.FundsDriver> fundsDriverMapper
             , INotifyConsumerClientFactory notifyConsumerService)
         {
             _userId = userId;
             _userName = userName;
             _gameDataStoreDataAccessService = gameDataStoreDataAccessService;
-            _gameDataPersistMapper = gameDataPersistMapper;
-            _gameDataRefreshMapper = gameDataRefreshMapper;
-            _fundsDriverPersistMapper = fundsDriverPersistMapper;
-            _fundsDriverRefreshMapper = fundsDriverRefreshMapper;
+            _gameDataMapper = gameDataMapper;
+            _fundsDriverMapper = fundsDriverMapper;
             _notifyConsumerService = notifyConsumerService;
         }
 
@@ -58,22 +52,33 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
             //_gameDataStoreDataAccessService.StoreGameDataForUser(_userId, gameData);
         }
 
-        private StoreGameData PrepareGameDataToPersist(IGame game)
+        private GameData PrepareGameDataToPersist(IGame game)
         {
-            var gameData = _gameDataPersistMapper.Map(game);
-            gameData.FundsDrivers = game.FundsDrivers.Values.Select(_ => _fundsDriverPersistMapper.Map(_)).ToArray();
+            var gameData = _gameDataMapper.Map(game);
+            gameData.FundsDrivers = game.FundsDrivers.Values.Select(_ => _fundsDriverMapper.Map(_)).ToArray();
+
+
+            gameData.CustomRules = game.CustomRules.Select(_ =>
+            {
+                var ruleName = _.Value.GetType().Name;
+                return new CustomRule()
+                {
+                    Name = ruleName,
+                    Id =  _.Key
+                };
+            }).ToArray();
             game.ModifiedFundsDrivers.Clear();
             return gameData;
         }
 
         private GameData PrepareGameDataToRefresh(IGame game)
         {
-            var gameData = _gameDataRefreshMapper.Map(game);
+            var gameData = _gameDataMapper.Map(game);
 
             var fundsDrivers = new List<Gdcame.Common.Contract.Funds.FundsDriver>();
             foreach (var fundDriver in game.FundsDrivers)
             {
-                var fundDriverMapped = _fundsDriverRefreshMapper.Map(fundDriver.Value);
+                var fundDriverMapped = _fundsDriverMapper.Map(fundDriver.Value);
                 fundDriverMapped.IsActive = gameData.Counters.Counters[0].Value >= fundDriverMapped.UnlockValue;
                 fundsDrivers.Add(fundDriverMapped);
             }

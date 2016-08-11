@@ -1,6 +1,5 @@
 ﻿using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.Common.Contract.Incrementors;
-using EntityFX.Gdcame.DataAccess.Contract.GameData;
 using EntityFX.Gdcame.GameEngine.Contract;
 using EntityFX.Gdcame.GameEngine.Contract.Counters;
 using EntityFX.Gdcame.GameEngine.Contract.Funds;
@@ -38,17 +37,6 @@ namespace EntityFX.Gdcame.Manager
                 <IMapper<ManualStepResult, Gdcame.Manager.Contract.GameManager.ManualStepResult>, ManualStepContractMapper>();
 
             container.RegisterType<IGame, NetworkGame>();
-
-            //Store
-            container.RegisterType<IMapper<IncrementorBase, StoreIncrementor>, StoreIncrementorContractMapper>();
-            container.RegisterType<IMapper<CounterBase, StoreCounterBase>, StoreCounterContractMapper>();
-            container
-                .RegisterType
-                <IMapper<FundsCounters, StoreFundsCounters>, StoreFundsCountersContractMapper>();
-            container.RegisterType<IMapper<FundsDriver, StoreFundsDriver>, StoreFundsDriverContractMapper>();
-            container.RegisterType<IMapper<CustomRuleInfo, StoreCustomRuleInfo>, StoreCustomRuleInfoContractMapper>();
-            container.RegisterType<IMapper<IGame, StoreGameData>, StoreGameDataMapper>("StoreGameDataMapper");
-            /////
 
 
 
