@@ -6,8 +6,8 @@ using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.DataAccess.Contract.GameData;
 using EntityFX.Gdcame.GameEngine.Contract;
 using EntityFX.Gdcame.GameEngine.Contract.Counters;
-using EntityFX.Gdcame.GameEngine.Contract.Funds;
 using EntityFX.Gdcame.GameEngine.Contract.Incrementors;
+using EntityFX.Gdcame.GameEngine.Contract.Items;
 using EntityFX.Gdcame.Infrastructure.Common;
 using IncrementorTypeEnum = EntityFX.Gdcame.Common.Contract.Incrementors.IncrementorTypeEnum;
 
@@ -24,17 +24,18 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
                             source =>
                             {
                                 var sourceGenericCounter =  (Gdcame.Common.Contract.Counters.GenericCounter)source;
-                                return new GenericCounter
+                                var res = new GenericCounter
                                 {
                                     BonusPercentage =
                                         sourceGenericCounter.BonusPercentage,
-                                    CurrentSteps = sourceGenericCounter.CurrentSteps,
                                     StepsToIncreaseInflation = sourceGenericCounter.InflationIncreaseSteps,
                                     Inflation = sourceGenericCounter.Inflation,
                                     SubValue = sourceGenericCounter.SubValue,
                                     IsUsedInAutoStep =
                                         sourceGenericCounter.UseInAutoSteps
                                 };
+                                res.CurrentSteps = sourceGenericCounter.CurrentSteps;
+                                return res;
                             }
                         },
                         {
@@ -79,10 +80,10 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
             _userId = userId;
         }
 
-        protected override IDictionary<int, FundsDriver> GetFundsDrivers()
+        protected override ReadOnlyDictionary<int, Item> GetFundsDrivers()
         {
-            var result = new Dictionary<int, FundsDriver>();
-            foreach (var fundDriver in _gameData.FundsDrivers)
+            var result = new Dictionary<int, Item>();
+            foreach (var fundDriver in _gameData.Items)
             {
                 var incrementors = new Dictionary<int, IncrementorBase>();
                 foreach (var incrementor in fundDriver.Incrementors)
@@ -103,20 +104,12 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
                     incrementors.Add(incrementor.Key, value);
                 }
 
-                for (int i = 0; i < 3; i++)
-                {
-                    if (!incrementors.ContainsKey(i))
-                    {
-                        incrementors.Add(i, new ValueIncrementor(0));
-                    }
-                }
-
-                result.Add(fundDriver.Id, new FundsDriver()
+                result.Add(fundDriver.Id, new Item()
                 {
                     Id = fundDriver.Id,
                     Name = fundDriver.Name,
                     InitialValue = fundDriver.InitialValue,
-                    CurrentValue = fundDriver.Value,
+                    CurrentValue = fundDriver.Price,
                     UnlockValue = fundDriver.UnlockValue,
                     InflationPercent = fundDriver.InflationPercent,
                     BuyCount = fundDriver.BuyCount,
@@ -128,13 +121,13 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
                     } : null
                 });
             }
-            return result;
+            return new ReadOnlyDictionary<int, Item>(result);
         }
 
-        protected override FundsCounters GetFundsCounters()
+        protected override GameCash GetFundsCounters()
         {
 
-            var fundsCounters = _gameData.Counters;
+            var fundsCounters = _gameData.Cash;
             var counters = new Dictionary<int, CounterBase>();
             var inc = 0;
             foreach (var sourceCounter in fundsCounters.Counters)
@@ -148,14 +141,14 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
                 counters.Add(inc, destinationCouner);
                 inc++;
             }
-            return new FundsCounters()
+            return new GameCash()
             {
                 Counters = counters,
                 RootCounter = counters[0]
             };
         }
 
-        protected override IDictionary<int, ICustomRule> GetCustomRules()
+        protected override ReadOnlyDictionary<int, ICustomRule> GetCustomRules()
         {
             var customRuleDictionary = new Dictionary<int, ICustomRule>();
             foreach (var customRule in _gameData.CustomRules)
@@ -196,7 +189,7 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
             _notifyGameDataChanged.AutomaticRefreshed(this);
         }
 
-        protected override void PostBuyFundDriver(FundsDriver fundDriver)
+        protected override void PostBuyFundDriver(Item fundDriver)
         {
             _notifyGameDataChanged.FundsDriverBought(this, fundDriver);
         }
@@ -205,9 +198,9 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
         {
             //CashFunds(1500000);
             ManualStepNumber = _gameData.ManualStepsCount;
-            AutomaticStepNumber = _gameData.AutomaticStepsCount;
-            FundsCounters.CurrentFunds = _gameData.Counters.CurrentFunds;
-            FundsCounters.TotalFunds = _gameData.Counters.TotalFunds;
+            AutomaticStepNumber = _gameData.AutomatedStepsCount;
+            GameCash.CashOnHand = _gameData.Cash.CashOnHand;
+            GameCash.TotalEarned = _gameData.Cash.TotalEarned;
         }
 
         protected override void PreInitialize()

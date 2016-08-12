@@ -5,7 +5,7 @@ using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.DataAccess.Contract.GameData;
 using EntityFX.Gdcame.DataAccess.Contract.User;
 using EntityFX.Gdcame.GameEngine.Contract;
-using EntityFX.Gdcame.GameEngine.Contract.Funds;
+using EntityFX.Gdcame.GameEngine.Contract.Items;
 using EntityFX.Gdcame.GameEngine.NetworkGameEngine;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Infrastructure.Service;
@@ -87,8 +87,8 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.Manager
                     new ResolvedParameter<IGameDataStoreDataAccessService>(),
                     new ResolvedParameter<IMapper<IGame, GameData>>("StoreGameDataMapper"),
                     new ResolvedParameter<IMapper<IGame, GameData>>("GameDataMapper"),
-                    new ResolvedParameter<IMapper<FundsDriver, Gdcame.Common.Contract.Funds.FundsDriver>>(),
-                    new ResolvedParameter<IMapper<FundsDriver, StoreFundsDriver>>(),
+                    new ResolvedParameter<IMapper<Item, Gdcame.Common.Contract.Items.Item>>(),
+                    new ResolvedParameter<IMapper<Item, StoredItem>>(),
                     new ResolvedParameter<INotifyConsumerClientFactory>()
                     )
                 );

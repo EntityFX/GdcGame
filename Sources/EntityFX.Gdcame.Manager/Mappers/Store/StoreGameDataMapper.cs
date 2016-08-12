@@ -4,62 +4,58 @@ using EntityFX.Gdcame.GameEngine.Contract;
 using EntityFX.Gdcame.GameEngine.Contract.Counters;
 using EntityFX.Gdcame.Infrastructure.Common;
 using CounterBase = EntityFX.Gdcame.Common.Contract.Counters.CounterBase;
-using FundsCounters = EntityFX.Gdcame.Common.Contract.Counters.FundsCounters;
 
 namespace EntityFX.Gdcame.GameEngine.Mappers
 {
-    public class StoreGameDataMapper : IMapper<IGame, StoreGameData>
+    public class StoreGameDataMapper : IMapper<IGame, StoredGameData>
     {
-        public StoreGameData Map(IGame source, StoreGameData destination = null)
+        public StoredGameData Map(IGame source, StoredGameData destination = null)
         {
-            var gameData = new StoreGameData()
+            var gameData = new StoredGameData()
             {
-                Counters = new StoreFundsCounters()
+                Cash = new StoredCash()
                 {
-                    CurrentFunds = source.FundsCounters.CurrentFunds,
-                    TotalFunds = source.FundsCounters.TotalFunds,
+                    CashOnHand = source.GameCash.CashOnHand,
+                    TotalEarned = source.GameCash.TotalEarned,
                     Counters = PrepareCountersToPersist(source)
                 },
-                AutomaticStepsCount = source.AutomaticStepNumber,
+                AutomatedStepsCount = source.AutomaticStepNumber,
                 ManualStepsCount = source.ManualStepNumber,
             };
             return gameData;
         }
 
-        private StoreCounterBase[] PrepareCountersToPersist(IGame game)
+        private StoredCounterBase[] PrepareCountersToPersist(IGame game)
         {
-            var counters = new StoreCounterBase[game.FundsCounters.Counters.Count];
-            foreach (var sourceCounter in game.FundsCounters.Counters)
+            var counters = new StoredCounterBase[game.GameCash.Counters.Count];
+            foreach (var sourceCounter in game.GameCash.Counters)
             {
-                StoreCounterBase destinationCouner = null;
+                StoredCounterBase destinationCouner = null;
                 var sourcenGenericCounter = sourceCounter.Value as GenericCounter;
                 if (sourcenGenericCounter != null)
                 {
-                    var destinationGenericCounter = new EntityFX.Gdcame.DataAccess.Contract.GameData.StoreGenericCounter
+                    var destinationGenericCounter = new EntityFX.Gdcame.DataAccess.Contract.GameData.StoredGenericCounter
                     {
                         BonusPercent = sourcenGenericCounter.BonusPercentage,
                         Inflation = sourcenGenericCounter.Inflation,
                         CurrentSteps = sourcenGenericCounter.CurrentSteps
                     };
                     destinationCouner = destinationGenericCounter;
-                    destinationCouner.Type = 1;
                 }
                 var sourceSingleCounter = sourceCounter.Value as SingleCounter;
                 if (sourceSingleCounter != null)
                 {
-                    destinationCouner = new EntityFX.Gdcame.DataAccess.Contract.GameData.StoreSingleCounter();
-                    destinationCouner.Type = 0;
+                    destinationCouner = new EntityFX.Gdcame.DataAccess.Contract.GameData.StoredSingleCounter();
                 }
                 var sourceDelayedCounter = sourceCounter.Value as DelayedCounter;
                 if (sourceDelayedCounter != null)
                 {
-                    var destinationDelayedCounter = new EntityFX.Gdcame.DataAccess.Contract.GameData.StoreDelayedCounter()
+                    var destinationDelayedCounter = new EntityFX.Gdcame.DataAccess.Contract.GameData.StoredDelayedCounter()
                     {
                         SecondsRemaining = sourceDelayedCounter.SecondsRemaining,
                         DelayedValue = sourceDelayedCounter.SubValue
                     };
                     destinationCouner = destinationDelayedCounter;
-                    destinationCouner.Type = 2;
                 }
                 if (destinationCouner != null)
                 {

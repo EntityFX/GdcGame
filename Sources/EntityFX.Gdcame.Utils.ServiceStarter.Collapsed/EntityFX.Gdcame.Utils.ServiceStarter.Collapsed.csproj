@@ -85,11 +85,11 @@
     <Compile Include="AdminManagerServiceHost.cs" />
     <Compile Include="CollapsedServiceStarter.cs" />
     <Compile Include="NotifyConsumerServiceHost.cs" />
-    <Compile Include="NoWcfContainerBootstrapper.cs" />
+    <Compile Include="FullCollapsedContainerBootstrapper.cs" />
     <Compile Include="SignalRDependencyResolver.cs" />
-    <Compile Include="WcfContainerBootstrapper.cs" />
+    <Compile Include="CollapsedContainerBootstrapper.cs" />
     <Compile Include="GameManagerServiceHost.cs" />
-    <Compile Include="NoWcfServiceStarter.cs" />
+    <Compile Include="FullCollapsedServiceStarter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

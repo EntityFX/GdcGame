@@ -16,14 +16,14 @@ using Owin;
 
 namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
 {
-    public class CollapsedServiceStarter : ServicesStarterBase<WcfContainerBootstrapper>, IServicesStarter, IDisposable
+    public class CollapsedServiceStarter : ServicesStarterBase<CollapsedContainerBootstrapper>, IServicesStarter, IDisposable
     {
         private readonly Uri _baseUrl = new Uri("net.pipe://localhost/");
         private readonly Uri _baseMsmqUrl = new Uri("net.msmq://localhost/private/");
         private readonly string _signalRHost = "http://+:8080/";
         private IDisposable _webApp;
 
-        public CollapsedServiceStarter(WcfContainerBootstrapper bootstrapper)
+        public CollapsedServiceStarter(CollapsedContainerBootstrapper bootstrapper)
             : base(bootstrapper)
         {
         }

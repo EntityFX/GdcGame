@@ -1,7 +1,7 @@
 ﻿using System;
 using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.Common.Contract.Counters;
-using EntityFX.Gdcame.Common.Contract.Funds;
+using EntityFX.Gdcame.Common.Contract.Items;
 using EntityFX.Gdcame.Common.Presentation.Model;
 using EntityFX.Gdcame.Common.Presentation.Model.Mappers;
 using EntityFX.Gdcame.Infrastructure.Common;
@@ -16,9 +16,9 @@ namespace EntityFX.Gdcame.NotifyConsumer
     {
         public IUnityContainer Configure(IUnityContainer container)
         {
-            container.RegisterType<IMapper<FundsCounters, FundsCounterModel>, FundsCounterModelMapper>();
+            container.RegisterType<IMapper<Cash, FundsCounterModel>, FundsCounterModelMapper>();
             container.RegisterType<IMapper<CounterBase, CounterModelBase>, CounterModelMapper>();
-            container.RegisterType<IMapper<FundsDriver, FundsDriverModel>, FundsDriverModelMapper>();
+            container.RegisterType<IMapper<Item, FundsDriverModel>, FundsDriverModelMapper>();
             container.RegisterType<IMapper<GameData, GameDataModel>, GameDataModelMapper>();
 
             container.RegisterType<GameDataHub>();

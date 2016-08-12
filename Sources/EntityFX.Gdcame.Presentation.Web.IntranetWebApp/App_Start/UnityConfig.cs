@@ -2,7 +2,7 @@ using System;
 using System.Configuration;
 using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.Common.Contract.Counters;
-using EntityFX.Gdcame.Common.Contract.Funds;
+using EntityFX.Gdcame.Common.Contract.Items;
 using EntityFX.Gdcame.Common.Presentation.Model;
 using EntityFX.Gdcame.Common.Presentation.Model.Mappers;
 using EntityFX.Gdcame.Infrastructure.Common;
@@ -107,9 +107,9 @@ namespace EntityFX.Gdcame.Presentation.Web.IntranetWebApp
                     , new InterceptionBehavior<LoggerInterceptor>()
                     );
             }
-            container.RegisterType<IMapper<FundsCounters, FundsCounterModel>, FundsCounterModelMapper>();
+            container.RegisterType<IMapper<Cash, FundsCounterModel>, FundsCounterModelMapper>();
             container.RegisterType<IMapper<CounterBase, CounterModelBase>, CounterModelMapper>();
-            container.RegisterType<IMapper<FundsDriver, FundsDriverModel>, FundsDriverModelMapper>();
+            container.RegisterType<IMapper<Item, FundsDriverModel>, FundsDriverModelMapper>();
             container.RegisterType<IMapper<GameData, GameDataModel>, GameDataModelMapper>();
             container.RegisterType<IMapper<BuyFundDriverResult, BuyDriverModel>, FundsDriverBuyInfoMapper>();
             container.RegisterType<IGameClientFactory, GameClientFactory>();

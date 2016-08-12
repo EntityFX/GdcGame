@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
-using EntityFX.Gdcame.Common.Contract.Funds;
 using EntityFX.Gdcame.Common.Contract.Incrementors;
+using EntityFX.Gdcame.Common.Contract.Items;
 using EntityFX.Gdcame.DataAccess.Model;
 using EntityFX.Gdcame.Infrastructure.Common;
 
 namespace EntityFX.Gdcame.DataAccess.Repository.Mappers
 {
-    public class FundsDriverEntityMapper : IMapper<FundsDriver, FundsDriverEntity>
+    public class FundsDriverEntityMapper : IMapper<Item, FundsDriverEntity>
     {
         private readonly IMapper<Incrementor, IncrementorEntity> _incrementorContractMapper;
 
@@ -15,10 +15,10 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mappers
             _incrementorContractMapper = incrementorContractMapper;
         }
 
-        public FundsDriverEntity Map(FundsDriver source, FundsDriverEntity destination = null)
+        public FundsDriverEntity Map(Item source, FundsDriverEntity destination = null)
         {
             destination = destination ?? new FundsDriverEntity();
-            destination.InitialValue = source.Value;
+            destination.InitialValue = source.Price;
             destination.UnlockValue = source.UnlockValue;
             destination.Name = source.Name;
             destination.Id = source.Id;

@@ -3,8 +3,8 @@ using EntityFX.Gdcame.Common.Contract.Incrementors;
 using EntityFX.Gdcame.DataAccess.Contract.GameData;
 using EntityFX.Gdcame.GameEngine.Contract;
 using EntityFX.Gdcame.GameEngine.Contract.Counters;
-using EntityFX.Gdcame.GameEngine.Contract.Funds;
 using EntityFX.Gdcame.GameEngine.Contract.Incrementors;
+using EntityFX.Gdcame.GameEngine.Contract.Items;
 using EntityFX.Gdcame.GameEngine.Mappers;
 using EntityFX.Gdcame.GameEngine.NetworkGameEngine;
 using EntityFX.Gdcame.Infrastructure.Common;
@@ -28,9 +28,9 @@ namespace EntityFX.Gdcame.Manager
             container.RegisterType<IMapper<CounterBase, Gdcame.Common.Contract.Counters.CounterBase>, CounterContractMapper>();
             container
                 .RegisterType
-                <IMapper<FundsCounters, Gdcame.Common.Contract.Counters.FundsCounters>, FundsCountersContractMapper>();
-            container.RegisterType<IMapper<FundsDriver, Gdcame.Common.Contract.Funds.FundsDriver>, FundsDriverContractMapper>();
-            container.RegisterType<IMapper<CustomRuleInfo, Gdcame.Common.Contract.Funds.CustomRuleInfo>, CustomRuleInfoContractMapper>();
+                <IMapper<GameCash, Gdcame.Common.Contract.Counters.Cash>, FundsCountersContractMapper>();
+            container.RegisterType<IMapper<Item, Common.Contract.Items.Item>, FundsDriverContractMapper>();
+            container.RegisterType<IMapper<CustomRuleInfo, Common.Contract.Items.CustomRuleInfo>, CustomRuleInfoContractMapper>();
             container.RegisterType<IMapper<IGame, GameData>, GameDataContractMapper>();
             container.RegisterType<IMapper<IGame, GameData>, GameDataMapper>("GameDataMapper");
             container
@@ -40,14 +40,14 @@ namespace EntityFX.Gdcame.Manager
             container.RegisterType<IGame, NetworkGame>();
 
             //Store
-            container.RegisterType<IMapper<IncrementorBase, StoreIncrementor>, StoreIncrementorContractMapper>();
-            container.RegisterType<IMapper<CounterBase, StoreCounterBase>, StoreCounterContractMapper>();
+            container.RegisterType<IMapper<IncrementorBase, StoredIncrementor>, StoreIncrementorContractMapper>();
+            container.RegisterType<IMapper<CounterBase, StoredCounterBase>, StoreCounterContractMapper>();
             container
                 .RegisterType
-                <IMapper<FundsCounters, StoreFundsCounters>, StoreFundsCountersContractMapper>();
-            container.RegisterType<IMapper<FundsDriver, StoreFundsDriver>, StoreFundsDriverContractMapper>();
-            container.RegisterType<IMapper<CustomRuleInfo, StoreCustomRuleInfo>, StoreCustomRuleInfoContractMapper>();
-            container.RegisterType<IMapper<IGame, StoreGameData>, StoreGameDataMapper>("StoreGameDataMapper");
+                <IMapper<GameCash, StoredCash>, StoreFundsCountersContractMapper>();
+            container.RegisterType<IMapper<Item, StoredItem>, StoreFundsDriverContractMapper>();
+            container.RegisterType<IMapper<CustomRuleInfo, StoredCustomRuleInfo>, StoreCustomRuleInfoContractMapper>();
+            container.RegisterType<IMapper<IGame, StoredGameData>, StoreGameDataMapper>("StoreGameDataMapper");
             /////
 
 

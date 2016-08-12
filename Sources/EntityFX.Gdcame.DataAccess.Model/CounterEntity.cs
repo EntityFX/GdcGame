@@ -9,7 +9,6 @@ namespace EntityFX.Gdcame.DataAccess.Model
         public CounterEntity()
         {
             Incrementors = new HashSet<IncrementorEntity>();
-            UserCounters = new HashSet<UserCounterEntity>();
         }
 
         public int Id { get; set; }
@@ -28,7 +27,5 @@ namespace EntityFX.Gdcame.DataAccess.Model
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<IncrementorEntity> Incrementors { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserCounterEntity> UserCounters { get; set; }
     }
 }

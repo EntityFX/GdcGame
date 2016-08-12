@@ -61,9 +61,9 @@ namespace EntityFX.Gdcame.Manager
             var gameData = _gameDataRetrieveDataAccessService.GetGameData(user.Id);
             return new UserRating()
             {
-                GdcPoints = gameData.Counters.Counters[0].Value,
+                GdcPoints = gameData.Cash.Counters[0].Value,
                 ManualStepsCount = gameData.ManualStepsCount,
-                TotalFunds = gameData.Counters.TotalFunds,
+                TotalFunds = gameData.Cash.TotalEarned,
                 UserName = user.Email
             };
         }
@@ -74,9 +74,9 @@ namespace EntityFX.Gdcame.Manager
                                 let gameData = _gameDataRetrieveDataAccessService.GetGameData(user.Id)
                                 select new UserRating()
                                 {
-                                    GdcPoints = gameData.Counters.Counters[0].Value,
+                                    GdcPoints = gameData.Cash.Counters[0].Value,
                                     ManualStepsCount = gameData.ManualStepsCount,
-                                    TotalFunds = gameData.Counters.TotalFunds,
+                                    TotalFunds = gameData.Cash.TotalEarned,
                                     UserName = user.Email
                                 });
 

@@ -3,7 +3,7 @@ using System.Linq;
 using System.Runtime.Caching;
 using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.Common.Contract.Counters;
-using EntityFX.Gdcame.Common.Contract.Funds;
+using EntityFX.Gdcame.Common.Contract.Items;
 using EntityFX.Gdcame.Common.Contract.UserRating;
 using EntityFX.Gdcame.DataAccess.Contract.GameData;
 using EntityFX.Gdcame.DataAccess.Repository;
@@ -38,7 +38,7 @@ namespace EntityFX.Gdcame.DataAccess.Service
         }
 
 
-        protected FundsDriver[] GetFundDrivers()
+        protected Item[] GetFundDrivers()
         {
             if (!_cache.Contains("FundDrivers"))
             {
@@ -46,7 +46,7 @@ namespace EntityFX.Gdcame.DataAccess.Service
                     , _fundsDriverRepository.FindAll(new GetAllFundsDriversCriterion())
                     , new CacheItemPolicy { AbsoluteExpiration = new DateTimeOffset(DateTime.Now.AddDays(1)) });
             }
-            return _cache.Get("FundDrivers") as FundsDriver[];
+            return _cache.Get("FundDrivers") as Item[];
         }
 
         protected CounterBase[] GetCounters()
@@ -72,102 +72,6 @@ namespace EntityFX.Gdcame.DataAccess.Service
         }
     }
 
-    public class GameDataRetrieveDataAccessService : GameDataRetrieveDataAccessBase, IGameDataRetrieveDataAccessService
-    {
-        private readonly IUserGameCounterRepository _userGameCounterRepository;
-        private readonly IUserCounterRepository _userCounterRepository;
-        private readonly IUserFundsDriverRepository _userFundsDriverRepository;
-        private readonly IUserRatingRepository _userRatingRepository;
-        private readonly IUserCustomRuleRepository _userCustomRuleRepository;
-
-        public GameDataRetrieveDataAccessService(
-            IFundsDriverRepository fundsDriverRepository,
-            ICountersRepository countersRepository,
-            ICustomRuleRepository customRuleRepository,
-            IUserGameCounterRepository userGameCounterRepository,
-            IUserCounterRepository userCounterRepository,
-            IUserFundsDriverRepository userFundsDriverRepository,
-            IUserRatingRepository userRatingRepository,
-            IUserCustomRuleRepository userCustomRuleRepository)
-            : base(fundsDriverRepository, countersRepository, customRuleRepository)
-        {
-
-            _userGameCounterRepository = userGameCounterRepository;
-            _userCounterRepository = userCounterRepository;
-            _userFundsDriverRepository = userFundsDriverRepository;
-            _userRatingRepository = userRatingRepository;
-            _userCustomRuleRepository = userCustomRuleRepository;
-        }
-
-        public UserRating[] GetUserRatings()
-        {
-            return _userRatingRepository.GetAllUserRatings(new GetAllUsersRatingsCriterion()).ToArray();
-        }
-
-        public GameData GetGameData(int userId)
-        {
-            var fundsDrivers = (FundsDriver[])GetFundDrivers().Clone();
-            var counters = (CounterBase[])GetCounters().Clone();
-            var customRules = (CustomRule[])GetCsutomRules().Clone();
-            var userGameCounters = _userGameCounterRepository.FindById(new GetUserGameCounterByIdCriterion(userId));
-            var userCounters = _userCounterRepository.FindByUserId(new GetUserCountersByUserIdCriterion(userId));
-            if (userCounters != null)
-            {
-                userCounters.AsParallel().ForAll(_ =>
-                {
-                    var originalCounter = counters.SingleOrDefault(f => f.Id == _.Id);
-                    if (originalCounter == null) return;
-                    var indexOfOriginalCounter = 0;
-
-                    indexOfOriginalCounter = Array.IndexOf(counters, originalCounter);
-
-
-                    counters[indexOfOriginalCounter] = _;
-                });
-
-            }
-            var userFundsDrivers =
-                _userFundsDriverRepository.FindByUserId(new GetUserFundsDriverByUserIdCriterion(userId));
-            if (userFundsDrivers != null)
-            {
-                userFundsDrivers.AsParallel().ForAll(_ =>
-                {
-                    var originalFundDriver = fundsDrivers.SingleOrDefault(f => f.Id == _.Id);
-                    if (originalFundDriver == null) return;
-                    originalFundDriver.BuyCount = _.BuyCount;
-                    originalFundDriver.Value = _.Value;
-                });
-            }
-            var userCustomRuleCounters =
-                _userCustomRuleRepository.FindByUserId(new GetUserCustomRuleInfoByUserIdCriterion(userId));
-            if (userCustomRuleCounters != null)
-            {
-                userCustomRuleCounters.AsParallel().ForAll(_ =>
-                {
-                    var originalFundDriver =
-  fundsDrivers.SingleOrDefault(cr => cr.Id == _.FundsDriverId);
-                    if (originalFundDriver == null) return;
-                    originalFundDriver.CustomRuleInfo.CurrentIndex = _.CurrentIndex;
-                    originalFundDriver.CustomRuleInfo.FundsDriverId = _.FundsDriverId;
-                });
-
-            }
-            return new GameData()
-            {
-                FundsDrivers = fundsDrivers,
-                Counters = new FundsCounters()
-                {
-                    Counters = counters,
-                    CurrentFunds = userGameCounters != null ? userGameCounters.CurrentFunds : 100,
-                    TotalFunds = userGameCounters != null ? userGameCounters.TotalFunds : 100
-                },
-                CustomRules = customRules,
-                AutomaticStepsCount = userGameCounters != null ? userGameCounters.AutomaticStepsCount : 0,
-                ManualStepsCount = userGameCounters != null ? userGameCounters.ManualStepsCount : 0
-            };
-        }
-    }
-
     public class GameDataRetrieveDataAccessDocumentService : GameDataRetrieveDataAccessBase, IGameDataRetrieveDataAccessService
     {
         private readonly IUserGameSnapshotRepository _userGameSnapshotRepository;
@@ -183,27 +87,66 @@ namespace EntityFX.Gdcame.DataAccess.Service
 
         public GameData GetGameData(int userId)
         {
-            GameData userGameData = null;// _userGameSnapshotRepository.FindByUserId(new GetUserGameSnapshotByIdCriterion(userId));
-            if (userGameData == null)
+            StoredGameData userGameData = _userGameSnapshotRepository.FindByUserId(new GetUserGameSnapshotByIdCriterion(userId));
+            var originalItems = (Item[])GetFundDrivers().Clone();
+            var originalCounters = (CounterBase[])GetCounters().Clone();
+            var originalCustomRules = (CustomRule[])GetCsutomRules().Clone();
+            var cash = new Cash()
             {
-                var fundsDrivers = (FundsDriver[])GetFundDrivers().Clone();
-                var counters = (CounterBase[])GetCounters().Clone();
-                var customRules = (CustomRule[])GetCsutomRules().Clone();
-                return new GameData()
+                Counters = originalCounters,
+                CashOnHand = 100,
+                TotalEarned = 100
+            };
+            if (userGameData != null)
+            {
+                var originalItemsDisct = originalItems.ToDictionary(_ => _.Id, _ => _);
+                var originalCountersDisct = originalCounters.ToDictionary(_ => _.Id, _ => _);
+                var originalCustomRulesDisct = originalCustomRules.ToDictionary(_ => _.Id, _ => _);
+                foreach (var storedFundDriver in userGameData.Items)
                 {
-                    FundsDrivers = fundsDrivers,
-                    Counters = new FundsCounters()
+                    var originalItem = originalItemsDisct[storedFundDriver.Id];
+                    originalItem.BuyCount = storedFundDriver.BuyCount;
+                    originalItem.Price = storedFundDriver.Value;
+                    foreach (var storedIncrementor in storedFundDriver.Incrementors)
                     {
-                        Counters = counters,
-                        CurrentFunds = 100,
-                        TotalFunds = 100
-                    },
-                    CustomRules = customRules,
-                    AutomaticStepsCount =  0,
-                    ManualStepsCount =  0
-                };
+                        originalItem.Incrementors[storedIncrementor.Key].Value = storedIncrementor.Value;
+                    }
+                }
+
+                for (int index = 0; index < userGameData.Cash.Counters.Length; index++)
+                {
+                    var storedCounter = userGameData.Cash.Counters[index];
+                    var originalCounter = originalCountersDisct[storedCounter.Id];
+                    originalCounter.Value = storedCounter.Value;
+                    switch (originalCounter.Type)
+                    {
+                        case 1:
+                            var storedGenericCounter = (StoredGenericCounter) storedCounter;
+                            var originalGenericCounter = (GenericCounter) originalCounter;
+                            originalGenericCounter.BonusPercentage = storedGenericCounter.BonusPercent;
+                            originalGenericCounter.CurrentSteps = storedGenericCounter.CurrentSteps;
+                            originalGenericCounter.Inflation = storedGenericCounter.Inflation;
+                            originalGenericCounter.SubValue = storedGenericCounter.Value;
+                            break;
+                        case 2:
+                            var storedDelayedCounter = (StoredDelayedCounter) storedCounter;
+                            var originalDelayedCounter = (DelayedCounter) originalCounter;
+                            originalDelayedCounter.SecondsRemaining = storedDelayedCounter.SecondsRemaining;
+                            originalCounter.Value = storedDelayedCounter.DelayedValue;
+                            break;
+                    }
+                }
+                cash.CashOnHand = userGameData.Cash.CashOnHand;
+                cash.TotalEarned = userGameData.Cash.TotalEarned;
             }
-            return userGameData;
+            return new GameData()
+            {
+                Items = originalItems,
+                Cash = cash,
+                CustomRules = originalCustomRules,
+                AutomatedStepsCount = 0,
+                ManualStepsCount = 0
+            };
         }
 
         public UserRating[] GetUserRatings()

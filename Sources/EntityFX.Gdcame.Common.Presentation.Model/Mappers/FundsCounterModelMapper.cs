@@ -4,7 +4,7 @@ using EntityFX.Gdcame.Infrastructure.Common;
 
 namespace EntityFX.Gdcame.Common.Presentation.Model.Mappers
 {
-    public class FundsCounterModelMapper : IMapper<FundsCounters, FundsCounterModel>
+    public class FundsCounterModelMapper : IMapper<Cash, FundsCounterModel>
     {
         private readonly IMapper<CounterBase, CounterModelBase> _counterModelBaseMapper;
 
@@ -13,11 +13,11 @@ namespace EntityFX.Gdcame.Common.Presentation.Model.Mappers
             _counterModelBaseMapper = counterModelBaseMapper;
         }
 
-        public FundsCounterModel Map(FundsCounters source, FundsCounterModel destination = null)
+        public FundsCounterModel Map(Cash source, FundsCounterModel destination = null)
         {
             destination = destination ?? new FundsCounterModel();
-            destination.TotalFunds = source.TotalFunds;
-            destination.CurrentFunds = source.CurrentFunds;
+            destination.TotalFunds = source.TotalEarned;
+            destination.CurrentFunds = source.CashOnHand;
             var counters = new List<CounterModelBase>();
             foreach (var counter in source.Counters)
             {

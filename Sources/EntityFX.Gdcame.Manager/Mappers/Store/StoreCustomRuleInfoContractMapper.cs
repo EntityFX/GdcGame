@@ -1,16 +1,16 @@
-﻿using EntityFX.Gdcame.GameEngine.Contract.Funds;
+﻿using EntityFX.Gdcame.GameEngine.Contract.Items;
 using EntityFX.Gdcame.Infrastructure.Common;
 
 using EntityFX.Gdcame.DataAccess.Contract.GameData;
 
 namespace EntityFX.Gdcame.Manager.Mappers
 {
-    public class StoreCustomRuleInfoContractMapper : IMapper<CustomRuleInfo, StoreCustomRuleInfo>
+    public class StoreCustomRuleInfoContractMapper : IMapper<CustomRuleInfo, StoredCustomRuleInfo>
     {
 
-        public StoreCustomRuleInfo Map(CustomRuleInfo source, StoreCustomRuleInfo destination)
+        public StoredCustomRuleInfo Map(CustomRuleInfo source, StoredCustomRuleInfo destination)
         {
-            return new StoreCustomRuleInfo()
+            return new StoredCustomRuleInfo()
             {
                 Id = source.CustomRule.Id,
                 CurrentIndex = source.CurrentIndex

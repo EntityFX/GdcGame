@@ -2,19 +2,19 @@
 using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.GameEngine.Contract;
 using EntityFX.Gdcame.GameEngine.Contract.Counters;
-using EntityFX.Gdcame.GameEngine.Contract.Funds;
+using EntityFX.Gdcame.GameEngine.Contract.Items;
 using EntityFX.Gdcame.Infrastructure.Common;
 
 namespace EntityFX.Gdcame.Manager.Mappers
 {
     public class GameDataContractMapper : IMapper<IGame, GameData>
     {
-        private readonly IMapper<FundsCounters, Gdcame.Common.Contract.Counters.FundsCounters> _fundsCountersContractMapper;
-        private readonly IMapper<FundsDriver, Gdcame.Common.Contract.Funds.FundsDriver> _fundsDriversContractMapper;
+        private readonly IMapper<GameCash, Gdcame.Common.Contract.Counters.Cash> _fundsCountersContractMapper;
+        private readonly IMapper<Item, Common.Contract.Items.Item> _fundsDriversContractMapper;
 
         public GameDataContractMapper(
-            IMapper<FundsCounters, Gdcame.Common.Contract.Counters.FundsCounters> fundsCountersContractMapper,
-                        IMapper<FundsDriver, Gdcame.Common.Contract.Funds.FundsDriver> fundsDriversContractMapper
+            IMapper<GameCash, Gdcame.Common.Contract.Counters.Cash> fundsCountersContractMapper,
+                        IMapper<Item, Common.Contract.Items.Item> fundsDriversContractMapper
             )
         {
             _fundsCountersContractMapper = fundsCountersContractMapper;
@@ -25,15 +25,15 @@ namespace EntityFX.Gdcame.Manager.Mappers
         {
             return new GameData()
             {
-                FundsDrivers = source.FundsDrivers.Select(fundsDriver =>
+                Items = source.Items.Select(fundsDriver =>
                 {
                     var destinationFundDriver = _fundsDriversContractMapper.Map((fundsDriver.Value));
                     destinationFundDriver.IsActive = destinationFundDriver.UnlockValue <=
-                                                     source.FundsCounters.RootCounter.Value;
+                                                     source.GameCash.RootCounter.Value;
                     return destinationFundDriver;
                 }).ToArray(),
-                Counters = _fundsCountersContractMapper.Map(source.FundsCounters),
-                AutomaticStepsCount = source.AutomaticStepNumber,
+                Cash = _fundsCountersContractMapper.Map(source.GameCash),
+                AutomatedStepsCount = source.AutomaticStepNumber,
                 ManualStepsCount =  source.ManualStepNumber
             };
         }

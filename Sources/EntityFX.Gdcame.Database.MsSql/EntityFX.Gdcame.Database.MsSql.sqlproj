@@ -84,6 +84,7 @@
     <Build Include="Tables\dbo.CustomRule.sql" />
     <Build Include="Data\GdCame\CustomRule.sql" />
     <Build Include="Tables\dbo.UserCustomRule.sql" />
+    <Build Include="Tables\dbo.UserGameDataSnapshot.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\dbo.Incrementor.sql">

@@ -6,7 +6,7 @@ using System.Timers;
 using EntityFx.EconomicsArcade.Test.Shared;
 using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.GameEngine.Contract;
-using EntityFX.Gdcame.GameEngine.Contract.Funds;
+using EntityFX.Gdcame.GameEngine.Contract.Items;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFx.Gdcame.TestApplication.UssrSimulator;
 using Timer = System.Timers.Timer;
@@ -16,14 +16,14 @@ namespace EntityFx.Gdcame.TestApplication
     class GameRunner : GameRunnerBase
     {
         private readonly IMapper<IGame, GameData> _gameDataMapper;
-        private readonly IMapper<FundsDriver, EntityFX.Gdcame.Common.Contract.Funds.FundsDriver> _fundsDriverMapper;
+        private readonly IMapper<Item, EntityFX.Gdcame.Common.Contract.Items.Item> _fundsDriverMapper;
         private readonly IGame _game = new UssrSimulatorGame();
 
         private readonly Timer _timer = new Timer(1000);
 
         private int? _verificationResult;
 
-        public GameRunner(IMapper<IGame, GameData> gameDataMapper, IMapper<FundsDriver, EntityFX.Gdcame.Common.Contract.Funds.FundsDriver> fundsDriverMapper)
+        public GameRunner(IMapper<IGame, GameData> gameDataMapper, IMapper<Item, EntityFX.Gdcame.Common.Contract.Items.Item> fundsDriverMapper)
         {
             _gameDataMapper = gameDataMapper;
             _fundsDriverMapper = fundsDriverMapper;
@@ -61,7 +61,7 @@ namespace EntityFx.Gdcame.TestApplication
         public override GameData GetGameData()
         {
             var gameData = _gameDataMapper.Map(_game);
-            gameData.FundsDrivers = _game.FundsDrivers.Select(_ => _fundsDriverMapper.Map(_.Value)).ToArray();
+            gameData.Items = _game.Items.Select(_ => _fundsDriverMapper.Map(_.Value)).ToArray();
             return gameData;
         }
 

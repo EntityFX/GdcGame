@@ -21,7 +21,7 @@ namespace EntityFX.Gdcame.Presentation.Web.Providers.Providers
         private readonly ISimpleUserManager _simpleUserManager;
         private readonly ISessionManagerClientFactory _sessionManagerClient;
         private readonly IMapper<GameData, GameDataModel> _gameDataModelMapper;
-        private readonly IMapper<FundsCounters, FundsCounterModel> _fundsCounterModelMapper;
+        private readonly IMapper<Cash, FundsCounterModel> _fundsCounterModelMapper;
         private readonly IMapper<BuyFundDriverResult, BuyDriverModel> _fundsDriverBuyinfoModelMapper;
         private readonly IGameClientFactory _gameClientFactory;
         private readonly IRatingManager _ratingManager;
@@ -32,7 +32,7 @@ namespace EntityFX.Gdcame.Presentation.Web.Providers.Providers
             ISimpleUserManager simpleUserManager,
             ISessionManagerClientFactory sessionManagerClient,
             IMapper<GameData, GameDataModel> gameDataModelMapper,
-            IMapper<FundsCounters, FundsCounterModel> fundsCounterModelMapper,
+            IMapper<Cash, FundsCounterModel> fundsCounterModelMapper,
             IMapper<BuyFundDriverResult, BuyDriverModel> fundsDriverBuyinfoModelMapper,
             IRatingManager ratingManager
             )
@@ -115,7 +115,7 @@ namespace EntityFX.Gdcame.Presentation.Web.Providers.Providers
             var noVerficationRequiredResult = result as NoVerficationRequiredResult;
             if (noVerficationRequiredResult != null)
             {
-                modifiedCounters = _fundsCounterModelMapper.Map(noVerficationRequiredResult.ModifiedCounters);
+                modifiedCounters = _fundsCounterModelMapper.Map(noVerficationRequiredResult.ModifiedCash);
             }
 
             return new ManualStepResultModel()

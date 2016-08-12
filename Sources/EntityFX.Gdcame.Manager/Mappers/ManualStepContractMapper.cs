@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using EntityFX.Gdcame.GameEngine.Contract;
+using EntityFX.Gdcame.GameEngine.Contract.Counters;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager.Contract.GameManager;
-using FundsCounters = EntityFX.Gdcame.GameEngine.Contract.Counters.FundsCounters;
 using ManualStepResult = EntityFX.Gdcame.Manager.Contract.GameManager.ManualStepResult;
 
 namespace EntityFX.Gdcame.Manager.Mappers
 {
     public class ManualStepContractMapper : IMapper<GameEngine.Contract.ManualStepResult, ManualStepResult>
     {
-        private readonly IMapper<FundsCounters, Common.Contract.Counters.FundsCounters> _countersContractMapper;
+        private readonly IMapper<GameCash, Common.Contract.Counters.Cash> _countersContractMapper;
 
-        public ManualStepContractMapper(IMapper<FundsCounters, Common.Contract.Counters.FundsCounters> countersContractMapper)
+        public ManualStepContractMapper(IMapper<GameCash, Common.Contract.Counters.Cash> countersContractMapper)
         {
             _countersContractMapper = countersContractMapper;
         }
@@ -47,8 +47,8 @@ namespace EntityFX.Gdcame.Manager.Mappers
             var noVerificationResult = result as NoVerficationRequiredResult;
             if (noVerificationResult != null)
             {
-                noVerificationResult.ModifiedCounters =
-                    _countersContractMapper.Map(((ManualStepNoVerficationRequiredResult) source).ModifiedFundsCounters);
+                noVerificationResult.ModifiedCash =
+                    _countersContractMapper.Map(((ManualStepNoVerficationRequiredResult) source).ModifiedGameCash);
             }
             return result;
         }

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using EntityFX.Gdcame.Common.Contract.Funds;
+using EntityFX.Gdcame.Common.Contract.Items;
 using EntityFX.Gdcame.DataAccess.Model;
 using EntityFX.Gdcame.DataAccess.Repository.Criterions.FundsDriver;
 using EntityFX.Gdcame.Infrastructure.Common;
@@ -10,11 +10,11 @@ namespace EntityFX.Gdcame.DataAccess.Repository
 {
     public class FundsDriverRepository : IFundsDriverRepository
     {
-        private readonly IMapper<FundsDriverEntity, FundsDriver> _fundsDriverContractMapper;
+        private readonly IMapper<FundsDriverEntity, Item> _fundsDriverContractMapper;
         private readonly IUnitOfWorkFactory _unitOfWorkFactory;
 
         public FundsDriverRepository(IUnitOfWorkFactory unitOfWorkFactory
-            , IMapper<FundsDriverEntity, FundsDriver> fundsDriverContractMapper
+            , IMapper<FundsDriverEntity, Item> fundsDriverContractMapper
             )
         {
             _unitOfWorkFactory = unitOfWorkFactory;
@@ -22,7 +22,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository
         }
 
 
-        public FundsDriver[] FindAll(GetAllFundsDriversCriterion criterion)
+        public Item[] FindAll(GetAllFundsDriversCriterion criterion)
         {
             using (var uow = _unitOfWorkFactory.Create())
             {

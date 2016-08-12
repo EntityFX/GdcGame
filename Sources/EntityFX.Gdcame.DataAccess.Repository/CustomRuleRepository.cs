@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using EntityFX.Gdcame.Common.Contract.Funds;
+using EntityFX.Gdcame.Common.Contract.Items;
 using EntityFX.Gdcame.DataAccess.Model;
 using EntityFX.Gdcame.DataAccess.Repository.Criterions.CustomRule;
 using EntityFX.Gdcame.Infrastructure.Common;

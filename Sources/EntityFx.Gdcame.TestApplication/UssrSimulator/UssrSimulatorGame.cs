@@ -3,8 +3,8 @@ using System.Collections.ObjectModel;
 using EntityFX.Gdcame.GameEngine;
 using EntityFX.Gdcame.GameEngine.Contract;
 using EntityFX.Gdcame.GameEngine.Contract.Counters;
-using EntityFX.Gdcame.GameEngine.Contract.Funds;
 using EntityFX.Gdcame.GameEngine.Contract.Incrementors;
+using EntityFX.Gdcame.GameEngine.Contract.Items;
 using EntityFX.Gdcame.GameEngine.CustomRules;
 
 namespace EntityFx.Gdcame.TestApplication.UssrSimulator
@@ -15,7 +15,7 @@ namespace EntityFx.Gdcame.TestApplication.UssrSimulator
         {
             get
             {
-                return FundsCounters.Counters[(int)UssrCounterEnum.Communism].SubValue;
+                return GameCash.Counters[(int)UssrCounterEnum.Communism].SubValue;
             }
         }
 
@@ -23,7 +23,7 @@ namespace EntityFx.Gdcame.TestApplication.UssrSimulator
         {
             get
             {
-                return FundsCounters.Counters[(int)UssrCounterEnum.Production].SubValue;
+                return GameCash.Counters[(int)UssrCounterEnum.Production].SubValue;
             }
         }
 
@@ -31,7 +31,7 @@ namespace EntityFx.Gdcame.TestApplication.UssrSimulator
         {
             get
             {
-                return FundsCounters.Counters[(int)UssrCounterEnum.Tax].SubValue;
+                return GameCash.Counters[(int)UssrCounterEnum.Tax].SubValue;
             }
         }
 
@@ -39,16 +39,16 @@ namespace EntityFx.Gdcame.TestApplication.UssrSimulator
         {
             get
             {
-                return FundsCounters.Counters[(int)UssrCounterEnum.FiveYearPlan].SubValue;
+                return GameCash.Counters[(int)UssrCounterEnum.FiveYearPlan].SubValue;
             }
         }
 
-        protected override IDictionary<int, FundsDriver> GetFundsDrivers()
+        protected override ReadOnlyDictionary<int, Item> GetFundsDrivers()
         {
-            return new Dictionary<int, FundsDriver> {
+            return new ReadOnlyDictionary<int, Item>(new Dictionary<int, Item> {
                 {
                     1,
-                    new FundsDriver {
+                    new Item {
                         InitialValue = 200,
                         Incrementors = new Dictionary<int, IncrementorBase> {
                             {
@@ -65,7 +65,7 @@ namespace EntityFx.Gdcame.TestApplication.UssrSimulator
                 },
                 {
                     2,
-                    new FundsDriver {
+                    new Item {
                         InitialValue = 400,
                         UnlockValue = 5,
                         Incrementors = new Dictionary<int, IncrementorBase> {
@@ -83,7 +83,7 @@ namespace EntityFx.Gdcame.TestApplication.UssrSimulator
                 },
                 {
                     3,
-                    new FundsDriver {
+                    new Item {
                         InitialValue = 800,
                         UnlockValue = 10,
                         Incrementors = new Dictionary<int, IncrementorBase> {
@@ -109,7 +109,7 @@ namespace EntityFx.Gdcame.TestApplication.UssrSimulator
                 },
                 {
                     4,
-                    new FundsDriver {
+                    new Item {
                         InitialValue = 1500,
                         UnlockValue = 25,
                         Incrementors = new Dictionary<int, IncrementorBase> {
@@ -131,7 +131,7 @@ namespace EntityFx.Gdcame.TestApplication.UssrSimulator
                 },
                 {
                     5,
-                    new FundsDriver {
+                    new Item {
                         InitialValue = 3000,
                         UnlockValue = 40,
                         Incrementors = new Dictionary<int, IncrementorBase> {
@@ -149,7 +149,7 @@ namespace EntityFx.Gdcame.TestApplication.UssrSimulator
                 },
                 {
                     6,
-                    new FundsDriver {
+                    new Item {
                         InitialValue = 6000,
                         UnlockValue = 80,
                         Incrementors = new Dictionary<int, IncrementorBase> {
@@ -167,7 +167,7 @@ namespace EntityFx.Gdcame.TestApplication.UssrSimulator
                 },
                 {
                     7,
-                    new FundsDriver {
+                    new Item {
                         InitialValue = 10000,
                         UnlockValue = 120,
                         Incrementors = new Dictionary<int, IncrementorBase> {
@@ -189,7 +189,7 @@ namespace EntityFx.Gdcame.TestApplication.UssrSimulator
                 },
                 {
                     8,
-                    new FundsDriver {
+                    new Item {
                         InitialValue = 20000,
                         UnlockValue = 180,
                         Incrementors = new Dictionary<int, IncrementorBase> {
@@ -211,7 +211,7 @@ namespace EntityFx.Gdcame.TestApplication.UssrSimulator
                 },
                 {
                     9,
-                    new FundsDriver {
+                    new Item {
                         InitialValue = 50000,
                         UnlockValue = 220,
                         Incrementors = new Dictionary<int, IncrementorBase> {
@@ -233,7 +233,7 @@ namespace EntityFx.Gdcame.TestApplication.UssrSimulator
                 },
                 {
                     10,
-                    new FundsDriver {
+                    new Item {
                         InitialValue = 223200,
                         UnlockValue = 250,
                         Incrementors = new Dictionary<int, IncrementorBase> {
@@ -251,7 +251,7 @@ namespace EntityFx.Gdcame.TestApplication.UssrSimulator
                 },
                 {
                     11,
-                    new FundsDriver {
+                    new Item {
                         InitialValue = 250000,
                         UnlockValue = 280,
                         Incrementors = new Dictionary<int, IncrementorBase> {
@@ -273,7 +273,7 @@ namespace EntityFx.Gdcame.TestApplication.UssrSimulator
                 },
                 {
                     12,
-                    new FundsDriver {
+                    new Item {
                         InitialValue = 300000,
                         UnlockValue = 500,
                         Incrementors = new Dictionary<int, IncrementorBase> {
@@ -291,7 +291,7 @@ namespace EntityFx.Gdcame.TestApplication.UssrSimulator
                 },
                 {
                     13,
-                    new FundsDriver {
+                    new Item {
                         InitialValue = 500000,
                         UnlockValue = 600,
                         Incrementors = new Dictionary<int, IncrementorBase> {
@@ -309,7 +309,7 @@ namespace EntityFx.Gdcame.TestApplication.UssrSimulator
                 },
                 {
                     14,
-                    new FundsDriver {
+                    new Item {
                         InitialValue = 800000,
                         UnlockValue = 650,
                         Incrementors = new Dictionary<int, IncrementorBase> {
@@ -323,7 +323,7 @@ namespace EntityFx.Gdcame.TestApplication.UssrSimulator
                 },
                 {
                     15,
-                    new FundsDriver {
+                    new Item {
                         InitialValue = 1100000,
                         UnlockValue = 700,
                         Incrementors = new Dictionary<int, IncrementorBase> {
@@ -341,7 +341,7 @@ namespace EntityFx.Gdcame.TestApplication.UssrSimulator
                 },
                 {
                     16,
-                    new FundsDriver {
+                    new Item {
                         InitialValue = 1100000,
                         UnlockValue = 800,
                         Incrementors = new Dictionary<int, IncrementorBase> {
@@ -363,7 +363,7 @@ namespace EntityFx.Gdcame.TestApplication.UssrSimulator
                 },
                 {
                     17,
-                    new FundsDriver {
+                    new Item {
                         InitialValue = 1350000,
                         UnlockValue = 900,
                         Incrementors = new Dictionary<int, IncrementorBase> {
@@ -385,7 +385,7 @@ namespace EntityFx.Gdcame.TestApplication.UssrSimulator
                 },
                 {
                     18,
-                    new FundsDriver {
+                    new Item {
                         InitialValue = 2200000,
                         UnlockValue = 1000,
                         Incrementors = new Dictionary<int, IncrementorBase> {
@@ -407,7 +407,7 @@ namespace EntityFx.Gdcame.TestApplication.UssrSimulator
                 },
                 {
                     19,
-                    new FundsDriver {
+                    new Item {
                         InitialValue = 2500000,
                         UnlockValue = 1200,
                         Incrementors = new Dictionary<int, IncrementorBase> {
@@ -425,7 +425,7 @@ namespace EntityFx.Gdcame.TestApplication.UssrSimulator
                 },
                 {
                     20,
-                    new FundsDriver {
+                    new Item {
                         InitialValue = 2500000,
                         UnlockValue = 1300,
                         Incrementors = new Dictionary<int, IncrementorBase> {
@@ -443,7 +443,7 @@ namespace EntityFx.Gdcame.TestApplication.UssrSimulator
                 },
                 {
                     21,
-                    new FundsDriver {
+                    new Item {
                         InitialValue = 1000000,
                         UnlockValue = 1500,
                         Incrementors = new Dictionary<int, IncrementorBase> {
@@ -461,7 +461,7 @@ namespace EntityFx.Gdcame.TestApplication.UssrSimulator
                 },
                                 {
                     22,
-                    new FundsDriver {
+                    new Item {
                         InitialValue = 2500000,
                         UnlockValue = 1800,
                         Incrementors = new Dictionary<int, IncrementorBase> {
@@ -481,10 +481,10 @@ namespace EntityFx.Gdcame.TestApplication.UssrSimulator
                         Name = "Cinema"
                     }   
                 },
-            };
+            });
         }
 
-        protected override FundsCounters GetFundsCounters()
+        protected override GameCash GetFundsCounters()
         {
             var counters = new Dictionary<int, CounterBase>() { 
                     {
@@ -526,14 +526,14 @@ namespace EntityFx.Gdcame.TestApplication.UssrSimulator
                     },
                 };
 
-            return new FundsCounters()
+            return new GameCash()
             {
                 Counters = counters,
                 RootCounter = counters[(int)UssrCounterEnum.Communism]
             };
         }
 
-        protected override IDictionary<int, ICustomRule> GetCustomRules()
+        protected override ReadOnlyDictionary<int, ICustomRule> GetCustomRules()
         {
             return new ReadOnlyDictionary<int, ICustomRule>(new Dictionary<int, ICustomRule>()
             {
@@ -563,7 +563,7 @@ namespace EntityFx.Gdcame.TestApplication.UssrSimulator
 
         }
 
-        protected override void PostBuyFundDriver(FundsDriver fundDriverId)
+        protected override void PostBuyFundDriver(Item fundDriverId)
         {
 
         }

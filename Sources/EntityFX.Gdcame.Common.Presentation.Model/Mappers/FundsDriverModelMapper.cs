@@ -1,14 +1,14 @@
-﻿using EntityFX.Gdcame.Common.Contract.Funds;
+﻿using EntityFX.Gdcame.Common.Contract.Items;
 using EntityFX.Gdcame.Infrastructure.Common;
 
 namespace EntityFX.Gdcame.Common.Presentation.Model.Mappers
 {
-    public class FundsDriverModelMapper : IMapper<FundsDriver, FundsDriverModel>
+    public class FundsDriverModelMapper : IMapper<Item, FundsDriverModel>
     {
-        public FundsDriverModel Map(FundsDriver source, FundsDriverModel destination = null)
+        public FundsDriverModel Map(Item source, FundsDriverModel destination = null)
         {
             destination = destination ?? new FundsDriverModel();
-            destination.Value = source.Value;
+            destination.Value = source.Price;
             destination.BuyCount = source.BuyCount;
             destination.Id = source.Id;
             destination.Incrementors = source.Incrementors;

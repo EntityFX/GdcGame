@@ -1,4 +1,4 @@
-﻿using EntityFX.Gdcame.GameEngine.Contract.Funds;
+﻿using EntityFX.Gdcame.GameEngine.Contract.Items;
 
 namespace EntityFX.Gdcame.GameEngine.Contract
 {

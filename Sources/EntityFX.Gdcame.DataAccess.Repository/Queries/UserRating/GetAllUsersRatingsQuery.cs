@@ -17,16 +17,12 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Queries.UserRating
 
         public IEnumerable<Gdcame.Common.Contract.UserRating.UserRating> Execute(GetAllUsersRatingsCriterion criterion)
         {
-            var userRatings = from user in DbContext.Set<UserEntity>().ToArray()
-                              join gameData in DbContext.Set<UserGameCounterEntity>().ToArray() on user.Id equals gameData.UserId
-                              select
-                                  new Gdcame.Common.Contract.UserRating.UserRating()
-                                  {
-                                      UserName = user.Email,
-                                      GdcPoints = user.UserCounters.ToArray()[0].Value,
-                                      TotalFunds = gameData.TotalFunds,
-                                      ManualStepsCount = gameData.ManualStepsCount
-                                  };
+            var userRatings =
+                    DbContext.Set<UserEntity>().AsEnumerable().Select(u => new Common.Contract.UserRating.UserRating()
+                    {
+                        UserName = u.Email
+                    });
+
             return userRatings;
         }
     }

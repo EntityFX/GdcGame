@@ -1,19 +1,20 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using EntityFX.Gdcame.GameEngine.Contract.Counters;
-using EntityFX.Gdcame.GameEngine.Contract.Funds;
+using EntityFX.Gdcame.GameEngine.Contract.Items;
 
 namespace EntityFX.Gdcame.GameEngine.Contract
 {
     public interface IGame
     {
-        IDictionary<int, FundsDriver> FundsDrivers { get; }
+        ReadOnlyDictionary<int, Item> Items { get; }
 
-        IDictionary<int, FundsDriver> ModifiedFundsDrivers { get; }
+        Dictionary<int, Item> ModifiedFundsDrivers { get; }
 
-        FundsCounters FundsCounters { get; }
+        GameCash GameCash { get; }
 
-        IDictionary<int, ICustomRule> CustomRules { get; }
+        ReadOnlyDictionary<int, ICustomRule> CustomRules { get; }
 
         int AutomaticStepNumber { get; }
 
@@ -25,7 +26,7 @@ namespace EntityFX.Gdcame.GameEngine.Contract
 
         ManualStepResult PerformManualStep(VerificationManualStepData verificationData);
 
-        BuyFundDriverResult BuyFundDriver(int fundDriverId);
+        BuyItemResult BuyFundDriver(int fundDriverId);
 
         void FightAgainstInflation();
 

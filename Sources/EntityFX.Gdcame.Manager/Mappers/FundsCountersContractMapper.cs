@@ -4,7 +4,7 @@ using EntityFX.Gdcame.Infrastructure.Common;
 
 namespace EntityFX.Gdcame.Manager.Mappers
 {
-    public class FundsCountersContractMapper : IMapper<FundsCounters, Gdcame.Common.Contract.Counters.FundsCounters>
+    public class FundsCountersContractMapper : IMapper<GameCash, Gdcame.Common.Contract.Counters.Cash>
     {
         private readonly IMapper<CounterBase, Gdcame.Common.Contract.Counters.CounterBase> _counterContractMapper;
 
@@ -13,13 +13,13 @@ namespace EntityFX.Gdcame.Manager.Mappers
             _counterContractMapper = counterContractMapper;
         }
 
-        public Gdcame.Common.Contract.Counters.FundsCounters Map(FundsCounters source, Gdcame.Common.Contract.Counters.FundsCounters destination = null)
+        public Gdcame.Common.Contract.Counters.Cash Map(GameCash source, Gdcame.Common.Contract.Counters.Cash destination = null)
         {
-            return new Gdcame.Common.Contract.Counters.FundsCounters()
+            return new Gdcame.Common.Contract.Counters.Cash()
             {
                 Counters = source.Counters.Select(counter => _counterContractMapper.Map(counter.Value)).ToArray(),
-                CurrentFunds = source.CurrentFunds,
-                TotalFunds = source.TotalFunds
+                CashOnHand = source.CashOnHand,
+                TotalEarned = source.TotalEarned
             };
         }
     }

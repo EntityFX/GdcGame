@@ -2,11 +2,11 @@
 using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.GameEngine.Contract;
 using EntityFX.Gdcame.GameEngine.Contract.Counters;
+using EntityFX.Gdcame.GameEngine.Contract.Items;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager.Contract.GameManager;
 using EntityFX.Gdcame.Manager.Contract.SessionManager;
 using BuyFundDriverResult = EntityFX.Gdcame.Manager.Contract.GameManager.BuyFundDriverResult;
-using FundsDriver = EntityFX.Gdcame.GameEngine.Contract.Funds.FundsDriver;
 using ManualStepResult = EntityFX.Gdcame.GameEngine.Contract.ManualStepResult;
 
 namespace EntityFX.Gdcame.Manager
@@ -17,14 +17,14 @@ namespace EntityFX.Gdcame.Manager
         private ILogger _logger;
         private readonly IOperationContextHelper _operationContextHelper;
         private readonly IMapper<IGame, GameData> _gameDataContractMapper;
-        private readonly IMapper<FundsCounters, Common.Contract.Counters.FundsCounters> _countersContractMapper;
-        private readonly IMapper<FundsDriver, Common.Contract.Funds.FundsDriver> _fundsDriverContractMapper;
+        private readonly IMapper<GameCash, Common.Contract.Counters.Cash> _countersContractMapper;
+        private readonly IMapper<Item, Common.Contract.Items.Item> _fundsDriverContractMapper;
         private readonly IMapper<ManualStepResult, Contract.GameManager.ManualStepResult> _manualStepResultMapper;
 
         public GameManager(ILogger logger, IOperationContextHelper operationContextHelper,GameSessions gameSessions
             , IMapper<IGame, GameData> gameDataContractMapper
-            , IMapper<FundsCounters, Common.Contract.Counters.FundsCounters> countersContractMapper
-            , IMapper<FundsDriver, Common.Contract.Funds.FundsDriver> fundsDriverContractMapper
+            , IMapper<GameCash, Common.Contract.Counters.Cash> countersContractMapper
+            , IMapper<Item, Common.Contract.Items.Item> fundsDriverContractMapper
             , IMapper<ManualStepResult, Contract.GameManager.ManualStepResult> manualStepResultMapper)
         {
             _logger = logger;
@@ -43,8 +43,8 @@ namespace EntityFX.Gdcame.Manager
             {
                 return new BuyFundDriverResult()
                 {
-                    ModifiedFundsCounters = _countersContractMapper.Map(buyFundDriverResult.ModifiedFundsCounters),
-                    ModifiedFundsDriver = _fundsDriverContractMapper.Map(buyFundDriverResult.ModifiedFundsDriver)
+                    ModifiedCash = _countersContractMapper.Map(buyFundDriverResult.ModifiedGameCash),
+                    ModifiedItem = _fundsDriverContractMapper.Map(buyFundDriverResult.ModifiedItem)
                 };
             }
             return null;
@@ -74,9 +74,9 @@ namespace EntityFX.Gdcame.Manager
             throw new NotImplementedException();
         }
 
-        public Common.Contract.Counters.FundsCounters GetCounters()
+        public Common.Contract.Counters.Cash GetCounters()
         {
-            return _countersContractMapper.Map(GetSessionGame().FundsCounters);
+            return _countersContractMapper.Map(GetSessionGame().GameCash);
         }
 
         public GameData GetGameData()

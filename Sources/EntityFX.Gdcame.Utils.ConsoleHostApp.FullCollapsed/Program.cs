@@ -9,8 +9,8 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.FullCollapsed
     {
         static void Main(string[] args)
         {
-            var containerBootstrapper = new NoWcfContainerBootstrapper();
-            var ss = new NoWcfServiceStarter(
+            var containerBootstrapper = new FullCollapsedContainerBootstrapper();
+            var ss = new FullCollapsedServiceStarter(
                 containerBootstrapper,
                  ConfigurationManager.AppSettings["NotifyConsumerSignalRHubEndpoint_AddressServiceUrl"]
                 );

@@ -74,7 +74,6 @@
     <Compile Include="ContainerBootstrapper.cs" />
     <Compile Include="GameDataRetrieveDataAccessService.cs" />
     <Compile Include="GameDataStoreDataAccessService.cs" />
-    <Compile Include="Mappers\UserGameCounterMapper.cs" />
     <Compile Include="UserDataAccessService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -110,6 +109,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Mappers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

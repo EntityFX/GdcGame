@@ -15,7 +15,7 @@ namespace EntityFX.Gdcame.GameEngine.Contract
 
     public class ManualStepNoVerficationRequiredResult : ManualStepResult
     {
-        public FundsCounters ModifiedFundsCounters { get; set; }
+        public GameCash ModifiedGameCash { get; set; }
 
         public ManualStepNoVerficationRequiredResult()
         {

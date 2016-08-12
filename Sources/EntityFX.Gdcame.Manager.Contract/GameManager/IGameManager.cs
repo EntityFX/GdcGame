@@ -21,7 +21,7 @@ namespace EntityFX.Gdcame.Manager.Contract.GameManager
         void PlayLottery();
         [OperationContract]
         [FaultContract(typeof(InvalidSessionFault))]
-        FundsCounters GetCounters();
+        Cash GetCounters();
         [OperationContract]
         [FaultContract(typeof(InvalidSessionFault))]
         GameData GetGameData();

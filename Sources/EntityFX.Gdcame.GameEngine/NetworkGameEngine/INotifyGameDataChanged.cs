@@ -1,5 +1,5 @@
 ﻿using EntityFX.Gdcame.GameEngine.Contract;
-using EntityFX.Gdcame.GameEngine.Contract.Funds;
+using EntityFX.Gdcame.GameEngine.Contract.Items;
 
 namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
 {
@@ -7,6 +7,6 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
     {
         void GameDataChanged(IGame game);
         void AutomaticRefreshed(IGame game);
-        void FundsDriverBought(IGame game, FundsDriver fundsDriver);
+        void FundsDriverBought(IGame game, Item item);
     }
 }

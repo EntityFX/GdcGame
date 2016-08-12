@@ -8,7 +8,6 @@ namespace EntityFX.Gdcame.DataAccess.Model
         public FundsDriverEntity()
         {
             Incrementors = new HashSet<IncrementorEntity>();
-            UserFundsDrivers = new HashSet<UserFundsDriverEntity>();
         }
 
         public int Id { get; set; }
@@ -31,7 +30,5 @@ namespace EntityFX.Gdcame.DataAccess.Model
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<IncrementorEntity> Incrementors { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserFundsDriverEntity> UserFundsDrivers { get; set; }
     }
 }

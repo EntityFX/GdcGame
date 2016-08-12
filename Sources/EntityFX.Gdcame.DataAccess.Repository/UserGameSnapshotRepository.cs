@@ -24,7 +24,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository
 
         }
 
-        public StoreGameData FindByUserId(GetUserGameSnapshotByIdCriterion criterion)
+        public StoredGameData FindByUserId(GetUserGameSnapshotByIdCriterion criterion)
         {
             using (var uow = _unitOfWorkFactory.Create())
             {
@@ -36,7 +36,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository
             }
         }
 
-        public void CreateForUser(int userId, StoreGameData gameData)
+        public void CreateForUser(int userId, StoredGameData gameData)
         {
 
             using (var uow = _unitOfWorkFactory.Create())
@@ -49,7 +49,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository
 
         }
 
-        public void UpdateForUser(int userId, StoreGameData gameData)
+        public void UpdateForUser(int userId, StoredGameData gameData)
         {
             using (var uow = _unitOfWorkFactory.Create())
             {
@@ -63,14 +63,20 @@ namespace EntityFX.Gdcame.DataAccess.Repository
             }
         }
 
-        public static string Serialize(StoreGameData obj)
+        public static string Serialize(StoredGameData obj)
         {
-            return JsonConvert.SerializeObject(obj);
+            return JsonConvert.SerializeObject(obj, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.Auto
+            });
         }
 
-        public static StoreGameData Deserialize(string json)
+        public static StoredGameData Deserialize(string json)
         {
-            return JsonConvert.DeserializeObject<StoreGameData>(json);
+            return JsonConvert.DeserializeObject<StoredGameData>(json, new JsonSerializerSettings
+{
+    TypeNameHandling = TypeNameHandling.Auto
+});
         }
     }
 }

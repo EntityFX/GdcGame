@@ -1,19 +1,19 @@
 ﻿using System.Collections.Generic;
 using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.Common.Contract.Counters;
-using EntityFX.Gdcame.Common.Contract.Funds;
+using EntityFX.Gdcame.Common.Contract.Items;
 using EntityFX.Gdcame.Infrastructure.Common;
 
 namespace EntityFX.Gdcame.Common.Presentation.Model.Mappers
 {
     public class GameDataModelMapper : IMapper<GameData, GameDataModel>
     {
-        private readonly IMapper<FundsDriver, FundsDriverModel> _fundsDriverModelMapper;
-        private readonly IMapper<FundsCounters, FundsCounterModel> _fundsCounterModelMapper;
+        private readonly IMapper<Item, FundsDriverModel> _fundsDriverModelMapper;
+        private readonly IMapper<Cash, FundsCounterModel> _fundsCounterModelMapper;
 
         public GameDataModelMapper(
-            IMapper<FundsDriver, FundsDriverModel> fundsDriverModelMapper
-            , IMapper<FundsCounters, FundsCounterModel> fundsCounterModelMapper)
+            IMapper<Item, FundsDriverModel> fundsDriverModelMapper
+            , IMapper<Cash, FundsCounterModel> fundsCounterModelMapper)
         {
             _fundsDriverModelMapper = fundsDriverModelMapper;
             _fundsCounterModelMapper = fundsCounterModelMapper;
@@ -23,12 +23,12 @@ namespace EntityFX.Gdcame.Common.Presentation.Model.Mappers
         {
             destination = destination ?? new GameDataModel();
             var fundsDriverModels = new List<FundsDriverModel>();
-            foreach (var fundsDriver in source.FundsDrivers)
+            foreach (var fundsDriver in source.Items)
             {
                 fundsDriverModels.Add(_fundsDriverModelMapper.Map(fundsDriver));
             }
             destination.FundsDrivers = fundsDriverModels.ToArray();
-            destination.Counters = _fundsCounterModelMapper.Map(source.Counters);
+            destination.Counters = _fundsCounterModelMapper.Map(source.Cash);
 
             return destination;
         }

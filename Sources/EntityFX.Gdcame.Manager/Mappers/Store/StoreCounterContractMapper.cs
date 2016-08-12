@@ -4,20 +4,19 @@ using EntityFX.Gdcame.Infrastructure.Common;
 
 namespace EntityFX.Gdcame.Manager.Mappers
 {
-    public class StoreCounterContractMapper : IMapper<CounterBase, StoreCounterBase>
+    public class StoreCounterContractMapper : IMapper<CounterBase, StoredCounterBase>
     {
-        public StoreCounterBase Map(CounterBase source, StoreCounterBase destination)
+        public StoredCounterBase Map(CounterBase source, StoredCounterBase destination)
         {
-            StoreCounterBase destinationCounter = null;
+            StoredCounterBase destinationCounter = null;
             var genericCounter = source as GenericCounter;
             if (genericCounter != null)
             {
-                var genericDestination = new StoreGenericCounter
+                var genericDestination = new StoredGenericCounter
                 {
                     BonusPercent = genericCounter.BonusPercentage,
                     CurrentSteps = genericCounter.CurrentSteps,
-                    Inflation = genericCounter.Inflation,
-                    Type = 1
+                    Inflation = genericCounter.Inflation
                 };
                 destinationCounter = genericDestination;
             }
@@ -25,7 +24,7 @@ namespace EntityFX.Gdcame.Manager.Mappers
             var singleCounter = source as SingleCounter;
             if (singleCounter != null)
             {
-                destinationCounter = new StoreSingleCounter { Value = singleCounter.Value, Type = 0 };
+                destinationCounter = new StoredSingleCounter { Value = singleCounter.Value};
             }
             if (destinationCounter != null)
             {
@@ -35,11 +34,10 @@ namespace EntityFX.Gdcame.Manager.Mappers
             var delayedCounter = source as DelayedCounter;
             if (delayedCounter != null)
             {
-                destinationCounter = new StoreDelayedCounter()
+                destinationCounter = new StoredDelayedCounter()
                 {
                     SecondsRemaining = delayedCounter.SecondsRemaining,
-                    DelayedValue = delayedCounter.SubValue,
-                    Type = 2
+                    DelayedValue = delayedCounter.SubValue
                 };
             }
             if (destinationCounter != null)
@@ -50,7 +48,7 @@ namespace EntityFX.Gdcame.Manager.Mappers
             return destinationCounter;
         }
 
-        private void MapCommon(CounterBase source, StoreCounterBase destination)
+        private void MapCommon(CounterBase source, StoredCounterBase destination)
         {
             destination.Id = source.Id;
             destination.Value = source.Value;

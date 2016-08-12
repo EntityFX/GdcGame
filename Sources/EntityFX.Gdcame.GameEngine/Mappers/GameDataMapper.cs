@@ -1,9 +1,11 @@
 ﻿using EntityFX.Gdcame.Common.Contract;
+using EntityFX.Gdcame.Common.Contract.Counters;
 using EntityFX.Gdcame.GameEngine.Contract;
-using EntityFX.Gdcame.GameEngine.Contract.Counters;
 using EntityFX.Gdcame.Infrastructure.Common;
 using CounterBase = EntityFX.Gdcame.Common.Contract.Counters.CounterBase;
-using FundsCounters = EntityFX.Gdcame.Common.Contract.Counters.FundsCounters;
+using DelayedCounter = EntityFX.Gdcame.GameEngine.Contract.Counters.DelayedCounter;
+using GenericCounter = EntityFX.Gdcame.GameEngine.Contract.Counters.GenericCounter;
+using SingleCounter = EntityFX.Gdcame.GameEngine.Contract.Counters.SingleCounter;
 
 namespace EntityFX.Gdcame.GameEngine.Mappers
 {
@@ -13,13 +15,13 @@ namespace EntityFX.Gdcame.GameEngine.Mappers
         {
             var gameData = new GameData()
             {
-                Counters = new FundsCounters()
+                Cash = new Cash()
                 {
-                    CurrentFunds = source.FundsCounters.CurrentFunds,
-                    TotalFunds = source.FundsCounters.TotalFunds,
+                    CashOnHand = source.GameCash.CashOnHand,
+                    TotalEarned = source.GameCash.TotalEarned,
                     Counters = PrepareCountersToPersist(source)
                 },
-                AutomaticStepsCount = source.AutomaticStepNumber,
+                AutomatedStepsCount = source.AutomaticStepNumber,
                 ManualStepsCount = source.ManualStepNumber,
             };
             return gameData;
@@ -27,8 +29,8 @@ namespace EntityFX.Gdcame.GameEngine.Mappers
 
         private CounterBase[] PrepareCountersToPersist(IGame game)
         {
-            var counters = new CounterBase[game.FundsCounters.Counters.Count];
-            foreach (var sourceCounter in game.FundsCounters.Counters)
+            var counters = new CounterBase[game.GameCash.Counters.Count];
+            foreach (var sourceCounter in game.GameCash.Counters)
             {
                 CounterBase destinationCouner = null;
                 var sourcenGenericCounter = sourceCounter.Value as GenericCounter;

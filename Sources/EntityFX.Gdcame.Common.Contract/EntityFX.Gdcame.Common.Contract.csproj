@@ -39,12 +39,12 @@
   <ItemGroup>
     <Compile Include="Counters\CounterBase.cs" />
     <Compile Include="Counters\DelayedCounter.cs" />
-    <Compile Include="Counters\FundsCounters.cs" />
+    <Compile Include="Counters\Cash.cs" />
     <Compile Include="Counters\GenericCounter.cs" />
     <Compile Include="Counters\SingleCounter.cs" />
-    <Compile Include="Funds\CustomRule.cs" />
-    <Compile Include="Funds\CustomRuleInfo.cs" />
-    <Compile Include="Funds\FundsDriver.cs" />
+    <Compile Include="Items\CustomRule.cs" />
+    <Compile Include="Items\CustomRuleInfo.cs" />
+    <Compile Include="Items\Item.cs" />
     <Compile Include="GameData.cs" />
     <Compile Include="Incrementors\Incrementor.cs" />
     <Compile Include="Incrementors\IncrementorTypeEnum.cs" />

@@ -37,14 +37,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="BuyFundDriverResult.cs" />
+    <Compile Include="BuyItemResult.cs" />
     <Compile Include="Counters\CounterBase.cs" />
     <Compile Include="Counters\DelayedCounter.cs" />
-    <Compile Include="Counters\FundsCounters.cs" />
+    <Compile Include="Counters\GameCash.cs" />
     <Compile Include="Counters\GenericCounter.cs" />
     <Compile Include="Counters\SingleCounter.cs" />
-    <Compile Include="Funds\CustomRuleInfo.cs" />
-    <Compile Include="Funds\FundsDriver.cs" />
+    <Compile Include="Items\CustomRuleInfo.cs" />
+    <Compile Include="Items\Item.cs" />
     <Compile Include="ICustomRule.cs" />
     <Compile Include="IGame.cs" />
     <Compile Include="Incrementors\IncrementorBase.cs" />

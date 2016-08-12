@@ -46,16 +46,15 @@
   <ItemGroup>
     <Compile Include="GameData\IGameDataRetrieveDataAccessService.cs" />
     <Compile Include="GameData\IGameDataStoreDataAccessService.cs" />
-    <Compile Include="GameData\Store\StoreCounterBase.cs" />
-    <Compile Include="GameData\Store\StoreCustomRuleInfo.cs" />
-    <Compile Include="GameData\Store\StoreDelayedCounter.cs" />
-    <Compile Include="GameData\Store\StoreFundsCounters.cs" />
-    <Compile Include="GameData\Store\StoreFundsDriver.cs" />
-    <Compile Include="GameData\Store\StoreGameData.cs" />
-    <Compile Include="GameData\Store\StoreGenericCounter.cs" />
-    <Compile Include="GameData\Store\StoreIncrementor.cs" />
-    <Compile Include="GameData\Store\StoreSingleCounter.cs" />
-    <Compile Include="GameData\UserGameCounter.cs" />
+    <Compile Include="GameData\Store\StoredCounterBase.cs" />
+    <Compile Include="GameData\Store\StoredCustomRuleInfo.cs" />
+    <Compile Include="GameData\Store\StoredDelayedCounter.cs" />
+    <Compile Include="GameData\Store\StoredCash.cs" />
+    <Compile Include="GameData\Store\StoredItem.cs" />
+    <Compile Include="GameData\Store\StoredGameData.cs" />
+    <Compile Include="GameData\Store\StoredGenericCounter.cs" />
+    <Compile Include="GameData\Store\StoredIncrementor.cs" />
+    <Compile Include="GameData\Store\StoredSingleCounter.cs" />
     <Compile Include="User\IUserDataAccessService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User\User.cs" />

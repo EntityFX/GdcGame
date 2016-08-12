@@ -70,17 +70,17 @@ namespace EntityFX.Gdcame.Utils.ClientProxy.Manager
             throw new NotImplementedException();
         }
 
-        public FundsCounters GetCounters()
+        public Cash GetCounters()
         {
-            FundsCounters counters;
+            Cash cash;
             using (var proxy = new TInfrastructureProxy())
             {
                 IGameManager channel = proxy.CreateChannel(_endpointAddress);
                 proxy.ApplyContextScope(operationContext, _sesionGuid);
-                counters = channel.GetCounters();
+                cash = channel.GetCounters();
                 proxy.CloseChannel();
             }
-            return counters;
+            return cash;
         }
 
         public GameData GetGameData()

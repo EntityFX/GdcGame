@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 using EntityFX.Gdcame.Common.Contract.Counters;
-using EntityFX.Gdcame.Common.Contract.Funds;
+using EntityFX.Gdcame.Common.Contract.Items;
 
 namespace EntityFX.Gdcame.Manager.Contract.GameManager
 {
@@ -8,9 +8,9 @@ namespace EntityFX.Gdcame.Manager.Contract.GameManager
     public class BuyFundDriverResult
     {
         [DataMember]
-        public FundsCounters ModifiedFundsCounters { get; set; }
+        public Cash ModifiedCash { get; set; }
         [DataMember]
-        public FundsDriver ModifiedFundsDriver { get; set; }
+        public Item ModifiedItem { get; set; }
     }
 
 }

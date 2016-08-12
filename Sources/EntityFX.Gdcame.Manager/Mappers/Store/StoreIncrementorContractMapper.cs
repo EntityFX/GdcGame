@@ -6,14 +6,13 @@ using IncrementorTypeEnum = EntityFX.Gdcame.Common.Contract.Incrementors.Increme
 
 namespace EntityFX.Gdcame.Manager.Mappers
 {
-    public class StoreIncrementorContractMapper : IMapper<IncrementorBase, StoreIncrementor>
+    public class StoreIncrementorContractMapper : IMapper<IncrementorBase, StoredIncrementor>
     {
-        public StoreIncrementor Map(IncrementorBase source, StoreIncrementor destination)
+        public StoredIncrementor Map(IncrementorBase source, StoredIncrementor destination)
         {
-            return new StoreIncrementor()
+            return new StoredIncrementor()
             {
-                Value = source.Value,
-                Type = (EntityFX.Gdcame.Common.Contract.Incrementors.IncrementorTypeEnum)(int)source.IncrementorType
+                Value = source.Value
             };
         }
     }

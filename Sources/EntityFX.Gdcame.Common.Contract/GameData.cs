@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 using EntityFX.Gdcame.Common.Contract.Counters;
-using EntityFX.Gdcame.Common.Contract.Funds;
+using EntityFX.Gdcame.Common.Contract.Items;
 
 namespace EntityFX.Gdcame.Common.Contract
 {
@@ -8,14 +8,14 @@ namespace EntityFX.Gdcame.Common.Contract
     public class GameData
     {
         [DataMember]
-        public FundsDriver[] FundsDrivers { get; set; }
+        public Item[] Items { get; set; }
         [DataMember]
-        public FundsCounters Counters { get; set; }
+        public Cash Cash { get; set; }
         [DataMember]
         public CustomRule[] CustomRules { get; set; }
         [DataMember]
         public int ManualStepsCount { get; set; }
         [DataMember]
-        public int AutomaticStepsCount { get; set; }
+        public int AutomatedStepsCount { get; set; }
     }
 }

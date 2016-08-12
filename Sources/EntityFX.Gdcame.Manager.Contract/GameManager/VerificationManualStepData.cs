@@ -16,7 +16,7 @@ namespace EntityFX.Gdcame.Manager.Contract.GameManager
     public class NoVerficationRequiredResult : ManualStepResult
     {
         [DataMember]
-        public FundsCounters ModifiedCounters { get; set; }
+        public Cash ModifiedCash { get; set; }
     }
 
     [DataContract]

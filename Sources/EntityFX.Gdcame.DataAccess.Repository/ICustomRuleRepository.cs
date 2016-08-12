@@ -1,4 +1,4 @@
-﻿using EntityFX.Gdcame.Common.Contract.Funds;
+﻿using EntityFX.Gdcame.Common.Contract.Items;
 using EntityFX.Gdcame.DataAccess.Repository.Criterions.CustomRule;
 
 namespace EntityFX.Gdcame.DataAccess.Repository

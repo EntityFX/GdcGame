@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
-using EntityFX.Gdcame.Common.Contract.Funds;
 using EntityFX.Gdcame.Common.Contract.Incrementors;
+using EntityFX.Gdcame.Common.Contract.Items;
 using EntityFX.Gdcame.DataAccess.Model;
 using EntityFX.Gdcame.Infrastructure.Common;
 
 namespace EntityFX.Gdcame.DataAccess.Repository.Mappers
 {
-    public class FundsDriverContractMapper : IMapper<FundsDriverEntity, FundsDriver>
+    public class FundsDriverContractMapper : IMapper<FundsDriverEntity, Item>
     {
         private readonly IMapper<IncrementorEntity, Incrementor> _incrementorContractMapper;
         private readonly IMapper<CustomRuleEntity, CustomRule> _customRuleContractMapper;
@@ -17,9 +17,9 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mappers
             _customRuleContractMapper = customRuleContractMapper;
         }
 
-        public FundsDriver Map(FundsDriverEntity source, FundsDriver destination = null)
+        public Item Map(FundsDriverEntity source, Item destination = null)
         {
-            destination = destination ?? new FundsDriver();
+            destination = destination ?? new Item();
             destination.BuyCount = 0;
             destination.InitialValue = source.InitialValue;
             destination.UnlockValue = source.UnlockValue;
@@ -32,6 +32,13 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mappers
             foreach (var incrementor in source.Incrementors)
             {
                 destination.Incrementors.Add(incrementor.CounterId ?? 0, _incrementorContractMapper.Map(incrementor));
+            }
+            for (var i = 0; i < 3; i++)
+            {
+                if (!destination.Incrementors.ContainsKey(i))
+                {
+                    destination.Incrementors.Add(i, new Incrementor() { IncrementorType = IncrementorTypeEnum.ValueIncrementor, Value = 0});
+                }
             }
             return destination;
         }

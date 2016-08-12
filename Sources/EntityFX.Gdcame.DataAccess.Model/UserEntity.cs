@@ -19,13 +19,5 @@ namespace EntityFX.Gdcame.DataAccess.Model
         public DateTime CreateDateTime { get; set; }
 
         public DateTime? UpdateDateTime { get; set; }
-
-        public virtual UserGameCounterEntity UserGameCounter { get; set; }
-
-        public virtual ICollection<UserCounterEntity> UserCounters { get; set; }
-
-        public virtual ICollection<UserFundsDriverEntity> UserFundsDrivers { get; set; }
-
-        public virtual ICollection<UserCustomRuleEntity> UserCustomRules { get; set; }
     }
 }

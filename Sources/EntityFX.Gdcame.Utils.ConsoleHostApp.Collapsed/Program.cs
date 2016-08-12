@@ -7,7 +7,7 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceHost.Collapsed.ConsoleApp
     {
         static void Main(string[] args)
         {
-            var containerBootstrapper = new WcfContainerBootstrapper();
+            var containerBootstrapper = new CollapsedContainerBootstrapper();
             var ss = new CollapsedServiceStarter(
                 containerBootstrapper
                 );

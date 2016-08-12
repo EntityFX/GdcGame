@@ -15,7 +15,7 @@ namespace EntityFX.Gdcame.Utils.ClientProxy.DataAccess
             _endpoint = new Uri(endpoint);
         }
 
-        public void StoreGameDataForUser(int userId, StoreGameData gameData)
+        public void StoreGameDataForUser(int userId, StoredGameData gameData)
         {
             using (var proxy = new TInfrastructureProxy())
             {

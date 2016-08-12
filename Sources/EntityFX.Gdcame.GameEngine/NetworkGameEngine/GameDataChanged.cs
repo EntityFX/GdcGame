@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using EntityFX.Gdcame.Common.Contract;
-using EntityFX.Gdcame.Common.Contract.Funds;
 using EntityFX.Gdcame.DataAccess.Contract.GameData;
 using EntityFX.Gdcame.GameEngine.Contract;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.NotifyConsumer.Contract;
-using FundsDriver = EntityFX.Gdcame.GameEngine.Contract.Funds.FundsDriver;
+using Item = EntityFX.Gdcame.GameEngine.Contract.Items.Item;
 
 namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
 {
@@ -15,19 +14,19 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
         private readonly int _userId;
         private readonly string _userName;
         private readonly IGameDataStoreDataAccessService _gameDataStoreDataAccessService;
-        private readonly IMapper<IGame, StoreGameData> _gameDataPersistMapper;
+        private readonly IMapper<IGame, StoredGameData> _gameDataPersistMapper;
         private readonly IMapper<IGame, GameData> _gameDataRefreshMapper;
-        private readonly IMapper<FundsDriver, StoreFundsDriver> _fundsDriverPersistMapper;
-        private readonly IMapper<FundsDriver, Gdcame.Common.Contract.Funds.FundsDriver> _fundsDriverRefreshMapper;
+        private readonly IMapper<Item, StoredItem> _fundsDriverPersistMapper;
+        private readonly IMapper<Item, Common.Contract.Items.Item> _fundsDriverRefreshMapper;
         private readonly INotifyConsumerClientFactory _notifyConsumerService;
 
         public NotifyGameDataChanged(int userId
             , string userName
             , IGameDataStoreDataAccessService gameDataStoreDataAccessService
-            , IMapper<IGame, StoreGameData> gameDataPersistMapper
+            , IMapper<IGame, StoredGameData> gameDataPersistMapper
             , IMapper<IGame, GameData> gameDataRefreshMapper
-            , IMapper<FundsDriver, StoreFundsDriver> fundsDriverPersistMapper
-            , IMapper<FundsDriver, Gdcame.Common.Contract.Funds.FundsDriver> fundsDriverRefreshMapper
+            , IMapper<Item, StoredItem> fundsDriverPersistMapper
+            , IMapper<Item, Common.Contract.Items.Item> fundsDriverRefreshMapper
             , INotifyConsumerClientFactory notifyConsumerService)
         {
             _userId = userId;
@@ -52,16 +51,16 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
             _notifyConsumerService.BuildNotifyConsumerClient().PushGameData(new UserContext() { UserId = _userId, UserName = _userName }, gameData);
         }
 
-        public void FundsDriverBought(IGame game, FundsDriver fundsDriver)
+        public void FundsDriverBought(IGame game, Item item)
         {
             //var gameData = PrepareGameDataToPersist(game);
             //_gameDataStoreDataAccessService.StoreGameDataForUser(_userId, gameData);
         }
 
-        private StoreGameData PrepareGameDataToPersist(IGame game)
+        private StoredGameData PrepareGameDataToPersist(IGame game)
         {
             var gameData = _gameDataPersistMapper.Map(game);
-            gameData.FundsDrivers = game.FundsDrivers.Values.Select(_ => _fundsDriverPersistMapper.Map(_)).ToArray();
+            gameData.Items = game.Items.Values.Select(_ => _fundsDriverPersistMapper.Map(_)).ToArray();
             game.ModifiedFundsDrivers.Clear();
             return gameData;
         }
@@ -70,14 +69,14 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
         {
             var gameData = _gameDataRefreshMapper.Map(game);
 
-            var fundsDrivers = new List<Gdcame.Common.Contract.Funds.FundsDriver>();
-            foreach (var fundDriver in game.FundsDrivers)
+            var fundsDrivers = new List<Common.Contract.Items.Item>();
+            foreach (var fundDriver in game.Items)
             {
                 var fundDriverMapped = _fundsDriverRefreshMapper.Map(fundDriver.Value);
-                fundDriverMapped.IsActive = gameData.Counters.Counters[0].Value >= fundDriverMapped.UnlockValue;
+                fundDriverMapped.IsActive = gameData.Cash.Counters[0].Value >= fundDriverMapped.UnlockValue;
                 fundsDrivers.Add(fundDriverMapped);
             }
-            gameData.FundsDrivers = fundsDrivers.ToArray();
+            gameData.Items = fundsDrivers.ToArray();
             return gameData;
         }
 

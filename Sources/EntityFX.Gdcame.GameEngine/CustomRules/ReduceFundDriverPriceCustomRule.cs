@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using EntityFX.Gdcame.GameEngine.Contract;
-using EntityFX.Gdcame.GameEngine.Contract.Funds;
+using EntityFX.Gdcame.GameEngine.Contract.Items;
 
 namespace EntityFX.Gdcame.GameEngine.CustomRules
 {
@@ -11,12 +11,12 @@ namespace EntityFX.Gdcame.GameEngine.CustomRules
         {
             if (customRuleInfo.CurrentIndex == null)
             {
-                customRuleInfo.CurrentIndex = game.FundsDrivers.First().Key;
+                customRuleInfo.CurrentIndex = game.Items.First().Key;
             }
-            game.FundsDrivers[customRuleInfo.CurrentIndex.Value].CurrentValue /= REDUCE_TIMES;
-            game.ModifiedFundsDrivers[customRuleInfo.CurrentIndex.Value] = game.FundsDrivers[customRuleInfo.CurrentIndex.Value];
-            var nextItem = game.FundsDrivers.FirstOrDefault(_ => _.Key > customRuleInfo.CurrentIndex.Value);
-            customRuleInfo.CurrentIndex = nextItem.Key != 0 ? nextItem.Key : game.FundsDrivers.First().Key;
+            game.Items[customRuleInfo.CurrentIndex.Value].CurrentValue /= REDUCE_TIMES;
+            game.ModifiedFundsDrivers[customRuleInfo.CurrentIndex.Value] = game.Items[customRuleInfo.CurrentIndex.Value];
+            var nextItem = game.Items.FirstOrDefault(_ => _.Key > customRuleInfo.CurrentIndex.Value);
+            customRuleInfo.CurrentIndex = nextItem.Key != 0 ? nextItem.Key : game.Items.First().Key;
             customRuleInfo.CurrentIndex = customRuleInfo.CurrentIndex;
         }
 

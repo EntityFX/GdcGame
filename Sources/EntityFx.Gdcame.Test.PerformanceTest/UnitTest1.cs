@@ -10,7 +10,7 @@ using EntityFX.Gdcame.DataAccess.Contract.GameData;
 using EntityFX.Gdcame.DataAccess.Contract.User;
 using EntityFX.Gdcame.DataAccess.Service;
 using EntityFX.Gdcame.GameEngine.Contract;
-using EntityFX.Gdcame.GameEngine.Contract.Funds;
+using EntityFX.Gdcame.GameEngine.Contract.Items;
 using EntityFX.Gdcame.GameEngine.NetworkGameEngine;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager;
@@ -69,8 +69,10 @@ namespace EntityFx.Gdcame.Test.PerformanceTest
                     new ResolvedParameter<int>(),
                     new ResolvedParameter<string>(),
                     new ResolvedParameter<IGameDataStoreDataAccessService>(),
+                    new ResolvedParameter<IMapper<IGame, StoredGameData>>("StoreGameDataMapper"),
                     new ResolvedParameter<IMapper<IGame, GameData>>("GameDataMapper"),
-                    new ResolvedParameter<IMapper<FundsDriver, EntityFX.Gdcame.Common.Contract.Funds.FundsDriver>>(),
+                                        new ResolvedParameter<IMapper<Item, StoredItem>>(),
+                    new ResolvedParameter<IMapper<Item, EntityFX.Gdcame.Common.Contract.Items.Item>>(),
                     new ResolvedParameter<INotifyConsumerClientFactory>()
                     )
                 );
@@ -107,7 +109,7 @@ namespace EntityFx.Gdcame.Test.PerformanceTest
             game.Initialize();
             game.PerformManualStep(null);
             var csw = new Stopwatch();
-            foreach (var iterNumber in new [] {1, 10, 50, 100, 500, 1000, 5000, 10000})
+            foreach (var iterNumber in new [] {1, 10, 50, 100, 500, 1000, 5000, 10000, 50000})
             {
                 var swList = Enumerable.Repeat(new Stopwatch(), iterNumber).ToArray();
                 csw.Restart();
