@@ -1,6 +1,6 @@
 ﻿using System.ServiceModel;
 using System.ServiceModel.Channels;
-using EntityFX.Gdcame.Infrastructure.Service.NetMsmq;
+using EntityFX.Gdcame.Infrastructure.Service.Windows.NetMsmq;
 using EntityFX.Gdcame.NotifyConsumer.Contract;
 
 namespace EntityFX.EconomicsArcade.Utils.ClientProxy.NotifyConsumer

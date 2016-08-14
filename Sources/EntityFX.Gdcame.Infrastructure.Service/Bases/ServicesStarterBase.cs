@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Infrastructure.Service.Interfaces;
-using EntityFX.Gdcame.Infrastructure.Service.NetMsmq;
 using EntityFX.Gdcame.Infrastructure.Service.NetNamedPipe;
 using EntityFX.Gdcame.Infrastructure.Service.NetTcp;
 using Microsoft.Practices.Unity;
@@ -43,12 +42,6 @@ namespace EntityFX.Gdcame.Infrastructure.Service.Bases
         protected void AddNetNamedPipeService<T>(Uri endpointAddress) where T : class
         {
             var service = new NetNamedPipeServiceHost<T>(_container);
-            AddServiceHost(service, endpointAddress);
-        }
-
-        protected void AddNetMsmqService<T>(Uri endpointAddress) where T : class
-        {
-            var service = new NetMsmqServiceHost<T>(_container);
             AddServiceHost(service, endpointAddress);
         }
 

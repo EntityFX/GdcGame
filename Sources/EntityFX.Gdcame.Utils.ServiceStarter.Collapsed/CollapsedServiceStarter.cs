@@ -5,6 +5,7 @@ using EntityFX.Gdcame.DataAccess.Contract.User;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Infrastructure.Service.Bases;
 using EntityFX.Gdcame.Infrastructure.Service.Interfaces;
+using EntityFX.Gdcame.Infrastructure.Service.Windows;
 using EntityFX.Gdcame.Manager.Contract.RatingManager;
 using EntityFX.Gdcame.Manager.Contract.SessionManager;
 using EntityFX.Gdcame.Manager.Contract.UserManager;
@@ -16,7 +17,7 @@ using Owin;
 
 namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
 {
-    public class CollapsedServiceStarter : ServicesStarterBase<CollapsedContainerBootstrapper>, IServicesStarter, IDisposable
+    public class CollapsedServiceStarter : WindowsServiceStarter<CollapsedContainerBootstrapper>, IServicesStarter, IDisposable
     {
         private readonly Uri _baseUrl = new Uri("net.pipe://localhost/");
         private readonly Uri _baseMsmqUrl = new Uri("net.msmq://localhost/private/");

@@ -23,9 +23,9 @@ namespace EntityFX.Gdcame.Manager
 
         private readonly ConcurrentDictionary<Guid, Session> SessionsStorage = new ConcurrentDictionary<Guid, Session>();
 
-        private readonly Timer _gameTimer;
+        private readonly TaskTimer _gameTimer;
 
-        private readonly Timer _persisTimertimer;
+        private readonly TaskTimer _persisTimertimer;
 
         private void GamePersistCallback(object state)
         {
@@ -42,9 +42,9 @@ namespace EntityFX.Gdcame.Manager
         {
             _logger = logger;
             _gameFactory = gameFactory;
-            _gameTimer = new Timer(TimerCallback, null, 0, 1000);
+            _gameTimer = new TaskTimer(TimerCallback, null, 0, 1000);
 
-            _persisTimertimer = new Timer(GamePersistCallback, null, 0, 30000);
+            _persisTimertimer = new TaskTimer(GamePersistCallback, null, 0, 30000);
         }
 
         private void TimerCallback(object state)

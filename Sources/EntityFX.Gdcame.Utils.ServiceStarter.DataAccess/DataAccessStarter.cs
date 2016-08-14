@@ -4,11 +4,12 @@ using EntityFX.Gdcame.DataAccess.Contract.User;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Infrastructure.Service.Bases;
 using EntityFX.Gdcame.Infrastructure.Service.Interfaces;
+using EntityFX.Gdcame.Infrastructure.Service.Windows;
 using Microsoft.Practices.Unity;
 
 namespace EntityFX.Gdcame.Utils.ServiceStarter.DataAccess
 {
-    public class DataAccessStarter: ServicesStarterBase<ContainerBootstrapper>, IServicesStarter
+    public class DataAccessStarter : WindowsServiceStarter<ContainerBootstrapper>, IServicesStarter
     {
 
         private readonly Uri _baseUrl;// = "net.tcp://localhost:8777/EntityFX.EconomicsArcade.DataAccess/";
