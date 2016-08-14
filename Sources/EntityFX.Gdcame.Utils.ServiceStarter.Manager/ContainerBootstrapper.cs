@@ -10,7 +10,6 @@ using EntityFX.Gdcame.GameEngine.NetworkGameEngine;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Infrastructure.Service;
 using EntityFX.Gdcame.Infrastructure.Service.Interfaces;
-using EntityFX.Gdcame.Infrastructure.Service.NetMsmq;
 using EntityFX.Gdcame.Infrastructure.Service.NetTcp;
 using EntityFX.Gdcame.Infrastructure.Service.Windows.NetMsmq;
 using EntityFX.Gdcame.Manager;

@@ -5,7 +5,7 @@ using System.ServiceModel.Channels;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Infrastructure.Service.Bases;
 using EntityFX.Gdcame.Infrastructure.Service.Interfaces;
-using EntityFX.Gdcame.Infrastructure.Service.NetMsmq;
+using EntityFX.Gdcame.Infrastructure.Service.Windows.NetMsmq;
 using EntityFX.Gdcame.NotifyConsumer.Contract;
 using Microsoft.AspNet.SignalR;
 using Microsoft.Owin.Cors;

@@ -11,8 +11,8 @@ using EntityFX.Gdcame.GameEngine.NetworkGameEngine;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Infrastructure.Service;
 using EntityFX.Gdcame.Infrastructure.Service.Interfaces;
+using EntityFX.Gdcame.Infrastructure.Service.NetNamedPipe;
 using EntityFX.Gdcame.Infrastructure.Service.NetTcp;
-using EntityFX.Gdcame.Infrastructure.Service.Windows.NetMsmq;
 using EntityFX.Gdcame.Manager;
 using EntityFX.Gdcame.NotifyConsumer;
 using EntityFX.Gdcame.NotifyConsumer.Contract;
@@ -47,7 +47,7 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
 
 
 
-            container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessClient<NetTcpProxy<IGameDataRetrieveDataAccessService>>>("GameDataRetrieveDataAccessClient",
+            container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessClient<NetNamedPipeProxy<IGameDataRetrieveDataAccessService>>>("GameDataRetrieveDataAccessClient",
                new InjectionConstructor(
                    "net.pipe://localhost/EntityFX.Gdcame.DataAccess/EntityFX.Gdcame.DataAccess.Contract.GameData.IGameDataRetrieveDataAccessService"
                    )
@@ -55,7 +55,7 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
                new InterceptionBehavior<PolicyInjectionBehavior>()
                , new Interceptor<InterfaceInterceptor>()
                );
-            container.RegisterType<IUserDataAccessService, UserDataAccessClient<NetTcpProxy<IUserDataAccessService>>>("UserDataAccessClient",
+            container.RegisterType<IUserDataAccessService, UserDataAccessClient<NetNamedPipeProxy<IUserDataAccessService>>>("UserDataAccessClient",
                 new InjectionConstructor(
                     "net.pipe://localhost/EntityFX.Gdcame.DataAccess/EntityFX.Gdcame.DataAccess.Contract.User.IUserDataAccessService"
                     )
@@ -63,7 +63,7 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
                 new InterceptionBehavior<PolicyInjectionBehavior>()
                 , new Interceptor<InterfaceInterceptor>()
                 );
-            container.RegisterType<IGameDataStoreDataAccessService, GameDataStoreDataAccessClient<NetMsmqProxy<IGameDataStoreDataAccessService>>>("GameDataStoreDataAccessClient",
+            container.RegisterType<IGameDataStoreDataAccessService, GameDataStoreDataAccessClient<NetNamedPipeProxy<IGameDataStoreDataAccessService>>>("GameDataStoreDataAccessClient",
                 new InjectionConstructor(
                     "net.msmq://localhost/private/EntityFX.Gdcame.DataAccess.Contract.GameData.IGameDataStoreDataAccessService"
                     ),
@@ -75,7 +75,7 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
 
             container.RegisterInstance<GameSessions>(new GameSessions(container.Resolve<ILogger>(), container.Resolve<IGameFactory>()));
 
-            container.RegisterType<INotifyConsumerService, NotifyConsumerServiceClient<NotifyConsumerProxy>>("NotifyConsumerServiceClient",
+            container.RegisterType<INotifyConsumerService, NotifyConsumerServiceClient<NetNamedPipeProxy<INotifyConsumerService>>>("NotifyConsumerServiceClient",
                 new InjectionConstructor(
                     "net.msmq://localhost/private/EntityFX.Gdcame.NotifyConsumer.Contract.INotifyConsumerService"
                     )
