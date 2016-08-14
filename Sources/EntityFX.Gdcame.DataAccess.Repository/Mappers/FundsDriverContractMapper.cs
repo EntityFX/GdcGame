@@ -4,7 +4,7 @@ using EntityFX.Gdcame.Common.Contract.Items;
 using EntityFX.Gdcame.DataAccess.Model;
 using EntityFX.Gdcame.Infrastructure.Common;
 
-namespace EntityFX.Gdcame.DataAccess.Repository.Mappers
+namespace EntityFX.Gdcame.DataAccess.Repository.Ef.Mappers
 {
     public class FundsDriverContractMapper : IMapper<FundsDriverEntity, Item>
     {

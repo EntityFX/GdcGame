@@ -7,15 +7,11 @@ using EntityFX.Gdcame.Common.Contract.Items;
 using EntityFX.Gdcame.Common.Contract.UserRating;
 using EntityFX.Gdcame.DataAccess.Contract.GameData;
 using EntityFX.Gdcame.DataAccess.Repository;
-using EntityFX.Gdcame.DataAccess.Repository.Criterions.Counters;
-using EntityFX.Gdcame.DataAccess.Repository.Criterions.CustomRule;
-using EntityFX.Gdcame.DataAccess.Repository.Criterions.FundsDriver;
-using EntityFX.Gdcame.DataAccess.Repository.Criterions.UserCounter;
-using EntityFX.Gdcame.DataAccess.Repository.Criterions.UserCustomRuleInfo;
-using EntityFX.Gdcame.DataAccess.Repository.Criterions.UserFundsDriver;
-using EntityFX.Gdcame.DataAccess.Repository.Criterions.UserGameCounter;
-using EntityFX.Gdcame.DataAccess.Repository.Criterions.UserGameSnapshot;
-using EntityFX.Gdcame.DataAccess.Repository.Criterions.UserRating;
+using EntityFX.Gdcame.DataAccess.Repository.Contract;
+using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.Counters;
+using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.CustomRule;
+using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.FundsDriver;
+using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.UserGameSnapshot;
 
 namespace EntityFX.Gdcame.DataAccess.Service
 {

@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using EntityFX.Gdcame.DataAccess.Model;
-using EntityFX.Gdcame.DataAccess.Repository.Criterions.User;
+using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.User;
 using EntityFX.Gdcame.Infrastructure.Repository.Query;
 
-namespace EntityFX.Gdcame.DataAccess.Repository.Queries.User
+namespace EntityFX.Gdcame.DataAccess.Repository.Ef.Queries.User
 {
     public class GetUserByIdQuery : QueryBase, IQuery<GetUserByIdCriterion, UserEntity>
     {

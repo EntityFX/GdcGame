@@ -22,7 +22,7 @@ using Microsoft.AspNet.SignalR;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
 using PortableLog.NLog;
-using ContainerBootstrapper = EntityFX.Gdcame.DataAccess.Repository.ContainerBootstrapper;
+using ContainerBootstrapper = EntityFX.Gdcame.DataAccess.Repository.Ef.ContainerBootstrapper;
 
 namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
 {

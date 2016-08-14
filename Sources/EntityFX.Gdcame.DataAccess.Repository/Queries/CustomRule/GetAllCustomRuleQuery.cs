@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using EntityFX.Gdcame.DataAccess.Model;
-using EntityFX.Gdcame.DataAccess.Repository.Criterions.CustomRule;
+using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.CustomRule;
 using EntityFX.Gdcame.Infrastructure.Repository.Query;
 
-namespace EntityFX.Gdcame.DataAccess.Repository.Queries.CustomRule
+namespace EntityFX.Gdcame.DataAccess.Repository.Ef.Queries.CustomRule
 {
     public class GetAllCustomRuleQuery : QueryBase,
         IQuery<GetAllCustomRulesCriterion, IEnumerable<CustomRuleEntity>>

@@ -2,10 +2,10 @@
 using System.Data.Entity;
 using System.Linq;
 using EntityFX.Gdcame.DataAccess.Model;
-using EntityFX.Gdcame.DataAccess.Repository.Criterions.UserRating;
+using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.UserRating;
 using EntityFX.Gdcame.Infrastructure.Repository.Query;
 
-namespace EntityFX.Gdcame.DataAccess.Repository.Queries.UserRating
+namespace EntityFX.Gdcame.DataAccess.Repository.Ef.Queries.UserRating
 {
     public class GetAllUsersRatingsQuery : QueryBase,
         IQuery<GetAllUsersRatingsCriterion, IEnumerable<Gdcame.Common.Contract.UserRating.UserRating>>

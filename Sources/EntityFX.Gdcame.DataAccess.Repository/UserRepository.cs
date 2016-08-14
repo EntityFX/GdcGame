@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using EntityFX.Gdcame.DataAccess.Contract.User;
 using EntityFX.Gdcame.DataAccess.Model;
-using EntityFX.Gdcame.DataAccess.Repository.Criterions.User;
+using EntityFX.Gdcame.DataAccess.Repository.Contract;
+using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.User;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Infrastructure.Repository.UnitOfWork;
 
-namespace EntityFX.Gdcame.DataAccess.Repository
+namespace EntityFX.Gdcame.DataAccess.Repository.Ef
 {
     public class UserRepository : IUserRepository
     {

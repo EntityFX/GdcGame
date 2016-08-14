@@ -18,7 +18,7 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.DataAccess
         {
             var childBootstrappers = new IContainerBootstrapper[]
             {
-                new Gdcame.DataAccess.Repository.ContainerBootstrapper(),
+                new Gdcame.DataAccess.Repository.Ef.ContainerBootstrapper(),
                 new Gdcame.DataAccess.Service.ContainerBootstrapper()
             };
 

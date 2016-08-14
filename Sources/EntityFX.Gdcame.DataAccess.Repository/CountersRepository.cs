@@ -2,11 +2,12 @@
 using System.Linq;
 using EntityFX.Gdcame.Common.Contract.Counters;
 using EntityFX.Gdcame.DataAccess.Model;
-using EntityFX.Gdcame.DataAccess.Repository.Criterions.Counters;
+using EntityFX.Gdcame.DataAccess.Repository.Contract;
+using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.Counters;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Infrastructure.Repository.UnitOfWork;
 
-namespace EntityFX.Gdcame.DataAccess.Repository
+namespace EntityFX.Gdcame.DataAccess.Repository.Ef
 {
     public class CountersRepository : ICountersRepository
     {

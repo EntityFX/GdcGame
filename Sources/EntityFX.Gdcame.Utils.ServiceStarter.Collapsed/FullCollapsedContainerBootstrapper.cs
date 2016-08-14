@@ -19,7 +19,7 @@ using Microsoft.AspNet.SignalR;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
 using PortableLog.NLog;
-using ContainerBootstrapper = EntityFX.Gdcame.DataAccess.Repository.ContainerBootstrapper;
+using ContainerBootstrapper = EntityFX.Gdcame.DataAccess.Repository.Ef.ContainerBootstrapper;
 using EntityFX.Gdcame.Manager.Mappers;
 using EntityFX.Gdcame.GameEngine.Mappers;
 using EntityFX.Gdcame.GameEngine.Contract.Counters;

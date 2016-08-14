@@ -61,7 +61,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Common.Pres
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.DataAccess.Model", "EntityFX.Gdcame.DataAccess.Model\EntityFX.Gdcame.DataAccess.Model.csproj", "{DE1D1C25-F30A-461C-B572-00BFA1C7161E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.DataAccess.Repository", "EntityFX.Gdcame.DataAccess.Repository\EntityFX.Gdcame.DataAccess.Repository.csproj", "{D5A72A34-5DE5-41E1-B52E-8F70D19CB7BF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.DataAccess.Repository.Ef", "EntityFX.Gdcame.DataAccess.Repository\EntityFX.Gdcame.DataAccess.Repository.Ef.csproj", "{D5A72A34-5DE5-41E1-B52E-8F70D19CB7BF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.DataAccess.Service", "EntityFX.Gdcame.DataAccess.Service\EntityFX.Gdcame.DataAccess.Service.csproj", "{2008F2C2-C1FA-4CB9-8A99-A9406AC4967D}"
 EndProject
@@ -132,6 +132,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFx.Gdcame.Test.PerformanceTest", "EntityFx.Gdcame.Test.PerformanceTest\EntityFx.Gdcame.Test.PerformanceTest.csproj", "{9F0FABF3-4DEB-4389-B659-092A2BA29E7C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Infrastructure.Service.Windows", "EntityFX.Gdcame.Infrastructure.Service.Windows\EntityFX.Gdcame.Infrastructure.Service.Windows.csproj", "{7D6673BB-1844-4983-9372-829DA9D3A994}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Infrastructure.Repository.EF", "EntityFX.Gdcame.Infrastructure.Repository.EF\EntityFX.Gdcame.Infrastructure.Repository.EF.csproj", "{E92BA217-1681-453A-AEF8-888028A12070}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.DataAccess.Repository.Contract", "EntityFX.Gdcame.DataAccess.Repository.Contract\EntityFX.Gdcame.DataAccess.Repository.Contract.csproj", "{C1B1F481-6E3E-464C-A983-CB56AD430C1D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -321,6 +325,14 @@ Global
 		{7D6673BB-1844-4983-9372-829DA9D3A994}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D6673BB-1844-4983-9372-829DA9D3A994}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D6673BB-1844-4983-9372-829DA9D3A994}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E92BA217-1681-453A-AEF8-888028A12070}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E92BA217-1681-453A-AEF8-888028A12070}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E92BA217-1681-453A-AEF8-888028A12070}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E92BA217-1681-453A-AEF8-888028A12070}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1B1F481-6E3E-464C-A983-CB56AD430C1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1B1F481-6E3E-464C-A983-CB56AD430C1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1B1F481-6E3E-464C-A983-CB56AD430C1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1B1F481-6E3E-464C-A983-CB56AD430C1D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -376,5 +388,7 @@ Global
 		{24C8E95E-66EA-4E35-8584-C50171B68984} = {D150B452-1254-4C2D-90DA-27765E2C7C0B}
 		{9F0FABF3-4DEB-4389-B659-092A2BA29E7C} = {D150B452-1254-4C2D-90DA-27765E2C7C0B}
 		{7D6673BB-1844-4983-9372-829DA9D3A994} = {F8FED8D2-E9CC-484B-9794-C60B0191CF7C}
+		{E92BA217-1681-453A-AEF8-888028A12070} = {F8FED8D2-E9CC-484B-9794-C60B0191CF7C}
+		{C1B1F481-6E3E-464C-A983-CB56AD430C1D} = {71152D90-9B19-442E-AD44-F385A35B4DD2}
 	EndGlobalSection
 EndGlobal

@@ -86,9 +86,13 @@
       <Project>{0932D8B3-29EB-4546-987A-B246421A9B87}</Project>
       <Name>EntityFX.Gdcame.DataAccess.Contract</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Repository\EntityFX.Gdcame.DataAccess.Repository.csproj">
+    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Repository.Contract\EntityFX.Gdcame.DataAccess.Repository.Contract.csproj">
+      <Project>{C1B1F481-6E3E-464C-A983-CB56AD430C1D}</Project>
+      <Name>EntityFX.Gdcame.DataAccess.Repository.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Repository\EntityFX.Gdcame.DataAccess.Repository.Ef.csproj">
       <Project>{D5A72A34-5DE5-41E1-B52E-8F70D19CB7BF}</Project>
-      <Name>EntityFX.Gdcame.DataAccess.Repository</Name>
+      <Name>EntityFX.Gdcame.DataAccess.Repository.Ef</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Common\EntityFX.Gdcame.Infrastructure.Common.csproj">
       <Project>{924CC67D-9E2B-46BA-BE1D-6C6C780CCFBC}</Project>

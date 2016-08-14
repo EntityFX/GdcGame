@@ -4,32 +4,28 @@ using EntityFX.Gdcame.Common.Contract.Counters;
 using EntityFX.Gdcame.Common.Contract.Incrementors;
 using EntityFX.Gdcame.Common.Contract.Items;
 using EntityFX.Gdcame.Common.Contract.UserRating;
-using EntityFX.Gdcame.DataAccess.Contract.GameData;
 using EntityFX.Gdcame.DataAccess.Contract.User;
 using EntityFX.Gdcame.DataAccess.Model;
-using EntityFX.Gdcame.DataAccess.Repository.Criterions.Counters;
-using EntityFX.Gdcame.DataAccess.Repository.Criterions.CustomRule;
-using EntityFX.Gdcame.DataAccess.Repository.Criterions.FundsDriver;
-using EntityFX.Gdcame.DataAccess.Repository.Criterions.User;
-using EntityFX.Gdcame.DataAccess.Repository.Criterions.UserCounter;
-using EntityFX.Gdcame.DataAccess.Repository.Criterions.UserCustomRuleInfo;
-using EntityFX.Gdcame.DataAccess.Repository.Criterions.UserFundsDriver;
-using EntityFX.Gdcame.DataAccess.Repository.Criterions.UserGameCounter;
-using EntityFX.Gdcame.DataAccess.Repository.Criterions.UserGameSnapshot;
-using EntityFX.Gdcame.DataAccess.Repository.Criterions.UserRating;
-using EntityFX.Gdcame.DataAccess.Repository.Mappers;
-using EntityFX.Gdcame.DataAccess.Repository.Queries.Counetrs;
-using EntityFX.Gdcame.DataAccess.Repository.Queries.CustomRule;
-using EntityFX.Gdcame.DataAccess.Repository.Queries.FundsDriver;
-using EntityFX.Gdcame.DataAccess.Repository.Queries.User;
-using EntityFX.Gdcame.DataAccess.Repository.Queries.UserGameCounter;
-using EntityFX.Gdcame.DataAccess.Repository.Queries.UserRating;
+using EntityFX.Gdcame.DataAccess.Repository.Contract;
+using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.Counters;
+using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.CustomRule;
+using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.FundsDriver;
+using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.User;
+using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.UserGameSnapshot;
+using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.UserRating;
+using EntityFX.Gdcame.DataAccess.Repository.Ef.Mappers;
+using EntityFX.Gdcame.DataAccess.Repository.Ef.Queries.Counetrs;
+using EntityFX.Gdcame.DataAccess.Repository.Ef.Queries.CustomRule;
+using EntityFX.Gdcame.DataAccess.Repository.Ef.Queries.FundsDriver;
+using EntityFX.Gdcame.DataAccess.Repository.Ef.Queries.User;
+using EntityFX.Gdcame.DataAccess.Repository.Ef.Queries.UserGameSnapshot;
+using EntityFX.Gdcame.DataAccess.Repository.Ef.Queries.UserRating;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Infrastructure.Repository.Query;
 using EntityFX.Gdcame.Infrastructure.Repository.UnitOfWork;
 using Microsoft.Practices.Unity;
 
-namespace EntityFX.Gdcame.DataAccess.Repository
+namespace EntityFX.Gdcame.DataAccess.Repository.Ef
 {
     public class ContainerBootstrapper : IContainerBootstrapper
     {
@@ -37,7 +33,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository
         {
             container.RegisterType<DbContext, EconomicsArcadeDbContext>(new InjectionConstructor("name=EconomicsArcadeDbContext"));
             container.RegisterType<IQueryBuilder, QueryBuilder>();
-            container.RegisterType<IUnitOfWork, UnitOfWork>();
+            container.RegisterType<IUnitOfWork, EfUnitOfWork>();
             container.RegisterType<IUnitOfWorkFactory, UnitOfWorkFactory>();
 
             container.RegisterType<IQuery<GetUserByIdCriterion, UserEntity>, GetUserByIdQuery>();

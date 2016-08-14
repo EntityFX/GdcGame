@@ -3,7 +3,7 @@ using EntityFX.Gdcame.Common.Contract.Incrementors;
 using EntityFX.Gdcame.DataAccess.Model;
 using EntityFX.Gdcame.Infrastructure.Common;
 
-namespace EntityFX.Gdcame.DataAccess.Repository.Mappers
+namespace EntityFX.Gdcame.DataAccess.Repository.Ef.Mappers
 {
     public class IncrementorContractMapper : IMapper<IncrementorEntity, Incrementor>
     {

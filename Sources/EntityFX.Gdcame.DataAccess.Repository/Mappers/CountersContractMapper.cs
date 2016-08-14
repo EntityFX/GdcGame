@@ -5,7 +5,7 @@ using EntityFX.Gdcame.Common.Contract.Counters;
 using EntityFX.Gdcame.DataAccess.Model;
 using EntityFX.Gdcame.Infrastructure.Common;
 
-namespace EntityFX.Gdcame.DataAccess.Repository.Mappers
+namespace EntityFX.Gdcame.DataAccess.Repository.Ef.Mappers
 {
     public class CountersContractMapper : IMapper<CounterEntity, CounterBase>
     {

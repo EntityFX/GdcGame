@@ -44,7 +44,7 @@ namespace EntityFx.Gdcame.Test.PerformanceTest
 
             var childBootstrappers = new IContainerBootstrapper[]
             {
-                new EntityFX.Gdcame.DataAccess.Repository.ContainerBootstrapper(),
+                new EntityFX.Gdcame.DataAccess.Repository.Ef.ContainerBootstrapper(),
                 new EntityFX.Gdcame.DataAccess.Service.ContainerBootstrapper(),
                 new EntityFX.Gdcame.NotifyConsumer.ContainerBootstrapper(),
             };
