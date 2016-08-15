@@ -1,8 +1,8 @@
-﻿using System.ServiceProcess;
-using System.Configuration;
+﻿using System.Configuration;
+using System.ServiceProcess;
 using EntityFX.Gdcame.Utils.ServiceStarter.NotifyConsumer;
 
-namespace EntityFX.EconomicsArcade.Utils.ServiceHost.NotifyConsumer.Temp
+namespace EntityFX.GdCame.Utils.WindowsHostSrv.NotifyConsumer
 {
     static class Program
     {

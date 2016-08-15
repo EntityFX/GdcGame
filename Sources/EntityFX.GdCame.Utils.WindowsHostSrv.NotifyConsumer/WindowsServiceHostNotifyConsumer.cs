@@ -1,30 +1,30 @@
 ﻿using System.Diagnostics;
 using System.ServiceProcess;
-using EntityFX.Gdcame.Utils.ServiceStarter.Manager;
+using EntityFX.Gdcame.Utils.ServiceStarter.NotifyConsumer;
 
-namespace EntityFX.EconomicsArcade.Utils.ServiceHost.Mananger.WindowsSrv
+namespace EntityFX.GdCame.Utils.WindowsHostSrv.NotifyConsumer
 {
-    public partial class WindowsServiceHostManager : ServiceBase
+    public partial class WindowsServiceHostNotifyConsumer : ServiceBase
     {
-        ManagerStarter _managerStarter;
+        NotifyConsumerStarter _notifyConsumerStarter;
 
-        public WindowsServiceHostManager(ManagerStarter managerStarter)
+        public WindowsServiceHostNotifyConsumer(NotifyConsumerStarter notifyConsumerStarter)
         {
             InitializeComponent();
 
-            _managerStarter = managerStarter;
+            _notifyConsumerStarter = notifyConsumerStarter;
         }
 
         protected override void OnStart(string[] args)
         {
-            _managerStarter.StartServices();
+            _notifyConsumerStarter.StartServices();
 
             AddLog("Service " + this.ServiceName + " is started");
         }
 
         protected override void OnStop()
         {
-            _managerStarter.StopServices();
+            _notifyConsumerStarter.StopServices();
 
             AddLog("Service " + this.ServiceName + " is stoped");
         }

@@ -2,7 +2,7 @@
 using System.ServiceProcess;
 using EntityFX.Gdcame.Utils.ServiceStarter.DataAccess;
 
-namespace EntityFX.EconomicsArcade.Utils.ServiceHost.DataAccess.WindowsSrv
+namespace EntityFX.GdCame.Utils.WindowsHostSrv.DataAccess
 {
     public partial class WindowsServiceHostDataAccess : ServiceBase
     {

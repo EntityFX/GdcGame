@@ -1,4 +1,4 @@
-﻿namespace EntityFX.EconomicsArcade.Utils.ServiceHost.NotifyConsumer.Temp
+﻿namespace EntityFX.GdCame.Utils.WindowsHostSrv.NotifyConsumer
 {
     partial class ProjectInstaller
     {

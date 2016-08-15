@@ -1,6 +1,6 @@
-﻿namespace EntityFX.EconomicsArcade.Utils.ServiceHost.DataAccess.WindowsSrv
+﻿namespace EntityFX.GdCame.Utils.WindowsHostSrv.Manager
 {
-    partial class WindowsServiceHostDataAccess
+    partial class WindowsServiceHostManager
     {
         /// <summary> 
         /// Required designer variable.
@@ -31,9 +31,9 @@
             this.eventLogMain = new System.Diagnostics.EventLog();
             ((System.ComponentModel.ISupportInitialize)(this.eventLogMain)).BeginInit();
             // 
-            // Service_ServiceHost_DataAccess
+            // Service_ServiceHost_Manager
             // 
-            this.ServiceName = "EntityFX.EconomicsArcade.Utils.ServiceHost.DataAccess.WindowsSrv";
+            this.ServiceName = "EntityFX.EconomicsArcade.Utils.ServiceHost.Manager.WindowsSrv";
             ((System.ComponentModel.ISupportInitialize)(this.eventLogMain)).EndInit();
 
         }

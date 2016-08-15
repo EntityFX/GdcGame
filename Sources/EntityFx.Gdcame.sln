@@ -43,12 +43,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notify Consumer Layer", "No
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WindowsHost", "WindowsHost", "{7E755489-4971-4475-8018-CE2ACC8D182D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.EconomicsArcade.Utils.ServiceHost.DataAccess.WindowsSrv", "EntityFX.EconomicsArcade.Utils.ServiceHost.DataAccess.WindowsSrv\EntityFX.EconomicsArcade.Utils.ServiceHost.DataAccess.WindowsSrv.csproj", "{E9168948-DCE6-4FBC-81E5-1B85419BC0EE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.EconomicsArcade.Utils.ServiceHost.Manager.WindowsSrv", "EntityFX.EconomicsArcade.Utils.ServiceHost.Manager.WindowsSrv\EntityFX.EconomicsArcade.Utils.ServiceHost.Manager.WindowsSrv.csproj", "{D9F1BFE6-F564-4401-97D1-45758359B432}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.EconomicsArcade.Utils.ServiceHost.NotifyConsumer.WindowsSrv", "EntityFX.EconomicsArcade.Utils.ServiceHost.NotifyConsumer.WindowsSrv\EntityFX.EconomicsArcade.Utils.ServiceHost.NotifyConsumer.WindowsSrv.csproj", "{E5B88D3E-F8F5-4DDE-81D2-6381CF3FD3EA}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.GdCame.Test.MultiClientManager", "EntityFX.GdCame.Test.MultiClientManager\EntityFX.GdCame.Test.MultiClientManager.csproj", "{6BA728A2-4566-4D55-AFA0-E52E5D749287}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "EntityFX.Gdcame.Database.MsSql", "EntityFX.Gdcame.Database.MsSql\EntityFX.Gdcame.Database.MsSql.sqlproj", "{4FF756A4-148E-4E5D-8AAF-7558660F621E}"
@@ -137,6 +131,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Infrastruct
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.DataAccess.Repository.Contract", "EntityFX.Gdcame.DataAccess.Repository.Contract\EntityFX.Gdcame.DataAccess.Repository.Contract.csproj", "{C1B1F481-6E3E-464C-A983-CB56AD430C1D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.GdCame.Utils.WindowsHostSrv.DataAccess", "EntityFX.GdCame.Utils.WindowsHostSrv.DataAccess\EntityFX.GdCame.Utils.WindowsHostSrv.DataAccess.csproj", "{E9168948-DCE6-4FBC-81E5-1B85419BC0EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.GdCame.Utils.WindowsHostSrv.Manager", "EntityFX.GdCame.Utils.WindowsHostSrv.Manager\EntityFX.GdCame.Utils.WindowsHostSrv.Manager.csproj", "{D9F1BFE6-F564-4401-97D1-45758359B432}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.GdCame.Utils.WindowsHostSrv.NotifyConsumer", "EntityFX.GdCame.Utils.WindowsHostSrv.NotifyConsumer\EntityFX.GdCame.Utils.WindowsHostSrv.NotifyConsumer.csproj", "{E5B88D3E-F8F5-4DDE-81D2-6381CF3FD3EA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -151,18 +151,6 @@ Global
 		{3DE430F2-1610-49C3-9EAF-E1238F149C3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DE430F2-1610-49C3-9EAF-E1238F149C3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3DE430F2-1610-49C3-9EAF-E1238F149C3D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E9168948-DCE6-4FBC-81E5-1B85419BC0EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E9168948-DCE6-4FBC-81E5-1B85419BC0EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E9168948-DCE6-4FBC-81E5-1B85419BC0EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E9168948-DCE6-4FBC-81E5-1B85419BC0EE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D9F1BFE6-F564-4401-97D1-45758359B432}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D9F1BFE6-F564-4401-97D1-45758359B432}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D9F1BFE6-F564-4401-97D1-45758359B432}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D9F1BFE6-F564-4401-97D1-45758359B432}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E5B88D3E-F8F5-4DDE-81D2-6381CF3FD3EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E5B88D3E-F8F5-4DDE-81D2-6381CF3FD3EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E5B88D3E-F8F5-4DDE-81D2-6381CF3FD3EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E5B88D3E-F8F5-4DDE-81D2-6381CF3FD3EA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6BA728A2-4566-4D55-AFA0-E52E5D749287}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6BA728A2-4566-4D55-AFA0-E52E5D749287}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6BA728A2-4566-4D55-AFA0-E52E5D749287}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -333,6 +321,18 @@ Global
 		{C1B1F481-6E3E-464C-A983-CB56AD430C1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1B1F481-6E3E-464C-A983-CB56AD430C1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1B1F481-6E3E-464C-A983-CB56AD430C1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9168948-DCE6-4FBC-81E5-1B85419BC0EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9168948-DCE6-4FBC-81E5-1B85419BC0EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9168948-DCE6-4FBC-81E5-1B85419BC0EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9168948-DCE6-4FBC-81E5-1B85419BC0EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9F1BFE6-F564-4401-97D1-45758359B432}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9F1BFE6-F564-4401-97D1-45758359B432}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9F1BFE6-F564-4401-97D1-45758359B432}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9F1BFE6-F564-4401-97D1-45758359B432}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5B88D3E-F8F5-4DDE-81D2-6381CF3FD3EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5B88D3E-F8F5-4DDE-81D2-6381CF3FD3EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5B88D3E-F8F5-4DDE-81D2-6381CF3FD3EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5B88D3E-F8F5-4DDE-81D2-6381CF3FD3EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -343,9 +343,6 @@ Global
 		{3DE430F2-1610-49C3-9EAF-E1238F149C3D} = {D150B452-1254-4C2D-90DA-27765E2C7C0B}
 		{A76DA6B5-F5DC-4E1F-8B1B-E89BA8216229} = {D150B452-1254-4C2D-90DA-27765E2C7C0B}
 		{7E755489-4971-4475-8018-CE2ACC8D182D} = {2B7D0649-6899-491F-B4E7-70D163B1F72D}
-		{E9168948-DCE6-4FBC-81E5-1B85419BC0EE} = {7E755489-4971-4475-8018-CE2ACC8D182D}
-		{D9F1BFE6-F564-4401-97D1-45758359B432} = {7E755489-4971-4475-8018-CE2ACC8D182D}
-		{E5B88D3E-F8F5-4DDE-81D2-6381CF3FD3EA} = {7E755489-4971-4475-8018-CE2ACC8D182D}
 		{6BA728A2-4566-4D55-AFA0-E52E5D749287} = {D150B452-1254-4C2D-90DA-27765E2C7C0B}
 		{4FF756A4-148E-4E5D-8AAF-7558660F621E} = {71152D90-9B19-442E-AD44-F385A35B4DD2}
 		{0932D8B3-29EB-4546-987A-B246421A9B87} = {71152D90-9B19-442E-AD44-F385A35B4DD2}
@@ -390,5 +387,8 @@ Global
 		{7D6673BB-1844-4983-9372-829DA9D3A994} = {F8FED8D2-E9CC-484B-9794-C60B0191CF7C}
 		{E92BA217-1681-453A-AEF8-888028A12070} = {F8FED8D2-E9CC-484B-9794-C60B0191CF7C}
 		{C1B1F481-6E3E-464C-A983-CB56AD430C1D} = {71152D90-9B19-442E-AD44-F385A35B4DD2}
+		{E9168948-DCE6-4FBC-81E5-1B85419BC0EE} = {7E755489-4971-4475-8018-CE2ACC8D182D}
+		{D9F1BFE6-F564-4401-97D1-45758359B432} = {7E755489-4971-4475-8018-CE2ACC8D182D}
+		{E5B88D3E-F8F5-4DDE-81D2-6381CF3FD3EA} = {7E755489-4971-4475-8018-CE2ACC8D182D}
 	EndGlobalSection
 EndGlobal

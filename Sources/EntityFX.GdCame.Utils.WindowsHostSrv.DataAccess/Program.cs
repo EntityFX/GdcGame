@@ -1,8 +1,8 @@
-﻿using System.ServiceProcess;
-using System.Configuration;
+﻿using System.Configuration;
+using System.ServiceProcess;
 using EntityFX.Gdcame.Utils.ServiceStarter.DataAccess;
 
-namespace EntityFX.EconomicsArcade.Utils.ServiceHost.DataAccess.WindowsSrv
+namespace EntityFX.GdCame.Utils.WindowsHostSrv.DataAccess
 {
     static class Program
     {

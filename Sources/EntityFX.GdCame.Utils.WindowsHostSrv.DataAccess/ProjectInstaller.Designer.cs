@@ -1,4 +1,4 @@
-﻿namespace EntityFX.EconomicsArcade.Utils.ServiceHost.Mananger.WindowsSrv
+﻿namespace EntityFX.GdCame.Utils.WindowsHostSrv.DataAccess
 {
     partial class ProjectInstaller
     {
@@ -35,11 +35,13 @@
             // 
             this.serviceProcessInstallerMain.Password = null;
             this.serviceProcessInstallerMain.Username = null;
+            this.serviceProcessInstallerMain.AfterInstall += new System.Configuration.Install.InstallEventHandler(this.serviceProcessInstallerMain_AfterInstall);
             // 
             // serviceInstallerMain
             // 
-            this.serviceInstallerMain.ServiceName = "EntityFX.EconomicsArcade.Utils.ServiceHost.Manager.WindowsSrv";
+            this.serviceInstallerMain.ServiceName = "EntityFX.EconomicsArcade.Utils.ServiceHost.DataAccess.WindowsSrv";
             this.serviceInstallerMain.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
+            this.serviceInstallerMain.AfterInstall += new System.Configuration.Install.InstallEventHandler(this.serviceInstallerMain_AfterInstall);
             // 
             // ProjectInstaller
             // 

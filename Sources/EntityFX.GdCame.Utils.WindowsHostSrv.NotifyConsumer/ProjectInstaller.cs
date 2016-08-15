@@ -1,13 +1,11 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Configuration.Install;
 using System.Configuration;
-using System.Reflection;
+using System.Configuration.Install;
 using System.Messaging;
+using System.Reflection;
 
-
-
-namespace EntityFX.EconomicsArcade.Utils.ServiceHost.NotifyConsumer.Temp
+namespace EntityFX.GdCame.Utils.WindowsHostSrv.NotifyConsumer
 {
     [RunInstaller(true)]
     public partial class ProjectInstaller : System.Configuration.Install.Installer

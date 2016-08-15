@@ -1,11 +1,11 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Configuration;
 using System.Configuration.Install;
 using System.Messaging;
-using System.Configuration;
 using System.Reflection;
 
-namespace EntityFX.EconomicsArcade.Utils.ServiceHost.DataAccess.WindowsSrv
+namespace EntityFX.GdCame.Utils.WindowsHostSrv.DataAccess
 {
     [RunInstaller(true)]
     public partial class ProjectInstaller : System.Configuration.Install.Installer
