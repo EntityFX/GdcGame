@@ -3,12 +3,12 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Timers;
-using EntityFx.EconomicsArcade.Test.Shared;
 using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.GameEngine.Contract;
 using EntityFX.Gdcame.GameEngine.Contract.Items;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFx.Gdcame.TestApplication.UssrSimulator;
+using EntityFx.GdCame.Test.Shared;
 using Timer = System.Timers.Timer;
 
 namespace EntityFx.Gdcame.TestApplication

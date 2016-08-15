@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
-using EntityFx.EconomicsArcade.Test.Shared;
+using EntityFx.GdCame.Test.Shared;
 using EntityFX.Gdcame.Manager.Contract;
 using EntityFX.Gdcame.Manager.Contract.AdminManager;
 using EntityFX.Gdcame.Manager.Contract.GameManager;

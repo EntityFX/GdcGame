@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{F8FED8D2-E9CC-484B-9794-C60B0191CF7C}"
 EndProject
@@ -19,9 +19,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utils", "Utils", "{2B7D0649
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ConsoleHost", "ConsoleHost", "{2B3C3D7D-D36A-47E8-9395-DB1AA2D271EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.EconomicsArcade.Test.EntityTest", "EntityFX.EconomicsArcade.Test.EntityTest\EntityFX.EconomicsArcade.Test.EntityTest.csproj", "{6A8CFFC2-2467-4C6E-93DC-6C76B43E0180}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.GdCame.Test.Entity", "EntityFX.GdCame.Test.Entity\EntityFX.GdCame.Test.Entity.csproj", "{6A8CFFC2-2467-4C6E-93DC-6C76B43E0180}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.EconomicsArcade.Test.DataAccessTest", "EntityFX.EconomicsArcade.Test.DataAccessTest\EntityFX.EconomicsArcade.Test.DataAccessTest.csproj", "{3DE430F2-1610-49C3-9EAF-E1238F149C3D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.GdCame.Test.DataAccess", "EntityFX.GdCame.Test.DataAccess\EntityFX.GdCame.Test.DataAccess.csproj", "{3DE430F2-1610-49C3-9EAF-E1238F149C3D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{2ECE9623-BD00-47BF-A617-3104D0E03486}"
 EndProject
@@ -34,9 +34,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{E9B9F1
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{A76DA6B5-F5DC-4E1F-8B1B-E89BA8216229}"
 	ProjectSection(SolutionItems) = preProject
-		EntityFX.EconomicsArcade.Test.Shared\ContainerBootstrapper.cs = EntityFX.EconomicsArcade.Test.Shared\ContainerBootstrapper.cs
-		EntityFX.EconomicsArcade.Test.Shared\GameRunnerBase.cs = EntityFX.EconomicsArcade.Test.Shared\GameRunnerBase.cs
-		EntityFX.EconomicsArcade.Test.Shared\PrettyConsole.cs = EntityFX.EconomicsArcade.Test.Shared\PrettyConsole.cs
+		EntityFX.Gdcame.Test.Shared\ContainerBootstrapper.cs = EntityFX.Gdcame.Test.Shared\ContainerBootstrapper.cs
+		EntityFX.GdCame.Test.Shared\GameRunnerBase.cs = EntityFX.GdCame.Test.Shared\GameRunnerBase.cs
+		EntityFX.GdCame.Test.Shared\PrettyConsole.cs = EntityFX.GdCame.Test.Shared\PrettyConsole.cs
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notify Consumer Layer", "Notify Consumer Layer", "{5FB81BA3-44E9-4E51-B46D-7EF7BB4C87C1}"
@@ -49,7 +49,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.EconomicsArcade.Ut
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.EconomicsArcade.Utils.ServiceHost.NotifyConsumer.WindowsSrv", "EntityFX.EconomicsArcade.Utils.ServiceHost.NotifyConsumer.WindowsSrv\EntityFX.EconomicsArcade.Utils.ServiceHost.NotifyConsumer.WindowsSrv.csproj", "{E5B88D3E-F8F5-4DDE-81D2-6381CF3FD3EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.EconomicsArcade.Test.MultiClientManagerTest", "EntityFX.EconomicsArcade.Test.MultiClientManagerTest\EntityFX.EconomicsArcade.Test.MultiClientManagerTest.csproj", "{6BA728A2-4566-4D55-AFA0-E52E5D749287}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.GdCame.Test.MultiClientManager", "EntityFX.GdCame.Test.MultiClientManager\EntityFX.GdCame.Test.MultiClientManager.csproj", "{6BA728A2-4566-4D55-AFA0-E52E5D749287}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "EntityFX.Gdcame.Database.MsSql", "EntityFX.Gdcame.Database.MsSql\EntityFX.Gdcame.Database.MsSql.sqlproj", "{4FF756A4-148E-4E5D-8AAF-7558660F621E}"
 EndProject
