@@ -1,6 +1,6 @@
 ﻿using System;
-using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.DataAccess.Contract.GameData;
+using EntityFX.Gdcame.DataAccess.Contract.GameData.Store;
 using EntityFX.Gdcame.Infrastructure.Service.Bases;
 
 namespace EntityFX.Gdcame.Utils.ClientProxy.DataAccess

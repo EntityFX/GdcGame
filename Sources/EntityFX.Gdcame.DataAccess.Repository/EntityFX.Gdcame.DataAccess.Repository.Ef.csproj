@@ -104,9 +104,9 @@
       <Project>{0932D8B3-29EB-4546-987A-B246421A9B87}</Project>
       <Name>EntityFX.Gdcame.DataAccess.Contract</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Model\EntityFX.Gdcame.DataAccess.Model.csproj">
+    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Model.Ef\EntityFX.Gdcame.DataAccess.Model.Ef.csproj">
       <Project>{DE1D1C25-F30A-461C-B572-00BFA1C7161E}</Project>
-      <Name>EntityFX.Gdcame.DataAccess.Model</Name>
+      <Name>EntityFX.Gdcame.DataAccess.Model.Ef</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Repository.Contract\EntityFX.Gdcame.DataAccess.Repository.Contract.csproj">
       <Project>{C1B1F481-6E3E-464C-A983-CB56AD430C1D}</Project>

@@ -1,5 +1,4 @@
 ﻿using EntityFX.Gdcame.DataAccess.Contract.User;
-using EntityFX.Gdcame.DataAccess.Repository;
 using EntityFX.Gdcame.DataAccess.Repository.Contract;
 using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.User;
 

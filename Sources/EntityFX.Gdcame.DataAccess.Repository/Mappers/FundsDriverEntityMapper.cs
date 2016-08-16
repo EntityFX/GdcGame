@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using EntityFX.Gdcame.Common.Contract.Incrementors;
 using EntityFX.Gdcame.Common.Contract.Items;
-using EntityFX.Gdcame.DataAccess.Model;
+using EntityFX.Gdcame.DataAccess.Model.Ef;
 using EntityFX.Gdcame.Infrastructure.Common;
 
 namespace EntityFX.Gdcame.DataAccess.Repository.Ef.Mappers

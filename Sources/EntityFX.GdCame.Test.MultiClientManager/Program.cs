@@ -10,7 +10,7 @@ using EntityFX.Gdcame.Manager.Contract.SessionManager;
 using EntityFX.Gdcame.Manager.Contract.UserManager;
 using Microsoft.Practices.Unity;
 
-namespace EntityFX.Gdcame.Test.MultiClientManager
+namespace EntityFX.GdCame.Test.MultiClientManager
 {
     class Program
     {

@@ -3,6 +3,7 @@ using System.Configuration;
 using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.Common.Presentation.Model;
 using EntityFX.Gdcame.DataAccess.Contract.GameData;
+using EntityFX.Gdcame.DataAccess.Contract.GameData.Store;
 using EntityFX.Gdcame.DataAccess.Contract.User;
 using EntityFX.Gdcame.DataAccess.Service;
 using EntityFX.Gdcame.GameEngine.Contract;
@@ -20,10 +21,9 @@ using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
 using PortableLog.NLog;
 using ContainerBootstrapper = EntityFX.Gdcame.DataAccess.Repository.Ef.ContainerBootstrapper;
-using EntityFX.Gdcame.Manager.Mappers;
-using EntityFX.Gdcame.GameEngine.Mappers;
 using EntityFX.Gdcame.GameEngine.Contract.Counters;
 using EntityFX.Gdcame.GameEngine.Contract.Incrementors;
+using EntityFX.Gdcame.Manager.Mappers.Store;
 
 namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
 {

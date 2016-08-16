@@ -1,8 +1,8 @@
 ﻿using System;
-using EntityFX.Gdcame.DataAccess.Model;
+using EntityFX.Gdcame.DataAccess.Model.Ef;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace EntityFX.GdCame.Test.Entity
+namespace EntityFX.Gdcame.Test.Entity
 {
     [TestClass]
     public class UserEntityTest

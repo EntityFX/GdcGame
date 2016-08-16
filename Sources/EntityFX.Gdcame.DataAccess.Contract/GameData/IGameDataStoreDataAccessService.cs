@@ -1,4 +1,5 @@
 ﻿using System.ServiceModel;
+using EntityFX.Gdcame.DataAccess.Contract.GameData.Store;
 
 namespace EntityFX.Gdcame.DataAccess.Contract.GameData
 {

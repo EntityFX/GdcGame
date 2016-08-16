@@ -1,5 +1,5 @@
 ﻿using EntityFX.Gdcame.DataAccess.Contract.User;
-using EntityFX.Gdcame.DataAccess.Model;
+using EntityFX.Gdcame.DataAccess.Model.Ef;
 using EntityFX.Gdcame.Infrastructure.Common;
 
 namespace EntityFX.Gdcame.DataAccess.Repository.Ef.Mappers

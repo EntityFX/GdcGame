@@ -3,7 +3,7 @@ using EntityFX.Gdcame.Infrastructure.Service.NetTcp;
 using EntityFX.Gdcame.Utils.ClientProxy.DataAccess;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace EntityFX.Gdcame.Test.DataAccess
+namespace EntityFX.GdCame.Test.DataAccess
 {
     [TestClass]
     public class UserRepositoryTest

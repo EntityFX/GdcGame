@@ -1,6 +1,6 @@
 ﻿using System.Data.Entity;
 
-namespace EntityFX.Gdcame.Infrastructure.Repository.Query
+namespace EntityFX.Gdcame.Infrastructure.Repository.EF
 {
     public abstract class QueryBase
     {

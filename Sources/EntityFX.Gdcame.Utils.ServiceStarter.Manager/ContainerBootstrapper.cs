@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Configuration;
-using EntityFX.EconomicsArcade.Utils.ClientProxy.NotifyConsumer;
 using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.DataAccess.Contract.GameData;
+using EntityFX.Gdcame.DataAccess.Contract.GameData.Store;
 using EntityFX.Gdcame.DataAccess.Contract.User;
 using EntityFX.Gdcame.GameEngine.Contract;
 using EntityFX.Gdcame.GameEngine.Contract.Items;
@@ -15,6 +15,7 @@ using EntityFX.Gdcame.Infrastructure.Service.Windows.NetMsmq;
 using EntityFX.Gdcame.Manager;
 using EntityFX.Gdcame.NotifyConsumer.Contract;
 using EntityFX.Gdcame.Utils.ClientProxy.DataAccess;
+using EntityFX.Gdcame.Utils.ClientProxy.NotifyConsumer;
 using EntityFX.Gdcame.Utils.Common;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;

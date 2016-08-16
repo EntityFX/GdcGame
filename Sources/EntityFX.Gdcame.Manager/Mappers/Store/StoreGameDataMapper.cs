@@ -1,11 +1,9 @@
-﻿using EntityFX.Gdcame.Common.Contract;
-using EntityFX.Gdcame.DataAccess.Contract.GameData;
+﻿using EntityFX.Gdcame.DataAccess.Contract.GameData.Store;
 using EntityFX.Gdcame.GameEngine.Contract;
 using EntityFX.Gdcame.GameEngine.Contract.Counters;
 using EntityFX.Gdcame.Infrastructure.Common;
-using CounterBase = EntityFX.Gdcame.Common.Contract.Counters.CounterBase;
 
-namespace EntityFX.Gdcame.GameEngine.Mappers
+namespace EntityFX.Gdcame.Manager.Mappers.Store
 {
     public class StoreGameDataMapper : IMapper<IGame, StoredGameData>
     {
@@ -34,7 +32,7 @@ namespace EntityFX.Gdcame.GameEngine.Mappers
                 var sourcenGenericCounter = sourceCounter.Value as GenericCounter;
                 if (sourcenGenericCounter != null)
                 {
-                    var destinationGenericCounter = new EntityFX.Gdcame.DataAccess.Contract.GameData.StoredGenericCounter
+                    var destinationGenericCounter = new StoredGenericCounter
                     {
                         BonusPercent = sourcenGenericCounter.BonusPercentage,
                         Inflation = sourcenGenericCounter.Inflation,
@@ -45,12 +43,12 @@ namespace EntityFX.Gdcame.GameEngine.Mappers
                 var sourceSingleCounter = sourceCounter.Value as SingleCounter;
                 if (sourceSingleCounter != null)
                 {
-                    destinationCouner = new EntityFX.Gdcame.DataAccess.Contract.GameData.StoredSingleCounter();
+                    destinationCouner = new StoredSingleCounter();
                 }
                 var sourceDelayedCounter = sourceCounter.Value as DelayedCounter;
                 if (sourceDelayedCounter != null)
                 {
-                    var destinationDelayedCounter = new EntityFX.Gdcame.DataAccess.Contract.GameData.StoredDelayedCounter()
+                    var destinationDelayedCounter = new StoredDelayedCounter()
                     {
                         SecondsRemaining = sourceDelayedCounter.SecondsRemaining,
                         DelayedValue = sourceDelayedCounter.SubValue

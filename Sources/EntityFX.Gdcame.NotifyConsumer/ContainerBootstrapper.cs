@@ -1,5 +1,4 @@
-﻿using System;
-using EntityFX.Gdcame.Common.Contract;
+﻿using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.Common.Contract.Counters;
 using EntityFX.Gdcame.Common.Contract.Items;
 using EntityFX.Gdcame.Common.Presentation.Model;
@@ -7,7 +6,6 @@ using EntityFX.Gdcame.Common.Presentation.Model.Mappers;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.NotifyConsumer.Contract;
 using EntityFX.Gdcame.NotifyConsumer.Signalr;
-using Microsoft.AspNet.SignalR;
 using Microsoft.Practices.Unity;
 
 namespace EntityFX.Gdcame.NotifyConsumer
