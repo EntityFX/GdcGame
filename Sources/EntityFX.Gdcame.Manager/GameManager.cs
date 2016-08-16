@@ -21,19 +21,22 @@ namespace EntityFX.Gdcame.Manager
         private readonly IMapper<Item, Common.Contract.Items.Item> _fundsDriverContractMapper;
         private readonly IMapper<ManualStepResult, Contract.GameManager.ManualStepResult> _manualStepResultMapper;
 
+        private readonly IMapperFactory _mapperFactory;
+
         public GameManager(ILogger logger, IOperationContextHelper operationContextHelper,GameSessions gameSessions
-            , IMapper<IGame, GameData> gameDataContractMapper
-            , IMapper<GameCash, Common.Contract.Counters.Cash> countersContractMapper
-            , IMapper<Item, Common.Contract.Items.Item> fundsDriverContractMapper
-            , IMapper<ManualStepResult, Contract.GameManager.ManualStepResult> manualStepResultMapper)
+            , IMapperFactory mapperFactory
+            )            
         {
             _logger = logger;
             _operationContextHelper = operationContextHelper;
             _gameSessions = gameSessions;
-            _gameDataContractMapper = gameDataContractMapper;
-            _countersContractMapper = countersContractMapper;
-            _fundsDriverContractMapper = fundsDriverContractMapper;
-            _manualStepResultMapper = manualStepResultMapper;
+
+            _mapperFactory = mapperFactory;
+
+            _gameDataContractMapper = _mapperFactory.Build<IGame, GameData>();
+            _countersContractMapper = _mapperFactory.Build<GameCash, Common.Contract.Counters.Cash>();
+            _fundsDriverContractMapper = _mapperFactory.Build<Item, Common.Contract.Items.Item>();
+            _manualStepResultMapper = _mapperFactory.Build<ManualStepResult, Contract.GameManager.ManualStepResult>();
         }
 
         public BuyFundDriverResult BuyFundDriver(int fundDriverId)

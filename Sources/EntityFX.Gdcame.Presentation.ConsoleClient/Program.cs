@@ -32,6 +32,7 @@ namespace EntityFX.Gdcame.Presentation.ConsoleClient
                 }
             }
             _container = new UnityContainer();
+            isCollapsed = false;
             var containerBootstrapper = new ContainerBootstrapper(isCollapsed).Configure(_container);
             MainLoop(listArgs);
             //Console.ReadKey();
@@ -49,7 +50,7 @@ namespace EntityFX.Gdcame.Presentation.ConsoleClient
             var simpleUserManagerClient = _container.Resolve<ISimpleUserManager>();
             if (!simpleUserManagerClient.Exists(userName))
             {
-                simpleUserManagerClient.Create(new UserData() {Login = userName});
+                simpleUserManagerClient.Create(new UserData() { Login = userName });
             }
 
             var sessionManagerClient = _container.Resolve<ISessionManager>(new ParameterOverride("sessionGuid", Guid.Empty));
@@ -99,7 +100,7 @@ namespace EntityFX.Gdcame.Presentation.ConsoleClient
                     {
                         gr.PerformManualStep();
                     }
-                    else if ((int) keyInfo.Key >= 65 && (int) keyInfo.Key <= 90)
+                    else if ((int)keyInfo.Key >= 65 && (int)keyInfo.Key <= 90)
                     {
                         gr.BuyFundDriver(keyInfo);
                     }
@@ -120,7 +121,7 @@ namespace EntityFX.Gdcame.Presentation.ConsoleClient
                         ac.StartMenu();
 
                         gr.Invalidate();
-                    }                   
+                    }
                     else if (keyInfo.Key == ConsoleKey.F3)
                     {
                         UserLogout(_sessionGuid);

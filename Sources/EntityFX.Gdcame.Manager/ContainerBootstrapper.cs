@@ -50,7 +50,7 @@ namespace EntityFX.Gdcame.Manager
             container.RegisterType<IMapper<IGame, StoredGameData>, StoreGameDataMapper>("StoreGameDataMapper");
             /////
 
-
+            container.RegisterType<IMapperFactory, MapperFactory>();
 
 
             container.RegisterType<ISessionManager, SessionManager>(

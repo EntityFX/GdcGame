@@ -37,6 +37,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="IMapperFactory.cs" />
+    <Compile Include="MapperFactory.cs" />
     <Compile Include="IConfigurationProvider.cs" />
     <Compile Include="IContainerBootstrapper.cs" />
     <Compile Include="ILogger.cs" />
