@@ -13,7 +13,6 @@ namespace EntityFX.Gdcame.NotifyConsumer.Signalr
     {
         private readonly ILogger _logger;
         private readonly IConnections _connections;
-        private readonly IMapper<GameData, GameDataModel> _gameDataModelMapper;
 
         public GameDataHub(ILogger logger, IConnections connections)
         {

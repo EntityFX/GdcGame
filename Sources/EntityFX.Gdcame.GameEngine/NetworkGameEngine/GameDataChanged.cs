@@ -19,24 +19,25 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
         private readonly IMapper<IGame, GameData> _gameDataRefreshMapper;
         private readonly IMapper<Item, StoredItem> _fundsDriverPersistMapper;
         private readonly IMapper<Item, Common.Contract.Items.Item> _fundsDriverRefreshMapper;
+        private readonly IMapperFactory _mapperFactory;
         private readonly INotifyConsumerClientFactory _notifyConsumerService;
 
         public NotifyGameDataChanged(int userId
             , string userName
             , IGameDataStoreDataAccessService gameDataStoreDataAccessService
-            , IMapper<IGame, StoredGameData> gameDataPersistMapper
-            , IMapper<IGame, GameData> gameDataRefreshMapper
-            , IMapper<Item, StoredItem> fundsDriverPersistMapper
-            , IMapper<Item, Common.Contract.Items.Item> fundsDriverRefreshMapper
+            , IMapperFactory mapperFactory
             , INotifyConsumerClientFactory notifyConsumerService)
         {
             _userId = userId;
             _userName = userName;
             _gameDataStoreDataAccessService = gameDataStoreDataAccessService;
-            _gameDataPersistMapper = gameDataPersistMapper;
-            _gameDataRefreshMapper = gameDataRefreshMapper;
-            _fundsDriverPersistMapper = fundsDriverPersistMapper;
-            _fundsDriverRefreshMapper = fundsDriverRefreshMapper;
+
+            _mapperFactory = mapperFactory;
+
+            _gameDataPersistMapper = _mapperFactory.Build<IGame, StoredGameData>("StoreGameDataMapper");
+            _gameDataRefreshMapper = _mapperFactory.Build<IGame, GameData>("GameDataMapper");
+            _fundsDriverPersistMapper = _mapperFactory.Build<Item, StoredItem>();
+            _fundsDriverRefreshMapper = _mapperFactory.Build<Item, Common.Contract.Items.Item>();
             _notifyConsumerService = notifyConsumerService;
         }
 

@@ -12,14 +12,16 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef
     public class CountersRepository : ICountersRepository
     {
         private readonly IUnitOfWorkFactory _unitOfWorkFactory;
+        private readonly IMapperFactory _mapperFactory;
         private readonly IMapper<CounterEntity, CounterBase> _counterContractMapper;
 
         public CountersRepository(IUnitOfWorkFactory unitOfWorkFactory
-            , IMapper<CounterEntity, CounterBase> counterContractMapper
+            , IMapperFactory mapperFactory
             )
         {
             _unitOfWorkFactory = unitOfWorkFactory;
-            _counterContractMapper = counterContractMapper;
+            _mapperFactory = mapperFactory;
+            _counterContractMapper = _mapperFactory.Build<CounterEntity, CounterBase>();
         }
         
         public CounterBase[] FindAll(GetAllCountersCriterion criterion)

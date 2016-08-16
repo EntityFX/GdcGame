@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Configuration;
-using EntityFX.EconomicsArcade.Utils.ClientProxy.NotifyConsumer;
 using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.Common.Presentation.Model;
 using EntityFX.Gdcame.DataAccess.Contract.GameData;
@@ -23,6 +22,8 @@ using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
 using PortableLog.NLog;
 using ContainerBootstrapper = EntityFX.Gdcame.DataAccess.Repository.Ef.ContainerBootstrapper;
+using EntityFX.Gdcame.Utils.ClientProxy.NotifyConsumer;
+using EntityFX.Gdcame.DataAccess.Contract.GameData.Store;
 
 namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
 {
@@ -45,7 +46,7 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
             container.RegisterType<ILogger>(new InjectionFactory(
                _ => new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger")))));
 
-
+            container.RegisterType<IMapperFactory, MapperFactory>();
 
             container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessClient<NetNamedPipeProxy<IGameDataRetrieveDataAccessService>>>("GameDataRetrieveDataAccessClient",
                new InjectionConstructor(
@@ -98,10 +99,7 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
                     new ResolvedParameter<int>(),
                     new ResolvedParameter<string>(),
                     new ResolvedParameter<IGameDataStoreDataAccessService>(),
-                    new ResolvedParameter<IMapper<IGame, StoredGameData>>("StoreGameDataMapper"),
-                    new ResolvedParameter<IMapper<IGame, GameData>>("GameDataMapper"),
-                                        new ResolvedParameter<IMapper<Item, StoredItem>>(),
-                    new ResolvedParameter<IMapper<Item, Gdcame.Common.Contract.Items.Item>>(),
+                    new ResolvedParameter<IMapperFactory>(),
                     new ResolvedParameter<INotifyConsumerClientFactory>()
                     )
                 );

@@ -13,13 +13,15 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef
     {
         private readonly IMapper<FundsDriverEntity, Item> _fundsDriverContractMapper;
         private readonly IUnitOfWorkFactory _unitOfWorkFactory;
+        private readonly IMapperFactory _mapperFactory;
 
         public FundsDriverRepository(IUnitOfWorkFactory unitOfWorkFactory
-            , IMapper<FundsDriverEntity, Item> fundsDriverContractMapper
+            , IMapperFactory mapperFactory
             )
         {
             _unitOfWorkFactory = unitOfWorkFactory;
-            _fundsDriverContractMapper = fundsDriverContractMapper;
+            _mapperFactory = mapperFactory;
+            _fundsDriverContractMapper = _mapperFactory.Build<FundsDriverEntity, Item>();
         }
 
 

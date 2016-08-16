@@ -13,13 +13,15 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef
     {
         private readonly IUnitOfWorkFactory _unitOfWorkFactory;
         private readonly IMapper<CustomRuleEntity, CustomRule> _customRuleMapper;
+        private readonly IMapperFactory _mapperFactory;
 
         public CustomRuleRepository(IUnitOfWorkFactory unitOfWorkFactory
-            , IMapper<CustomRuleEntity, CustomRule> customRuleMapper
+            , IMapperFactory mapperFactory
             )
         {
             _unitOfWorkFactory = unitOfWorkFactory;
-            _customRuleMapper = customRuleMapper;
+            _mapperFactory = mapperFactory;
+            _customRuleMapper = _mapperFactory.Build<CustomRuleEntity, CustomRule>();
         }
 
         public CustomRule[] FindAll(GetAllCustomRulesCriterion criterion)

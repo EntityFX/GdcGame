@@ -15,17 +15,18 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef
         private readonly IUnitOfWorkFactory _unitOfWorkFactory;
 
         private readonly IMapper<UserEntity, User> _userContractMapper;
-
         private readonly IMapper<User, UserEntity> _userEntityMapper;
 
+        private readonly IMapperFactory _mapperFactory;
+
         public UserRepository(IUnitOfWorkFactory unitOfWorkFactory
-            , IMapper<User, UserEntity> userEntityMapper
-            , IMapper<UserEntity, User> userContractMapper
+            , IMapperFactory mapperFactory
             )
         {
             _unitOfWorkFactory = unitOfWorkFactory;
-            _userEntityMapper = userEntityMapper;
-            _userContractMapper = userContractMapper;
+            _mapperFactory = mapperFactory;
+            _userEntityMapper = _mapperFactory.Build<User, UserEntity>();
+            _userContractMapper = _mapperFactory.Build<UserEntity, User>();
         }
 
         public int Create(User user)

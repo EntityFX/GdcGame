@@ -23,6 +23,7 @@ namespace EntityFX.Gdcame.Presentation.Web.Providers.Providers
         private readonly IMapper<GameData, GameDataModel> _gameDataModelMapper;
         private readonly IMapper<Cash, FundsCounterModel> _fundsCounterModelMapper;
         private readonly IMapper<BuyFundDriverResult, BuyDriverModel> _fundsDriverBuyinfoModelMapper;
+        private readonly IMapperFactory _mapperFactory;
         private readonly IGameClientFactory _gameClientFactory;
         private readonly IRatingManager _ratingManager;
 
@@ -31,18 +32,20 @@ namespace EntityFX.Gdcame.Presentation.Web.Providers.Providers
             IGameClientFactory gameClientFactory,
             ISimpleUserManager simpleUserManager,
             ISessionManagerClientFactory sessionManagerClient,
-            IMapper<GameData, GameDataModel> gameDataModelMapper,
-            IMapper<Cash, FundsCounterModel> fundsCounterModelMapper,
-            IMapper<BuyFundDriverResult, BuyDriverModel> fundsDriverBuyinfoModelMapper,
+            IMapperFactory mapperFactory,
+
             IRatingManager ratingManager
             )
         {
             _logger = logger;
             _simpleUserManager = simpleUserManager;
             _sessionManagerClient = sessionManagerClient;
-            _gameDataModelMapper = gameDataModelMapper;
-            _fundsCounterModelMapper = fundsCounterModelMapper;
-            _fundsDriverBuyinfoModelMapper = fundsDriverBuyinfoModelMapper;
+
+            _mapperFactory = mapperFactory;
+
+            _gameDataModelMapper = _mapperFactory.Build<GameData, GameDataModel>();
+            _fundsCounterModelMapper = _mapperFactory.Build<Cash, FundsCounterModel>();
+            _fundsDriverBuyinfoModelMapper = _mapperFactory.Build<BuyFundDriverResult, BuyDriverModel>();
             _gameClientFactory = gameClientFactory;
             _ratingManager = ratingManager;
         }

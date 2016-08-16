@@ -23,14 +23,11 @@ namespace EntityFX.Gdcame.DataAccess.Service
         private readonly ICountersRepository _countersRepository;
         private readonly ICustomRuleRepository _customRuleRepository;
 
-        public GameDataRetrieveDataAccessBase(
-            IFundsDriverRepository fundsDriverRepository,
-            ICountersRepository countersRepository,
-            ICustomRuleRepository customRuleRepository)
+        public GameDataRetrieveDataAccessBase(GameRepositoryFacade gameRepositoryFacade)
         {
-            _fundsDriverRepository = fundsDriverRepository;
-            _countersRepository = countersRepository;
-            _customRuleRepository = customRuleRepository;
+            _fundsDriverRepository = gameRepositoryFacade.FundsDriverRepository;
+            _countersRepository = gameRepositoryFacade.CountersRepository;
+            _customRuleRepository = gameRepositoryFacade.CustomRuleRepository;
         }
 
 
@@ -72,10 +69,8 @@ namespace EntityFX.Gdcame.DataAccess.Service
     {
         private readonly IUserGameSnapshotRepository _userGameSnapshotRepository;
 
-        public GameDataRetrieveDataAccessDocumentService(IUserGameSnapshotRepository userGameSnapshotRepository, IFundsDriverRepository fundsDriverRepository,
-    ICountersRepository countersRepository,
-    ICustomRuleRepository customRuleRepository)
-            : base(fundsDriverRepository, countersRepository, customRuleRepository)
+        public GameDataRetrieveDataAccessDocumentService(IUserGameSnapshotRepository userGameSnapshotRepository, GameRepositoryFacade gameRepositoryFacade)
+            : base(gameRepositoryFacade)
         {
             _userGameSnapshotRepository = userGameSnapshotRepository;
 

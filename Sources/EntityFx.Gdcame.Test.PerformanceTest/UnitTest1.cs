@@ -65,10 +65,7 @@ namespace EntityFx.Gdcame.Test.PerformanceTest
                     new ResolvedParameter<int>(),
                     new ResolvedParameter<string>(),
                     new ResolvedParameter<IGameDataStoreDataAccessService>(),
-                    new ResolvedParameter<IMapper<IGame, StoredGameData>>("StoreGameDataMapper"),
-                    new ResolvedParameter<IMapper<IGame, GameData>>("GameDataMapper"),
-                                        new ResolvedParameter<IMapper<Item, StoredItem>>(),
-                    new ResolvedParameter<IMapper<Item, EntityFX.Gdcame.Common.Contract.Items.Item>>(),
+                    new ResolvedParameter<IMapperFactory>(),
                     new ResolvedParameter<INotifyConsumerClientFactory>()
                     )
                 );
