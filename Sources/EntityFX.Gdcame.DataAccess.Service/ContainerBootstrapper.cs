@@ -1,5 +1,6 @@
 ﻿using EntityFX.Gdcame.DataAccess.Contract.GameData;
 using EntityFX.Gdcame.DataAccess.Contract.User;
+using EntityFX.Gdcame.DataAccess.Repository.Contract;
 using EntityFX.Gdcame.Infrastructure.Common;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
@@ -22,6 +23,15 @@ namespace EntityFX.Gdcame.DataAccess.Service
                 new InterceptionBehavior<PolicyInjectionBehavior>()
                 , new Interceptor<InterfaceInterceptor>()
                 );
+            container.RegisterType<GameRepositoryFacade>(new InjectionFactory(
+               _ => new GameRepositoryFacade()
+                        {
+                            CountersRepository = container.Resolve<ICountersRepository>(),
+                            CustomRuleRepository = container.Resolve<ICustomRuleRepository>(),
+                            FundsDriverRepository = container.Resolve<IFundsDriverRepository>()
+                        }
+                        )
+                        );
             return container;
         }
     }
