@@ -32,7 +32,6 @@ namespace EntityFX.Gdcame.Presentation.ConsoleClient
                 }
             }
             _container = new UnityContainer();
-            isCollapsed = false;
             var containerBootstrapper = new ContainerBootstrapper(isCollapsed).Configure(_container);
             MainLoop(listArgs);
             //Console.ReadKey();

@@ -27,7 +27,7 @@ namespace EntityFX.Gdcame.Manager
 
         private readonly TaskTimer _persisTimertimer;
 
-        private void GamePersistCallback(object state)
+        private void GamePersistCallback()
         {
             var sw = new Stopwatch();
             sw.Start();
@@ -42,12 +42,11 @@ namespace EntityFX.Gdcame.Manager
         {
             _logger = logger;
             _gameFactory = gameFactory;
-            _gameTimer = new TaskTimer(TimerCallback, null, 0, 1000);
-
-            _persisTimertimer = new TaskTimer(GamePersistCallback, null, 0, 30000);
+            _gameTimer = new TaskTimer(TimeSpan.FromSeconds(1), TimerCallback).Start();
+            _persisTimertimer = new TaskTimer(TimeSpan.FromSeconds(30), GamePersistCallback).Start();
         }
 
-        private void TimerCallback(object state)
+        private void TimerCallback()
         {
             var sw = new Stopwatch();
             sw.Start();

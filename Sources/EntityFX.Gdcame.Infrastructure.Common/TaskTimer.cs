@@ -5,22 +5,53 @@ using System.Threading.Tasks;
 
 namespace EntityFX.Gdcame.Infrastructure.Common
 {
-    public delegate void TimerCallback(object state);
 
-    public sealed class TaskTimer : CancellationTokenSource, IDisposable
+    public class TaskTimer
     {
-        public TaskTimer(TimerCallback callback, object state, int dueTime, int period)
+        private bool timerRunning;
+        private TimeSpan interval;
+        private Action tick;
+        private bool runOnce;
+
+        public TaskTimer(TimeSpan interval, Action tick, bool runOnce = false)
         {
-            //Contract.Assert(period == -1, "This stub implementation only supports dueTime.");
-            Task.Delay(dueTime, Token).ContinueWith((t, s) =>
-            {
-                var tuple = (Tuple<TimerCallback, object>)s;
-                tuple.Item1(tuple.Item2);
-            }, Tuple.Create(callback, state), CancellationToken.None,
-                TaskContinuationOptions.ExecuteSynchronously | TaskContinuationOptions.OnlyOnRanToCompletion,
-                TaskScheduler.Default);
+            this.interval = interval;
+            this.tick = tick;
+            this.runOnce = runOnce;
         }
 
-        public new void Dispose() { base.Cancel(); }
+        public TaskTimer Start()
+        {
+            if (!timerRunning)
+            {
+                timerRunning = true;
+                RunTimer();
+            }
+
+            return this;
+        }
+
+        public void Stop()
+        {
+            timerRunning = false;
+        }
+
+        private async Task RunTimer()
+        {
+            while (timerRunning)
+            {
+                await Task.Delay(interval);
+
+                if (timerRunning)
+                {
+                    tick();
+
+                    if (runOnce)
+                    {
+                        Stop();
+                    }
+                }
+            }
+        }
     }
 }

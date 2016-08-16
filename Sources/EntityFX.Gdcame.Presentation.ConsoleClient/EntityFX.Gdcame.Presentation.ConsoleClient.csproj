@@ -104,7 +104,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
-    <None Include="EntityFX.Gdcame.Presentation.ConsoleClient_OneMachine.cmd">
+    <None Include="EntityFX.Gdcame.Presentation.ConsoleClient_Pipe.cmd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
