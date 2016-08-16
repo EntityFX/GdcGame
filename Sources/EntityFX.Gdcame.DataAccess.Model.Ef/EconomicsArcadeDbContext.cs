@@ -1,6 +1,6 @@
 ﻿using System.Data.Entity;
 
-namespace EntityFX.Gdcame.DataAccess.Model
+namespace EntityFX.Gdcame.DataAccess.Model.Ef
 {
     public class EconomicsArcadeDbContext : DbContext
     {

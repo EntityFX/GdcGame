@@ -14,7 +14,6 @@ using EntityFX.Gdcame.Manager.Contract.RatingManager;
 using EntityFX.Gdcame.Manager.Contract.SessionManager;
 using EntityFX.Gdcame.Manager.Contract.UserManager;
 using EntityFX.Gdcame.Presentation.Web.Controller;
-using EntityFX.Gdcame.Presentation.Web.Controllers;
 using EntityFX.Gdcame.Presentation.Web.Model;
 using EntityFX.Gdcame.Presentation.Web.Model.Mappers;
 using EntityFX.Gdcame.Presentation.Web.Providers.Providers;

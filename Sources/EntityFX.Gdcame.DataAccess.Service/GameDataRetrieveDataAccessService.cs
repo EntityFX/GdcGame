@@ -6,7 +6,7 @@ using EntityFX.Gdcame.Common.Contract.Counters;
 using EntityFX.Gdcame.Common.Contract.Items;
 using EntityFX.Gdcame.Common.Contract.UserRating;
 using EntityFX.Gdcame.DataAccess.Contract.GameData;
-using EntityFX.Gdcame.DataAccess.Repository;
+using EntityFX.Gdcame.DataAccess.Contract.GameData.Store;
 using EntityFX.Gdcame.DataAccess.Repository.Contract;
 using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.Counters;
 using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.CustomRule;

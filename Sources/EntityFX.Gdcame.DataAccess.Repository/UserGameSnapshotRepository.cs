@@ -1,5 +1,5 @@
-using EntityFX.Gdcame.DataAccess.Contract.GameData;
-using EntityFX.Gdcame.DataAccess.Model;
+using EntityFX.Gdcame.DataAccess.Contract.GameData.Store;
+using EntityFX.Gdcame.DataAccess.Model.Ef;
 using EntityFX.Gdcame.DataAccess.Repository.Contract;
 using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.UserGameSnapshot;
 using EntityFX.Gdcame.Infrastructure.Repository.UnitOfWork;

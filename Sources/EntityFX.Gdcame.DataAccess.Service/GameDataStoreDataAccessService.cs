@@ -1,10 +1,7 @@
-﻿using System.Linq;
-using EntityFX.Gdcame.Common.Contract;
-using EntityFX.Gdcame.DataAccess.Contract.GameData;
-using EntityFX.Gdcame.DataAccess.Repository;
+﻿using EntityFX.Gdcame.DataAccess.Contract.GameData;
+using EntityFX.Gdcame.DataAccess.Contract.GameData.Store;
 using EntityFX.Gdcame.DataAccess.Repository.Contract;
 using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.UserGameSnapshot;
-using EntityFX.Gdcame.Infrastructure.Common;
 
 namespace EntityFX.Gdcame.DataAccess.Service
 {

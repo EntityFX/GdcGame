@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace EntityFX.Gdcame.DataAccess.Contract.GameData
+namespace EntityFX.Gdcame.DataAccess.Contract.GameData.Store
 {
     [DataContract]
     [KnownType(typeof(StoredGenericCounter))]

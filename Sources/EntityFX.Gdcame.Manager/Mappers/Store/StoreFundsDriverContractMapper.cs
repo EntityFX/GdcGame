@@ -1,11 +1,10 @@
 ﻿using System.Linq;
-using EntityFX.Gdcame.Common.Contract.Incrementors;
-using EntityFX.Gdcame.DataAccess.Contract.GameData;
+using EntityFX.Gdcame.DataAccess.Contract.GameData.Store;
 using EntityFX.Gdcame.GameEngine.Contract.Incrementors;
 using EntityFX.Gdcame.GameEngine.Contract.Items;
 using EntityFX.Gdcame.Infrastructure.Common;
 
-namespace EntityFX.Gdcame.Manager.Mappers
+namespace EntityFX.Gdcame.Manager.Mappers.Store
 {
     public class StoreFundsDriverContractMapper : IMapper<Item, StoredItem>
     {

@@ -2,8 +2,9 @@
 using System.Data.Entity;
 using System.Linq.Expressions;
 using EntityFX.Gdcame.Infrastructure.Repository.Query;
+using EntityFX.Gdcame.Infrastructure.Repository.UnitOfWork;
 
-namespace EntityFX.Gdcame.Infrastructure.Repository.UnitOfWork
+namespace EntityFX.Gdcame.Infrastructure.Repository.EF
 {
     public class EfUnitOfWork : IUnitOfWork
     {

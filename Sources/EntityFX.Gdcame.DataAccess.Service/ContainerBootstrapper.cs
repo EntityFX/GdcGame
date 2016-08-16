@@ -1,8 +1,6 @@
-﻿using EntityFX.Gdcame.Common.Contract;
-using EntityFX.Gdcame.DataAccess.Contract.GameData;
+﻿using EntityFX.Gdcame.DataAccess.Contract.GameData;
 using EntityFX.Gdcame.DataAccess.Contract.User;
 using EntityFX.Gdcame.Infrastructure.Common;
-using EntityFX.Gdcame.Utils.Common;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
 

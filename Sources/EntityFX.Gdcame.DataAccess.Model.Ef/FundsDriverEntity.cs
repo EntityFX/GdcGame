@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace EntityFX.Gdcame.DataAccess.Model
+namespace EntityFX.Gdcame.DataAccess.Model.Ef
 {
     public partial class FundsDriverEntity
     {

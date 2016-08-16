@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using EntityFX.Gdcame.DataAccess.Contract.User;
-using EntityFX.Gdcame.DataAccess.Model;
+using EntityFX.Gdcame.DataAccess.Model.Ef;
 using EntityFX.Gdcame.DataAccess.Repository.Contract;
 using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.User;
 using EntityFX.Gdcame.Infrastructure.Common;

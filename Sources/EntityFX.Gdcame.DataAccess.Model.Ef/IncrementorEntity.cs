@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace EntityFX.Gdcame.DataAccess.Model
+namespace EntityFX.Gdcame.DataAccess.Model.Ef
 {
     public partial class IncrementorEntity
     {

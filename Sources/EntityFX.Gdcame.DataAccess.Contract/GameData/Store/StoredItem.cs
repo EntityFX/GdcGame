@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Runtime.Serialization;
 
-namespace EntityFX.Gdcame.DataAccess.Contract.GameData
+namespace EntityFX.Gdcame.DataAccess.Contract.GameData.Store
 {
     public class StoredItem
     {

@@ -1,6 +1,6 @@
 ﻿using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.Common.Contract.Incrementors;
-using EntityFX.Gdcame.DataAccess.Contract.GameData;
+using EntityFX.Gdcame.DataAccess.Contract.GameData.Store;
 using EntityFX.Gdcame.GameEngine.Contract;
 using EntityFX.Gdcame.GameEngine.Contract.Counters;
 using EntityFX.Gdcame.GameEngine.Contract.Incrementors;
@@ -14,6 +14,7 @@ using EntityFX.Gdcame.Manager.Contract.RatingManager;
 using EntityFX.Gdcame.Manager.Contract.SessionManager;
 using EntityFX.Gdcame.Manager.Contract.UserManager;
 using EntityFX.Gdcame.Manager.Mappers;
+using EntityFX.Gdcame.Manager.Mappers.Store;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
 using ManualStepResult = EntityFX.Gdcame.GameEngine.Contract.ManualStepResult;

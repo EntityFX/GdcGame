@@ -86,9 +86,9 @@
     <Content Include="Readme.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Model\EntityFX.Gdcame.DataAccess.Model.csproj">
+    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Model.Ef\EntityFX.Gdcame.DataAccess.Model.Ef.csproj">
       <Project>{DE1D1C25-F30A-461C-B572-00BFA1C7161E}</Project>
-      <Name>EntityFX.Gdcame.DataAccess.Model</Name>
+      <Name>EntityFX.Gdcame.DataAccess.Model.Ef</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>
