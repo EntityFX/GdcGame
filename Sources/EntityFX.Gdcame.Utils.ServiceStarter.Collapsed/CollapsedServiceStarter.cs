@@ -18,9 +18,9 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
 {
     public class CollapsedServiceStarter : ServicesStarterBase<CollapsedContainerBootstrapper>, IServicesStarter, IDisposable
     {
-        private readonly Uri _baseUrl = new Uri("net.pipe://localhost/");
+        private readonly string _baseUrl = "net.tcp://localhost";
         private readonly Uri _baseMsmqUrl = new Uri("net.msmq://localhost/private/");
-        private readonly string _signalRHost = "http://+:8080/";
+        private readonly string _signalRHost = "http://+:8088/";
         private IDisposable _webApp;
 
         public CollapsedServiceStarter(CollapsedContainerBootstrapper bootstrapper)
@@ -30,17 +30,17 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
 
         public override void StartServices()
         {
-            AddNetNamedPipeService<IUserDataAccessService>(_baseUrl);
-            AddNetNamedPipeService<IGameDataRetrieveDataAccessService>(_baseUrl);
-            AddNetNamedPipeService<IGameDataStoreDataAccessService>(_baseMsmqUrl);
+            AddNetTcpService<IUserDataAccessService>(new Uri(_baseUrl + ":11000"));
+            AddNetTcpService<IGameDataRetrieveDataAccessService>(new Uri(_baseUrl + ":11001"));
+            AddNetTcpService<IGameDataStoreDataAccessService>(new Uri(_baseUrl + ":11002"));
 
-            AddNetNamedPipeService<ISessionManager>(_baseUrl);
-            AddNetNamedPipeService<ISimpleUserManager>(_baseUrl);
-            AddNetNamedPipeService<IRatingManager>(_baseUrl);
-            AddCustomService<GameManagerPipeServiceHost>(_baseUrl);
-            AddCustomService<AdminManagerPipeServiceHost>(_baseUrl);
+            AddNetTcpService<ISessionManager>(new Uri(_baseUrl + ":10000"));
+            AddNetTcpService<ISimpleUserManager>(new Uri(_baseUrl + ":10001"));
+            AddNetTcpService<IRatingManager>(new Uri(_baseUrl + ":10002"));
+            AddCustomService<GameManagerTcpServiceHost>(new Uri(_baseUrl + ":10003"));
+            AddCustomService<AdminManagerTcpServiceHost>(new Uri(_baseUrl + ":10004"));
 
-            AddCustomService<NotifyConsumerServiceHost>(_baseMsmqUrl);
+            AddCustomService<NotifyConsumerServiceHost>(new Uri(_baseUrl + ":10005"));
 
             _webApp = WebApp.Start(_signalRHost, builder =>
             {

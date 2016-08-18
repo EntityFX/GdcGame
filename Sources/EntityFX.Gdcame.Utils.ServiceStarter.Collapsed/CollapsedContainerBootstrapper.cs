@@ -50,7 +50,7 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
 
             container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessClient<NetNamedPipeProxy<IGameDataRetrieveDataAccessService>>>("GameDataRetrieveDataAccessClient",
                new InjectionConstructor(
-                   "net.pipe://localhost/EntityFX.Gdcame.DataAccess/EntityFX.Gdcame.DataAccess.Contract.GameData.IGameDataRetrieveDataAccessService"
+                   "net.tcp://localhost/EntityFX.Gdcame.DataAccess/EntityFX.Gdcame.DataAccess.Contract.GameData.IGameDataRetrieveDataAccessService"
                    )
                ,
                new InterceptionBehavior<PolicyInjectionBehavior>()
@@ -58,7 +58,7 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
                );
             container.RegisterType<IUserDataAccessService, UserDataAccessClient<NetNamedPipeProxy<IUserDataAccessService>>>("UserDataAccessClient",
                 new InjectionConstructor(
-                    "net.pipe://localhost/EntityFX.Gdcame.DataAccess/EntityFX.Gdcame.DataAccess.Contract.User.IUserDataAccessService"
+                    "net.tcp://localhost/EntityFX.Gdcame.DataAccess/EntityFX.Gdcame.DataAccess.Contract.User.IUserDataAccessService"
                     )
                 ,
                 new InterceptionBehavior<PolicyInjectionBehavior>()
@@ -66,7 +66,7 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
                 );
             container.RegisterType<IGameDataStoreDataAccessService, GameDataStoreDataAccessClient<NetNamedPipeProxy<IGameDataStoreDataAccessService>>>("GameDataStoreDataAccessClient",
                 new InjectionConstructor(
-                    "net.msmq://localhost/private/EntityFX.Gdcame.DataAccess.Contract.GameData.IGameDataStoreDataAccessService"
+                    "net.tcp://localhost/private/EntityFX.Gdcame.DataAccess.Contract.GameData.IGameDataStoreDataAccessService"
                     ),
                 new InterceptionBehavior<PolicyInjectionBehavior>()
                 , new Interceptor<InterfaceInterceptor>()
@@ -78,7 +78,7 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
 
             container.RegisterType<INotifyConsumerService, NotifyConsumerServiceClient<NetNamedPipeProxy<INotifyConsumerService>>>("NotifyConsumerServiceClient",
                 new InjectionConstructor(
-                    "net.msmq://localhost/private/EntityFX.Gdcame.NotifyConsumer.Contract.INotifyConsumerService"
+                    "net.tcp://localhost/private/EntityFX.Gdcame.NotifyConsumer.Contract.INotifyConsumerService"
                     )
                 , new InterceptionBehavior<PolicyInjectionBehavior>()
                 , new Interceptor<InterfaceInterceptor>()
