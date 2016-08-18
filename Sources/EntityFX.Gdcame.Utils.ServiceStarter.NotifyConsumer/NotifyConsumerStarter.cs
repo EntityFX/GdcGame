@@ -71,12 +71,10 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.NotifyConsumer
             {
             }
 
-            protected override Binding GetBinding()
+            protected override void ConfigureBinding(NetMsmqBinding binding)
             {
-                var binding = (NetMsmqBinding)base.GetBinding();
                 binding.ExactlyOnce = false;
                 binding.Durable = false;
-                return binding;
             }
         }
     }

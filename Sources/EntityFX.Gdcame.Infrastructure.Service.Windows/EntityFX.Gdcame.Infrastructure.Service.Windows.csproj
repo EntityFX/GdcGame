@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="NetMsmq\NetMsmqProxy.cs" />
     <Compile Include="NetMsmq\NetMsmqServiceHost.cs" />
+    <Compile Include="NetMsmq\NetMsmqBindingFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WindowsServiceStarter.cs" />
   </ItemGroup>

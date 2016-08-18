@@ -138,6 +138,10 @@
       <Project>{2B414418-F3D8-4528-BA9F-6FEFA8B7AA03}</Project>
       <Name>EntityFX.Gdcame.Infrastructure.Service</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Utils.ServiceStarter.NotifyConsumer\EntityFX.Gdcame.Utils.ServiceStarter.NotifyConsumer.csproj">
+      <Project>{639B148B-D38B-46FA-AEC6-B3883A114C25}</Project>
+      <Name>EntityFX.Gdcame.Utils.ServiceStarter.NotifyConsumer</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.1">

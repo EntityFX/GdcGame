@@ -1,6 +1,7 @@
-﻿using System.Diagnostics;
+﻿using EntityFX.Gdcame.Utils.ServiceStarter.Manager;
+using System.Diagnostics;
 using System.ServiceProcess;
-using EntityFX.Gdcame.Utils.ServiceStarter.Manager;
+
 
 namespace EntityFX.GdCame.Utils.WindowsHostSrv.Manager
 {

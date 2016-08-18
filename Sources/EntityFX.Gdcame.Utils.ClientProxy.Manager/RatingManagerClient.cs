@@ -7,7 +7,7 @@ using System.ServiceModel.Channels;
 namespace EntityFX.Gdcame.Utils.ClientProxy.Manager
 {
 	public class RatingManagerClient<TInfrastructureProxy> : IRatingManager
-		where TInfrastructureProxy : InfrastructureProxy<IRatingManager, Binding>, new()
+		where TInfrastructureProxy : IInfrastructureProxy<IRatingManager, Binding>, new()
     {
         private readonly Uri _endpointAddress;
 

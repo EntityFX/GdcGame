@@ -1,6 +1,7 @@
-﻿using System.Configuration;
+﻿using EntityFX.Gdcame.Utils.ServiceStarter.DataAccess;
+using System.Configuration;
 using System.ServiceProcess;
-using EntityFX.Gdcame.Utils.ServiceStarter.DataAccess;
+
 
 namespace EntityFX.GdCame.Utils.WindowsHostSrv.DataAccess
 {

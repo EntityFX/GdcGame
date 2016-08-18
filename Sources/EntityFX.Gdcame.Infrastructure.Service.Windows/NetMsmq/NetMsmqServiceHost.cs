@@ -10,7 +10,7 @@ using Microsoft.Practices.Unity;
 
 namespace EntityFX.Gdcame.Infrastructure.Service.Windows.NetMsmq
 {
-    public class NetMsmqServiceHost<T> : InfrastructureServiceHost<T>
+    public class NetMsmqServiceHost<T> : InfrastructureServiceHost<T, NetMsmqBinding>
     {
         public NetMsmqServiceHost(IUnityContainer container)
             :base(container)
@@ -18,44 +18,9 @@ namespace EntityFX.Gdcame.Infrastructure.Service.Windows.NetMsmq
 
         }
 
-        protected override Binding GetBinding()
+        protected override IBindingFactory<NetMsmqBinding> GetBindingFactory()
         {
-            var binding = new NetMsmqBinding()
-            {
-                ReceiveTimeout = new TimeSpan(0, 0, 10, 0, 0),
-                SendTimeout = new TimeSpan(0, 0, 10, 0, 0),
-                OpenTimeout = new TimeSpan(0, 0, 10, 0, 0),
-                CloseTimeout = new TimeSpan(0, 0, 10, 0, 0),
-                MaxBufferPoolSize = 500000000,
-                MaxReceivedMessageSize = 500000000,
-                UseActiveDirectory = false,
-                ExactlyOnce = true,
-                QueueTransferProtocol = System.ServiceModel.QueueTransferProtocol.Srmp,
-                Security = new NetMsmqSecurity()
-                {
-                    Transport = new MsmqTransportSecurity()
-                    {
-                        MsmqAuthenticationMode = MsmqAuthenticationMode.None, MsmqProtectionLevel = ProtectionLevel.None
-                    },
-                    Message = new MessageSecurityOverMsmq()
-                    {
-                        AlgorithmSuite = SecurityAlgorithmSuite.Basic128Sha256, ClientCredentialType = MessageCredentialType.None
-                    }
-                }
-            };
-
-            var myReaderQuotas = new XmlDictionaryReaderQuotas
-            {
-                MaxStringContentLength = int.MaxValue,
-                MaxArrayLength = int.MaxValue,
-                MaxBytesPerRead = int.MaxValue,
-                MaxDepth = int.MaxValue,
-                MaxNameTableCharCount = int.MaxValue
-            };
-
-            binding.GetType().GetProperty("ReaderQuotas").SetValue(binding, myReaderQuotas, null);
-
-            return binding;
+            return new NetMsmqBindingFactory();
         }
 
         protected override ServiceEndpoint CreateServiceEndpoint(ServiceHost serviceHost)

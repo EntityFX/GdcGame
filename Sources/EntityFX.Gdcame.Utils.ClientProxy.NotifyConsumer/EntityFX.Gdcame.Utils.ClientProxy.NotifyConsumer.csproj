@@ -50,6 +50,10 @@
       <Project>{89F89C37-F564-47EB-839D-C45ACD9D012A}</Project>
       <Name>EntityFX.Gdcame.Common.Contract</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Service.Windows\EntityFX.Gdcame.Infrastructure.Service.Windows.csproj">
+      <Project>{7D6673BB-1844-4983-9372-829DA9D3A994}</Project>
+      <Name>EntityFX.Gdcame.Infrastructure.Service.Windows</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Service\EntityFX.Gdcame.Infrastructure.Service.csproj">
       <Project>{2B414418-F3D8-4528-BA9F-6FEFA8B7AA03}</Project>
       <Name>EntityFX.Gdcame.Infrastructure.Service</Name>

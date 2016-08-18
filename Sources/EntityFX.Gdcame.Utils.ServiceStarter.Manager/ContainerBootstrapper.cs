@@ -11,7 +11,7 @@ using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Infrastructure.Service;
 using EntityFX.Gdcame.Infrastructure.Service.Interfaces;
 using EntityFX.Gdcame.Infrastructure.Service.NetTcp;
-using EntityFX.Gdcame.Infrastructure.Service.Windows.NetMsmq;
+
 using EntityFX.Gdcame.Manager;
 using EntityFX.Gdcame.NotifyConsumer.Contract;
 using EntityFX.Gdcame.Utils.ClientProxy.DataAccess;
@@ -20,6 +20,7 @@ using EntityFX.Gdcame.Utils.Common;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
 using PortableLog.NLog;
+using EntityFX.Gdcame.Infrastructure.Service.Windows.NetMsmq;
 
 namespace EntityFX.Gdcame.Utils.ServiceStarter.Manager
 {

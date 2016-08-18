@@ -25,6 +25,7 @@ namespace EntityFX.Gdcame.Infrastructure.Service.Bases
         public virtual TServiceContract CreateChannel(Uri endpointAddress)
         {
 			var binding = GetBindingFactory ().Build (null);
+            ConfigureBinding(binding);
             _channelFactory = new ChannelFactory<TServiceContract>(binding, new EndpointAddress(endpointAddress));
             _clientProxy = _channelFactory.CreateChannel();
             return _clientProxy;
@@ -58,7 +59,11 @@ namespace EntityFX.Gdcame.Infrastructure.Service.Bases
             return _clientProxy;
         }
 
-		public void CloseChannel()
+        protected virtual void ConfigureBinding(TBinding binding)
+        {
+        }
+
+        public void CloseChannel()
         {
             if (_clientProxy != null) ((IClientChannel)_clientProxy).Close();
             if (_channelFactory != null) _channelFactory.Close();

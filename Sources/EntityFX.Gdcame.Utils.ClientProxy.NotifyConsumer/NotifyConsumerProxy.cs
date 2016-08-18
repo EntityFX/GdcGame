@@ -2,6 +2,7 @@
 using System.ServiceModel.Channels;
 using EntityFX.Gdcame.NotifyConsumer.Contract;
 using EntityFX.Gdcame.Infrastructure.Service.NetTcp;
+using EntityFX.Gdcame.Infrastructure.Service.Windows.NetMsmq;
 
 namespace EntityFX.Gdcame.Utils.ClientProxy.NotifyConsumer
 {
@@ -10,14 +11,12 @@ namespace EntityFX.Gdcame.Utils.ClientProxy.NotifyConsumer
 	{
 	}
 	#else
-	public class NotifyConsumerProxy : EntityFX.Gdcame.Infrastructure.Service.Windows.NetMsmq.NetMsmqProxy<INotifyConsumerService>
+	public class NotifyConsumerProxy : NetMsmqProxy<INotifyConsumerService>
     {
-        protected override Binding GetBinding()
+        protected override void ConfigureBinding(NetMsmqBinding binding)
         {
-            var binding = (NetMsmqBinding)base.GetBinding();
             binding.Durable = false;
             binding.ExactlyOnce = false;
-            return binding;
         }
     }
 	#endif

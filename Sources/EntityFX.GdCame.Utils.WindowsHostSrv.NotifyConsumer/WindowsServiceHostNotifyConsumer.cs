@@ -1,6 +1,6 @@
-﻿using System.Diagnostics;
+﻿using EntityFX.Gdcame.Utils.ServiceStarter.NotifyConsumer;
+using System.Diagnostics;
 using System.ServiceProcess;
-using EntityFX.Gdcame.Utils.ServiceStarter.NotifyConsumer;
 
 namespace EntityFX.GdCame.Utils.WindowsHostSrv.NotifyConsumer
 {

@@ -101,6 +101,10 @@
       <Project>{2B414418-F3D8-4528-BA9F-6FEFA8B7AA03}</Project>
       <Name>EntityFX.Gdcame.Infrastructure.Service</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Utils.ServiceStarter.Manager\EntityFX.Gdcame.Utils.ServiceStarter.Manager.csproj">
+      <Project>{F025D4A4-CDC8-437D-848C-5B71A8249BD2}</Project>
+      <Name>EntityFX.Gdcame.Utils.ServiceStarter.Manager</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.1">
