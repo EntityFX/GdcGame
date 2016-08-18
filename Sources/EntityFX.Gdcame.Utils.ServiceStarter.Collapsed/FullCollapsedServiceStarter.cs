@@ -16,7 +16,7 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
 {
     public class FullCollapsedServiceStarter : ServicesStarterBase<FullCollapsedContainerBootstrapper>, IServicesStarter, IDisposable
     {
-        private readonly Uri _baseUrl = new Uri("net.pipe://localhost/");
+		private readonly string _baseUrl = "net.tcp://localhost";
         private readonly string _signalRHost;
         private IDisposable _webApp;
         
@@ -27,16 +27,16 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
 
         public override void StartServices()
         {
-            AddNetNamedPipeService<ISessionManager>(_baseUrl);
-            AddNetNamedPipeService<ISimpleUserManager>(_baseUrl);
-            AddNetNamedPipeService<IRatingManager>(_baseUrl);
-            AddCustomService<GameManagerServiceHost>(_baseUrl);
-            AddCustomService<AdminManagerServiceHost>(_baseUrl);
+			AddNetTcpService<ISessionManager>(new Uri(_baseUrl + ":10000/"));
+			AddNetTcpService<ISimpleUserManager>(new Uri(_baseUrl + ":10001/"));
+			AddNetTcpService<IRatingManager>(new Uri(_baseUrl + ":10002/"));
+			AddCustomService<GameManagerTcpServiceHost>(new Uri(_baseUrl + ":10003/"));
+			AddCustomService<AdminManagerTcpServiceHost>(new Uri(_baseUrl + ":10004/"));
 
             _webApp = WebApp.Start(_signalRHost, builder =>
             {
                 var listener = (HttpListener)builder.Properties[typeof(HttpListener).FullName];
-                listener.AuthenticationSchemes = AuthenticationSchemes.Ntlm;
+                listener.AuthenticationSchemes = AuthenticationSchemes.Anonymous;
                 builder.UseCors(CorsOptions.AllowAll);
                 builder.MapSignalR();
                 builder.RunSignalR(new HubConfiguration()

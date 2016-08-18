@@ -37,8 +37,8 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
             AddNetNamedPipeService<ISessionManager>(_baseUrl);
             AddNetNamedPipeService<ISimpleUserManager>(_baseUrl);
             AddNetNamedPipeService<IRatingManager>(_baseUrl);
-            AddCustomService<GameManagerServiceHost>(_baseUrl);
-            AddCustomService<AdminManagerServiceHost>(_baseUrl);
+            AddCustomService<GameManagerPipeServiceHost>(_baseUrl);
+            AddCustomService<AdminManagerPipeServiceHost>(_baseUrl);
 
             AddCustomService<NotifyConsumerServiceHost>(_baseMsmqUrl);
 

@@ -94,7 +94,7 @@ namespace EntityFx.GdCame.Test.Shared
                 {
                     if (!IsFundsDriverAvailableForBuy(gameData.Cash.Counters[0], fundsDriver))
                     {
-                        PrettyConsole.WriteColor(ConsoleColor.DarkGray, "{0,2}:             Need money to buy:     {1,8}. x{2,-4} ", ((char)charIndex).ToString(), fundsDriver.UnlockValue, fundsDriver.BuyCount);
+                        PrettyConsole.WriteColor(ConsoleColor.Gray, "{0,2}:             Need money to buy:     {1,8}. x{2,-4} ", ((char)charIndex).ToString(), fundsDriver.UnlockValue, fundsDriver.BuyCount);
                     }
                     else
                     {

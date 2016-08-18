@@ -2,11 +2,12 @@
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Infrastructure.Service.Bases;
 using EntityFX.Gdcame.Manager.Contract.AdminManager;
+using System.ServiceModel.Channels;
 
 namespace EntityFX.Gdcame.Utils.ClientProxy.Manager
 {
     public class AdminManagerClient<TInfrastructureProxy> : IAdminManager
-                                        where TInfrastructureProxy : InfrastructureProxy<IAdminManager>, new()
+		where TInfrastructureProxy : IInfrastructureProxy<IAdminManager, Binding>, new()
     {
         private readonly Guid _sesionGuid;
         private readonly Uri _endpointAddress;

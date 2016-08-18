@@ -2,11 +2,12 @@
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Infrastructure.Service.Bases;
 using EntityFX.Gdcame.Manager.Contract.SessionManager;
+using System.ServiceModel.Channels;
 
 namespace EntityFX.Gdcame.Utils.ClientProxy.Manager
 {
-    public class SessionManagerClient<TInfrastructureProxy>     : ISessionManager
-                        where TInfrastructureProxy : InfrastructureProxy<ISessionManager>, new()
+	public class SessionManagerClient<TInfrastructureProxy>     : ISessionManager
+		where TInfrastructureProxy : IInfrastructureProxy<ISessionManager, Binding>, new()
     {
         private readonly IOperationContextHelper _operationContextHelper;
         private readonly Guid _sessionGuid;

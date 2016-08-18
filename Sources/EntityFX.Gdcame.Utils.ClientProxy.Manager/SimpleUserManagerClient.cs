@@ -1,11 +1,12 @@
 ﻿using System;
 using EntityFX.Gdcame.Infrastructure.Service.Bases;
 using EntityFX.Gdcame.Manager.Contract.UserManager;
+using System.ServiceModel.Channels;
 
 namespace EntityFX.Gdcame.Utils.ClientProxy.Manager
 {
-    public class SimpleUserManagerClient<TInfrastructureProxy> : ISimpleUserManager
-                where TInfrastructureProxy : InfrastructureProxy<ISimpleUserManager>, new()
+	public class SimpleUserManagerClient<TInfrastructureProxy> : ISimpleUserManager
+		where TInfrastructureProxy : IInfrastructureProxy<ISimpleUserManager, Binding>, new()
     {
         private readonly Uri _endpointAddress;// = new Uri("net.tcp://localhost:8555/EntityFX.EconomicsArcade.Manager/EntityFX.EconomicsArcade.Contract.Manager.UserManager.ISimpleUserManager");
 

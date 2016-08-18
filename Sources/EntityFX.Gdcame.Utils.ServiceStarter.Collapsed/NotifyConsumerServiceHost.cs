@@ -12,13 +12,5 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
             : base(container)
         {
         }
-
-        protected override Binding GetBinding()
-        {
-            var binding = (NetMsmqBinding)base.GetBinding();
-            binding.ExactlyOnce = false;
-            binding.Durable = false;
-            return binding;
-        }
     }
 }

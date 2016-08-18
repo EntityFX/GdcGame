@@ -4,11 +4,12 @@ using EntityFX.Gdcame.Common.Contract.Counters;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Infrastructure.Service.Bases;
 using EntityFX.Gdcame.Manager.Contract.GameManager;
+using System.ServiceModel.Channels;
 
 namespace EntityFX.Gdcame.Utils.ClientProxy.Manager
 {
-    public class GameManagerClient<TInfrastructureProxy> : IGameManager
-        where TInfrastructureProxy : InfrastructureProxy<IGameManager>, new()
+	public class GameManagerClient<TInfrastructureProxy> : IGameManager
+		where TInfrastructureProxy : IInfrastructureProxy<IGameManager, Binding>, new()		
     {
         private readonly Uri _endpointAddress;
             // = new Uri("net.tcp://localhost:8555/EntityFX.EconomicsArcade.Manager/EntityFX.EconomicsArcade.Contract.Manager.GameManager.IGameManager");

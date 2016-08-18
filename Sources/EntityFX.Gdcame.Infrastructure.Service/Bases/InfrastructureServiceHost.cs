@@ -9,7 +9,8 @@ using Unity.Wcf;
 
 namespace EntityFX.Gdcame.Infrastructure.Service.Bases
 {
-    public abstract class InfrastructureServiceHost<T> : IServiceHost, IDisposable
+	public abstract class InfrastructureServiceHost<TServiceContract, TBinding> : IServiceHost, IDisposable
+		where TBinding : Binding
     {
         private ServiceHost _serviceHost;
 
@@ -39,7 +40,7 @@ namespace EntityFX.Gdcame.Infrastructure.Service.Bases
         {
             get
             {
-                return typeof(T).FullName;
+				return typeof(TServiceContract).FullName;
             }
         }
 
@@ -48,20 +49,28 @@ namespace EntityFX.Gdcame.Infrastructure.Service.Bases
             Container = container;
         }
         
-        protected virtual Binding GetBinding()
+		private TBinding GetBinding()
         {
-            return new NetTcpBinding();
+			var binding = GetBindingFactory ().Build (null);
+			ConfigureBinding (binding);
+			return binding;
         }
+
+		protected abstract IBindingFactory<TBinding> GetBindingFactory ();
 
         protected virtual ServiceEndpoint CreateServiceEndpoint(ServiceHost serviceHost)
         {
-            var endpoint = serviceHost.AddServiceEndpoint(typeof(T), GetBinding(), string.Empty);
+			var endpoint = serviceHost.AddServiceEndpoint(typeof(TServiceContract), GetBinding(), string.Empty);
             return endpoint;
         }
 
+		protected virtual void ConfigureBinding(TBinding binding) 
+		{
+		}
+
         public void Open(Uri endpointAddress)
         {
-            _serviceHost = new UnityServiceHost(Container, Container.Resolve<T>().GetType(), endpointAddress);
+			_serviceHost = new UnityServiceHost(Container, Container.Resolve<TServiceContract>().GetType(), endpointAddress);
             CreateServiceEndpoint(_serviceHost);
             var serviceDebugBehavior = _serviceHost.Description.Behaviors.Find<ServiceDebugBehavior>();
             if (serviceDebugBehavior == null)

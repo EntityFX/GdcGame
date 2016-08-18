@@ -2,11 +2,12 @@
 using EntityFX.Gdcame.DataAccess.Contract.GameData;
 using EntityFX.Gdcame.DataAccess.Contract.GameData.Store;
 using EntityFX.Gdcame.Infrastructure.Service.Bases;
+using System.ServiceModel.Channels;
 
 namespace EntityFX.Gdcame.Utils.ClientProxy.DataAccess
 {
-    public class GameDataStoreDataAccessClient<TInfrastructureProxy> : IGameDataStoreDataAccessService
-                where TInfrastructureProxy : InfrastructureProxy<IGameDataStoreDataAccessService>, new()
+	public class GameDataStoreDataAccessClient<TInfrastructureProxy> : IGameDataStoreDataAccessService
+		where TInfrastructureProxy : IInfrastructureProxy<IGameDataStoreDataAccessService, Binding>, new()
     {
         private readonly Uri _endpoint;// = "net.msmq://localhost/private/EntityFX.EconomicsArcade.Contract.DataAccess.GameData.IGameDataStoreDataAccessService";
 

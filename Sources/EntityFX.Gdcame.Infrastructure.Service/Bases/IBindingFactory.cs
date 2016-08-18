@@ -1,12 +1,12 @@
 ﻿using System;
+using System.ServiceModel.Channels;
 
-namespace EntityFX.Gdcame.Infrastructure.Service
+namespace EntityFX.Gdcame.Infrastructure.Service.Bases
 {
-	public class IBindingFactory
+	public interface IBindingFactory<TBinding>
+		where TBinding : Binding
 	{
-		public IBindingFactory ()
-		{
-		}
+		TBinding Build (object config);
 	}
 }
 

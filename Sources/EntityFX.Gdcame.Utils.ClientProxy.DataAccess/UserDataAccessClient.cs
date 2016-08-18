@@ -1,11 +1,12 @@
 ﻿using System;
 using EntityFX.Gdcame.DataAccess.Contract.User;
 using EntityFX.Gdcame.Infrastructure.Service.Bases;
+using System.ServiceModel.Channels;
 
 namespace EntityFX.Gdcame.Utils.ClientProxy.DataAccess
 {
     public class UserDataAccessClient<TInfrastructureProxy> : IUserDataAccessService
-                where TInfrastructureProxy : InfrastructureProxy<IUserDataAccessService>, new()
+                where TInfrastructureProxy : IInfrastructureProxy<IUserDataAccessService, Binding>, new()
     {
     //"net.tcp://localhost:8777/EntityFX.EconomicsArcade.DataAccess/EntityFX.EconomicsArcade.Contract.DataAccess.User.IUserDataAccessService";
 

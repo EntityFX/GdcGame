@@ -28,6 +28,7 @@ namespace EntityFx.Gdcame.TestApplication
             _gameDataMapper = gameDataMapper;
             _fundsDriverMapper = fundsDriverMapper;
             _timer.Elapsed += _timer_Elapsed;
+		
         }
 
         async void _timer_Elapsed(object sender, ElapsedEventArgs e)
@@ -52,7 +53,12 @@ namespace EntityFx.Gdcame.TestApplication
         {
             lock (_stdLock)
             {
-                Console.SetCursorPosition(0, 0);
+				#if __MonoCS__
+				Console.Clear();
+				#else
+
+				#endif
+				Console.SetCursorPosition(0, 0);
                 base.DisplayGameData(gameData);
             }
 

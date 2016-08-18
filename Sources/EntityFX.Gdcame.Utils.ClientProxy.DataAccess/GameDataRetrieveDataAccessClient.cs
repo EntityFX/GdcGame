@@ -3,11 +3,12 @@ using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.Common.Contract.UserRating;
 using EntityFX.Gdcame.DataAccess.Contract.GameData;
 using EntityFX.Gdcame.Infrastructure.Service.Bases;
+using System.ServiceModel.Channels;
 
 namespace EntityFX.Gdcame.Utils.ClientProxy.DataAccess
 {
-    public class GameDataRetrieveDataAccessClient<TInfrastructureProxy> : IGameDataRetrieveDataAccessService
-        where TInfrastructureProxy : InfrastructureProxy<IGameDataRetrieveDataAccessService>, new()
+	public class GameDataRetrieveDataAccessClient<TInfrastructureProxy> : IGameDataRetrieveDataAccessService
+		where TInfrastructureProxy : IInfrastructureProxy<IGameDataRetrieveDataAccessService, Binding>, new()
     {
         private readonly Uri _endpoint;// =
         //"net.tcp://localhost:8777/EntityFX.EconomicsArcade.DataAccess/EntityFX.EconomicsArcade.Contract.DataAccess.GameData.IGameDataRetrieveDataAccessService";

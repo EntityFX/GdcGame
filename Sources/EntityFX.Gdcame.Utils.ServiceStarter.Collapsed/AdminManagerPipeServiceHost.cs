@@ -5,12 +5,13 @@ using EntityFX.Gdcame.Manager;
 using EntityFX.Gdcame.Manager.Contract.AdminManager;
 using EntityFX.Gdcame.Utils.Common;
 using Microsoft.Practices.Unity;
+using EntityFX.Gdcame.Infrastructure.Service.NetTcp;
 
 namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
 {
-    internal class AdminManagerServiceHost : NetNamedPipeServiceHost<IAdminManager>
+    internal class AdminManagerPipeServiceHost : NetNamedPipeServiceHost<IAdminManager>
     {
-        public AdminManagerServiceHost(IUnityContainer container)
+        public AdminManagerPipeServiceHost(IUnityContainer container)
             : base(container)
         {
         }
@@ -27,4 +28,6 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
             }
         }
     }
+
+
 }
