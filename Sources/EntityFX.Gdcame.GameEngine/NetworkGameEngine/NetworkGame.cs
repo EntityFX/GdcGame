@@ -68,8 +68,6 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
         private readonly INotifyGameDataChanged _notifyGameDataChanged;
         private readonly int _userId;
         private GameData _gameData;
-        private readonly int _stepsToPersist = 30;
-        private int _currentStepsToPersist;
 
         public NetworkGame(ILogger logger, IGameDataRetrieveDataAccessService gameDataRetrieveDataAccessService
             , INotifyGameDataChanged notifyGameDataChanged, int userId)
@@ -168,6 +166,11 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
         }
 
         private static object _syslock = new { };
+
+        public int StepsToPersist
+        {
+            get;
+        }
 
         public void PerformGameDataChanged()
         {

@@ -14,7 +14,6 @@ namespace EntityFX.Gdcame.Utils.ClientProxy.Manager
 
 
         private readonly Action<Guid> operationContext;
-        private ILogger _logger;
         private IOperationContextHelper _operationContextHelper;
 
 

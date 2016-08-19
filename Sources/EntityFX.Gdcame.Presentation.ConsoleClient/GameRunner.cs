@@ -77,7 +77,7 @@ namespace EntityFX.Gdcame.Presentation.ConsoleClient
             }
             catch (Exception exp)
             {
-
+                PrettyConsole.WriteLineColor(ConsoleColor.Red, "Error: {0}", exp);
             }
             DisplayGameData(GetGameData());
         }
@@ -90,7 +90,7 @@ namespace EntityFX.Gdcame.Presentation.ConsoleClient
             }
             catch (Exception exp)
             {
-                Console.WriteLine(exp);
+                PrettyConsole.WriteLineColor(ConsoleColor.Red, "Error: {0}", exp);
             }
             DisplayGameData(GetGameData());
         }

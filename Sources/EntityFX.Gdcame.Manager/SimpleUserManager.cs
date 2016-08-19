@@ -42,7 +42,8 @@ namespace EntityFX.Gdcame.Manager
             }
             catch (Exception exp)
             {
-                
+                _logger.Error(exp);
+                throw;
             }
         }
 

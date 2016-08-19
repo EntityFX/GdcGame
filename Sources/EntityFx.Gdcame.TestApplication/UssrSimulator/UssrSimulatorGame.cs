@@ -545,8 +545,6 @@ namespace EntityFx.Gdcame.TestApplication.UssrSimulator
 
         private readonly object _lockObject = new { };
 
-        private int verifyResult = -1;
-
         protected override void PostPerformManualStep(IEnumerable<CounterBase> modifiedCounters)
         {
 

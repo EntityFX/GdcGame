@@ -59,7 +59,7 @@ namespace EntityFX.Gdcame.Presentation.Web.WebApp.Providers
 
         public override async Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
-            context.Validated();
+             await Task.Run(() => context.Validated());
         }
 
     }

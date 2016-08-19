@@ -138,6 +138,7 @@ namespace EntityFX.Gdcame.Presentation.ConsoleClient
                     gr.SetGameClient(GetGameClient(_sessionGuid));
                     ac.SetAdminClient(GetAdminClient(_sessionGuid));
                     gr.DisplayGameData(gr.GetGameData());
+                    PrettyConsole.WriteLineColor(ConsoleColor.Red, "Error: {0}", faultException);
                 }
             }
         }
