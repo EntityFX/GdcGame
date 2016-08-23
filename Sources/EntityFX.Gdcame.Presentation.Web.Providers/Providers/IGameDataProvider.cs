@@ -16,8 +16,8 @@ namespace EntityFX.Gdcame.Presentation.Web.Providers.Providers
         ManualStepResultModel PerformManualStep(int? verificationNumber);
         void FightAgainstInflation();
         void ActivateDelayedCounter(int counterId);
-        UserRating[] GetUsersRatingByCount(int count);
+        /*UserRating[] GetUsersRatingByCount(int count);
         UserRating FindUserRatingByUserName(string userName);
-        UserRating[] FindUserRatingByUserNameAndAroundUsers(string userName, int count);
+        UserRating[] FindUserRatingByUserNameAndAroundUsers(string userName, int count);*/
     }
 }

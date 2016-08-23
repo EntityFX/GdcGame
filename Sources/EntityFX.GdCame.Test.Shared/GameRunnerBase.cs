@@ -4,14 +4,11 @@ using EntityFX.Gdcame.Common.Contract.Counters;
 using EntityFX.Gdcame.Common.Contract.Incrementors;
 using EntityFX.Gdcame.Common.Contract.Items;
 
-
 namespace EntityFx.GdCame.Test.Shared
 {
     public abstract class GameRunnerBase
     {
-        public GameRunnerBase()
-        {
-        }
+        protected static readonly object _stdLock = new {};
 
         private bool IsFundsDriverAvailableForBuy(CounterBase rootCounter, Item item)
         {
@@ -35,70 +32,90 @@ namespace EntityFx.GdCame.Test.Shared
 
         private string GetIncrementorValueById(Item item, int incrmentorId)
         {
-            var incrementor = item.Incrementors.ContainsKey(incrmentorId) ?
-                item.Incrementors[incrmentorId] : null;
+            var incrementor = item.Incrementors.ContainsKey(incrmentorId)
+                ? item.Incrementors[incrmentorId]
+                : null;
             if (incrementor != null)
             {
-                return String.Format("{0}{1}", incrementor.Value, incrementor.IncrementorType == IncrementorTypeEnum.PercentageIncrementor ? "%" : string.Empty);
+                return string.Format("{0}{1}", incrementor.Value,
+                    incrementor.IncrementorType == IncrementorTypeEnum.PercentageIncrementor ? "%" : string.Empty);
             }
             return "0";
         }
 
         public abstract GameData GetGameData();
 
-        protected static readonly object _stdLock = new { };
-
         public virtual void DisplayGameData(GameData gameData)
         {
             lock (_stdLock)
             {
-                Console.WriteLine("Funds: {0:C}; Total Funds: {1:C}", gameData.Cash.CashOnHand, gameData.Cash.TotalEarned);
+                Console.WriteLine("Funds: {0:C}; Total Funds: {1:C}", gameData.Cash.CashOnHand,
+                    gameData.Cash.TotalEarned);
                 Console.WriteLine("Manual Steps: {0}, Automatic Steps: {1}",
                     gameData.ManualStepsCount, gameData.AutomatedStepsCount);
-                PrettyConsole.WriteLineColor(ConsoleColor.Red, "{1,15}: {0,12}", gameData.Cash.Counters[0].Value, gameData.Cash.Counters[0].Name);
-                PrettyConsole.WriteLineColor(ConsoleColor.Cyan, "{1,15}: {0,12:C} ", ((GenericCounter)gameData.Cash.Counters[1]).SubValue, gameData.Cash.Counters[1].Name);
+                PrettyConsole.WriteLineColor(ConsoleColor.Red, "{1,15}: {0,12}", gameData.Cash.Counters[0].Value,
+                    gameData.Cash.Counters[0].Name);
+                PrettyConsole.WriteLineColor(ConsoleColor.Cyan, "{1,15}: {0,12:C} ",
+                    ((GenericCounter) gameData.Cash.Counters[1]).SubValue, gameData.Cash.Counters[1].Name);
                 PrettyConsole.WriteLineColor(ConsoleColor.Cyan, "{1,15}: {0,12:C} ({2}%)"
-                    , ((GenericCounter)gameData.Cash.Counters[1]).Bonus, "Bonus"
-                    , ((GenericCounter)gameData.Cash.Counters[1]).BonusPercentage);
+                    , ((GenericCounter) gameData.Cash.Counters[1]).Bonus, "Bonus"
+                    , ((GenericCounter) gameData.Cash.Counters[1]).BonusPercentage);
                 PrettyConsole.WriteColor(ConsoleColor.Cyan, "{1,15}: {0,12}%"
-                    , ((GenericCounter)gameData.Cash.Counters[1]).Inflation, "Inflation");
-                PrettyConsole.WriteLineColor(ConsoleColor.DarkGray, " StepsToIncrInflation: {0}, Current Steps: {1}", ((GenericCounter)gameData.Cash.Counters[1]).InflationIncreaseSteps, ((GenericCounter)gameData.Cash.Counters[1]).CurrentSteps);
+                    , ((GenericCounter) gameData.Cash.Counters[1]).Inflation, "Inflation");
+                PrettyConsole.WriteLineColor(ConsoleColor.DarkGray, " StepsToIncrInflation: {0}, Current Steps: {1}",
+                    ((GenericCounter) gameData.Cash.Counters[1]).InflationIncreaseSteps,
+                    ((GenericCounter) gameData.Cash.Counters[1]).CurrentSteps);
                 PrettyConsole.WriteLineColor(ConsoleColor.Cyan, "{1,15}: {0,12:C}"
-                    , ((GenericCounter)gameData.Cash.Counters[1]).Value, "Total");
-                PrettyConsole.WriteLineColor(ConsoleColor.Green, "{1,15}: {0,12:C}", ((GenericCounter)gameData.Cash.Counters[2]).SubValue, gameData.Cash.Counters[2].Name);
+                    , ((GenericCounter) gameData.Cash.Counters[1]).Value, "Total");
+                PrettyConsole.WriteLineColor(ConsoleColor.Green, "{1,15}: {0,12:C}",
+                    ((GenericCounter) gameData.Cash.Counters[2]).SubValue, gameData.Cash.Counters[2].Name);
                 PrettyConsole.WriteLineColor(ConsoleColor.Green, "{1,15}: {0,12:C} ({2}%)"
-                    , ((GenericCounter)gameData.Cash.Counters[2]).Bonus, "Bonus"
-                    , ((GenericCounter)gameData.Cash.Counters[2]).BonusPercentage);
+                    , ((GenericCounter) gameData.Cash.Counters[2]).Bonus, "Bonus"
+                    , ((GenericCounter) gameData.Cash.Counters[2]).BonusPercentage);
                 PrettyConsole.WriteColor(ConsoleColor.Green, "{1,15}: {0,12}%"
-                    , ((GenericCounter)gameData.Cash.Counters[2]).Inflation, "Corruption");
-                PrettyConsole.WriteLineColor(ConsoleColor.DarkGray, " StepsToIncrInflation: {0}, Current Steps: {1}", ((GenericCounter)gameData.Cash.Counters[2]).InflationIncreaseSteps, ((GenericCounter)gameData.Cash.Counters[2]).CurrentSteps);
+                    , ((GenericCounter) gameData.Cash.Counters[2]).Inflation, "Corruption");
+                PrettyConsole.WriteLineColor(ConsoleColor.DarkGray, " StepsToIncrInflation: {0}, Current Steps: {1}",
+                    ((GenericCounter) gameData.Cash.Counters[2]).InflationIncreaseSteps,
+                    ((GenericCounter) gameData.Cash.Counters[2]).CurrentSteps);
                 PrettyConsole.WriteLineColor(ConsoleColor.Green, "{1,15}: {0,12:C}"
-                    , ((GenericCounter)gameData.Cash.Counters[2]).Value, "Total");
-                PrettyConsole.WriteLineColor(ConsoleColor.Magenta, "{1,15}: +{0,12:C} {2}/{3}", gameData.Cash.Counters[3].Value, gameData.Cash.Counters[3].Name
-                    , TimeSpan.FromSeconds(((DelayedCounter)gameData.Cash.Counters[3]).SecondsRemaining)
-                    , TimeSpan.FromSeconds(((DelayedCounter)gameData.Cash.Counters[3]).MiningTimeSeconds));
+                    , ((GenericCounter) gameData.Cash.Counters[2]).Value, "Total");
+                PrettyConsole.WriteLineColor(ConsoleColor.Magenta, "{1,15}: +{0,12:C} {2}/{3}",
+                    gameData.Cash.Counters[3].Value, gameData.Cash.Counters[3].Name
+                    , TimeSpan.FromSeconds(((DelayedCounter) gameData.Cash.Counters[3]).SecondsRemaining)
+                    , TimeSpan.FromSeconds(((DelayedCounter) gameData.Cash.Counters[3]).MiningTimeSeconds));
 
                 Console.WriteLine();
-                int charIndex = 65;
-                PrettyConsole.WriteLineColor(IsCounterWithInflation((GenericCounter)gameData.Cash.Counters[2]) ? ConsoleColor.Yellow : ConsoleColor.DarkYellow, "{0,2}:   Fight Against Corruption", "*");
-                if (IsCounterAvailableForActivate((DelayedCounter)gameData.Cash.Counters[3], gameData.Cash.Counters[0].Value))
+                var charIndex = 65;
+                PrettyConsole.WriteLineColor(
+                    IsCounterWithInflation((GenericCounter) gameData.Cash.Counters[2])
+                        ? ConsoleColor.Yellow
+                        : ConsoleColor.DarkYellow, "{0,2}:   Fight Against Corruption", "*");
+                if (IsCounterAvailableForActivate((DelayedCounter) gameData.Cash.Counters[3],
+                    gameData.Cash.Counters[0].Value))
                 {
-                    PrettyConsole.WriteLineColor(IsCounterIsMining((DelayedCounter)gameData.Cash.Counters[3]) ? ConsoleColor.DarkMagenta : ConsoleColor.Magenta, "{0,2}:         Do Five Year Plan", "+");
+                    PrettyConsole.WriteLineColor(
+                        IsCounterIsMining((DelayedCounter) gameData.Cash.Counters[3])
+                            ? ConsoleColor.DarkMagenta
+                            : ConsoleColor.Magenta, "{0,2}:         Do Five Year Plan", "+");
                 }
                 else
                 {
-                    PrettyConsole.WriteLineColor(ConsoleColor.DarkMagenta, "{0,2}:         Do Five Year Plan: need {1} {2} to unlock", "+", ((DelayedCounter)gameData.Cash.Counters[3]).UnlockValue, gameData.Cash.Counters[0].Name);
-
+                    PrettyConsole.WriteLineColor(ConsoleColor.DarkMagenta,
+                        "{0,2}:         Do Five Year Plan: need {1} {2} to unlock", "+",
+                        ((DelayedCounter) gameData.Cash.Counters[3]).UnlockValue, gameData.Cash.Counters[0].Name);
                 }
                 foreach (var fundsDriver in gameData.Items)
                 {
                     if (!IsFundsDriverAvailableForBuy(gameData.Cash.Counters[0], fundsDriver))
                     {
-                        PrettyConsole.WriteColor(ConsoleColor.Gray, "{0,2}:             Need money to buy:     {1,8}. x{2,-4} ", ((char)charIndex).ToString(), fundsDriver.UnlockValue, fundsDriver.BuyCount);
+                        PrettyConsole.WriteColor(ConsoleColor.Gray,
+                            "{0,2}:             Need money to buy:     {1,8}. x{2,-4} ", ((char) charIndex).ToString(),
+                            fundsDriver.UnlockValue, fundsDriver.BuyCount);
                     }
                     else
                     {
-                        PrettyConsole.WriteColor(ConsoleColor.White, "{3,2}: {0,28} {1,15:C} x{2,-4} ", fundsDriver.Name, fundsDriver.Price, fundsDriver.BuyCount, ((char)charIndex).ToString());
+                        PrettyConsole.WriteColor(ConsoleColor.White, "{3,2}: {0,28} {1,15:C} x{2,-4} ", fundsDriver.Name,
+                            fundsDriver.Price, fundsDriver.BuyCount, ((char) charIndex).ToString());
                     }
                     PrettyConsole.WriteColor(ConsoleColor.Red, "+{0, -4} ", GetIncrementorValueById(fundsDriver, 0));
                     PrettyConsole.WriteColor(ConsoleColor.Cyan, "+{0, -7} ", GetIncrementorValueById(fundsDriver, 1));

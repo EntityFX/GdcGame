@@ -2,7 +2,6 @@
 using EntityFX.Gdcame.Common.Contract.Counters;
 using EntityFX.Gdcame.GameEngine.Contract;
 using EntityFX.Gdcame.Infrastructure.Common;
-using CounterBase = EntityFX.Gdcame.Common.Contract.Counters.CounterBase;
 using DelayedCounter = EntityFX.Gdcame.GameEngine.Contract.Counters.DelayedCounter;
 using GenericCounter = EntityFX.Gdcame.GameEngine.Contract.Counters.GenericCounter;
 using SingleCounter = EntityFX.Gdcame.GameEngine.Contract.Counters.SingleCounter;
@@ -13,16 +12,16 @@ namespace EntityFX.Gdcame.GameEngine.Mappers
     {
         public GameData Map(IGame source, GameData destination = null)
         {
-            var gameData = new GameData()
+            var gameData = new GameData
             {
-                Cash = new Cash()
+                Cash = new Cash
                 {
                     CashOnHand = source.GameCash.CashOnHand,
                     TotalEarned = source.GameCash.TotalEarned,
                     Counters = PrepareCountersToPersist(source)
                 },
                 AutomatedStepsCount = source.AutomaticStepNumber,
-                ManualStepsCount = source.ManualStepNumber,
+                ManualStepsCount = source.ManualStepNumber
             };
             return gameData;
         }
@@ -36,7 +35,7 @@ namespace EntityFX.Gdcame.GameEngine.Mappers
                 var sourcenGenericCounter = sourceCounter.Value as GenericCounter;
                 if (sourcenGenericCounter != null)
                 {
-                    var destinationGenericCounter = new Gdcame.Common.Contract.Counters.GenericCounter
+                    var destinationGenericCounter = new Common.Contract.Counters.GenericCounter
                     {
                         BonusPercentage = sourcenGenericCounter.BonusPercentage,
                         Bonus = sourcenGenericCounter.Bonus,
@@ -50,13 +49,13 @@ namespace EntityFX.Gdcame.GameEngine.Mappers
                 var sourceSingleCounter = sourceCounter.Value as SingleCounter;
                 if (sourceSingleCounter != null)
                 {
-                    destinationCouner = new Gdcame.Common.Contract.Counters.SingleCounter();
+                    destinationCouner = new Common.Contract.Counters.SingleCounter();
                     destinationCouner.Type = 0;
                 }
                 var sourceDelayedCounter = sourceCounter.Value as DelayedCounter;
                 if (sourceDelayedCounter != null)
                 {
-                    var destinationDelayedCounter = new Gdcame.Common.Contract.Counters.DelayedCounter()
+                    var destinationDelayedCounter = new Common.Contract.Counters.DelayedCounter
                     {
                         SecondsRemaining = sourceDelayedCounter.SecondsRemaining,
                         MiningTimeSeconds = sourceDelayedCounter.SecondsToAchieve,

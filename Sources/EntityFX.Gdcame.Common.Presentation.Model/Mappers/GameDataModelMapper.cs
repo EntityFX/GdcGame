@@ -8,8 +8,8 @@ namespace EntityFX.Gdcame.Common.Presentation.Model.Mappers
 {
     public class GameDataModelMapper : IMapper<GameData, GameDataModel>
     {
-        private readonly IMapper<Item, FundsDriverModel> _fundsDriverModelMapper;
         private readonly IMapper<Cash, FundsCounterModel> _fundsCounterModelMapper;
+        private readonly IMapper<Item, FundsDriverModel> _fundsDriverModelMapper;
 
         public GameDataModelMapper(
             IMapper<Item, FundsDriverModel> fundsDriverModelMapper

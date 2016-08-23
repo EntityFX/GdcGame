@@ -1,14 +1,14 @@
 ﻿using System;
+using System.ServiceModel.Channels;
 using EntityFX.Gdcame.DataAccess.Contract.User;
 using EntityFX.Gdcame.Infrastructure.Service.Bases;
-using System.ServiceModel.Channels;
 
 namespace EntityFX.Gdcame.Utils.ClientProxy.DataAccess
 {
     public class UserDataAccessClient<TInfrastructureProxy> : IUserDataAccessService
-                where TInfrastructureProxy : IInfrastructureProxy<IUserDataAccessService, Binding>, new()
+        where TInfrastructureProxy : IInfrastructureProxy<IUserDataAccessService, Binding>, new()
     {
-    //"net.tcp://localhost:8777/EntityFX.EconomicsArcade.DataAccess/EntityFX.EconomicsArcade.Contract.DataAccess.User.IUserDataAccessService";
+        //"net.tcp://localhost:8777/EntityFX.EconomicsArcade.DataAccess/EntityFX.EconomicsArcade.Contract.DataAccess.User.IUserDataAccessService";
 
         private readonly Uri _endpoint;
 
@@ -39,7 +39,7 @@ namespace EntityFX.Gdcame.Utils.ClientProxy.DataAccess
             }
         }
 
-        public void Delete(int userId)
+        public void Delete(string userId)
         {
             using (var proxy = new TInfrastructureProxy())
             {
@@ -49,7 +49,7 @@ namespace EntityFX.Gdcame.Utils.ClientProxy.DataAccess
             }
         }
 
-        public User FindById(int userId)
+        public User FindById(string userId)
         {
             User result;
             using (var proxy = new TInfrastructureProxy())
@@ -68,6 +68,18 @@ namespace EntityFX.Gdcame.Utils.ClientProxy.DataAccess
             {
                 var channel = proxy.CreateChannel(_endpoint);
                 result = channel.FindByName(name);
+                proxy.CloseChannel();
+            }
+            return result;
+        }
+
+        public User[] FindByFilter(string searchString)
+        {
+            User[] result;
+            using (var proxy = new TInfrastructureProxy())
+            {
+                var channel = proxy.CreateChannel(_endpoint);
+                result = channel.FindByFilter(searchString);
                 proxy.CloseChannel();
             }
             return result;

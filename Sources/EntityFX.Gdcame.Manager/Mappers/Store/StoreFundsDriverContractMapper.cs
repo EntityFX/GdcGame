@@ -8,10 +8,11 @@ namespace EntityFX.Gdcame.Manager.Mappers.Store
 {
     public class StoreFundsDriverContractMapper : IMapper<Item, StoredItem>
     {
-        private readonly IMapper<IncrementorBase, StoredIncrementor> _incrementorContractMapper;
         private readonly IMapper<CustomRuleInfo, StoredCustomRuleInfo> _customRuleInfoMapper;
+        private readonly IMapper<IncrementorBase, StoredIncrementor> _incrementorContractMapper;
 
-        public StoreFundsDriverContractMapper(IMapper<IncrementorBase, StoredIncrementor> incrementorContractMapper, IMapper<CustomRuleInfo, StoredCustomRuleInfo> customRuleInfoMapper)
+        public StoreFundsDriverContractMapper(IMapper<IncrementorBase, StoredIncrementor> incrementorContractMapper,
+            IMapper<CustomRuleInfo, StoredCustomRuleInfo> customRuleInfoMapper)
         {
             _incrementorContractMapper = incrementorContractMapper;
             _customRuleInfoMapper = customRuleInfoMapper;
@@ -21,7 +22,7 @@ namespace EntityFX.Gdcame.Manager.Mappers.Store
         {
             var destinationIncrementors = source.Incrementors.ToDictionary(_ => _.Key, _ => _.Value.Value);
             var customRuleInfo = source.CustomRuleInfo != null ? _customRuleInfoMapper.Map(source.CustomRuleInfo) : null;
-            return new StoredItem()
+            return new StoredItem
             {
                 Id = source.Id,
                 BuyCount = source.BuyCount,

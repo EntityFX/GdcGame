@@ -4,9 +4,9 @@ using EntityFX.Gdcame.Utils.ServiceStarter.Manager;
 
 namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Manager
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             var containerBootstrapper = new ContainerBootstrapper();
             var ss = new ManagerStarter(

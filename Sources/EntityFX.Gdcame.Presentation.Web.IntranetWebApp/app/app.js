@@ -1,48 +1,48 @@
 ﻿var app = angular.module("gdCameApp", []);
 
-app.factory('gameData',
-    function ($q, gdCameApiService) {
+app.factory("gameData",
+    function($q, gdCameApiService) {
         var deferred = $q.defer();
-        gdCameApiService.getGameData().then(function (value) {
+        gdCameApiService.getGameData().then(function(value) {
             deferred.resolve(value.data);
         });
         return deferred.promise;
     });
 
-app.controller('appGameController',
+app.controller("appGameController",
 [
-    '$rootScope', '$scope', '$interval', 'gameData', 'gdCameApiService', '$location',
-    function ($rootScope, $scope, $interval, gameData, gdCameApiService, $location) {
+    "$rootScope", "$scope", "$interval", "gameData", "gdCameApiService", "$location",
+    function($rootScope, $scope, $interval, gameData, gdCameApiService, $location) {
         $.connection.hub.url = $location.protocol() + "://" + $location.host() + ":8080/signalr";
         $scope.isTakeRestDisabled = true;
         $scope.isDoQuarterGoalDisabled = true;
         var hub = $.connection.gameDataHub;
         if (hub != null) {
-            hub.client.getGameData = function (data) {
+            hub.client.getGameData = function(data) {
 
-                $rootScope.$apply(function () {
+                $rootScope.$apply(function() {
                         $rootScope.gameData = data;
                         $scope.isTakeRestDisabled = isTakeRestActive();
                         $scope.isDoQuarterGoalDisabled = isDoQuarterGoalActive();
                     }
                 );
-                $scope.$broadcast('update.fundsDrivers', $rootScope.gameData);
+                $scope.$broadcast("update.fundsDrivers", $rootScope.gameData);
             };
             $.connection.hub.start();
 
         }
 
-        gameData.then(function (data) {
+        gameData.then(function(data) {
             $rootScope.gameData = data;
         });
 
-        $scope.performManualStep = function () {
+        $scope.performManualStep = function() {
             gdCameApiService.performManualStep($scope.verificationNumber)
-                .then(function (value) {
+                .then(function(value) {
                     if (value.data.ModifiedCountersInfo != undefined) {
 
                         if (value.data.ModifiedCountersInfo != undefined) {
-                            $rootScope.$broadcast('counters.update', value.data.ModifiedCountersInfo);
+                            $rootScope.$broadcast("counters.update", value.data.ModifiedCountersInfo);
                         }
                     }
 
@@ -56,20 +56,18 @@ app.controller('appGameController',
                     }
 
                 });
-        }
-
-        $scope.$on('counters.update',
-            function (event, value) {
+        };
+        $scope.$on("counters.update",
+            function(event, value) {
                 $scope.isTakeRestDisabled = isTakeRestActive();
             });
 
-        $scope.fightAgainstInflation = function () {
+        $scope.fightAgainstInflation = function() {
             gdCameApiService.fightAgainstInflation();
-        }
-
-        $scope.activateDelayedCounter = function () {
+        };
+        $scope.activateDelayedCounter = function() {
             gdCameApiService.activateDelayedCounter($rootScope.gameData.Counters.Counters[3].Id);
-        }
+        };
 
         function isTakeRestActive() {
             return $rootScope.gameData.Counters.Counters[2].Inflation == 0;
@@ -79,4 +77,5 @@ app.controller('appGameController',
             return $rootScope.gameData.Counters.Counters[3].UnlockValue > $rootScope.gameData.Counters.Counters[0].Value
                 || $rootScope.gameData.Counters.Counters[3].SecondsRemaining > 0;
         }
-    }]);
+    }
+]);

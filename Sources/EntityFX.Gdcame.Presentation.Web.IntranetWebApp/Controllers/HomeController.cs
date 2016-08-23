@@ -7,16 +7,16 @@ namespace EntityFX.Gdcame.Presentation.Web.IntranetWebApp.Controllers
     {
         private readonly IGameDataProvider _gameDataProvider;
 
+        public HomeController(IGameDataProvider gameDataProvider)
+        {
+            _gameDataProvider = gameDataProvider;
+        }
+
         /// <summary>Called before the action method is invoked.</summary>
         /// <param name="filterContext">Information about the current request and action.</param>
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             _gameDataProvider.InitializeSession(User.Identity.Name);
-        }
-
-        public HomeController(IGameDataProvider gameDataProvider)
-        {
-            _gameDataProvider = gameDataProvider;
         }
 
         public ActionResult Index()

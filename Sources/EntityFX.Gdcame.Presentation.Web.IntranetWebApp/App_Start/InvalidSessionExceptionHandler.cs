@@ -15,7 +15,7 @@ namespace EntityFX.Gdcame.Presentation.Web.IntranetWebApp
         }
 
         /// <summary>
-        /// When overridden in a derived class, handles the exception synchronously.
+        ///     When overridden in a derived class, handles the exception synchronously.
         /// </summary>
         /// <param name="context">The exception handler context.</param>
         public override void Handle(ExceptionHandlerContext context)
@@ -23,7 +23,7 @@ namespace EntityFX.Gdcame.Presentation.Web.IntranetWebApp
             if (context.Exception is FaultException<InvalidSessionFault>)
             {
                 _gameDataProvider.ClearSession();
-              //  _gameDataProvider.InitializeSession(context.RequestContext.Principal.Identity.Name);
+                //  _gameDataProvider.InitializeSession(context.RequestContext.Principal.Identity.Name);
             }
         }
     }

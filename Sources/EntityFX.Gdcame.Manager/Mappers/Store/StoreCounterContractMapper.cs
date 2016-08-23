@@ -24,7 +24,7 @@ namespace EntityFX.Gdcame.Manager.Mappers.Store
             var singleCounter = source as SingleCounter;
             if (singleCounter != null)
             {
-                destinationCounter = new StoredSingleCounter { Value = singleCounter.Value};
+                destinationCounter = new StoredSingleCounter {Value = singleCounter.Value};
             }
             if (destinationCounter != null)
             {
@@ -34,7 +34,7 @@ namespace EntityFX.Gdcame.Manager.Mappers.Store
             var delayedCounter = source as DelayedCounter;
             if (delayedCounter != null)
             {
-                destinationCounter = new StoredDelayedCounter()
+                destinationCounter = new StoredDelayedCounter
                 {
                     SecondsRemaining = delayedCounter.SecondsRemaining,
                     DelayedValue = delayedCounter.SubValue

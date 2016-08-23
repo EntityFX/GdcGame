@@ -5,9 +5,7 @@ namespace EntityFX.Gdcame.Common.Contract.Incrementors
     [DataContract]
     public enum IncrementorTypeEnum
     {
-        [EnumMember]
-        ValueIncrementor,
-        [EnumMember]
-        PercentageIncrementor
+        [EnumMember] ValueIncrementor,
+        [EnumMember] PercentageIncrementor
     }
 }

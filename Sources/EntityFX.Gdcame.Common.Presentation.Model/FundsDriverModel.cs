@@ -13,6 +13,6 @@ namespace EntityFX.Gdcame.Common.Presentation.Model
         public bool IsActive { get; set; }
         public int BuyCount { get; set; }
         public string Picture { get; set; }
-        public IDictionary<int, Incrementor> Incrementors { get; set; } 
+        public IDictionary<int, Incrementor> Incrementors { get; set; }
     }
 }

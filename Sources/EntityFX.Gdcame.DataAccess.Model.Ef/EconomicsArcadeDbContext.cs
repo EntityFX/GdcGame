@@ -1,25 +1,26 @@
-﻿using System.Data.Entity;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
 
 namespace EntityFX.Gdcame.DataAccess.Model.Ef
 {
     public class EconomicsArcadeDbContext : DbContext
     {
-        public virtual DbSet<CounterEntity> Counters { get; set; }
-        public virtual DbSet<FundsDriverEntity> FundsDrivers { get; set; }
-        public virtual DbSet<IncrementorEntity> Incrementors { get; set; }
-        public virtual DbSet<UserEntity> Users { get; set; }
-
-        public virtual DbSet<UserGameDataSnapshotEntity> UserGameDataSnapshot { get; set; }
         public EconomicsArcadeDbContext()
             : base("EconomicsArcadeDbContext")
         {
-
         }
 
         public EconomicsArcadeDbContext(string connectionString)
             : base(connectionString)
         {
         }
+
+        public virtual DbSet<CounterEntity> Counters { get; set; }
+        public virtual DbSet<FundsDriverEntity> FundsDrivers { get; set; }
+        public virtual DbSet<IncrementorEntity> Incrementors { get; set; }
+        public virtual DbSet<UserEntity> Users { get; set; }
+
+        public virtual DbSet<UserGameDataSnapshotEntity> UserGameDataSnapshot { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -31,6 +32,11 @@ namespace EntityFX.Gdcame.DataAccess.Model.Ef
                 .Property(_ => _.Email)
                 .IsRequired();
 
+            modelBuilder.Entity<UserEntity>()
+                .HasKey(e => e.Id)
+                .Property(e => e.Id)
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+
             modelBuilder.Entity<CounterEntity>()
                 .ToTable("Counter")
                 .HasKey(_ => _.Id);
@@ -38,8 +44,8 @@ namespace EntityFX.Gdcame.DataAccess.Model.Ef
 
             modelBuilder.Entity<CounterEntity>()
                 .Property(e => e.InitialValue)
-                .HasColumnType("Money");           
-            
+                .HasColumnType("Money");
+
             modelBuilder.Entity<FundsDriverEntity>()
                 .ToTable("FundsDriver")
                 .HasKey(_ => _.Id);
@@ -72,15 +78,13 @@ namespace EntityFX.Gdcame.DataAccess.Model.Ef
                 .WillCascadeOnDelete(false);      */
 
 
-
             modelBuilder.Entity<CustomRuleEntity>()
                 .ToTable("CustomRule");
 
             modelBuilder.Entity<CustomRuleEntity>()
-                 .HasMany(e => e.FundsDrivers)
+                .HasMany(e => e.FundsDrivers)
                 .WithOptional(e => e.CustomRule)
                 .WillCascadeOnDelete(false);
-
 
 
             modelBuilder.Entity<UserGameDataSnapshotEntity>()

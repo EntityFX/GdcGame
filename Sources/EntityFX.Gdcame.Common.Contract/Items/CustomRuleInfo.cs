@@ -9,9 +9,9 @@ namespace EntityFX.Gdcame.Common.Contract.Items
         public int CustomRuleId { get; set; }
 
         [DataMember]
-        public int FundsDriverId { get; set; } 
-        
+        public int FundsDriverId { get; set; }
+
         [DataMember]
-        public int? CurrentIndex { get; set; } 
+        public int? CurrentIndex { get; set; }
     }
 }

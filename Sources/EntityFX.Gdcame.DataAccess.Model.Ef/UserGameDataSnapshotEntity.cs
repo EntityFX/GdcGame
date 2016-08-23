@@ -7,7 +7,7 @@ namespace EntityFX.Gdcame.DataAccess.Model.Ef
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
         public string Data { get; set; }
     }

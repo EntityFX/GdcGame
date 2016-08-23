@@ -7,9 +7,11 @@ namespace EntityFX.Gdcame.Common.Contract.Counters
     {
         [DataMember]
         public decimal CashOnHand { get; set; }
+
         [DataMember]
         public decimal TotalEarned { get; set; }
+
         [DataMember]
-        public CounterBase[] Counters { get; set; } 
+        public CounterBase[] Counters { get; set; }
     }
 }

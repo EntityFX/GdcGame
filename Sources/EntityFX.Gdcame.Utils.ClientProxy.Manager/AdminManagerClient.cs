@@ -1,23 +1,24 @@
 ﻿using System;
+using System.ServiceModel.Channels;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Infrastructure.Service.Bases;
 using EntityFX.Gdcame.Manager.Contract.AdminManager;
-using System.ServiceModel.Channels;
 
 namespace EntityFX.Gdcame.Utils.ClientProxy.Manager
 {
     public class AdminManagerClient<TInfrastructureProxy> : IAdminManager
-		where TInfrastructureProxy : IInfrastructureProxy<IAdminManager, Binding>, new()
+        where TInfrastructureProxy : IInfrastructureProxy<IAdminManager, Binding>, new()
     {
-        private readonly Guid _sesionGuid;
         private readonly Uri _endpointAddress;
+        private readonly Guid _sesionGuid;
 
 
         private readonly Action<Guid> operationContext;
-        private IOperationContextHelper _operationContextHelper;
+        private readonly IOperationContextHelper _operationContextHelper;
 
 
-        public AdminManagerClient(IOperationContextHelper operationContextHelper, string endpointAddress, Guid sessionGuid)
+        public AdminManagerClient(IOperationContextHelper operationContextHelper, string endpointAddress,
+            Guid sessionGuid)
         {
             _sesionGuid = sessionGuid;
             _endpointAddress = new Uri(endpointAddress);

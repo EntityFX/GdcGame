@@ -61,6 +61,7 @@
     <Compile Include="Criterions\User\GetAllUsersCriterion.cs" />
     <Compile Include="Criterions\User\GetUserByIdCriterion.cs" />
     <Compile Include="Criterions\User\GetUserByNameCriterion.cs" />
+    <Compile Include="Criterions\User\GetUsersBySearchStringCriterion.cs" />
     <Compile Include="ICountersRepository.cs" />
     <Compile Include="ICustomRuleRepository.cs" />
     <Compile Include="IFundsDriverRepository.cs" />

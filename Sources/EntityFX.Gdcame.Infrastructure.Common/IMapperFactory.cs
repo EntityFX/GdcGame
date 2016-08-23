@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace EntityFX.Gdcame.Infrastructure.Common
+﻿namespace EntityFX.Gdcame.Infrastructure.Common
 {
     public interface IMapperFactory
     {

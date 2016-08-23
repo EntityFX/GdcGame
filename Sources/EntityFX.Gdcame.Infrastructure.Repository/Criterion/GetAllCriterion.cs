@@ -5,6 +5,7 @@
         public static readonly GetAllCriterion Value = new GetAllCriterion();
 
         protected GetAllCriterion()
-        { }
+        {
+        }
     }
 }

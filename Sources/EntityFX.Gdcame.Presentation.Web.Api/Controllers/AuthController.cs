@@ -6,81 +6,60 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using EntityFX.Gdcame.Presentation.Web.WebApp.Models;
+using System.Web.Http.Controllers;
+using EntityFX.Gdcame.Presentation.Web.Api.Models;
+using EntityFX.Gdcame.Presentation.Web.Api.Providers;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 
-namespace EntityFX.Gdcame.Presentation.Web.WebApp.Controllers
+namespace EntityFX.Gdcame.Presentation.Web.Api.Controllers
 {
-    public interface IAccountController
-    {
-        [Route("UserInfo")]
-        UserInfoViewModel GetUserInfo();
-
-        [Route("Logout")]
-        IHttpActionResult Logout();
-
-        [AllowAnonymous]
-        [Route("Register")]
-        Task<IHttpActionResult> Register(RegisterBindingModel model);
-    }
-
-    [Authorize]
-    [RoutePrefix("api/Account")]
-    public class AccountController : ApiController, IAccountController
+    [RoutePrefix("api/Auth")]
+    public class AuthController : ApiController
     {
         private const string LocalLoginProvider = "Local";
         private UserManager<GameUser> _userManager;
 
         public UserManager<GameUser> UserManager
         {
-            get
-            {
-                return _userManager ?? Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
+            get { return _userManager ?? Request.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
+            private set { _userManager = value; }
         }
 
-        public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 
         // GET api/Account/UserInfo
-        [Route("UserInfo")]
         public UserInfoViewModel GetUserInfo()
         {
-
             return new UserInfoViewModel
             {
-                Email = User.Identity.GetUserName()
+                Email = RequestContext.Principal.Identity.GetUserName()
             };
         }
 
-        // POST api/Account/Logout
+        // POST api/Auth/Logout
         [Route("Logout")]
         public IHttpActionResult Logout()
         {
             Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
             return Ok();
         }
-      
-        
-        // POST api/Account/Register
-        [AllowAnonymous]
+
+
+        // POST api/Auth/Register
         [Route("Register")]
-        public async Task<IHttpActionResult> Register(RegisterBindingModel model)
+        [HttpPost]
+        public async Task<IHttpActionResult> Register(RegisterAccountModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var user = new GameUser() { UserName = model.Email };
+            var user = new GameUser {UserName = model.Email};
 
-            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+            var result = await UserManager.CreateAsync(user, model.Password);
 
             if (!result.Succeeded)
             {
@@ -90,7 +69,6 @@ namespace EntityFX.Gdcame.Presentation.Web.WebApp.Controllers
             return Ok();
         }
 
-       
 
         protected override void Dispose(bool disposing)
         {
@@ -121,7 +99,7 @@ namespace EntityFX.Gdcame.Presentation.Web.WebApp.Controllers
             {
                 if (result.Errors != null)
                 {
-                    foreach (string error in result.Errors)
+                    foreach (var error in result.Errors)
                     {
                         ModelState.AddModelError("", error);
                     }
@@ -165,10 +143,10 @@ namespace EntityFX.Gdcame.Presentation.Web.WebApp.Controllers
                     return null;
                 }
 
-                Claim providerKeyClaim = identity.FindFirst(ClaimTypes.NameIdentifier);
+                var providerKeyClaim = identity.FindFirst(ClaimTypes.NameIdentifier);
 
-                if (providerKeyClaim == null || String.IsNullOrEmpty(providerKeyClaim.Issuer)
-                    || String.IsNullOrEmpty(providerKeyClaim.Value))
+                if (providerKeyClaim == null || string.IsNullOrEmpty(providerKeyClaim.Issuer)
+                    || string.IsNullOrEmpty(providerKeyClaim.Value))
                 {
                     return null;
                 }
@@ -189,20 +167,20 @@ namespace EntityFX.Gdcame.Presentation.Web.WebApp.Controllers
 
         private static class RandomOAuthStateGenerator
         {
-            private static RandomNumberGenerator _random = new RNGCryptoServiceProvider();
+            private static readonly RandomNumberGenerator _random = new RNGCryptoServiceProvider();
 
             public static string Generate(int strengthInBits)
             {
                 const int bitsPerByte = 8;
 
-                if (strengthInBits % bitsPerByte != 0)
+                if (strengthInBits%bitsPerByte != 0)
                 {
                     throw new ArgumentException("strengthInBits must be evenly divisible by 8.", "strengthInBits");
                 }
 
-                int strengthInBytes = strengthInBits / bitsPerByte;
+                var strengthInBytes = strengthInBits/bitsPerByte;
 
-                byte[] data = new byte[strengthInBytes];
+                var data = new byte[strengthInBytes];
                 _random.GetBytes(data);
                 return HttpServerUtility.UrlTokenEncode(data);
             }

@@ -2,17 +2,16 @@
 using System.Configuration;
 using EntityFX.Gdcame.Utils.ServiceStarter.Collapsed;
 
-
 namespace EntityFX.Gdcame.Utils.ConsoleHostApp.FullCollapsed
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             var containerBootstrapper = new FullCollapsedContainerBootstrapper();
             var ss = new FullCollapsedServiceStarter(
                 containerBootstrapper,
-                 ConfigurationManager.AppSettings["NotifyConsumerSignalRHubEndpoint_AddressServiceUrl"]
+                ConfigurationManager.AppSettings["NotifyConsumerSignalRHubEndpoint_AddressServiceUrl"]
                 );
             ss.StartServices();
             Console.ReadKey();

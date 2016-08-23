@@ -15,26 +15,22 @@ namespace EntityFX.Gdcame.Presentation.Web.Providers.Providers
 {
     public class GameDataProvider : IGameDataProvider
     {
-        private Guid GameGuid { get; set; }
-        private ILogger _logger;
-        private IGameManager _gameManager;
-        private readonly ISimpleUserManager _simpleUserManager;
-        private readonly ISessionManagerClientFactory _sessionManagerClient;
-        private readonly IMapper<GameData, GameDataModel> _gameDataModelMapper;
         private readonly IMapper<Cash, FundsCounterModel> _fundsCounterModelMapper;
         private readonly IMapper<BuyFundDriverResult, BuyDriverModel> _fundsDriverBuyinfoModelMapper;
-        private readonly IMapperFactory _mapperFactory;
         private readonly IGameClientFactory _gameClientFactory;
-        private readonly IRatingManager _ratingManager;
+        private readonly IMapper<GameData, GameDataModel> _gameDataModelMapper;
+        private readonly IMapperFactory _mapperFactory;
+        private readonly ISessionManagerClientFactory _sessionManagerClient;
+        private readonly ISimpleUserManager _simpleUserManager;
+        private IGameManager _gameManager;
+        private ILogger _logger;
 
         public GameDataProvider(
             ILogger logger,
             IGameClientFactory gameClientFactory,
             ISimpleUserManager simpleUserManager,
             ISessionManagerClientFactory sessionManagerClient,
-            IMapperFactory mapperFactory,
-
-            IRatingManager ratingManager
+            IMapperFactory mapperFactory
             )
         {
             _logger = logger;
@@ -47,8 +43,9 @@ namespace EntityFX.Gdcame.Presentation.Web.Providers.Providers
             _fundsCounterModelMapper = _mapperFactory.Build<Cash, FundsCounterModel>();
             _fundsDriverBuyinfoModelMapper = _mapperFactory.Build<BuyFundDriverResult, BuyDriverModel>();
             _gameClientFactory = gameClientFactory;
-            _ratingManager = ratingManager;
         }
+
+        private Guid GameGuid { get; set; }
 
         public void InitializeSession(string userName)
         {
@@ -56,11 +53,11 @@ namespace EntityFX.Gdcame.Presentation.Web.Providers.Providers
             {
                 if (!_simpleUserManager.Exists(userName))
                 {
-                    _simpleUserManager.Create(new UserData() {Login = userName});
+                    _simpleUserManager.Create(new UserData {Login = userName});
                 }
 
-                HttpContext.Current.Session["SessionGuid"] = _sessionManagerClient.BuildSessionManagerClient(Guid.Empty).OpenSession(userName);
-
+                HttpContext.Current.Session["SessionGuid"] =
+                    _sessionManagerClient.BuildSessionManagerClient(Guid.Empty).OpenSession(userName);
             }
             InitializeGameContext((Guid) HttpContext.Current.Session["SessionGuid"]);
         }
@@ -96,19 +93,20 @@ namespace EntityFX.Gdcame.Presentation.Web.Providers.Providers
         {
             var buyResult = _gameManager.BuyFundDriver(id);
             return buyResult != null ? _fundsDriverBuyinfoModelMapper.Map(buyResult) : null;
-
         }
 
         public ManualStepResultModel PerformManualStep(int? verificationNumber)
         {
             var result = _gameManager.PerformManualStep(
-                 verificationNumber != null ? new VerificationManualStepResult() { VerificationNumber = verificationNumber.Value } : null);
+                verificationNumber != null
+                    ? new VerificationManualStepResult {VerificationNumber = verificationNumber.Value}
+                    : null);
             var verificationnumberResult = result as VerificationRequiredResult;
             VerificationData verificationData = null;
             FundsCounterModel modifiedCounters = null;
             if (verificationnumberResult != null)
             {
-                verificationData = new VerificationData()
+                verificationData = new VerificationData
                 {
                     FirstNumber = verificationnumberResult.FirstNumber,
                     SecondNumber = verificationnumberResult.SecondNumber
@@ -121,7 +119,7 @@ namespace EntityFX.Gdcame.Presentation.Web.Providers.Providers
                 modifiedCounters = _fundsCounterModelMapper.Map(noVerficationRequiredResult.ModifiedCash);
             }
 
-            return new ManualStepResultModel()
+            return new ManualStepResultModel
             {
                 VerificationData = verificationData,
                 ModifiedCountersInfo = modifiedCounters
@@ -137,7 +135,7 @@ namespace EntityFX.Gdcame.Presentation.Web.Providers.Providers
         {
             _gameManager.ActivateDelayedCounter(counterId);
         }
-
+        /*
         public UserRating[] GetUsersRatingByCount(int count)
         {
             return _ratingManager.GetUsersRatingByCount(count);
@@ -151,6 +149,6 @@ namespace EntityFX.Gdcame.Presentation.Web.Providers.Providers
         public UserRating[] FindUserRatingByUserNameAndAroundUsers(string userName, int count)
         {
             return _ratingManager.FindUserRatingByUserNameAndAroundUsers(userName, count);
-        }
+        }*/
     }
 }

@@ -1,18 +1,18 @@
 ﻿using System;
+using System.ServiceModel.Channels;
 using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.Common.Contract.Counters;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Infrastructure.Service.Bases;
 using EntityFX.Gdcame.Manager.Contract.GameManager;
-using System.ServiceModel.Channels;
 
 namespace EntityFX.Gdcame.Utils.ClientProxy.Manager
 {
-	public class GameManagerClient<TInfrastructureProxy> : IGameManager
-		where TInfrastructureProxy : IInfrastructureProxy<IGameManager, Binding>, new()		
+    public class GameManagerClient<TInfrastructureProxy> : IGameManager
+        where TInfrastructureProxy : IInfrastructureProxy<IGameManager, Binding>, new()
     {
         private readonly Uri _endpointAddress;
-            // = new Uri("net.tcp://localhost:8555/EntityFX.EconomicsArcade.Manager/EntityFX.EconomicsArcade.Contract.Manager.GameManager.IGameManager");
+        // = new Uri("net.tcp://localhost:8555/EntityFX.EconomicsArcade.Manager/EntityFX.EconomicsArcade.Contract.Manager.GameManager.IGameManager");
 
         private readonly IOperationContextHelper _operationContextHelper;
         private readonly Guid _sesionGuid;
@@ -35,9 +35,9 @@ namespace EntityFX.Gdcame.Utils.ClientProxy.Manager
         {
             using (var proxy = new TInfrastructureProxy())
             {
-                IGameManager channel = proxy.CreateChannel(_endpointAddress);
+                var channel = proxy.CreateChannel(_endpointAddress);
                 proxy.ApplyContextScope(operationContext, _sesionGuid);
-                BuyFundDriverResult result = channel.BuyFundDriver(fundDriverId);
+                var result = channel.BuyFundDriver(fundDriverId);
                 proxy.CloseChannel();
                 return result;
             }
@@ -47,9 +47,9 @@ namespace EntityFX.Gdcame.Utils.ClientProxy.Manager
         {
             using (var proxy = new TInfrastructureProxy())
             {
-                IGameManager channel = proxy.CreateChannel(_endpointAddress);
+                var channel = proxy.CreateChannel(_endpointAddress);
                 proxy.ApplyContextScope(operationContext, _sesionGuid);
-                ManualStepResult res = channel.PerformManualStep(verificationManualStepResult);
+                var res = channel.PerformManualStep(verificationManualStepResult);
                 proxy.CloseChannel();
                 return res;
             }
@@ -59,7 +59,7 @@ namespace EntityFX.Gdcame.Utils.ClientProxy.Manager
         {
             using (var proxy = new TInfrastructureProxy())
             {
-                IGameManager channel = proxy.CreateChannel(_endpointAddress);
+                var channel = proxy.CreateChannel(_endpointAddress);
                 proxy.ApplyContextScope(operationContext, _sesionGuid);
                 channel.FightAgainstInflation();
                 proxy.CloseChannel();
@@ -76,7 +76,7 @@ namespace EntityFX.Gdcame.Utils.ClientProxy.Manager
             Cash cash;
             using (var proxy = new TInfrastructureProxy())
             {
-                IGameManager channel = proxy.CreateChannel(_endpointAddress);
+                var channel = proxy.CreateChannel(_endpointAddress);
                 proxy.ApplyContextScope(operationContext, _sesionGuid);
                 cash = channel.GetCounters();
                 proxy.CloseChannel();
@@ -89,7 +89,7 @@ namespace EntityFX.Gdcame.Utils.ClientProxy.Manager
             GameData gameData = null;
             using (var proxy = new TInfrastructureProxy())
             {
-                IGameManager channel = proxy.CreateChannel(_endpointAddress);
+                var channel = proxy.CreateChannel(_endpointAddress);
                 proxy.ApplyContextScope(operationContext, _sesionGuid);
                 gameData = channel.GetGameData();
                 proxy.CloseChannel();
@@ -101,7 +101,7 @@ namespace EntityFX.Gdcame.Utils.ClientProxy.Manager
         {
             using (var proxy = new TInfrastructureProxy())
             {
-                IGameManager channel = proxy.CreateChannel(_endpointAddress);
+                var channel = proxy.CreateChannel(_endpointAddress);
                 proxy.ApplyContextScope(operationContext, _sesionGuid);
                 channel.ActivateDelayedCounter(counterId);
                 proxy.CloseChannel();
@@ -110,10 +110,10 @@ namespace EntityFX.Gdcame.Utils.ClientProxy.Manager
 
         public bool Ping()
         {
-            bool result = false;
+            var result = false;
             using (var proxy = new TInfrastructureProxy())
             {
-                IGameManager channel = proxy.CreateChannel(_endpointAddress);
+                var channel = proxy.CreateChannel(_endpointAddress);
                 proxy.ApplyContextScope(operationContext, _sesionGuid);
                 channel.Ping();
                 proxy.CloseChannel();

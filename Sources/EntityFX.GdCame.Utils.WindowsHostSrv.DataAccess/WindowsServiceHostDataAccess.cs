@@ -6,7 +6,7 @@ namespace EntityFX.GdCame.Utils.WindowsHostSrv.DataAccess
 {
     public partial class WindowsServiceHostDataAccess : ServiceBase
     {
-        DataAccessStarter _dataAccessStarter;
+        private readonly DataAccessStarter _dataAccessStarter;
 
         public WindowsServiceHostDataAccess(DataAccessStarter dataAccessStarter)
         {
@@ -19,14 +19,14 @@ namespace EntityFX.GdCame.Utils.WindowsHostSrv.DataAccess
         {
             _dataAccessStarter.StartServices();
 
-            AddLog("Service " + this.ServiceName + " is started");
+            AddLog("Service " + ServiceName + " is started");
         }
 
         protected override void OnStop()
         {
             _dataAccessStarter.StopServices();
 
-            AddLog("Service " + this.ServiceName + " is stoped");
+            AddLog("Service " + ServiceName + " is stoped");
         }
 
         public void AddLog(string log)
@@ -40,7 +40,9 @@ namespace EntityFX.GdCame.Utils.WindowsHostSrv.DataAccess
                 eventLogMain.Source = "MyExampleService";
                 eventLogMain.WriteEntry(log);
             }
-            catch { }
+            catch
+            {
+            }
         }
     }
 }

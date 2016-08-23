@@ -12,7 +12,7 @@ namespace EntityFX.Gdcame.DataAccess.Service
         {
             _userRepository = userRepository;
         }
-        
+
         public int Create(User user)
         {
             return _userRepository.Create(user);
@@ -23,12 +23,12 @@ namespace EntityFX.Gdcame.DataAccess.Service
             _userRepository.Update(user);
         }
 
-        public void Delete(int userId)
+        public void Delete(string userId)
         {
             _userRepository.Delete(userId);
         }
 
-        public User FindById(int userId)
+        public User FindById(string userId)
         {
             return _userRepository.FindById(new GetUserByIdCriterion(userId));
         }
@@ -36,6 +36,11 @@ namespace EntityFX.Gdcame.DataAccess.Service
         public User FindByName(string name)
         {
             return _userRepository.FindByName(new GetUserByNameCriterion(name));
+        }
+
+        public User[] FindByFilter(string searchString)
+        {
+            return _userRepository.FindByFilter(new GetUsersBySearchStringCriterion(searchString));
         }
 
         public User[] FindAll()

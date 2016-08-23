@@ -4,19 +4,11 @@ namespace EntityFX.Gdcame.Infrastructure.Repository.EF
 {
     public abstract class QueryBase
     {
-        private readonly DbContext _dbContext;
-
-        protected DbContext DbContext
-        {
-            get
-            {
-                return _dbContext;
-            }
-        }
-
         protected QueryBase(DbContext dbContext)
         {
-            _dbContext = dbContext;
+            DbContext = dbContext;
         }
+
+        protected DbContext DbContext { get; }
     }
 }

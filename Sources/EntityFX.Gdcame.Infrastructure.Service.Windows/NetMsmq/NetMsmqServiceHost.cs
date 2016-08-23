@@ -1,10 +1,5 @@
-﻿using System;
-using System.Net.Security;
-using System.ServiceModel;
-using System.ServiceModel.Channels;
+﻿using System.ServiceModel;
 using System.ServiceModel.Description;
-using System.ServiceModel.Security;
-using System.Xml;
 using EntityFX.Gdcame.Infrastructure.Service.Bases;
 using Microsoft.Practices.Unity;
 
@@ -13,9 +8,8 @@ namespace EntityFX.Gdcame.Infrastructure.Service.Windows.NetMsmq
     public class NetMsmqServiceHost<T> : InfrastructureServiceHost<T, NetMsmqBinding>
     {
         public NetMsmqServiceHost(IUnityContainer container)
-            :base(container)
+            : base(container)
         {
-
         }
 
         protected override IBindingFactory<NetMsmqBinding> GetBindingFactory()

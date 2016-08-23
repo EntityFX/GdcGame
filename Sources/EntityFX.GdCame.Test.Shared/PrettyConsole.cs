@@ -4,7 +4,7 @@ namespace EntityFx.GdCame.Test.Shared
 {
     internal static class PrettyConsole
     {
-        private static readonly object LockObject = new { };
+        private static readonly object LockObject = new {};
 
         public static void WriteColor(ConsoleColor color, string text)
         {

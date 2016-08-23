@@ -5,6 +5,6 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Contract
 {
     public interface ICustomRuleRepository
     {
-        CustomRule[] FindAll(GetAllCustomRulesCriterion criterion); 
+        CustomRule[] FindAll(GetAllCustomRulesCriterion criterion);
     }
 }

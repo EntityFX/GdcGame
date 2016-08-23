@@ -9,11 +9,11 @@ using EntityFX.Gdcame.Infrastructure.Repository.UnitOfWork;
 
 namespace EntityFX.Gdcame.DataAccess.Repository.Ef
 {
-    class CustomRuleRepository : ICustomRuleRepository
+    internal class CustomRuleRepository : ICustomRuleRepository
     {
-        private readonly IUnitOfWorkFactory _unitOfWorkFactory;
         private readonly IMapper<CustomRuleEntity, CustomRule> _customRuleMapper;
         private readonly IMapperFactory _mapperFactory;
+        private readonly IUnitOfWorkFactory _unitOfWorkFactory;
 
         public CustomRuleRepository(IUnitOfWorkFactory unitOfWorkFactory
             , IMapperFactory mapperFactory

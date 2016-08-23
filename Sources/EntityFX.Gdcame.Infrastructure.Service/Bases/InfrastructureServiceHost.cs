@@ -9,99 +9,81 @@ using Unity.Wcf;
 
 namespace EntityFX.Gdcame.Infrastructure.Service.Bases
 {
-	public abstract class InfrastructureServiceHost<TServiceContract, TBinding> : IServiceHost, IDisposable
-		where TBinding : Binding
+    public abstract class InfrastructureServiceHost<TServiceContract, TBinding> : IServiceHost, IDisposable
+        where TBinding : Binding
     {
-        private ServiceHost _serviceHost;
-
-        public ServiceHost ServiceHost
-        {
-            get
-            {
-                return _serviceHost;
-            }
-        }
-
-        public Uri Endpoint
-        {
-            get
-            {
-                return _serviceHost.BaseAddresses.First();
-            }
-        }
-
-        protected virtual IUnityContainer Container
-        {
-            get;
-            private set;
-        }
-
-        public string Name
-        {
-            get
-            {
-				return typeof(TServiceContract).FullName;
-            }
-        }
-
         protected InfrastructureServiceHost(IUnityContainer container)
         {
             Container = container;
         }
-        
-		private TBinding GetBinding()
+
+        protected virtual IUnityContainer Container { get; }
+
+        public void Dispose()
         {
-			var binding = GetBindingFactory ().Build (null);
-			ConfigureBinding (binding);
-			return binding;
+            ((IDisposable) ServiceHost).Dispose();
         }
 
-		protected abstract IBindingFactory<TBinding> GetBindingFactory ();
+        public ServiceHost ServiceHost { get; private set; }
 
-        protected virtual ServiceEndpoint CreateServiceEndpoint(ServiceHost serviceHost)
+        public Uri Endpoint
         {
-			var endpoint = serviceHost.AddServiceEndpoint(typeof(TServiceContract), GetBinding(), string.Empty);
-            return endpoint;
+            get { return ServiceHost.BaseAddresses.First(); }
         }
 
-		protected virtual void ConfigureBinding(TBinding binding) 
-		{
-		}
+        public string Name
+        {
+            get { return typeof (TServiceContract).FullName; }
+        }
 
         public void Open(Uri endpointAddress)
         {
-			_serviceHost = new UnityServiceHost(Container, Container.Resolve<TServiceContract>().GetType(), endpointAddress);
-            CreateServiceEndpoint(_serviceHost);
-            var serviceDebugBehavior = _serviceHost.Description.Behaviors.Find<ServiceDebugBehavior>();
+            ServiceHost = new UnityServiceHost(Container, Container.Resolve<TServiceContract>().GetType(),
+                endpointAddress);
+            CreateServiceEndpoint(ServiceHost);
+            var serviceDebugBehavior = ServiceHost.Description.Behaviors.Find<ServiceDebugBehavior>();
             if (serviceDebugBehavior == null)
             {
-                _serviceHost.Description.Behaviors
-                    .Add(new ServiceDebugBehavior() { IncludeExceptionDetailInFaults = true });
+                ServiceHost.Description.Behaviors
+                    .Add(new ServiceDebugBehavior {IncludeExceptionDetailInFaults = true});
             }
             else
             {
                 serviceDebugBehavior.IncludeExceptionDetailInFaults = true;
             }
-            BeforeServiceOpen(_serviceHost);
-            _serviceHost.Open();
-        }
-
-        protected virtual void BeforeServiceOpen(ServiceHost serviceHost)
-        {
-            
+            BeforeServiceOpen(ServiceHost);
+            ServiceHost.Open();
         }
 
         public void Close()
         {
-            if (_serviceHost != null)
+            if (ServiceHost != null)
             {
-                _serviceHost.Close();
+                ServiceHost.Close();
             }
         }
 
-        public void Dispose()
+        private TBinding GetBinding()
         {
-            ((IDisposable)_serviceHost).Dispose();
+            var binding = GetBindingFactory().Build(null);
+            ConfigureBinding(binding);
+            return binding;
+        }
+
+        protected abstract IBindingFactory<TBinding> GetBindingFactory();
+
+        protected virtual ServiceEndpoint CreateServiceEndpoint(ServiceHost serviceHost)
+        {
+            var endpoint = serviceHost.AddServiceEndpoint(typeof (TServiceContract), GetBinding(), string.Empty);
+            return endpoint;
+        }
+
+        protected virtual void ConfigureBinding(TBinding binding)
+        {
+        }
+
+        protected virtual void BeforeServiceOpen(ServiceHost serviceHost)
+        {
         }
     }
 }

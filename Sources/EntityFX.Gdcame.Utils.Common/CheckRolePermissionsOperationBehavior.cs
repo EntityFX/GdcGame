@@ -13,12 +13,13 @@ using EntityFX.Gdcame.Manager.Contract.SessionManager;
 
 namespace EntityFX.Gdcame.Utils.Common
 {
-    public class CheckRolePermissionsOperationBehavior   : IOperationBehavior
+    public class CheckRolePermissionsOperationBehavior : IOperationBehavior
     {
-        private readonly IOperationContextHelper _operationContextHelper;
         private readonly GameSessions _gameSessions;
+        private readonly IOperationContextHelper _operationContextHelper;
 
-        public CheckRolePermissionsOperationBehavior(IOperationContextHelper operationContextHelper,GameSessions gameSessions)
+        public CheckRolePermissionsOperationBehavior(IOperationContextHelper operationContextHelper,
+            GameSessions gameSessions)
         {
             _operationContextHelper = operationContextHelper;
             _gameSessions = gameSessions;
@@ -26,33 +27,33 @@ namespace EntityFX.Gdcame.Utils.Common
 
         public void Validate(OperationDescription operationDescription)
         {
-
         }
 
         public void ApplyDispatchBehavior(OperationDescription operationDescription, DispatchOperation dispatchOperation)
         {
-            dispatchOperation.Invoker = new CheckRolePermissionsInvoker(_gameSessions, _operationContextHelper, dispatchOperation.Invoker, operationDescription.SyncMethod);
+            dispatchOperation.Invoker = new CheckRolePermissionsInvoker(_gameSessions, _operationContextHelper,
+                dispatchOperation.Invoker, operationDescription.SyncMethod);
         }
 
         public void ApplyClientBehavior(OperationDescription operationDescription, ClientOperation clientOperation)
         {
-
         }
 
-        public void AddBindingParameters(OperationDescription operationDescription, BindingParameterCollection bindingParameters)
+        public void AddBindingParameters(OperationDescription operationDescription,
+            BindingParameterCollection bindingParameters)
         {
-    
         }
     }
 
-    internal class  CheckRolePermissionsInvoker : IOperationInvoker
+    internal class CheckRolePermissionsInvoker : IOperationInvoker
     {
+        private readonly GameSessions _gameSessions;
         private readonly IOperationInvoker _invoker;
         private readonly MethodInfo _methodInfo;
-        private readonly GameSessions _gameSessions;
         private readonly IOperationContextHelper _operationContextHelper;
 
-        public CheckRolePermissionsInvoker(GameSessions gameSessions, IOperationContextHelper operationContextHelper, IOperationInvoker invoker, MethodInfo methodInfo)
+        public CheckRolePermissionsInvoker(GameSessions gameSessions, IOperationContextHelper operationContextHelper,
+            IOperationInvoker invoker, MethodInfo methodInfo)
         {
             _gameSessions = gameSessions;
             _operationContextHelper = operationContextHelper;
@@ -75,18 +76,20 @@ namespace EntityFX.Gdcame.Utils.Common
                 if (!attr.AllowedRoles.Any(_ => session.UserRoles.Contains(_)))
                 {
                     throw new FaultException<InsufficientPermissionsFault>(
-                        new InsufficientPermissionsFault()
+                        new InsufficientPermissionsFault
                         {
                             RequiredRoles = attr.AllowedRoles,
                             CurrentRoles = session.UserRoles
                         }
-                        , string.Format("User {0} doesn't have enough permissions to perform this operation", session.Login));
+                        ,
+                        string.Format("User {0} doesn't have enough permissions to perform this operation",
+                            session.Login));
                 }
-                            return _invoker.Invoke(instance, inputs, out outputs);
+                return _invoker.Invoke(instance, inputs, out outputs);
             }
             throw new FaultException<InsufficientPermissionsFault>(
-                new InsufficientPermissionsFault() {RequiredRoles = null, CurrentRoles = new []{UserRole.GenericUser}}
-                , string.Format("User doesn't have enough permissions to perform this operation"));
+                new InsufficientPermissionsFault {RequiredRoles = null, CurrentRoles = new[] {UserRole.GenericUser}}
+                , "User doesn\'t have enough permissions to perform this operation");
         }
 
         public IAsyncResult InvokeBegin(object instance, object[] inputs, AsyncCallback callback, object state)

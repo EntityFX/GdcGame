@@ -5,15 +5,9 @@ namespace EntityFX.Gdcame.Infrastructure.Service.Interfaces
 {
     public interface IServiceHost
     {
-        string Name
-        {
-            get;
-        }
+        string Name { get; }
 
-        Uri Endpoint
-        {
-            get;
-        }
+        Uri Endpoint { get; }
 
         ServiceHost ServiceHost { get; }
 

@@ -16,16 +16,22 @@ using Owin;
 
 namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
 {
-    public class CollapsedServiceStarter : ServicesStarterBase<CollapsedContainerBootstrapper>, IServicesStarter, IDisposable
+    public class CollapsedServiceStarter : ServicesStarterBase<CollapsedContainerBootstrapper>, IServicesStarter,
+        IDisposable
     {
-        private readonly string _baseUrl = "net.tcp://localhost";
         private readonly Uri _baseMsmqUrl = new Uri("net.msmq://localhost/private/");
+        private readonly string _baseUrl = "net.tcp://localhost";
         private readonly string _signalRHost = "http://+:8088/";
         private IDisposable _webApp;
 
         public CollapsedServiceStarter(CollapsedContainerBootstrapper bootstrapper)
             : base(bootstrapper)
         {
+        }
+
+        public void Dispose()
+        {
+            _webApp.Dispose();
         }
 
         public override void StartServices()
@@ -44,11 +50,11 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
 
             _webApp = WebApp.Start(_signalRHost, builder =>
             {
-                var listener = (HttpListener)builder.Properties[typeof(HttpListener).FullName];
+                var listener = (HttpListener) builder.Properties[typeof (HttpListener).FullName];
                 listener.AuthenticationSchemes = AuthenticationSchemes.Ntlm;
                 builder.UseCors(CorsOptions.AllowAll);
                 builder.MapSignalR();
-                builder.RunSignalR(new HubConfiguration()
+                builder.RunSignalR(new HubConfiguration
                 {
                     EnableDetailedErrors = true,
                     EnableJSONP = true
@@ -68,17 +74,6 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
             var serviceInfoHelper = _container.Resolve<IServiceInfoHelper>();
             serviceInfoHelper.PrintServiceHostInfo(service.ServiceHost);
             //ServiceInfoHelperConsole.PrintServiceHostInfo(service.ServiceHost);
-
         }
-
-        public void Dispose()
-        {
-            _webApp.Dispose();
-        }
-
-
-
-
-
     }
 }

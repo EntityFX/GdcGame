@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[UserGameCounter]
 (
-	[UserId] INT NOT NULL PRIMARY KEY,
+	[UserId] CHAR(32) NOT NULL PRIMARY KEY,
 	[TotalFunds] MONEY NOT NULL,
 	[CurrentFunds] MONEY NOT NULL,
 	[ManualStepsCount] INT NOT NULL,

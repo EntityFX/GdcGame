@@ -6,9 +6,9 @@ using EntityFX.Gdcame.Presentation.Web.IntranetWebApp;
 using EntityFX.Gdcame.Presentation.Web.IntranetWebApp.Factories;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Mvc;
+using WebActivatorEx;
 
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(UnityWebActivator), "Start")]
-
+[assembly: PreApplicationStartMethod(typeof (UnityWebActivator), "Start")]
 
 namespace EntityFX.Gdcame.Presentation.Web.IntranetWebApp
 {
@@ -16,7 +16,7 @@ namespace EntityFX.Gdcame.Presentation.Web.IntranetWebApp
     public static class UnityWebActivator
     {
         /// <summary>Integrates Unity when the application starts.</summary>
-        public static void Start() 
+        public static void Start()
         {
             var container = new UnityContainer();
             UnityConfig.RegisterComponents(container);
@@ -25,10 +25,10 @@ namespace EntityFX.Gdcame.Presentation.Web.IntranetWebApp
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
             GlobalConfiguration.Configuration.DependencyResolver = new Unity.WebApi.UnityDependencyResolver(container);
             ControllerBuilder.Current.SetControllerFactory(new UnityControllerFactory(container));
-            GlobalConfiguration.Configuration.Services.Replace(typeof(IExceptionHandler), container.Resolve<InvalidSessionExceptionHandler>());
+            GlobalConfiguration.Configuration.Services.Replace(typeof (IExceptionHandler),
+                container.Resolve<InvalidSessionExceptionHandler>());
             // TODO: Uncomment if you want to use PerRequestLifetimeManager
             // Microsoft.Web.Infrastructure.DynamicModuleHelper.DynamicModuleUtility.RegisterModule(typeof(UnityPerRequestHttpModule));
         }
-
     }
 }

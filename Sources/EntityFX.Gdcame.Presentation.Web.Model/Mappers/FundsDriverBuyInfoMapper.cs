@@ -11,7 +11,8 @@ namespace EntityFX.Gdcame.Presentation.Web.Model.Mappers
         private readonly IMapper<Cash, FundsCounterModel> _countersMapper;
         private readonly IMapper<Item, FundsDriverModel> _fundsDriverMapper;
 
-        public FundsDriverBuyInfoMapper(IMapper<Cash, FundsCounterModel> countersMapper, IMapper<Item, FundsDriverModel> fundsDriverMapper)
+        public FundsDriverBuyInfoMapper(IMapper<Cash, FundsCounterModel> countersMapper,
+            IMapper<Item, FundsDriverModel> fundsDriverMapper)
         {
             _countersMapper = countersMapper;
             _fundsDriverMapper = fundsDriverMapper;

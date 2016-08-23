@@ -3,7 +3,6 @@ using EntityFX.Gdcame.Common.Contract;
 
 namespace EntityFX.Gdcame.NotifyConsumer.Contract
 {
-
     [ServiceContract]
     public interface INotifyConsumerService
     {

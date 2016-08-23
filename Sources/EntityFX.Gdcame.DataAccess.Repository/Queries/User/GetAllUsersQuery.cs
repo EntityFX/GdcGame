@@ -19,4 +19,23 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef.Queries.User
             return DbContext.Set<UserEntity>().ToArray();
         }
     }
+
+    public class GetUsersBySearchStringQuery : QueryBase, IQuery<GetUsersBySearchStringCriterion, IEnumerable<UserEntity>>
+    {
+        public GetUsersBySearchStringQuery(EconomicsArcadeDbContext dbContext)
+            : base(dbContext)
+        {
+        }
+
+        public IEnumerable<UserEntity> Execute(GetUsersBySearchStringCriterion criterion)
+        {
+            IQueryable<UserEntity> usersQuery = DbContext.Set<UserEntity>();
+
+            if (!string.IsNullOrWhiteSpace(criterion.SearchString))
+            {
+                usersQuery = usersQuery.Where(u => u.Email.StartsWith(criterion.SearchString));
+            }
+            return usersQuery.ToArray();
+        }
+    }
 }

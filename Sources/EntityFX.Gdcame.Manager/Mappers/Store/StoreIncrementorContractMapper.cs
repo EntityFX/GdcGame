@@ -8,7 +8,7 @@ namespace EntityFX.Gdcame.Manager.Mappers.Store
     {
         public StoredIncrementor Map(IncrementorBase source, StoredIncrementor destination)
         {
-            return new StoredIncrementor()
+            return new StoredIncrementor
             {
                 Value = source.Value
             };

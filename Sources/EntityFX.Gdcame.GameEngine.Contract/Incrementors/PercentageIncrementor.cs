@@ -6,7 +6,7 @@
             : base(value)
         {
         }
-        
+
         protected override IncrementorTypeEnum GetIncrementorType()
         {
             return IncrementorTypeEnum.PercentageIncrementor;

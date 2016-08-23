@@ -8,6 +8,7 @@ namespace EntityFX.Gdcame.Manager.Contract.AdminManager
     {
         [DataMember]
         public UserRole[] RequiredRoles { get; set; }
+
         [DataMember]
         public UserRole[] CurrentRoles { get; set; }
     }

@@ -7,14 +7,22 @@ namespace EntityFX.Gdcame.DataAccess.Contract.User
     {
         [OperationContract]
         int Create(User user);
+
         [OperationContract]
         void Update(User user);
+
         [OperationContract]
-        void Delete(int userId);
+        void Delete(string userId);
+
         [OperationContract]
-        User FindById(int userId);
+        User FindById(string userId);
+
         [OperationContract]
         User FindByName(string name);
+
+        [OperationContract]
+        User[] FindByFilter(string searchString);
+
         [OperationContract]
         User[] FindAll();
     }

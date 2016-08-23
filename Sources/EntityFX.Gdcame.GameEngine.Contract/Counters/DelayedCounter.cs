@@ -12,10 +12,7 @@
 
         public override decimal Value
         {
-            get
-            {
-                return SubValue;
-            }
+            get { return SubValue; }
         }
     }
 }

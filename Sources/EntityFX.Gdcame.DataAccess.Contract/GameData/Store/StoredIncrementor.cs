@@ -7,6 +7,7 @@ namespace EntityFX.Gdcame.DataAccess.Contract.GameData.Store
     {
         [DataMember]
         public int Id { get; set; }
+
         [DataMember]
         public int Value { get; set; }
     }

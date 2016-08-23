@@ -5,6 +5,6 @@ namespace EntityFX.Gdcame.Utils.Common
 {
     public interface ISessionManagerClientFactory
     {
-        ISessionManager BuildSessionManagerClient(Guid sessionGuid);   
+        ISessionManager BuildSessionManagerClient(Guid sessionGuid);
     }
 }

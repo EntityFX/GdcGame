@@ -4,49 +4,46 @@ namespace EntityFX.Gdcame.GameEngine.Contract
 {
     public abstract class ManualStepResult
     {
-        public bool IsVerificationRequired { get; protected set; }
-
-
         protected ManualStepResult()
         {
             IsVerificationRequired = false;
         }
+
+        public bool IsVerificationRequired { get; protected set; }
     }
 
     public class ManualStepNoVerficationRequiredResult : ManualStepResult
     {
-        public GameCash ModifiedGameCash { get; set; }
-
         public ManualStepNoVerficationRequiredResult()
         {
             IsVerificationRequired = false;
         }
+
+        public GameCash ModifiedGameCash { get; set; }
     }
 
-    public class ManualStepVerifiedResult  : ManualStepResult
+    public class ManualStepVerifiedResult : ManualStepResult
     {
-            
-        public bool IsVerificationValid { get; protected set; }
-
         public ManualStepVerifiedResult(bool isValid = false)
         {
             IsVerificationRequired = false;
             IsVerificationValid = isValid;
         }
+
+        public bool IsVerificationValid { get; protected set; }
     }
 
     public class ManualStepVerificationRequiredResult : ManualStepResult
     {
+        public ManualStepVerificationRequiredResult()
+        {
+            IsVerificationRequired = true;
+        }
+
         public int FirstNumber { get; set; }
 
         public int SecondNumber { get; set; }
-
-        public ManualStepVerificationRequiredResult()
-        {
-            IsVerificationRequired = true;    
-        }
     }
-
 
 
     public class VerificationManualStepData

@@ -1,20 +1,23 @@
 ﻿using System;
+using System.ServiceModel.Channels;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Infrastructure.Service.Bases;
 using EntityFX.Gdcame.Manager.Contract.SessionManager;
-using System.ServiceModel.Channels;
 
 namespace EntityFX.Gdcame.Utils.ClientProxy.Manager
 {
-	public class SessionManagerClient<TInfrastructureProxy>     : ISessionManager
-		where TInfrastructureProxy : IInfrastructureProxy<ISessionManager, Binding>, new()
+    public class SessionManagerClient<TInfrastructureProxy> : ISessionManager
+        where TInfrastructureProxy : IInfrastructureProxy<ISessionManager, Binding>, new()
     {
+        private readonly Uri _endpointAddress;
+            // = "net.tcp://localhost:8555/EntityFX.EconomicsArcade.Manager/EntityFX.EconomicsArcade.Contract.Manager.SessionManager.ISessionManager";
+
         private readonly IOperationContextHelper _operationContextHelper;
         private readonly Guid _sessionGuid;
-        private readonly Uri _endpointAddress;// = "net.tcp://localhost:8555/EntityFX.EconomicsArcade.Manager/EntityFX.EconomicsArcade.Contract.Manager.SessionManager.ISessionManager";
         private readonly Action<Guid> operationContext;
 
-        public SessionManagerClient(IOperationContextHelper operationContextHelper, string endpointAddress, Guid sessionGuid)
+        public SessionManagerClient(IOperationContextHelper operationContextHelper, string endpointAddress,
+            Guid sessionGuid)
         {
             _sessionGuid = sessionGuid;
             _endpointAddress = new Uri(endpointAddress);

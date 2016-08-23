@@ -12,10 +12,10 @@ namespace EntityFX.GdCame.Test.DataAccess
         public void TestGelAllFundsDrivers()
         {
             var proxy =
-    new GameDataRetrieveDataAccessClient<NetTcpProxy<IGameDataRetrieveDataAccessService>>(
-        "net.tcp://localhost/EntityFX.EconomicsArcade.DataAccess:8777/EntityFX.EconomicsArcade.Contract.DataAccess.GameData.IGameDataRetrieveDataAccessService");
+                new GameDataRetrieveDataAccessClient<NetTcpProxy<IGameDataRetrieveDataAccessService>>(
+                    "net.tcp://localhost/EntityFX.EconomicsArcade.DataAccess:8777/EntityFX.EconomicsArcade.Contract.DataAccess.GameData.IGameDataRetrieveDataAccessService");
 
-            var user = proxy.GetGameData(1);
+            var user = proxy.GetGameData("1");
             Assert.IsNotNull(user);
         }
     }

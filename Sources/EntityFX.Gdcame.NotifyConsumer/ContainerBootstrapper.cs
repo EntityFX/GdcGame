@@ -24,7 +24,6 @@ namespace EntityFX.Gdcame.NotifyConsumer
             container.RegisterInstance<IConnections>(new Connections());
 
             return container;
-
         }
     }
 }

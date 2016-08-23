@@ -2,7 +2,6 @@
 
 namespace EntityFX.Gdcame.Infrastructure.Common
 {
-
     public interface ILogger
     {
         void Debug(string message, params object[] args);

@@ -7,8 +7,8 @@ namespace EntityFX.Gdcame.Common.Contract.Items
     {
         [DataMember]
         public int Id { get; set; }
+
         [DataMember]
         public string Name { get; set; }
-
     }
 }

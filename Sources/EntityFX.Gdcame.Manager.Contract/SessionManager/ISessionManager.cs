@@ -8,8 +8,10 @@ namespace EntityFX.Gdcame.Manager.Contract.SessionManager
     {
         [OperationContract]
         Guid OpenSession(string login);
+
         [OperationContract]
         bool CloseSession();
+
         [OperationContract]
         Session GetSession();
     }

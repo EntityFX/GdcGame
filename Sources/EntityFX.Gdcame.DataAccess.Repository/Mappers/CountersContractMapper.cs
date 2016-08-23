@@ -20,23 +20,25 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef.Mappers
         };
 
         private static readonly IDictionary<int, Func<CounterEntity, CounterBase>> MappingDictionary =
-            new ReadOnlyDictionary<int, Func<CounterEntity, CounterBase>>(new Dictionary<int, Func<CounterEntity, CounterBase>>(new Dictionary<int, Func<CounterEntity, CounterBase>>()
-            {
+            new ReadOnlyDictionary<int, Func<CounterEntity, CounterBase>>(
+                new Dictionary<int, Func<CounterEntity, CounterBase>>(new Dictionary
+                    <int, Func<CounterEntity, CounterBase>>
                 {
-                    0, entity => new SingleCounter()
-                },
-                {
-                    1, GenericFunc
-                },
-                {
-                    2, entity => new DelayedCounter
                     {
-                        MiningTimeSeconds = entity.MiningTimeSeconds ?? 0,
-                        SecondsRemaining = 0,
-                        UnlockValue = 10000
+                        0, entity => new SingleCounter()
+                    },
+                    {
+                        1, GenericFunc
+                    },
+                    {
+                        2, entity => new DelayedCounter
+                        {
+                            MiningTimeSeconds = entity.MiningTimeSeconds ?? 0,
+                            SecondsRemaining = 0,
+                            UnlockValue = 10000
+                        }
                     }
-                }
-            }));
+                }));
 
         public CounterBase Map(CounterEntity source, CounterBase destination = null)
         {

@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace EntityFX.Gdcame.Infrastructure.Common
 {
-
     public class TaskTimer
     {
+        private readonly TimeSpan interval;
+        private readonly bool runOnce;
+        private readonly Action tick;
         private bool timerRunning;
-        private TimeSpan interval;
-        private Action tick;
-        private bool runOnce;
 
         public TaskTimer(TimeSpan interval, Action tick, bool runOnce = false)
         {

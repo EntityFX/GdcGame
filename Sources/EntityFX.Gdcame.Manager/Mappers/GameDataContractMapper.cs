@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using EntityFX.Gdcame.Common.Contract;
+using EntityFX.Gdcame.Common.Contract.Counters;
 using EntityFX.Gdcame.GameEngine.Contract;
 using EntityFX.Gdcame.GameEngine.Contract.Counters;
 using EntityFX.Gdcame.GameEngine.Contract.Items;
@@ -9,12 +10,12 @@ namespace EntityFX.Gdcame.Manager.Mappers
 {
     public class GameDataContractMapper : IMapper<IGame, GameData>
     {
-        private readonly IMapper<GameCash, Gdcame.Common.Contract.Counters.Cash> _fundsCountersContractMapper;
+        private readonly IMapper<GameCash, Cash> _fundsCountersContractMapper;
         private readonly IMapper<Item, Common.Contract.Items.Item> _fundsDriversContractMapper;
 
         public GameDataContractMapper(
-            IMapper<GameCash, Gdcame.Common.Contract.Counters.Cash> fundsCountersContractMapper,
-                        IMapper<Item, Common.Contract.Items.Item> fundsDriversContractMapper
+            IMapper<GameCash, Cash> fundsCountersContractMapper,
+            IMapper<Item, Common.Contract.Items.Item> fundsDriversContractMapper
             )
         {
             _fundsCountersContractMapper = fundsCountersContractMapper;
@@ -23,7 +24,7 @@ namespace EntityFX.Gdcame.Manager.Mappers
 
         public GameData Map(IGame source, GameData destination = null)
         {
-            return new GameData()
+            return new GameData
             {
                 Items = source.Items.Select(fundsDriver =>
                 {
@@ -34,7 +35,7 @@ namespace EntityFX.Gdcame.Manager.Mappers
                 }).ToArray(),
                 Cash = _fundsCountersContractMapper.Map(source.GameCash),
                 AutomatedStepsCount = source.AutomaticStepNumber,
-                ManualStepsCount =  source.ManualStepNumber
+                ManualStepsCount = source.ManualStepNumber
             };
         }
     }

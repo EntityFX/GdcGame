@@ -7,6 +7,7 @@ namespace EntityFX.Gdcame.GameEngine.CustomRules
     public class ReduceFundDriverPriceCustomRule : ICustomRule
     {
         private const int REDUCE_TIMES = 3;
+
         public void PerformRuleWhenBuyFundDriver(IGame game, CustomRuleInfo customRuleInfo)
         {
             if (customRuleInfo.CurrentIndex == null)

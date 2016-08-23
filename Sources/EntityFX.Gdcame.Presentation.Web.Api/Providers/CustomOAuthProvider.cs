@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using EntityFX.Gdcame.Presentation.Web.WebApp.Models;
 using EntityFX.Gdcame.Utils.Common;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security.OAuth;
 
-namespace EntityFX.Gdcame.Presentation.Web.WebApp.Providers
+namespace EntityFX.Gdcame.Presentation.Web.Api.Providers
 {
-    public class ApplicationOAuthProvider : OAuthAuthorizationServerProvider
+    public class CustomOAuthProvider : OAuthAuthorizationServerProvider
     {
         private readonly string _publicClientId;
         private readonly ISessionManagerClientFactory _sessionManager;
 
-        public ApplicationOAuthProvider(string publicClientId, ISessionManagerClientFactory sessionManager)
+        public CustomOAuthProvider(string publicClientId, ISessionManagerClientFactory sessionManager)
         {
             if (publicClientId == null)
             {
@@ -26,11 +25,11 @@ namespace EntityFX.Gdcame.Presentation.Web.WebApp.Providers
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
-            context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
-            
+            context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] {"*"});
+
             var userManager = context.OwinContext.GetUserManager<ApplicationUserManager>();
 
-            GameUser user = await userManager.FindAsync(context.UserName, context.Password);
+            var user = await userManager.FindAsync(context.UserName, context.Password);
 
             if (user == null)
             {
@@ -38,17 +37,14 @@ namespace EntityFX.Gdcame.Presentation.Web.WebApp.Providers
                 return;
             }
 
-            //ClaimsIdentity oAuthIdentity = await userManager.CreateIdentityAsync(user, OAuthDefaults.AuthenticationType);
-            //ClaimsIdentity cookiesIdentity = await userManager.CreateIdentityAsync(user, CookieAuthenticationDefaults.AuthenticationType);
-
-
-            //AuthenticationProperties properties = CreateProperties(user.UserName);
-            //AuthenticationTicket ticket = new AuthenticationTicket(oAuthIdentity, properties);
-
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
             identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
             identity.AddClaim(new Claim("sub", context.UserName));
-            identity.AddClaim(new Claim("role", "user"));
+
+            foreach (var role in user.Roles)
+            {
+                identity.AddClaim(new Claim(ClaimTypes.Role, role));
+            }
 
             var sessionGuid = _sessionManager.BuildSessionManagerClient(Guid.Empty).OpenSession(context.UserName);
             identity.AddClaim(new Claim("gameSession", sessionGuid.ToString()));
@@ -59,8 +55,7 @@ namespace EntityFX.Gdcame.Presentation.Web.WebApp.Providers
 
         public override async Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
-             await Task.Run(() => context.Validated());
+            await Task.Run(() => context.Validated());
         }
-
     }
 }

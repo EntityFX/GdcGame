@@ -12,7 +12,6 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef
         private readonly IUnitOfWorkFactory _unitOfWorkFactory;
 
 
-
         public UserRatingRepository(IUnitOfWorkFactory unitOfWorkFactory)
         {
             _unitOfWorkFactory = unitOfWorkFactory;
@@ -20,7 +19,6 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef
 
         public UserRating[] GetAllUserRatings(GetAllUsersRatingsCriterion findAllUsersRatingsCriterion)
         {
-
             using (var uow = _unitOfWorkFactory.Create())
             {
                 var findQuery = uow.BuildQuery();
@@ -30,14 +28,15 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef
             }
         }
 
-       
-            //using (var uow = _unitOfWorkFactory.Create())
-            //{
-            //    var findQuery = uow.BuildQuery();
-            //    return findQuery.For<IEnumerable<UserEntity>>()
-            //        .With(finalAllCriterion)
-            //        .Select(_ => _userContractMapper.Map(_))
-            //        .ToArray();
-            //}
+        //    var findQuery = uow.BuildQuery();
+        //{
+
+
+        //using (var uow = _unitOfWorkFactory.Create())
+        //    return findQuery.For<IEnumerable<UserEntity>>()
+        //        .With(finalAllCriterion)
+        //        .Select(_ => _userContractMapper.Map(_))
+        //        .ToArray();
+        //}
     }
 }

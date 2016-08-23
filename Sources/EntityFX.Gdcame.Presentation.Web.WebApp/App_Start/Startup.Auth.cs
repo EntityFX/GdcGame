@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Web.Http;
-using EntityFX.Gdcame.Presentation.Web.WebApp.EntityFX.EconomicsArcade.Presentation.GameApi;
-using EntityFX.Gdcame.Presentation.Web.WebApp.Providers;
+using EntityFX.Gdcame.Presentation.Web.Api.Providers;
 using EntityFX.Gdcame.Utils.Common;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.OAuth;
@@ -20,28 +19,26 @@ namespace EntityFX.Gdcame.Presentation.Web.WebApp
         public void ConfigureAuth(IAppBuilder app)
         {
             var unityResolver = GlobalConfiguration.Configuration.DependencyResolver as UnityDependencyResolver;
-            var aumf = (ApplicationUserManagerFacrtory)unityResolver.GetService(typeof (ApplicationUserManagerFacrtory));
+            var aumf =
+                (ApplicationUserManagerFacotory) unityResolver.GetService(typeof (ApplicationUserManagerFacotory));
             // Configure the db context and user manager to use a single instance per request
-           // app.CreatePerOwinContext(ApplicationDbContext.Create);
-            app.CreatePerOwinContext<ApplicationUserManager>((options, context) =>
-            {
-                return (ApplicationUserManager)aumf.Create(options, context);
-            });
+            // app.CreatePerOwinContext(ApplicationDbContext.Create);
+            app.CreatePerOwinContext<ApplicationUserManager>(
+                (options, context) => { return (ApplicationUserManager) aumf.Create(options, context); });
 
-            OAuthAuthorizationServerOptions OAuthServerOptions = new OAuthAuthorizationServerOptions()
+            var OAuthServerOptions = new OAuthAuthorizationServerOptions
             {
-
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/token"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(30),
-                Provider = new ApplicationOAuthProvider("GameApi", (ISessionManagerClientFactory)unityResolver.GetService(typeof(ISessionManagerClientFactory))),
+                Provider =
+                    new CustomOAuthProvider("GameApi",
+                        (ISessionManagerClientFactory) unityResolver.GetService(typeof (ISessionManagerClientFactory)))
             };
 
             // Token Generation
             app.UseOAuthAuthorizationServer(OAuthServerOptions);
             app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
         }
-
-
     }
 }

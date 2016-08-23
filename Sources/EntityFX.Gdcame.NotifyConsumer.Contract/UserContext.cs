@@ -6,7 +6,8 @@ namespace EntityFX.Gdcame.NotifyConsumer.Contract
     public class UserContext
     {
         [DataMember]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
+
         [DataMember]
         public string UserName { get; set; }
     }

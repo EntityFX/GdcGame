@@ -5,7 +5,7 @@ namespace EntityFX.Gdcame.Infrastructure.Common
 {
     public class NLoggerAdapter : ILogger
     {
-        ILog _nLogLogger;
+        private readonly ILog _nLogLogger;
 
         public NLoggerAdapter(ILog nLogLogger)
         {

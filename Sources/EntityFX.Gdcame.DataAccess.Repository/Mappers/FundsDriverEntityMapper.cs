@@ -22,7 +22,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef.Mappers
             destination.UnlockValue = source.UnlockValue;
             destination.Name = source.Name;
             destination.Id = source.Id;
-            destination.InflationPercent = (short)source.InflationPercent;
+            destination.InflationPercent = (short) source.InflationPercent;
             destination.Incrementors = new List<IncrementorEntity>();
             destination.Picture = source.Picture;
             foreach (var incrementor in source.Incrementors)

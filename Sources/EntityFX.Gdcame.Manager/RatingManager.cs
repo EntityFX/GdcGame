@@ -9,9 +9,9 @@ namespace EntityFX.Gdcame.Manager
 {
     public class RatingManager : IRatingManager
     {
+        private readonly IGameDataRetrieveDataAccessService _gameDataRetrieveDataAccessService;
         private readonly GameSessions _gameSessions;
         private readonly IUserDataAccessService _userDataAccess;
-        private readonly IGameDataRetrieveDataAccessService _gameDataRetrieveDataAccessService;
 
         public RatingManager(GameSessions gameSessions, IUserDataAccessService userDataAccess,
             IGameDataRetrieveDataAccessService gameDataRetrieveDataAccessService)
@@ -29,7 +29,11 @@ namespace EntityFX.Gdcame.Manager
             //{
             //    userRating.Status = _gameSessions.GetGameSessionStatus(userRating.UserName);
             //}
-            return usersRatings.OrderByDescending(_ => _.GdcPoints).ThenByDescending(_ => _.TotalFunds).Take(count).ToArray();
+            return
+                usersRatings.OrderByDescending(_ => _.GdcPoints)
+                    .ThenByDescending(_ => _.TotalFunds)
+                    .Take(count)
+                    .ToArray();
             //var users = _userDataAccess.FindAll();
             ////var usersRatings = (from user in users
             ////                    let gameData = _gameDataRetrieveDataAccessService.GetGameData(user.Id)
@@ -59,7 +63,7 @@ namespace EntityFX.Gdcame.Manager
         {
             var user = _userDataAccess.FindByName(userName);
             var gameData = _gameDataRetrieveDataAccessService.GetGameData(user.Id);
-            return new UserRating()
+            return new UserRating
             {
                 GdcPoints = gameData.Cash.Counters[0].Value,
                 ManualStepsCount = gameData.ManualStepsCount,
@@ -67,18 +71,19 @@ namespace EntityFX.Gdcame.Manager
                 UserName = user.Email
             };
         }
+
         public UserRating[] FindUserRatingByUserNameAndAroundUsers(string userName, int count)
         {
             var users = _userDataAccess.FindAll();
             var usersRatings = (from user in users
-                                let gameData = _gameDataRetrieveDataAccessService.GetGameData(user.Id)
-                                select new UserRating()
-                                {
-                                    GdcPoints = gameData.Cash.Counters[0].Value,
-                                    ManualStepsCount = gameData.ManualStepsCount,
-                                    TotalFunds = gameData.Cash.TotalEarned,
-                                    UserName = user.Email
-                                });
+                let gameData = _gameDataRetrieveDataAccessService.GetGameData(user.Id)
+                select new UserRating
+                {
+                    GdcPoints = gameData.Cash.Counters[0].Value,
+                    ManualStepsCount = gameData.ManualStepsCount,
+                    TotalFunds = gameData.Cash.TotalEarned,
+                    UserName = user.Email
+                });
 
             return usersRatings.OrderBy(_ => _.GdcPoints).Take(count).ToArray();
         }

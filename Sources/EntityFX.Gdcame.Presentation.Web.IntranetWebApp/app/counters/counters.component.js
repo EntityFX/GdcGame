@@ -5,19 +5,19 @@
         templateUrl: "/app/templates/counters.template.html",
         controller: function CountersController($rootScope, $scope) {
             $rootScope.$watch("gameData",
-                function () {
+                function() {
                     if ($rootScope.gameData !== undefined)
                         $scope.counters = $rootScope.gameData.Counters;
                 });
 
 
-            $scope.$on('counters.update',
-                function (event, value) {
+            $scope.$on("counters.update",
+                function(event, value) {
                     $scope.counters.TotalFunds = value.TotalFunds;
                     $scope.counters.CurrentFunds = value.CurrentFunds;
 
-                    value.Counters.forEach(function (item) {
-                        var oldCounter = $rootScope.gameData.Counters.Counters.filter(function (counter) {
+                    value.Counters.forEach(function(item) {
+                        var oldCounter = $rootScope.gameData.Counters.Counters.filter(function(counter) {
                             return counter.Id === item.Id;
                         })[0];
 

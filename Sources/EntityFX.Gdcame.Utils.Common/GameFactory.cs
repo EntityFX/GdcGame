@@ -14,11 +14,12 @@ namespace EntityFX.Gdcame.Utils.Common
             _unityContainer = unityContainer;
         }
 
-        public IGame BuildGame(int userId, string userName)
+        public IGame BuildGame(string userId, string userName)
         {
             var game = _unityContainer.Resolve<IGame>(
                 new ParameterOverride("notifyGameDataChanged", _unityContainer.Resolve<INotifyGameDataChanged>(
-                    new ParameterOverride("userId", userId), new ParameterOverride("userName", userName))), new ParameterOverride("userId", userId));
+                    new ParameterOverride("userId", userId), new ParameterOverride("userName", userName))),
+                new ParameterOverride("userId", userId));
             return game;
         }
     }

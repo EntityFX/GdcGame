@@ -9,10 +9,13 @@ namespace EntityFX.Gdcame.Manager.Contract.SessionManager
     {
         [DataMember]
         public Guid SessionIdentifier { get; set; }
+
         [DataMember]
         public string Login { get; set; }
+
         [DataMember]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
+
         [DataMember]
         public UserRole[] UserRoles { get; set; }
 

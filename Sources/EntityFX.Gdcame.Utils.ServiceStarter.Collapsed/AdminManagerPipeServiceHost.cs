@@ -5,7 +5,6 @@ using EntityFX.Gdcame.Manager;
 using EntityFX.Gdcame.Manager.Contract.AdminManager;
 using EntityFX.Gdcame.Utils.Common;
 using Microsoft.Practices.Unity;
-using EntityFX.Gdcame.Infrastructure.Service.NetTcp;
 
 namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
 {
@@ -23,11 +22,11 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
             {
                 foreach (var operation in serviceEndpoint.Contract.Operations)
                 {
-                    operation.Behaviors.Add(new CheckRolePermissionsOperationBehavior(Container.Resolve<IOperationContextHelper>(), Container.Resolve<GameSessions>()));
+                    operation.Behaviors.Add(
+                        new CheckRolePermissionsOperationBehavior(Container.Resolve<IOperationContextHelper>(),
+                            Container.Resolve<GameSessions>()));
                 }
             }
         }
     }
-
-
 }

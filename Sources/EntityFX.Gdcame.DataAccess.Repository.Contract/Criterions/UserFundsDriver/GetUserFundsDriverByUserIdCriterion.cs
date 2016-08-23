@@ -4,11 +4,11 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.UserFundsDri
 {
     public class GetUserFundsDriverByUserIdCriterion : ICriterion
     {
-        public int UserId { get; private set; }
-
         public GetUserFundsDriverByUserIdCriterion(int userId)
         {
             UserId = userId;
         }
+
+        public int UserId { get; private set; }
     }
 }

@@ -1,13 +1,13 @@
 ﻿using System;
+using System.ServiceModel.Channels;
 using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.Infrastructure.Service.Bases;
 using EntityFX.Gdcame.NotifyConsumer.Contract;
-using System.ServiceModel.Channels;
 
 namespace EntityFX.Gdcame.Utils.ClientProxy.NotifyConsumer
 {
-	public class NotifyConsumerServiceClient<TInfrastructureProxy> : INotifyConsumerService
-		where TInfrastructureProxy : IInfrastructureProxy<INotifyConsumerService, Binding>, new()
+    public class NotifyConsumerServiceClient<TInfrastructureProxy> : INotifyConsumerService
+        where TInfrastructureProxy : IInfrastructureProxy<INotifyConsumerService, Binding>, new()
     {
         private readonly Uri _endpoint;
 

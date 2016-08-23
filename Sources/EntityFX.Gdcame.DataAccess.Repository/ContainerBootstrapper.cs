@@ -32,7 +32,8 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef
     {
         public IUnityContainer Configure(IUnityContainer container)
         {
-            container.RegisterType<DbContext, EconomicsArcadeDbContext>(new InjectionConstructor("name=EconomicsArcadeDbContext"));
+            container.RegisterType<DbContext, EconomicsArcadeDbContext>(
+                new InjectionConstructor("name=EconomicsArcadeDbContext"));
             container.RegisterType<IQueryBuilder, QueryBuilder>();
             container.RegisterType<IUnitOfWork, EfUnitOfWork>();
             container.RegisterType<IUnitOfWorkFactory, UnitOfWorkFactory>();
@@ -40,12 +41,19 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef
             container.RegisterType<IQuery<GetUserByIdCriterion, UserEntity>, GetUserByIdQuery>();
             container.RegisterType<IQuery<GetUserByNameCriterion, UserEntity>, GetUserByNameQuery>();
             container.RegisterType<IQuery<GetAllUsersCriterion, IEnumerable<UserEntity>>, GetAllUsersQuery>();
-            container.RegisterType<IQuery<GetAllUsersRatingsCriterion, IEnumerable<UserRating>>, GetAllUsersRatingsQuery>();
-            container.RegisterType<IQuery<GetAllFundsDriversCriterion, IEnumerable<FundsDriverEntity>>, GetAllFundsDriversQuery>();
+            container.RegisterType<IQuery<GetUsersBySearchStringCriterion, IEnumerable<UserEntity>>, GetUsersBySearchStringQuery>();
+            container
+                .RegisterType<IQuery<GetAllUsersRatingsCriterion, IEnumerable<UserRating>>, GetAllUsersRatingsQuery>();
+            container
+                .RegisterType
+                <IQuery<GetAllFundsDriversCriterion, IEnumerable<FundsDriverEntity>>, GetAllFundsDriversQuery>();
             container.RegisterType<IQuery<GetAllCountersCriterion, IEnumerable<CounterEntity>>, GetAllCountersQuery>();
 
-            container.RegisterType<IQuery<GetAllCustomRulesCriterion, IEnumerable<CustomRuleEntity>>, GetAllCustomRuleQuery>();
-            container.RegisterType<IQuery<GetUserGameSnapshotByIdCriterion, UserGameDataSnapshotEntity>, GetUserGameSnapshotByIdQuery>();
+            container
+                .RegisterType<IQuery<GetAllCustomRulesCriterion, IEnumerable<CustomRuleEntity>>, GetAllCustomRuleQuery>();
+            container
+                .RegisterType
+                <IQuery<GetUserGameSnapshotByIdCriterion, UserGameDataSnapshotEntity>, GetUserGameSnapshotByIdQuery>();
 
             container.RegisterType<IMapper<User, UserEntity>, UserEntityMapper>();
             container.RegisterType<IMapper<UserEntity, User>, UserContractMapper>();

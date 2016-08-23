@@ -1,44 +1,70 @@
 ﻿<!DOCTYPE html>
 
+
 <html ng-app="gdCameApp">
+
 <head>
+
     <title>GDCame</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
     @Styles.Render("~/Content/css")
+
 
 </head>
 
+
 <body ng-controller="appGameController">
-    <nav class="navbar navbar-fixed-top navbar-default">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="@Url.Action("Index","Home")">GDCame</a>
-                <a class="navbar-brand" href="@Url.Action("Rating","Home")">Rating</a>
-            </div>
-            <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><p class="navbar-text">@User.Identity.Name</p></li>
-                </ul>
-            </div>
+
+<nav class="navbar navbar-fixed-top navbar-default">
+
+    <div class="container">
+
+        <div class="navbar-header">
+
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <a class="navbar-brand" href="@Url.Action("Index", "Home")">GDCame</a>
+
+            <a class="navbar-brand" href="@Url.Action("Rating", "Home")">Rating</a>
+
         </div>
-    </nav>
-    @RenderBody()
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/angular")
-    @Scripts.Render("~/bundles/signalr")
-    @Scripts.Render("~/app/app.js")
-    @Scripts.Render("~/app/gdCameData.service.js")
-    @Scripts.Render("~/app/gdCameRating.service.js")
-    @Scripts.Render("~/app/counters/counters.component.js")
-    @Scripts.Render("~/app/fundDrivers/fundDrivers.component.js")
-    @Scripts.Render("~/app/rating/rating.component.js")
-    @Scripts.Render("http://localhost:8080/signalr/hubs")
+
+        <div id="navbar" class="navbar-collapse collapse">
+
+            <ul class="nav navbar-nav navbar-right">
+
+                <li>
+                    <p class="navbar-text">@User.Identity.Name</p>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>
+
+@RenderBody()
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@Scripts.Render("~/bundles/angular")
+@Scripts.Render("~/bundles/signalr")
+@Scripts.Render("~/app/app.js")
+@Scripts.Render("~/app/gdCameData.service.js")
+@Scripts.Render("~/app/gdCameRating.service.js")
+@Scripts.Render("~/app/counters/counters.component.js")
+@Scripts.Render("~/app/fundDrivers/fundDrivers.component.js")
+@Scripts.Render("~/app/rating/rating.component.js")
+@Scripts.Render("http://localhost:8080/signalr/hubs")
 </body>
+
 </html>

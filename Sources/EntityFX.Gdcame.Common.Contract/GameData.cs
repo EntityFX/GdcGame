@@ -9,12 +9,16 @@ namespace EntityFX.Gdcame.Common.Contract
     {
         [DataMember]
         public Item[] Items { get; set; }
+
         [DataMember]
         public Cash Cash { get; set; }
+
         [DataMember]
         public CustomRule[] CustomRules { get; set; }
+
         [DataMember]
         public int ManualStepsCount { get; set; }
+
         [DataMember]
         public int AutomatedStepsCount { get; set; }
     }

@@ -2,11 +2,11 @@
 {
     public class GetByIdCriterion : ICriterion
     {
-        public int Id { get; set; }
-
         public GetByIdCriterion(int id)
         {
             Id = id;
         }
+
+        public int Id { get; set; }
     }
 }

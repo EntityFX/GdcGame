@@ -5,10 +5,10 @@ namespace EntityFX.Gdcame.Manager.Mappers
 {
     public class CustomRuleInfoContractMapper : IMapper<CustomRuleInfo, Common.Contract.Items.CustomRuleInfo>
     {
-
-        public Common.Contract.Items.CustomRuleInfo Map(CustomRuleInfo source, Common.Contract.Items.CustomRuleInfo destination)
+        public Common.Contract.Items.CustomRuleInfo Map(CustomRuleInfo source,
+            Common.Contract.Items.CustomRuleInfo destination)
         {
-            return new Common.Contract.Items.CustomRuleInfo()
+            return new Common.Contract.Items.CustomRuleInfo
             {
                 CustomRuleId = source.CustomRule.Id,
                 CurrentIndex = source.CurrentIndex

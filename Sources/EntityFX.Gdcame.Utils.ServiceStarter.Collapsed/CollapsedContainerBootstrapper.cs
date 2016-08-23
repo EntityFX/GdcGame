@@ -4,26 +4,22 @@ using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.Common.Presentation.Model;
 using EntityFX.Gdcame.DataAccess.Contract.GameData;
 using EntityFX.Gdcame.DataAccess.Contract.User;
-using EntityFX.Gdcame.GameEngine.Contract;
-using EntityFX.Gdcame.GameEngine.Contract.Items;
 using EntityFX.Gdcame.GameEngine.NetworkGameEngine;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Infrastructure.Service;
 using EntityFX.Gdcame.Infrastructure.Service.Interfaces;
 using EntityFX.Gdcame.Infrastructure.Service.NetNamedPipe;
-using EntityFX.Gdcame.Infrastructure.Service.NetTcp;
 using EntityFX.Gdcame.Manager;
 using EntityFX.Gdcame.NotifyConsumer;
 using EntityFX.Gdcame.NotifyConsumer.Contract;
 using EntityFX.Gdcame.Utils.ClientProxy.DataAccess;
+using EntityFX.Gdcame.Utils.ClientProxy.NotifyConsumer;
 using EntityFX.Gdcame.Utils.Common;
 using Microsoft.AspNet.SignalR;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
 using PortableLog.NLog;
 using ContainerBootstrapper = EntityFX.Gdcame.DataAccess.Repository.Ef.ContainerBootstrapper;
-using EntityFX.Gdcame.Utils.ClientProxy.NotifyConsumer;
-using EntityFX.Gdcame.DataAccess.Contract.GameData.Store;
 
 namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
 {
@@ -36,7 +32,7 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
                 new ContainerBootstrapper(),
                 new DataAccess.Service.ContainerBootstrapper(),
                 new Manager.ContainerBootstrapper(),
-                new NotifyConsumer.ContainerBootstrapper(),
+                new NotifyConsumer.ContainerBootstrapper()
             };
             Array.ForEach(childBootstrappers, _ => _.Configure(container));
             container.AddNewExtension<Interception>();
@@ -44,51 +40,64 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
             container.RegisterType<IOperationContextHelper, WcfOperationContextHelper>();
 
             container.RegisterType<ILogger>(new InjectionFactory(
-               _ => new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger")))));
+                _ => new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger")))));
 
             container.RegisterType<IMapperFactory, MapperFactory>();
 
-            container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessClient<NetNamedPipeProxy<IGameDataRetrieveDataAccessService>>>("GameDataRetrieveDataAccessClient",
-               new InjectionConstructor(
-                   "net.tcp://localhost/EntityFX.Gdcame.DataAccess/EntityFX.Gdcame.DataAccess.Contract.GameData.IGameDataRetrieveDataAccessService"
-                   )
-               ,
-               new InterceptionBehavior<PolicyInjectionBehavior>()
-               , new Interceptor<InterfaceInterceptor>()
-               );
-            container.RegisterType<IUserDataAccessService, UserDataAccessClient<NetNamedPipeProxy<IUserDataAccessService>>>("UserDataAccessClient",
-                new InjectionConstructor(
-                    "net.tcp://localhost/EntityFX.Gdcame.DataAccess/EntityFX.Gdcame.DataAccess.Contract.User.IUserDataAccessService"
-                    )
-                ,
-                new InterceptionBehavior<PolicyInjectionBehavior>()
-                , new Interceptor<InterfaceInterceptor>()
+            container
+                .RegisterType
+                <IGameDataRetrieveDataAccessService,
+                    GameDataRetrieveDataAccessClient<NetNamedPipeProxy<IGameDataRetrieveDataAccessService>>>(
+                        "GameDataRetrieveDataAccessClient",
+                        new InjectionConstructor(
+                            "net.tcp://localhost/EntityFX.Gdcame.DataAccess/EntityFX.Gdcame.DataAccess.Contract.GameData.IGameDataRetrieveDataAccessService"
+                            )
+                        ,
+                        new InterceptionBehavior<PolicyInjectionBehavior>()
+                        , new Interceptor<InterfaceInterceptor>()
                 );
-            container.RegisterType<IGameDataStoreDataAccessService, GameDataStoreDataAccessClient<NetNamedPipeProxy<IGameDataStoreDataAccessService>>>("GameDataStoreDataAccessClient",
-                new InjectionConstructor(
-                    "net.tcp://localhost/private/EntityFX.Gdcame.DataAccess.Contract.GameData.IGameDataStoreDataAccessService"
-                    ),
-                new InterceptionBehavior<PolicyInjectionBehavior>()
-                , new Interceptor<InterfaceInterceptor>()
+            container
+                .RegisterType<IUserDataAccessService, UserDataAccessClient<NetNamedPipeProxy<IUserDataAccessService>>>(
+                    "UserDataAccessClient",
+                    new InjectionConstructor(
+                        "net.tcp://localhost/EntityFX.Gdcame.DataAccess/EntityFX.Gdcame.DataAccess.Contract.User.IUserDataAccessService"
+                        )
+                    ,
+                    new InterceptionBehavior<PolicyInjectionBehavior>()
+                    , new Interceptor<InterfaceInterceptor>()
+                );
+            container
+                .RegisterType
+                <IGameDataStoreDataAccessService,
+                    GameDataStoreDataAccessClient<NetNamedPipeProxy<IGameDataStoreDataAccessService>>>(
+                        "GameDataStoreDataAccessClient",
+                        new InjectionConstructor(
+                            "net.tcp://localhost/private/EntityFX.Gdcame.DataAccess.Contract.GameData.IGameDataStoreDataAccessService"
+                            ),
+                        new InterceptionBehavior<PolicyInjectionBehavior>()
+                        , new Interceptor<InterfaceInterceptor>()
                 );
 
             container.RegisterType<IGameFactory, GameFactory>();
 
-            container.RegisterInstance<GameSessions>(new GameSessions(container.Resolve<ILogger>(), container.Resolve<IGameFactory>()));
+            container.RegisterInstance(new GameSessions(container.Resolve<ILogger>(), container.Resolve<IGameFactory>()));
 
-            container.RegisterType<INotifyConsumerService, NotifyConsumerServiceClient<NetNamedPipeProxy<INotifyConsumerService>>>("NotifyConsumerServiceClient",
-                new InjectionConstructor(
-                    "net.tcp://localhost/private/EntityFX.Gdcame.NotifyConsumer.Contract.INotifyConsumerService"
-                    )
-                , new InterceptionBehavior<PolicyInjectionBehavior>()
-                , new Interceptor<InterfaceInterceptor>()
+            container
+                .RegisterType
+                <INotifyConsumerService, NotifyConsumerServiceClient<NetNamedPipeProxy<INotifyConsumerService>>>(
+                    "NotifyConsumerServiceClient",
+                    new InjectionConstructor(
+                        "net.tcp://localhost/private/EntityFX.Gdcame.NotifyConsumer.Contract.INotifyConsumerService"
+                        )
+                    , new InterceptionBehavior<PolicyInjectionBehavior>()
+                    , new Interceptor<InterfaceInterceptor>()
                 );
 
             container.RegisterType<INotifyConsumerService, NotifyConsumerService>(new InjectionConstructor(
                 new ResolvedParameter<ILogger>(),
                 new ResolvedParameter<IMapper<GameData, GameDataModel>>(),
                 new ResolvedParameter<IHubContextAccessor>(),
-                                new ResolvedParameter<IConnections>()
+                new ResolvedParameter<IConnections>()
                 )
                 , new Interceptor<InterfaceInterceptor>()
                 , new InterceptionBehavior<LoggerInterceptor>()
@@ -106,15 +115,15 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.Collapsed
 
 
             container.RegisterType<INotifyConsumerClientFactory, NotifyConsumerClientFactory>(new InjectionConstructor(
-                    new ResolvedParameter<IUnityContainer>(),
-                    "NotifyConsumerServiceClient"));
+                new ResolvedParameter<IUnityContainer>(),
+                "NotifyConsumerServiceClient"));
 
             if (ConfigurationManager.AppSettings["UseLoggerInterceptor"] == "True")
             {
                 container.Configure<Interception>()
-                .AddPolicy("logging")
-                .AddCallHandler<LoggerCallHandler>(new ContainerControlledLifetimeManager())
-                .AddMatchingRule<NamespaceMatchingRule>(new InjectionConstructor("EntityFX.Gdcame.*", true));
+                    .AddPolicy("logging")
+                    .AddCallHandler<LoggerCallHandler>(new ContainerControlledLifetimeManager())
+                    .AddMatchingRule<NamespaceMatchingRule>(new InjectionConstructor("EntityFX.Gdcame.*", true));
             }
 
             if (!Environment.UserInteractive)

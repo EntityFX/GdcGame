@@ -4,10 +4,10 @@ namespace EntityFX.Gdcame.Presentation.Web.Controller
 {
     public interface IRatingApiController
     {
-        UserRating[] GetUsersRatingByCount(int count);
+        UserRating[] GetRaiting(int count);
 
-        UserRating FindUserRatingByUserName();
+        UserRating GetUserRating();
 
-        UserRating[] FindUserRatingByUserNameAndAroundUsers(int count);
+        UserRating[] GetNearestRating(int count);
     }
 }

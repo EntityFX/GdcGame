@@ -6,13 +6,9 @@ namespace EntityFX.Gdcame.Common.Contract
     public enum UserGameSessionStatus
     {
         /// <summary>
-        /// 
         /// </summary>
-        [EnumMember]
-        GameNotStarted,
-        [EnumMember]
-        Offline,
-        [EnumMember]
-        Online
+        [EnumMember] GameNotStarted,
+        [EnumMember] Offline,
+        [EnumMember] Online
     }
 }

@@ -12,12 +12,11 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef
 {
     public class UserRepository : IUserRepository
     {
+        private readonly IMapperFactory _mapperFactory;
         private readonly IUnitOfWorkFactory _unitOfWorkFactory;
 
         private readonly IMapper<UserEntity, User> _userContractMapper;
         private readonly IMapper<User, UserEntity> _userEntityMapper;
-
-        private readonly IMapperFactory _mapperFactory;
 
         public UserRepository(IUnitOfWorkFactory unitOfWorkFactory
             , IMapperFactory mapperFactory
@@ -53,7 +52,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef
             //}
         }
 
-        public void Delete(int id)
+        public void Delete(string id)
         {
             //using (IUnitOfWork uow = _unitOfWorkFactory.Create())
             //{
@@ -97,6 +96,18 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef
                 var entity = findQuery.For<UserEntity>()
                     .With(findByIdCriterion);
                 return entity != null ? _userContractMapper.Map(entity) : null;
+            }
+        }
+
+        public User[] FindByFilter(GetUsersBySearchStringCriterion findByIdCriterion)
+        {
+            using (var uow = _unitOfWorkFactory.Create())
+            {
+                var findQuery = uow.BuildQuery();
+                return findQuery.For<IEnumerable<UserEntity>>()
+                    .With(findByIdCriterion)
+                    .Select(_ => _userContractMapper.Map(_))
+                    .ToArray();
             }
         }
     }

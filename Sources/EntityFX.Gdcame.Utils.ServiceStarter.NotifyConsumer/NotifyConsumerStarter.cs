@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Net;
 using System.ServiceModel;
-using System.ServiceModel.Channels;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Infrastructure.Service.Bases;
 using EntityFX.Gdcame.Infrastructure.Service.Interfaces;
@@ -17,8 +16,8 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.NotifyConsumer
 {
     public class NotifyConsumerStarter : ServicesStarterBase<ContainerBootstrapper>, IServicesStarter, IDisposable
     {
-        private readonly string _signalRHost;
         private readonly Uri _baseUrl;
+        private readonly string _signalRHost;
         private IDisposable _webApp;
 
         public NotifyConsumerStarter(ContainerBootstrapper containerBootstrapper, string baseUrl, string signalRHost)
@@ -28,6 +27,11 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.NotifyConsumer
             _baseUrl = new Uri(baseUrl);
         }
 
+        public void Dispose()
+        {
+            _webApp.Dispose();
+        }
+
         public override void StartServices()
         {
             AddCustomService<NotifyConsumerServiceHost>(_baseUrl);
@@ -35,18 +39,17 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.NotifyConsumer
 
             _webApp = WebApp.Start(_signalRHost, builder =>
             {
-                var listener = (HttpListener)builder.Properties[typeof(HttpListener).FullName];
+                var listener = (HttpListener) builder.Properties[typeof (HttpListener).FullName];
                 listener.AuthenticationSchemes = AuthenticationSchemes.Ntlm;
                 builder.UseCors(CorsOptions.AllowAll);
                 builder.MapSignalR();
-                builder.RunSignalR(new HubConfiguration()
+                builder.RunSignalR(new HubConfiguration
                 {
                     EnableDetailedErrors = true,
                     EnableJSONP = true
                 });
             });
             Console.WriteLine("Server running on {0}", _signalRHost);
-
         }
 
         public override void StopServices()
@@ -58,11 +61,6 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.NotifyConsumer
         {
             var serviceInfoHelper = _container.Resolve<IServiceInfoHelper>();
             serviceInfoHelper.PrintServiceHostInfo(service.ServiceHost);
-        }
-
-        public void Dispose()
-        {
-            _webApp.Dispose();
         }
 
         private class NotifyConsumerServiceHost : NetMsmqServiceHost<INotifyConsumerService>

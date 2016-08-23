@@ -4,6 +4,6 @@ namespace EntityFX.Gdcame.Manager
 {
     public interface IGameFactory
     {
-        IGame BuildGame(int userId,string userName);
+        IGame BuildGame(string userId, string userName);
     }
 }

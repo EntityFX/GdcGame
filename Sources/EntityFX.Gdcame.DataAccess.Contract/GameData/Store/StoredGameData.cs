@@ -7,10 +7,13 @@ namespace EntityFX.Gdcame.DataAccess.Contract.GameData.Store
     {
         [DataMember]
         public StoredItem[] Items { get; set; }
+
         [DataMember]
         public StoredCash Cash { get; set; }
+
         [DataMember]
         public int ManualStepsCount { get; set; }
+
         [DataMember]
         public int AutomatedStepsCount { get; set; }
     }

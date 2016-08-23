@@ -16,6 +16,6 @@ namespace EntityFX.Gdcame.Infrastructure.Service.Windows
         {
             var service = new NetMsmqServiceHost<T>(_container);
             AddServiceHost(service, endpointAddress);
-        } 
+        }
     }
 }

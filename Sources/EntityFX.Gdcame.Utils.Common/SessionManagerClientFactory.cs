@@ -12,7 +12,7 @@ namespace EntityFX.Gdcame.Utils.Common
         {
             _unityContainer = unityContainer;
         }
-        
+
         public ISessionManager BuildSessionManagerClient(Guid sessionGuid)
         {
             var game = _unityContainer.Resolve<ISessionManager>(new ParameterOverride("sessionGuid", sessionGuid));

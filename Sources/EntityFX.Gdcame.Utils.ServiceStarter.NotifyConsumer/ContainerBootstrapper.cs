@@ -19,12 +19,12 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.NotifyConsumer
         {
             var childBootstrappers = new IContainerBootstrapper[]
             {
-                new Gdcame.NotifyConsumer.ContainerBootstrapper(),
+                new Gdcame.NotifyConsumer.ContainerBootstrapper()
             };
             Array.ForEach(childBootstrappers, _ => _.Configure(container));
-            
+
             container.AddNewExtension<Interception>();
-            
+
             GlobalHost.DependencyResolver = new SignalRDependencyResolver(container);
             container.RegisterType<ILogger>(new InjectionFactory(
                 _ => new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger")))));
@@ -34,7 +34,7 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.NotifyConsumer
                 new ResolvedParameter<ILogger>(),
                 new ResolvedParameter<IMapper<GameData, GameDataModel>>(),
                 new ResolvedParameter<IHubContextAccessor>(),
-                                new ResolvedParameter<IConnections>()
+                new ResolvedParameter<IConnections>()
                 )
                 , new Interceptor<InterfaceInterceptor>()
                 , new InterceptionBehavior<LoggerInterceptor>()

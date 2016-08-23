@@ -3,38 +3,40 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Timers;
+using EntityFx.Gdcame.TestApplication.UssrSimulator;
+using EntityFx.GdCame.Test.Shared;
 using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.GameEngine.Contract;
 using EntityFX.Gdcame.GameEngine.Contract.Items;
 using EntityFX.Gdcame.Infrastructure.Common;
-using EntityFx.Gdcame.TestApplication.UssrSimulator;
-using EntityFx.GdCame.Test.Shared;
 using Timer = System.Timers.Timer;
 
 namespace EntityFx.Gdcame.TestApplication
 {
-    class GameRunner : GameRunnerBase
+    internal class GameRunner : GameRunnerBase
     {
-        private readonly IMapper<IGame, GameData> _gameDataMapper;
         private readonly IMapper<Item, EntityFX.Gdcame.Common.Contract.Items.Item> _fundsDriverMapper;
         private readonly IGame _game = new UssrSimulatorGame();
+        private readonly IMapper<IGame, GameData> _gameDataMapper;
 
         private readonly Timer _timer = new Timer(1000);
 
+        private ManualStepResult _manualStepResult;
+
         private int? _verificationResult;
 
-        public GameRunner(IMapper<IGame, GameData> gameDataMapper, IMapper<Item, EntityFX.Gdcame.Common.Contract.Items.Item> fundsDriverMapper)
+        public GameRunner(IMapper<IGame, GameData> gameDataMapper,
+            IMapper<Item, EntityFX.Gdcame.Common.Contract.Items.Item> fundsDriverMapper)
         {
             _gameDataMapper = gameDataMapper;
             _fundsDriverMapper = fundsDriverMapper;
             _timer.Elapsed += _timer_Elapsed;
-		
         }
 
-        async void _timer_Elapsed(object sender, ElapsedEventArgs e)
+        private async void _timer_Elapsed(object sender, ElapsedEventArgs e)
         {
             var sw = new Stopwatch();
-             sw.Start();
+            sw.Start();
             await _game.PerformAutoStep();
             Console.WriteLine(sw.Elapsed);
             DisplayGameData(GetGameData());
@@ -47,21 +49,18 @@ namespace EntityFx.Gdcame.TestApplication
             DisplayGameData(GetGameData());
         }
 
-        private ManualStepResult _manualStepResult;
-
         public override void DisplayGameData(GameData gameData)
         {
             lock (_stdLock)
             {
-				#if __MonoCS__
+#if __MonoCS__
 				Console.Clear();
 				#else
 
-				#endif
-				Console.SetCursorPosition(0, 0);
+#endif
+                Console.SetCursorPosition(0, 0);
                 base.DisplayGameData(gameData);
             }
-
         }
 
         public override GameData GetGameData()
@@ -73,8 +72,10 @@ namespace EntityFx.Gdcame.TestApplication
 
         public void PerformManualStep()
         {
-
-            _manualStepResult = _game.PerformManualStep(_manualStepResult == null ? null : new VerificationManualStepData() { ResultNumber = _verificationResult ?? 0 });
+            _manualStepResult =
+                _game.PerformManualStep(_manualStepResult == null
+                    ? null
+                    : new VerificationManualStepData {ResultNumber = _verificationResult ?? 0});
 
             if (_manualStepResult is ManualStepNoVerficationRequiredResult)
             {
@@ -101,7 +102,7 @@ namespace EntityFx.Gdcame.TestApplication
 
         public void BuyFundDriver(ConsoleKeyInfo keyInfo)
         {
-            _game.BuyFundDriver((int)keyInfo.Key - 64);
+            _game.BuyFundDriver((int) keyInfo.Key - 64);
             DisplayGameData(GetGameData());
         }
 

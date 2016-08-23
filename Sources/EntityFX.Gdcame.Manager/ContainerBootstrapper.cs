@@ -1,4 +1,5 @@
 ﻿using EntityFX.Gdcame.Common.Contract;
+using EntityFX.Gdcame.Common.Contract.Counters;
 using EntityFX.Gdcame.Common.Contract.Incrementors;
 using EntityFX.Gdcame.DataAccess.Contract.GameData.Store;
 using EntityFX.Gdcame.GameEngine.Contract;
@@ -17,6 +18,7 @@ using EntityFX.Gdcame.Manager.Mappers;
 using EntityFX.Gdcame.Manager.Mappers.Store;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
+using CounterBase = EntityFX.Gdcame.GameEngine.Contract.Counters.CounterBase;
 using ManualStepResult = EntityFX.Gdcame.GameEngine.Contract.ManualStepResult;
 
 namespace EntityFX.Gdcame.Manager
@@ -26,17 +28,19 @@ namespace EntityFX.Gdcame.Manager
         public IUnityContainer Configure(IUnityContainer container)
         {
             container.RegisterType<IMapper<IncrementorBase, Incrementor>, IncrementorContractMapper>();
-            container.RegisterType<IMapper<CounterBase, Gdcame.Common.Contract.Counters.CounterBase>, CounterContractMapper>();
+            container.RegisterType<IMapper<CounterBase, Common.Contract.Counters.CounterBase>, CounterContractMapper>();
             container
                 .RegisterType
-                <IMapper<GameCash, Gdcame.Common.Contract.Counters.Cash>, FundsCountersContractMapper>();
+                <IMapper<GameCash, Cash>, FundsCountersContractMapper>();
             container.RegisterType<IMapper<Item, Common.Contract.Items.Item>, FundsDriverContractMapper>();
-            container.RegisterType<IMapper<CustomRuleInfo, Common.Contract.Items.CustomRuleInfo>, CustomRuleInfoContractMapper>();
+            container
+                .RegisterType
+                <IMapper<CustomRuleInfo, Common.Contract.Items.CustomRuleInfo>, CustomRuleInfoContractMapper>();
             container.RegisterType<IMapper<IGame, GameData>, GameDataContractMapper>();
             container.RegisterType<IMapper<IGame, GameData>, GameDataMapper>("GameDataMapper");
             container
                 .RegisterType
-                <IMapper<ManualStepResult, Gdcame.Manager.Contract.GameManager.ManualStepResult>, ManualStepContractMapper>();
+                <IMapper<ManualStepResult, Contract.GameManager.ManualStepResult>, ManualStepContractMapper>();
 
             container.RegisterType<IGame, NetworkGame>();
 

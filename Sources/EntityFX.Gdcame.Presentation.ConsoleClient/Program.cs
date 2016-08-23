@@ -22,7 +22,7 @@ namespace EntityFX.Gdcame.Presentation.ConsoleClient
         private static void Main(string[] args)
         {
             var listArgs = args.ToList();
-            bool isCollapsed = false;
+            var isCollapsed = false;
             if (args.Length > 0)
             {
                 foreach (var arg in args)
@@ -49,10 +49,11 @@ namespace EntityFX.Gdcame.Presentation.ConsoleClient
             var simpleUserManagerClient = _container.Resolve<ISimpleUserManager>();
             if (!simpleUserManagerClient.Exists(userName))
             {
-                simpleUserManagerClient.Create(new UserData() { Login = userName });
+                simpleUserManagerClient.Create(new UserData {Login = userName});
             }
 
-            var sessionManagerClient = _container.Resolve<ISessionManager>(new ParameterOverride("sessionGuid", Guid.Empty));
+            var sessionManagerClient =
+                _container.Resolve<ISessionManager>(new ParameterOverride("sessionGuid", Guid.Empty));
             return new Tuple<Guid, string>(sessionManagerClient.OpenSession(userName), userName);
         }
 
@@ -99,7 +100,7 @@ namespace EntityFX.Gdcame.Presentation.ConsoleClient
                     {
                         gr.PerformManualStep();
                     }
-                    else if ((int)keyInfo.Key >= 65 && (int)keyInfo.Key <= 90)
+                    else if ((int) keyInfo.Key >= 65 && (int) keyInfo.Key <= 90)
                     {
                         gr.BuyFundDriver(keyInfo);
                     }

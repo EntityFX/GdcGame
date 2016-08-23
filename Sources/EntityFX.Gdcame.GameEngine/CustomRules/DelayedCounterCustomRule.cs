@@ -10,7 +10,8 @@ namespace EntityFX.Gdcame.GameEngine.CustomRules
         public void PerformRuleWhenBuyFundDriver(IGame game, CustomRuleInfo customRuleInfo)
         {
             var delayedCounters = game.GameCash.Counters.Values.OfType<DelayedCounter>();
-            foreach (var delayedCounter in delayedCounters.Where(delayedCounter => delayedCounter.SecondsToAchieve >= 1800))
+            foreach (
+                var delayedCounter in delayedCounters.Where(delayedCounter => delayedCounter.SecondsToAchieve >= 1800))
             {
                 delayedCounter.SecondsToAchieve -= 300;
             }

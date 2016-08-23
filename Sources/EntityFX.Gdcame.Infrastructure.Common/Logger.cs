@@ -4,7 +4,7 @@ namespace EntityFX.Gdcame.Infrastructure.Common
 {
     public class Logger : ILogger
     {
-        ILogger _loggerAdapter;
+        private readonly ILogger _loggerAdapter;
 
         public Logger(ILogger adapter)
         {
@@ -35,7 +35,5 @@ namespace EntityFX.Gdcame.Infrastructure.Common
         {
             _loggerAdapter.Error(exception);
         }
-
-
     }
 }

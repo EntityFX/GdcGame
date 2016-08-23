@@ -4,6 +4,6 @@ namespace EntityFX.Gdcame.NotifyConsumer.Contract
 {
     public interface IConnections
     {
-        Dictionary<string, List<string>> ActiveConnections { get; }  
+        Dictionary<string, List<string>> ActiveConnections { get; }
     }
 }

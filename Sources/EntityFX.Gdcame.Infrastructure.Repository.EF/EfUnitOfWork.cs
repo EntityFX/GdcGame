@@ -16,17 +16,18 @@ namespace EntityFX.Gdcame.Infrastructure.Repository.EF
             _dbContext = dbContext;
             _queryBuilder = queryBuilder;
         }
-        
+
         public void Commit()
         {
             _dbContext.SaveChanges();
         }
 
-        public void ExcludeProperty<TEntity, TProperty>(TEntity entity, Expression<Func<TEntity, TProperty>> property) where TEntity : class
+        public void ExcludeProperty<TEntity, TProperty>(TEntity entity, Expression<Func<TEntity, TProperty>> property)
+            where TEntity : class
         {
             var entry = _dbContext.Entry(entity);
             entry.State = EntityState.Modified;
-            entry.Property<TProperty>(property).IsModified = false;
+            entry.Property(property).IsModified = false;
         }
 
         public TEntity CreateEntity<TEntity>() where TEntity : class, new()

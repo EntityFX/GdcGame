@@ -2,7 +2,7 @@
 
 namespace EntityFX.Gdcame.DataAccess.Model.Ef
 {
-    public partial class IncrementorEntity
+    public class IncrementorEntity
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }

@@ -7,12 +7,11 @@ namespace EntityFX.Gdcame.Infrastructure.Repository
         where TFindByIdCriterion : ICriterion
         where TFindAllCriterion : ICriterion
     {
-
         int Create(TDomain user);
 
         void Update(TDomain user);
 
-        void Delete(int id);
+        void Delete(string id);
 
         TDomain FindById(TFindByIdCriterion findByIdCriterion);
 

@@ -1,16 +1,16 @@
 ﻿using System;
+using System.ServiceModel.Channels;
 using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.Common.Contract.UserRating;
 using EntityFX.Gdcame.DataAccess.Contract.GameData;
 using EntityFX.Gdcame.Infrastructure.Service.Bases;
-using System.ServiceModel.Channels;
 
 namespace EntityFX.Gdcame.Utils.ClientProxy.DataAccess
 {
-	public class GameDataRetrieveDataAccessClient<TInfrastructureProxy> : IGameDataRetrieveDataAccessService
-		where TInfrastructureProxy : IInfrastructureProxy<IGameDataRetrieveDataAccessService, Binding>, new()
+    public class GameDataRetrieveDataAccessClient<TInfrastructureProxy> : IGameDataRetrieveDataAccessService
+        where TInfrastructureProxy : IInfrastructureProxy<IGameDataRetrieveDataAccessService, Binding>, new()
     {
-        private readonly Uri _endpoint;// =
+        private readonly Uri _endpoint; // =
         //"net.tcp://localhost:8777/EntityFX.EconomicsArcade.DataAccess/EntityFX.EconomicsArcade.Contract.DataAccess.GameData.IGameDataRetrieveDataAccessService";
 
         public GameDataRetrieveDataAccessClient(string endpoint)
@@ -19,11 +19,10 @@ namespace EntityFX.Gdcame.Utils.ClientProxy.DataAccess
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public GameData GetGameData(int userId)
+        public GameData GetGameData(string userId)
         {
             GameData result;
             using (var proxy = new TInfrastructureProxy())

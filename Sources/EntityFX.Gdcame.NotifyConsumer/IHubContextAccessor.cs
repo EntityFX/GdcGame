@@ -8,7 +8,7 @@ namespace EntityFX.Gdcame.NotifyConsumer
         IHubContext GetHubContext();
     }
 
-    class HubContextAccessor : IHubContextAccessor
+    internal class HubContextAccessor : IHubContextAccessor
     {
         public IHubContext GetHubContext()
         {

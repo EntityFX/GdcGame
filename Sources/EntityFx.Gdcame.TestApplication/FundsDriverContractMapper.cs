@@ -15,12 +15,13 @@ namespace EntityFx.Gdcame.TestApplication
             _incrementorContractMapper = incrementorContractMapper;
         }
 
-        public EntityFX.Gdcame.Common.Contract.Items.Item Map(Item source, EntityFX.Gdcame.Common.Contract.Items.Item destination)
+        public EntityFX.Gdcame.Common.Contract.Items.Item Map(Item source,
+            EntityFX.Gdcame.Common.Contract.Items.Item destination)
         {
             var destinationIncrementors = source.Incrementors.ToDictionary(
-                sourceIncrementor => sourceIncrementor.Key, 
+                sourceIncrementor => sourceIncrementor.Key,
                 sourceIncrementor => _incrementorContractMapper.Map(sourceIncrementor.Value));
-            return new EntityFX.Gdcame.Common.Contract.Items.Item()
+            return new EntityFX.Gdcame.Common.Contract.Items.Item
             {
                 Id = source.Id,
                 BuyCount = source.BuyCount,

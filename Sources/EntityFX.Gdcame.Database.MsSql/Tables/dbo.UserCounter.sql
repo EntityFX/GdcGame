@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[UserCounter]
 (
-	[UserId] INT NOT NULL,
+	[UserId] CHAR(32) NOT NULL,
 	[CounterId] INT NOT NULL,
 	[Value] MONEY NOT NULL,
 	[CurrentStepsCount] INT NOT NULL,

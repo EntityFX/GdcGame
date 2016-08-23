@@ -11,9 +11,9 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef
 {
     public class CountersRepository : ICountersRepository
     {
-        private readonly IUnitOfWorkFactory _unitOfWorkFactory;
-        private readonly IMapperFactory _mapperFactory;
         private readonly IMapper<CounterEntity, CounterBase> _counterContractMapper;
+        private readonly IMapperFactory _mapperFactory;
+        private readonly IUnitOfWorkFactory _unitOfWorkFactory;
 
         public CountersRepository(IUnitOfWorkFactory unitOfWorkFactory
             , IMapperFactory mapperFactory
@@ -23,7 +23,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef
             _mapperFactory = mapperFactory;
             _counterContractMapper = _mapperFactory.Build<CounterEntity, CounterBase>();
         }
-        
+
         public CounterBase[] FindAll(GetAllCountersCriterion criterion)
         {
             using (var uow = _unitOfWorkFactory.Create())

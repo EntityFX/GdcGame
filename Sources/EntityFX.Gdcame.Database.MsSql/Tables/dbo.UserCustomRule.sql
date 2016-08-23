@@ -1,5 +1,5 @@
 ﻿CREATE TABLE dbo.UserCustomRule (
-  UserId INT NOT NULL
+  UserId CHAR(32) NOT NULL
  ,CustomRuleId INT NOT NULL
  ,FundsDriverId INT NOT NULL
  ,CurrentIndex INT NULL

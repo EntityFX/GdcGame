@@ -12,9 +12,9 @@ namespace EntityFX.Gdcame.DataAccess.Service
         public IUnityContainer Configure(IUnityContainer container)
         {
             container.RegisterType<IUserDataAccessService, UserDataAccessService>(
-               new InterceptionBehavior<PolicyInjectionBehavior>()
-               , new Interceptor<InterfaceInterceptor>()
-               );
+                new InterceptionBehavior<PolicyInjectionBehavior>()
+                , new Interceptor<InterfaceInterceptor>()
+                );
             container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessDocumentService>(
                 new InterceptionBehavior<PolicyInjectionBehavior>()
                 , new Interceptor<InterfaceInterceptor>()
@@ -24,14 +24,14 @@ namespace EntityFX.Gdcame.DataAccess.Service
                 , new Interceptor<InterfaceInterceptor>()
                 );
             container.RegisterType<GameRepositoryFacade>(new InjectionFactory(
-               _ => new GameRepositoryFacade()
-                        {
-                            CountersRepository = container.Resolve<ICountersRepository>(),
-                            CustomRuleRepository = container.Resolve<ICustomRuleRepository>(),
-                            FundsDriverRepository = container.Resolve<IFundsDriverRepository>()
-                        }
-                        )
-                        );
+                _ => new GameRepositoryFacade
+                {
+                    CountersRepository = container.Resolve<ICountersRepository>(),
+                    CustomRuleRepository = container.Resolve<ICustomRuleRepository>(),
+                    FundsDriverRepository = container.Resolve<IFundsDriverRepository>()
+                }
+                )
+                );
             return container;
         }
     }

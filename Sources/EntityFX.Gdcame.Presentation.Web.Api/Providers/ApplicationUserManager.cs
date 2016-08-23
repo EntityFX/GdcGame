@@ -1,9 +1,9 @@
-﻿using EntityFX.Gdcame.Presentation.Web.WebApp.Models;
+﻿using EntityFX.Gdcame.Presentation.Web.Api.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 
-namespace EntityFX.Gdcame.Presentation.Web.WebApp
+namespace EntityFX.Gdcame.Presentation.Web.Api.Providers
 {
     public class ApplicationUserManager : UserManager<GameUser>
     {
@@ -19,17 +19,17 @@ namespace EntityFX.Gdcame.Presentation.Web.WebApp
             // Configure validation logic for usernames
             UserValidator = new UserValidator<GameUser>(this)
             {
-                AllowOnlyAlphanumericUserNames = false,
-                RequireUniqueEmail = true
+                AllowOnlyAlphanumericUserNames = true,
+                RequireUniqueEmail = false
             };
             // Configure validation logic for passwords
             PasswordValidator = new PasswordValidator
             {
-                RequiredLength = 6,
+                RequiredLength = 8,
                 RequireNonLetterOrDigit = true,
                 RequireDigit = true,
                 RequireLowercase = true,
-                RequireUppercase = true,
+                RequireUppercase = false
             };
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)
@@ -38,6 +38,5 @@ namespace EntityFX.Gdcame.Presentation.Web.WebApp
                     new DataProtectorTokenProvider<GameUser>(dataProtectionProvider.Create("ASP.NET Identity"));
             }
         }
-
     }
 }

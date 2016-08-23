@@ -4,12 +4,12 @@ using EntityFX.Gdcame.Utils.ServiceStarter.Manager;
 
 namespace EntityFX.GdCame.Utils.WindowsHostSrv.Manager
 {
-    static class Program
+    internal static class Program
     {
         /// <summary>
-        /// The main entry point for the application.
+        ///     The main entry point for the application.
         /// </summary>
-        static void Main()
+        private static void Main()
         {
             var containerBootstrapper = new ContainerBootstrapper();
             var dataAccessStarter = new ManagerStarter(
@@ -18,9 +18,9 @@ namespace EntityFX.GdCame.Utils.WindowsHostSrv.Manager
                 //, ConfigurationManager.AppSettings["DataAccessHost_BaseStoreUri"]
                 );
             ServiceBase[] ServicesToRun;
-            ServicesToRun = new ServiceBase[] 
-            { 
-                new WindowsServiceHostManager(dataAccessStarter) 
+            ServicesToRun = new ServiceBase[]
+            {
+                new WindowsServiceHostManager(dataAccessStarter)
             };
             ServiceBase.Run(ServicesToRun);
         }

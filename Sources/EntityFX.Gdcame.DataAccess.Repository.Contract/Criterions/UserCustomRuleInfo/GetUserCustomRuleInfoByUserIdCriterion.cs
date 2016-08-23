@@ -4,11 +4,11 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.UserCustomRu
 {
     public class GetUserCustomRuleInfoByUserIdCriterion : ICriterion
     {
-        public int UserId { get; private set; }
-
         public GetUserCustomRuleInfoByUserIdCriterion(int userId)
         {
             UserId = userId;
         }
+
+        public int UserId { get; private set; }
     }
 }

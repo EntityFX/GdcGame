@@ -3,11 +3,8 @@ using System.Diagnostics;
 using System.Linq;
 using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.DataAccess.Contract.GameData;
-using EntityFX.Gdcame.DataAccess.Contract.GameData.Store;
 using EntityFX.Gdcame.DataAccess.Contract.User;
 using EntityFX.Gdcame.DataAccess.Service;
-using EntityFX.Gdcame.GameEngine.Contract;
-using EntityFX.Gdcame.GameEngine.Contract.Items;
 using EntityFX.Gdcame.GameEngine.NetworkGameEngine;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager;
@@ -26,8 +23,8 @@ namespace EntityFx.Gdcame.Test.PerformanceTest
     [TestClass]
     public class UnitTest1
     {
-        IUnityContainer container = new UnityContainer(); 
-        
+        private readonly IUnityContainer container = new UnityContainer();
+
         [TestInitialize]
         public void TestInitialize()
         {
@@ -35,25 +32,24 @@ namespace EntityFx.Gdcame.Test.PerformanceTest
                 _ => new Logger(new NLoggerAdapter(new NLogLogExFactory().GetLogger("logger")))));
 
             container.RegisterInstance<IOperationContextHelper>(new FakeOperationContextHelper());
-                              ContainerBootstrapper managerBootstrapper = new ContainerBootstrapper();
+            var managerBootstrapper = new ContainerBootstrapper();
             managerBootstrapper.Configure(container);
 
             var childBootstrappers = new IContainerBootstrapper[]
             {
                 new EntityFX.Gdcame.DataAccess.Repository.Ef.ContainerBootstrapper(),
                 new EntityFX.Gdcame.DataAccess.Service.ContainerBootstrapper(),
-                new EntityFX.Gdcame.NotifyConsumer.ContainerBootstrapper(),
+                new EntityFX.Gdcame.NotifyConsumer.ContainerBootstrapper()
             };
             Array.ForEach(childBootstrappers, _ => _.Configure(container));
 
             container.RegisterType<IGameFactory, GameFactory>();
 
-            container.RegisterInstance<GameSessions>(new GameSessions(container.Resolve<ILogger>(), container.Resolve<IGameFactory>()));
+            container.RegisterInstance(new GameSessions(container.Resolve<ILogger>(), container.Resolve<IGameFactory>()));
 
             container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessDocumentService>(
-   );
+                );
             container.RegisterType<IUserDataAccessService, UserDataAccessService>(
-
                 );
             container.RegisterType<IGameDataStoreDataAccessService, GameDataStoreDataAccessDocumentService>(
                 );
@@ -71,25 +67,24 @@ namespace EntityFx.Gdcame.Test.PerformanceTest
                 );
 
             container.RegisterType<INotifyConsumerClientFactory, NotifyConsumerClientFactory>(new InjectionConstructor(
-        new ResolvedParameter<IUnityContainer>(),
-        string.Empty));
+                new ResolvedParameter<IUnityContainer>(),
+                string.Empty));
         }
 
         [TestMethod]
         public void TestIntegrity()
         {
-            
             var userName = "test-user-1";
-            ISimpleUserManager su = container.Resolve<ISimpleUserManager>();
+            var su = container.Resolve<ISimpleUserManager>();
             if (!su.Exists(userName))
             {
-                su.Create(new UserData() { Login = userName});
+                su.Create(new UserData {Login = userName});
             }
-            ISessionManager sm = container.Resolve<ISessionManager>();
+            var sm = container.Resolve<ISessionManager>();
             var sessionGuid = sm.OpenSession(userName);
             var och = container.Resolve<IOperationContextHelper>();
-            och.Instance.SessionId = sessionGuid; 
-            IGameManager gm = container.Resolve<IGameManager>();
+            och.Instance.SessionId = sessionGuid;
+            var gm = container.Resolve<IGameManager>();
             gm.Ping();
         }
 
@@ -98,11 +93,11 @@ namespace EntityFx.Gdcame.Test.PerformanceTest
         public void TestEngine()
         {
             var gf = container.Resolve<IGameFactory>();
-            var game = gf.BuildGame(1, "test-user-1");
+            var game = gf.BuildGame("1", "test-user-1");
             game.Initialize();
             game.PerformManualStep(null);
             var csw = new Stopwatch();
-            foreach (var iterNumber in new [] {1, 10, 50, 100, 500, 1000, 5000, 10000, 50000})
+            foreach (var iterNumber in new[] {1, 10, 50, 100, 500, 1000, 5000, 10000, 50000})
             {
                 var swList = Enumerable.Repeat(new Stopwatch(), iterNumber).ToArray();
                 csw.Restart();
@@ -114,17 +109,15 @@ namespace EntityFx.Gdcame.Test.PerformanceTest
                 }
                 Debug.Print("Ellapsed for {0} iterrations: {1}", iterNumber, csw.Elapsed);
             }
-
-
-
         }
     }
 
     internal class FakeOperationContextHelper : IOperationContext, IOperationContextHelper
     {
-        public Guid? SessionId { get; set; }
         private static readonly Lazy<IOperationContext> ObjInstance =
             new Lazy<IOperationContext>(() => new FakeOperationContextHelper());
+
+        public Guid? SessionId { get; set; }
 
         public IOperationContext Instance
         {
@@ -136,7 +129,6 @@ namespace EntityFx.Gdcame.Test.PerformanceTest
     {
         public void PushGameData(UserContext userContext, GameData gameData)
         {
-
         }
     }
 }

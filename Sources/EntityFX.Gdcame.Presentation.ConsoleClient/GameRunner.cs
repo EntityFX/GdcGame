@@ -9,28 +9,21 @@ namespace EntityFX.Gdcame.Presentation.ConsoleClient
 {
     public class GameRunner : GameRunnerBase
     {
-        private Guid _sessionGuid;
-        private string _user;
         private IGameManager _game;
+
+        private ManualStepResult _manualStepResult;
+        private int? _verificationResult;
 
         public GameRunner(string user, Guid sessionGuid, IGameManager game)
         {
-            _sessionGuid = sessionGuid;
-            _user = user;
+            SessionGuid = sessionGuid;
+            User = user;
             _game = game;
         }
 
-        public Guid SessionGuid
-        {
-            get { return _sessionGuid; }
-            set { _sessionGuid = value; }
-        }
+        public Guid SessionGuid { get; set; }
 
-        public string User
-        {
-            get { return _user; }
-            set { _user = value; }
-        }
+        public string User { get; set; }
 
         public void SetGameClient(IGameManager game)
         {
@@ -41,7 +34,13 @@ namespace EntityFX.Gdcame.Presentation.ConsoleClient
         {
             try
             {
-                _manualStepResult = await Task.Run(() => _game.PerformManualStep(_manualStepResult == null ? null : new VerificationManualStepResult() { VerificationNumber = _verificationResult ?? 0 }));
+                _manualStepResult =
+                    await
+                        Task.Run(
+                            () =>
+                                _game.PerformManualStep(_manualStepResult == null
+                                    ? null
+                                    : new VerificationManualStepResult {VerificationNumber = _verificationResult ?? 0}));
 
                 if (_manualStepResult is NoVerficationRequiredResult)
                 {
@@ -70,10 +69,9 @@ namespace EntityFX.Gdcame.Presentation.ConsoleClient
 
         public void BuyFundDriver(ConsoleKeyInfo keyInfo)
         {
-
             try
             {
-                _game.BuyFundDriver((int)keyInfo.Key - 64);
+                _game.BuyFundDriver((int) keyInfo.Key - 64);
             }
             catch (Exception exp)
             {
@@ -95,15 +93,12 @@ namespace EntityFX.Gdcame.Presentation.ConsoleClient
             DisplayGameData(GetGameData());
         }
 
-        private ManualStepResult _manualStepResult;
-        private int? _verificationResult;
-
         public override void DisplayGameData(GameData gameData)
         {
             lock (_stdLock)
             {
                 Console.SetCursorPosition(0, 0);
-                PrettyConsole.WriteLineColor(ConsoleColor.DarkRed, "User: {0}, Session: {1}", _user, _sessionGuid);
+                PrettyConsole.WriteLineColor(ConsoleColor.DarkRed, "User: {0}, Session: {1}", User, SessionGuid);
                 PrettyConsole.WriteLineColor(ConsoleColor.DarkGreen, "F2 - Admin settings");
                 PrettyConsole.WriteLineColor(ConsoleColor.DarkGreen, "F3 - Logout");
                 Console.SetCursorPosition(0, 3);
@@ -111,7 +106,7 @@ namespace EntityFX.Gdcame.Presentation.ConsoleClient
             }
         }
 
-        public override  GameData GetGameData()
+        public override GameData GetGameData()
         {
             return _game.GetGameData();
         }
@@ -126,6 +121,5 @@ namespace EntityFX.Gdcame.Presentation.ConsoleClient
         {
             DisplayGameData(GetGameData());
         }
-
     }
 }

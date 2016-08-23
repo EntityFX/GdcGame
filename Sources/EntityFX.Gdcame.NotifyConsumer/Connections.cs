@@ -9,7 +9,7 @@ namespace EntityFX.Gdcame.NotifyConsumer
         {
             ActiveConnections = new Dictionary<string, List<string>>();
         }
-        
-        public Dictionary<string, List<string>> ActiveConnections { get; private set; }
+
+        public Dictionary<string, List<string>> ActiveConnections { get; }
     }
 }

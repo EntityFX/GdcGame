@@ -12,14 +12,13 @@ using EntityFX.Gdcame.Manager.Contract.GameManager;
 using EntityFX.Gdcame.Manager.Contract.RatingManager;
 using EntityFX.Gdcame.Manager.Contract.SessionManager;
 using EntityFX.Gdcame.Manager.Contract.UserManager;
+using EntityFX.Gdcame.Presentation.Web.Api.Controllers;
+using EntityFX.Gdcame.Presentation.Web.Api.Models;
+using EntityFX.Gdcame.Presentation.Web.Api.Providers;
 using EntityFX.Gdcame.Presentation.Web.Controller;
 using EntityFX.Gdcame.Presentation.Web.Model;
 using EntityFX.Gdcame.Presentation.Web.Model.Mappers;
 using EntityFX.Gdcame.Presentation.Web.Providers.Providers;
-using EntityFX.Gdcame.Presentation.Web.WebApp.Controllers;
-using EntityFX.Gdcame.Presentation.Web.WebApp.EntityFX.EconomicsArcade.Presentation.GameApi;
-using EntityFX.Gdcame.Presentation.Web.WebApp.Models;
-using EntityFX.Gdcame.Presentation.Web.WebApp.Providers;
 using EntityFX.Gdcame.Utils.ClientProxy.Manager;
 using EntityFX.Gdcame.Utils.Common;
 using Microsoft.AspNet.Identity;
@@ -42,33 +41,35 @@ namespace EntityFX.Gdcame.Presentation.Web.WebApp
                 _ => new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger")))));
 
 
-
             container.RegisterType<IGameManager, GameManagerClient<NetTcpProxy<IGameManager>>>(
                 new InjectionConstructor(
                     new ResolvedParameter<ILogger>(),
-                    ConfigurationManager.AppSettings["ManagerEndpointAddress_GameManager"], typeof(Guid))
+                    new ResolvedParameter<IOperationContextHelper>(),
+                    ConfigurationManager.AppSettings["ManagerEndpointAddress_GameManager"], typeof (Guid))
                 , new Interceptor<InterfaceInterceptor>()
                 , new InterceptionBehavior<LoggerInterceptor>()
-                    );
+                );
             container.RegisterType<ISimpleUserManager, SimpleUserManagerClient<NetTcpProxy<ISimpleUserManager>>>(
                 new InjectionConstructor(
                     ConfigurationManager.AppSettings["ManagerEndpointAddress_UserManager"])
                 , new Interceptor<InterfaceInterceptor>()
                 , new InterceptionBehavior<LoggerInterceptor>()
-                    );
+                );
 
             container.RegisterType<IRatingManager, RatingManagerClient<NetTcpProxy<IRatingManager>>>(
                 new InjectionConstructor(
                     ConfigurationManager.AppSettings["ManagerEndpointAddress_RatingManager"]),
-                    new Interceptor<InterfaceInterceptor>(),
-                    new InterceptionBehavior<LoggerInterceptor>()
-                    );
+                new Interceptor<InterfaceInterceptor>(),
+                new InterceptionBehavior<LoggerInterceptor>()
+                );
             container.RegisterType<ISessionManager, SessionManagerClient<NetTcpProxy<ISessionManager>>>(
                 new InjectionConstructor(
-                ConfigurationManager.AppSettings["ManagerEndpointAddress_SessionManager"], new ResolvedParameter<Guid>())
+                    new ResolvedParameter<IOperationContextHelper>(),
+                    ConfigurationManager.AppSettings["ManagerEndpointAddress_SessionManager"],
+                    new ResolvedParameter<Guid>())
                 , new Interceptor<InterfaceInterceptor>()
                 , new InterceptionBehavior<LoggerInterceptor>()
-                    );
+                );
             container.RegisterType<IMapper<Cash, FundsCounterModel>, FundsCounterModelMapper>();
             container.RegisterType<IMapper<CounterBase, CounterModelBase>, CounterModelMapper>();
             container.RegisterType<IMapper<Item, FundsDriverModel>, FundsDriverModelMapper>();
@@ -77,10 +78,10 @@ namespace EntityFX.Gdcame.Presentation.Web.WebApp
             container.RegisterType<IGameClientFactory, GameClientFactory>();
             container.RegisterType<ISessionManagerClientFactory, SessionManagerClientFactory>();
 
-            container.RegisterType<ApplicationUserManagerFacrtory>();
+            container.RegisterType<ApplicationUserManagerFacotory>();
             container.RegisterType<UserManager<GameUser>, ApplicationUserManager>();
             container.RegisterType<IUserStore<GameUser>, GameUserStore>();
-            container.RegisterType<IAccountController,AccountController>();
+            container.RegisterType<AuthController, AuthController>();
             container.RegisterType<IGameDataProvider, GameDataProvider>();
 
             container.RegisterType<IGameApiController, GameApiController>();

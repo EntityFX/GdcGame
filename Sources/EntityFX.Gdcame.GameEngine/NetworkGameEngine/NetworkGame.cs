@@ -9,74 +9,82 @@ using EntityFX.Gdcame.GameEngine.Contract.Counters;
 using EntityFX.Gdcame.GameEngine.Contract.Incrementors;
 using EntityFX.Gdcame.GameEngine.Contract.Items;
 using EntityFX.Gdcame.Infrastructure.Common;
+using CounterBase = EntityFX.Gdcame.Common.Contract.Counters.CounterBase;
+using DelayedCounter = EntityFX.Gdcame.Common.Contract.Counters.DelayedCounter;
+using GenericCounter = EntityFX.Gdcame.Common.Contract.Counters.GenericCounter;
 using IncrementorTypeEnum = EntityFX.Gdcame.Common.Contract.Incrementors.IncrementorTypeEnum;
+using SingleCounter = EntityFX.Gdcame.Common.Contract.Counters.SingleCounter;
 
 namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
 {
     public class NetworkGame : GameBase
     {
-        private static readonly IDictionary<Type, Func<Gdcame.Common.Contract.Counters.CounterBase, CounterBase>> MappingDictionary
-            = new ReadOnlyDictionary<Type, Func<Gdcame.Common.Contract.Counters.CounterBase, CounterBase>>(
-                new Dictionary<Type, Func<Gdcame.Common.Contract.Counters.CounterBase, CounterBase>>
+        private static readonly IDictionary<Type, Func<CounterBase, Contract.Counters.CounterBase>> MappingDictionary
+            = new ReadOnlyDictionary<Type, Func<CounterBase, Contract.Counters.CounterBase>>(
+                new Dictionary<Type, Func<CounterBase, Contract.Counters.CounterBase>>
+                {
                     {
+                        typeof (GenericCounter),
+                        source =>
                         {
-                            typeof(Gdcame.Common.Contract.Counters.GenericCounter),
-                            source =>
+                            var sourceGenericCounter = (GenericCounter) source;
+                            var res = new Contract.Counters.GenericCounter
                             {
-                                var sourceGenericCounter =  (Gdcame.Common.Contract.Counters.GenericCounter)source;
-                                var res = new GenericCounter
-                                {
-                                    BonusPercentage =
-                                        sourceGenericCounter.BonusPercentage,
-                                    StepsToIncreaseInflation = sourceGenericCounter.InflationIncreaseSteps,
-                                    Inflation = sourceGenericCounter.Inflation,
-                                    SubValue = sourceGenericCounter.SubValue,
-                                    IsUsedInAutoStep =
-                                        sourceGenericCounter.UseInAutoSteps
-                                };
-                                res.CurrentSteps = sourceGenericCounter.CurrentSteps;
-                                return res;
-                            }
-                        },
+                                BonusPercentage =
+                                    sourceGenericCounter.BonusPercentage,
+                                StepsToIncreaseInflation = sourceGenericCounter.InflationIncreaseSteps,
+                                Inflation = sourceGenericCounter.Inflation,
+                                SubValue = sourceGenericCounter.SubValue,
+                                IsUsedInAutoStep =
+                                    sourceGenericCounter.UseInAutoSteps
+                            };
+                            res.CurrentSteps = sourceGenericCounter.CurrentSteps;
+                            return res;
+                        }
+                    },
+                    {
+                        typeof (SingleCounter),
+                        source => new Contract.Counters.SingleCounter
                         {
-                            typeof(Gdcame.Common.Contract.Counters.SingleCounter),
-                            source =>  new SingleCounter 
-                            {
-                                                    SubValue = source.Value
-                            }
-                        },
+                            SubValue = source.Value
+                        }
+                    },
+                    {
+                        typeof (DelayedCounter),
+                        source =>
                         {
-                            typeof(Gdcame.Common.Contract.Counters.DelayedCounter),
-                            source =>
+                            var sourceDelayedCounter = (DelayedCounter) source;
+                            return new Contract.Counters.DelayedCounter
                             {
-                                var sourceDelayedCounter =  (Gdcame.Common.Contract.Counters.DelayedCounter)source;
-                                return new DelayedCounter
-                                {
-                                    UnlockValue = sourceDelayedCounter.UnlockValue,
-                                    SubValue = sourceDelayedCounter.Value,
-                                    SecondsRemaining = sourceDelayedCounter.SecondsRemaining,
-                                    SecondsToAchieve = sourceDelayedCounter.MiningTimeSeconds,
-                                    IsMining = sourceDelayedCounter.SecondsRemaining > 0
-                                };
-                            }
+                                UnlockValue = sourceDelayedCounter.UnlockValue,
+                                SubValue = sourceDelayedCounter.Value,
+                                SecondsRemaining = sourceDelayedCounter.SecondsRemaining,
+                                SecondsToAchieve = sourceDelayedCounter.MiningTimeSeconds,
+                                IsMining = sourceDelayedCounter.SecondsRemaining > 0
+                            };
                         }
                     }
-            );
+                }
+                );
+
+        private static object _syslock = new {};
+        private readonly IGameDataRetrieveDataAccessService _gameDataRetrieveDataAccessService;
 
         private readonly ILogger _logger;
-        private readonly IGameDataRetrieveDataAccessService _gameDataRetrieveDataAccessService;
         private readonly INotifyGameDataChanged _notifyGameDataChanged;
-        private readonly int _userId;
+        private readonly string _userId;
         private GameData _gameData;
 
         public NetworkGame(ILogger logger, IGameDataRetrieveDataAccessService gameDataRetrieveDataAccessService
-            , INotifyGameDataChanged notifyGameDataChanged, int userId)
+            , INotifyGameDataChanged notifyGameDataChanged, string userId)
         {
             _logger = logger;
             _gameDataRetrieveDataAccessService = gameDataRetrieveDataAccessService;
             _notifyGameDataChanged = notifyGameDataChanged;
             _userId = userId;
         }
+
+        public int StepsToPersist { get; }
 
         protected override ReadOnlyDictionary<int, Item> GetFundsDrivers()
         {
@@ -102,7 +110,7 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
                     incrementors.Add(incrementor.Key, value);
                 }
 
-                result.Add(fundDriver.Id, new Item()
+                result.Add(fundDriver.Id, new Item
                 {
                     Id = fundDriver.Id,
                     Name = fundDriver.Name,
@@ -112,11 +120,13 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
                     InflationPercent = fundDriver.InflationPercent,
                     BuyCount = fundDriver.BuyCount,
                     Incrementors = incrementors,
-                    CustomRuleInfo = fundDriver.CustomRuleInfo != null ? new CustomRuleInfo()
-                    {
-                        CustomRule = CustomRules[fundDriver.CustomRuleInfo.CustomRuleId],
-                        CurrentIndex = fundDriver.CustomRuleInfo.CurrentIndex
-                    } : null
+                    CustomRuleInfo = fundDriver.CustomRuleInfo != null
+                        ? new CustomRuleInfo
+                        {
+                            CustomRule = CustomRules[fundDriver.CustomRuleInfo.CustomRuleId],
+                            CurrentIndex = fundDriver.CustomRuleInfo.CurrentIndex
+                        }
+                        : null
                 });
             }
             return new ReadOnlyDictionary<int, Item>(result);
@@ -124,9 +134,8 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
 
         protected override GameCash GetFundsCounters()
         {
-
             var fundsCounters = _gameData.Cash;
-            var counters = new Dictionary<int, CounterBase>();
+            var counters = new Dictionary<int, Contract.Counters.CounterBase>();
             var inc = 0;
             foreach (var sourceCounter in fundsCounters.Counters)
             {
@@ -139,7 +148,7 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
                 counters.Add(inc, destinationCouner);
                 inc++;
             }
-            return new GameCash()
+            return new GameCash
             {
                 Counters = counters,
                 RootCounter = counters[0]
@@ -160,16 +169,8 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
             return new ReadOnlyDictionary<int, ICustomRule>(customRuleDictionary);
         }
 
-        protected override void PostPerformManualStep(IEnumerable<CounterBase> modifiedCounters)
+        protected override void PostPerformManualStep(IEnumerable<Contract.Counters.CounterBase> modifiedCounters)
         {
-
-        }
-
-        private static object _syslock = new { };
-
-        public int StepsToPersist
-        {
-            get;
         }
 
         public void PerformGameDataChanged()
@@ -177,16 +178,17 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
             _notifyGameDataChanged.GameDataChanged(this);
         }
 
-        protected override void PostPerformAutoStep(IEnumerable<CounterBase> modifiedCounters, int iterations)
+        protected override void PostPerformAutoStep(IEnumerable<Contract.Counters.CounterBase> modifiedCounters,
+            int iterations)
         {
             /*lock (_syslock)
             {   */
-                //if (_currentStepsToPersist == _stepsToPersist)
-                //{
-                //    _currentStepsToPersist = 0;
-                //    _notifyGameDataChanged.GameDataChanged(this);
-                //}
-                //_currentStepsToPersist++;
+            //if (_currentStepsToPersist == _stepsToPersist)
+            //{
+            //    _currentStepsToPersist = 0;
+            //    _notifyGameDataChanged.GameDataChanged(this);
+            //}
+            //_currentStepsToPersist++;
             /*}  */
 
             _notifyGameDataChanged.AutomaticRefreshed(this);
@@ -214,7 +216,5 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
             _gameData = _gameDataRetrieveDataAccessService.GetGameData(_userId);
             _logger.Info("Perform PreInitialize: {0}", sw.Elapsed);
         }
-
     }
-
 }

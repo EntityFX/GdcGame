@@ -10,10 +10,7 @@
 
         public virtual decimal Value
         {
-            get
-            {
-                return SubValue;
-            }
+            get { return SubValue; }
         }
 
         public bool IsUsedInAutoStep { get; set; }

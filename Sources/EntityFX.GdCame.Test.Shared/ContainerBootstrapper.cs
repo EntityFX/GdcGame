@@ -36,7 +36,7 @@ namespace EntityFx.GdCame.Test.Shared
                 container.RegisterType<IGameManager, GameManagerClient<NetTcpProxy<IGameManager>>>(
                     new InjectionConstructor(
                         new ResolvedParameter<ILogger>(), new ResolvedParameter<IOperationContextHelper>(),
-                        ConfigurationManager.AppSettings["ManagerEndpointAddress_GameManager"], typeof(Guid))
+                        ConfigurationManager.AppSettings["ManagerEndpointAddress_GameManager"], typeof (Guid))
                     , new Interceptor<InterfaceInterceptor>()
                     , new InterceptionBehavior<LoggerInterceptor>()
                     );
@@ -49,7 +49,7 @@ namespace EntityFx.GdCame.Test.Shared
 
                 container.RegisterType<IAdminManager, AdminManagerClient<NetTcpProxy<IAdminManager>>>(
                     new InjectionConstructor(
-                         new ResolvedParameter<IOperationContextHelper>(),
+                        new ResolvedParameter<IOperationContextHelper>(),
                         ConfigurationManager.AppSettings["ManagerEndpointAddress_AdminManager"],
                         new ResolvedParameter<Guid>()),
                     new Interceptor<InterfaceInterceptor>(),
@@ -66,13 +66,12 @@ namespace EntityFx.GdCame.Test.Shared
             }
             else
             {
-
                 container.RegisterType<IGameManager, GameManagerClient<NetNamedPipeProxy<IGameManager>>>(
                     new InjectionConstructor(
                         new ResolvedParameter<ILogger>(),
                         new ResolvedParameter<IOperationContextHelper>(),
                         "net.pipe://localhost/EntityFX.Gdcame.Manager.Contract.GameManager.IGameManager",
-                        typeof(Guid))
+                        typeof (Guid))
                     , new Interceptor<InterfaceInterceptor>()
                     , new InterceptionBehavior<LoggerInterceptor>()
                     );

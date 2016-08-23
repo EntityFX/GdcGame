@@ -9,16 +9,16 @@ namespace EntityFX.Gdcame.Manager.Mappers.Store
     {
         public StoredGameData Map(IGame source, StoredGameData destination = null)
         {
-            var gameData = new StoredGameData()
+            var gameData = new StoredGameData
             {
-                Cash = new StoredCash()
+                Cash = new StoredCash
                 {
                     CashOnHand = source.GameCash.CashOnHand,
                     TotalEarned = source.GameCash.TotalEarned,
                     Counters = PrepareCountersToPersist(source)
                 },
                 AutomatedStepsCount = source.AutomaticStepNumber,
-                ManualStepsCount = source.ManualStepNumber,
+                ManualStepsCount = source.ManualStepNumber
             };
             return gameData;
         }
@@ -48,7 +48,7 @@ namespace EntityFX.Gdcame.Manager.Mappers.Store
                 var sourceDelayedCounter = sourceCounter.Value as DelayedCounter;
                 if (sourceDelayedCounter != null)
                 {
-                    var destinationDelayedCounter = new StoredDelayedCounter()
+                    var destinationDelayedCounter = new StoredDelayedCounter
                     {
                         SecondsRemaining = sourceDelayedCounter.SecondsRemaining,
                         DelayedValue = sourceDelayedCounter.SubValue

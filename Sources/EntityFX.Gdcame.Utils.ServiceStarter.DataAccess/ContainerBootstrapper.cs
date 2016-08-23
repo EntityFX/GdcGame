@@ -12,7 +12,6 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.DataAccess
 {
     public class ContainerBootstrapper : IContainerBootstrapper
     {
-
         //public 
         public IUnityContainer Configure(IUnityContainer container)
         {
@@ -26,14 +25,14 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.DataAccess
             container.AddNewExtension<Interception>();
 
             container.RegisterType<ILogger>(new InjectionFactory(
-               _ => new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger")))));
+                _ => new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger")))));
 
             if (ConfigurationManager.AppSettings["UseLoggerInterceptor"] == "True")
             {
                 container.Configure<Interception>()
-                .AddPolicy("logging")
-                .AddCallHandler<LoggerCallHandler>(new ContainerControlledLifetimeManager())
-                .AddMatchingRule<NamespaceMatchingRule>(new InjectionConstructor("EntityFX.Gdcame.*", true));
+                    .AddPolicy("logging")
+                    .AddCallHandler<LoggerCallHandler>(new ContainerControlledLifetimeManager())
+                    .AddMatchingRule<NamespaceMatchingRule>(new InjectionConstructor("EntityFX.Gdcame.*", true));
             }
 
             if (!Environment.UserInteractive)

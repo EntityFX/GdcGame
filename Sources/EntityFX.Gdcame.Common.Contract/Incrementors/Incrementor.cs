@@ -7,6 +7,7 @@ namespace EntityFX.Gdcame.Common.Contract.Incrementors
     {
         [DataMember]
         public IncrementorTypeEnum IncrementorType { get; set; }
+
         [DataMember]
         public int Value { get; set; }
     }

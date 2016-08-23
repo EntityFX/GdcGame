@@ -5,9 +5,9 @@ using EntityFX.Gdcame.Presentation.Web.WebApp;
 using EntityFX.Gdcame.Presentation.Web.WebApp.Factories;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Mvc;
+using WebActivatorEx;
 
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(UnityWebActivator), "Start")]
-
+[assembly: PreApplicationStartMethod(typeof (UnityWebActivator), "Start")]
 
 namespace EntityFX.Gdcame.Presentation.Web.WebApp
 {
@@ -15,7 +15,7 @@ namespace EntityFX.Gdcame.Presentation.Web.WebApp
     public static class UnityWebActivator
     {
         /// <summary>Integrates Unity when the application starts.</summary>
-        public static void Start() 
+        public static void Start()
         {
             var container = new UnityContainer();
             UnityConfig.RegisterComponents(container);
@@ -28,6 +28,5 @@ namespace EntityFX.Gdcame.Presentation.Web.WebApp
             // TODO: Uncomment if you want to use PerRequestLifetimeManager
             // Microsoft.Web.Infrastructure.DynamicModuleHelper.DynamicModuleUtility.RegisterModule(typeof(UnityPerRequestHttpModule));
         }
-
     }
 }

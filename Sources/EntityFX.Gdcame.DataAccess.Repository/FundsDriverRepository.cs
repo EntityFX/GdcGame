@@ -12,8 +12,8 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef
     public class FundsDriverRepository : IFundsDriverRepository
     {
         private readonly IMapper<FundsDriverEntity, Item> _fundsDriverContractMapper;
-        private readonly IUnitOfWorkFactory _unitOfWorkFactory;
         private readonly IMapperFactory _mapperFactory;
+        private readonly IUnitOfWorkFactory _unitOfWorkFactory;
 
         public FundsDriverRepository(IUnitOfWorkFactory unitOfWorkFactory
             , IMapperFactory mapperFactory

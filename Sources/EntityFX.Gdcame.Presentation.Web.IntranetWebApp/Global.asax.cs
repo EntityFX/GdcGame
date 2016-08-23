@@ -17,6 +17,7 @@ namespace EntityFX.Gdcame.Presentation.Web.IntranetWebApp
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+
         protected void Application_PostAuthorizeRequest()
         {
             if (IsWebApiRequest())
@@ -27,7 +28,9 @@ namespace EntityFX.Gdcame.Presentation.Web.IntranetWebApp
 
         private static bool IsWebApiRequest()
         {
-            return HttpContext.Current.Request.AppRelativeCurrentExecutionFilePath != null && HttpContext.Current.Request.AppRelativeCurrentExecutionFilePath.StartsWith(WebApiConfig.UrlPrefixRelative);
+            return HttpContext.Current.Request.AppRelativeCurrentExecutionFilePath != null &&
+                   HttpContext.Current.Request.AppRelativeCurrentExecutionFilePath.StartsWith(
+                       WebApiConfig.UrlPrefixRelative);
         }
     }
 }

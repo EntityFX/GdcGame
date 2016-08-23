@@ -12,13 +12,15 @@
             <dt>{{counters.Counters[0].Name}}</dt>
             <dd class="text-primary">{{counters.Counters[0].Value}}</dd>
             <dt>{{counters.Counters[1].Name}}</dt>
-            <dd class="text-info">+{{counters.Counters[1].Value | currency}} = {{counters.Counters[1].SubValue | currency}} + (Bonus: {{counters.Counters[1].BonusPercentage}}%  {{counters.Counters[1].Bonus | currency}}) - Buthurt: {{counters.Counters[1].Inflation}}%</dd>
+            <dd class="text-info">+{{counters.Counters[1].Value | currency}} = {{counters.Counters[1].SubValue | currency}} + (Bonus: {{counters.Counters[1].BonusPercentage}}% {{counters.Counters[1].Bonus | currency}}) - Buthurt: {{counters.Counters[1].Inflation}}%</dd>
             <dt>{{counters.Counters[2].Name}}</dt>
-            <dd class="text-success">+{{counters.Counters[2].Value | currency}} = {{counters.Counters[2].SubValue | currency}} + (Bonus: {{counters.Counters[2].BonusPercentage}}%  {{counters.Counters[2].Bonus | currency}}) - Fatigue: {{counters.Counters[2].Inflation}}%</dd>
+            <dd class="text-success">+{{counters.Counters[2].Value | currency}} = {{counters.Counters[2].SubValue | currency}} + (Bonus: {{counters.Counters[2].BonusPercentage}}% {{counters.Counters[2].Bonus | currency}}) - Fatigue: {{counters.Counters[2].Inflation}}%</dd>
             <dt class="text-danger">{{counters.Counters[3].Name}}</dt>
             <dd class="text-danger">+{{counters.Counters[3].Value | currency}} <span ng-if="counters.Counters[3].UnlockValue > counters.Counters[0].Value">Need <strong class="text-primary">{{counters.Counters[3].UnlockValue}}</strong> to start</span></dd>
-            <dd class="text-danger"><span ng-if="counters.Counters[3].SecondsRemaining>0">{{counters.Counters[3].Name}} will finished after {{counters.Counters[3].SecondsRemaining}} seconds</span></dd>
-            <dd class="text-danger"><span ng-if="counters.Counters[3].SecondsRemaining==0"><br></span></dd>
+            <dd class="text-danger">
+                <span ng-if="counters.Counters[3].SecondsRemaining>0">{{counters.Counters[3].Name}} will finished after {{counters.Counters[3].SecondsRemaining}} seconds</span></dd>
+            <dd class="text-danger">
+                <span ng-if="counters.Counters[3].SecondsRemaining==0"><br></span></dd>
 
         </dl>
     </div>

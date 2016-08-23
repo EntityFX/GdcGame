@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using EntityFX.Gdcame.Common.Contract;
-using EntityFX.Gdcame.Common.Presentation.Model;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.NotifyConsumer.Contract;
 using Microsoft.AspNet.SignalR;
@@ -11,8 +9,8 @@ namespace EntityFX.Gdcame.NotifyConsumer.Signalr
     [Authorize]
     public class GameDataHub : Hub
     {
-        private readonly ILogger _logger;
         private readonly IConnections _connections;
+        private readonly ILogger _logger;
 
         public GameDataHub(ILogger logger, IConnections connections)
         {

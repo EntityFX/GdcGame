@@ -14,7 +14,7 @@ namespace EntityFX.Gdcame.Manager.Mappers.Store
 
         public StoreGameDataContractMapper(
             IMapper<GameCash, StoredCash> fundsCountersContractMapper,
-                        IMapper<Item, StoredItem> fundsDriversContractMapper
+            IMapper<Item, StoredItem> fundsDriversContractMapper
             )
         {
             _fundsCountersContractMapper = fundsCountersContractMapper;
@@ -23,7 +23,7 @@ namespace EntityFX.Gdcame.Manager.Mappers.Store
 
         public StoredGameData Map(IGame source, StoredGameData destination = null)
         {
-            return new StoredGameData()
+            return new StoredGameData
             {
                 Items = source.Items.Select(fundsDriver =>
                 {
@@ -35,6 +35,5 @@ namespace EntityFX.Gdcame.Manager.Mappers.Store
                 ManualStepsCount = source.ManualStepNumber
             };
         }
-
     }
 }

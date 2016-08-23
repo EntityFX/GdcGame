@@ -7,5 +7,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Contract
     public interface IUserRepository : IRepository<User, GetUserByIdCriterion, GetAllUsersCriterion>
     {
         User FindByName(GetUserByNameCriterion findByIdCriterion);
+
+        User[] FindByFilter(GetUsersBySearchStringCriterion findByIdCriterion);
     }
 }

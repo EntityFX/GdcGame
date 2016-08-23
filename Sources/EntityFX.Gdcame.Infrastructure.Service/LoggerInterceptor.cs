@@ -16,7 +16,6 @@ namespace EntityFX.Gdcame.Infrastructure.Service
 
         public IMethodReturn Invoke(IMethodInvocation input, GetNextInterceptionBehaviorDelegate getNext)
         {
-
             _logger.Debug("Interecptor: {0}, Call begin {1}.{2}", GetType(), input.Target, input.MethodBase.Name);
             var result = getNext()(input, getNext);
 
@@ -26,7 +25,8 @@ namespace EntityFX.Gdcame.Infrastructure.Service
             }
             else
             {
-                _logger.Debug("Interecptor: {0}, Call end {1}.{2} [Return={3}]", GetType(), input.Target, input.MethodBase.Name, result.ReturnValue);
+                _logger.Debug("Interecptor: {0}, Call end {1}.{2} [Return={3}]", GetType(), input.Target,
+                    input.MethodBase.Name, result.ReturnValue);
             }
             return result;
         }
@@ -36,7 +36,10 @@ namespace EntityFX.Gdcame.Infrastructure.Service
             return Type.EmptyTypes;
         }
 
-        public bool WillExecute { get { return true; } }
+        public bool WillExecute
+        {
+            get { return true; }
+        }
     }
 
     public class LoggerCallHandler : ICallHandler
@@ -59,7 +62,8 @@ namespace EntityFX.Gdcame.Infrastructure.Service
             }
             else
             {
-                _logger.Debug("Interecptor: {0}, Call end {1}.{2} [Return={3}]", GetType(), input.Target, input.MethodBase.Name, result.ReturnValue);
+                _logger.Debug("Interecptor: {0}, Call end {1}.{2} [Return={3}]", GetType(), input.Target,
+                    input.MethodBase.Name, result.ReturnValue);
             }
             return result;
         }

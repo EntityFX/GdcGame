@@ -15,14 +15,11 @@ namespace EntityFX.GdCame.Test.DataAccess
                 new UserDataAccessClient<NetTcpProxy<IUserDataAccessService>>(
                     "net.tcp://localhost/EntityFX.EconomicsArcade.DataAccess:8777/EntityFX.EconomicsArcade.Contract.DataAccess.User.IUserDataAccessService");
             {
-                
-                proxyFactory.Create(new User()
+                proxyFactory.Create(new User
                 {
                     Email = "vasya2"
                 });
-
             }
-
         }
 
         [TestMethod]
@@ -31,9 +28,8 @@ namespace EntityFX.GdCame.Test.DataAccess
             var proxyFactory =
                 new UserDataAccessClient<NetTcpProxy<IUserDataAccessService>>(
                     "net.tcp://localhost/EntityFX.EconomicsArcade.DataAccess:8777/EntityFX.EconomicsArcade.Contract.DataAccess.User.IUserDataAccessService");
-                var user = proxyFactory.FindById(1);
-                Assert.IsNotNull(user);
-            }
+            var user = proxyFactory.FindById("1");
+            Assert.IsNotNull(user);
         }
     }
-
+}

@@ -8,6 +8,7 @@ namespace EntityFX.Gdcame.Manager.Contract.AdminManager
     {
         [DataMember]
         public string UserName { get; set; }
+
         [DataMember]
         public Session[] UserSessions { get; set; }
     }

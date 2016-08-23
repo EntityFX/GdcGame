@@ -18,10 +18,10 @@ namespace EntityFX.Gdcame.DataAccess.Service
     public abstract class GameDataRetrieveDataAccessBase
     {
         private readonly ObjectCache _cache = MemoryCache.Default;
-        private object _stdLock = new object();
-        private readonly IFundsDriverRepository _fundsDriverRepository;
         private readonly ICountersRepository _countersRepository;
         private readonly ICustomRuleRepository _customRuleRepository;
+        private readonly IFundsDriverRepository _fundsDriverRepository;
+        private object _stdLock = new object();
 
         public GameDataRetrieveDataAccessBase(GameRepositoryFacade gameRepositoryFacade)
         {
@@ -37,7 +37,7 @@ namespace EntityFX.Gdcame.DataAccess.Service
             {
                 _cache.Set("FundDrivers"
                     , _fundsDriverRepository.FindAll(new GetAllFundsDriversCriterion())
-                    , new CacheItemPolicy { AbsoluteExpiration = new DateTimeOffset(DateTime.Now.AddDays(1)) });
+                    , new CacheItemPolicy {AbsoluteExpiration = new DateTimeOffset(DateTime.Now.AddDays(1))});
             }
             return _cache.Get("FundDrivers") as Item[];
         }
@@ -48,7 +48,7 @@ namespace EntityFX.Gdcame.DataAccess.Service
             {
                 _cache.Set("Counters"
                     , _countersRepository.FindAll(new GetAllCountersCriterion())
-                    , new CacheItemPolicy { AbsoluteExpiration = new DateTimeOffset(DateTime.Now.AddDays(1)) });
+                    , new CacheItemPolicy {AbsoluteExpiration = new DateTimeOffset(DateTime.Now.AddDays(1))});
             }
             return _cache.Get("Counters") as CounterBase[];
         }
@@ -59,30 +59,31 @@ namespace EntityFX.Gdcame.DataAccess.Service
             {
                 _cache.Set("CustomRules"
                     , _customRuleRepository.FindAll(new GetAllCustomRulesCriterion())
-                    , new CacheItemPolicy { AbsoluteExpiration = new DateTimeOffset(DateTime.Now.AddDays(1)) });
+                    , new CacheItemPolicy {AbsoluteExpiration = new DateTimeOffset(DateTime.Now.AddDays(1))});
             }
             return _cache.Get("CustomRules") as CustomRule[];
         }
     }
 
-    public class GameDataRetrieveDataAccessDocumentService : GameDataRetrieveDataAccessBase, IGameDataRetrieveDataAccessService
+    public class GameDataRetrieveDataAccessDocumentService : GameDataRetrieveDataAccessBase,
+        IGameDataRetrieveDataAccessService
     {
         private readonly IUserGameSnapshotRepository _userGameSnapshotRepository;
 
-        public GameDataRetrieveDataAccessDocumentService(IUserGameSnapshotRepository userGameSnapshotRepository, GameRepositoryFacade gameRepositoryFacade)
+        public GameDataRetrieveDataAccessDocumentService(IUserGameSnapshotRepository userGameSnapshotRepository,
+            GameRepositoryFacade gameRepositoryFacade)
             : base(gameRepositoryFacade)
         {
             _userGameSnapshotRepository = userGameSnapshotRepository;
-
         }
 
-        public GameData GetGameData(int userId)
+        public GameData GetGameData(string userId)
         {
-            StoredGameData userGameData = _userGameSnapshotRepository.FindByUserId(new GetUserGameSnapshotByIdCriterion(userId));
-            var originalItems = (Item[])GetFundDrivers().Clone();
-            var originalCounters = (CounterBase[])GetCounters().Clone();
-            var originalCustomRules = (CustomRule[])GetCsutomRules().Clone();
-            var cash = new Cash()
+            var userGameData = _userGameSnapshotRepository.FindByUserId(new GetUserGameSnapshotByIdCriterion(userId));
+            var originalItems = (Item[]) GetFundDrivers().Clone();
+            var originalCounters = (CounterBase[]) GetCounters().Clone();
+            var originalCustomRules = (CustomRule[]) GetCsutomRules().Clone();
+            var cash = new Cash
             {
                 Counters = originalCounters,
                 CashOnHand = 100,
@@ -104,7 +105,7 @@ namespace EntityFX.Gdcame.DataAccess.Service
                     }
                 }
 
-                for (int index = 0; index < userGameData.Cash.Counters.Length; index++)
+                for (var index = 0; index < userGameData.Cash.Counters.Length; index++)
                 {
                     var storedCounter = userGameData.Cash.Counters[index];
                     var originalCounter = originalCountersDisct[storedCounter.Id];
@@ -130,7 +131,7 @@ namespace EntityFX.Gdcame.DataAccess.Service
                 cash.CashOnHand = userGameData.Cash.CashOnHand;
                 cash.TotalEarned = userGameData.Cash.TotalEarned;
             }
-            return new GameData()
+            return new GameData
             {
                 Items = originalItems,
                 Cash = cash,

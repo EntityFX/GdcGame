@@ -16,12 +16,12 @@ using Microsoft.Practices.Unity;
 
 namespace EntityFX.Gdcame.Utils.ServiceStarter.Manager
 {
-    public class ManagerStarter: ServicesStarterBase<ContainerBootstrapper>, IServicesStarter
+    public class ManagerStarter : ServicesStarterBase<ContainerBootstrapper>, IServicesStarter
     {
-        private readonly Uri _baseUrl;// = "net.tcp://localhost:8555/EntityFX.EconomicsArcade.Manager/";
+        private readonly Uri _baseUrl; // = "net.tcp://localhost:8555/EntityFX.EconomicsArcade.Manager/";
 
         public ManagerStarter(ContainerBootstrapper container, string baseUrl)
-            :base(container)
+            : base(container)
         {
             _baseUrl = new Uri(baseUrl);
         }
@@ -74,7 +74,9 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.Manager
                 {
                     foreach (var operation in serviceEndpoint.Contract.Operations)
                     {
-                        operation.Behaviors.Add(new CheckRolePermissionsOperationBehavior(Container.Resolve<IOperationContextHelper>(), Container.Resolve<GameSessions>()));
+                        operation.Behaviors.Add(
+                            new CheckRolePermissionsOperationBehavior(Container.Resolve<IOperationContextHelper>(),
+                                Container.Resolve<GameSessions>()));
                     }
                 }
             }

@@ -8,10 +8,11 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef.Mappers
 {
     public class FundsDriverContractMapper : IMapper<FundsDriverEntity, Item>
     {
-        private readonly IMapper<IncrementorEntity, Incrementor> _incrementorContractMapper;
         private readonly IMapper<CustomRuleEntity, CustomRule> _customRuleContractMapper;
+        private readonly IMapper<IncrementorEntity, Incrementor> _incrementorContractMapper;
 
-        public FundsDriverContractMapper(IMapper<IncrementorEntity, Incrementor> incrementorContractMapper, IMapper<CustomRuleEntity, CustomRule> customRuleContractMapper)
+        public FundsDriverContractMapper(IMapper<IncrementorEntity, Incrementor> incrementorContractMapper,
+            IMapper<CustomRuleEntity, CustomRule> customRuleContractMapper)
         {
             _incrementorContractMapper = incrementorContractMapper;
             _customRuleContractMapper = customRuleContractMapper;
@@ -27,7 +28,9 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef.Mappers
             destination.Id = source.Id;
             destination.InflationPercent = source.InflationPercent;
             destination.Picture = source.Picture;
-            destination.CustomRuleInfo = source.CustomRule != null ? new CustomRuleInfo() { CustomRuleId = source.CustomRule.Id} : null;
+            destination.CustomRuleInfo = source.CustomRule != null
+                ? new CustomRuleInfo {CustomRuleId = source.CustomRule.Id}
+                : null;
             destination.Incrementors = new Dictionary<int, Incrementor>();
             foreach (var incrementor in source.Incrementors)
             {
@@ -37,7 +40,8 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef.Mappers
             {
                 if (!destination.Incrementors.ContainsKey(i))
                 {
-                    destination.Incrementors.Add(i, new Incrementor() { IncrementorType = IncrementorTypeEnum.ValueIncrementor, Value = 0});
+                    destination.Incrementors.Add(i,
+                        new Incrementor {IncrementorType = IncrementorTypeEnum.ValueIncrementor, Value = 0});
                 }
             }
             return destination;

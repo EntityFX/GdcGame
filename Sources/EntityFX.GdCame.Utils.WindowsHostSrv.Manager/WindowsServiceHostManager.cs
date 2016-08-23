@@ -1,13 +1,12 @@
-﻿using EntityFX.Gdcame.Utils.ServiceStarter.Manager;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.ServiceProcess;
-
+using EntityFX.Gdcame.Utils.ServiceStarter.Manager;
 
 namespace EntityFX.GdCame.Utils.WindowsHostSrv.Manager
 {
     public partial class WindowsServiceHostManager : ServiceBase
     {
-        ManagerStarter _managerStarter;
+        private readonly ManagerStarter _managerStarter;
 
         public WindowsServiceHostManager(ManagerStarter managerStarter)
         {
@@ -20,14 +19,14 @@ namespace EntityFX.GdCame.Utils.WindowsHostSrv.Manager
         {
             _managerStarter.StartServices();
 
-            AddLog("Service " + this.ServiceName + " is started");
+            AddLog("Service " + ServiceName + " is started");
         }
 
         protected override void OnStop()
         {
             _managerStarter.StopServices();
 
-            AddLog("Service " + this.ServiceName + " is stoped");
+            AddLog("Service " + ServiceName + " is stoped");
         }
 
         public void AddLog(string log)
@@ -41,7 +40,9 @@ namespace EntityFX.GdCame.Utils.WindowsHostSrv.Manager
                 eventLogMain.Source = "MyExampleService";
                 eventLogMain.WriteEntry(log);
             }
-            catch { }
+            catch
+            {
+            }
         }
     }
 }

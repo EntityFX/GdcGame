@@ -58,7 +58,7 @@ INSERT Incrementor(Id, Type, Value, FundsDriverId, CounterId) VALUES (56, 0, 120
 INSERT Incrementor(Id, Type, Value, FundsDriverId, CounterId) VALUES (57, 0, 80.00, 26, 0)
 INSERT Incrementor(Id, Type, Value, FundsDriverId, CounterId) VALUES (58, 0, 40.00, 27, 0)
 INSERT Incrementor(Id, Type, Value, FundsDriverId, CounterId) VALUES (59, 1, 4.00, 27, 1)
-INSERT Incrementor(Id, Type, Value, FundsDriverId, CounterId) VALUES (60, 1, 4.00, 27, 1)
+INSERT Incrementor(Id, Type, Value, FundsDriverId, CounterId) VALUES (60, 1, 4.00, 27, 2)
 INSERT Incrementor(Id, Type, Value, FundsDriverId, CounterId) VALUES (61, 0, 40.00, 28, 0)
 INSERT Incrementor(Id, Type, Value, FundsDriverId, CounterId) VALUES (62, 0, 4000.00, 28, 1)
 INSERT Incrementor(Id, Type, Value, FundsDriverId, CounterId) VALUES (63, 0, 50.00, 29, 0)

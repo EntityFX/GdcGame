@@ -80,15 +80,16 @@ namespace EntityFX.Gdcame.Presentation.Web.IntranetWebApp
                     new InjectionConstructor(
                         new ResolvedParameter<ILogger>(),
                         new ResolvedParameter<IOperationContextHelper>(),
-                        "net.pipe://localhost/EntityFX.Gdcame.Manager.Contract.GameManager.IGameManager", typeof(Guid))
+                        "net.pipe://localhost/EntityFX.Gdcame.Manager.Contract.GameManager.IGameManager", typeof (Guid))
                     , new Interceptor<InterfaceInterceptor>()
                     , new InterceptionBehavior<LoggerInterceptor>()
                     );
-                container.RegisterType<ISimpleUserManager, SimpleUserManagerClient<NetNamedPipeProxy<ISimpleUserManager>>>(
-                    new InjectionConstructor(
-                        "net.pipe://localhost/EntityFX.Gdcame.Manager.Contract.UserManager.ISimpleUserManager")
-                    , new Interceptor<InterfaceInterceptor>()
-                    , new InterceptionBehavior<LoggerInterceptor>()
+                container
+                    .RegisterType<ISimpleUserManager, SimpleUserManagerClient<NetNamedPipeProxy<ISimpleUserManager>>>(
+                        new InjectionConstructor(
+                            "net.pipe://localhost/EntityFX.Gdcame.Manager.Contract.UserManager.ISimpleUserManager")
+                        , new Interceptor<InterfaceInterceptor>()
+                        , new InterceptionBehavior<LoggerInterceptor>()
                     );
 
                 container.RegisterType<IRatingManager, RatingManagerClient<NetNamedPipeProxy<IRatingManager>>>(

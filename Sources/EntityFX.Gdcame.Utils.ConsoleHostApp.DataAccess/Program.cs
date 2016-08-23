@@ -6,7 +6,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.DataAccess
 {
     public class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             var containerBootstrapper = new ContainerBootstrapper();
             var ss = new DataAccessStarter(

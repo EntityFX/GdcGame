@@ -9,35 +9,37 @@ namespace EntityFX.Gdcame.Presentation.Web.Controller
     {
         private readonly IGameDataProvider _gameDataProvider;
 
-        protected override void Initialize(HttpControllerContext controllerContext)
-        {
-            base.Initialize(controllerContext);
-            _gameDataProvider.InitializeSession(User.Identity.Name);
-        }
-
         public RatingApiController(IGameDataProvider gameDataProvider)
         {
             _gameDataProvider = gameDataProvider;
         }
 
         [HttpPost]
-        public UserRating[] GetUsersRatingByCount([FromBody]int count)
+        public UserRating[] GetRaiting([FromBody] int count)
         {
-            return _gameDataProvider.GetUsersRatingByCount(count);
+            return new UserRating[0];
+            //_gameDataProvider.GetUsersRatingByCount(count);
         }
 
         [HttpGet]
-        public UserRating FindUserRatingByUserName()
+        public UserRating GetUserRating()
         {
-            return _gameDataProvider.FindUserRatingByUserName(User.Identity.Name);
+            return new UserRating();
+            //return _gameDataProvider.FindUserRatingByUserName(User.Identity.Name);
         }
 
 
         [HttpPost]
-        public UserRating[] FindUserRatingByUserNameAndAroundUsers([FromBody]int count)
+        public UserRating[] GetNearestRating([FromBody] int count)
         {
-            return _gameDataProvider.FindUserRatingByUserNameAndAroundUsers(User.Identity.Name, count);
+            return new UserRating[0];
+            //return _gameDataProvider.FindUserRatingByUserNameAndAroundUsers(User.Identity.Name, count);
+        }
+
+        protected override void Initialize(HttpControllerContext controllerContext)
+        {
+            base.Initialize(controllerContext);
+            _gameDataProvider.InitializeSession(User.Identity.Name);
         }
     }
-
 }

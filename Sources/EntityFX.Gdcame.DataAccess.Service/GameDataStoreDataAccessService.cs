@@ -14,7 +14,7 @@ namespace EntityFX.Gdcame.DataAccess.Service
             _userGameSnapshotRepository = userGameSnapshotRepository;
         }
 
-        public void StoreGameDataForUser(int userId, StoredGameData gameData)
+        public void StoreGameDataForUser(string userId, StoredGameData gameData)
         {
             var userGame = _userGameSnapshotRepository.FindByUserId(new GetUserGameSnapshotByIdCriterion(userId));
 
@@ -27,5 +27,5 @@ namespace EntityFX.Gdcame.DataAccess.Service
                 _userGameSnapshotRepository.UpdateForUser(userId, gameData);
             }
         }
-    } 
+    }
 }

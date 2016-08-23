@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[UserFundsDriver]
 (
-	[UserId] INT NOT NULL,
+	[UserId] CHAR(32) NOT NULL,
 	[FundsDriverId] INT NOT NULL,
 	[Value] MONEY NOT NULL,
 	[BuyCount] INT  NOT NULL,

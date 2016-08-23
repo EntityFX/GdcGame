@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EntityFX.Gdcame.DataAccess.Repository.Contract
+﻿namespace EntityFX.Gdcame.DataAccess.Repository.Contract
 {
     public class GameRepositoryFacade
     {

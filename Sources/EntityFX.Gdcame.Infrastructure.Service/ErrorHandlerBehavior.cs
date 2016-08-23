@@ -12,7 +12,7 @@ namespace EntityFX.Gdcame.Infrastructure.Service
 
         public ErrorHandlerBehavior(IErrorHandler errorHandler)
         {
-            this.handler = errorHandler;
+            handler = errorHandler;
         }
 
         public void Validate(ServiceDescription serviceDescription, ServiceHostBase serviceHostBase)

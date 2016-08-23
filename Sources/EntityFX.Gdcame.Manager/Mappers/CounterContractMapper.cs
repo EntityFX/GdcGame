@@ -3,15 +3,16 @@ using EntityFX.Gdcame.Infrastructure.Common;
 
 namespace EntityFX.Gdcame.Manager.Mappers
 {
-    public class CounterContractMapper : IMapper<CounterBase, Gdcame.Common.Contract.Counters.CounterBase>
+    public class CounterContractMapper : IMapper<CounterBase, Common.Contract.Counters.CounterBase>
     {
-        public Gdcame.Common.Contract.Counters.CounterBase Map(CounterBase source, Gdcame.Common.Contract.Counters.CounterBase destination)
+        public Common.Contract.Counters.CounterBase Map(CounterBase source,
+            Common.Contract.Counters.CounterBase destination)
         {
-            Gdcame.Common.Contract.Counters.CounterBase destinationCounter = null;
+            Common.Contract.Counters.CounterBase destinationCounter = null;
             var genericCounter = source as GenericCounter;
             if (genericCounter != null)
             {
-                var genericDestination = new Gdcame.Common.Contract.Counters.GenericCounter
+                var genericDestination = new Common.Contract.Counters.GenericCounter
                 {
                     Bonus = genericCounter.Bonus,
                     BonusPercentage = genericCounter.BonusPercentage,
@@ -27,7 +28,7 @@ namespace EntityFX.Gdcame.Manager.Mappers
             var singleCounter = source as SingleCounter;
             if (singleCounter != null)
             {
-                destinationCounter = new Gdcame.Common.Contract.Counters.SingleCounter { Value = singleCounter.Value, Type = 0 };
+                destinationCounter = new Common.Contract.Counters.SingleCounter {Value = singleCounter.Value, Type = 0};
             }
             if (destinationCounter != null)
             {
@@ -37,9 +38,9 @@ namespace EntityFX.Gdcame.Manager.Mappers
             var delayedCounter = source as DelayedCounter;
             if (delayedCounter != null)
             {
-                destinationCounter = new Gdcame.Common.Contract.Counters.DelayedCounter()
+                destinationCounter = new Common.Contract.Counters.DelayedCounter
                 {
-                    MiningTimeSeconds = delayedCounter.SecondsToAchieve, 
+                    MiningTimeSeconds = delayedCounter.SecondsToAchieve,
                     SecondsRemaining = delayedCounter.SecondsRemaining,
                     UnlockValue = delayedCounter.UnlockValue,
                     Type = 2
@@ -50,10 +51,10 @@ namespace EntityFX.Gdcame.Manager.Mappers
                 MapCommon(source, destinationCounter);
             }
 
-            return  destinationCounter;
+            return destinationCounter;
         }
 
-        private void MapCommon(CounterBase source, Gdcame.Common.Contract.Counters.CounterBase destination)
+        private void MapCommon(CounterBase source, Common.Contract.Counters.CounterBase destination)
         {
             destination.Id = source.Id;
             destination.Name = source.Name;

@@ -1,16 +1,15 @@
-﻿using EntityFX.Gdcame.Utils.ServiceStarter.DataAccess;
-using System.Configuration;
+﻿using System.Configuration;
 using System.ServiceProcess;
-
+using EntityFX.Gdcame.Utils.ServiceStarter.DataAccess;
 
 namespace EntityFX.GdCame.Utils.WindowsHostSrv.DataAccess
 {
-    static class Program
+    internal static class Program
     {
         /// <summary>
-        /// The main entry point for the application.
+        ///     The main entry point for the application.
         /// </summary>
-        static void Main()
+        private static void Main()
         {
             var containerBootstrapper = new ContainerBootstrapper();
             var dataAccessStarter = new DataAccessStarter(
@@ -20,13 +19,11 @@ namespace EntityFX.GdCame.Utils.WindowsHostSrv.DataAccess
                 );
 
             ServiceBase[] ServicesToRun;
-            ServicesToRun = new ServiceBase[] 
-            { 
-                new WindowsServiceHostDataAccess(dataAccessStarter) 
+            ServicesToRun = new ServiceBase[]
+            {
+                new WindowsServiceHostDataAccess(dataAccessStarter)
             };
             ServiceBase.Run(ServicesToRun);
         }
-
-        
     }
 }

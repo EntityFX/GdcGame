@@ -9,7 +9,7 @@ namespace EntityFX.Gdcame.Manager.Mappers
     {
         public Incrementor Map(IncrementorBase source, Incrementor destination)
         {
-            return new Incrementor()
+            return new Incrementor
             {
                 IncrementorType = (IncrementorTypeEnum) ((int) source.IncrementorType),
                 Value = source.Value

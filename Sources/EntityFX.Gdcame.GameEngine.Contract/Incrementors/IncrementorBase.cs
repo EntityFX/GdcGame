@@ -2,20 +2,20 @@
 {
     public abstract class IncrementorBase
     {
-        public IncrementorTypeEnum IncrementorType { get; private set; }
-
-        protected abstract IncrementorTypeEnum GetIncrementorType();
-
-        public int Value { get; set; }
-
         private IncrementorBase()
         {
             IncrementorType = GetIncrementorType();
         }
 
-        protected IncrementorBase(int value)   : this()
+        protected IncrementorBase(int value) : this()
         {
             Value = value;
         }
+
+        public IncrementorTypeEnum IncrementorType { get; private set; }
+
+        public int Value { get; set; }
+
+        protected abstract IncrementorTypeEnum GetIncrementorType();
     }
 }

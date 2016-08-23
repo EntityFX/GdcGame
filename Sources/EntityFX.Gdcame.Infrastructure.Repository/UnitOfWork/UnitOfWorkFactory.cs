@@ -4,12 +4,12 @@ namespace EntityFX.Gdcame.Infrastructure.Repository.UnitOfWork
 {
     public class UnitOfWorkFactory : IUnitOfWorkFactory
     {
-        readonly IUnityContainer  _container;
+        private readonly IUnityContainer _container;
+
         public UnitOfWorkFactory(IUnityContainer container)
         {
             _container = container;
         }
-
 
         #region Implementation of IUnitOfWorkFactory
 

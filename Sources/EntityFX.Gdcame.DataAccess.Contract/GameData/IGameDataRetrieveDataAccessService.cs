@@ -7,7 +7,8 @@ namespace EntityFX.Gdcame.DataAccess.Contract.GameData
     public interface IGameDataRetrieveDataAccessService
     {
         [OperationContract]
-        Common.Contract.GameData GetGameData(int userId);
+        Common.Contract.GameData GetGameData(string userId);
+
         [OperationContract]
         UserRating[] GetUserRatings();
     }

@@ -4,11 +4,11 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.UserGameCoun
 {
     public class GetUserGameCounterByIdCriterion : ICriterion
     {
-        public int UserId { get; private set; }
-
         public GetUserGameCounterByIdCriterion(int userId)
         {
             UserId = userId;
         }
+
+        public int UserId { get; private set; }
     }
 }

@@ -11,7 +11,8 @@ namespace EntityFX.Gdcame.Infrastructure.Common
             _unityContainer = unityContainer;
         }
 
-        public IMapper<TSource, TDestination> Build<TSource, TDestination>(string mapperName = null) where TSource : class where TDestination : class
+        public IMapper<TSource, TDestination> Build<TSource, TDestination>(string mapperName = null)
+            where TSource : class where TDestination : class
         {
             IMapper<TSource, TDestination> mapper;
 

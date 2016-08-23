@@ -7,7 +7,7 @@ namespace EntityFX.Gdcame.Infrastructure.Service
 {
     public class ServiceInfoHelperLogger : IServiceInfoHelper
     {
-        private ILogger _logger;
+        private readonly ILogger _logger;
 
         public ServiceInfoHelperLogger(ILogger logger)
         {

@@ -9,8 +9,8 @@ namespace EntityFX.Gdcame.Manager.Contract.GameManager
     {
         [DataMember]
         public Cash ModifiedCash { get; set; }
+
         [DataMember]
         public Item ModifiedItem { get; set; }
     }
-
 }

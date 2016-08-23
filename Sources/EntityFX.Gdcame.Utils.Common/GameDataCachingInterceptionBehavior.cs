@@ -20,7 +20,7 @@ namespace EntityFX.Gdcame.Utils.Common
                         FetchFromCache(objectName));
                 }
             }
-            IMethodReturn result = getNext()(input, getNext);
+            var result = getNext()(input, getNext);
             AddToCache(objectName, result.ReturnValue);
             return result;
         }
@@ -30,7 +30,10 @@ namespace EntityFX.Gdcame.Utils.Common
             return Type.EmptyTypes;
         }
 
-        public bool WillExecute { get { return true; } }
+        public bool WillExecute
+        {
+            get { return true; }
+        }
 
         private bool IsInCache(string key)
         {
@@ -45,7 +48,8 @@ namespace EntityFX.Gdcame.Utils.Common
         private void AddToCache(string key, object toBeAddedToCache)
         {
             if (!_memoryCache.Contains(key))
-                _memoryCache.Add(new CacheItem(key, toBeAddedToCache), new CacheItemPolicy { AbsoluteExpiration = new DateTimeOffset(DateTime.Now.AddDays(1)) });
+                _memoryCache.Add(new CacheItem(key, toBeAddedToCache),
+                    new CacheItemPolicy {AbsoluteExpiration = new DateTimeOffset(DateTime.Now.AddDays(1))});
         }
     }
 }

@@ -3,40 +3,28 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.DataAccess.Contract.User;
 using EntityFX.Gdcame.GameEngine.Contract;
 using EntityFX.Gdcame.GameEngine.NetworkGameEngine;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager.Contract.SessionManager;
-using Microsoft.Practices.ObjectBuilder2;
 
 namespace EntityFX.Gdcame.Manager
 {
     public class GameSessions
     {
-        private readonly ILogger _logger;
         private readonly IGameFactory _gameFactory;
-        private readonly ConcurrentDictionary<string, IGame> GameSessionsStorage = new ConcurrentDictionary<string, IGame>();
-
-        private readonly ConcurrentDictionary<Guid, Session> SessionsStorage = new ConcurrentDictionary<Guid, Session>();
 
         private readonly TaskTimer _gameTimer;
+        private readonly ILogger _logger;
 
         private readonly TaskTimer _persisTimertimer;
 
-        private void GamePersistCallback()
-        {
-            var sw = new Stopwatch();
-            sw.Start();
-            //GameSessionsStorage.Ta
-            GameSessionsStorage.AsParallel().ForAll(_ => ((NetworkGame)_.Value).PerformGameDataChanged());
-            //GameSessionsStorage.ForEach(_ => Task.Run(() => ((NetworkGame)_.Value).PerformGameDataChanged()));
-            if (_logger != null)
-                _logger.Info("Perform persist for {0} game sessions: {1}", GameSessionsStorage.ToList().Count, sw.Elapsed);
-        }
+        private readonly ConcurrentDictionary<string, IGame> GameSessionsStorage =
+            new ConcurrentDictionary<string, IGame>();
+
+        private readonly ConcurrentDictionary<Guid, Session> SessionsStorage = new ConcurrentDictionary<Guid, Session>();
 
         public GameSessions(ILogger logger, IGameFactory gameFactory)
         {
@@ -44,6 +32,23 @@ namespace EntityFX.Gdcame.Manager
             _gameFactory = gameFactory;
             _gameTimer = new TaskTimer(TimeSpan.FromSeconds(1), TimerCallback).Start();
             _persisTimertimer = new TaskTimer(TimeSpan.FromSeconds(30), GamePersistCallback).Start();
+        }
+
+        internal IEnumerable<Session> Sessions
+        {
+            get { return SessionsStorage.Values; }
+        }
+
+        private void GamePersistCallback()
+        {
+            var sw = new Stopwatch();
+            sw.Start();
+            //GameSessionsStorage.Ta
+            GameSessionsStorage.AsParallel().ForAll(_ => ((NetworkGame) _.Value).PerformGameDataChanged());
+            //GameSessionsStorage.ForEach(_ => Task.Run(() => ((NetworkGame)_.Value).PerformGameDataChanged()));
+            if (_logger != null)
+                _logger.Info("Perform persist for {0} game sessions: {1}", GameSessionsStorage.ToList().Count,
+                    sw.Elapsed);
         }
 
         private void TimerCallback()
@@ -92,13 +97,14 @@ namespace EntityFX.Gdcame.Manager
 
         public Guid AddSession(User user)
         {
-            var session = new Session()
+            var session = new Session
             {
                 Login = user.Email,
                 UserId = user.Id,
                 SessionIdentifier = Guid.NewGuid(),
-                UserRoles = user.IsAdmin ? new[] { UserRole.GenericUser, UserRole.Admin } : new[] { UserRole.GenericUser },
-                Identity = new CustomGameIdentity() { AuthenticationType = "Auto", IsAuthenticated = true, Name = user.Email }
+                UserRoles = user.IsAdmin ? new[] {UserRole.GenericUser, UserRole.Admin} : new[] {UserRole.GenericUser},
+                Identity =
+                    new CustomGameIdentity {AuthenticationType = "Auto", IsAuthenticated = true, Name = user.Email}
             };
             SessionsStorage.TryAdd(session.SessionIdentifier, session);
             return session.SessionIdentifier;
@@ -120,14 +126,9 @@ namespace EntityFX.Gdcame.Manager
             SessionsStorage.Clear();
         }
 
-        private IGame BuildGame(int userId, string userName)
+        private IGame BuildGame(string userId, string userName)
         {
             return _gameFactory.BuildGame(userId, userName);
-        }
-
-        internal IEnumerable<Session> Sessions
-        {
-            get { return SessionsStorage.Values; }
         }
     }
 }

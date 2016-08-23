@@ -5,9 +5,9 @@ using Microsoft.Practices.Unity;
 
 namespace EntityFX.Gdcame.Utils.ServiceStarter.NotifyConsumer
 {
-    class SignalRDependencyResolver : DefaultDependencyResolver
+    internal class SignalRDependencyResolver : DefaultDependencyResolver
     {
-        private IUnityContainer _container;
+        private readonly IUnityContainer _container;
 
         public SignalRDependencyResolver(IUnityContainer container)
         {
@@ -17,13 +17,13 @@ namespace EntityFX.Gdcame.Utils.ServiceStarter.NotifyConsumer
         public override object GetService(Type serviceType)
         {
             if (_container.IsRegistered(serviceType)) return _container.Resolve(serviceType);
-            else return base.GetService(serviceType);
+            return base.GetService(serviceType);
         }
 
         public override IEnumerable<object> GetServices(Type serviceType)
         {
             if (_container.IsRegistered(serviceType)) return _container.ResolveAll(serviceType);
-            else return base.GetServices(serviceType);
+            return base.GetServices(serviceType);
         }
     }
 }

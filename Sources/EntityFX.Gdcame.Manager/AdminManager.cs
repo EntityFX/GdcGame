@@ -8,7 +8,8 @@ namespace EntityFX.Gdcame.Manager
     public class AdminManager : IAdminManager
     {
         private readonly GameSessions _gameSessions;
-        private IOperationContextHelper _operationContextHelper;
+        private readonly IOperationContextHelper _operationContextHelper;
+
         public AdminManager(IOperationContextHelper operationContextHelper, GameSessions gameSessions)
         {
             _gameSessions = gameSessions;

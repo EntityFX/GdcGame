@@ -7,7 +7,8 @@ using EntityFX.Gdcame.Infrastructure.Repository.Query;
 
 namespace EntityFX.Gdcame.DataAccess.Repository.Ef.Queries.UserGameSnapshot
 {
-    public class GetUserGameSnapshotByIdQuery : QueryBase, IQuery<GetUserGameSnapshotByIdCriterion, UserGameDataSnapshotEntity>
+    public class GetUserGameSnapshotByIdQuery : QueryBase,
+        IQuery<GetUserGameSnapshotByIdCriterion, UserGameDataSnapshotEntity>
     {
         public GetUserGameSnapshotByIdQuery(DbContext dbContext)
             : base(dbContext)
