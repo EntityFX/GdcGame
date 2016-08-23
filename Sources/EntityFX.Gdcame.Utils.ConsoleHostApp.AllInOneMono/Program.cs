@@ -34,15 +34,6 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOneMono
             });
             Console.WriteLine("SignalR server running on {0}", signalRHost);
             Console.WriteLine("Web server running on {0}", baseAddress);
-
-            var client = new HttpClient();
-
-            var response = client.GetAsync(baseAddress + "api/heartbeat").Result;
-
-            Console.WriteLine(response);
-            Console.WriteLine(response.Content.ReadAsStringAsync().Result);
-
-
             Console.ReadLine();
         }
     }
