@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CollapsedServiceStarter.cs" />
+    <Compile Include="NotifyConsumerServiceClient.cs" />
     <Compile Include="NotifyConsumerServiceHost.cs" />
     <Compile Include="FullCollapsedContainerBootstrapper.cs" />
     <Compile Include="SignalRDependencyResolver.cs" />
@@ -140,10 +141,6 @@
     <ProjectReference Include="..\EntityFX.Gdcame.Utils.ClientProxy.DataAccess\EntityFX.Gdcame.Utils.ClientProxy.DataAccess.csproj">
       <Project>{CEAD1C8C-20A4-4E48-969A-9AFCD104D109}</Project>
       <Name>EntityFX.Gdcame.Utils.ClientProxy.DataAccess</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.Utils.ClientProxy.NotifyConsumer\EntityFX.Gdcame.Utils.ClientProxy.NotifyConsumer.csproj">
-      <Project>{F1EC6494-BA8E-406D-BC6C-89E32FAB7769}</Project>
-      <Name>EntityFX.Gdcame.Utils.ClientProxy.NotifyConsumer</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Utils.Common\EntityFX.Gdcame.Utils.Common.csproj">
       <Project>{2AE99E38-4B45-4D8B-B9D5-840B21F82A43}</Project>

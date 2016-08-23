@@ -13,7 +13,7 @@ using EntityFX.Gdcame.Manager;
 using EntityFX.Gdcame.NotifyConsumer;
 using EntityFX.Gdcame.NotifyConsumer.Contract;
 using EntityFX.Gdcame.Utils.ClientProxy.DataAccess;
-using EntityFX.Gdcame.Utils.ClientProxy.NotifyConsumer;
+
 using EntityFX.Gdcame.Utils.Common;
 using Microsoft.AspNet.SignalR;
 using Microsoft.Practices.Unity;
