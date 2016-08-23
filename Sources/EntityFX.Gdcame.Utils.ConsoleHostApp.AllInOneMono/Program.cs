@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Net;
 using System.Net.Http;
 using Microsoft.AspNet.SignalR;
@@ -12,14 +13,14 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOneMono
     {
         private static void Main()
         {
-            var baseAddress = "http://localhost:9001/";
+            var baseAddress = ConfigurationManager.AppSettings["WebAddressUrl"];
 
-            var _signalRHost = "http://localhost:9091/";
+            var signalRHost = ConfigurationManager.AppSettings["SignalRAddressUrl"];
 
             // Start OWIN host 
             var httpWebApi = WebApp.Start<Startup>(baseAddress);
 
-            var signalR = WebApp.Start(_signalRHost, builder =>
+            var signalR = WebApp.Start(signalRHost, builder =>
             {
                 var listener = (HttpListener)builder.Properties[typeof(HttpListener).FullName];
                 listener.AuthenticationSchemes = AuthenticationSchemes.Anonymous;
@@ -31,7 +32,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOneMono
                     EnableJSONP = true
                 });
             });
-            Console.WriteLine("SignalR server running on {0}", _signalRHost);
+            Console.WriteLine("SignalR server running on {0}", signalRHost);
             Console.WriteLine("Web server running on {0}", baseAddress);
 
             var client = new HttpClient();
