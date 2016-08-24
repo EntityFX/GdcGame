@@ -1,6 +1,9 @@
 using System;
 using System.Linq;
+using System.Net.Http;
 using System.Net.Http.Formatting;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web.Http;
 using EntityFX.Gdcame.Presentation.Web.Api.Providers;
 using EntityFX.Gdcame.Utils.Common;
@@ -36,7 +39,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOneMono
 
             config.DependencyResolver = new UnityDependencyResolver(container);
 
-            (new ContainerBootstrapper()).Configure(container);
+           (new ContainerBootstrapper()).Configure(container);
 
             var aumf =
                 (ApplicationUserManagerFacotory)
@@ -67,10 +70,12 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOneMono
                 );
 
 
-            var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
-            jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            /*var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
+            jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();*/
 
             appBuilder.UseWebApi(config);
+
         }
+
     }
 }

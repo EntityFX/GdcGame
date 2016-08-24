@@ -17,8 +17,14 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOneMono
 
             var signalRHost = ConfigurationManager.AppSettings["SignalRAddressUrl"];
 
+            var options = new StartOptions
+            {
+                ServerFactory = "Nowin",
+                Port = 9000
+            };
+
             // Start OWIN host 
-            var httpWebApi = WebApp.Start<Startup>(baseAddress);
+            var httpWebApi = WebApp.Start<Startup>(options);
 
             var signalR = WebApp.Start(signalRHost, builder =>
             {
@@ -32,6 +38,8 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOneMono
                     EnableJSONP = true
                 });
             });
+
+
             Console.WriteLine("SignalR server running on {0}", signalRHost);
             Console.WriteLine("Web server running on {0}", baseAddress);
             Console.ReadLine();
