@@ -12,14 +12,17 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
     {
         private static void Main()
         {
-            var baseAddress = "http://localhost:9001/";
+            var baseHost = "+";
 
-            var _signalRHost = "http://localhost:9091/";
+            var webApiPort = "9001";
+
+            var signalRPort = "9091";
+
 
             // Start OWIN host 
-            var httpWebApi = WebApp.Start<Startup>(baseAddress);
+            var httpWebApi = WebApp.Start<Startup>(string.Format("http://{0}:{1}", baseHost, webApiPort));
 
-            var signalR = WebApp.Start(_signalRHost, builder =>
+            var signalR = WebApp.Start(string.Format("http://{0}:{1}", baseHost, signalRPort), builder =>
             {
                 var listener = (HttpListener)builder.Properties[typeof(HttpListener).FullName];
                 listener.AuthenticationSchemes = AuthenticationSchemes.Anonymous;
@@ -31,15 +34,8 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
                     EnableJSONP = true
                 });
             });
-            Console.WriteLine("SignalR server running on {0}", _signalRHost);
-            Console.WriteLine("Web server running on {0}", baseAddress);
-
-            var client = new HttpClient();
-
-            var response = client.GetAsync(baseAddress + "api/heartbeat").Result;
-
-            Console.WriteLine(response);
-            Console.WriteLine(response.Content.ReadAsStringAsync().Result);
+            Console.WriteLine("SignalR server running on {0}", signalRPort);
+            Console.WriteLine("Web server running on {0}", webApiPort);
 
 
             Console.ReadLine();

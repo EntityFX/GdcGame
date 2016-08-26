@@ -86,8 +86,8 @@ namespace EntityFX.Gdcame.DataAccess.Service
             var cash = new Cash
             {
                 Counters = originalCounters,
-                CashOnHand = 100,
-                TotalEarned = 100
+                OnHand = 100,
+                Total = 100
             };
             if (userGameData != null)
             {
@@ -128,8 +128,8 @@ namespace EntityFX.Gdcame.DataAccess.Service
                             break;
                     }
                 }
-                cash.CashOnHand = userGameData.Cash.CashOnHand;
-                cash.TotalEarned = userGameData.Cash.TotalEarned;
+                cash.OnHand = userGameData.Cash.CashOnHand;
+                cash.Total = userGameData.Cash.TotalEarned;
             }
             return new GameData
             {

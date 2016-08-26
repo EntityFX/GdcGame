@@ -11,7 +11,7 @@ namespace EntityFX.Gdcame.Presentation.Web.Providers.Providers
         void InitializeGameContext(Guid gameGuid);
         void ClearSession();
         GameDataModel GetGameData();
-        FundsCounterModel GetCounters();
+        CashModel GetCounters();
         BuyDriverModel BuyFundDriver(int id);
         ManualStepResultModel PerformManualStep(int? verificationNumber);
         void FightAgainstInflation();

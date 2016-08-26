@@ -1,4 +1,5 @@
-﻿using EntityFX.Gdcame.Common.Presentation.Model;
+﻿using System.Threading.Tasks;
+using EntityFX.Gdcame.Common.Presentation.Model;
 using EntityFX.Gdcame.Presentation.Web.Model;
 
 namespace EntityFX.Gdcame.Presentation.Web.Controller
@@ -11,9 +12,9 @@ namespace EntityFX.Gdcame.Presentation.Web.Controller
 
         bool ActivateDelayedCounter(int counterId);
 
-        GameDataModel GetGameData();
+        Task<GameDataModel> GetGameData();
 
-        FundsCounterModel GetCounters();
+        CashModel GetCounters();
 
         BuyDriverModel BuyFundDriver(int id);
     }

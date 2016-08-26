@@ -1,14 +1,15 @@
 ﻿using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 namespace EntityFX.Gdcame.Common.Contract.Incrementors
 {
-    [DataContract]
+    [XmlRoot]
     public class Incrementor
     {
-        [DataMember]
+        [XmlElement]
         public IncrementorTypeEnum IncrementorType { get; set; }
 
-        [DataMember]
+        [XmlElement]
         public int Value { get; set; }
     }
 }

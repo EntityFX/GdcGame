@@ -204,8 +204,8 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
             //CashFunds(1500000);
             ManualStepNumber = _gameData.ManualStepsCount;
             AutomaticStepNumber = _gameData.AutomatedStepsCount;
-            GameCash.CashOnHand = _gameData.Cash.CashOnHand;
-            GameCash.TotalEarned = _gameData.Cash.TotalEarned;
+            GameCash.CashOnHand = _gameData.Cash.OnHand;
+            GameCash.TotalEarned = _gameData.Cash.Total;
         }
 
         protected override void PreInitialize()

@@ -40,9 +40,9 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
             new FullCollapsedContainerBootstrapper().Configure(container);
 
 
-            container.RegisterType<IMapper<Cash, FundsCounterModel>, FundsCounterModelMapper>();
+            container.RegisterType<IMapper<Cash, CashModel>, FundsCounterModelMapper>();
             container.RegisterType<IMapper<CounterBase, CounterModelBase>, CounterModelMapper>();
-            container.RegisterType<IMapper<Item, FundsDriverModel>, FundsDriverModelMapper>();
+            container.RegisterType<IMapper<Item, ItemModel>, FundsDriverModelMapper>();
             container.RegisterType<IMapper<GameData, GameDataModel>, GameDataModelMapper>();
             container.RegisterType<IMapper<BuyFundDriverResult, BuyDriverModel>, FundsDriverBuyInfoMapper>();
             container.RegisterType<IGameClientFactory, NoWcfGameManagerFactory>();

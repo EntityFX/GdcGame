@@ -8,12 +8,12 @@ namespace EntityFX.Gdcame.Common.Presentation.Model.Mappers
 {
     public class GameDataModelMapper : IMapper<GameData, GameDataModel>
     {
-        private readonly IMapper<Cash, FundsCounterModel> _fundsCounterModelMapper;
-        private readonly IMapper<Item, FundsDriverModel> _fundsDriverModelMapper;
+        private readonly IMapper<Cash, CashModel> _fundsCounterModelMapper;
+        private readonly IMapper<Item, ItemModel> _fundsDriverModelMapper;
 
         public GameDataModelMapper(
-            IMapper<Item, FundsDriverModel> fundsDriverModelMapper
-            , IMapper<Cash, FundsCounterModel> fundsCounterModelMapper)
+            IMapper<Item, ItemModel> fundsDriverModelMapper
+            , IMapper<Cash, CashModel> fundsCounterModelMapper)
         {
             _fundsDriverModelMapper = fundsDriverModelMapper;
             _fundsCounterModelMapper = fundsCounterModelMapper;
@@ -22,13 +22,13 @@ namespace EntityFX.Gdcame.Common.Presentation.Model.Mappers
         public GameDataModel Map(GameData source, GameDataModel destination = null)
         {
             destination = destination ?? new GameDataModel();
-            var fundsDriverModels = new List<FundsDriverModel>();
+            var fundsDriverModels = new List<ItemModel>();
             foreach (var fundsDriver in source.Items)
             {
                 fundsDriverModels.Add(_fundsDriverModelMapper.Map(fundsDriver));
             }
-            destination.FundsDrivers = fundsDriverModels.ToArray();
-            destination.Counters = _fundsCounterModelMapper.Map(source.Cash);
+            destination.Items = fundsDriverModels.ToArray();
+            destination.Cash = _fundsCounterModelMapper.Map(source.Cash);
 
             return destination;
         }

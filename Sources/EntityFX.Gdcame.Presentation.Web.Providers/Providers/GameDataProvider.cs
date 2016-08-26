@@ -15,7 +15,7 @@ namespace EntityFX.Gdcame.Presentation.Web.Providers.Providers
 {
     public class GameDataProvider : IGameDataProvider
     {
-        private readonly IMapper<Cash, FundsCounterModel> _fundsCounterModelMapper;
+        private readonly IMapper<Cash, CashModel> _fundsCounterModelMapper;
         private readonly IMapper<BuyFundDriverResult, BuyDriverModel> _fundsDriverBuyinfoModelMapper;
         private readonly IGameClientFactory _gameClientFactory;
         private readonly IMapper<GameData, GameDataModel> _gameDataModelMapper;
@@ -40,7 +40,7 @@ namespace EntityFX.Gdcame.Presentation.Web.Providers.Providers
             _mapperFactory = mapperFactory;
 
             _gameDataModelMapper = _mapperFactory.Build<GameData, GameDataModel>();
-            _fundsCounterModelMapper = _mapperFactory.Build<Cash, FundsCounterModel>();
+            _fundsCounterModelMapper = _mapperFactory.Build<Cash, CashModel>();
             _fundsDriverBuyinfoModelMapper = _mapperFactory.Build<BuyFundDriverResult, BuyDriverModel>();
             _gameClientFactory = gameClientFactory;
         }
@@ -77,14 +77,14 @@ namespace EntityFX.Gdcame.Presentation.Web.Providers.Providers
         public GameDataModel GetGameData()
         {
             var gameData = _gameDataModelMapper.Map(_gameManager.GetGameData());
-            foreach (var fundsDriverModel in gameData.FundsDrivers)
+            foreach (var fundsDriverModel in gameData.Items)
             {
-                fundsDriverModel.IsActive = gameData.Counters.Counters[0].Value >= fundsDriverModel.UnlockValue;
+                fundsDriverModel.IsActive = gameData.Cash.Counters[0].Value >= fundsDriverModel.UnlockValue;
             }
             return gameData;
         }
 
-        public FundsCounterModel GetCounters()
+        public CashModel GetCounters()
         {
             return _fundsCounterModelMapper.Map(_gameManager.GetCounters());
         }
@@ -103,7 +103,7 @@ namespace EntityFX.Gdcame.Presentation.Web.Providers.Providers
                     : null);
             var verificationnumberResult = result as VerificationRequiredResult;
             VerificationData verificationData = null;
-            FundsCounterModel modifiedCounters = null;
+            CashModel modifiedCounters = null;
             if (verificationnumberResult != null)
             {
                 verificationData = new VerificationData

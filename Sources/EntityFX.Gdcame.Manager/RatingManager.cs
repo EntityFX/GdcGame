@@ -67,7 +67,7 @@ namespace EntityFX.Gdcame.Manager
             {
                 GdcPoints = gameData.Cash.Counters[0].Value,
                 ManualStepsCount = gameData.ManualStepsCount,
-                TotalFunds = gameData.Cash.TotalEarned,
+                TotalFunds = gameData.Cash.Total,
                 UserName = user.Email
             };
         }
@@ -81,7 +81,7 @@ namespace EntityFX.Gdcame.Manager
                 {
                     GdcPoints = gameData.Cash.Counters[0].Value,
                     ManualStepsCount = gameData.ManualStepsCount,
-                    TotalFunds = gameData.Cash.TotalEarned,
+                    TotalFunds = gameData.Cash.Total,
                     UserName = user.Email
                 });
 

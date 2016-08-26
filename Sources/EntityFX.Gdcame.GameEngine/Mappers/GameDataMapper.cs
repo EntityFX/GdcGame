@@ -16,8 +16,8 @@ namespace EntityFX.Gdcame.GameEngine.Mappers
             {
                 Cash = new Cash
                 {
-                    CashOnHand = source.GameCash.CashOnHand,
-                    TotalEarned = source.GameCash.TotalEarned,
+                    OnHand = source.GameCash.CashOnHand,
+                    Total = source.GameCash.TotalEarned,
                     Counters = PrepareCountersToPersist(source)
                 },
                 AutomatedStepsCount = source.AutomaticStepNumber,

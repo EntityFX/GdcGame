@@ -57,7 +57,7 @@ namespace EntityFX.Gdcame.Manager
             sw.Start();
             GameSessionsStorage.AsParallel().ForAll(_ => _.Value.PerformAutoStep());
             if (_logger != null)
-                _logger.Info("Perform steps for {0} game sessions: {1}", GameSessionsStorage.Count, sw.Elapsed);
+                _logger.Info("Perform steps for {0} active games and {1} sessions: {2}", GameSessionsStorage.Count, SessionsStorage.Count, sw.Elapsed);
         }
 
         public IGame GetGame(Guid sessionId)

@@ -49,8 +49,8 @@ namespace EntityFx.GdCame.Test.Shared
         {
             lock (_stdLock)
             {
-                Console.WriteLine("Funds: {0:C}; Total Funds: {1:C}", gameData.Cash.CashOnHand,
-                    gameData.Cash.TotalEarned);
+                Console.WriteLine("Funds: {0:C}; Total Funds: {1:C}", gameData.Cash.OnHand,
+                    gameData.Cash.Total);
                 Console.WriteLine("Manual Steps: {0}, Automatic Steps: {1}",
                     gameData.ManualStepsCount, gameData.AutomatedStepsCount);
                 PrettyConsole.WriteLineColor(ConsoleColor.Red, "{1,15}: {0,12}", gameData.Cash.Counters[0].Value,

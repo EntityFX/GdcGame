@@ -52,8 +52,8 @@
     <Compile Include="Mappers\GameDataModelMapper.cs" />
     <Compile Include="CounterModelBase.cs" />
     <Compile Include="DelayedCounterModel.cs" />
-    <Compile Include="FundsCounterModel.cs" />
-    <Compile Include="FundsDriverModel.cs" />
+    <Compile Include="CashModel.cs" />
+    <Compile Include="ItemModel.cs" />
     <Compile Include="GameDataModel.cs" />
     <Compile Include="GenericCounterModel.cs" />
     <Compile Include="SingleCounterModel.cs" />

@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Net.Http.Formatting;
 using System.Web.Http;
+using System.Xml.Serialization;
 using EntityFX.Gdcame.Presentation.Web.Api.Providers;
 using EntityFX.Gdcame.Utils.Common;
 using Microsoft.Owin;

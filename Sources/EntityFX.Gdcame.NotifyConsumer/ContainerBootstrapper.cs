@@ -14,9 +14,9 @@ namespace EntityFX.Gdcame.NotifyConsumer
     {
         public IUnityContainer Configure(IUnityContainer container)
         {
-            container.RegisterType<IMapper<Cash, FundsCounterModel>, FundsCounterModelMapper>();
+            container.RegisterType<IMapper<Cash, CashModel>, FundsCounterModelMapper>();
             container.RegisterType<IMapper<CounterBase, CounterModelBase>, CounterModelMapper>();
-            container.RegisterType<IMapper<Item, FundsDriverModel>, FundsDriverModelMapper>();
+            container.RegisterType<IMapper<Item, ItemModel>, FundsDriverModelMapper>();
             container.RegisterType<IMapper<GameData, GameDataModel>, GameDataModelMapper>();
 
             container.RegisterType<GameDataHub>();

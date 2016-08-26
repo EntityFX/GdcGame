@@ -1,17 +1,15 @@
 ﻿using System.Runtime.Serialization;
 
-namespace EntityFX.Gdcame.Common.Contract.Counters
+namespace EntityFX.Gdcame.Common.Presentation.Model
 {
     [DataContract]
-    public class Cash
+    public class CashModel
     {
         [DataMember]
         public decimal OnHand { get; set; }
-
         [DataMember]
         public decimal Total { get; set; }
-
         [DataMember]
-        public CounterBase[] Counters { get; set; }
+        public CounterModelBase[] Counters { get; set; }
     }
 }

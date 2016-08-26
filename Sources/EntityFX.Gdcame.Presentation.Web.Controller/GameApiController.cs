@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Security.Claims;
 using System.Security.Principal;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using EntityFX.Gdcame.Common.Presentation.Model;
@@ -46,15 +47,16 @@ namespace EntityFX.Gdcame.Presentation.Web.Controller
 
         [HttpGet]
         [Route("game-data")]
-        public GameDataModel GetGameData()
+        public async Task<GameDataModel> GetGameData()
         {
-            var gameData = _gameDataProvider.GetGameData();
+            var gameData = await Task.Factory.StartNew(() =>
+                _gameDataProvider.GetGameData());
             return gameData;
         }
 
         [HttpGet]
         [Route("game-counters")]
-        public FundsCounterModel GetCounters()
+        public CashModel GetCounters()
         {
             return _gameDataProvider.GetCounters();
         }

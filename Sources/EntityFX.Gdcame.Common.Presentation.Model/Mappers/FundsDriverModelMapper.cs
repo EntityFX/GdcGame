@@ -3,11 +3,11 @@ using EntityFX.Gdcame.Infrastructure.Common;
 
 namespace EntityFX.Gdcame.Common.Presentation.Model.Mappers
 {
-    public class FundsDriverModelMapper : IMapper<Item, FundsDriverModel>
+    public class FundsDriverModelMapper : IMapper<Item, ItemModel>
     {
-        public FundsDriverModel Map(Item source, FundsDriverModel destination = null)
+        public ItemModel Map(Item source, ItemModel destination = null)
         {
-            destination = destination ?? new FundsDriverModel();
+            destination = destination ?? new ItemModel();
             destination.Value = source.Price;
             destination.BuyCount = source.BuyCount;
             destination.Id = source.Id;

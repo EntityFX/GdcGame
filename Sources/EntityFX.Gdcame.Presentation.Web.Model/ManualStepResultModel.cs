@@ -6,7 +6,7 @@ namespace EntityFX.Gdcame.Presentation.Web.Model
     {
         public VerificationData VerificationData { get; set; }
 
-        public FundsCounterModel ModifiedCountersInfo { get; set; }
+        public CashModel ModifiedCountersInfo { get; set; }
     }
 
     public class VerificationData

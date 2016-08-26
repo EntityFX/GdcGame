@@ -4,8 +4,8 @@ namespace EntityFX.Gdcame.Presentation.Web.Model
 {
     public class BuyDriverModel
     {
-        public FundsDriverModel FundsDriverBuyInfo { get; set; }
+        public ItemModel FundsDriverBuyInfo { get; set; }
 
-        public FundsCounterModel ModifiedCountersInfo { get; set; }
+        public CashModel ModifiedCountersInfo { get; set; }
     }
 }

@@ -8,11 +8,11 @@ namespace EntityFX.Gdcame.Presentation.Web.Model.Mappers
 {
     public class FundsDriverBuyInfoMapper : IMapper<BuyFundDriverResult, BuyDriverModel>
     {
-        private readonly IMapper<Cash, FundsCounterModel> _countersMapper;
-        private readonly IMapper<Item, FundsDriverModel> _fundsDriverMapper;
+        private readonly IMapper<Cash, CashModel> _countersMapper;
+        private readonly IMapper<Item, ItemModel> _fundsDriverMapper;
 
-        public FundsDriverBuyInfoMapper(IMapper<Cash, FundsCounterModel> countersMapper,
-            IMapper<Item, FundsDriverModel> fundsDriverMapper)
+        public FundsDriverBuyInfoMapper(IMapper<Cash, CashModel> countersMapper,
+            IMapper<Item, ItemModel> fundsDriverMapper)
         {
             _countersMapper = countersMapper;
             _fundsDriverMapper = fundsDriverMapper;
