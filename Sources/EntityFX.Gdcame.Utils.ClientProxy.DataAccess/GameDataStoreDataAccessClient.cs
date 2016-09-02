@@ -4,7 +4,7 @@ using EntityFX.Gdcame.DataAccess.Contract.GameData;
 using EntityFX.Gdcame.DataAccess.Contract.GameData.Store;
 using EntityFX.Gdcame.Infrastructure.Service.Bases;
 
-namespace EntityFX.Gdcame.Utils.ClientProxy.DataAccess
+namespace EntityFX.Gdcame.Utils.ClientProxy.WcfDataAccess
 {
     public class GameDataStoreDataAccessClient<TInfrastructureProxy> : IGameDataStoreDataAccessService
         where TInfrastructureProxy : IInfrastructureProxy<IGameDataStoreDataAccessService, Binding>, new()

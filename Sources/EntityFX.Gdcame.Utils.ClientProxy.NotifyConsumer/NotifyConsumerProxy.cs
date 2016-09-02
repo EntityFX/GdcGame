@@ -2,7 +2,7 @@
 using EntityFX.Gdcame.Infrastructure.Service.Windows.NetMsmq;
 using EntityFX.Gdcame.NotifyConsumer.Contract;
 
-namespace EntityFX.Gdcame.Utils.ClientProxy.NotifyConsumer
+namespace EntityFX.Gdcame.Utils.ClientProxy.WcfNotifyConsumer
 {
 #if __MonoCS__
 	public class NotifyConsumerProxy : NetTcpProxy<INotifyConsumerService>

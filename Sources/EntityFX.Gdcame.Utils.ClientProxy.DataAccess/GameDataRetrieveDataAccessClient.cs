@@ -5,7 +5,7 @@ using EntityFX.Gdcame.Common.Contract.UserRating;
 using EntityFX.Gdcame.DataAccess.Contract.GameData;
 using EntityFX.Gdcame.Infrastructure.Service.Bases;
 
-namespace EntityFX.Gdcame.Utils.ClientProxy.DataAccess
+namespace EntityFX.Gdcame.Utils.ClientProxy.WcfDataAccess
 {
     public class GameDataRetrieveDataAccessClient<TInfrastructureProxy> : IGameDataRetrieveDataAccessService
         where TInfrastructureProxy : IInfrastructureProxy<IGameDataRetrieveDataAccessService, Binding>, new()

@@ -5,7 +5,7 @@ using System.Configuration.Install;
 using System.Messaging;
 using System.Reflection;
 
-namespace EntityFX.GdCame.Utils.WindowsHostSrv.DataAccess
+namespace EntityFX.Gdcame.Utils.WindowsHostSrv.WcfDataAccess
 {
     [RunInstaller(true)]
     public partial class ProjectInstaller : Installer

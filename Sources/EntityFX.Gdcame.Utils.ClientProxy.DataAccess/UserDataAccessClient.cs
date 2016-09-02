@@ -3,7 +3,7 @@ using System.ServiceModel.Channels;
 using EntityFX.Gdcame.DataAccess.Contract.User;
 using EntityFX.Gdcame.Infrastructure.Service.Bases;
 
-namespace EntityFX.Gdcame.Utils.ClientProxy.DataAccess
+namespace EntityFX.Gdcame.Utils.ClientProxy.WcfDataAccess
 {
     public class UserDataAccessClient<TInfrastructureProxy> : IUserDataAccessService
         where TInfrastructureProxy : IInfrastructureProxy<IUserDataAccessService, Binding>, new()

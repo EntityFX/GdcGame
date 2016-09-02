@@ -4,7 +4,7 @@ using EntityFX.Gdcame.Common.Contract.UserRating;
 using EntityFX.Gdcame.Infrastructure.Service.Bases;
 using EntityFX.Gdcame.Manager.Contract.RatingManager;
 
-namespace EntityFX.Gdcame.Utils.ClientProxy.Manager
+namespace EntityFX.Gdcame.Utils.ClientProxy.WcfManager
 {
     public class RatingManagerClient<TInfrastructureProxy> : IRatingManager
         where TInfrastructureProxy : IInfrastructureProxy<IRatingManager, Binding>, new()

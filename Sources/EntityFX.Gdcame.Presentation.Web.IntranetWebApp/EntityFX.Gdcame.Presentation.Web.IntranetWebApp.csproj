@@ -1146,9 +1146,9 @@
       <Project>{A6F59753-3065-4BB3-85A8-1E0778205407}</Project>
       <Name>EntityFX.Gdcame.Presentation.Web.Providers</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.Utils.ClientProxy.Manager\EntityFX.Gdcame.Utils.ClientProxy.Manager.csproj">
+    <ProjectReference Include="..\EntityFX.Gdcame.Utils.ClientProxy.Manager\EntityFX.Gdcame.Utils.ClientProxy.WcfManager.csproj">
       <Project>{234EB70F-3E7D-4F66-82B0-2B506518B027}</Project>
-      <Name>EntityFX.Gdcame.Utils.ClientProxy.Manager</Name>
+      <Name>EntityFX.Gdcame.Utils.ClientProxy.WcfManager</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Utils.Common\EntityFX.Gdcame.Utils.Common.csproj">
       <Project>{2AE99E38-4B45-4D8B-B9D5-840B21F82A43}</Project>

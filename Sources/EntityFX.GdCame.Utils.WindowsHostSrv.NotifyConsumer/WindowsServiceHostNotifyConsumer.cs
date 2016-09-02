@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
 using System.ServiceProcess;
-using EntityFX.Gdcame.Utils.ServiceStarter.NotifyConsumer;
+using EntityFX.Gdcame.Utils.ServiceStarter.WcfNotifyConsumer;
 
-namespace EntityFX.GdCame.Utils.WindowsHostSrv.NotifyConsumer
+namespace EntityFX.Gdcame.Utils.WindowsHostSrv.WcfNotifyConsumer
 {
     public partial class WindowsServiceHostNotifyConsumer : ServiceBase
     {

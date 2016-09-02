@@ -4,7 +4,7 @@ using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Infrastructure.Service.Bases;
 using EntityFX.Gdcame.Manager.Contract.AdminManager;
 
-namespace EntityFX.Gdcame.Utils.ClientProxy.Manager
+namespace EntityFX.Gdcame.Utils.ClientProxy.WcfManager
 {
     public class AdminManagerClient<TInfrastructureProxy> : IAdminManager
         where TInfrastructureProxy : IInfrastructureProxy<IAdminManager, Binding>, new()

@@ -2,14 +2,26 @@ using System;
 using System.Configuration;
 using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.Common.Contract.Counters;
-using EntityFX.Gdcame.Common.Contract.Items;
 using EntityFX.Gdcame.Common.Presentation.Model;
 using EntityFX.Gdcame.Common.Presentation.Model.Mappers;
+using EntityFX.Gdcame.DataAccess.Contract.GameData;
+using EntityFX.Gdcame.DataAccess.Contract.GameData.Store;
+using EntityFX.Gdcame.DataAccess.Contract.User;
+using EntityFX.Gdcame.DataAccess.Service;
+using EntityFX.Gdcame.GameEngine.Contract;
+using EntityFX.Gdcame.GameEngine.Contract.Counters;
+using EntityFX.Gdcame.GameEngine.Contract.Incrementors;
+using EntityFX.Gdcame.GameEngine.Contract.Items;
+using EntityFX.Gdcame.GameEngine.NetworkGameEngine;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Infrastructure.Service;
 using EntityFX.Gdcame.Infrastructure.Service.Interfaces;
+using EntityFX.Gdcame.Manager;
 using EntityFX.Gdcame.Manager.Contract.AdminManager;
 using EntityFX.Gdcame.Manager.Contract.GameManager;
+using EntityFX.Gdcame.Manager.Mappers.Store;
+using EntityFX.Gdcame.NotifyConsumer;
+using EntityFX.Gdcame.NotifyConsumer.Contract;
 using EntityFX.Gdcame.Presentation.Web.Api.Models;
 using EntityFX.Gdcame.Presentation.Web.Api.Providers;
 using EntityFX.Gdcame.Presentation.Web.Controller;
@@ -17,11 +29,12 @@ using EntityFX.Gdcame.Presentation.Web.Model;
 using EntityFX.Gdcame.Presentation.Web.Model.Mappers;
 using EntityFX.Gdcame.Presentation.Web.Providers.Providers;
 using EntityFX.Gdcame.Utils.Common;
-using EntityFX.Gdcame.Utils.ServiceStarter.Collapsed;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.SignalR;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
 using PortableLog.NLog;
+using CounterBase = EntityFX.Gdcame.Common.Contract.Counters.CounterBase;
 
 namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
 {
@@ -37,12 +50,97 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
             container.RegisterType<ILogger>(new InjectionFactory(
                 _ => new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger")))));
 
-            new FullCollapsedContainerBootstrapper().Configure(container);
+            var childBootstrappers = new IContainerBootstrapper[]
+                        {
+                new DataAccess.Service.ContainerBootstrapper(),
+                new Manager.ContainerBootstrapper(),
+                new NotifyConsumer.ContainerBootstrapper()
+                        };
+            Array.ForEach(childBootstrappers, _ => _.Configure(container));
+            container.AddNewExtension<Interception>();
+            GlobalHost.DependencyResolver = new SignalRDependencyResolver(container);
+            container.RegisterType<IOperationContextHelper, WcfOperationContextHelper>();
+
+            container.RegisterType<ILogger>(new InjectionFactory(
+                _ => new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger")))));
+
+            container.RegisterType<IMapperFactory, MapperFactory>();
+
+            container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessDocumentService>(
+                new InterceptionBehavior<PolicyInjectionBehavior>()
+                , new Interceptor<InterfaceInterceptor>()
+                );
+            container.RegisterType<IUserDataAccessService, UserDataAccessService>(
+                new InterceptionBehavior<PolicyInjectionBehavior>()
+                , new Interceptor<InterfaceInterceptor>()
+                );
+            container.RegisterType<IGameDataStoreDataAccessService, GameDataStoreDataAccessDocumentService>(
+                new InterceptionBehavior<PolicyInjectionBehavior>()
+                , new Interceptor<InterfaceInterceptor>()
+                );
+
+            //Store
+            container.RegisterType<IMapper<IncrementorBase, StoredIncrementor>, StoreIncrementorContractMapper>();
+            container.RegisterType<IMapper<GameEngine.Contract.Counters.CounterBase, StoredCounterBase>, StoreCounterContractMapper>();
+            container
+                .RegisterType
+                <IMapper<GameCash, StoredCash>, StoreFundsCountersContractMapper>();
+            container.RegisterType<IMapper<Item, StoredItem>, StoreFundsDriverContractMapper>();
+            container.RegisterType<IMapper<CustomRuleInfo, StoredCustomRuleInfo>, StoreCustomRuleInfoContractMapper>();
+            container.RegisterType<IMapper<IGame, StoredGameData>, StoreGameDataMapper>("StoreGameDataMapper");
+            /////
+
+            container.RegisterType<IGameFactory, GameFactory>();
+
+            container.RegisterInstance(new GameSessions(container.Resolve<ILogger>(), container.Resolve<IGameFactory>()));
+
+            container.RegisterType<INotifyConsumerService, NotifyConsumerService>(new InjectionConstructor(
+                new ResolvedParameter<ILogger>(),
+                new ResolvedParameter<IMapper<GameData, GameDataModel>>(),
+                new ResolvedParameter<IHubContextAccessor>(),
+                new ResolvedParameter<IConnections>()
+                )
+                , new InterceptionBehavior<PolicyInjectionBehavior>()
+                , new Interceptor<InterfaceInterceptor>()
+                );
+
+            container.RegisterType<INotifyGameDataChanged, NotifyGameDataChanged>(
+                new InjectionConstructor(
+                    new ResolvedParameter<string>(),
+                    new ResolvedParameter<string>(),
+                    new ResolvedParameter<IGameDataStoreDataAccessService>(),
+                    new ResolvedParameter<IMapperFactory>(),
+                    new ResolvedParameter<INotifyConsumerClientFactory>()
+                    )
+                );
+
+            container.RegisterType<INotifyConsumerClientFactory, NotifyConsumerClientFactory>(new InjectionConstructor(
+                new ResolvedParameter<IUnityContainer>(),
+                string.Empty));
+
+            if (ConfigurationManager.AppSettings["UseLoggerInterceptor"] == "True")
+            {
+                container.Configure<Interception>()
+                    .AddPolicy("logging")
+                    .AddCallHandler<LoggerCallHandler>(new ContainerControlledLifetimeManager())
+                    .AddMatchingRule<NamespaceMatchingRule>(new InjectionConstructor("EntityFX.Gdcame.*", true));
+            }
+
+            container.RegisterType<IHashHelper, HashHelper>();
+
+            if (!Environment.UserInteractive)
+            {
+                container.RegisterType<IServiceInfoHelper, ServiceInfoHelperLogger>();
+            }
+            else
+            {
+                container.RegisterType<IServiceInfoHelper, ServiceInfoHelperConsole>();
+            }
 
 
             container.RegisterType<IMapper<Cash, CashModel>, FundsCounterModelMapper>();
             container.RegisterType<IMapper<CounterBase, CounterModelBase>, CounterModelMapper>();
-            container.RegisterType<IMapper<Item, ItemModel>, FundsDriverModelMapper>();
+            container.RegisterType<IMapper<Gdcame.Common.Contract.Items.Item, ItemModel>, FundsDriverModelMapper>();
             container.RegisterType<IMapper<GameData, GameDataModel>, GameDataModelMapper>();
             container.RegisterType<IMapper<BuyFundDriverResult, BuyDriverModel>, FundsDriverBuyInfoMapper>();
             container.RegisterType<IGameClientFactory, NoWcfGameManagerFactory>();

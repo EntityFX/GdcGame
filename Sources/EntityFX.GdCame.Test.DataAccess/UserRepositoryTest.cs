@@ -1,6 +1,6 @@
 ﻿using EntityFX.Gdcame.DataAccess.Contract.User;
 using EntityFX.Gdcame.Infrastructure.Service.NetTcp;
-using EntityFX.Gdcame.Utils.ClientProxy.DataAccess;
+using EntityFX.Gdcame.Utils.ClientProxy.WcfDataAccess;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace EntityFX.GdCame.Test.DataAccess

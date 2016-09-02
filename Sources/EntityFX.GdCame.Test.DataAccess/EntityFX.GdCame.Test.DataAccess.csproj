@@ -93,9 +93,9 @@
       <Project>{2B414418-F3D8-4528-BA9F-6FEFA8B7AA03}</Project>
       <Name>EntityFX.Gdcame.Infrastructure.Service</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.Utils.ClientProxy.DataAccess\EntityFX.Gdcame.Utils.ClientProxy.DataAccess.csproj">
-      <Project>{CEAD1C8C-20A4-4E48-969A-9AFCD104D109}</Project>
-      <Name>EntityFX.Gdcame.Utils.ClientProxy.DataAccess</Name>
+    <ProjectReference Include="..\EntityFX.Gdcame.Utils.ClientProxy.DataAccess\EntityFX.Gdcame.Utils.ClientProxy.WcfDataAccess.csproj">
+      <Project>{cead1c8c-20a4-4e48-969a-9afcd104d109}</Project>
+      <Name>EntityFX.Gdcame.Utils.ClientProxy.WcfDataAccess</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

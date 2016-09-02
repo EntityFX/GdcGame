@@ -5,7 +5,7 @@ using System.Configuration.Install;
 using System.Messaging;
 using System.Reflection;
 
-namespace EntityFX.GdCame.Utils.WindowsHostSrv.NotifyConsumer
+namespace EntityFX.Gdcame.Utils.WindowsHostSrv.WcfNotifyConsumer
 {
     [RunInstaller(true)]
     public partial class ProjectInstaller : Installer

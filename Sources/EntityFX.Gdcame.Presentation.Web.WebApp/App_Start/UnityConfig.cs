@@ -19,7 +19,7 @@ using EntityFX.Gdcame.Presentation.Web.Controller;
 using EntityFX.Gdcame.Presentation.Web.Model;
 using EntityFX.Gdcame.Presentation.Web.Model.Mappers;
 using EntityFX.Gdcame.Presentation.Web.Providers.Providers;
-using EntityFX.Gdcame.Utils.ClientProxy.Manager;
+using EntityFX.Gdcame.Utils.ClientProxy.WcfManager;
 using EntityFX.Gdcame.Utils.Common;
 using Microsoft.AspNet.Identity;
 using Microsoft.Practices.Unity;

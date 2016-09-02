@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
 using System.ServiceProcess;
-using EntityFX.Gdcame.Utils.ServiceStarter.Manager;
+using EntityFX.Gdcame.Utils.ServiceStarter.WcfManager;
 
-namespace EntityFX.GdCame.Utils.WindowsHostSrv.Manager
+namespace EntityFX.Gdcame.Utils.WindowsHostSrv.WcfManager
 {
     public partial class WindowsServiceHostManager : ServiceBase
     {

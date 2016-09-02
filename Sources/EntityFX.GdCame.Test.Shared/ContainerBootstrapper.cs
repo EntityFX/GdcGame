@@ -8,7 +8,7 @@ using EntityFX.Gdcame.Manager.Contract.AdminManager;
 using EntityFX.Gdcame.Manager.Contract.GameManager;
 using EntityFX.Gdcame.Manager.Contract.SessionManager;
 using EntityFX.Gdcame.Manager.Contract.UserManager;
-using EntityFX.Gdcame.Utils.ClientProxy.Manager;
+using EntityFX.Gdcame.Utils.ClientProxy.WcfManager;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
 using PortableLog.NLog;

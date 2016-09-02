@@ -1,8 +1,8 @@
 ﻿using System.Configuration;
 using System.ServiceProcess;
-using EntityFX.Gdcame.Utils.ServiceStarter.DataAccess;
+using EntityFX.Gdcame.Utils.ServiceStarter.WcfDataAccess;
 
-namespace EntityFX.GdCame.Utils.WindowsHostSrv.DataAccess
+namespace EntityFX.Gdcame.Utils.WindowsHostSrv.WcfDataAccess
 {
     internal static class Program
     {

@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Configuration.Install;
 
-namespace EntityFX.GdCame.Utils.WindowsHostSrv.Manager
+namespace EntityFX.Gdcame.Utils.WindowsHostSrv.WcfManager
 {
     [RunInstaller(true)]
     public partial class ProjectInstaller : Installer

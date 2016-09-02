@@ -1,4 +1,4 @@
-﻿namespace EntityFX.GdCame.Utils.WindowsHostSrv.NotifyConsumer
+﻿namespace EntityFX.Gdcame.Utils.WindowsHostSrv.WcfNotifyConsumer
 {
     partial class ProjectInstaller
     {

@@ -1,4 +1,4 @@
-﻿namespace EntityFX.GdCame.Utils.WindowsHostSrv.DataAccess
+﻿namespace EntityFX.Gdcame.Utils.WindowsHostSrv.WcfDataAccess
 {
     partial class WindowsServiceHostDataAccess
     {

@@ -1,4 +1,4 @@
-﻿namespace EntityFX.GdCame.Utils.WindowsHostSrv.Manager
+﻿namespace EntityFX.Gdcame.Utils.WindowsHostSrv.WcfManager
 {
     partial class WindowsServiceHostManager
     {

@@ -3,7 +3,7 @@ using System.ServiceModel.Channels;
 using EntityFX.Gdcame.Infrastructure.Service.Bases;
 using EntityFX.Gdcame.Manager.Contract.UserManager;
 
-namespace EntityFX.Gdcame.Utils.ClientProxy.Manager
+namespace EntityFX.Gdcame.Utils.ClientProxy.WcfManager
 {
     public class SimpleUserManagerClient<TInfrastructureProxy> : ISimpleUserManager
         where TInfrastructureProxy : IInfrastructureProxy<ISimpleUserManager, Binding>, new()
