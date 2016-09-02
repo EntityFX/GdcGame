@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<nlog xmlns="http://www.nlog-project.org/schemas/NLog.xsd"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <!-- 
+  See https://github.com/nlog/nlog/wiki/Configuration-file 
+  for information on customizing logging rules and outputs.
+   -->
+  <targets>
+    <!-- add your targets here -->
+
+    <!--
+    <target xsi:type="File" name="f" fileName="${basedir}/logs/${shortdate}.log"
+            layout="${longdate} ${uppercase:${level}} ${message}" />
+    -->
+    <target name="logfile" xsi:type="AsyncWrapper" queueLimit="5000" overflowAction="Discard">
+      <target xsi:type="File" fileName="${basedir}/logs/${processname}-${shortdate}.log" />
+    </target>
+    <target name="fileFatal" xsi:type="File" fileName="${basedir}/logs/${processname}-${shortdate}.log"  layout="${longdate} ${message} ${exception:format=tostring}" />
+
+    <target name="logConsole" xsi:type="AsyncWrapper" queueLimit="5000" overflowAction="Discard">
+      <target xsi:type="Console" />
+    </target>
+  </targets>
+
+  <rules>
+    <logger name="*" minlevel="Debug" writeTo="logfile, logConsole" />
+    <logger name="*" minlevel="Error" writeTo="fileFatal" />
+  </rules>
+</nlog>

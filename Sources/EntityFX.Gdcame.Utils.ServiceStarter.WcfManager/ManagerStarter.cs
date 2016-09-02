@@ -1,27 +1,27 @@
-﻿using System.ServiceModel.Description;
-using EntityFX.EconomicsArcade.Contract.Manager.SessionManager;
-using EntityFX.EconomicsArcade.Infrastructure.Common;
-using EntityFX.EconomicsArcade.Infrastructure.Service;
-using System;
+﻿using System;
 using System.ServiceModel;
-using EntityFX.EconomicsArcade.Contract.Manager;
-using EntityFX.EconomicsArcade.Contract.Manager.AdminManager;
-using EntityFX.EconomicsArcade.Contract.Manager.GameManager;
-using EntityFX.EconomicsArcade.Contract.Manager.RatingManager;
-using EntityFX.EconomicsArcade.Contract.Manager.UserManager;
-using EntityFX.EconomicsArcade.Infrastructure.Service.Interfaces;
-using EntityFX.EconomicsArcade.Manager;
-using EntityFX.EconomicsArcade.Utils.Common;
+using EntityFX.Gdcame.Infrastructure.Common;
+using EntityFX.Gdcame.Infrastructure.Service;
+using EntityFX.Gdcame.Infrastructure.Service.Bases;
+using EntityFX.Gdcame.Infrastructure.Service.Interfaces;
+using EntityFX.Gdcame.Infrastructure.Service.NetTcp;
+using EntityFX.Gdcame.Manager;
+using EntityFX.Gdcame.Manager.Contract.AdminManager;
+using EntityFX.Gdcame.Manager.Contract.GameManager;
+using EntityFX.Gdcame.Manager.Contract.RatingManager;
+using EntityFX.Gdcame.Manager.Contract.SessionManager;
+using EntityFX.Gdcame.Manager.Contract.UserManager;
+using EntityFX.Gdcame.Utils.Common;
 using Microsoft.Practices.Unity;
 
-namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
+namespace EntityFX.Gdcame.Utils.ServiceStarter.WcfManager
 {
-    public class ManagerStarter: ServicesStarterBase<ContainerBootstrapper>, IServicesStarter
+    public class ManagerStarter : ServicesStarterBase<ContainerBootstrapper>, IServicesStarter
     {
-        private readonly Uri _baseUrl;// = "net.tcp://localhost:8555/EntityFX.EconomicsArcade.Manager/";
+        private readonly Uri _baseUrl; // = "net.tcp://localhost:8555/EntityFX.EconomicsArcade.Manager/";
 
         public ManagerStarter(ContainerBootstrapper container, string baseUrl)
-            :base(container)
+            : base(container)
         {
             _baseUrl = new Uri(baseUrl);
         }
@@ -74,7 +74,9 @@ namespace EntityFX.EconomicsArcade.Utils.ServiceStarter.Manager
                 {
                     foreach (var operation in serviceEndpoint.Contract.Operations)
                     {
-                        operation.Behaviors.Add(new CheckRolePermissionsOperationBehavior(Container.Resolve<IOperationContextHelper>(), Container.Resolve<GameSessions>()));
+                        operation.Behaviors.Add(
+                            new CheckRolePermissionsOperationBehavior(Container.Resolve<IOperationContextHelper>(),
+                                Container.Resolve<GameSessions>()));
                     }
                 }
             }
