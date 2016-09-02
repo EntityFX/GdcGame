@@ -52,6 +52,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
 
             var childBootstrappers = new IContainerBootstrapper[]
                         {
+                new DataAccess.Repository.Ef.ContainerBootstrapper(), 
                 new DataAccess.Service.ContainerBootstrapper(),
                 new Manager.ContainerBootstrapper(),
                 new NotifyConsumer.ContainerBootstrapper()
