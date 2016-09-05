@@ -253,6 +253,10 @@
       <Project>{41696F24-E345-4599-A0C7-0715F64946D8}</Project>
       <Name>EntityFX.Gdcame.Manager.Contract</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Presentation.Contract.Controller\EntityFX.Gdcame.Presentation.Contract.Controller.csproj">
+      <Project>{B9608A11-F0F0-47AA-BD55-D6E25A310DAA}</Project>
+      <Name>EntityFX.Gdcame.Presentation.Contract.Controller</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Presentation.Web.Api\EntityFX.Gdcame.Presentation.Web.Api.csproj">
       <Project>{C6C4637E-F0B7-43DF-A692-D8B82245311A}</Project>
       <Name>EntityFX.Gdcame.Presentation.Web.Api</Name>
@@ -261,9 +265,9 @@
       <Project>{892D6D25-857F-4CA9-A518-526BBF05C011}</Project>
       <Name>EntityFX.Gdcame.Presentation.Web.Controller</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.Presentation.Web.Model\EntityFX.Gdcame.Presentation.Web.Model.csproj">
+    <ProjectReference Include="..\EntityFX.Gdcame.Presentation.Web.Model\EntityFX.Gdcame.Presentation.Contract.Model.csproj">
       <Project>{0F9C056A-DB5D-48ED-A688-BFD04ED4DFD7}</Project>
-      <Name>EntityFX.Gdcame.Presentation.Web.Model</Name>
+      <Name>EntityFX.Gdcame.Presentation.Contract.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Presentation.Web.Providers\EntityFX.Gdcame.Presentation.Web.Providers.csproj">
       <Project>{A6F59753-3065-4BB3-85A8-1E0778205407}</Project>

@@ -2,10 +2,9 @@
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using EntityFX.Gdcame.Presentation.Web.Api.Models;
-using EntityFX.Gdcame.Presentation.Web.Model;
+using EntityFX.Gdcame.Presentation.Contract.Model;
 
-namespace EntityFX.Gdcame.Manager.Contract.AdminManager
+namespace EntityFX.Gdcame.Presentation.Contract.Controller
 {
     public interface IAccountController
     {

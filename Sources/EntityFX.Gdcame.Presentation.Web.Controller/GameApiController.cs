@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using EntityFX.Gdcame.Common.Presentation.Model;
-using EntityFX.Gdcame.Presentation.Web.Model;
+using EntityFX.Gdcame.Presentation.Contract.Model;
 using EntityFX.Gdcame.Presentation.Web.Providers.Providers;
+using EntityFX.Gdcame.Presentation.Contract.Controller;
 
 namespace EntityFX.Gdcame.Presentation.Web.Controller
 {
@@ -23,49 +24,47 @@ namespace EntityFX.Gdcame.Presentation.Web.Controller
 
         [HttpPost]
         [Route("perform-step")]
-        public ManualStepResultModel PerformManualStep([FromBody] int? verificationNumber)
+        public Task<ManualStepResultModel> PerformManualStepAsync([FromBody] int? verificationNumber)
         {
-            var res = _gameDataProvider.PerformManualStep(verificationNumber);
-            return res;
+            return Task.Run(() =>_gameDataProvider.PerformManualStep(verificationNumber));
         }
 
         [HttpPost]
         [Route("fight-inflation")]
-        public bool FightAgainstInflation()
+        public async Task<bool> FightAgainstInflationAsync()
         {
-            _gameDataProvider.FightAgainstInflation();
+            await Task.Run(() => _gameDataProvider.FightAgainstInflation());
             return true;
         }
 
         [HttpPost]
-        [Route("activate-delayed-counter/{counterId:int}")]
-        public bool ActivateDelayedCounter([FromBody] int counterId)
+        [Route("activate-delayed-counter")]
+        public async Task<bool> ActivateDelayedCounterAsync([FromBody] int counterId)
         {
-            _gameDataProvider.ActivateDelayedCounter(counterId);
+            await Task.Run(() => _gameDataProvider.ActivateDelayedCounter(counterId));
             return true;
         }
 
         [HttpGet]
         [Route("game-data")]
-        public async Task<GameDataModel> GetGameData()
+        public async Task<GameDataModel> GetGameDataAsync()
         {
-            var gameData = await Task.Factory.StartNew(() =>
+            return await Task.Run(() =>
                 _gameDataProvider.GetGameData());
-            return gameData;
         }
 
         [HttpGet]
         [Route("game-counters")]
-        public CashModel GetCounters()
+        public async Task<CashModel> GetCountersAsync()
         {
-            return _gameDataProvider.GetCounters();
+            return await Task.Run(() => _gameDataProvider.GetCounters());
         }
 
         [HttpPost]
-        [Route("buy-item/{id:int}")]
-        public BuyDriverModel BuyFundDriver([FromBody] int id)
+        [Route("buy-item")]
+        public async Task<BuyDriverModel> BuyFundDriverAsync([FromBody] int id)
         {
-            return _gameDataProvider.BuyFundDriver(id);
+            return await Task.Run(() => _gameDataProvider.BuyFundDriver(id));
         }
 
         protected override void Initialize(HttpControllerContext controllerContext)

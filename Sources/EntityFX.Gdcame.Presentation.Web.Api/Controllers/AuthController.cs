@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Controllers;
-using EntityFX.Gdcame.Presentation.Web.Api.Models;
+using EntityFX.Gdcame.Presentation.Contract.Model;
 using EntityFX.Gdcame.Presentation.Web.Api.Providers;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
+using EntityFX.Gdcame.Presentation.Web.Api.Models;
 
 namespace EntityFX.Gdcame.Presentation.Web.Api.Controllers
 {

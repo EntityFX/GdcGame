@@ -8,7 +8,7 @@ using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager.Contract.GameManager;
 using EntityFX.Gdcame.Manager.Contract.RatingManager;
 using EntityFX.Gdcame.Manager.Contract.UserManager;
-using EntityFX.Gdcame.Presentation.Web.Model;
+using EntityFX.Gdcame.Presentation.Contract.Model;
 using EntityFX.Gdcame.Utils.Common;
 
 namespace EntityFX.Gdcame.Presentation.Web.Providers.Providers

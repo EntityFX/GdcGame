@@ -1,6 +1,7 @@
 ﻿using EntityFX.Gdcame.Common.Contract.Counters;
 using EntityFX.Gdcame.Common.Contract.Items;
 using EntityFX.Gdcame.Common.Presentation.Model;
+using EntityFX.Gdcame.Presentation.Contract.Model;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager.Contract.GameManager;
 

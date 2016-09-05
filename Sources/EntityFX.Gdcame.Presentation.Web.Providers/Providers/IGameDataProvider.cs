@@ -1,7 +1,7 @@
 using System;
 using EntityFX.Gdcame.Common.Contract.UserRating;
 using EntityFX.Gdcame.Common.Presentation.Model;
-using EntityFX.Gdcame.Presentation.Web.Model;
+using EntityFX.Gdcame.Presentation.Contract.Model;
 
 namespace EntityFX.Gdcame.Presentation.Web.Providers.Providers
 {

@@ -1,6 +1,7 @@
 ﻿using System.Web.Http;
 using System.Web.Http.Controllers;
 using EntityFX.Gdcame.Common.Contract.UserRating;
+using EntityFX.Gdcame.Presentation.Contract.Controller;
 using EntityFX.Gdcame.Presentation.Web.Providers.Providers;
 
 namespace EntityFX.Gdcame.Presentation.Web.Controller

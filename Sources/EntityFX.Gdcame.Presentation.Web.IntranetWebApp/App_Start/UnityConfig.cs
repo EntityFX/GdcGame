@@ -14,7 +14,8 @@ using EntityFX.Gdcame.Manager.Contract.RatingManager;
 using EntityFX.Gdcame.Manager.Contract.SessionManager;
 using EntityFX.Gdcame.Manager.Contract.UserManager;
 using EntityFX.Gdcame.Presentation.Web.Controller;
-using EntityFX.Gdcame.Presentation.Web.Model;
+using EntityFX.Gdcame.Presentation.Contract.Controller;
+using EntityFX.Gdcame.Presentation.Contract.Model;
 using EntityFX.Gdcame.Presentation.Web.Model.Mappers;
 using EntityFX.Gdcame.Presentation.Web.Providers.Providers;
 using EntityFX.Gdcame.Utils.ClientProxy.WcfManager;
@@ -22,7 +23,7 @@ using EntityFX.Gdcame.Utils.Common;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
 using PortableLog.NLog;
-
+using EntityFX.Gdcame.Presentation.Contract.Controller;
 namespace EntityFX.Gdcame.Presentation.Web.IntranetWebApp
 {
     public static class UnityConfig

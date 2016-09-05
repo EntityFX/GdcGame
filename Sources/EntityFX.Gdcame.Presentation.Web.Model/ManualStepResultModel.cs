@@ -1,6 +1,6 @@
 ﻿using EntityFX.Gdcame.Common.Presentation.Model;
 
-namespace EntityFX.Gdcame.Presentation.Web.Model
+namespace EntityFX.Gdcame.Presentation.Contract.Model
 {
     public class ManualStepResultModel
     {

@@ -1,6 +1,6 @@
 ﻿using EntityFX.Gdcame.Common.Contract.UserRating;
 
-namespace EntityFX.Gdcame.Presentation.Web.Controller
+namespace EntityFX.Gdcame.Presentation.Contract.Controller
 {
     public interface IRatingApiController
     {

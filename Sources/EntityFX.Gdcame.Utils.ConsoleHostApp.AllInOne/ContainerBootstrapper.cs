@@ -25,7 +25,7 @@ using EntityFX.Gdcame.NotifyConsumer.Contract;
 using EntityFX.Gdcame.Presentation.Web.Api.Models;
 using EntityFX.Gdcame.Presentation.Web.Api.Providers;
 using EntityFX.Gdcame.Presentation.Web.Controller;
-using EntityFX.Gdcame.Presentation.Web.Model;
+using EntityFX.Gdcame.Presentation.Contract.Model;
 using EntityFX.Gdcame.Presentation.Web.Model.Mappers;
 using EntityFX.Gdcame.Presentation.Web.Providers.Providers;
 using EntityFX.Gdcame.Utils.Common;
@@ -35,6 +35,7 @@ using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
 using PortableLog.NLog;
 using CounterBase = EntityFX.Gdcame.Common.Contract.Counters.CounterBase;
+using EntityFX.Gdcame.Presentation.Contract.Controller;
 
 namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
 {

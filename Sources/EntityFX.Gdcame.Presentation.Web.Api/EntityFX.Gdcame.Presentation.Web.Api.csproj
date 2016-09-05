@@ -117,9 +117,9 @@
       <Project>{41696F24-E345-4599-A0C7-0715F64946D8}</Project>
       <Name>EntityFX.Gdcame.Manager.Contract</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.Presentation.Web.Model\EntityFX.Gdcame.Presentation.Web.Model.csproj">
+    <ProjectReference Include="..\EntityFX.Gdcame.Presentation.Web.Model\EntityFX.Gdcame.Presentation.Contract.Model.csproj">
       <Project>{0F9C056A-DB5D-48ED-A688-BFD04ED4DFD7}</Project>
-      <Name>EntityFX.Gdcame.Presentation.Web.Model</Name>
+      <Name>EntityFX.Gdcame.Presentation.Contract.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Utils.Common\EntityFX.Gdcame.Utils.Common.csproj">
       <Project>{2AE99E38-4B45-4D8B-B9D5-840B21F82A43}</Project>

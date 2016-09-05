@@ -2,7 +2,7 @@
 using System.Web.Mvc;
 
 
-namespace EntityFX.Gdcame.Presentation.Web.Api.Models
+namespace EntityFX.Gdcame.Presentation.Contract.Model
 {
     public class RegisterAccountModel
     {

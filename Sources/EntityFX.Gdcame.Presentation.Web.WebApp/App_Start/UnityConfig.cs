@@ -16,7 +16,7 @@ using EntityFX.Gdcame.Presentation.Web.Api.Controllers;
 using EntityFX.Gdcame.Presentation.Web.Api.Models;
 using EntityFX.Gdcame.Presentation.Web.Api.Providers;
 using EntityFX.Gdcame.Presentation.Web.Controller;
-using EntityFX.Gdcame.Presentation.Web.Model;
+using EntityFX.Gdcame.Presentation.Contract.Model;
 using EntityFX.Gdcame.Presentation.Web.Model.Mappers;
 using EntityFX.Gdcame.Presentation.Web.Providers.Providers;
 using EntityFX.Gdcame.Utils.ClientProxy.WcfManager;
@@ -25,7 +25,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
 using PortableLog.NLog;
-
+using EntityFX.Gdcame.Presentation.Contract.Controller;
 namespace EntityFX.Gdcame.Presentation.Web.WebApp
 {
     public static class UnityConfig

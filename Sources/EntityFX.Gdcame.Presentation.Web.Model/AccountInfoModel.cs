@@ -1,4 +1,4 @@
-﻿namespace EntityFX.Gdcame.Presentation.Web.Model
+﻿namespace EntityFX.Gdcame.Presentation.Contract.Model
 {
     public class AccountInfoModel
     {
