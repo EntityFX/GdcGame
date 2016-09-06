@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 namespace EntityFX.Gdcame.Common.Presentation.Model
 {
@@ -17,4 +18,6 @@ namespace EntityFX.Gdcame.Common.Presentation.Model
         [DataMember]
         public int Type { get; set; }
     }
+
+
 }

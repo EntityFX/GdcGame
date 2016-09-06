@@ -8,6 +8,7 @@ using EntityFX.Gdcame.Utils.Common;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.OAuth;
 using Microsoft.Practices.Unity;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Owin;
 using Owin.Security.AesDataProtectorProvider;
@@ -71,7 +72,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
 
             var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
             jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-
+            jsonFormatter.SerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
             appBuilder.UseWebApi(config);
         }
     }

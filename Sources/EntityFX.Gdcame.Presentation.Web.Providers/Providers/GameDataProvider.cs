@@ -117,6 +117,7 @@ namespace EntityFX.Gdcame.Presentation.Web.Providers.Providers
             if (noVerficationRequiredResult != null)
             {
                 modifiedCounters = _fundsCounterModelMapper.Map(noVerficationRequiredResult.ModifiedCash);
+                verificationData = null;
             }
 
             return new ManualStepResultModel

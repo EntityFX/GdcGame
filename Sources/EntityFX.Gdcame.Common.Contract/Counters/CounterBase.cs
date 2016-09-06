@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 namespace EntityFX.Gdcame.Common.Contract.Counters
 {
@@ -20,4 +21,6 @@ namespace EntityFX.Gdcame.Common.Contract.Counters
         [DataMember]
         public int Type { get; set; }
     }
+
+
 }
