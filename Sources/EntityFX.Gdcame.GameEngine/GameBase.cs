@@ -16,7 +16,7 @@ namespace EntityFX.Gdcame.GameEngine
 
         public ReadOnlyDictionary<int, Item> Items { get; private set; }
 
-        public Dictionary<int, Item> ModifiedFundsDrivers { get; }
+        public Dictionary<int, Item> ModifiedFundsDrivers { get; private set; }
 
         public GameCash GameCash { get; private set; }
 

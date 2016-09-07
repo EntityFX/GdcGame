@@ -17,7 +17,7 @@ namespace EntityFX.Gdcame.Infrastructure.Service.Bases
             Container = container;
         }
 
-        protected virtual IUnityContainer Container { get; }
+        protected virtual IUnityContainer Container { get; private set; }
 
         public void Dispose()
         {

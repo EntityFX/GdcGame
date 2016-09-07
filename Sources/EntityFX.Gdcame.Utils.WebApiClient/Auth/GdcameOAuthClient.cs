@@ -28,7 +28,7 @@ namespace EntityFX.Gdcame.Utils.WebApiClient.Auth
             get { return "Gdcame"; }
         }
 
-        protected override Endpoint AccessCodeServiceEndpoint { get; }
+        protected override Endpoint AccessCodeServiceEndpoint { get { return null; } }
 
         protected override Endpoint AccessTokenServiceEndpoint
         {
@@ -42,7 +42,9 @@ namespace EntityFX.Gdcame.Utils.WebApiClient.Auth
             }
         }
 
-        protected override Endpoint UserInfoServiceEndpoint { get; }
+        protected override Endpoint UserInfoServiceEndpoint {
+            get { return null;}
+        }
 
         /// <summary>
         /// Called before the request to get the access token

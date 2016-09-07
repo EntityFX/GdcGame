@@ -16,10 +16,10 @@ namespace EntityFX.Gdcame.Infrastructure.Service.Bases
         protected ServicesStarterBase(TBootstrapper bootstrapper)
         {
             _container = bootstrapper.Configure(new UnityContainer());
+            ServiceHosts = new Dictionary<string, ServiceHostInfo>();
         }
 
-        protected IDictionary<string, ServiceHostInfo> ServiceHosts { get; } = new Dictionary<string, ServiceHostInfo>()
-            ;
+        protected IDictionary<string, ServiceHostInfo> ServiceHosts { get; private set; }
 
         public abstract void StopServices();
 

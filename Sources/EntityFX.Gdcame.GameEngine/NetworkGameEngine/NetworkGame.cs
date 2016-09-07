@@ -84,7 +84,7 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
             _userId = userId;
         }
 
-        public int StepsToPersist { get; }
+        public int StepsToPersist { get; private set; }
 
         protected override ReadOnlyDictionary<int, Item> GetFundsDrivers()
         {

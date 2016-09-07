@@ -9,6 +9,6 @@ namespace EntityFX.Gdcame.Infrastructure.Repository.EF
             DbContext = dbContext;
         }
 
-        protected DbContext DbContext { get; }
+        protected DbContext DbContext { get; private set; }
     }
 }
