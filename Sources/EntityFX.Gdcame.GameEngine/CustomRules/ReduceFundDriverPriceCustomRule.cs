@@ -14,7 +14,7 @@ namespace EntityFX.Gdcame.GameEngine.CustomRules
             {
                 customRuleInfo.CurrentIndex = game.Items.First().Key;
             }
-            game.Items[customRuleInfo.CurrentIndex.Value].CurrentValue /= REDUCE_TIMES;
+            game.Items[customRuleInfo.CurrentIndex.Value].Price /= REDUCE_TIMES;
             game.ModifiedFundsDrivers[customRuleInfo.CurrentIndex.Value] = game.Items[customRuleInfo.CurrentIndex.Value];
             var nextItem = game.Items.FirstOrDefault(_ => _.Key > customRuleInfo.CurrentIndex.Value);
             customRuleInfo.CurrentIndex = nextItem.Key != 0 ? nextItem.Key : game.Items.First().Key;

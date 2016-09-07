@@ -188,7 +188,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 
             private bool IsFundsDriverAvailableForBuy(CounterModelBase rootCounter, ItemModel item)
             {
-                return item.UnlockValue <= rootCounter.Value;
+                return item.UnlockBalance <= rootCounter.Value;
             }
 
             private bool IsCounterAvailableForActivate(DelayedCounterModel counter, decimal currentFunds)
@@ -213,8 +213,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                     : null;
                 if (incrementor != null)
                 {
-                    return string.Format("{0}{1}", incrementor.Value,
-                        incrementor.IncrementorType == IncrementorTypeEnum.PercentageIncrementor ? "%" : string.Empty);
+                    return incrementor;
                 }
                 return "0";
             }
@@ -225,8 +224,8 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             {
                 lock (_stdLock)
                 {
-                    Console.WriteLine("Funds: {0:C}; Total Funds: {1:C}", gameData.Cash.OnHand,
-                        gameData.Cash.Total);
+                    Console.WriteLine("Funds: {0:C}; Total Funds: {1:C}", gameData.Cash.Price,
+                        gameData.Cash.TotalEarned);
                     /*Console.WriteLine("Manual Steps: {0}, Automatic Steps: {1}",
                         gameData.ManualStepsCount, gameData.AutomatedStepsCount);*/
                     PrettyConsole.WriteLineColor(ConsoleColor.Red, "{1,15}: {0,12}", gameData.Cash.Counters[0].Value,
@@ -280,12 +279,12 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                         {
                             PrettyConsole.WriteColor(ConsoleColor.Gray,
                                 "{0,2}:             Need money to buy:     {1,8}. x{2,-4} ", ((char)charIndex).ToString(),
-                                fundsDriver.UnlockValue, fundsDriver.BuyCount);
+                                fundsDriver.UnlockBalance, fundsDriver.Bought);
                         }
                         else
                         {
                             PrettyConsole.WriteColor(ConsoleColor.White, "{3,2}: {0,28} {1,15:C} x{2,-4} ", fundsDriver.Name,
-                                fundsDriver.Value, fundsDriver.BuyCount, ((char)charIndex).ToString());
+                                fundsDriver.Price, fundsDriver.Bought, ((char)charIndex).ToString());
                         }
                         PrettyConsole.WriteColor(ConsoleColor.Red, "+{0, -4} ", GetIncrementorValueById(fundsDriver, 0));
                         PrettyConsole.WriteColor(ConsoleColor.Cyan, "+{0, -7} ", GetIncrementorValueById(fundsDriver, 1));

@@ -94,12 +94,12 @@ namespace EntityFX.Gdcame.DataAccess.Service
                 var originalItemsDisct = originalItems.ToDictionary(_ => _.Id, _ => _);
                 var originalCountersDisct = originalCounters.ToDictionary(_ => _.Id, _ => _);
                 var originalCustomRulesDisct = originalCustomRules.ToDictionary(_ => _.Id, _ => _);
-                foreach (var storedFundDriver in userGameData.Items)
+                foreach (var storedItem in userGameData.Items)
                 {
-                    var originalItem = originalItemsDisct[storedFundDriver.Id];
-                    originalItem.BuyCount = storedFundDriver.BuyCount;
-                    originalItem.Price = storedFundDriver.Value;
-                    foreach (var storedIncrementor in storedFundDriver.Incrementors)
+                    var originalItem = originalItemsDisct[storedItem.Id];
+                    originalItem.Bought = storedItem.Bought;
+                    originalItem.Price = storedItem.Price;
+                    foreach (var storedIncrementor in storedItem.Incrementors)
                     {
                         originalItem.Incrementors[storedIncrementor.Key].Value = storedIncrementor.Value;
                     }
@@ -128,7 +128,7 @@ namespace EntityFX.Gdcame.DataAccess.Service
                             break;
                     }
                 }
-                cash.OnHand = userGameData.Cash.CashOnHand;
+                cash.OnHand = userGameData.Cash.Balance;
                 cash.Total = userGameData.Cash.TotalEarned;
             }
             return new GameData

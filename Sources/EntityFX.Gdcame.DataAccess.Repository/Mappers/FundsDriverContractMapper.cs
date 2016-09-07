@@ -21,9 +21,9 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef.Mappers
         public Item Map(FundsDriverEntity source, Item destination = null)
         {
             destination = destination ?? new Item();
-            destination.BuyCount = 0;
+            destination.Bought = 0;
             destination.InitialValue = source.InitialValue;
-            destination.UnlockValue = source.UnlockValue;
+            destination.UnlockBalance = source.UnlockValue;
             destination.Name = source.Name;
             destination.Id = source.Id;
             destination.InflationPercent = source.InflationPercent;

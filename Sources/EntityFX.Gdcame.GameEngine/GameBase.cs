@@ -98,9 +98,9 @@ namespace EntityFX.Gdcame.GameEngine
             Items = GetFundsDrivers();
             Items.AsParallel().ForAll(pair =>
             {
-                if (pair.Value.CurrentValue == 0)
+                if (pair.Value.Price == 0)
                 {
-                    pair.Value.CurrentValue = pair.Value.InitialValue;
+                    pair.Value.Price = pair.Value.InitialPrice;
                 }
                 pair.Value.InflationPercent = 15;
             });
@@ -263,12 +263,12 @@ namespace EntityFX.Gdcame.GameEngine
             {
                 throw new InvalidOperationException(string.Format("Fund driver {0} not available to buy ", fundDriverId));
             }
-            if (GameCash.CashOnHand >= fundDriver.CurrentValue)
+            if (GameCash.CashOnHand >= fundDriver.Price)
             {
-                PayWithFunds(fundDriver.CurrentValue);
-                fundDriver.CurrentValue = fundDriver.CurrentValue +
-                                          fundDriver.CurrentValue*fundDriver.InflationPercent/100.0m;
-                fundDriver.BuyCount++;
+                PayWithFunds(fundDriver.Price);
+                fundDriver.Price = fundDriver.Price +
+                                          fundDriver.Price*fundDriver.InflationPercent/100.0m;
+                fundDriver.Bought++;
                 var changedCounters = IncrementCounters(fundDriver.Incrementors);
                 PerformBuyFundDriverCustomRule(fundDriver);
                 result = new BuyItemResult
@@ -374,7 +374,7 @@ namespace EntityFX.Gdcame.GameEngine
 
         protected bool IsFundsDriverAvailableForBuy(Item item)
         {
-            return item.UnlockValue <= GameCash.RootCounter.Value;
+            return item.UnlockBalance <= GameCash.RootCounter.Value;
         }
 
 

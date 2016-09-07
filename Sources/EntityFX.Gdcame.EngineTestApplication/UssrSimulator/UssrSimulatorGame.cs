@@ -41,7 +41,7 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                     1,
                     new Item
                     {
-                        InitialValue = 200,
+                        InitialPrice = 200,
                         Incrementors = new Dictionary<int, IncrementorBase>
                         {
                             {
@@ -60,8 +60,8 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                     2,
                     new Item
                     {
-                        InitialValue = 400,
-                        UnlockValue = 5,
+                        InitialPrice = 400,
+                        UnlockBalance = 5,
                         Incrementors = new Dictionary<int, IncrementorBase>
                         {
                             {
@@ -80,8 +80,8 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                     3,
                     new Item
                     {
-                        InitialValue = 800,
-                        UnlockValue = 10,
+                        InitialPrice = 800,
+                        UnlockBalance = 10,
                         Incrementors = new Dictionary<int, IncrementorBase>
                         {
                             {
@@ -108,8 +108,8 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                     4,
                     new Item
                     {
-                        InitialValue = 1500,
-                        UnlockValue = 25,
+                        InitialPrice = 1500,
+                        UnlockBalance = 25,
                         Incrementors = new Dictionary<int, IncrementorBase>
                         {
                             {
@@ -132,8 +132,8 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                     5,
                     new Item
                     {
-                        InitialValue = 3000,
-                        UnlockValue = 40,
+                        InitialPrice = 3000,
+                        UnlockBalance = 40,
                         Incrementors = new Dictionary<int, IncrementorBase>
                         {
                             {
@@ -152,8 +152,8 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                     6,
                     new Item
                     {
-                        InitialValue = 6000,
-                        UnlockValue = 80,
+                        InitialPrice = 6000,
+                        UnlockBalance = 80,
                         Incrementors = new Dictionary<int, IncrementorBase>
                         {
                             {
@@ -172,8 +172,8 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                     7,
                     new Item
                     {
-                        InitialValue = 10000,
-                        UnlockValue = 120,
+                        InitialPrice = 10000,
+                        UnlockBalance = 120,
                         Incrementors = new Dictionary<int, IncrementorBase>
                         {
                             {
@@ -196,8 +196,8 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                     8,
                     new Item
                     {
-                        InitialValue = 20000,
-                        UnlockValue = 180,
+                        InitialPrice = 20000,
+                        UnlockBalance = 180,
                         Incrementors = new Dictionary<int, IncrementorBase>
                         {
                             {
@@ -220,8 +220,8 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                     9,
                     new Item
                     {
-                        InitialValue = 50000,
-                        UnlockValue = 220,
+                        InitialPrice = 50000,
+                        UnlockBalance = 220,
                         Incrementors = new Dictionary<int, IncrementorBase>
                         {
                             {
@@ -244,8 +244,8 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                     10,
                     new Item
                     {
-                        InitialValue = 223200,
-                        UnlockValue = 250,
+                        InitialPrice = 223200,
+                        UnlockBalance = 250,
                         Incrementors = new Dictionary<int, IncrementorBase>
                         {
                             {
@@ -264,8 +264,8 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                     11,
                     new Item
                     {
-                        InitialValue = 250000,
-                        UnlockValue = 280,
+                        InitialPrice = 250000,
+                        UnlockBalance = 280,
                         Incrementors = new Dictionary<int, IncrementorBase>
                         {
                             {
@@ -288,8 +288,8 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                     12,
                     new Item
                     {
-                        InitialValue = 300000,
-                        UnlockValue = 500,
+                        InitialPrice = 300000,
+                        UnlockBalance = 500,
                         Incrementors = new Dictionary<int, IncrementorBase>
                         {
                             {
@@ -308,8 +308,8 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                     13,
                     new Item
                     {
-                        InitialValue = 500000,
-                        UnlockValue = 600,
+                        InitialPrice = 500000,
+                        UnlockBalance = 600,
                         Incrementors = new Dictionary<int, IncrementorBase>
                         {
                             {
@@ -328,8 +328,8 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                     14,
                     new Item
                     {
-                        InitialValue = 800000,
-                        UnlockValue = 650,
+                        InitialPrice = 800000,
+                        UnlockBalance = 650,
                         Incrementors = new Dictionary<int, IncrementorBase>
                         {
                             {
@@ -344,8 +344,8 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                     15,
                     new Item
                     {
-                        InitialValue = 1100000,
-                        UnlockValue = 700,
+                        InitialPrice = 1100000,
+                        UnlockBalance = 700,
                         Incrementors = new Dictionary<int, IncrementorBase>
                         {
                             {
@@ -364,8 +364,8 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                     16,
                     new Item
                     {
-                        InitialValue = 1100000,
-                        UnlockValue = 800,
+                        InitialPrice = 1100000,
+                        UnlockBalance = 800,
                         Incrementors = new Dictionary<int, IncrementorBase>
                         {
                             {
@@ -388,8 +388,8 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                     17,
                     new Item
                     {
-                        InitialValue = 1350000,
-                        UnlockValue = 900,
+                        InitialPrice = 1350000,
+                        UnlockBalance = 900,
                         Incrementors = new Dictionary<int, IncrementorBase>
                         {
                             {
@@ -412,8 +412,8 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                     18,
                     new Item
                     {
-                        InitialValue = 2200000,
-                        UnlockValue = 1000,
+                        InitialPrice = 2200000,
+                        UnlockBalance = 1000,
                         Incrementors = new Dictionary<int, IncrementorBase>
                         {
                             {
@@ -436,8 +436,8 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                     19,
                     new Item
                     {
-                        InitialValue = 2500000,
-                        UnlockValue = 1200,
+                        InitialPrice = 2500000,
+                        UnlockBalance = 1200,
                         Incrementors = new Dictionary<int, IncrementorBase>
                         {
                             {
@@ -456,8 +456,8 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                     20,
                     new Item
                     {
-                        InitialValue = 2500000,
-                        UnlockValue = 1300,
+                        InitialPrice = 2500000,
+                        UnlockBalance = 1300,
                         Incrementors = new Dictionary<int, IncrementorBase>
                         {
                             {
@@ -476,8 +476,8 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                     21,
                     new Item
                     {
-                        InitialValue = 1000000,
-                        UnlockValue = 1500,
+                        InitialPrice = 1000000,
+                        UnlockBalance = 1500,
                         Incrementors = new Dictionary<int, IncrementorBase>
                         {
                             {
@@ -496,8 +496,8 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                     22,
                     new Item
                     {
-                        InitialValue = 2500000,
-                        UnlockValue = 1800,
+                        InitialPrice = 2500000,
+                        UnlockBalance = 1800,
                         Incrementors = new Dictionary<int, IncrementorBase>
                         {
                             {

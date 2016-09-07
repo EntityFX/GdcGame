@@ -112,7 +112,7 @@ namespace EntityFX.Gdcame.Presentation.Web.IntranetWebApp
             container.RegisterType<IMapper<CounterBase, CounterModelBase>, CounterModelMapper>();
             container.RegisterType<IMapper<Item, ItemModel>, FundsDriverModelMapper>();
             container.RegisterType<IMapper<GameData, GameDataModel>, GameDataModelMapper>();
-            container.RegisterType<IMapper<BuyFundDriverResult, BuyDriverModel>, FundsDriverBuyInfoMapper>();
+            container.RegisterType<IMapper<BuyFundDriverResult, BuyItemModel>, FundsDriverBuyInfoMapper>();
             container.RegisterType<IGameClientFactory, GameClientFactory>();
             container.RegisterType<ISessionManagerClientFactory, SessionManagerClientFactory>();
             container.RegisterType<IGameDataProvider, GameDataProvider>();

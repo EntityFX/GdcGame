@@ -89,10 +89,10 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
         protected override ReadOnlyDictionary<int, Item> GetFundsDrivers()
         {
             var result = new Dictionary<int, Item>();
-            foreach (var fundDriver in _gameData.Items)
+            foreach (var item in _gameData.Items)
             {
                 var incrementors = new Dictionary<int, IncrementorBase>();
-                foreach (var incrementor in fundDriver.Incrementors)
+                foreach (var incrementor in item.Incrementors)
                 {
                     IncrementorBase value;
                     if (incrementor.Value.IncrementorType == IncrementorTypeEnum.ValueIncrementor)
@@ -110,21 +110,21 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
                     incrementors.Add(incrementor.Key, value);
                 }
 
-                result.Add(fundDriver.Id, new Item
+                result.Add(item.Id, new Item
                 {
-                    Id = fundDriver.Id,
-                    Name = fundDriver.Name,
-                    InitialValue = fundDriver.InitialValue,
-                    CurrentValue = fundDriver.Price,
-                    UnlockValue = fundDriver.UnlockValue,
-                    InflationPercent = fundDriver.InflationPercent,
-                    BuyCount = fundDriver.BuyCount,
+                    Id = item.Id,
+                    Name = item.Name,
+                    InitialPrice = item.InitialValue,
+                    Price = item.Price,
+                    UnlockBalance = item.UnlockBalance,
+                    InflationPercent = item.InflationPercent,
+                    Bought = item.Bought,
                     Incrementors = incrementors,
-                    CustomRuleInfo = fundDriver.CustomRuleInfo != null
+                    CustomRuleInfo = item.CustomRuleInfo != null
                         ? new CustomRuleInfo
                         {
-                            CustomRule = CustomRules[fundDriver.CustomRuleInfo.CustomRuleId],
-                            CurrentIndex = fundDriver.CustomRuleInfo.CurrentIndex
+                            CustomRule = CustomRules[item.CustomRuleInfo.CustomRuleId],
+                            CurrentIndex = item.CustomRuleInfo.CurrentIndex
                         }
                         : null
                 });

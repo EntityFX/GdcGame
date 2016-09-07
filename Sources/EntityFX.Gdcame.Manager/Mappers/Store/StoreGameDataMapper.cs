@@ -13,7 +13,7 @@ namespace EntityFX.Gdcame.Manager.Mappers.Store
             {
                 Cash = new StoredCash
                 {
-                    CashOnHand = source.GameCash.CashOnHand,
+                    Balance = source.GameCash.CashOnHand,
                     TotalEarned = source.GameCash.TotalEarned,
                     Counters = PrepareCountersToPersist(source)
                 },

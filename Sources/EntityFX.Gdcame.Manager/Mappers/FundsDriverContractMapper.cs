@@ -28,12 +28,12 @@ namespace EntityFX.Gdcame.Manager.Mappers
             return new Common.Contract.Items.Item
             {
                 Id = source.Id,
-                BuyCount = source.BuyCount,
+                Bought = source.Bought,
                 Incrementors = destinationIncrementors,
                 InflationPercent = source.InflationPercent,
                 Name = source.Name,
-                UnlockValue = source.UnlockValue,
-                Price = source.CurrentValue,
+                UnlockBalance = source.UnlockBalance,
+                Price = source.Price,
                 CustomRuleInfo = customRuleInfo
             };
         }

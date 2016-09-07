@@ -16,7 +16,7 @@ namespace EntityFX.Gdcame.Presentation.Web.Providers.Providers
     public class GameDataProvider : IGameDataProvider
     {
         private readonly IMapper<Cash, CashModel> _fundsCounterModelMapper;
-        private readonly IMapper<BuyFundDriverResult, BuyDriverModel> _fundsDriverBuyinfoModelMapper;
+        private readonly IMapper<BuyFundDriverResult, BuyItemModel> _fundsDriverBuyinfoModelMapper;
         private readonly IGameClientFactory _gameClientFactory;
         private readonly IMapper<GameData, GameDataModel> _gameDataModelMapper;
         private readonly IMapperFactory _mapperFactory;
@@ -41,7 +41,7 @@ namespace EntityFX.Gdcame.Presentation.Web.Providers.Providers
 
             _gameDataModelMapper = _mapperFactory.Build<GameData, GameDataModel>();
             _fundsCounterModelMapper = _mapperFactory.Build<Cash, CashModel>();
-            _fundsDriverBuyinfoModelMapper = _mapperFactory.Build<BuyFundDriverResult, BuyDriverModel>();
+            _fundsDriverBuyinfoModelMapper = _mapperFactory.Build<BuyFundDriverResult, BuyItemModel>();
             _gameClientFactory = gameClientFactory;
         }
 
@@ -79,7 +79,7 @@ namespace EntityFX.Gdcame.Presentation.Web.Providers.Providers
             var gameData = _gameDataModelMapper.Map(_gameManager.GetGameData());
             foreach (var fundsDriverModel in gameData.Items)
             {
-                fundsDriverModel.IsActive = gameData.Cash.Counters[0].Value >= fundsDriverModel.UnlockValue;
+                fundsDriverModel.IsUnlocked = gameData.Cash.Counters[0].Value >= fundsDriverModel.UnlockBalance;
             }
             return gameData;
         }
@@ -89,7 +89,7 @@ namespace EntityFX.Gdcame.Presentation.Web.Providers.Providers
             return _fundsCounterModelMapper.Map(_gameManager.GetCounters());
         }
 
-        public BuyDriverModel BuyFundDriver(int id)
+        public BuyItemModel BuyFundDriver(int id)
         {
             var buyResult = _gameManager.BuyFundDriver(id);
             return buyResult != null ? _fundsDriverBuyinfoModelMapper.Map(buyResult) : null;

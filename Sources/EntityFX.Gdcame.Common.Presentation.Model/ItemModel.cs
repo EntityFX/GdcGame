@@ -14,20 +14,20 @@ namespace EntityFX.Gdcame.Common.Presentation.Model
         [XmlElement]
         public string Name { get; set; }
         [XmlElement]
-        public decimal Value { get; set; }
+        public decimal Price { get; set; }
         [XmlElement]
         public int InflationPercent { get; set; }
         [XmlElement]
-        public decimal UnlockValue { get; set; }
+        public decimal UnlockBalance { get; set; }
         [XmlElement]
-        public bool IsActive { get; set; }
+        public bool IsUnlocked { get; set; }
         [XmlElement]
-        public int BuyCount { get; set; }
+        public int Bought { get; set; }
         [XmlElement(IsNullable = true)]
         public string Picture { get; set; }
         [XmlElement]
         [XmlArray("Incrementors")]
         [XmlArrayItem("Pair")]
-        public IDictionary<int, Incrementor> Incrementors { get; set; }
+        public IDictionary<int, string> Incrementors { get; set; }
     }
 }

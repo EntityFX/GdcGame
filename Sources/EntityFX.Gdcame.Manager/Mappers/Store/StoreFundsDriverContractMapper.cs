@@ -25,9 +25,9 @@ namespace EntityFX.Gdcame.Manager.Mappers.Store
             return new StoredItem
             {
                 Id = source.Id,
-                BuyCount = source.BuyCount,
+                Bought = source.Bought,
                 Incrementors = destinationIncrementors,
-                Value = source.CurrentValue,
+                Price = source.Price,
                 CustomRule = customRuleInfo
             };
         }

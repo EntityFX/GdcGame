@@ -1,4 +1,6 @@
-﻿using EntityFX.Gdcame.Common.Contract.Items;
+﻿using System.Collections.Generic;
+using System.Linq;
+using EntityFX.Gdcame.Common.Contract.Items;
 using EntityFX.Gdcame.Infrastructure.Common;
 
 namespace EntityFX.Gdcame.Common.Presentation.Model.Mappers
@@ -8,14 +10,16 @@ namespace EntityFX.Gdcame.Common.Presentation.Model.Mappers
         public ItemModel Map(Item source, ItemModel destination = null)
         {
             destination = destination ?? new ItemModel();
-            destination.Value = source.Price;
-            destination.BuyCount = source.BuyCount;
+            destination.Price = source.Price;
+            destination.Bought = source.Bought;
             destination.Id = source.Id;
-            destination.Incrementors = source.Incrementors;
+            destination.Incrementors = source.Incrementors.Select(
+                (pair, i) => new KeyValuePair<int, string>(pair.Key, pair.Value.Value.ToString()))
+                .ToDictionary(pair => pair.Key, pair => pair.Value);
             destination.InflationPercent = source.InflationPercent;
             destination.Name = source.Name;
-            destination.UnlockValue = source.UnlockValue;
-            destination.IsActive = source.IsActive;
+            destination.UnlockBalance = source.UnlockBalance;
+            destination.IsUnlocked = source.IsUnlocked;
             destination.Picture = source.Picture;
             return destination;
         }

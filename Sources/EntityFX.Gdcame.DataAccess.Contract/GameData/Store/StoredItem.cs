@@ -6,9 +6,9 @@ namespace EntityFX.Gdcame.DataAccess.Contract.GameData.Store
     {
         public int Id { get; set; }
 
-        public decimal Value { get; set; }
+        public decimal Price { get; set; }
 
-        public int BuyCount { get; set; }
+        public int Bought { get; set; }
 
         public StoredCustomRuleInfo CustomRule { get; set; }
 

@@ -7,7 +7,7 @@ using EntityFX.Gdcame.Manager.Contract.GameManager;
 
 namespace EntityFX.Gdcame.Presentation.Web.Model.Mappers
 {
-    public class FundsDriverBuyInfoMapper : IMapper<BuyFundDriverResult, BuyDriverModel>
+    public class FundsDriverBuyInfoMapper : IMapper<BuyFundDriverResult, BuyItemModel>
     {
         private readonly IMapper<Cash, CashModel> _countersMapper;
         private readonly IMapper<Item, ItemModel> _fundsDriverMapper;
@@ -19,11 +19,11 @@ namespace EntityFX.Gdcame.Presentation.Web.Model.Mappers
             _fundsDriverMapper = fundsDriverMapper;
         }
 
-        public BuyDriverModel Map(BuyFundDriverResult source, BuyDriverModel destination = null)
+        public BuyItemModel Map(BuyFundDriverResult source, BuyItemModel destination = null)
         {
-            destination = destination ?? new BuyDriverModel();
+            destination = destination ?? new BuyItemModel();
             destination.ModifiedCountersInfo = _countersMapper.Map(source.ModifiedCash);
-            destination.FundsDriverBuyInfo = _fundsDriverMapper.Map(source.ModifiedItem);
+            destination.ItemBuyInfo = _fundsDriverMapper.Map(source.ModifiedItem);
             return destination;
         }
     }

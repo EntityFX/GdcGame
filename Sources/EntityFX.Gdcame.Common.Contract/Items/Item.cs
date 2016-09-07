@@ -26,13 +26,13 @@ namespace EntityFX.Gdcame.Common.Contract.Items
         public int InflationSteps { get; set; }
 
         [DataMember]
-        public decimal UnlockValue { get; set; }
+        public decimal UnlockBalance { get; set; }
 
         [DataMember]
-        public int BuyCount { get; set; }
+        public int Bought { get; set; }
 
         [DataMember]
-        public bool IsActive { get; set; }
+        public bool IsUnlocked { get; set; }
 
         [DataMember]
         public string Picture { get; set; }

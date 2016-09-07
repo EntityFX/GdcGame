@@ -62,7 +62,7 @@ namespace EntityFX.Gdcame.Presentation.Web.Controller
 
         [HttpPost]
         [Route("buy-item")]
-        public async Task<BuyDriverModel> BuyFundDriverAsync([FromBody] int id)
+        public async Task<BuyItemModel> BuyFundDriverAsync([FromBody] int id)
         {
             return await Task.Run(() => _gameDataProvider.BuyFundDriver(id));
         }

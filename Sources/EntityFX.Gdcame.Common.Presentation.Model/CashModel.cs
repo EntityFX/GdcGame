@@ -6,9 +6,9 @@ namespace EntityFX.Gdcame.Common.Presentation.Model
     public class CashModel
     {
         [DataMember]
-        public decimal OnHand { get; set; }
+        public decimal Price { get; set; }
         [DataMember]
-        public decimal Total { get; set; }
+        public decimal TotalEarned { get; set; }
         [DataMember]
         public CounterModelBase[] Counters { get; set; }
     }

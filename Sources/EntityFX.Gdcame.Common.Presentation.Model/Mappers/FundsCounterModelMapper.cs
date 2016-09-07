@@ -16,8 +16,8 @@ namespace EntityFX.Gdcame.Common.Presentation.Model.Mappers
         public CashModel Map(Cash source, CashModel destination = null)
         {
             destination = destination ?? new CashModel();
-            destination.Total = source.Total;
-            destination.OnHand = source.OnHand;
+            destination.TotalEarned = source.Total;
+            destination.Price = source.OnHand;
             var counters = new List<CounterModelBase>();
             foreach (var counter in source.Counters)
             {

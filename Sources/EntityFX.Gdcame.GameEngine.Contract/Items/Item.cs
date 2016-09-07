@@ -9,15 +9,15 @@ namespace EntityFX.Gdcame.GameEngine.Contract.Items
 
         public string Name { get; set; }
 
-        public decimal CurrentValue { get; set; }
+        public decimal Price { get; set; }
 
-        public decimal InitialValue { get; set; }
+        public decimal InitialPrice { get; set; }
 
         public int InflationPercent { get; set; }
 
-        public decimal UnlockValue { get; set; }
+        public decimal UnlockBalance { get; set; }
 
-        public int BuyCount { get; set; }
+        public int Bought { get; set; }
 
         public CustomRuleInfo CustomRuleInfo { get; set; }
 

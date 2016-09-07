@@ -12,7 +12,7 @@ namespace EntityFx.GdCame.Test.Shared
 
         private bool IsFundsDriverAvailableForBuy(CounterBase rootCounter, Item item)
         {
-            return item.UnlockValue <= rootCounter.Value;
+            return item.UnlockBalance <= rootCounter.Value;
         }
 
         private bool IsCounterAvailableForActivate(DelayedCounter counter, decimal currentFunds)
@@ -104,22 +104,22 @@ namespace EntityFx.GdCame.Test.Shared
                         "{0,2}:         Do Five Year Plan: need {1} {2} to unlock", "+",
                         ((DelayedCounter) gameData.Cash.Counters[3]).UnlockValue, gameData.Cash.Counters[0].Name);
                 }
-                foreach (var fundsDriver in gameData.Items)
+                foreach (var item in gameData.Items)
                 {
-                    if (!IsFundsDriverAvailableForBuy(gameData.Cash.Counters[0], fundsDriver))
+                    if (!IsFundsDriverAvailableForBuy(gameData.Cash.Counters[0], item))
                     {
                         PrettyConsole.WriteColor(ConsoleColor.Gray,
                             "{0,2}:             Need money to buy:     {1,8}. x{2,-4} ", ((char) charIndex).ToString(),
-                            fundsDriver.UnlockValue, fundsDriver.BuyCount);
+                            item.UnlockBalance, item.Bought);
                     }
                     else
                     {
-                        PrettyConsole.WriteColor(ConsoleColor.White, "{3,2}: {0,28} {1,15:C} x{2,-4} ", fundsDriver.Name,
-                            fundsDriver.Price, fundsDriver.BuyCount, ((char) charIndex).ToString());
+                        PrettyConsole.WriteColor(ConsoleColor.White, "{3,2}: {0,28} {1,15:C} x{2,-4} ", item.Name,
+                            item.Price, item.Bought, ((char) charIndex).ToString());
                     }
-                    PrettyConsole.WriteColor(ConsoleColor.Red, "+{0, -4} ", GetIncrementorValueById(fundsDriver, 0));
-                    PrettyConsole.WriteColor(ConsoleColor.Cyan, "+{0, -7} ", GetIncrementorValueById(fundsDriver, 1));
-                    PrettyConsole.WriteColor(ConsoleColor.Green, "+{0,-7} ", GetIncrementorValueById(fundsDriver, 2));
+                    PrettyConsole.WriteColor(ConsoleColor.Red, "+{0, -4} ", GetIncrementorValueById(item, 0));
+                    PrettyConsole.WriteColor(ConsoleColor.Cyan, "+{0, -7} ", GetIncrementorValueById(item, 1));
+                    PrettyConsole.WriteColor(ConsoleColor.Green, "+{0,-7} ", GetIncrementorValueById(item, 2));
                     Console.WriteLine();
                     charIndex++;
                 }

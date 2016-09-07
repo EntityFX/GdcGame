@@ -16,6 +16,6 @@ namespace EntityFX.Gdcame.Presentation.Contract.Controller
 
         Task<CashModel> GetCountersAsync();
 
-        Task<BuyDriverModel> BuyFundDriverAsync(int id);
+        Task<BuyItemModel> BuyFundDriverAsync(int id);
     }
 }

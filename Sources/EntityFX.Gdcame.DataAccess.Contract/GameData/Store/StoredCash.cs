@@ -6,7 +6,7 @@ namespace EntityFX.Gdcame.DataAccess.Contract.GameData.Store
     public class StoredCash
     {
         [DataMember]
-        public decimal CashOnHand { get; set; }
+        public decimal Balance { get; set; }
 
         [DataMember]
         public decimal TotalEarned { get; set; }

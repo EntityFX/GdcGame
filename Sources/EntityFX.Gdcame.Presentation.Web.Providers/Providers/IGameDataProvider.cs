@@ -12,7 +12,7 @@ namespace EntityFX.Gdcame.Presentation.Web.Providers.Providers
         void ClearSession();
         GameDataModel GetGameData();
         CashModel GetCounters();
-        BuyDriverModel BuyFundDriver(int id);
+        BuyItemModel BuyFundDriver(int id);
         ManualStepResultModel PerformManualStep(int? verificationNumber);
         void FightAgainstInflation();
         void ActivateDelayedCounter(int counterId);
