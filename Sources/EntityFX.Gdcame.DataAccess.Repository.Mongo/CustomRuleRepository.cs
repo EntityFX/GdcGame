@@ -9,11 +9,11 @@ using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.CustomRule;
 
 namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
 {
-    class CustomRuleRepository : ICustomRuleRepository
+    public class CustomRuleRepository : ICustomRuleRepository
     {
         public CustomRule[] FindAll(GetAllCustomRulesCriterion criterion)
         {
-            throw new NotImplementedException();
+            return new CustomRule []{ };
         }
     }
 }

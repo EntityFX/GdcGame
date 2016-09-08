@@ -63,7 +63,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef
             container.RegisterType<IMapper<CustomRuleEntity, CustomRule>, CustomRuleContractMapper>();
 
             container.RegisterType<IUserRepository, UserRepository>();
-            container.RegisterType<IFundsDriverRepository, FundsDriverRepository>();
+            container.RegisterType<IItemRepository, ItemRepository>();
             container.RegisterType<ICountersRepository, CountersRepository>();
             container.RegisterType<IUserRatingRepository, UserRatingRepository>();
             container.RegisterType<ICustomRuleRepository, CustomRuleRepository>();

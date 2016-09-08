@@ -9,21 +9,19 @@ using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.UserGameSnapshot
 
 namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
 {
-    class UserGameSnapshotRepository : IUserGameSnapshotRepository
+    public class UserGameSnapshotRepository : IUserGameSnapshotRepository
     {
         public void CreateForUser(string userId, StoredGameData gameData)
         {
-            throw new NotImplementedException();
         }
 
         public StoredGameData FindByUserId(GetUserGameSnapshotByIdCriterion criterion)
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         public void UpdateForUser(string userId, StoredGameData gameData)
         {
-            throw new NotImplementedException();
         }
     }
 }

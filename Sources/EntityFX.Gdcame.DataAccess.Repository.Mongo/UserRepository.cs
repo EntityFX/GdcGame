@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.User;
+using EntityFX.Gdcame.DataAccess.Contract.User;
 
 namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
 {
@@ -37,7 +38,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
 
         public DataAccess.Contract.User.User FindByName(GetUserByNameCriterion findByIdCriterion)
         {
-            throw new NotImplementedException();
+            return new User() { Id = "1", Email = "admin", IsAdmin = true, PasswordHash = @"AEaKRfyF9sOQcAm3L+PrN67RZVWrutGFPLBMo9Tau+4uKcDTDQgqiz6v8spTtLAZcg==" };
         }
 
         public void Update(DataAccess.Contract.User.User user)

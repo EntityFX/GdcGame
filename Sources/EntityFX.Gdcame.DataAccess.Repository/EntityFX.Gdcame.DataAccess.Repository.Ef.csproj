@@ -70,7 +70,7 @@
     <Compile Include="ContainerBootstrapper.cs" />
     <Compile Include="CountersRepository.cs" />
     <Compile Include="CustomRuleRepository.cs" />
-    <Compile Include="FundsDriverRepository.cs" />
+    <Compile Include="ItemRepository.cs" />
     <Compile Include="Mappers\CustomRuleContractMapper.cs" />
     <Compile Include="Mappers\CountersContractMapper.cs" />
     <Compile Include="Mappers\FundsDriverContractMapper.cs" />

@@ -3,7 +3,7 @@ using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.FundsDriver;
 
 namespace EntityFX.Gdcame.DataAccess.Repository.Contract
 {
-    public interface IFundsDriverRepository
+    public interface IItemRepository
     {
         Item[] FindAll(GetAllFundsDriversCriterion criterion);
     }
