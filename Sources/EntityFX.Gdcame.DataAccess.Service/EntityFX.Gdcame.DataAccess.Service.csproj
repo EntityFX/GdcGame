@@ -63,9 +63,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Unity.Wcf">
-      <HintPath>..\packages\Unity.WCF.4.1.0.2\lib\net45\Unity.Wcf.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Practices.Unity.Interception">
       <HintPath>..\packages\Unity.Interception.4.0.1\lib\Net45\Microsoft.Practices.Unity.Interception.dll</HintPath>
     </Reference>

@@ -61,9 +61,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Unity.Wcf">
-      <HintPath>..\packages\Unity.WCF.4.1.0.2\lib\net45\Unity.Wcf.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\EntityFX.GdCame.Test.Shared\GameRunnerBase.cs">

@@ -14,8 +14,6 @@ using EntityFX.Gdcame.GameEngine.Contract.Incrementors;
 using EntityFX.Gdcame.GameEngine.Contract.Items;
 using EntityFX.Gdcame.GameEngine.NetworkGameEngine;
 using EntityFX.Gdcame.Infrastructure.Common;
-using EntityFX.Gdcame.Infrastructure.Service;
-using EntityFX.Gdcame.Infrastructure.Service.Interfaces;
 using EntityFX.Gdcame.Manager;
 using EntityFX.Gdcame.Manager.Contract.AdminManager;
 using EntityFX.Gdcame.Manager.Contract.GameManager;
@@ -61,7 +59,6 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
             Array.ForEach(childBootstrappers, _ => _.Configure(container));
             container.AddNewExtension<Interception>();
             GlobalHost.DependencyResolver = new SignalRDependencyResolver(container);
-            container.RegisterType<IOperationContextHelper, WcfOperationContextHelper>();
 
             container.RegisterType<ILogger>(new InjectionFactory(
                 _ => new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger")))));
@@ -120,25 +117,15 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
                 new ResolvedParameter<IUnityContainer>(),
                 string.Empty));
 
-            if (ConfigurationManager.AppSettings["UseLoggerInterceptor"] == "True")
+           /* if (ConfigurationManager.AppSettings["UseLoggerInterceptor"] == "True")
             {
                 container.Configure<Interception>()
                     .AddPolicy("logging")
                     .AddCallHandler<LoggerCallHandler>(new ContainerControlledLifetimeManager())
                     .AddMatchingRule<NamespaceMatchingRule>(new InjectionConstructor("EntityFX.Gdcame.*", true));
-            }
+            }*/
 
             container.RegisterType<IHashHelper, HashHelper>();
-
-            if (!Environment.UserInteractive)
-            {
-                container.RegisterType<IServiceInfoHelper, ServiceInfoHelperLogger>();
-            }
-            else
-            {
-                container.RegisterType<IServiceInfoHelper, ServiceInfoHelperConsole>();
-            }
-
 
             container.RegisterType<IMapper<Cash, CashModel>, FundsCounterModelMapper>();
             container.RegisterType<IMapper<CounterBase, CounterModelBase>, CounterModelMapper>();
