@@ -20,7 +20,7 @@ namespace EntityFX.Gdcame.DataAccess.Service
         private readonly ObjectCache _cache = MemoryCache.Default;
         private readonly ICountersRepository _countersRepository;
         private readonly ICustomRuleRepository _customRuleRepository;
-        private readonly IFundsDriverRepository _fundsDriverRepository;
+        private readonly IItemRepository _fundsDriverRepository;
         private object _stdLock = new object();
 
         public GameDataRetrieveDataAccessBase(GameRepositoryFacade gameRepositoryFacade)

@@ -28,7 +28,7 @@ namespace EntityFX.Gdcame.DataAccess.Service
                 {
                     CountersRepository = container.Resolve<ICountersRepository>(),
                     CustomRuleRepository = container.Resolve<ICustomRuleRepository>(),
-                    FundsDriverRepository = container.Resolve<IFundsDriverRepository>()
+                    FundsDriverRepository = container.Resolve<IItemRepository>()
                 }
                 )
                 );

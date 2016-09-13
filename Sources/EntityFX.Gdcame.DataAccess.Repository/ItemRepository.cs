@@ -9,13 +9,13 @@ using EntityFX.Gdcame.Infrastructure.Repository.UnitOfWork;
 
 namespace EntityFX.Gdcame.DataAccess.Repository.Ef
 {
-    public class FundsDriverRepository : IFundsDriverRepository
+    public class ItemRepository : IItemRepository
     {
         private readonly IMapper<FundsDriverEntity, Item> _fundsDriverContractMapper;
         private readonly IMapperFactory _mapperFactory;
         private readonly IUnitOfWorkFactory _unitOfWorkFactory;
 
-        public FundsDriverRepository(IUnitOfWorkFactory unitOfWorkFactory
+        public ItemRepository(IUnitOfWorkFactory unitOfWorkFactory
             , IMapperFactory mapperFactory
             )
         {

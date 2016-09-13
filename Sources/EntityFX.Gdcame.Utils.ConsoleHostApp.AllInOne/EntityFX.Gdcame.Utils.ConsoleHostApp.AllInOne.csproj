@@ -209,6 +209,10 @@
       <Project>{c1b1f481-6e3e-464c-a983-cb56ad430c1d}</Project>
       <Name>EntityFX.Gdcame.DataAccess.Repository.Contract</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Repository.Mongo\EntityFX.Gdcame.DataAccess.Repository.Mongo.csproj">
+      <Project>{0f77947a-9e4c-4663-a7ee-c43a4d357217}</Project>
+      <Name>EntityFX.Gdcame.DataAccess.Repository.Mongo</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Repository\EntityFX.Gdcame.DataAccess.Repository.Ef.csproj">
       <Project>{d5a72a34-5de5-41e1-b52e-8f70d19cb7bf}</Project>
       <Name>EntityFX.Gdcame.DataAccess.Repository.Ef</Name>

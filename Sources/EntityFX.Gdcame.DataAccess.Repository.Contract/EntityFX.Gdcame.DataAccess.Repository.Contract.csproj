@@ -64,7 +64,7 @@
     <Compile Include="Criterions\User\GetUsersBySearchStringCriterion.cs" />
     <Compile Include="ICountersRepository.cs" />
     <Compile Include="ICustomRuleRepository.cs" />
-    <Compile Include="IFundsDriverRepository.cs" />
+    <Compile Include="IItemRepository.cs" />
     <Compile Include="IUserGameSnapshotRepository.cs" />
     <Compile Include="IUserRatingRepository.cs" />
     <Compile Include="IUserRepository.cs" />
