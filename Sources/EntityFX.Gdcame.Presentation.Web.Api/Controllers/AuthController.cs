@@ -14,6 +14,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using EntityFX.Gdcame.Presentation.Web.Api.Models;
+using EntityFX.Gdcame.Presentation.Contract.Controller;
 
 namespace EntityFX.Gdcame.Presentation.Web.Api.Controllers
 {
@@ -41,10 +42,10 @@ namespace EntityFX.Gdcame.Presentation.Web.Api.Controllers
 
         // POST api/Auth/Logout
         [Route("Logout")]
-        public IHttpActionResult Logout()
+        public bool Logout()
         {
             Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
-            return Ok();
+            return true;
         }
 
 

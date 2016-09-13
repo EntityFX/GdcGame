@@ -17,6 +17,9 @@ using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager;
 using EntityFX.Gdcame.Manager.Contract.AdminManager;
 using EntityFX.Gdcame.Manager.Contract.GameManager;
+using EntityFX.Gdcame.Manager.Contract.RatingManager;
+using EntityFX.Gdcame.Manager.Contract.SessionManager;
+using EntityFX.Gdcame.Manager.Contract.UserManager;
 using EntityFX.Gdcame.Manager.Mappers.Store;
 using EntityFX.Gdcame.NotifyConsumer;
 using EntityFX.Gdcame.NotifyConsumer.Contract;
@@ -134,6 +137,24 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
             container.RegisterType<IMapper<BuyFundDriverResult, BuyItemModel>, FundsDriverBuyInfoMapper>();
             container.RegisterType<IGameClientFactory, NoWcfGameManagerFactory>();
             container.RegisterType<ISessionManagerClientFactory, SessionManagerClientFactory>();
+
+            container.RegisterType<ISessionManager, SessionManager>(
+    new InterceptionBehavior<PolicyInjectionBehavior>(),
+    new Interceptor<InterfaceInterceptor>());
+
+            container.RegisterType<IRatingManager, RatingManager>(
+                new InterceptionBehavior<PolicyInjectionBehavior>(),
+                new Interceptor<InterfaceInterceptor>());
+
+            container.RegisterType<IGameManager, GameManager>(
+                new InterceptionBehavior<PolicyInjectionBehavior>()
+                , new Interceptor<InterfaceInterceptor>());
+            container.RegisterType<ISimpleUserManager, SimpleUserManager>(
+                new InterceptionBehavior<PolicyInjectionBehavior>()
+                , new Interceptor<InterfaceInterceptor>());
+            container.RegisterType<IAdminManager, AdminManager>(
+                new InterceptionBehavior<PolicyInjectionBehavior>()
+                , new Interceptor<InterfaceInterceptor>());
 
             container.RegisterType<ApplicationUserManagerFacotory>();
             container.RegisterType<UserManager<GameUser>, ApplicationUserManager>();
