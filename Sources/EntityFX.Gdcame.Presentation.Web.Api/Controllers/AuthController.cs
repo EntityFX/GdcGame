@@ -15,6 +15,7 @@ using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using EntityFX.Gdcame.Presentation.Web.Api.Models;
 using EntityFX.Gdcame.Presentation.Contract.Controller;
+using RegisterAccountModel = EntityFX.Gdcame.Presentation.Web.Api.Models.RegisterAccountModel;
 
 namespace EntityFX.Gdcame.Presentation.Web.Api.Controllers
 {
@@ -59,7 +60,7 @@ namespace EntityFX.Gdcame.Presentation.Web.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = new GameUser {UserName = model.Email};
+            var user = new GameUser {UserName = model.Login};
 
             var result = await UserManager.CreateAsync(user, model.Password);
 

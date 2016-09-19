@@ -14,4 +14,5 @@ namespace EntityFX.Gdcame.Presentation.Contract.Controller
 
         IEnumerable<AccountInfoModel> Get(string filter = null);
     }
+
 }

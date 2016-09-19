@@ -38,79 +38,50 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
 
 
 
-    public class GameApiClient : IGameApiController
+    public class GameApiClient : ApiClientBase, IGameApiController
     {
-        private readonly IAuthContext<IAuthenticator> _authContext;
 
-        public GameApiClient(IAuthContext<IAuthenticator> authContext)
-        {
-            _authContext = authContext;
-        }
 
         public async Task<ManualStepResultModel> PerformManualStepAsync(int? id = null)
         {
-            var response = await ExecuteGetRequestAsync<ManualStepResultModel>("/api/game/perform-step", Method.POST);
+            var response = await ExecuteRequestAsync<ManualStepResultModel>("/api/game/perform-step", Method.POST);
             return response.Data;
         }
 
         public async Task<bool> FightAgainstInflationAsync()
         {
-            var response = await ExecuteGetRequestAsync<bool>("/api/game/fight-inflation", Method.POST);
+            var response = await ExecuteRequestAsync<bool>("/api/game/fight-inflation", Method.POST);
             return response.Data;
         }
 
         public async Task<bool> ActivateDelayedCounterAsync(int counterId)
         {
-            var response = await ExecuteGetRequestAsync<bool>("/api/game/activate-delayed-counter", Method.POST);
+            var response = await ExecuteRequestAsync<bool>("/api/game/activate-delayed-counter", Method.POST);
 
             return response.Data;
         }
 
         public async Task<GameDataModel> GetGameDataAsync()
         {
-            var response = await ExecuteGetRequestAsync<GameDataModel>("/api/game/game-data");
+            var response = await ExecuteRequestAsync<GameDataModel>("/api/game/game-data");
             return response.Data;
         }
 
         public async Task<CashModel> GetCountersAsync()
         {
-            var response = await ExecuteGetRequestAsync<CashModel>("/api/game/game-counters");
+            var response = await ExecuteRequestAsync<CashModel>("/api/game/game-counters");
             return response.Data;
         }
 
         public async Task<BuyItemModel> BuyFundDriverAsync(int id)
         {
-            var response = await ExecuteGetRequestAsync<BuyItemModel>("/api/game/buy-item", Method.POST
+            var response = await ExecuteRequestAsync<BuyItemModel>("/api/game/buy-item", Method.POST
                 , new List<Parameter>() { new Parameter() {Type = ParameterType.RequestBody, Value = id} });
             return response.Data;
         }
 
-        private async Task<IRestResponse<TModel>> ExecuteGetRequestAsync<TModel>(string requestUriPath, Method method = Method.GET, IEnumerable<Parameter> parameters = null)
+        public GameApiClient(IAuthContext<IAuthenticator> authContext) : base(authContext)
         {
-            var clientFactory = new GameClientFactory(_authContext.BaseUri);
-            var request = clientFactory.CreateRequest(requestUriPath);
-            if (parameters != null)
-            {
-                foreach (var parameter in parameters)
-                {
-                    request.Parameters.Add(parameter);
-                }
-            }
-
-            request.Method = method;
-            var client = clientFactory.CreateClient();
-            client.AddHandler("application/json",  CustomJsonDeserializer.Default);
-            client.AddHandler("text/javascript", CustomJsonDeserializer.Default);
-            client.Authenticator = _authContext.Context;
-            try
-            {
-                return await client.Execute<TModel>(request);
-            }
-            catch (HttpRequestException exception)
-            {
-                ExceptionHandlerHelper.HandleHttpRequestException(exception);
-            }
-            return null;
         }
     }
 }

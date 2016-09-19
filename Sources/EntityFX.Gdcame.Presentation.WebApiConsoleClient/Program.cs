@@ -63,8 +63,48 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             return new Tuple<PasswordOAuthContext, string>(res, userName);
         }
 
+        private static void Register()
+        {
+            Console.Clear();
+            Console.WriteLine("-=Account registration=-");
+            Console.Write("Please, enter user name: ");
+            var userName = Console.ReadLine();
+
+            Console.Write("Please, enter user password: ");
+            var password = Console.ReadLine();
+
+            Console.Write("Please, confirm password: ");
+            var confirmPassword = Console.ReadLine();
+
+            var authApi = new AuthApiClient(new PasswordOAuthContext() {BaseUri = new Uri("http://localhost:9001")});
+
+            try
+            {
+                var result = authApi.Register(new RegisterAccountModel()
+                {
+                    Login = userName,
+                    Password = password,
+                    ConfirmPassword = confirmPassword
+                }).Result;
+            }
+            catch (AggregateException loginException)
+            {
+                Console.Clear();
+                var authException = loginException.InnerException as ClientException;
+                if (authException != null)
+                {
+                    PrettyConsole.WriteLineColor(ConsoleColor.Red, "Error: {0}", authException.Message);
+                }
+            }
+
+
+        }
+
         private static bool UserLogout(PasswordOAuthContext session)
         {
+            _userName = null;
+            _userPassword = null;
+            _session = null;
             return false;
         }
 
@@ -82,10 +122,13 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
         {
             try
             {
+                Console.Clear();
+                Console.WriteLine("-=Log In=-");
                 loginResultTuple = UserLogin(_userName, _userPassword).Result;
             }
             catch (AggregateException loginException)
             {
+                Console.Clear();
                 var authException = loginException.InnerException as WrongAuthException<PasswordAuthData>;
                 if (authException != null)
                 {
@@ -97,26 +140,45 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             return true;
         }
 
-        private static void MainLoop(IEnumerable<string> args)
+        private static void AuthMenu()
         {
-            if (args.Any())
-            {
-                _userName = args.First();
-                if (args.Count() >= 2)
-                {
-                    _userPassword = args.ToArray()[1];
-                }
-            }
             Tuple<PasswordOAuthContext, string> loginResult = null;
+
+            ConsoleKeyInfo mainKeyInfo = new ConsoleKeyInfo();
             do
             {
-            } while ((!TryLogin(_userName, _userPassword, out loginResult)));
+                if (mainKeyInfo.Key == ConsoleKey.D1)
+                {
+                    TryLogin(_userName, _userPassword, out loginResult);
 
-            if (loginResult != null)
+                    if (loginResult != null)
+                    {
+                        _session = loginResult.Item1;
+                        _userName = loginResult.Item2;
+                        break;
+                    }
+                }
+                if (mainKeyInfo.Key == ConsoleKey.D2)
+                {
+                    Register();
+                }
+                Console.WriteLine("1. Enter login");
+                Console.WriteLine("2. Register account");
+            } while ((mainKeyInfo = Console.ReadKey(true)).Key != ConsoleKey.Escape);
+        }
+
+        private static void MainLoop(IEnumerable<string> args)
+        {
+            var argsArray = args as string[] ?? args.ToArray();
+            if (argsArray.Any())
             {
-                _session = loginResult.Item1;
-                _userName = loginResult.Item2;
+                _userName = argsArray.First();
+                if (argsArray.Count() >= 2)
+                {
+                    _userPassword = argsArray.ToArray()[1];
+                }
             }
+            AuthMenu();
 
 
             var adminManagerClient = GetAdminClient(_session);
@@ -163,7 +225,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                     else if (keyInfo.Key == ConsoleKey.F3)
                     {
                         UserLogout(_session);
-                        gr.DisplayGameData(gr.GetGameData());
+                        AuthMenu();
                     }
                 }
                 catch (ClientException faultException)
