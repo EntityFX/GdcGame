@@ -363,12 +363,12 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                         if (!IsFundsDriverAvailableForBuy(gameData.Cash.Counters[0], fundsDriver))
                         {
                             PrettyConsole.WriteColor(ConsoleColor.Gray,
-                                "{0,2}:             Need money to buy:     {1,8}. x{2,-4} ", ((char)charIndex).ToString(),
+                                "{0,2}:           Need points to buy:     {1,6} x{2,-4} ", ((char)charIndex).ToString(),
                                 fundsDriver.UnlockBalance, fundsDriver.Bought);
                         }
                         else
                         {
-                            PrettyConsole.WriteColor(ConsoleColor.White, "{3,2}: {0,28} {1,15:C} x{2,-4} ", fundsDriver.Name,
+                            PrettyConsole.WriteColor(ConsoleColor.White, "{3,2}: {0,26} {1,14:C} x{2,-4} ", fundsDriver.Name,
                                 fundsDriver.Price, fundsDriver.Bought, ((char)charIndex).ToString());
                         }
                         PrettyConsole.WriteColor(ConsoleColor.Red, "+{0, -4} ", GetIncrementorValueById(fundsDriver, 0));
