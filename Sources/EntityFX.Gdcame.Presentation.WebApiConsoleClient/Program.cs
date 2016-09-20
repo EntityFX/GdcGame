@@ -5,12 +5,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using EntityFx.GdCame.Test.Shared;
-using EntityFX.Gdcame.Common.Contract;
-using EntityFX.Gdcame.Common.Contract.Incrementors;
 using EntityFX.Gdcame.Utils.WebApiClient;
 using EntityFX.Gdcame.Utils.WebApiClient.Auth;
 using EntityFX.Gdcame.Common.Presentation.Model;
-using EntityFX.Gdcame.Common.Contract.Items;
 using EntityFX.Gdcame.Presentation.Contract.Controller;
 using EntityFX.Gdcame.Presentation.Contract.Model;
 using EntityFX.Gdcame.Utils.WebApiClient.Exceptions;
@@ -27,15 +24,34 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
         private static string _userPassword;
         private static UnityContainer _container;
 
+        private static bool _exitFlag;
+
+        private static Dictionary<ConsoleKey, MenuItem> _mainMenu = new Dictionary<ConsoleKey, MenuItem>
+        {
+            {
+                ConsoleKey.F1,
+                new MenuItem {MenuText = "Login & Start game", MenuAction = TryLogin}
+            },            {
+                ConsoleKey.F2,
+                new MenuItem {MenuText = "Register account", MenuAction = RegisterAccount}
+            }, {
+                ConsoleKey.Escape,
+                new MenuItem {MenuText = "Exit", MenuAction = ExitMainMenu}
+            }
+        };
+
+        private static void ExitMainMenu()
+        {
+            _exitFlag = true;
+        }
+
         private static void Main(string[] args)
         {
             var listArgs = args.ToList();
-            var isCollapsed = false;
             if (args.Length > 0)
             {
                 foreach (var arg in args)
                 {
-                    isCollapsed = arg.Contains("IsCollapsed");
                     listArgs.Remove(arg);
                 }
             }
@@ -63,7 +79,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             return new Tuple<PasswordOAuthContext, string>(res, userName);
         }
 
-        private static void Register()
+        private static void RegisterAccount()
         {
             Console.Clear();
             Console.WriteLine("-=Account registration=-");
@@ -100,12 +116,14 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 
         }
 
-        private static bool UserLogout(PasswordOAuthContext session)
+        private async static void UserLogout(PasswordOAuthContext session)
         {
+            var authApi = new AuthApiClient(session);
+            Console.Clear();
+            await authApi.Logout();
             _userName = null;
             _userPassword = null;
             _session = null;
-            return false;
         }
 
         private static IGameApiController GetGameClient(PasswordOAuthContext session)
@@ -113,13 +131,14 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             return new GameApiClient(session);
         }
 
-        private static IGameApiController GetAdminClient(PasswordOAuthContext session)
+        private static IAdminController GetAdminClient(PasswordOAuthContext session)
         {
-            return null;
+            return new AdminApiClient(session);
         }
 
-        private static bool TryLogin(string userName, string password, out Tuple<PasswordOAuthContext, string> loginResultTuple)
+        private static void TryLogin()
         {
+            Tuple<PasswordOAuthContext, string> loginResultTuple;
             try
             {
                 Console.Clear();
@@ -135,60 +154,50 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                     PrettyConsole.WriteLineColor(ConsoleColor.Red, "Error: {0}", authException.Message);
                 }
                 loginResultTuple = null;
-                return false;
             }
-            return true;
+
+            if (loginResultTuple != null)
+            {
+                _session = loginResultTuple.Item1;
+                _userName = loginResultTuple.Item2;
+                EnterGame();
+            }
         }
 
-        private static void AuthMenu()
+        private static void EnterMainMenu()
         {
-            Tuple<PasswordOAuthContext, string> loginResult = null;
-
-            ConsoleKeyInfo mainKeyInfo = new ConsoleKeyInfo();
-            do
+            _exitFlag = false;
+            while (!_exitFlag)
             {
-                if (mainKeyInfo.Key == ConsoleKey.D1)
+                Console.WriteLine("-=Admin Functions=-");
+                foreach (var item in _mainMenu)
                 {
-                    TryLogin(_userName, _userPassword, out loginResult);
+                    Console.WriteLine(item.Key + " - " + item.Value.MenuText);
+                }
+                var key = Console.ReadKey();
+                Console.Clear();
 
-                    if (loginResult != null)
+                try
+                {
+                    if (_mainMenu.ContainsKey(key.Key))
                     {
-                        _session = loginResult.Item1;
-                        _userName = loginResult.Item2;
-                        break;
+                        _mainMenu[key.Key].MenuAction.Invoke();
                     }
                 }
-                if (mainKeyInfo.Key == ConsoleKey.D2)
+                catch (Exception exp)
                 {
-                    Register();
-                }
-                Console.WriteLine("1. Enter login");
-                Console.WriteLine("2. Register account");
-            } while ((mainKeyInfo = Console.ReadKey(true)).Key != ConsoleKey.Escape);
-        }
-
-        private static void MainLoop(IEnumerable<string> args)
-        {
-            var argsArray = args as string[] ?? args.ToArray();
-            if (argsArray.Any())
-            {
-                _userName = argsArray.First();
-                if (argsArray.Count() >= 2)
-                {
-                    _userPassword = argsArray.ToArray()[1];
+                    PrettyConsole.WriteLineColor(ConsoleColor.Red, exp.Message);
                 }
             }
-            AuthMenu();
+        }
 
-
-            var adminManagerClient = GetAdminClient(_session);
-
+        private static void EnterGame()
+        {
+            Console.Clear();
             var gameClient = GetGameClient(_session);
-
-
-
             var gr = new GameRunner(_userName, _session, gameClient);
-            var ac = new AdminConsole(/*adminManagerClient, _sessionGuid*/);
+            var adminManagerClient = GetAdminClient(_session);
+            var ac = new AdminConsole( adminManagerClient);
             var gameData = gr.GetGameData();
             gr.DisplayGameData(gameData);
             ConsoleKeyInfo keyInfo;
@@ -200,7 +209,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                     {
                         gr.PerformManualStep();
                     }
-                    else if ((int)keyInfo.Key >= 65 && (int)keyInfo.Key <= 90)
+                    else if ((int) keyInfo.Key >= 65 && (int) keyInfo.Key <= 90)
                     {
                         gr.BuyFundDriver(keyInfo);
                     }
@@ -225,7 +234,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                     else if (keyInfo.Key == ConsoleKey.F3)
                     {
                         UserLogout(_session);
-                        AuthMenu();
+                        break;
                     }
                 }
                 catch (ClientException faultException)
@@ -242,6 +251,20 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                     PrettyConsole.WriteLineColor(ConsoleColor.Red, "Error: {0}", faultException);
                 }
             }
+        }
+
+        private static void MainLoop(IEnumerable<string> args)
+        {
+            var argsArray = args as string[] ?? args.ToArray();
+            if (argsArray.Any())
+            {
+                _userName = argsArray.First();
+                if (argsArray.Count() >= 2)
+                {
+                    _userPassword = argsArray.ToArray()[1];
+                }
+            }
+            EnterMainMenu();  
         }
 
         internal abstract class GameRunnerBase
@@ -442,7 +465,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                 {
                     Console.SetCursorPosition(0, 0);
                     PrettyConsole.WriteLineColor(ConsoleColor.DarkRed, "User: {0}", User);
-                    PrettyConsole.WriteLineColor(ConsoleColor.DarkGreen, "F2 - Admin settings");
+                    PrettyConsole.WriteLineColor(ConsoleColor.DarkGreen, "F2 - Admin functions");
                     PrettyConsole.WriteLineColor(ConsoleColor.DarkGreen, "F3 - Logout");
                     Console.SetCursorPosition(0, 3);
                     base.DisplayGameData(gameData);

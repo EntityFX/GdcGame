@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IAccountController.cs" />
+    <Compile Include="IAdminController.cs" />
     <Compile Include="IGameApiController.cs" />
     <Compile Include="IRatingApiController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

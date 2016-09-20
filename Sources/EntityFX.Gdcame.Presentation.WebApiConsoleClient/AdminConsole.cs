@@ -1,45 +1,68 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using EntityFX.Gdcame.Presentation.Contract.Controller;
 
 namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 {
+    internal class MenuItem
+    {
+        public string MenuText { get; set; }
+
+        public Action MenuAction { get; set; }
+    }
+
+
     internal class AdminConsole
     {
-        //private IAdminManager _adminManagerClient;
+
+
+
+        private IAdminController _adminManagerClient;
         //Dictionary<string, Delegate> _menu;
         private bool _exitFlag;
 
-        private Dictionary<int, string> _menu;
+        private Dictionary<ConsoleKey, MenuItem> _menu;
 
-        /*public AdminConsole(IAdminManager adminManagerClient, Guid currentGuid)*/
-        public AdminConsole()
+        public AdminConsole(IAdminController adminManagerClient)
         {
-
-
+            SetAdminClient(adminManagerClient);
             InitMenu();
         }
 
         public Guid SessionGuid { get; set; }
 
-        /*public void SetAdminClient(IAdminManager adminManagerClient)
+        public void SetAdminClient(IAdminController adminManagerClient)
         {
             _adminManagerClient = adminManagerClient;
-        }*/
+        }
 
         private void InitMenu()
         {
-            _menu = new Dictionary<int, string>();
-
-            //CallDelegate abc = new CallDelegate(CreateUser);
-            _menu.Add(1, "Get active sessions and games");
-            //new CallDelegate(CreateUser));
-            _menu.Add(2, "Close session by GUID");
-            _menu.Add(3, "Close session by username and position of GUID");
-            _menu.Add(4, "Close all user sessions");
-            _menu.Add(5, "Close all sessions");
-            _menu.Add(6, "Close all sessions exlude this");
-            _menu.Add(7, "Wipe user");
-            _menu.Add(8, "Exit");
+            _menu = new Dictionary<ConsoleKey, MenuItem>
+            {
+                {
+                    ConsoleKey.F1,
+                    new MenuItem {MenuText = "Get active sessions and games", MenuAction = GetActiveSessions}
+                },
+                {ConsoleKey.F2, new MenuItem {MenuText = "Close session by GUID", MenuAction = CloseSessionByGuid}},
+                {
+                    ConsoleKey.F3,
+                    new MenuItem
+                    {
+                        MenuText = "Close session by username and position of GUID",
+                        MenuAction = CloseSessionByUserNameAndPositionOfGuid
+                    }
+                },
+                {ConsoleKey.F4, new MenuItem {MenuText = "Close all user sessions", MenuAction = CloseAllUserSessions}},
+                {ConsoleKey.F5, new MenuItem {MenuText = "Close all sessions", MenuAction = CloseAllSessions}},
+                {
+                    ConsoleKey.F6,
+                    new MenuItem {MenuText = "Close all sessions exlude this", MenuAction = CloseAllSessionsExludeThis}
+                },
+                {ConsoleKey.F7, new MenuItem {MenuText = "Wipe user", MenuAction = WipeUser}},
+                {ConsoleKey.Escape, new MenuItem {MenuText = "Exit", MenuAction = Exit}}
+            };
         }
 
         public void StartMenu()
@@ -50,13 +73,12 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             while (!_exitFlag)
             {
                 ShowMenu();
-                var key = Console.ReadLine();
+                var key = Console.ReadKey();
                 Console.Clear();
 
                 try
                 {
-                    GetAssociatedDelegate(
-                        Convert.ToInt32(key)).Invoke();
+                    _menu[key.Key].MenuAction.Invoke();
                 }
                 catch (Exception exp)
                 {
@@ -75,12 +97,10 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 
         public void ShowMenu()
         {
-            Console.WriteLine("Choose line and enter number:");
-            //for (int i = 0; i < _menu.Count; i++)
-            //    Console.WriteLine((i + 1) + ". " + _menu[i]);
+            Console.WriteLine("-=Admin Functions=-");
             foreach (var item in _menu)
             {
-                Console.WriteLine(item.Key + ". " + item.Value);
+                Console.WriteLine(item.Key + " - " + item.Value.MenuText);
             }
         }
 
@@ -90,42 +110,21 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             Console.ReadLine();
         }
 
-        private CallDelegate GetAssociatedDelegate(int numberOfRow)
-        {
-            switch (numberOfRow)
-            {
-                case 1:
-                    return GetActiveSessions;
-                case 2:
-                    return CloseSessionByGuid;
-                case 3:
-                    return CloseSessionByUserNameAndPositionOfGuid;
-                case 4:
-                    return CloseAllUserSessions;
-                case 5:
-                    return CloseAllSessions;
-                case 6:
-                    return CloseAllSessionsExludeThis;
-                case 7:
-                    return WipeUser;
-                default:
-                    return Exit;
-            }
-        }
+
 
         private void GetActiveSessions()
         {
             Console.Clear();
 
-            /*try
+            try
             {
-                var activeSessionsInfos = _adminManagerClient.GetActiveSessions();
+                var activeSessionsInfos = _adminManagerClient.GetActiveSessions().Result;
                 foreach (var activeSessionsInfo in activeSessionsInfos)
                 {
-                    Console.WriteLine("Username: {0}", activeSessionsInfo.UserName);
+                    Console.WriteLine("User login: {0}", activeSessionsInfo.Login);
 
                     var i = 0;
-                    foreach (var userSession in activeSessionsInfo.UserSessions)
+                    foreach (var userSession in activeSessionsInfo.Sessions)
                     {
                         Console.WriteLine("\tSession №{0}. GUID: {1}", i, userSession.SessionIdentifier);
                         i++;
@@ -135,7 +134,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             catch (Exception exp)
             {
                 Console.WriteLine(exp);
-            }*/
+            }
         }
 
         private void CloseSessionByGuid()
@@ -143,7 +142,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             Console.Clear();
             Console.WriteLine("Please enter session guid for close:");
 
-            /*try
+            try
             {
                 var guid = new Guid(Console.ReadLine());
 
@@ -153,14 +152,14 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             catch (Exception exp)
             {
                 Console.WriteLine(exp);
-            }*/
+            }
         }
 
         private void CloseSessionByUserNameAndPositionOfGuid()
         {
             Console.Clear();
 
-            /*try
+            try
             {
                 Console.WriteLine("Please enter username:");
                 var username = Console.ReadLine();
@@ -170,9 +169,9 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 
                 var guid =
                     _adminManagerClient
-                        .GetActiveSessions()
-                        .First(user => user.UserName == username)
-                        .UserSessions[position].SessionIdentifier;
+                        .GetActiveSessions().Result
+                        .First(user => user.Login == username)
+                        .Sessions[position].SessionIdentifier;
                 _adminManagerClient.CloseSessionByGuid(guid);
 
                 Console.WriteLine("Session {0} of user {1} is closed", guid, username);
@@ -180,7 +179,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             catch (Exception exp)
             {
                 Console.WriteLine(exp);
-            }*/
+            }
         }
 
         private void CloseAllUserSessions()
@@ -188,16 +187,16 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             Console.Clear();
             Console.WriteLine("Please enter username for close his sessions:");
 
-           /* try
-            {
-                var username = Console.ReadLine();
+            try
+             {
+                 var username = Console.ReadLine();
 
-                _adminManagerClient.CloseAllUserSessions(username);
-            }
-            catch (Exception exp)
-            {
-                Console.WriteLine(exp);
-            }*/
+                 _adminManagerClient.CloseAllUserSessions(username);
+             }
+             catch (Exception exp)
+             {
+                 Console.WriteLine(exp);
+             }
         }
 
         private void CloseAllSessions()
@@ -205,28 +204,28 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             Console.Clear();
             Console.WriteLine("Trying to close all sessions...");
 
-           /* try
-            {
-                _adminManagerClient.CloseAllSessions();
-                Console.WriteLine("Success!");
-            }
-            catch (Exception exp)
-            {
-                Console.WriteLine(exp);
-            }*/
+            try
+             {
+                 _adminManagerClient.CloseAllSessions();
+                 Console.WriteLine("Success!");
+             }
+             catch (Exception exp)
+             {
+                 Console.WriteLine(exp);
+             }
         }
 
         private void CloseAllSessionsExludeThis()
         {
-           /* try
-            {
-                _adminManagerClient.CloseAllSessionsExcludeThis(SessionGuid);
-                Console.WriteLine("Success!");
-            }
-            catch (Exception exp)
-            {
-                Console.WriteLine(exp);
-            }*/
+            try
+             {
+                 _adminManagerClient.CloseAllSessionsExcludeThis(SessionGuid);
+                 Console.WriteLine("Success!");
+             }
+             catch (Exception exp)
+             {
+                 Console.WriteLine(exp);
+             }
         }
 
         private void WipeUser()
@@ -234,29 +233,27 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             Console.Clear();
             Console.WriteLine("Please enter username for wipe him:");
 
-           /* try
-            {
-                var username = Console.ReadLine();
+            try
+             {
+                 var username = Console.ReadLine();
 
-                Console.WriteLine("All proress will LOSTED. Do you sure??? (Y/N):");
-                if (Console.ReadLine().ToUpper() != "Y")
-                    return;
+                 Console.WriteLine("All proress will LOSTED. Do you sure??? (Y/N):");
+                 if (Console.ReadLine().ToUpper() != "Y")
+                     return;
 
-                _adminManagerClient.WipeUser(username);
+                 _adminManagerClient.WipeUser(username);
 
-                Console.WriteLine("Progress of user {0} is wiped", username);
-            }
-            catch (Exception exp)
-            {
-                Console.WriteLine(exp);
-            }*/
+                 Console.WriteLine("Progress of user {0} is wiped", username);
+             }
+             catch (Exception exp)
+             {
+                 Console.WriteLine(exp);
+             }
         }
 
         private void Exit()
         {
             _exitFlag = true;
         }
-
-        private delegate void CallDelegate();
     }
 }

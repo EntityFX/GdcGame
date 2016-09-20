@@ -38,9 +38,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AdminApiClient.cs" />
     <Compile Include="AuthApiClient.cs" />
     <Compile Include="ApiClientBase.cs" />
     <Compile Include="Auth\EmptyAuthContext.cs" />
+    <Compile Include="CustomJsonDeserializer.cs" />
     <Compile Include="Exceptions\WrongAuthException.cs" />
     <Compile Include="Exceptions\ClientException.cs" />
     <Compile Include="ExceptionHandlerHelper.cs" />

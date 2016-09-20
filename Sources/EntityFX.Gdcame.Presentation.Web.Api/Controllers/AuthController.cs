@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Controllers;
+using EntityFX.Gdcame.Manager.Contract.SessionManager;
+using EntityFX.Gdcame.Manager.Contract.UserManager;
 using EntityFX.Gdcame.Presentation.Contract.Model;
 using EntityFX.Gdcame.Presentation.Web.Api.Providers;
 using Microsoft.AspNet.Identity;
@@ -22,6 +24,7 @@ namespace EntityFX.Gdcame.Presentation.Web.Api.Controllers
     [RoutePrefix("api/Auth")]
     public class AuthController : ApiController
     {
+        private readonly ISessionManager _sessionManager;
         private const string LocalLoginProvider = "Local";
         private UserManager<GameUser> _userManager;
 
@@ -29,6 +32,11 @@ namespace EntityFX.Gdcame.Presentation.Web.Api.Controllers
         {
             get { return _userManager ?? Request.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
             private set { _userManager = value; }
+        }
+
+        public AuthController(ISessionManager sessionManager)
+        {
+            _sessionManager = sessionManager;
         }
 
 
@@ -46,6 +54,7 @@ namespace EntityFX.Gdcame.Presentation.Web.Api.Controllers
         public bool Logout()
         {
             Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
+            _sessionManager.CloseSession();
             return true;
         }
 
