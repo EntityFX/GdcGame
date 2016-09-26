@@ -116,7 +116,7 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
                     Name = item.Name,
                     InitialPrice = item.InitialValue,
                     Price = item.Price,
-                    UnlockBalance = item.UnlockBalance,
+                    UnlockBalance = item.UnlockValue,
                     InflationPercent = item.InflationPercent,
                     Bought = item.Bought,
                     Incrementors = incrementors,

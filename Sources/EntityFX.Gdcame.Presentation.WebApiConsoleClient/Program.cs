@@ -12,6 +12,7 @@ using EntityFX.Gdcame.Presentation.Contract.Controller;
 using EntityFX.Gdcame.Presentation.Contract.Model;
 using EntityFX.Gdcame.Utils.WebApiClient.Exceptions;
 using Microsoft.Practices.Unity;
+using System.Configuration;
 
 namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 {
@@ -71,7 +72,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                 Console.Write("Please, enter user password: ");
                 password = Console.ReadLine();
             }
-            var p = new PasswordAuthProvider(new Uri("http://localhost:9001"));
+            var p = new PasswordAuthProvider(new Uri(ConfigurationManager.AppSettings["ServiceBaseAddress"]));
             var res = await p.Login(new PasswordAuthRequest<PasswordAuthData>()
             {
                 RequestData = new PasswordAuthData() { Password = password, Usename = userName }
@@ -92,7 +93,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             Console.Write("Please, confirm password: ");
             var confirmPassword = Console.ReadLine();
 
-            var authApi = new AuthApiClient(new PasswordOAuthContext() {BaseUri = new Uri("http://localhost:9001")});
+            var authApi = new AuthApiClient(new PasswordOAuthContext() {BaseUri = new Uri(ConfigurationManager.AppSettings["ServiceBaseAddress"]) });
 
             try
             {

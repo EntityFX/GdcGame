@@ -1,0 +1,33 @@
+﻿[
+  {
+    "$type": "EntityFX.Gdcame.Common.Contract.Counters.SingleCounter, EntityFX.Gdcame.Common.Contract",
+    "Id": 0,
+    "Value": 0.0,
+    "Name": "GDC Points"
+  },
+  {
+    "$type": "EntityFX.Gdcame.Common.Contract.Counters.GenericCounter, EntityFX.Gdcame.Common.Contract",
+    "BonusPercent": 0,
+    "Inflation": 0,
+    "Id": 1,
+    "Value": 10.0,
+    "Name": "Профессионализм"
+  },
+  {
+    "$type": "EntityFX.Gdcame.Common.Contract.CountersGenericCounter, EntityFX.Gdcame.Common.Contract",
+    "BonusPercent": 0,
+    "Inflation": 0,
+    "Id": 2,
+    "Value": 0.0,
+    "Name": "Зарплата"
+  },
+  {
+    "$type": "EntityFX.Gdcame.Common.Contract.Counters.DelayedCounter, EntityFX.Gdcame.Common.Contract",
+    "UnlockValue": 250.0,
+    "SecondsRemaining": 0,
+    "MiningTimeSeconds": 240,
+    "Id": 3,
+    "Value": 5000000.0,
+    "Name": "Квартальный план"
+  }
+]

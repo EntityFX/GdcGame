@@ -32,7 +32,7 @@ namespace EntityFX.Gdcame.Manager.Mappers
                 Incrementors = destinationIncrementors,
                 InflationPercent = source.InflationPercent,
                 Name = source.Name,
-                UnlockBalance = source.UnlockBalance,
+                UnlockValue = source.UnlockBalance,
                 Price = source.Price,
                 CustomRuleInfo = customRuleInfo
             };

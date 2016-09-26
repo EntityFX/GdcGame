@@ -10,7 +10,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef.Mappers
         {
             destination = destination ?? new User();
             destination.Id = source.Id;
-            destination.Email = source.Email;
+            destination.Login = source.Email;
             destination.IsAdmin = source.IsAdmin;
             destination.PasswordHash = source.Secret;
             return destination;

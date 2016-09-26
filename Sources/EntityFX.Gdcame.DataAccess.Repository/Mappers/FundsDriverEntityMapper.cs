@@ -19,7 +19,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef.Mappers
         {
             destination = destination ?? new FundsDriverEntity();
             destination.InitialValue = source.Price;
-            destination.UnlockValue = source.UnlockBalance;
+            destination.UnlockValue = source.UnlockValue;
             destination.Name = source.Name;
             destination.Id = source.Id;
             destination.InflationPercent = (short) source.InflationPercent;

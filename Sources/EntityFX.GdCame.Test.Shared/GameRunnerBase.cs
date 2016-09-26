@@ -12,7 +12,7 @@ namespace EntityFx.GdCame.Test.Shared
 
         private bool IsFundsDriverAvailableForBuy(CounterBase rootCounter, Item item)
         {
-            return item.UnlockBalance <= rootCounter.Value;
+            return item.UnlockValue <= rootCounter.Value;
         }
 
         private bool IsCounterAvailableForActivate(DelayedCounter counter, decimal currentFunds)
@@ -110,7 +110,7 @@ namespace EntityFx.GdCame.Test.Shared
                     {
                         PrettyConsole.WriteColor(ConsoleColor.Gray,
                             "{0,2}:             Need money to buy:     {1,8}. x{2,-4} ", ((char) charIndex).ToString(),
-                            item.UnlockBalance, item.Bought);
+                            item.UnlockValue, item.Bought);
                     }
                     else
                     {
