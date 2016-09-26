@@ -21,16 +21,6 @@ namespace EntityFX.Gdcame.DataAccess.Repository.LocalStorage
             }
         }
 
-        public void CreateForUser(string userId, StoredGameData gameData)
-        {
-            using (StreamWriter file = File.CreateText(Path.Combine("storage", "game-snapshots", userId + ".json")))
-            {
-                JsonSerializer serializer = new JsonSerializer();
-                serializer.TypeNameHandling = TypeNameHandling.Auto;
-                serializer.Serialize(file, gameData);
-            }
-        }
-
         public StoredGameData FindByUserId(GetUserGameSnapshotByIdCriterion criterion)
         {
             if (!File.Exists(Path.Combine("storage", "game-snapshots", criterion.UserId + ".json")))
@@ -46,9 +36,22 @@ namespace EntityFX.Gdcame.DataAccess.Repository.LocalStorage
             }
         }
 
-        public void UpdateForUser(string userId, StoredGameData gameData)
+        public void CreateUserGames(StoredGameDataWithUserId[] listOfGameDataWithUserId)
         {
-            CreateForUser(userId, gameData);
+            foreach (var gameDataWithUserId in listOfGameDataWithUserId)
+            {
+                using (StreamWriter file = File.CreateText(Path.Combine("storage", "game-snapshots", gameDataWithUserId.UserId + ".json")))
+                {
+                    JsonSerializer serializer = new JsonSerializer();
+                    serializer.TypeNameHandling = TypeNameHandling.Auto;
+                    serializer.Serialize(file, gameDataWithUserId.StoredGameData);
+                }
+            }
+        }
+
+        public void UpdateUserGames(StoredGameDataWithUserId[] listOfGameDataWithUserId)
+        {
+            CreateUserGames(listOfGameDataWithUserId);
         }
     }
 }

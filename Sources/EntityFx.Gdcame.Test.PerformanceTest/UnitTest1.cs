@@ -45,7 +45,18 @@ namespace EntityFx.Gdcame.Test.PerformanceTest
 
             container.RegisterType<IGameFactory, GameFactory>();
 
-            container.RegisterInstance(new GameSessions(container.Resolve<ILogger>(), container.Resolve<IGameFactory>(), container.Resolve<IGameDataPersisterFactory>()));
+            container.RegisterType<IGameDataPersister, GameDataPersister>(
+                new InjectionConstructor(
+                    new ResolvedParameter<IGameDataStoreDataAccessService>(),
+                    new ResolvedParameter<IMapperFactory>()
+                    )
+                );
+
+            container.RegisterType<IGameDataPersisterFactory, GameDataPersisterFactory>();
+
+            container.RegisterType<IHashHelper, HashHelper>();
+
+            container.RegisterInstance(new GameSessions(container.Resolve<ILogger>(), container.Resolve<IGameFactory>(), container.Resolve<IGameDataPersisterFactory>(), container.Resolve<IHashHelper>()));
 
             container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessDocumentService>(
                 );
@@ -66,19 +77,6 @@ namespace EntityFx.Gdcame.Test.PerformanceTest
                     )
                 );
 
-            //container.RegisterType<IGameDataPersister, GameDataPersister>(
-            //    new InjectionConstructor(
-            //        new ResolvedParameter<int>(),
-            //        new ResolvedParameter<string>(),
-            //        new ResolvedParameter<IGameDataStoreDataAccessService>(),
-            //        new ResolvedParameter<IMapper<IGame, StoredGameData>>("StoreGameDataMapper"),
-            //        new ResolvedParameter<IMapper<IGame, GameData>>("GameDataMapper"),
-            //                            new ResolvedParameter<IMapper<Item, StoredItem>>(),
-            //        new ResolvedParameter<IMapper<Item, EntityFX.Gdcame.Common.Contract.Items.Item>>(),
-            //        new ResolvedParameter<INotifyConsumerClientFactory>()
-            //        )
-            //    );
-            
             container.RegisterType<INotifyConsumerClientFactory, NotifyConsumerClientFactory>(new InjectionConstructor(
                 new ResolvedParameter<IUnityContainer>(),
                 string.Empty));
