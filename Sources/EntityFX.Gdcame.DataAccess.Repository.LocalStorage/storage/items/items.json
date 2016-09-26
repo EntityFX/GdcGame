@@ -5,7 +5,7 @@
     "Price": 200,
     "IsUnlocked": true,
     "InitialValue": 200,
-    "UnlockBalance": 0,
+    "UnlockValue": 0,
     "CustomRule": null,
     "Incrementors": {
       "0": {
@@ -28,7 +28,7 @@
     "Price": 400,
     "IsUnlocked": false,
     "InitialValue": 400,
-    "UnlockBalance": 5,
+    "UnlockValue": 5,
     "CustomRule": null,
     "Incrementors": {
       "0": {
@@ -51,7 +51,7 @@
     "Price": 800,
     "IsUnlocked": false,
     "InitialValue": 800,
-    "UnlockBalance": 10,
+    "UnlockValue": 10,
     "CustomRule": null,
     "Incrementors": {
       "0": {
@@ -74,7 +74,7 @@
     "Price": 1500,
     "IsUnlocked": true,
     "InitialValue": 1500,
-    "UnlockBalance": 25,
+    "UnlockValue": 25,
     "CustomRule": null,
     "Incrementors": {
       "0": {
@@ -97,7 +97,7 @@
     "Price": 3000,
     "IsUnlocked": false,
     "InitialValue": 3000,
-    "UnlockBalance": 40,
+    "UnlockValue": 40,
     "CustomRule": null,
     "Incrementors": {
       "0": {
@@ -120,7 +120,7 @@
     "Price": 6000,
     "IsUnlocked": false,
     "InitialValue": 6000,
-    "UnlockBalance": 80,
+    "UnlockValue": 80,
     "CustomRule": null,
     "Incrementors": {
       "0": {
@@ -143,7 +143,7 @@
     "Price": 10000,
     "IsUnlocked": true,
     "InitialValue": 10000,
-    "UnlockBalance": 120,
+    "UnlockValue": 120,
     "CustomRule": null,
     "Incrementors": {
       "0": {
@@ -166,7 +166,7 @@
     "Price": 20000,
     "IsUnlocked": false,
     "InitialValue": 20000,
-    "UnlockBalance": 180,
+    "UnlockValue": 180,
     "CustomRule": null,
     "Incrementors": {
       "0": {
@@ -189,7 +189,7 @@
     "Price": 50000,
     "IsUnlocked": false,
     "InitialValue": 50000,
-    "UnlockBalance": 220,
+    "UnlockValue": 220,
     "CustomRule": null,
     "Incrementors": {
       "0": {
@@ -212,7 +212,7 @@
     "Price": 223200,
     "IsUnlocked": true,
     "InitialValue": 223200,
-    "UnlockBalance": 250,
+    "UnlockValue": 250,
     "CustomRule": null,
     "Incrementors": {
       "0": {
@@ -235,7 +235,7 @@
     "Price": 250000,
     "IsUnlocked": false,
     "InitialValue": 250000,
-    "UnlockBalance": 280,
+    "UnlockValue": 280,
     "CustomRule": null,
     "Incrementors": {
       "0": {
@@ -258,7 +258,7 @@
     "Price": 300000,
     "IsUnlocked": false,
     "InitialValue": 300000,
-    "UnlockBalance": 500,
+    "UnlockValue": 500,
     "CustomRule": null,
     "Incrementors": {
       "0": {
@@ -281,7 +281,7 @@
     "Price": 500000,
     "IsUnlocked": true,
     "InitialValue": 500000,
-    "UnlockBalance": 600,
+    "UnlockValue": 600,
     "CustomRule": null,
     "Incrementors": {
       "0": {
@@ -304,7 +304,7 @@
     "Price": 800000,
     "IsUnlocked": false,
     "InitialValue": 800000,
-    "UnlockBalance": 650,
+    "UnlockValue": 650,
     "CustomRule": null,
     "Incrementors": {
       "0": {
@@ -327,7 +327,7 @@
     "Price": 1100000,
     "IsUnlocked": false,
     "InitialValue": 1100000,
-    "UnlockBalance": 700,
+    "UnlockValue": 700,
     "CustomRule": null,
     "Incrementors": {
       "0": {
@@ -350,7 +350,7 @@
     "Price": 1100000,
     "IsUnlocked": true,
     "InitialValue": 1100000,
-    "UnlockBalance": 800,
+    "UnlockValue": 800,
     "CustomRule": null,
     "Incrementors": {
       "0": {
@@ -373,7 +373,7 @@
     "Price": 1350000,
     "IsUnlocked": false,
     "InitialValue": 1350000,
-    "UnlockBalance": 900,
+    "UnlockValue": 900,
     "CustomRule": null,
     "Incrementors": {
       "0": {
@@ -396,7 +396,7 @@
     "Price": 2200000,
     "IsUnlocked": false,
     "InitialValue": 2200000,
-    "UnlockBalance": 1000,
+    "UnlockValue": 1000,
     "CustomRule": null,
     "Incrementors": {
       "0": {
@@ -419,7 +419,7 @@
     "Price": 2500000,
     "IsUnlocked": true,
     "InitialValue": 2500000,
-    "UnlockBalance": 1200,
+    "UnlockValue": 1200,
     "CustomRule": null,
     "Incrementors": {
       "0": {
@@ -442,7 +442,7 @@
     "Price": 2500000,
     "IsUnlocked": false,
     "InitialValue": 2500000,
-    "UnlockBalance": 1300,
+    "UnlockValue": 1300,
     "CustomRule": null,
     "Incrementors": {
       "0": {
@@ -465,7 +465,7 @@
     "Price": 1000000,
     "IsUnlocked": false,
     "InitialValue": 1000000,
-    "UnlockBalance": 1500,
+    "UnlockValue": 1500,
     "CustomRule": null,
     "Incrementors": {
       "0": {
@@ -488,7 +488,7 @@
     "Price": 1500000,
     "IsUnlocked": true,
     "InitialValue": 1500000,
-    "UnlockBalance": 1800,
+    "UnlockValue": 1800,
     "CustomRule": null,
     "Incrementors": {
       "0": {
@@ -511,7 +511,7 @@
     "Price": 1800000,
     "IsUnlocked": false,
     "InitialValue": 1800000,
-    "UnlockBalance": 1800,
+    "UnlockValue": 1800,
     "CustomRule": null,
     "Incrementors": {
       "0": {
@@ -534,7 +534,7 @@
     "Price": 2000000,
     "IsUnlocked": false,
     "InitialValue": 2000000,
-    "UnlockBalance": 2000,
+    "UnlockValue": 2000,
     "CustomRule": null,
     "Incrementors": {
       "0": {
@@ -557,7 +557,7 @@
     "Price": 2500000,
     "IsUnlocked": true,
     "InitialValue": 2500000,
-    "UnlockBalance": 2500,
+    "UnlockValue": 2500,
     "CustomRule": null,
     "Incrementors": {
       "0": {
@@ -580,7 +580,7 @@
     "Price": 3500000,
     "IsUnlocked": false,
     "InitialValue": 3500000,
-    "UnlockBalance": 3000,
+    "UnlockValue": 3000,
     "CustomRule": null,
     "Incrementors": {
       "0": {
@@ -603,7 +603,7 @@
     "Price": 5000000,
     "IsUnlocked": false,
     "InitialValue": 5000000,
-    "UnlockBalance": 3500,
+    "UnlockValue": 3500,
     "CustomRule": null,
     "Incrementors": {
       "0": {
@@ -626,7 +626,7 @@
     "Price": 7000000,
     "IsUnlocked": true,
     "InitialValue": 7000000,
-    "UnlockBalance": 3500,
+    "UnlockValue": 3500,
     "CustomRule": null,
     "Incrementors": {
       "0": {
@@ -649,7 +649,7 @@
     "Price": 8000000,
     "IsUnlocked": false,
     "InitialValue": 8000000,
-    "UnlockBalance": 4000,
+    "UnlockValue": 4000,
     "CustomRule": null,
     "Incrementors": {
       "0": {
@@ -672,7 +672,7 @@
     "Price": 10000000,
     "IsUnlocked": false,
     "InitialValue": 10000000,
-    "UnlockBalance": 4500,
+    "UnlockValue": 4500,
     "CustomRule": null,
     "Incrementors": {
       "0": {
@@ -694,7 +694,7 @@
     "Name": "Сходить на Strategy Update",
     "Price": 15000000,
     "IsUnlocked": true,
-    "UnlockBalance": 7000,
+    "UnlockValue": 7000,
     "InitialValue": 15000000,
     "CustomRule": null,
     "Incrementors": {

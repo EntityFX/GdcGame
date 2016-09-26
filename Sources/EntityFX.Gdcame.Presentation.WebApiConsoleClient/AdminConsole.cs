@@ -43,25 +43,25 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             {
                 {
                     ConsoleKey.F1,
-                    new MenuItem {MenuText = "Get active sessions and games", MenuAction = GetActiveSessions}
+                    new MenuItem {MenuText = "Все активные сессии", MenuAction = GetActiveSessions}
                 },
-                {ConsoleKey.F2, new MenuItem {MenuText = "Close session by GUID", MenuAction = CloseSessionByGuid}},
+                {ConsoleKey.F2, new MenuItem {MenuText = "Закрыть сессию по GUID", MenuAction = CloseSessionByGuid}},
                 {
                     ConsoleKey.F3,
                     new MenuItem
                     {
-                        MenuText = "Close session by username and position of GUID",
+                        MenuText = "Закрыть сессию по имени пользователя и номеру в списке GUID",
                         MenuAction = CloseSessionByUserNameAndPositionOfGuid
                     }
                 },
-                {ConsoleKey.F4, new MenuItem {MenuText = "Close all user sessions", MenuAction = CloseAllUserSessions}},
-                {ConsoleKey.F5, new MenuItem {MenuText = "Close all sessions", MenuAction = CloseAllSessions}},
+                {ConsoleKey.F4, new MenuItem {MenuText = "Закрыть все сессии пользователя", MenuAction = CloseAllUserSessions}},
+                {ConsoleKey.F5, new MenuItem {MenuText = "Закрыть все сессии", MenuAction = CloseAllSessions}},
                 {
                     ConsoleKey.F6,
-                    new MenuItem {MenuText = "Close all sessions exlude this", MenuAction = CloseAllSessionsExludeThis}
+                    new MenuItem {MenuText = "Закрыть все сессии кроме текущей", MenuAction = CloseAllSessionsExludeThis}
                 },
-                {ConsoleKey.F7, new MenuItem {MenuText = "Wipe user", MenuAction = WipeUser}},
-                {ConsoleKey.Escape, new MenuItem {MenuText = "Exit", MenuAction = Exit}}
+                {ConsoleKey.F7, new MenuItem {MenuText = "Обнулить пользователя", MenuAction = WipeUser}},
+                {ConsoleKey.Escape, new MenuItem {MenuText = "Выход", MenuAction = Exit}}
             };
         }
 
@@ -97,7 +97,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 
         public void ShowMenu()
         {
-            Console.WriteLine("-=Admin Functions=-");
+            Console.WriteLine("-=Администрирование=-");
             foreach (var item in _menu)
             {
                 Console.WriteLine(item.Key + " - " + item.Value.MenuText);
@@ -106,7 +106,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 
         private void Pause()
         {
-            Console.WriteLine("Press any key to continue...");
+            Console.WriteLine("Нажмите любую клавишу...");
             Console.ReadLine();
         }
 
@@ -121,12 +121,12 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                 var activeSessionsInfos = _adminManagerClient.GetActiveSessions().Result;
                 foreach (var activeSessionsInfo in activeSessionsInfos)
                 {
-                    Console.WriteLine("User login: {0}", activeSessionsInfo.Login);
+                    Console.WriteLine("Логин: {0}", activeSessionsInfo.Login);
 
                     var i = 0;
                     foreach (var userSession in activeSessionsInfo.Sessions)
                     {
-                        Console.WriteLine("\tSession №{0}. GUID: {1}", i, userSession.SessionIdentifier);
+                        Console.WriteLine("\tСессия №{0}. GUID: {1}", i, userSession.SessionIdentifier);
                         i++;
                     }
                 }
@@ -140,14 +140,14 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
         private void CloseSessionByGuid()
         {
             Console.Clear();
-            Console.WriteLine("Please enter session guid for close:");
+            Console.WriteLine("Введите GUID сессии для закрытия:");
 
             try
             {
                 var guid = new Guid(Console.ReadLine());
 
                 _adminManagerClient.CloseSessionByGuid(guid);
-                Console.WriteLine("Session {0} is closed", guid);
+                Console.WriteLine("Сессия {0} закрыта", guid);
             }
             catch (Exception exp)
             {
@@ -161,10 +161,10 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 
             try
             {
-                Console.WriteLine("Please enter username:");
+                Console.WriteLine("Введите логин:");
                 var username = Console.ReadLine();
 
-                Console.WriteLine("Please enter position(№) of GUID:");
+                Console.WriteLine("Введите позицию (№) GUID:");
                 var position = Convert.ToInt32(Console.ReadLine());
 
                 var guid =
@@ -174,7 +174,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                         .Sessions[position].SessionIdentifier;
                 _adminManagerClient.CloseSessionByGuid(guid);
 
-                Console.WriteLine("Session {0} of user {1} is closed", guid, username);
+                Console.WriteLine("Сессия {0} пользователя {1} закрыта", guid, username);
             }
             catch (Exception exp)
             {
@@ -185,7 +185,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
         private void CloseAllUserSessions()
         {
             Console.Clear();
-            Console.WriteLine("Please enter username for close his sessions:");
+            Console.WriteLine("Введите логин для закрытия всех его сессий:");
 
             try
              {
@@ -202,12 +202,12 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
         private void CloseAllSessions()
         {
             Console.Clear();
-            Console.WriteLine("Trying to close all sessions...");
+            Console.WriteLine("Закрываем сессии...");
 
             try
              {
                  _adminManagerClient.CloseAllSessions();
-                 Console.WriteLine("Success!");
+                 Console.WriteLine("Круто!");
              }
              catch (Exception exp)
              {
@@ -220,7 +220,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             try
              {
                  _adminManagerClient.CloseAllSessionsExcludeThis(SessionGuid);
-                 Console.WriteLine("Success!");
+                 Console.WriteLine("Круто!");
              }
              catch (Exception exp)
              {
@@ -237,13 +237,13 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
              {
                  var username = Console.ReadLine();
 
-                 Console.WriteLine("All proress will LOSTED. Do you sure??? (Y/N):");
+                 Console.WriteLine("Все данные пользователя будут обнулены. Продолжить??? (Y/N):");
                  if (Console.ReadLine().ToUpper() != "Y")
                      return;
 
                  _adminManagerClient.WipeUser(username);
 
-                 Console.WriteLine("Progress of user {0} is wiped", username);
+                 Console.WriteLine("Пользователь {0} обнулён", username);
              }
              catch (Exception exp)
              {
