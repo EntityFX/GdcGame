@@ -99,12 +99,12 @@ namespace EntityFX.Gdcame.Manager
         {
             var session = new Session
             {
-                Login = user.Email,
+                Login = user.Login,
                 UserId = user.Id,
                 SessionIdentifier = Guid.NewGuid(),
                 UserRoles = user.IsAdmin ? new[] {UserRole.GenericUser, UserRole.Admin} : new[] {UserRole.GenericUser},
                 Identity =
-                    new CustomGameIdentity {AuthenticationType = "Auto", IsAuthenticated = true, Name = user.Email}
+                    new CustomGameIdentity {AuthenticationType = "Auto", IsAuthenticated = true, Name = user.Login}
             };
             SessionsStorage.TryAdd(session.SessionIdentifier, session);
             return session.SessionIdentifier;

@@ -112,7 +112,7 @@ namespace EntityFx.Gdcame.Test.PerformanceTest
             var result = await http.PostAsync("http://localhost:9001/api/auth/register", new FormUrlEncodedContent(
                 new Dictionary<string, string>
                 {
-                    {"Email", "userok-" + index},
+                    {"Login", "userok-" + index},
                     {"Password", "!Biohazard1989"},
                     {"ConfirmPAssword", "!Biohazard1989"},
 

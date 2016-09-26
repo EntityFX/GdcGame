@@ -9,7 +9,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef.Mappers
         public UserEntity Map(User source, UserEntity destination)
         {
             destination.Id = source.Id;
-            destination.Email = source.Email;
+            destination.Email = source.Login;
             destination.IsAdmin = source.IsAdmin;
             destination.Secret = source.PasswordHash;
             return destination;

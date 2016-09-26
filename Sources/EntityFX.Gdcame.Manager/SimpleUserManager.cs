@@ -34,7 +34,7 @@ namespace EntityFX.Gdcame.Manager
             return user != null
                 ? new UserData
                 {
-                    Id = user.Id, Login = user.Email, PasswordHash = user.PasswordHash,
+                    Id = user.Id, Login = user.Login, PasswordHash = user.PasswordHash,
                     UserRoles = GetUserRoles(user)
                 }
                 : null;
@@ -44,7 +44,7 @@ namespace EntityFX.Gdcame.Manager
         {
             var user = _userDataAccess.FindByName(login);
             return user != null
-                ? new UserData {Id = user.Id, Login = user.Email, PasswordHash = user.PasswordHash,
+                ? new UserData {Id = user.Id, Login = user.Login, PasswordHash = user.PasswordHash,
                     UserRoles = GetUserRoles(user)
                 }
                 : null;
@@ -54,7 +54,7 @@ namespace EntityFX.Gdcame.Manager
         {
             return _userDataAccess.FindByFilter(searchString)
                 .Select(user =>
-                    new UserData {Id = user.Id, Login = user.Email, PasswordHash = user.PasswordHash,
+                    new UserData {Id = user.Id, Login = user.Login, PasswordHash = user.PasswordHash,
                         UserRoles = GetUserRoles(user)
                     })
                 .ToArray();
@@ -67,7 +67,7 @@ namespace EntityFX.Gdcame.Manager
                 _userDataAccess.Create(new User
                 {
                     Id = _hashHelper.GetHashedString(login.Login),
-                    Email = login.Login,
+                    Login = login.Login,
                     IsAdmin = login.UserRoles != null && login.UserRoles.Contains(UserRole.Admin),
                     PasswordHash = login.PasswordHash
                 });

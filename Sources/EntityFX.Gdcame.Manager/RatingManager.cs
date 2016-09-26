@@ -42,7 +42,7 @@ namespace EntityFX.Gdcame.Manager
             ////                        GdcPoints = gameData.Counters.Counters[0].Value,
             ////                        ManualStepsCount = gameData.ManualStepsCount,
             ////                        TotalFunds = gameData.Counters.TotalFunds,
-            ////                        UserName = user.Email
+            ////                        UserName = user.Login
             ////                    });
             //var usersRatings = new List<UserRating>();
             //foreach (var user in users)
@@ -53,7 +53,7 @@ namespace EntityFX.Gdcame.Manager
             //        GdcPoints = gameData.Counters.Counters[0].Value,
             //        ManualStepsCount = gameData.ManualStepsCount,
             //        TotalFunds = gameData.Counters.TotalFunds,
-            //        UserName = user.Email, Status = _gameSessions.GetGameSessionStatus(user.Email)
+            //        UserName = user.Login, Status = _gameSessions.GetGameSessionStatus(user.Login)
             //    });
             //}
             //return usersRatings.OrderByDescending(_ => _.GdcPoints).ThenByDescending(_ => _.TotalFunds).Take(count).ToArray();
@@ -68,7 +68,7 @@ namespace EntityFX.Gdcame.Manager
                 GdcPoints = gameData.Cash.Counters[0].Value,
                 ManualStepsCount = gameData.ManualStepsCount,
                 TotalFunds = gameData.Cash.Total,
-                UserName = user.Email
+                UserName = user.Login
             };
         }
 
@@ -82,7 +82,7 @@ namespace EntityFX.Gdcame.Manager
                     GdcPoints = gameData.Cash.Counters[0].Value,
                     ManualStepsCount = gameData.ManualStepsCount,
                     TotalFunds = gameData.Cash.Total,
-                    UserName = user.Email
+                    UserName = user.Login
                 });
 
             return usersRatings.OrderBy(_ => _.GdcPoints).Take(count).ToArray();

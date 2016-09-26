@@ -54,8 +54,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
 
             var childBootstrappers = new IContainerBootstrapper[]
                         {
-                //new DataAccess.Repository.Ef.ContainerBootstrapper(), 
-                new DataAccess.Repository.Mongo.ContainerBootstrapper(),
+                GetRepositoryProvider(ConfigurationManager.AppSettings["RepositoryProvider"]),
                 new DataAccess.Service.ContainerBootstrapper(),
                 new Manager.ContainerBootstrapper(),
                 new NotifyConsumer.ContainerBootstrapper()
@@ -169,6 +168,20 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
             container.RegisterType<IOperationContextHelper, NoWcfOperationContextHelper>();
 
             return container;
+        }
+
+        public IContainerBootstrapper GetRepositoryProvider(string providerName)
+        {
+            switch (providerName)
+            {
+                case "EntityFramework":
+                    return new DataAccess.Repository.Ef.ContainerBootstrapper();
+                case "Mongo":
+                    return new DataAccess.Repository.Mongo.ContainerBootstrapper();
+                case "LocalStorage":
+                default:
+                    return new DataAccess.Repository.LocalStorage.ContainerBootstrapper();
+            }
         }
     }
 }

@@ -113,8 +113,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
             Console.WriteLine(RuntimeHelper.GetRuntimeInfo());
             Console.WriteLine("SignalR server running on {0}", signalRPort);
             Console.WriteLine("Web server running on {0}", webApiStartOptions.Port);
-
-
+            Console.WriteLine("Repository provider: {0}", ConfigurationManager.AppSettings["RepositoryProvider"]);
             Console.ReadLine();
         }
     }

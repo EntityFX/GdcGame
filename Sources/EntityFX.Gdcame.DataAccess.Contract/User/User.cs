@@ -9,7 +9,7 @@ namespace EntityFX.Gdcame.DataAccess.Contract.User
         public string Id { get; set; }
 
         [DataMember]
-        public string Email { get; set; }
+        public string Login { get; set; }
 
         [DataMember]
         public bool IsAdmin { get; set; }

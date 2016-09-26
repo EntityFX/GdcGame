@@ -46,7 +46,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef
             //{
             //    var userEntity = uow.
             //    userEntity.Id = user.Id;
-            //    userEntity.Email = user.Email;
+            //    userEntity.Login = user.Login;
             //    userEntity.CreateDateTime = DateTime.Now;
             //    uow.Commit();
             //}
@@ -58,7 +58,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef
             //{
             //    var userEntity = uow.DeleteEntity<UserEntity>()
             //    userEntity.Id = user.Id;
-            //    userEntity.Email = user.Email;
+            //    userEntity.Login = user.Login;
             //    userEntity.CreateDateTime = DateTime.Now;
             //    uow.Commit();
             //}

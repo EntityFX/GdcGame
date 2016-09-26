@@ -18,7 +18,7 @@ namespace EntityFX.Gdcame.Common.Presentation.Model.Mappers
                 .ToDictionary(pair => pair.Key, pair => pair.Value);
             destination.InflationPercent = source.InflationPercent;
             destination.Name = source.Name;
-            destination.UnlockBalance = source.UnlockBalance;
+            destination.UnlockBalance = source.UnlockValue;
             destination.IsUnlocked = source.IsUnlocked;
             destination.Picture = source.Picture;
             return destination;

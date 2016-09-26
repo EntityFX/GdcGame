@@ -1,0 +1,715 @@
+[
+  {
+    "Id": 1,
+    "Name": "Принести бутыль воды",
+    "Price": 200,
+    "IsUnlocked": true,
+    "InitialValue": 200,
+    "UnlockBalance": 0,
+    "CustomRule": null,
+    "Incrementors": {
+      "0": {
+        "Value": 1,
+        "IncrementorType": 0
+      },
+      "1": {
+        "Value": 10,
+        "IncrementorType": 0
+      },
+      "2": {
+        "Value": 0,
+        "IncrementorType": 0
+      }
+    }
+  },
+  {
+    "Id": 2,
+    "Name": "Сварить кофе",
+    "Price": 400,
+    "IsUnlocked": false,
+    "InitialValue": 400,
+    "UnlockBalance": 5,
+    "CustomRule": null,
+    "Incrementors": {
+      "0": {
+        "Value": 1,
+        "IncrementorType": 0
+      },
+      "1": {
+        "Value": 0,
+        "IncrementorType": 0
+      },
+      "2": {
+        "Value": 10,
+        "IncrementorType": 0
+      }
+    }
+  },
+  {
+    "Id": 3,
+    "Name": "Открыть окно",
+    "Price": 800,
+    "IsUnlocked": false,
+    "InitialValue": 800,
+    "UnlockBalance": 10,
+    "CustomRule": null,
+    "Incrementors": {
+      "0": {
+        "Value": 2,
+        "IncrementorType": 0
+      },
+      "1": {
+        "Value": 20,
+        "IncrementorType": 0
+      },
+      "2": {
+        "Value": 20,
+        "IncrementorType": 0
+      }
+    }
+  },
+  {
+    "Id": 4,
+    "Name": "Протереть пыль",
+    "Price": 1500,
+    "IsUnlocked": true,
+    "InitialValue": 1500,
+    "UnlockBalance": 25,
+    "CustomRule": null,
+    "Incrementors": {
+      "0": {
+        "Value": 0,
+        "IncrementorType": 0
+      },
+      "1": {
+        "Value": 80,
+        "IncrementorType": 0
+      },
+      "2": {
+        "Value": 40,
+        "IncrementorType": 0
+      }
+    }
+  },
+  {
+    "Id": 5,
+    "Name": "Проверить задачу",
+    "Price": 3000,
+    "IsUnlocked": false,
+    "InitialValue": 3000,
+    "UnlockBalance": 40,
+    "CustomRule": null,
+    "Incrementors": {
+      "0": {
+        "Value": 0,
+        "IncrementorType": 0
+      },
+      "1": {
+        "Value": 160,
+        "IncrementorType": 0
+      },
+      "2": {
+        "Value": 0,
+        "IncrementorType": 0
+      }
+    }
+  },
+  {
+    "Id": 6,
+    "Name": "Проверить почту",
+    "Price": 6000,
+    "IsUnlocked": false,
+    "InitialValue": 6000,
+    "UnlockBalance": 80,
+    "CustomRule": null,
+    "Incrementors": {
+      "0": {
+        "Value": 10,
+        "IncrementorType": 0
+      },
+      "1": {
+        "Value": 0,
+        "IncrementorType": 0
+      },
+      "2": {
+        "Value": 80,
+        "IncrementorType": 0
+      }
+    }
+  },
+  {
+    "Id": 7,
+    "Name": "Позвать на чай",
+    "Price": 10000,
+    "IsUnlocked": true,
+    "InitialValue": 10000,
+    "UnlockBalance": 120,
+    "CustomRule": null,
+    "Incrementors": {
+      "0": {
+        "Value": 5,
+        "IncrementorType": 0
+      },
+      "1": {
+        "Value": 240,
+        "IncrementorType": 0
+      },
+      "2": {
+        "Value": 80,
+        "IncrementorType": 0
+      }
+    }
+  },
+  {
+    "Id": 8,
+    "Name": "Почистить винт",
+    "Price": 20000,
+    "IsUnlocked": false,
+    "InitialValue": 20000,
+    "UnlockBalance": 180,
+    "CustomRule": null,
+    "Incrementors": {
+      "0": {
+        "Value": 5,
+        "IncrementorType": 0
+      },
+      "1": {
+        "Value": 80,
+        "IncrementorType": 0
+      },
+      "2": {
+        "Value": 80,
+        "IncrementorType": 0
+      }
+    }
+  },
+  {
+    "Id": 9,
+    "Name": "Закоммитить код",
+    "Price": 50000,
+    "IsUnlocked": false,
+    "InitialValue": 50000,
+    "UnlockBalance": 220,
+    "CustomRule": null,
+    "Incrementors": {
+      "0": {
+        "Value": 10,
+        "IncrementorType": 0
+      },
+      "1": {
+        "Value": 2,
+        "IncrementorType": 1
+      },
+      "2": {
+        "Value": 80,
+        "IncrementorType": 0
+      }
+    }
+  },
+  {
+    "Id": 10,
+    "Name": "Заполнить таймшит",
+    "Price": 223200,
+    "IsUnlocked": true,
+    "InitialValue": 223200,
+    "UnlockBalance": 250,
+    "CustomRule": null,
+    "Incrementors": {
+      "0": {
+        "Value": 10,
+        "IncrementorType": 0
+      },
+      "1": {
+        "Value": 0,
+        "IncrementorType": 0
+      },
+      "2": {
+        "Value": 150,
+        "IncrementorType": 0
+      }
+    }
+  },
+  {
+    "Id": 11,
+    "Name": "Написать юнит тест",
+    "Price": 250000,
+    "IsUnlocked": false,
+    "InitialValue": 250000,
+    "UnlockBalance": 280,
+    "CustomRule": null,
+    "Incrementors": {
+      "0": {
+        "Value": 5,
+        "IncrementorType": 0
+      },
+      "1": {
+        "Value": 200,
+        "IncrementorType": 0
+      },
+      "2": {
+        "Value": 300,
+        "IncrementorType": 0
+      }
+    }
+  },
+  {
+    "Id": 12,
+    "Name": "Переехать на виртуалку",
+    "Price": 300000,
+    "IsUnlocked": false,
+    "InitialValue": 300000,
+    "UnlockBalance": 500,
+    "CustomRule": null,
+    "Incrementors": {
+      "0": {
+        "Value": 10,
+        "IncrementorType": 0
+      },
+      "1": {
+        "Value": 400,
+        "IncrementorType": 0
+      },
+      "2": {
+        "Value": 0,
+        "IncrementorType": 0
+      }
+    }
+  },
+  {
+    "Id": 13,
+    "Name": "Пофиксить баг",
+    "Price": 500000,
+    "IsUnlocked": true,
+    "InitialValue": 500000,
+    "UnlockBalance": 600,
+    "CustomRule": null,
+    "Incrementors": {
+      "0": {
+        "Value": 10,
+        "IncrementorType": 0
+      },
+      "1": {
+        "Value": 500,
+        "IncrementorType": 0
+      },
+      "2": {
+        "Value": 0,
+        "IncrementorType": 0
+      }
+    }
+  },
+  {
+    "Id": 14,
+    "Name": "Отрефакторить код",
+    "Price": 800000,
+    "IsUnlocked": false,
+    "InitialValue": 800000,
+    "UnlockBalance": 650,
+    "CustomRule": null,
+    "Incrementors": {
+      "0": {
+        "Value": 30,
+        "IncrementorType": 0
+      },
+      "1": {
+        "Value": 0,
+        "IncrementorType": 0
+      },
+      "2": {
+        "Value": 0,
+        "IncrementorType": 0
+      }
+    }
+  },
+  {
+    "Id": 15,
+    "Name": "Помочь команде",
+    "Price": 1100000,
+    "IsUnlocked": false,
+    "InitialValue": 1100000,
+    "UnlockBalance": 700,
+    "CustomRule": null,
+    "Incrementors": {
+      "0": {
+        "Value": 10,
+        "IncrementorType": 0
+      },
+      "1": {
+        "Value": 10,
+        "IncrementorType": 1
+      },
+      "2": {
+        "Value": 0,
+        "IncrementorType": 0
+      }
+    }
+  },
+  {
+    "Id": 16,
+    "Name": "Прикрутить модную либу",
+    "Price": 1100000,
+    "IsUnlocked": true,
+    "InitialValue": 1100000,
+    "UnlockBalance": 800,
+    "CustomRule": null,
+    "Incrementors": {
+      "0": {
+        "Value": 10,
+        "IncrementorType": 0
+      },
+      "1": {
+        "Value": 100,
+        "IncrementorType": 0
+      },
+      "2": {
+        "Value": 100,
+        "IncrementorType": 0
+      }
+    }
+  },
+  {
+    "Id": 17,
+    "Name": "Сделать SMART задачу",
+    "Price": 1350000,
+    "IsUnlocked": false,
+    "InitialValue": 1350000,
+    "UnlockBalance": 900,
+    "CustomRule": null,
+    "Incrementors": {
+      "0": {
+        "Value": 10,
+        "IncrementorType": 0
+      },
+      "1": {
+        "Value": 150,
+        "IncrementorType": 0
+      },
+      "2": {
+        "Value": 200,
+        "IncrementorType": 0
+      }
+    }
+  },
+  {
+    "Id": 18,
+    "Name": "Предложить инновацию",
+    "Price": 2200000,
+    "IsUnlocked": false,
+    "InitialValue": 2200000,
+    "UnlockBalance": 1000,
+    "CustomRule": null,
+    "Incrementors": {
+      "0": {
+        "Value": 15,
+        "IncrementorType": 0
+      },
+      "1": {
+        "Value": 300,
+        "IncrementorType": 0
+      },
+      "2": {
+        "Value": 50,
+        "IncrementorType": 0
+      }
+    }
+  },
+  {
+    "Id": 19,
+    "Name": "Стать Buddy",
+    "Price": 2500000,
+    "IsUnlocked": true,
+    "InitialValue": 2500000,
+    "UnlockBalance": 1200,
+    "CustomRule": null,
+    "Incrementors": {
+      "0": {
+        "Value": 20,
+        "IncrementorType": 0
+      },
+      "1": {
+        "Value": 0,
+        "IncrementorType": 0
+      },
+      "2": {
+        "Value": 2,
+        "IncrementorType": 1
+      }
+    }
+  },
+  {
+    "Id": 20,
+    "Name": "Помочь HR",
+    "Price": 2500000,
+    "IsUnlocked": false,
+    "InitialValue": 2500000,
+    "UnlockBalance": 1300,
+    "CustomRule": null,
+    "Incrementors": {
+      "0": {
+        "Value": 20,
+        "IncrementorType": 0
+      },
+      "1": {
+        "Value": 500,
+        "IncrementorType": 0
+      },
+      "2": {
+        "Value": 0,
+        "IncrementorType": 0
+      }
+    }
+  },
+  {
+    "Id": 21,
+    "Name": "Провести презентацию",
+    "Price": 1000000,
+    "IsUnlocked": false,
+    "InitialValue": 1000000,
+    "UnlockBalance": 1500,
+    "CustomRule": null,
+    "Incrementors": {
+      "0": {
+        "Value": 25,
+        "IncrementorType": 0
+      },
+      "1": {
+        "Value": 0,
+        "IncrementorType": 0
+      },
+      "2": {
+        "Value": 500,
+        "IncrementorType": 0
+      }
+    }
+  },
+  {
+    "Id": 22,
+    "Name": "Участвовать в R&D",
+    "Price": 1500000,
+    "IsUnlocked": true,
+    "InitialValue": 1500000,
+    "UnlockBalance": 1800,
+    "CustomRule": null,
+    "Incrementors": {
+      "0": {
+        "Value": 15,
+        "IncrementorType": 0
+      },
+      "1": {
+        "Value": 750,
+        "IncrementorType": 0
+      },
+      "2": {
+        "Value": 0,
+        "IncrementorType": 0
+      }
+    }
+  },
+  {
+    "Id": 23,
+    "Name": "Сделать Code Review",
+    "Price": 1800000,
+    "IsUnlocked": false,
+    "InitialValue": 1800000,
+    "UnlockBalance": 1800,
+    "CustomRule": null,
+    "Incrementors": {
+      "0": {
+        "Value": 20,
+        "IncrementorType": 0
+      },
+      "1": {
+        "Value": 100,
+        "IncrementorType": 0
+      },
+      "2": {
+        "Value": 0,
+        "IncrementorType": 0
+      }
+    }
+  },
+  {
+    "Id": 24,
+    "Name": "Оптимизировать Perfomance",
+    "Price": 2000000,
+    "IsUnlocked": false,
+    "InitialValue": 2000000,
+    "UnlockBalance": 2000,
+    "CustomRule": null,
+    "Incrementors": {
+      "0": {
+        "Value": 40,
+        "IncrementorType": 0
+      },
+      "1": {
+        "Value": 500,
+        "IncrementorType": 0
+      },
+      "2": {
+        "Value": 200,
+        "IncrementorType": 0
+      }
+    }
+  },
+  {
+    "Id": 25,
+    "Name": "Сделать DevOps скрипты",
+    "Price": 2500000,
+    "IsUnlocked": true,
+    "InitialValue": 2500000,
+    "UnlockBalance": 2500,
+    "CustomRule": null,
+    "Incrementors": {
+      "0": {
+        "Value": 40,
+        "IncrementorType": 0
+      },
+      "1": {
+        "Value": 1200,
+        "IncrementorType": 0
+      },
+      "2": {
+        "Value": 0,
+        "IncrementorType": 0
+      }
+    }
+  },
+  {
+    "Id": 26,
+    "Name": "Разработать архитектуру",
+    "Price": 3500000,
+    "IsUnlocked": false,
+    "InitialValue": 3500000,
+    "UnlockBalance": 3000,
+    "CustomRule": null,
+    "Incrementors": {
+      "0": {
+        "Value": 80,
+        "IncrementorType": 0
+      },
+      "1": {
+        "Value": 0,
+        "IncrementorType": 0
+      },
+      "2": {
+        "Value": 0,
+        "IncrementorType": 0
+      }
+    }
+  },
+  {
+    "Id": 27,
+    "Name": "Помочь PMу",
+    "Price": 5000000,
+    "IsUnlocked": false,
+    "InitialValue": 5000000,
+    "UnlockBalance": 3500,
+    "CustomRule": null,
+    "Incrementors": {
+      "0": {
+        "Value": 40,
+        "IncrementorType": 0
+      },
+      "1": {
+        "Value": 4,
+        "IncrementorType": 1
+      },
+      "2": {
+        "Value": 4,
+        "IncrementorType": 1
+      }
+    }
+  },
+  {
+    "Id": 28,
+    "Name": "Успокойить заказчика",
+    "Price": 7000000,
+    "IsUnlocked": true,
+    "InitialValue": 7000000,
+    "UnlockBalance": 3500,
+    "CustomRule": null,
+    "Incrementors": {
+      "0": {
+        "Value": 40,
+        "IncrementorType": 0
+      },
+      "1": {
+        "Value": 4000,
+        "IncrementorType": 0
+      },
+      "2": {
+        "Value": 0,
+        "IncrementorType": 0
+      }
+    }
+  },
+  {
+    "Id": 29,
+    "Name": "Организовать BAS Fest",
+    "Price": 8000000,
+    "IsUnlocked": false,
+    "InitialValue": 8000000,
+    "UnlockBalance": 4000,
+    "CustomRule": null,
+    "Incrementors": {
+      "0": {
+        "Value": 50,
+        "IncrementorType": 0
+      },
+      "1": {
+        "Value": 1000,
+        "IncrementorType": 0
+      },
+      "2": {
+        "Value": 1200,
+        "IncrementorType": 0
+      }
+    }
+  },
+  {
+    "Id": 30,
+    "Name": "Переехать на ICL Cloud",
+    "Price": 10000000,
+    "IsUnlocked": false,
+    "InitialValue": 10000000,
+    "UnlockBalance": 4500,
+    "CustomRule": null,
+    "Incrementors": {
+      "0": {
+        "Value": 25,
+        "IncrementorType": 0
+      },
+      "1": {
+        "Value": 0,
+        "IncrementorType": 0
+      },
+      "2": {
+        "Value": 0,
+        "IncrementorType": 0
+      }
+    }
+  },
+  {
+    "Id": 31,
+    "Name": "Сходить на Strategy Update",
+    "Price": 15000000,
+    "IsUnlocked": true,
+    "UnlockBalance": 7000,
+    "InitialValue": 15000000,
+    "CustomRule": null,
+    "Incrementors": {
+      "0": {
+        "Value": 25,
+        "IncrementorType": 0
+      },
+      "1": {
+        "Value": 0,
+        "IncrementorType": 0
+      },
+      "2": {
+        "Value": 0,
+        "IncrementorType": 0
+      }
+    }
+  }
+]

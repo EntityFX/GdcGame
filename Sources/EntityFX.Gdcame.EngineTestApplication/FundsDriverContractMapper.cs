@@ -28,7 +28,7 @@ namespace EntityFX.Gdcame.EngineTestApplication
                 Incrementors = destinationIncrementors,
                 InflationPercent = source.InflationPercent,
                 Name = source.Name,
-                UnlockBalance = source.UnlockBalance,
+                UnlockValue = source.UnlockBalance,
                 Price = source.Price
             };
         }

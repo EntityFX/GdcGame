@@ -26,7 +26,7 @@ namespace EntityFX.Gdcame.Common.Contract.Items
         public int InflationSteps { get; set; }
 
         [DataMember]
-        public decimal UnlockBalance { get; set; }
+        public decimal UnlockValue { get; set; }
 
         [DataMember]
         public int Bought { get; set; }

@@ -23,7 +23,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef.Mappers
             destination = destination ?? new Item();
             destination.Bought = 0;
             destination.InitialValue = source.InitialValue;
-            destination.UnlockBalance = source.UnlockValue;
+            destination.UnlockValue = source.UnlockValue;
             destination.Name = source.Name;
             destination.Id = source.Id;
             destination.InflationPercent = source.InflationPercent;
