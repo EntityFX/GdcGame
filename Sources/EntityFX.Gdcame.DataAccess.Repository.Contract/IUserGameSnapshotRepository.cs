@@ -6,7 +6,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Contract
     public interface IUserGameSnapshotRepository
     {
         StoredGameData FindByUserId(GetUserGameSnapshotByIdCriterion criterion);
-        void CreateForUser(string userId, StoredGameData gameData);
-        void UpdateForUser(string userId, StoredGameData gameData);
+        void CreateUserGames(StoredGameDataWithUserId[] gameDataWithUserId);
+        void UpdateUserGames(StoredGameDataWithUserId[] gameDataWithUserId);
     }
 }

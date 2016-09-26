@@ -71,16 +71,16 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
         private readonly IGameDataRetrieveDataAccessService _gameDataRetrieveDataAccessService;
 
         private readonly ILogger _logger;
-        private readonly INotifyGameDataChanged _notifyGameDataChanged;
+        private readonly IGameDataChangesNotifier _gameDataChangesNotifier;
         private readonly string _userId;
         private GameData _gameData;
 
         public NetworkGame(ILogger logger, IGameDataRetrieveDataAccessService gameDataRetrieveDataAccessService
-            , INotifyGameDataChanged notifyGameDataChanged, string userId)
+            , IGameDataChangesNotifier gameDataChangesNotifier, string userId)
         {
             _logger = logger;
             _gameDataRetrieveDataAccessService = gameDataRetrieveDataAccessService;
-            _notifyGameDataChanged = notifyGameDataChanged;
+            _gameDataChangesNotifier = gameDataChangesNotifier;
             _userId = userId;
         }
 
@@ -175,7 +175,8 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
 
         public void PerformGameDataChanged()
         {
-            _notifyGameDataChanged.GameDataChanged(this);
+            ///////_gameDataChangesNotifier.GameDataChanged(this);
+            throw new NotImplementedException("commented out previous line!!!");
         }
 
         protected override void PostPerformAutoStep(IEnumerable<Contract.Counters.CounterBase> modifiedCounters,
@@ -191,12 +192,13 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
             //_currentStepsToPersist++;
             /*}  */
 
-            _notifyGameDataChanged.AutomaticRefreshed(this);
+            _gameDataChangesNotifier.AutomaticRefreshed(this);
         }
 
         protected override void PostBuyFundDriver(Item fundDriver)
         {
-            _notifyGameDataChanged.FundsDriverBought(this, fundDriver);
+            ///////_gameDataChangesNotifier.FundsDriverBought(this, fundDriver);
+            throw new NotImplementedException("commented out previous line!!!");
         }
 
         protected override void PostInitialize()

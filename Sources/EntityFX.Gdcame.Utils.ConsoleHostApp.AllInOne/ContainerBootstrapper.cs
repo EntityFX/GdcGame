@@ -95,7 +95,18 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
 
             container.RegisterType<IGameFactory, GameFactory>();
 
-            container.RegisterInstance(new GameSessions(container.Resolve<ILogger>(), container.Resolve<IGameFactory>()));
+            container.RegisterType<IGameDataPersister, GameDataPersister>(
+                new InjectionConstructor(
+                    new ResolvedParameter<IGameDataStoreDataAccessService>(),
+                    new ResolvedParameter<IMapperFactory>()
+                    )
+                );
+
+            container.RegisterType<IGameDataPersisterFactory, GameDataPersisterFactory>();
+
+            container.RegisterType<IHashHelper, HashHelper>();
+
+            container.RegisterInstance(new GameSessions(container.Resolve<ILogger>(), container.Resolve<IGameFactory>(), container.Resolve<IGameDataPersisterFactory>(), container.Resolve<IHashHelper>()));
 
             container.RegisterType<INotifyConsumerService, NotifyConsumerService>(new InjectionConstructor(
                 new ResolvedParameter<ILogger>(),
@@ -107,7 +118,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
                 , new Interceptor<InterfaceInterceptor>()
                 );
 
-            container.RegisterType<INotifyGameDataChanged, NotifyGameDataChanged>(
+            container.RegisterType<IGameDataChangesNotifier, GameDataChangesNotifier>(
                 new InjectionConstructor(
                     new ResolvedParameter<string>(),
                     new ResolvedParameter<string>(),
@@ -121,15 +132,13 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
                 new ResolvedParameter<IUnityContainer>(),
                 string.Empty));
 
-           /* if (ConfigurationManager.AppSettings["UseLoggerInterceptor"] == "True")
-            {
-                container.Configure<Interception>()
-                    .AddPolicy("logging")
-                    .AddCallHandler<LoggerCallHandler>(new ContainerControlledLifetimeManager())
-                    .AddMatchingRule<NamespaceMatchingRule>(new InjectionConstructor("EntityFX.Gdcame.*", true));
-            }*/
-
-            container.RegisterType<IHashHelper, HashHelper>();
+            /* if (ConfigurationManager.AppSettings["UseLoggerInterceptor"] == "True")
+             {
+                 container.Configure<Interception>()
+                     .AddPolicy("logging")
+                     .AddCallHandler<LoggerCallHandler>(new ContainerControlledLifetimeManager())
+                     .AddMatchingRule<NamespaceMatchingRule>(new InjectionConstructor("EntityFX.Gdcame.*", true));
+             }*/
 
             container.RegisterType<IMapper<Cash, CashModel>, FundsCounterModelMapper>();
             container.RegisterType<IMapper<CounterBase, CounterModelBase>, CounterModelMapper>();

@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System;
+using System.Security.Cryptography;
 using System.Text;
 using EntityFX.Gdcame.Infrastructure.Common;
 
@@ -32,6 +33,31 @@ namespace EntityFX.Gdcame.Utils.Common
             }
 
             return new string(c);
+        }
+
+        public int GetModuloOfUserIdHash(string userId, int modulo)
+        {
+            Int64 value = 0;
+            Int64 _2_Pow_4Pos_ByModulo = 1;
+            for (int i = userId.Length - 1; i >= 0; i--)
+            {
+                int x = 0;
+                char c = userId[i];
+                if ((c >= 'a') && (c <= 'f'))
+                {
+                    x = c - 'a' + 10;
+                }
+                else if ((c >= '0') && (c <= '9'))
+                {
+                    x = c - '0';
+                }
+
+                value = (value + x * _2_Pow_4Pos_ByModulo) % modulo;
+
+                _2_Pow_4Pos_ByModulo = (_2_Pow_4Pos_ByModulo << 4) % modulo;
+            }
+
+            return (int)value;
         }
     }
 }

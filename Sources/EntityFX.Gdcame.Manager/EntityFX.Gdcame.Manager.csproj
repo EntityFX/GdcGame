@@ -72,6 +72,7 @@
     <Compile Include="CustomGameIdentity.cs" />
     <Compile Include="GameManager.cs" />
     <Compile Include="GameSessions.cs" />
+    <Compile Include="IGameDataPersisterFactory.cs" />
     <Compile Include="IGameFactory.cs" />
     <Compile Include="Mappers\CounterContractMapper.cs" />
     <Compile Include="Mappers\CustomRuleInfoContractMapper.cs" />

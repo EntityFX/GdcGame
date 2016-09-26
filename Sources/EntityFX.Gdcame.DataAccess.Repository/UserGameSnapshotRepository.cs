@@ -29,27 +29,35 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef
             }
         }
 
-        public void CreateForUser(string userId, StoredGameData gameData)
+        public void CreateUserGames(StoredGameDataWithUserId[] listOfGameDataWithUserId)
         {
+
             using (var uow = _unitOfWorkFactory.Create())
             {
-                var userEntity = uow.CreateEntity<UserGameDataSnapshotEntity>();
-                userEntity.Data = Serialize(gameData);
-                userEntity.UserId = userId;
+                foreach (var gameDataWithUserId in listOfGameDataWithUserId)
+                {
+                    var userEntity = uow.CreateEntity<UserGameDataSnapshotEntity>();
+                    userEntity.Data = Serialize(gameDataWithUserId.StoredGameData);
+                    userEntity.UserId = gameDataWithUserId.UserId.ToString();
+                }
                 uow.Commit();
             }
+
         }
 
-        public void UpdateForUser(string userId, StoredGameData gameData)
+        public void UpdateUserGames(StoredGameDataWithUserId[] listOfGameDataWithUserId)
         {
             using (var uow = _unitOfWorkFactory.Create())
             {
-                var userCounter = uow.CreateEntity<UserGameDataSnapshotEntity>();
-                userCounter.UserId = userId;
+                foreach (var gameDataWithUserId in listOfGameDataWithUserId)
+                {
+                    var userEntity = uow.CreateEntity<UserGameDataSnapshotEntity>();
+                    userEntity.Data = Serialize(gameDataWithUserId.StoredGameData);
+                    userEntity.UserId = gameDataWithUserId.UserId.ToString();
 
-                userCounter.Data = Serialize(gameData);
+                    uow.AttachEntity(userEntity);
+                }
 
-                uow.AttachEntity(userCounter);
                 uow.Commit();
             }
         }

@@ -14,18 +14,20 @@ namespace EntityFX.Gdcame.DataAccess.Service
             _userGameSnapshotRepository = userGameSnapshotRepository;
         }
 
-        public void StoreGameDataForUser(string userId, StoredGameData gameData)
+        public void StoreGameDataForUsers(StoredGameDataWithUserId[] listOfGameDataWithUserId)
         {
-            var userGame = _userGameSnapshotRepository.FindByUserId(new GetUserGameSnapshotByIdCriterion(userId));
+            _userGameSnapshotRepository.UpdateUserGames(listOfGameDataWithUserId);
+            
+            ///////var userGame = _userGameSnapshotRepository.FindByUserId(new GetUserGameSnapshotByIdCriterion(userId));
 
-            if (userGame == null)
-            {
-                _userGameSnapshotRepository.CreateForUser(userId, gameData);
-            }
-            else
-            {
-                _userGameSnapshotRepository.UpdateForUser(userId, gameData);
-            }
+            ///////if (userGame == null)
+            ///////{
+            ///////    _userGameSnapshotRepository.CreateForUser(userId, gameData);
+            ///////}
+            ///////else
+            ///////{
+            ///////    _userGameSnapshotRepository.UpdateForUser(userId, gameData);
+            ///////}
         }
     }
 }

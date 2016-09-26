@@ -11,16 +11,16 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
 {
     public class UserGameSnapshotRepository : IUserGameSnapshotRepository
     {
-        public void CreateForUser(string userId, StoredGameData gameData)
-        {
-        }
-
         public StoredGameData FindByUserId(GetUserGameSnapshotByIdCriterion criterion)
         {
             return null;
         }
 
-        public void UpdateForUser(string userId, StoredGameData gameData)
+        public void CreateUserGames(StoredGameDataWithUserId[] gameDataWithUserId)
+        {
+        }
+    
+        public void UpdateUserGames(StoredGameDataWithUserId[] gameDataWithUserId)
         {
         }
     }

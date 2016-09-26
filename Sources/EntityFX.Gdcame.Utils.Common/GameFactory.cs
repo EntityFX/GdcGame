@@ -17,7 +17,7 @@ namespace EntityFX.Gdcame.Utils.Common
         public IGame BuildGame(string userId, string userName)
         {
             var game = _unityContainer.Resolve<IGame>(
-                new ParameterOverride("notifyGameDataChanged", _unityContainer.Resolve<INotifyGameDataChanged>(
+                new ParameterOverride("gameDataChangesNotifier", _unityContainer.Resolve<IGameDataChangesNotifier>(
                     new ParameterOverride("userId", userId), new ParameterOverride("userName", userName))),
                 new ParameterOverride("userId", userId));
             return game;

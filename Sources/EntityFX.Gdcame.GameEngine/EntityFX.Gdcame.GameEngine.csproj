@@ -66,10 +66,13 @@
     <Compile Include="CustomRules\ReduceFundDriverPriceCustomRule.cs" />
     <Compile Include="GameBase.cs" />
     <Compile Include="Mappers\GameDataMapper.cs" />
+    <Compile Include="NetworkGameEngine\GameDataPersister.cs" />
+    <Compile Include="NetworkGameEngine\GameWithUserId.cs" />
+    <Compile Include="NetworkGameEngine\IGameDataPersister.cs" />
     <Compile Include="NetworkGameEngine\INotifyConsumerClientFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="NetworkGameEngine\GameDataChanged.cs" />
-    <Compile Include="NetworkGameEngine\INotifyGameDataChanged.cs" />
+    <Compile Include="NetworkGameEngine\GameDataChangesNotifier.cs" />
+    <Compile Include="NetworkGameEngine\IGameDataChangesNotifier.cs" />
     <Compile Include="NetworkGameEngine\NetworkGame.cs" />
   </ItemGroup>
   <ItemGroup>
