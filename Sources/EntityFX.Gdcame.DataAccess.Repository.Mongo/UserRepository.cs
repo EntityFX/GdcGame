@@ -6,39 +6,69 @@ using System.Text;
 using System.Threading.Tasks;
 using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.User;
 using EntityFX.Gdcame.DataAccess.Contract.User;
+using MongoDB.Driver;
+using MongoDB.Bson;
 
 namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
 {
+
     public class UserRepository : IUserRepository
     {
+        private IMongoDatabase Database
+        {
+            get;  set;
+        }
+
+        public UserRepository(IMongoDatabase database)
+        {
+            Database = database;
+        }
+
         public int Create(DataAccess.Contract.User.User user)
         {
-            throw new NotImplementedException();
+            Database.GetCollection<User>("Users").InsertOne(user);
+            return 1;
         }
 
         public void Delete(string id)
         {
-            throw new NotImplementedException();
+            IMongoCollection<User> users = Database.GetCollection<User>("Users");
+            var filter = Builders<User>.Filter.Eq("Id", id);
+            users.DeleteOne(filter);
         }
 
         public DataAccess.Contract.User.User[] FindAll(GetAllUsersCriterion finalAllCriterion)
         {
-            throw new NotImplementedException();
+            IMongoCollection<User> users = Database.GetCollection<User>("Users");
+            var filter = new BsonDocument();
+            return users.Find<User>(filter).ToList().ToArray();
         }
 
         public DataAccess.Contract.User.User[] FindByFilter(GetUsersBySearchStringCriterion findByIdCriterion)
         {
-            throw new NotImplementedException();
+            return null;
+            //IMongoCollection<User> users = Database.GetCollection<User>("Users");
+            //var filter = Builders<User>.Filter.Eq("Login", String.FormatfindByIdCriterion.SearchString);
+            //var result = users.Find(
+            //    Query.Matches("story", "<Regex for: moon or cow or Neil>")
+            //    ).ToList();
+            //return result.FirstOrDefault();
         }
 
         public DataAccess.Contract.User.User FindById(GetUserByIdCriterion findByIdCriterion)
         {
-            throw new NotImplementedException();
+            IMongoCollection<User> users = Database.GetCollection<User>("Users");
+            var filter = Builders<User>.Filter.Eq("Id", findByIdCriterion.Id);
+            var result = users.Find(filter).ToList();
+            return result.FirstOrDefault();
         }
 
-        public DataAccess.Contract.User.User FindByName(GetUserByNameCriterion findByIdCriterion)
+        public DataAccess.Contract.User.User FindByName(GetUserByNameCriterion findByNameCriterion)
         {
-            return new User() { Id = "1", Login = "admin", IsAdmin = true, PasswordHash = @"AEaKRfyF9sOQcAm3L+PrN67RZVWrutGFPLBMo9Tau+4uKcDTDQgqiz6v8spTtLAZcg==" };
+            IMongoCollection<User> users = Database.GetCollection<User>("Users");
+            var filter = Builders<User>.Filter.Eq("Login", findByNameCriterion.Name);
+            var result = users.Find(filter).ToList();
+            return result.FirstOrDefault();
         }
 
         public void Update(DataAccess.Contract.User.User user)

@@ -6,11 +6,30 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Practices.Unity;
 using EntityFX.Gdcame.DataAccess.Repository.Contract;
+using MongoDB.Driver;
 
 namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
 {
     public class ContainerBootstrapper : IContainerBootstrapper
     {
+        private readonly string _mongoConnectionString;
+        private MongoClient _mongoClient;
+        
+        public IMongoDatabase MongoDatabase
+        {
+            get
+            {
+                if (_mongoClient == null)
+                    _mongoClient = new MongoClient(_mongoConnectionString);
+                    return _mongoClient.GetDatabase(MongoUrl.Create(_mongoConnectionString).DatabaseName);
+            }
+        }
+
+        public ContainerBootstrapper(string mongoConnectionString)
+        {
+            _mongoConnectionString = mongoConnectionString;
+        }
+
         public IUnityContainer Configure(IUnityContainer container)
         {
             container.RegisterType<IUserRepository, UserRepository>();
@@ -19,6 +38,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
             container.RegisterType<IUserRatingRepository, UserRatingRepository>();
             container.RegisterType<ICustomRuleRepository, CustomRuleRepository>();
             container.RegisterType<IUserGameSnapshotRepository, UserGameSnapshotRepository>();
+            container.RegisterInstance<IMongoDatabase>(MongoDatabase);
             return container;
         }
     }
