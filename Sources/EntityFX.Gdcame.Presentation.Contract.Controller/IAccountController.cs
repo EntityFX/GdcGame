@@ -8,9 +8,11 @@ namespace EntityFX.Gdcame.Presentation.Contract.Controller
 {
     public interface IAccountController
     {
-        void Delete(string id);
+        Task DeleteAsync(string id);
 
         AccountInfoModel GetById(string id);
+
+        AccountInfoModel GetByLogin(string login);
 
         IEnumerable<AccountInfoModel> Get(string filter = null);
     }

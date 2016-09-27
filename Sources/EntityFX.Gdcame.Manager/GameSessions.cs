@@ -170,10 +170,16 @@ namespace EntityFX.Gdcame.Manager
             return !ClientSessionsStorage.ContainsKey(sessionId) ? null : ClientSessionsStorage[sessionId];
         }
 
-        public bool RemoveSession(Guid sessionId)
+        public void RemoveSession(Guid sessionId)
         {
             Session session;
-            return ClientSessionsStorage.TryRemove(sessionId, out session);
+            ClientSessionsStorage.TryRemove(sessionId, out session);
+        }
+
+        public void RemoveGame(string login)
+        {
+            IGame game;
+            UserGamesStorage.TryRemove(login, out game);
         }
 
         public void RemoveAllSessions()

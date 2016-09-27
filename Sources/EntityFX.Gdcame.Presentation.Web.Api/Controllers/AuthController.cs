@@ -53,8 +53,8 @@ namespace EntityFX.Gdcame.Presentation.Web.Api.Controllers
         [Route("Logout")]
         public bool Logout()
         {
-            Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
             _sessionManager.CloseSession();
+            Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
             return true;
         }
 

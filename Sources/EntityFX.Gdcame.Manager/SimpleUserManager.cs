@@ -13,12 +13,14 @@ namespace EntityFX.Gdcame.Manager
         private readonly IHashHelper _hashHelper;
         private readonly ILogger _logger;
         private readonly IUserDataAccessService _userDataAccess;
+        private readonly GameSessions _gameSessions;
 
-        public SimpleUserManager(ILogger logger, IUserDataAccessService userDataAccess, IHashHelper hashHelper)
+        public SimpleUserManager(ILogger logger, IUserDataAccessService userDataAccess, IHashHelper hashHelper, GameSessions gameSessions)
         {
             _logger = logger;
             _userDataAccess = userDataAccess;
             _hashHelper = hashHelper;
+            _gameSessions = gameSessions;
         }
 
         public bool Exists(string login)
@@ -81,7 +83,12 @@ namespace EntityFX.Gdcame.Manager
 
         public void Delete(string id)
         {
+            var user = FindById(id);
+            if (user == null) return;
             _userDataAccess.Delete(id);
+            _gameSessions.Sessions.Where(_ => _.Login == user.Login).AsParallel()
+                .ForAll(_ => _gameSessions.RemoveSession(_.SessionIdentifier));
+            _gameSessions.RemoveGame(user.Login);
         }
 
         private UserRole[] GetUserRoles(User user)

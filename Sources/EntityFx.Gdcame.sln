@@ -111,6 +111,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.DataAccess.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.DataAccess.Repository.LocalStorage", "EntityFX.Gdcame.DataAccess.Repository.LocalStorage\EntityFX.Gdcame.DataAccess.Repository.LocalStorage.csproj", "{B21F9BDF-E28D-4C42-91D5-008B0833A3FA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFx.Gdcame.Test.Perfomance", "EntityFx.Gdcame.Test.Perfomance\EntityFx.Gdcame.Test.Perfomance.csproj", "{A06209E7-56B8-4C02-B47B-776E6E597A56}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -247,6 +249,10 @@ Global
 		{B21F9BDF-E28D-4C42-91D5-008B0833A3FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B21F9BDF-E28D-4C42-91D5-008B0833A3FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B21F9BDF-E28D-4C42-91D5-008B0833A3FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A06209E7-56B8-4C02-B47B-776E6E597A56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A06209E7-56B8-4C02-B47B-776E6E597A56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A06209E7-56B8-4C02-B47B-776E6E597A56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A06209E7-56B8-4C02-B47B-776E6E597A56}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -291,5 +297,6 @@ Global
 		{B9608A11-F0F0-47AA-BD55-D6E25A310DAA} = {AFA994D0-4315-495A-A14A-74BC79DA9A51}
 		{0F77947A-9E4C-4663-A7EE-C43A4D357217} = {71152D90-9B19-442E-AD44-F385A35B4DD2}
 		{B21F9BDF-E28D-4C42-91D5-008B0833A3FA} = {71152D90-9B19-442E-AD44-F385A35B4DD2}
+		{A06209E7-56B8-4C02-B47B-776E6E597A56} = {D150B452-1254-4C2D-90DA-27765E2C7C0B}
 	EndGlobalSection
 EndGlobal

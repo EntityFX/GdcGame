@@ -7,11 +7,12 @@ using EntityFX.Gdcame.Manager.Contract.SessionManager;
 using EntityFX.Gdcame.Manager.Contract.UserManager;
 using EntityFX.Gdcame.Presentation.Contract.Model;
 using EntityFX.Gdcame.Presentation.Contract.Controller;
+using System.Threading.Tasks;
 
 namespace EntityFX.Gdcame.Presentation.Web.Controller
 {
     [Authorize(Roles = "Admin")]
-    [RoutePrefix("api/accounts")]
+    [RoutePrefix("api/admin/accounts")]
     public class AccountController : ApiController, IAccountController
     {
         private readonly ISimpleUserManager _simpleUserManager;
@@ -22,10 +23,10 @@ namespace EntityFX.Gdcame.Presentation.Web.Controller
         }
 
         [HttpDelete]
-        [Route("{id:length(32)}")]
-        public void Delete(string id)
+        [Route("")]
+        public Task DeleteAsync([FromBody] string id)
         {
-            _simpleUserManager.Delete(id);
+            return Task.Run(() => _simpleUserManager.Delete(id));
         }
 
         [HttpGet]
@@ -56,6 +57,22 @@ namespace EntityFX.Gdcame.Presentation.Web.Controller
                     Login = u.Login
                 });
 
+        }
+
+        [HttpGet]
+        [Route("login/{login}")]
+        public AccountInfoModel GetByLogin(string login)
+        {
+            var userData = _simpleUserManager.Find(login);
+            if (userData != null)
+            {
+                return new AccountInfoModel()
+                {
+                    UserId = userData.Id,
+                    Login = userData.Login
+                };
+            }
+            throw new HttpResponseException(HttpStatusCode.NotFound);
         }
     }
 }

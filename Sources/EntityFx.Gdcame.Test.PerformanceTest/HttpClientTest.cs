@@ -8,16 +8,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using EntityFX.Gdcame.Utils.WebApiClient.Auth;
+using EntityFX.Gdcame.Utils.WebApiClient;
+using EntityFX.Gdcame.Presentation.Web.Api.Models;
+using EntityFX.Gdcame.Common.Presentation.Model;
 
 namespace EntityFx.Gdcame.Test.PerformanceTest
 {
-    class AuthTokenResult
-    {
-        [JsonProperty("access_token")]
-        public string AccessToken { get; set; }
-        public string TokenType { get; set; }
-        public int ExpiresIn { get; set; }
-    }
 
     [TestClass]
     public class HttpClientTest
@@ -25,34 +22,47 @@ namespace EntityFx.Gdcame.Test.PerformanceTest
         [TestMethod]
         public void TestConnections()
         {
-            var adminToken = PostAuthAdmin().Result;
-            var connectionsList = new AuthTokenResult[1000];
-            for (int conn = 0; conn < 1000; conn++)
+            var p = new PasswordAuthProvider(new Uri("http://localhost:9001/"));
+            var adminToken = p.Login(new PasswordAuthRequest<PasswordAuthData>()
             {
-                Register(adminToken, conn);
-                connectionsList[conn]= PostAuth(conn).Result;
-            }
-            Array.ForEach(new [] {1, 10, 100}, connectionsNumber =>
-            {
-                Debug.WriteLine("Connections number: {0}", connectionsNumber);
+                RequestData = new PasswordAuthData() { Password = "P@ssw0rd", Usename = "admin" }
+            }).Result;
 
-                var sw = Stopwatch.StartNew();
-                for (int i = 0; i < connectionsNumber; i++)
+            var connectionsList = new PasswordOAuthContext[10000];
+            for (int conn = 0; conn < 10000; conn++)
+            {
+                try
                 {
-                    var x = GetData(connectionsList[i]);
+                    var registerRes = Register(adminToken, conn).Result;
                 }
-                Debug.WriteLine("Single: {0}", sw.Elapsed);
-                Debug.WriteLine("");
-            });
+                catch (Exception ex)
+                {
+                    Debug.Write(ex.Message);
+                }
 
-            Array.ForEach(new[] { 1, 10, 100, 1000 }, connectionsNumber =>
+                connectionsList[conn] = PostAuth(conn).Result;
+            }
+            Array.ForEach(new[] { 1, 10, 100, 1000, 10000 }, connectionsNumber =>
+             {
+                 Debug.WriteLine("Connections number: {0}", connectionsNumber);
+
+                 var sw = Stopwatch.StartNew();
+                 for (int i = 0; i < connectionsNumber; i++)
+                 {
+                     var x = GetData(connectionsList[i]).Result;
+                 }
+                 Debug.WriteLine("Single: {0}", sw.Elapsed);
+                 Debug.WriteLine("");
+             });
+
+            Array.ForEach(new[] { 1, 10, 100, 1000, 10000 }, connectionsNumber =>
             {
                 Debug.WriteLine("Connections number: {0}", connectionsNumber);
                 var sw = Stopwatch.StartNew();
                 List<Task> taskList = new List<Task>();
                 for (var i = 0; i < connectionsNumber; ++i)
                 {
-                    taskList.Add(new Task(() => { var x = GetData(connectionsList[i]); }));
+                    taskList.Add(GetData(connectionsList[i]));
                 }
                 Task.WhenAll(taskList);
                 Debug.WriteLine("Parallel: {0}", sw.Elapsed);
@@ -61,63 +71,36 @@ namespace EntityFx.Gdcame.Test.PerformanceTest
 
         }
 
-        private async static Task<AuthTokenResult> PostAuthAdmin()
+
+        private async static Task<PasswordOAuthContext> PostAuth(int index)
         {
-            var http = new HttpClient();
-            http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            var result = await http.PostAsync("http://localhost:9001/token", new FormUrlEncodedContent(
-                new Dictionary<string, string>
-                {
-                    {"grant_type", "password"},
-                    {"username", "entityfx"},
-                    {"password", "!Biohazard1989"},
+            var p = new PasswordAuthProvider(new Uri("http://localhost:9001/"));
+            return await p.Login(new PasswordAuthRequest<PasswordAuthData>()
+            {
+                RequestData = new PasswordAuthData() { Password = "P@ssw0rd", Usename = "userok" + index }
+            });
 
-                }));
-            var jsonString = await result.Content.ReadAsStringAsync();
-
-            return await Task.Run(() => JsonConvert.DeserializeObject<AuthTokenResult>(jsonString));
         }
 
-        private async static Task<AuthTokenResult> PostAuth(int index)
+        private static async Task<GameDataModel> GetData(PasswordOAuthContext token)
         {
-            var http = new HttpClient();
-            http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            var result = await http.PostAsync("http://localhost:9001/token", new FormUrlEncodedContent(
-                new Dictionary<string, string>
-                {
-                    {"grant_type", "userok-" + index},
-                    {"username", "userok-" + index},
-                    {"password", "!Biohazard1989"},
-
-                }));
-            var jsonString = await result.Content.ReadAsStringAsync();
-
-            return await Task.Run(() => JsonConvert.DeserializeObject<AuthTokenResult>(jsonString));
+            var gameClient = new GameApiClient(token);
+            return await gameClient.GetGameDataAsync();
         }
 
-        private static object GetData(AuthTokenResult token)
+        private async static Task<object> Register(PasswordOAuthContext token, int index)
         {
-            var http = new HttpClient();
-            http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.AccessToken);
-            var result = JsonConvert.DeserializeObject(http.GetAsync("http://localhost:9001/api/game/game-data").Result.Content.ReadAsStringAsync().Result);
-            return result;
-        }
 
-        private async static void Register(AuthTokenResult token, int index)
-        {
-            
-            var http = new HttpClient();
-            http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.AccessToken);
-            //http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            var result = await http.PostAsync("http://localhost:9001/api/auth/register", new FormUrlEncodedContent(
-                new Dictionary<string, string>
-                {
-                    {"Login", "userok-" + index},
-                    {"Password", "!Biohazard1989"},
-                    {"ConfirmPAssword", "!Biohazard1989"},
+            var authApi = new AuthApiClient(new PasswordOAuthContext() { BaseUri = new Uri("http://localhost:9001") });
 
-                }));
-            await result.Content.ReadAsStringAsync();
+
+            return await authApi.Register(new RegisterAccountModel()
+            {
+                Login = "userok" + index,
+                Password = "P@ssw0rd",
+                ConfirmPassword = "P@ssw0rd"
+            });
+
         }
     }
 }

@@ -38,11 +38,19 @@ namespace EntityFX.Gdcame.DataAccess.Repository.LocalStorage
 
         public void Delete(string id)
         {
+            var res = FindById(new GetUserByIdCriterion(id));
+            if (res == null) return;
+
             if (!File.Exists(GetUserStorageFilePath(id + ".json")))
             {
                 return;
             }
             File.Delete(GetUserStorageFilePath(id + ".json"));
+
+            if (File.Exists(GetUserStorageFilePath(res.Login + ".index")))
+            {
+                File.Delete(GetUserStorageFilePath(res.Login + ".index"));
+            }
         }
 
         public DataAccess.Contract.User.User[] FindAll(GetAllUsersCriterion finalAllCriterion)

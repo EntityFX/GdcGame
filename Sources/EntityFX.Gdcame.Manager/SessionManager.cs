@@ -3,6 +3,7 @@ using System.ServiceModel;
 using EntityFX.Gdcame.DataAccess.Contract.User;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager.Contract.SessionManager;
+using System.Linq;
 
 namespace EntityFX.Gdcame.Manager
 {
@@ -57,9 +58,9 @@ namespace EntityFX.Gdcame.Manager
             {
                 return false;
             }
-            var result = _gameSessions.RemoveSession(sessionId);
+            _gameSessions.RemoveSession(sessionId);
             _logger.Info("EntityFX.EconomicsArcade.Manager.SessionManager.CloseSession: Session {0} closed", sessionId);
-            return result;
+            return true;
         }
 
         public Session GetSession()
