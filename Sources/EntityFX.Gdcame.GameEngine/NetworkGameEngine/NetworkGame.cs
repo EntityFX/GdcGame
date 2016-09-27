@@ -176,7 +176,7 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
         public void PerformGameDataChanged()
         {
             ///////_gameDataChangesNotifier.GameDataChanged(this);
-            throw new NotImplementedException("commented out previous line!!!");
+            //throw new NotImplementedException("commented out previous line!!!");
         }
 
         protected override void PostPerformAutoStep(IEnumerable<Contract.Counters.CounterBase> modifiedCounters,
@@ -198,7 +198,7 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
         protected override void PostBuyFundDriver(Item fundDriver)
         {
             ///////_gameDataChangesNotifier.FundsDriverBought(this, fundDriver);
-            throw new NotImplementedException("commented out previous line!!!");
+            //throw new NotImplementedException("commented out previous line!!!");
         }
 
         protected override void PostInitialize()
