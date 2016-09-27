@@ -143,6 +143,10 @@
       <Project>{560b4d9d-4f4c-4659-8860-1c628448d154}</Project>
       <Name>EntityFX.Gdcame.NotifyConsumer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Presentation.Contract.Controller\EntityFX.Gdcame.Presentation.Contract.Controller.csproj">
+      <Project>{B9608A11-F0F0-47AA-BD55-D6E25A310DAA}</Project>
+      <Name>EntityFX.Gdcame.Presentation.Contract.Controller</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Presentation.Web.Api\EntityFX.Gdcame.Presentation.Web.Api.csproj">
       <Project>{C6C4637E-F0B7-43DF-A692-D8B82245311A}</Project>
       <Name>EntityFX.Gdcame.Presentation.Web.Api</Name>

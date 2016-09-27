@@ -71,6 +71,10 @@
       <Project>{3B44AFC0-F207-44E4-9F91-7F24E1F4D342}</Project>
       <Name>EntityFX.Gdcame.Common.Presentation.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Presentation.Contract.Controller\EntityFX.Gdcame.Presentation.Contract.Controller.csproj">
+      <Project>{B9608A11-F0F0-47AA-BD55-D6E25A310DAA}</Project>
+      <Name>EntityFX.Gdcame.Presentation.Contract.Controller</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Presentation.Web.Api\EntityFX.Gdcame.Presentation.Web.Api.csproj">
       <Project>{C6C4637E-F0B7-43DF-A692-D8B82245311A}</Project>
       <Name>EntityFX.Gdcame.Presentation.Web.Api</Name>
