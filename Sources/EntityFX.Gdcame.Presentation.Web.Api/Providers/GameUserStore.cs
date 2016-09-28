@@ -60,7 +60,7 @@ namespace EntityFX.Gdcame.Presentation.Web.Api.Providers
         public Task CreateAsync(GameUser user)
         {
             return
-                (new TaskFactory()).StartNew(
+                Task.Run(
                     () =>
                         _simpleUserManager.Create(new UserData {Login = user.UserName, PasswordHash = user.PasswordHash}));
         }
@@ -77,7 +77,7 @@ namespace EntityFX.Gdcame.Presentation.Web.Api.Providers
 
         public Task<GameUser> FindByIdAsync(string userId)
         {
-            return (new TaskFactory()).StartNew(() =>
+            return Task.Run(() =>
             {
                 var res = _simpleUserManager.FindById(userId);
                 if (res != null)
@@ -95,7 +95,7 @@ namespace EntityFX.Gdcame.Presentation.Web.Api.Providers
 
         public Task<GameUser> FindByNameAsync(string userName)
         {
-            return (new TaskFactory()).StartNew(() =>
+            return Task.Run(() =>
             {
                 var res = _simpleUserManager.Find(userName);
                 if (res != null)

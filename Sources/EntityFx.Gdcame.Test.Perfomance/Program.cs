@@ -61,7 +61,7 @@ namespace EntityFx.Gdcame.Test.Perfomance
     {
         private ClientConnectionInfo[] ClientConnections { get; set; }
 
-        private const string ServiceUri = "http://localhost:9001/";
+        private const string ServiceUri = "http://10.182.171.143:9001/";
 
         private const string DefaultPassword = "P@ssw0rd";
 

@@ -32,9 +32,9 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
 
             var webApiStartOptions = new StartOptions
             {
-                Port = int.Parse(ConfigurationManager.AppSettings["WebApiPort"])
+                Port = int.Parse(ConfigurationManager.AppSettings["WebApiPort"]),
             };
-
+            webApiStartOptions.Urls.Add(string.Format("http://+:{0}", webApiStartOptions.Port));
             if (RuntimeHelper.IsRunningOnMono())
             {
                 webApiStartOptions.ServerFactory = "Nowin";
