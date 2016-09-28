@@ -10,6 +10,7 @@ using EntityFX.Gdcame.GameEngine.Contract;
 using EntityFX.Gdcame.GameEngine.NetworkGameEngine;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager.Contract.SessionManager;
+using EntityFX.Gdcame.Manager.Contract.UserManager;
 
 namespace EntityFX.Gdcame.Manager
 {
@@ -20,8 +21,6 @@ namespace EntityFX.Gdcame.Manager
         private readonly TaskTimer _gameTimer;
         private readonly ILogger _logger;
         private readonly IHashHelper _hashHelper;
-
-        private readonly TaskTimer _persisTimertimer;
 
         private readonly ConcurrentDictionary<string, IGame> UserGamesStorage =
             new ConcurrentDictionary<string, IGame>();
@@ -52,9 +51,9 @@ namespace EntityFX.Gdcame.Manager
             _gameTimer = new TaskTimer(TimeSpan.FromSeconds(1), TimerCallback).Start();
         }
 
-        internal IEnumerable<Session> Sessions
+        internal IDictionary<Guid, Session> Sessions
         {
-            get { return ClientSessionsStorage.Values; }
+            get { return ClientSessionsStorage; }
         }
 
         private void PerformBackgroundPersisting()
@@ -112,6 +111,8 @@ namespace EntityFX.Gdcame.Manager
                 _logger.Info("Perform steps for {0} active games and {1} sessions: {2}", UserGamesStorage.Count, ClientSessionsStorage.Count, sw.Elapsed);
         }
 
+        private static readonly object _stdLock = new { };
+
         public IGame GetGame(Guid sessionId)
         {
             var session = GetSession(sessionId);
@@ -124,10 +125,11 @@ namespace EntityFX.Gdcame.Manager
             {
                 var game = BuildGame(session.UserId, session.Login);
                 game.Initialize();
-                UserGamesStorage.TryAdd(session.Login, game);
 
+                UserGamesStorage.TryAdd(session.Login, game);
                 int timeSlotId = _hashHelper.GetModuloOfUserIdHash(session.UserId, PersistTimeSlotsCount);
                 PersistTimeSlotsUsers[timeSlotId].Add(new Tuple<string, string>(session.Login, session.UserId));
+
             }
             return UserGamesStorage[session.Login];
         }
@@ -139,7 +141,7 @@ namespace EntityFX.Gdcame.Manager
 
         public UserGameSessionStatus GetGameSessionStatus(string username)
         {
-            if (Sessions.Count(_ => _.Login == username) > 0)
+            if (Sessions.Values.Count(_ => _.Login == username) > 0)
             {
                 return UserGameSessionStatus.Online;
             }
@@ -157,9 +159,9 @@ namespace EntityFX.Gdcame.Manager
                 Login = user.Login,
                 UserId = user.Id,
                 SessionIdentifier = Guid.NewGuid(),
-                UserRoles = user.IsAdmin ? new[] {UserRole.GenericUser, UserRole.Admin} : new[] {UserRole.GenericUser},
+                UserRoles = user.IsAdmin ? new[] { UserRole.GenericUser, UserRole.Admin } : new[] { UserRole.GenericUser },
                 Identity =
-                    new CustomGameIdentity {AuthenticationType = "Auto", IsAuthenticated = true, Name = user.Login}
+                    new CustomGameIdentity { AuthenticationType = "Auto", IsAuthenticated = true, Name = user.Login }
             };
             ClientSessionsStorage.TryAdd(session.SessionIdentifier, session);
             return session.SessionIdentifier;
@@ -174,12 +176,28 @@ namespace EntityFX.Gdcame.Manager
         {
             Session session;
             ClientSessionsStorage.TryRemove(sessionId, out session);
+
         }
 
-        public void RemoveGame(string login)
+        public void RemoveGame(UserData user)
         {
+
+            var userSessions = Sessions.Values.Where(_ => _.Login == user.Login);
+            foreach (var userSession in userSessions)
+            {
+                RemoveSession(userSession.SessionIdentifier);
+            }
+
+            UserGamesStorage[user.Login] = null;
             IGame game;
-            UserGamesStorage.TryRemove(login, out game);
+            UserGamesStorage.TryRemove(user.Login, out game);
+            int timeSlotId = _hashHelper.GetModuloOfUserIdHash(user.Login, PersistTimeSlotsCount);
+            var userTimeSlot = PersistTimeSlotsUsers[timeSlotId].FirstOrDefault(_ => _.Item2 == user.Id);
+            if (userTimeSlot != null)
+            {
+                PersistTimeSlotsUsers[timeSlotId].TryTake(out userTimeSlot);
+            }
+
         }
 
         public void RemoveAllSessions()

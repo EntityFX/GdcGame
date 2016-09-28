@@ -186,7 +186,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
                 case "EntityFramework":
                     return new DataAccess.Repository.Ef.ContainerBootstrapper();
                 case "Mongo":
-                    return new DataAccess.Repository.Mongo.ContainerBootstrapper();
+                    return new DataAccess.Repository.Mongo.ContainerBootstrapper(ConfigurationManager.AppSettings["MongoConnectionString"]);
                 case "LocalStorage":
                 default:
                     return new DataAccess.Repository.LocalStorage.ContainerBootstrapper();

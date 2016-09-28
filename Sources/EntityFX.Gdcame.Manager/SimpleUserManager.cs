@@ -86,9 +86,7 @@ namespace EntityFX.Gdcame.Manager
             var user = FindById(id);
             if (user == null) return;
             _userDataAccess.Delete(id);
-            _gameSessions.Sessions.Where(_ => _.Login == user.Login).AsParallel()
-                .ForAll(_ => _gameSessions.RemoveSession(_.SessionIdentifier));
-            _gameSessions.RemoveGame(user.Login);
+            _gameSessions.RemoveGame(user);
         }
 
         private UserRole[] GetUserRoles(User user)

@@ -26,14 +26,14 @@ namespace EntityFX.Gdcame.Presentation.Web.Controller
         [Route("perform-step")]
         public Task<ManualStepResultModel> PerformManualStepAsync([FromBody] int? verificationNumber)
         {
-            return Task.Run(() =>_gameDataProvider.PerformManualStep(verificationNumber));
+            return Task.Factory.StartNew(() =>_gameDataProvider.PerformManualStep(verificationNumber));
         }
 
         [HttpPost]
         [Route("fight-inflation")]
         public async Task<bool> FightAgainstInflationAsync()
         {
-            await Task.Run(() => _gameDataProvider.FightAgainstInflation());
+            await Task.Factory.StartNew(() => _gameDataProvider.FightAgainstInflation());
             return true;
         }
 
@@ -41,7 +41,7 @@ namespace EntityFX.Gdcame.Presentation.Web.Controller
         [Route("activate-delayed-counter")]
         public async Task<bool> ActivateDelayedCounterAsync([FromBody] int counterId)
         {
-            await Task.Run(() => _gameDataProvider.ActivateDelayedCounter(counterId));
+            await Task.Factory.StartNew(() => _gameDataProvider.ActivateDelayedCounter(counterId));
             return true;
         }
 
@@ -49,7 +49,7 @@ namespace EntityFX.Gdcame.Presentation.Web.Controller
         [Route("game-data")]
         public async Task<GameDataModel> GetGameDataAsync()
         {
-            return await Task.Run(() =>
+            return await Task.Factory.StartNew(() =>
                 _gameDataProvider.GetGameData());
         }
 
@@ -57,14 +57,14 @@ namespace EntityFX.Gdcame.Presentation.Web.Controller
         [Route("game-counters")]
         public async Task<CashModel> GetCountersAsync()
         {
-            return await Task.Run(() => _gameDataProvider.GetCounters());
+            return await Task.Factory.StartNew(() => _gameDataProvider.GetCounters());
         }
 
         [HttpPost]
         [Route("buy-item")]
         public async Task<BuyItemModel> BuyFundDriverAsync([FromBody] int id)
         {
-            return await Task.Run(() => _gameDataProvider.BuyFundDriver(id));
+            return await Task.Factory.StartNew(() => _gameDataProvider.BuyFundDriver(id));
         }
 
         protected override void Initialize(HttpControllerContext controllerContext)

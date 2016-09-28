@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace EntityFx.Gdcame.Test.Perfomance
@@ -23,21 +24,29 @@ namespace EntityFx.Gdcame.Test.Perfomance
             {
                 Console.WriteLine("Testing with {0} accounts", i);
                 Console.WriteLine("Test: Register accounts");
-                performanceTester.RegisterManyAccounts(i, "perfs", false);
+                performanceTester.RegisterManyAccounts(i, RandomString(10), false);
                 Console.WriteLine("Test: Register accounts in parallel");
-                performanceTester.RegisterManyAccounts(i, "perfs", true);
+                performanceTester.RegisterManyAccounts(i, RandomString(10), true);
                 Console.WriteLine("Test: Get game data");
-                performanceTester.TestGetGameData(i, "perfs", false);
+                performanceTester.TestGetGameData(i, RandomString(10), false);
                 Console.WriteLine("Test: Get game data in parallel");
-                performanceTester.TestGetGameData(i, "perfs", true);
+                performanceTester.TestGetGameData(i, RandomString(10), true);
                 Console.WriteLine("Test: Perform step");
-                performanceTester.TestPerformStepAction(i, "perfs", false);
+                performanceTester.TestPerformStepAction(i, RandomString(10), false);
                 Console.WriteLine("Test: Perform step in parallel");
-                performanceTester.TestPerformStepAction(i, "perfs", true);
+                performanceTester.TestPerformStepAction(i, RandomString(10), true);
                 Console.WriteLine("Press any key to close...");
                 Console.WriteLine();
             });
             Console.ReadKey();
+        }
+
+        private static Random random = new Random();
+        public static string RandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
         }
     }
 
@@ -58,6 +67,9 @@ namespace EntityFx.Gdcame.Test.Perfomance
 
         public void TestGetGameData(int countAccounts, string accounLoginPrefix, bool useParallel)
         {
+            RegisterManyAccounts(countAccounts, accounLoginPrefix, useParallel);
+            Thread.Sleep(1000);
+
             Task<ClientConnectionInfo>[] clientLogins;
             List<Task<ClientConnectionInfo>> loginTasks = new List<Task<ClientConnectionInfo>>();
             for (var i = 0; i < countAccounts; ++i)
@@ -73,6 +85,7 @@ namespace EntityFx.Gdcame.Test.Perfomance
 
             }
             clientLogins = loginTasks.ToArray();
+            Thread.Sleep(1000);
 
             if (useParallel)
             {
@@ -110,23 +123,28 @@ namespace EntityFx.Gdcame.Test.Perfomance
                 }
                 Console.WriteLine("Done get game data for {0} accounts, elapsed: {1}, {2} milliseconds per one", countAccounts, sw.Elapsed, sw.Elapsed.TotalMilliseconds / countAccounts);
             }
+            Thread.Sleep(1000);
 
-            var logoutTasks = new List<Task>();
+            var adminConnection = LoginAsAdmin().Result;
             foreach (var login in clientLogins)
             {
                 try
                 {
-                    logoutTasks.Add(Logout(login.Result));
+                    Logout(login.Result).Wait();
+                    FindAndDeleteAccount(adminConnection, login.Result.Login);
                 }
                 catch (Exception)
                 {
                 }
             }
-            Task.WaitAll(logoutTasks.ToArray());
+            Logout(adminConnection).Wait();
         }
 
         public void TestPerformStepAction(int countAccounts, string accounLoginPrefix, bool useParallel)
         {
+            RegisterManyAccounts(countAccounts, accounLoginPrefix, useParallel);
+            Thread.Sleep(1000);
+
             ClientConnectionInfo[] clientLogins;
             List<Task<ClientConnectionInfo>> loginTasks = new List<Task<ClientConnectionInfo>>();
             for (var i = 0; i < countAccounts; ++i)
@@ -142,6 +160,7 @@ namespace EntityFx.Gdcame.Test.Perfomance
 
             }
             clientLogins = loginTasks.Select(_ => _.Result).ToArray();
+            Thread.Sleep(1000);
 
             if (useParallel)
             {
@@ -179,16 +198,24 @@ namespace EntityFx.Gdcame.Test.Perfomance
                 }
                 Console.WriteLine("Don perform step for {0} accounts, elapsed: {1}, {2} milliseconds per one", countAccounts, sw.Elapsed, sw.Elapsed.TotalMilliseconds / countAccounts);
             }
+            Thread.Sleep(1000);
 
-            var logoutTasks = new List<Task>();
+            var adminConnection = LoginAsAdmin().Result;
             foreach (var login in clientLogins)
             {
-                logoutTasks.Add(Logout(login));
+                try
+                {
+                    Logout(login).Wait();
+                    FindAndDeleteAccount(adminConnection, login.Login);
+                }
+                catch (Exception)
+                {
+                }
             }
-            Task.WaitAll(logoutTasks.ToArray());
+            Logout(adminConnection).Wait();
         }
 
-        public void RegisterManyAccounts(int countAccounts, string accounLoginPrefix, bool useParallel)
+        public  void RegisterManyAccounts(int countAccounts, string accounLoginPrefix, bool useParallel)
         {
             var adminConnection = LoginAsAdmin().Result;
             Console.WriteLine("Start delete {0} accounts", countAccounts);
@@ -206,6 +233,7 @@ namespace EntityFx.Gdcame.Test.Perfomance
                     notFound++;
                 }
             };
+            Thread.Sleep(1000);
             Console.WriteLine("Success deleted {0} accounts, Not found: {1}", successDeleted, notFound);
 
             var sw = Stopwatch.StartNew();
@@ -217,7 +245,7 @@ namespace EntityFx.Gdcame.Test.Perfomance
                 {
                     registerTasks.Add(RegisterAccount(string.Format("{0}{1}", accounLoginPrefix, i)));
                 };
-                Task.WaitAll(registerTasks.ToArray());
+                Task.WhenAll(registerTasks.ToArray()).Wait();
                 Console.WriteLine("Done register {0} accounts, elapsed: {1}", countAccounts, sw.Elapsed);
             }
             else
@@ -230,6 +258,7 @@ namespace EntityFx.Gdcame.Test.Perfomance
                 sw.Stop();
                 Console.WriteLine("Done register {0} accounts, elapsed: {1}, {2} milliseconds per one", countAccounts, sw.Elapsed, sw.Elapsed.TotalMilliseconds / countAccounts);
             }
+            Thread.Sleep(1000);
             Logout(adminConnection).Wait();
         }
 
@@ -248,10 +277,10 @@ namespace EntityFx.Gdcame.Test.Perfomance
             return new ClientConnectionInfo { Login = login, Context = token };
         }
 
-        private async Task Logout(ClientConnectionInfo client)
+        private async Task<object> Logout(ClientConnectionInfo client)
         {
             var authApi = new AuthApiClient(client.Context);
-            var res = await authApi.Logout();
+            return await authApi.Logout();
         }
 
         private async Task<object> RegisterAccount(string login)
@@ -279,8 +308,8 @@ namespace EntityFx.Gdcame.Test.Perfomance
             var accountApi = new AccountApiClient(adminConnectionInfo.Context);
             try
             {
-                var acount = accountApi.GetByLogin(login);
-                accountApi.DeleteAsync(acount.UserId).Wait();
+                var acount = accountApi.GetByLoginAsync(login).Result;
+                var delResult = accountApi.DeleteAsync(acount.UserId).Result;
             }
             catch (Exception ex)
             {

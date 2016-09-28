@@ -24,55 +24,63 @@ namespace EntityFX.Gdcame.Presentation.Web.Controller
 
         [HttpDelete]
         [Route("")]
-        public Task DeleteAsync([FromBody] string id)
+        public async Task<bool> DeleteAsync([FromBody] string id)
         {
-            return Task.Run(() => _simpleUserManager.Delete(id));
+            return await Task.Factory.StartNew(() => { _simpleUserManager.Delete(id); return true; });
         }
 
         [HttpGet]
         [Route("{id:length(32)}")]
-        public AccountInfoModel GetById(string id)
+        public async Task<AccountInfoModel> GetByIdAsync(string id)
         {
-            var userData = _simpleUserManager.FindById(id);
-            if (userData != null)
+            return await Task.Factory.StartNew(() =>
             {
-                return new AccountInfoModel()
+                var userData = _simpleUserManager.FindById(id);
+                if (userData != null)
                 {
-                    UserId = userData.Id,
-                    Login = userData.Login
-                };
-            }
-            throw new HttpResponseException(HttpStatusCode.NotFound);
+                    return new AccountInfoModel()
+                    {
+                        UserId = userData.Id,
+                        Login = userData.Login
+                    };
+                }
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            });
         }
 
         [HttpGet]
         [Route("filter/{filter?}")]
         [Route("")]
-        public IEnumerable<AccountInfoModel> Get([FromUri]string filter = null)
+        public async Task<IEnumerable<AccountInfoModel>> GetAsync([FromUri]string filter = null)
         {
-            return _simpleUserManager.FindByFilter(filter)
+            return await Task.Factory.StartNew(() =>
+
+                _simpleUserManager.FindByFilter(filter)
                 .Select(u => new AccountInfoModel
                 {
                     UserId = u.Id,
                     Login = u.Login
-                });
+                }));
 
         }
 
         [HttpGet]
         [Route("login/{login}")]
-        public AccountInfoModel GetByLogin(string login)
+        public async Task<AccountInfoModel> GetByLoginAsync(string login)
         {
-            var userData = _simpleUserManager.Find(login);
-            if (userData != null)
+            return await Task.Factory.StartNew(() =>
             {
-                return new AccountInfoModel()
+                var userData = _simpleUserManager.Find(login);
+                if (userData != null)
                 {
-                    UserId = userData.Id,
-                    Login = userData.Login
-                };
-            }
-            throw new HttpResponseException(HttpStatusCode.NotFound);
+                    return new AccountInfoModel()
+                    {
+                        UserId = userData.Id,
+                        Login = userData.Login
+                    };
+                }
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            });
         }
     }
 }

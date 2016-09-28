@@ -16,27 +16,27 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
         {
         }
 
-        public async Task DeleteAsync(string id)
+        public async Task<bool> DeleteAsync(string id)
         {
-            var response = await ExecuteRequestAsync<string, object>("/api/admin/accounts", Method.DELETE, id);
-            return;
-        }
-
-        public IEnumerable<AccountInfoModel> Get(string filter = null)
-        {
-            var response = ExecuteRequestAsync<IEnumerable<AccountInfoModel>>("/api/admin/accounts").Result;
+            var response = await ExecuteRequestAsync<string, bool>("/api/admin/accounts", Method.DELETE, id);
             return response.Data;
         }
 
-        public AccountInfoModel GetById(string id)
+        public async Task<IEnumerable<AccountInfoModel>> GetAsync(string filter = null)
         {
-            var response = ExecuteRequestAsync<AccountInfoModel>(string.Format("/api/admin/accounts/", id)).Result;
+            var response = await ExecuteRequestAsync<IEnumerable<AccountInfoModel>>("/api/admin/accounts");
             return response.Data;
         }
 
-        public AccountInfoModel GetByLogin(string login)
+        public async Task<AccountInfoModel> GetByIdAsync(string id)
         {
-            var response = ExecuteRequestAsync<AccountInfoModel>(string.Format("/api/admin/accounts/login/{0}", login)).Result;
+            var response = await ExecuteRequestAsync<AccountInfoModel>(string.Format("/api/admin/accounts/", id));
+            return response.Data;
+        }
+
+        public async Task<AccountInfoModel> GetByLoginAsync(string login)
+        {
+            var response = await ExecuteRequestAsync<AccountInfoModel>(string.Format("/api/admin/accounts/login/{0}", login));
             return response.Data;
         }
     }

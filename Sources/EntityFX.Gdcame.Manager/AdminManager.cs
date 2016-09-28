@@ -18,7 +18,7 @@ namespace EntityFX.Gdcame.Manager
 
         public UserSessionsInfo[] GetActiveSessions()
         {
-            return _gameSessions.Sessions.GroupBy(_ => _.Login).Select(sessionsOfUser => new UserSessionsInfo
+            return _gameSessions.Sessions.Values.GroupBy(_ => _.Login).Select(sessionsOfUser => new UserSessionsInfo
             {
                 UserName = sessionsOfUser.Key,
                 UserSessions = sessionsOfUser.ToArray()
@@ -32,7 +32,7 @@ namespace EntityFX.Gdcame.Manager
 
         public void CloseAllUserSessions(string username)
         {
-            _gameSessions.Sessions.Where(_ => _.Login == username).AsParallel()
+            _gameSessions.Sessions.Values.Where(_ => _.Login == username).AsParallel()
                 .ForAll(_ => _gameSessions.RemoveSession(_.SessionIdentifier));
         }
 
@@ -44,7 +44,7 @@ namespace EntityFX.Gdcame.Manager
 
         public void CloseAllSessionsExcludeThis(Guid guid)
         {
-            _gameSessions.Sessions.Where(_ => _.SessionIdentifier != guid).AsParallel()
+            _gameSessions.Sessions.Values.Where(_ => _.SessionIdentifier != guid).AsParallel()
                 .ForAll(_ => _gameSessions.RemoveSession(_.SessionIdentifier));
         }
 
