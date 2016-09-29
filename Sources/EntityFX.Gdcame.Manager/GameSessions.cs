@@ -176,7 +176,6 @@ namespace EntityFX.Gdcame.Manager
         {
             Session session;
             ClientSessionsStorage.TryRemove(sessionId, out session);
-
         }
 
         public void RemoveGame(UserData user)

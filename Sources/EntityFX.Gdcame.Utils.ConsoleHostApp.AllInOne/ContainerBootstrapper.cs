@@ -63,9 +63,6 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
             container.AddNewExtension<Interception>();
             GlobalHost.DependencyResolver = new SignalRDependencyResolver(container);
 
-            container.RegisterType<ILogger>(new InjectionFactory(
-                _ => new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger")))));
-
             container.RegisterType<IMapperFactory, MapperFactory>();
 
             container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessDocumentService>(

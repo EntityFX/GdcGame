@@ -6,7 +6,6 @@ using System.Net.Http.Formatting;
 using System.Web.Http;
 using EntityFX.Gdcame.Presentation.Web.Api.Providers;
 using EntityFX.Gdcame.Utils.Common;
-using Fos;
 using Microsoft.AspNet.SignalR;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
