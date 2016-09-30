@@ -14,6 +14,14 @@
             });
 
         $scope.buyFundDriver = function (fundDriverId) {
+            var oldFundDriver = $scope.items.filter(function (item, index) {
+                return item.id === fundDriverId;
+            })[0];
+
+            if (oldFundDriver && oldFundDriver.unlockBalance > $rootScope.gameData.cash.counters[0].value) {
+                return;
+            }
+
             gdCameApiService.buyFundDriver(fundDriverId)
                 .then(function (value) {
                     if (value.data == undefined) return;

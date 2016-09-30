@@ -2,6 +2,18 @@
 [
     "$rootScope", "$scope", "$interval", "gameData", "gdCameApiService", "$location",
     function ($rootScope, $scope, $interval, gameData, gdCameApiService, $location) {
+
+        function calculateGameCounters() {
+            $rootScope.gameData.cash.onHand += $rootScope.gameData.cash.counters[2].value;
+        }
+
+        var gameCalculateInterval = $interval(calculateGameCounters, 1000);
+
+        $scope.$on("$destroy", function () {
+            $interval.cancel(gameCalculateInterval);
+        });
+
+
         //$.connection.hub.url = $location.protocol() + "://" + $location.host() + ":8080/signalr";
         $scope.isTakeRestDisabled = true;
         $scope.isDoQuarterGoalDisabled = true;
@@ -23,6 +35,7 @@
 
         gameData.then(function (data) {
             $rootScope.gameData = data;
+            $scope.isTakeRestDisabled = isTakeRestActive();
         });
 
         $scope.performManualStep = function () {
@@ -46,6 +59,7 @@
 
                 });
         };
+
         $scope.$on("counters.update",
             function (event, value) {
                 $scope.isTakeRestDisabled = isTakeRestActive();
@@ -55,16 +69,16 @@
             gdCameApiService.fightAgainstInflation();
         };
         $scope.activateDelayedCounter = function () {
-            gdCameApiService.activateDelayedCounter($rootScope.gameData.cash.counters[3].Id);
+            gdCameApiService.activateDelayedCounter($rootScope.gameData.cash.counters[3].id);
         };
 
         function isTakeRestActive() {
-            return $rootScope.gameData.cash.counters[2].Inflation == 0;
+            return $rootScope.gameData.cash.counters[2].inflation == 0;
         }
 
         function isDoQuarterGoalActive() {
-            return $rootScope.gameData.cash.counters[3].UnlockValue > $rootScope.gameData.cash.counters[0].Value
-                || $rootScope.gameData.cash.counters[3].SecondsRemaining > 0;
+            return $rootScope.gameData.cash.counters[3].unlockValue > $rootScope.gameData.cash.counters[0].value
+                || $rootScope.gameData.cash.counters[3].secondsRemaining > 0;
         }
     }
 ]);

@@ -16,12 +16,12 @@
                     <p class="buy-vount-multiplier text-right">x{{item.bought}}</p>
                 </div>
             </div>
-            <div class="caption" ng-if="item.isUnlocked">
+            <div class="caption" ng-if="item.unlockBalance <= $root.gameData.cash.counters[0].value">
                 <strong>{{item.name}}</strong>
                 <div>{{item.price | currency}}</div>
             </div>
-            <div class="caption" ng-if="!item.isUnlocked">
-                <strong>Need <span class="text-primary">{{item.unlockBalance}}</span> to buy</strong>
+            <div class="caption" ng-if="item.unlockBalance > $root.gameData.cash.counters[0].value">
+                <strong>Need <span class="text-primary">{{item.unlockBalance}}</span> points to buy</strong>
             </div>
         </a>
     </div>

@@ -11,24 +11,24 @@
             $scope.$on("counters.update",
                 function (event, value) {
                     $scope.cash.totalEarned = value.totalEarned;
-                    $scope.cash.price = value.price;
+                    $scope.cash.onHand = value.onHand;
 
                     value.counters.forEach(function (item) {
                         var oldCounter = $rootScope.gameData.cash.counters.filter(function (counter) {
-                            return counter.Id === item.Id;
+                            return counter.id === item.id;
                         })[0];
 
                         if (oldCounter != undefined) {
 
-                            oldCounter.Value = item.Value;
-                            if (item.Type = 1) {
-                                oldCounter.SubValue = item.SubValue;
-                                oldCounter.BonusPercentage = item.BonusPercentage;
-                                oldCounter.Bonus = item.Bonus;
-                                oldCounter.Inflation = item.Inflation;
+                            oldCounter.value = item.value;
+                            if (item.type = 1) {
+                                oldCounter.subValue = item.subValue;
+                                oldCounter.bonusPercentage = item.bonusPercentage;
+                                oldCounter.bonus = item.bonus;
+                                oldCounter.inflation = item.inflation;
                             }
-                            if (item.Type = 2) {
-                                oldCounter.UnlockValue = item.UnlockValue;
+                            if (item.type = 2) {
+                                oldCounter.unlockValue = item.unlockValue;
                             }
                         }
                     });
