@@ -74,6 +74,7 @@
     <Compile Include="ContainerBootstrapper.cs" />
     <Compile Include="CountersRepository.cs" />
     <Compile Include="CustomRuleRepository.cs" />
+    <Compile Include="DictionaryRepresentationConvention.cs" />
     <Compile Include="ItemRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserGameSnapshotRepository.cs" />

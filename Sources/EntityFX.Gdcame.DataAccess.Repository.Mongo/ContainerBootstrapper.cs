@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Microsoft.Practices.Unity;
 using EntityFX.Gdcame.DataAccess.Repository.Contract;
 using MongoDB.Driver;
+using MongoDB.Bson.Serialization.Conventions;
+using MongoDB.Bson.Serialization.Options;
 
 namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
 {
@@ -32,6 +34,11 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
 
         public IUnityContainer Configure(IUnityContainer container)
         {
+            ConventionRegistry.Register(
+            "DictionaryRepresentationConvention",
+            new ConventionPack { new DictionaryRepresentationConvention(DictionaryRepresentation.ArrayOfArrays) },
+            _ => true);
+
             container.RegisterType<IUserRepository, UserRepository>();
             container.RegisterType<IItemRepository, ItemRepository>();
             container.RegisterType<ICountersRepository, CountersRepository>();
