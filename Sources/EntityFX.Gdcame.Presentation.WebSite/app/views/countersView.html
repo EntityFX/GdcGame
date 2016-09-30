@@ -1,0 +1,29 @@
+﻿<div class="row">
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-8">
+        <dl class="dl-horizontal">
+            <dt>Баланс</dt>
+            <dd>{{cash.price | currency}}</dd>
+            <dt>Всего заработано</dt>
+            <dd>{{cash.totalEarned | currency}}</dd>
+        </dl>
+        <dl class="dl-horizontal">
+            <dt>{{cash.counters[0].name}}</dt>
+            <dd class="text-primary">{{cash.counters[0].value}}</dd>
+            <dt>{{cash.counters[1].name}}</dt>
+            <dd class="text-info">+{{cash.counters[1].value | currency}} = {{cash.counters[1].subValue | currency}} + (Bonus: {{cash.counters[1].bonusPercentage}}% {{cash.counters[1].bonus | currency}}) - Buthurt: {{cash.counters[1].inflation}}%</dd>
+            <dt>{{cash.counters[2].name}}</dt>
+            <dd class="text-success">+{{cash.counters[2].value | currency}} = {{cash.counters[2].subValue | currency}} + (Bonus: {{cash.counters[2].bonusPercentage}}% {{cash.counters[2].bonus | currency}}) - Fatigue: {{cash.counters[2].inflation}}%</dd>
+            <dt class="text-danger">{{cash.counters[3].name}}</dt>
+            <dd class="text-danger">+{{cash.counters[3].value | currency}} <span ng-if="cash.counters[3].unlockValue > cash.counters[0].value">Need <strong class="text-primary">{{cash.counters[3].unlockValue}}</strong> to start</span></dd>
+            <dd class="text-danger">
+                <span ng-if="cash.counters[3].secondsRemaining>0">{{cash.counters[3].name}} will finished after {{cash.counters[3].secondsRemaining}} seconds</span></dd>
+            <dd class="text-danger">
+                <span ng-if="cash.counters[3].secondsRemaining==0"><br></span></dd>
+
+        </dl>
+    </div>
+    <div class="col-md-2">
+    </div>
+</div>

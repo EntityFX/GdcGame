@@ -1,0 +1,31 @@
+﻿<div ng-if="!ratings">
+    Loading...
+</div>
+<div class="row" ng-show="ratings">
+    <table class="table">
+        <thead>
+        <tr>
+            <td>#</td>
+            <td>Имя пользователя</td>
+            <td>Status</td>
+            <td>Gdc Points</td>
+            <td>Всего заработано</td>
+            <td>Накликано</td>
+        </tr>
+        </thead>
+        <tr ng-repeat="rating in ratings track by $index">
+            <td>{{$index+1}}</td>
+            <td>{{rating.UserName}}</td>
+            <td>
+                <div ng-switch on="rating.Status">
+                    <span class="label label-default" ng-switch-when="0">Game not started</span>
+                    <span class="label label-primary" ng-switch-when="1">Offline</span>
+                    <span class="label label-success" ng-switch-when="2">Online</span>
+                </div>
+            </td>
+            <td>{{rating.GdcPoints}}</td>
+            <td>{{rating.TotalFunds}}</td>
+            <td>{{rating.ManualStepsCount}}</td>
+        </tr>
+    </table>
+</div>
