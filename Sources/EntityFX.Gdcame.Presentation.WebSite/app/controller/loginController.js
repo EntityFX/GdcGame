@@ -1,14 +1,20 @@
-﻿angular.module("gdCameApp").controller('LoginController', ["$location", "$scope", "authenticationService", function ($location, $scope, authenticationService) {
-    $scope.user = { login: 'admin', password: "P@ssw0rd" };
+﻿angular.module("gdCameApp").controller('LoginController', ["$location", "$rootScope", "$scope", "$localStorage", "authenticationService",
+    function ($location, $rootScope, $scope, $localStorage, authenticationService) {
 
-    $scope.login = function () {
-        authenticationService.login($scope.user.login, $scope.user.password)
-        .then(function (value) {
-            authenticationService.setCredentials(value.data, $scope.user.login);
+        if ($localStorage.global && $localStorage.global.auth) {
             $location.path('/');
-        })
-        .catch(function (reason) {
+        }
 
-        });
-    }
-}]);
+        $scope.user = { login: 'admin', password: "P@ssw0rd" };
+
+        $scope.login = function () {
+            authenticationService.login($scope.user.login, $scope.user.password)
+            .then(function (value) {
+                authenticationService.setCredentials(value.data, $scope.user.login);
+                $location.path('/');
+            })
+            .catch(function (reason) {
+
+            });
+        }
+    }]);

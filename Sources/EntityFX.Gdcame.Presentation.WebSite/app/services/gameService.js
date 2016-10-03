@@ -1,8 +1,9 @@
 ﻿angular
     .module("gdCameApp")
     .factory("gdCameApiService",
-        function($rootScope, $http, $location) {
-            var gameApiServiceBaseUri = $location.protocol() + "://" + $location.host() + ":" + 8889 + "/api/game/";
+        function ($rootScope, $http, $location, apiUri) {
+            var apiServer = "ns1";
+            var gameApiServiceBaseUri = $location.protocol() + "://" + apiServer + '.' + apiUri + "/api/game/";
 
             var gdCameApiServiceFactory = {
                 getGameData: function() {

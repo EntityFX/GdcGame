@@ -13,6 +13,7 @@ using Newtonsoft.Json.Serialization;
 using Owin;
 using Owin.Security.AesDataProtectorProvider;
 using Unity.WebApi;
+using System.Web.Http.Cors;
 
 namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
 {
@@ -62,11 +63,10 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
             };
 
             // Token Generation
-            appBuilder.UseOAuthAuthorizationServer(OAuthServerOptions);
-            appBuilder.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
-
+            appBuilder.UseOAuthAuthorizationServer(OAuthServerOptions)
+                .UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
+            config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
             config.MapHttpAttributeRoutes();
-
             config.Routes.MapHttpRoute("DefaultApi", "api/{controller}/{id}", new {id = RouteParameter.Optional}
                 );
 

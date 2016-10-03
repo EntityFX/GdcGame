@@ -1,15 +1,16 @@
 ﻿angular
     .module("gdCameApp")
     .factory("authenticationService",
-        function ($rootScope, $cookieStore, $http, $location) {
-            var authBaseUri = $location.protocol() + "://" + $location.host() + ":" + 8889 + "/token";
+        function ($rootScope, $localStorage, $http, $location, apiUri) {
+            var apiServer = "ns1";
+            var authBaseUri = $location.protocol() + "://" + apiServer + '.' + apiUri + '/';
 
             var authServiceFactory = {
 
                 login: function (login, password) {
                     return $http({
                         method: 'POST',
-                        url: authBaseUri,
+                        url: authBaseUri + "token",
                         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                         transformRequest: function (obj) {
                             var str = [];
@@ -26,24 +27,32 @@
                 },
 
                 logout: function () {
-                    $http.post(authBaseUri + "FightAgainstInflation/");
+                    return $http.post(authBaseUri + "api/auth/logout/")
+                        .then(function (result) {
+                            return result;
+                        });
+                },
+
+                register: function (user) {
+                    return $http.post(authBaseUri + "api/auth/register/", user)
+                        .then(function (result) {
+                            return result;
+                        });
                 },
 
                 setCredentials: function(authData, login) {
-                    $rootScope.globals = {
-                        auth: {
-                            login: login,
-                            authData: authData
-                        }
-                    };
-
                     $http.defaults.headers.common['Authorization'] = authData.token_type + ' ' + authData.access_token; // jshint ignore:line
-                    $cookieStore.put('globals', $rootScope.globals);
+                    var auth = {
+                        login: login,
+                        authData: authData
+                    }
+                    $localStorage.globals = {
+                        auth: auth
+                    };
                 },
 
                 clearCredentials: function () {
-                    $rootScope.globals = {};
-                    $cookieStore.remove('globals');
+                    delete $localStorage.globals;
                     $http.defaults.headers.common.Authorization = 'Basic';
                 }
             };

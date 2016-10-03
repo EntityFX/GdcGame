@@ -1,4 +1,6 @@
-﻿var app = angular.module("gdCameApp", ["ngRoute", "ngCookies"])
+﻿var app = angular.module("gdCameApp", ["ngRoute", "ngStorage"])
+
+app.constant('apiUri', 'gdcame.local:8889');
 
 app.config(function ($routeProvider, $locationProvider) {
     $routeProvider
@@ -16,6 +18,7 @@ app.config(function ($routeProvider, $locationProvider) {
     })
     .when("/register", {
         templateUrl: "app/views/registerView.html",
+        controller: "RegisterController"
     })
     .when("/rating", {
         templateUrl: "app/views/reatingView.html",
@@ -33,17 +36,18 @@ app.factory("gameData",
     });
 
 
-app.run(['$rootScope', '$location', '$cookieStore', '$http', function ($rootScope, $location, $cookieStore, $http) {
-    $rootScope.globals = $cookieStore.get('globals') || {};
-    if ($rootScope.globals.auth) {
-        $http.defaults.headers.common['Authorization'] = $rootScope.globals.auth.authData.token_type + ' ' + $rootScope.globals.auth.authData.access_token; // jshint ignore:line
+app.run(['$rootScope', '$location', '$localStorage', '$http', function ($rootScope, $location, $localStorage, $http) {
+    $rootScope.$storage = $localStorage;
+    if ($localStorage.globals && $localStorage.globals.auth) {
+        $http.defaults.headers.common['Authorization'] = $localStorage.globals.auth.authData.token_type + ' ' + $localStorage.globals.auth.authData.access_token; // jshint ignore:line
     }
 
 
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
         // redirect to login page if not logged in and trying to access a restricted page
         var restrictedPage = $.inArray($location.path(), ['/login', '/register']) === -1;
-        var loggedIn = $rootScope.globals.auth;
+        var loggedIn = $localStorage.globals && $localStorage.globals.auth;
+
         if (restrictedPage && !loggedIn) {
             $location.path('/login');
         }

@@ -8,7 +8,6 @@ using EntityFX.Gdcame.Presentation.Web.Api.Providers;
 using EntityFX.Gdcame.Utils.Common;
 using Microsoft.AspNet.SignalR;
 using Microsoft.Owin;
-using Microsoft.Owin.Cors;
 using Microsoft.Owin.Hosting;
 using Microsoft.Owin.Security.OAuth;
 using Microsoft.Practices.Unity;
