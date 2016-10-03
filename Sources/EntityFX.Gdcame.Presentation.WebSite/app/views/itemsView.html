@@ -1,0 +1,28 @@
+﻿<div class="row">
+    <div class="col-md-3 col-xs-6" ng-repeat="item in items">
+        <a class="thumbnail fund-driver-block" data-id="{{item.id}}" href ng-click="buyFundDriver(item.id)">
+            <div class="row">
+                <div class="col-xs-4">
+                    <div ng-repeat="incrementor in item.incrementors track by $index">
+                        <p class="incrementor" ng-class="{'text-primary':$index == 0,'text-info':$index == 1,'text-success':$index == 2}">
+                            +{{incrementor}}
+                        </p>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <img src="/Content/Images/water.svg" alt="water"/>
+                </div>
+                <div class="col-xs-4">
+                    <p class="buy-vount-multiplier text-right">x{{item.bought}}</p>
+                </div>
+            </div>
+            <div class="caption" ng-if="item.unlockBalance <= $root.gameData.cash.counters[0].value">
+                <strong>{{item.name}}</strong>
+                <div>{{item.price | currency}}</div>
+            </div>
+            <div class="caption" ng-if="item.unlockBalance > $root.gameData.cash.counters[0].value">
+                <strong>Need <span class="text-primary">{{item.unlockBalance}}</span> points to buy</strong>
+            </div>
+        </a>
+    </div>
+</div>

@@ -310,7 +310,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             {
                 lock (_stdLock)
                 {
-                    Console.WriteLine("Баланс: {0:C}; Всего заработано: {1:C}", gameData.Cash.Price,
+                    Console.WriteLine("Баланс: {0:C}; Всего заработано: {1:C}", gameData.Cash.OnHand,
                         gameData.Cash.TotalEarned);
                     /*Console.WriteLine("Manual Steps: {0}, Automatic Steps: {1}",
                         gameData.ManualStepsCount, gameData.AutomatedStepsCount);*/
