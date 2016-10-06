@@ -27,17 +27,6 @@ namespace EntityFX.Gdcame.DataAccess.Repository.LocalStorage
                 serializer.TypeNameHandling = TypeNameHandling.Auto;
                 return (Item[])serializer.Deserialize(file, typeof(Item[]));
             }
-
-            return new Item[] {
-                new Item() {
-                    Id = 1, Name = "Item", Price = 300, IsUnlocked = true, InitialValue = 100
-                        , Incrementors = new Dictionary<int, Incrementor>() {
-                            { 0, new Incrementor() { Value = 1, IncrementorType = IncrementorTypeEnum.ValueIncrementor } },
-                            { 1, new Incrementor() { Value = 10, IncrementorType = IncrementorTypeEnum.ValueIncrementor } },
-                            { 2, new Incrementor() { Value = 0, IncrementorType = IncrementorTypeEnum.ValueIncrementor } }
-                         }
-                    }
-            };
         }
     }
 }

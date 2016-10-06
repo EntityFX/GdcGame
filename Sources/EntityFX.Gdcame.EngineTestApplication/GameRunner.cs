@@ -13,7 +13,7 @@ using Timer = System.Timers.Timer;
 
 namespace EntityFX.Gdcame.EngineTestApplication
 {
-    internal class GameRunner : GameRunnerBase
+    internal class GameRunner : GameRunnerBase, IDisposable
     {
         private readonly IMapper<Item, EntityFX.Gdcame.Common.Contract.Items.Item> _fundsDriverMapper;
         private readonly IGame _game = new UssrSimulatorGame();
@@ -117,5 +117,29 @@ namespace EntityFX.Gdcame.EngineTestApplication
             _game.ActivateDelayedCounter(3);
             DisplayGameData(GetGameData());
         }
+
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    _timer.Dispose();
+                }
+                disposedValue = true;
+            }
+        }
+
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(true);
+            // GC.SuppressFinalize(this);
+        }
+        #endregion
     }
 }

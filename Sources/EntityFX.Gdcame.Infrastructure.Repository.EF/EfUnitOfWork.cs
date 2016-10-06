@@ -56,7 +56,16 @@ namespace EntityFX.Gdcame.Infrastructure.Repository.EF
 
         public void Dispose()
         {
-            _dbContext.Dispose();
+            Dispose(true);
+           // GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposeManaged)
+        {
+            if (disposeManaged)
+            {
+                _dbContext.Dispose();
+            }
         }
     }
 }

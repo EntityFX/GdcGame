@@ -17,15 +17,13 @@ namespace EntityFX.Gdcame.Infrastructure.Common
             this.runOnce = runOnce;
         }
 
-        public TaskTimer Start()
+        public async void Start()
         {
             if (!timerRunning)
             {
                 timerRunning = true;
-                RunTimer();
+                await RunTimer();
             }
-
-            return this;
         }
 
         public void Stop()

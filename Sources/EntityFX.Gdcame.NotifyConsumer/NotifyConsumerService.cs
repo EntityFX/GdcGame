@@ -25,6 +25,13 @@ namespace EntityFX.Gdcame.NotifyConsumer
 
         public void Dispose()
         {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposeManaged)
+        {
+
         }
 
         public void PushGameData(UserContext userContext, GameData gameData)

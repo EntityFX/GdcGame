@@ -8,7 +8,7 @@ using Microsoft.AspNet.Identity;
 
 namespace EntityFX.Gdcame.Presentation.Web.Api.Providers
 {
-    public class GameUserStore : IUserStore<GameUser>, IUserPasswordStore<GameUser> /*, IUserEmailStore<GameUser>*/
+    public class GameUserStore : IUserStore<GameUser>, IUserPasswordStore<GameUser>, IDisposable /*, IUserEmailStore<GameUser>*/
     {
         private readonly ISimpleUserManager _simpleUserManager;
 
@@ -55,6 +55,13 @@ namespace EntityFX.Gdcame.Presentation.Web.Api.Providers
 
         public void Dispose()
         {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposeManaged)
+        {
+
         }
 
         public Task CreateAsync(GameUser user)

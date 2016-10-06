@@ -21,7 +21,7 @@ using ContainerBootstrapper = EntityFX.Gdcame.Manager.ContainerBootstrapper;
 namespace EntityFx.Gdcame.Test.PerformanceTest
 {
     [TestClass]
-    public class UnitTest1
+    public class UnitTest1 : IDisposable
     {
         private readonly IUnityContainer container = new UnityContainer();
 
@@ -121,6 +121,35 @@ namespace EntityFx.Gdcame.Test.PerformanceTest
                 Debug.Print("Ellapsed for {0} iterrations: {1}", iterNumber, csw.Elapsed);
             }
         }
+
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    container.Dispose();
+                }
+                disposedValue = true;
+            }
+        }
+
+        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
+        // ~UnitTest1() {
+        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+        //   Dispose(false);
+        // }
+
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose()
+        {
+            Dispose(true);
+            // GC.SuppressFinalize(this);
+        }
+        #endregion
     }
 
     internal class FakeOperationContextHelper : IOperationContext, IOperationContextHelper

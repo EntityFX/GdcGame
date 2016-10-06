@@ -8,7 +8,6 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
     {
         static readonly Lazy<CustomJsonDeserializer> lazyInstance =
             new Lazy<CustomJsonDeserializer>(() => new CustomJsonDeserializer());
-        readonly JsonSerializerSettings settings;
 
         public static CustomJsonDeserializer Default
         {

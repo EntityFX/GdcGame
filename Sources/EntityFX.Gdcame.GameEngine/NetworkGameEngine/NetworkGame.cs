@@ -97,11 +97,11 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
                     IncrementorBase value;
                     if (incrementor.Value.IncrementorType == IncrementorTypeEnum.ValueIncrementor)
                     {
-                        value = new ValueIncrementor(incrementor.Value.Value);
+                        value = IncrementorFactory.Build<ValueIncrementor>(incrementor.Value.Value);
                     }
                     else if (incrementor.Value.IncrementorType == IncrementorTypeEnum.PercentageIncrementor)
                     {
-                        value = new PercentageIncrementor(incrementor.Value.Value);
+                        value = IncrementorFactory.Build<PercentageIncrementor>(incrementor.Value.Value);
                     }
                     else
                     {

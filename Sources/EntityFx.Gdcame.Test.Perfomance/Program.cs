@@ -32,23 +32,28 @@ namespace EntityFx.Gdcame.Test.Perfomance
             var logger = new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger")));
 
             var performanceTester = new PerfomanceTester(new Uri(serviceAddress), logger);
+
+            performanceTester.TestStartManyGames(50000, RandomString(15));
+            logger.Info("Press any key to close...");
+            Console.ReadKey();
+
             Array.ForEach(new int[] { 10, 50, 100, 500, 1000, 5000, 10000, 50000 }, i =>
             {
                 logger.Info("Testing with {0} accounts", i);
                 logger.Info("Test: Register accounts");
-                performanceTester.TestPerformanceRegisterManyAccounts(i, RandomString(10), false);
+                performanceTester.TestPerformanceRegisterManyAccounts(i, RandomString(15), false);
                 logger.Info("Test: Get game data");
-                performanceTester.TestGetGameData(i, RandomString(10), false);
+                performanceTester.TestGetGameData(i, RandomString(15), false);
                 logger.Info("Test: Perform step");
-                performanceTester.TestPerformStepAction(i, RandomString(10), false);
+                performanceTester.TestPerformStepAction(i, RandomString(15), false);
 
                 logger.Info("Test: Register accounts in parallel");
-                performanceTester.TestPerformanceRegisterManyAccounts(i, RandomString(10), true);
+                performanceTester.TestPerformanceRegisterManyAccounts(i, RandomString(15), true);
                 logger.Info("Test: Get game data in parallel");
-                performanceTester.TestGetGameData(i, RandomString(10), true);
+                performanceTester.TestGetGameData(i, RandomString(15), true);
 
                 logger.Info("Test: Perform step in parallel");
-                performanceTester.TestPerformStepAction(i, RandomString(10), true);
+                performanceTester.TestPerformStepAction(i, RandomString(15), true);
                 logger.Info("\n");
             });
             logger.Info("Press any key to close...");
@@ -89,6 +94,8 @@ namespace EntityFx.Gdcame.Test.Perfomance
 
     class PerfomanceTester
     {
+        public const int ParallelismFactor = 256;
+
         private ClientConnectionInfo[] ClientConnections { get; set; }
 
         private const string DefaultPassword = "P@ssw0rd";
@@ -111,6 +118,48 @@ namespace EntityFx.Gdcame.Test.Perfomance
         {
             _serviceUri = serviceUri;
             _logger = logger;
+        }
+
+        public void TestStartManyGames(int countAccounts, string accounLoginPrefix)
+        {
+            var testResult = new List<TestResultItem>();
+            var sw = new Stopwatch();
+            var adminConnection = LoginAsAdmin().Result;
+
+            _logger.Info("\tStart register {0} accounts in parallel", countAccounts);
+            sw.Restart();
+            RegisterManyAccounts(countAccounts, accounLoginPrefix, true);
+            _logger.Info("\tDone register {0} accounts, elapsed: {1}, {2} milliseconds per one", countAccounts, sw.Elapsed, sw.Elapsed.TotalMilliseconds / countAccounts);
+
+            _logger.Info("\tStart login {0} accounts in parallel", countAccounts);
+            ClientConnectionInfo[] clientLogins = LoginManyClients(countAccounts, accounLoginPrefix);
+            _logger.Info("\tDone login {0} accounts, elapsed: {1}, {2} milliseconds per one", countAccounts, sw.Elapsed, sw.Elapsed.TotalMilliseconds / countAccounts);
+            sw.Restart();
+
+            _logger.Info("\tStart get game data for {0} accounts in parallel", countAccounts);
+            try
+            {
+                ParallelTask(0, countAccounts, ParallelismFactor, i => GetGameData(clientLogins[i]), counter =>
+                {
+                    if (counter % ParallelismFactor == 0)
+                    {
+                        Console.WriteLine("Got game data for {0} accounts", counter);
+                    }
+                });
+                /*for (int i = 0; i < countAccounts; i++)
+                {
+                    var result = GetGameData(clientLogins[i]).Result;
+                    if (i % ParallelismFactor == 0)
+                    {
+                        Console.WriteLine("Got game data for {0} accounts", i);
+                    }
+                }*/
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e);
+            }
+            _logger.Info("\tDone get game data for {0} accounts, elapsed: {1}, {2} milliseconds per one", countAccounts, sw.Elapsed, sw.Elapsed.TotalMilliseconds / countAccounts);
         }
 
 
@@ -260,16 +309,42 @@ namespace EntityFx.Gdcame.Test.Perfomance
             _testsInfo.Add(new TestInfo { TestName = "TestPerformanceRegisterManyAccounts", TestResults = testResult });
         }
 
+        private void ParallelTask(int from, int to, int parallelism, Func<int, Task> task, Action<int> iterrationAction)
+        {
+            var counter = 0;
+            object stdLock = new { };
+            for (var i = from; i < to; i += parallelism)
+            {
+                List<Task> registerTasks = new List<Task>();
+                for (int i1 = i; i1 < ((i + parallelism) > to ? to : i + parallelism); i1++)
+                {
+                    registerTasks.Add(task(i1));
+                }
+                Task.WaitAll(registerTasks.ToArray());
+                lock (stdLock)
+                {
+                    iterrationAction(counter);
+                    counter += parallelism;
+                }
+            };
+        }
+
         private void RegisterManyAccounts(int countAccounts, string accounLoginPrefix, bool useParallel)
         {
             if (useParallel)
             {
-                List<Task> registerTasks = new List<Task>();
-                for (var i = 0; i < countAccounts; ++i)
+                ParallelTask(0, countAccounts, ParallelismFactor, i1 => RegisterAccount(string.Format("{0}{1}", accounLoginPrefix, i1)), counter =>
+                {
+                    if (counter % ParallelismFactor == 0)
+                    {
+                        Console.WriteLine("Registered {0} accounts", counter);
+                    }
+                });
+                /*for (var i = 0; i < countAccounts; ++i)
                 {
                     registerTasks.Add(RegisterAccount(string.Format("{0}{1}", accounLoginPrefix, i)));
                 };
-                Task.WhenAll(registerTasks.ToArray()).Wait();
+                Task.WhenAll(registerTasks.ToArray()).Wait();*/
             }
             else
             {
@@ -285,7 +360,15 @@ namespace EntityFx.Gdcame.Test.Perfomance
 
             int successDeleted = 0;
             int notFound = 0;
-            for (var i = 0; i < countAccounts; ++i)
+
+            ParallelTask(0, countAccounts, ParallelismFactor, i1 => Task.Run(() => FindAndDeleteAccount(adminConnectionInfo, string.Format("{0}{1}", accounLoginPrefix, i1))), counter =>
+            {
+                if (counter % ParallelismFactor == 0)
+                {
+                    Console.WriteLine("Deleted {0} accounts", counter);
+                }
+            });
+            /*for (var i = 0; i < countAccounts; ++i)
             {
                 var deleteResult = FindAndDeleteAccount(adminConnectionInfo, string.Format("{0}{1}", accounLoginPrefix, i));
                 if (deleteResult)
@@ -296,30 +379,53 @@ namespace EntityFx.Gdcame.Test.Perfomance
                 {
                     notFound++;
                 }
-            };
+            };*/
             return new Tuple<int, int>(successDeleted, notFound);
         }
 
         private ClientConnectionInfo[] LoginManyClients(int countAccounts, string accounLoginPrefix)
         {
-            List<Task<ClientConnectionInfo>> loginTasks = new List<Task<ClientConnectionInfo>>();
-            for (var i = 0; i < countAccounts; ++i)
+            //List<Task<ClientConnectionInfo>> loginTasks = new List<Task<ClientConnectionInfo>>();
+            ClientConnectionInfo[] logins = new ClientConnectionInfo[countAccounts];
+
+            ParallelTask(0, countAccounts, ParallelismFactor, async i1 =>
+            {
+                logins[i1] = await Login(string.Format("{0}{1}", accounLoginPrefix, i1), DefaultPassword);
+
+            }, counter =>
+            {
+                if (counter % ParallelismFactor == 0)
+                {
+                    Console.WriteLine("Logged in {0} accounts", counter);
+                }
+            });
+
+            /*for (var i = 0; i < countAccounts; ++i)
             {
                 loginTasks.Add(Login(string.Format("{0}{1}", accounLoginPrefix, i), DefaultPassword));
             };
             Task.WaitAll(loginTasks.ToArray());
-            return loginTasks.Select(_ => _.Result).ToArray();
+            return loginTasks.Select(_ => _.Result).ToArray();*/
+            return logins;
         }
 
         private void LogoutManyClients(ClientConnectionInfo[] clients)
         {
-            List<Task<object>> logoutTasks = new List<Task<object>>();
-            foreach (var client in clients)
+            ParallelTask(0, clients.Length, ParallelismFactor, i1 => Logout(clients[i1]), counter =>
+            {
+                if (counter % ParallelismFactor == 0)
+                {
+                    Console.WriteLine("Logged out {0} accounts", counter);
+                }
+            });
+
+
+            /*foreach (var client in clients)
             {
                 logoutTasks.Add(Logout(client));
             }
 
-            Task.WaitAll(logoutTasks.ToArray());
+            Task.WaitAll(logoutTasks.ToArray());*/
         }
 
 

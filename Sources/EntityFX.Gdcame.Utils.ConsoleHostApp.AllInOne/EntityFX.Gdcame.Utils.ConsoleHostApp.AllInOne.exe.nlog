@@ -16,7 +16,7 @@
     <target name="logfile" xsi:type="AsyncWrapper" queueLimit="5000" overflowAction="Discard">
       <target xsi:type="File" fileName="${basedir}/logs/AllInOne-${shortdate}.log" />
     </target>
-    <target name="fileFatal" xsi:type="File" fileName="${basedir}/logs/AllInOne-${shortdate}.log"  layout="${longdate} ${message} ${exception:format=tostring}" />
+    <target name="fileFatal" xsi:type="File" fileName="${basedir}/logs/AllInOne-${shortdate}.error.log"  layout="${longdate} ${message} ${exception:format=tostring}" />
     <target name="logConsole" xsi:type="AsyncWrapper" queueLimit="5000" overflowAction="Discard">
       <target xsi:type="ColoredConsole" useDefaultRowHighlightingRules="true" />
     </target>

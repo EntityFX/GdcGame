@@ -46,11 +46,11 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                         {
                             {
                                 (int) UssrCounterEnum.Production,
-                                new ValueIncrementor(10)
+                                IncrementorFactory.Build<ValueIncrementor>(10)
                             },
                             {
                                 (int) UssrCounterEnum.Communism,
-                                new ValueIncrementor(1)
+                                IncrementorFactory.Build<ValueIncrementor>(1)
                             }
                         },
                         Name = "Matches"
@@ -66,11 +66,11 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                         {
                             {
                                 (int) UssrCounterEnum.Tax,
-                                new ValueIncrementor(10)
+                                IncrementorFactory.Build<ValueIncrementor>(10)
                             },
                             {
                                 (int) UssrCounterEnum.Communism,
-                                new ValueIncrementor(1)
+                                IncrementorFactory.Build<ValueIncrementor>(1)
                             }
                         },
                         Name = "Bubble gum"
@@ -86,15 +86,15 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                         {
                             {
                                 (int) UssrCounterEnum.Production,
-                                new ValueIncrementor(20)
+                                IncrementorFactory.Build<ValueIncrementor>(20)
                             },
                             {
                                 (int) UssrCounterEnum.Tax,
-                                new ValueIncrementor(20)
+                                IncrementorFactory.Build<ValueIncrementor>(20)
                             },
                             {
                                 (int) UssrCounterEnum.Communism,
-                                new ValueIncrementor(2)
+                                IncrementorFactory.Build<ValueIncrementor>(2)
                             }
                         },
                         Name = "Beer",
@@ -114,11 +114,11 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                         {
                             {
                                 (int) UssrCounterEnum.Production,
-                                new ValueIncrementor(80)
+                                IncrementorFactory.Build<ValueIncrementor>(80)
                             },
                             {
                                 (int) UssrCounterEnum.Tax,
-                                new ValueIncrementor(40)
+                                IncrementorFactory.Build<ValueIncrementor>(40)
                             }
                         },
                         Name = "Voice Of America",
@@ -138,7 +138,7 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                         {
                             {
                                 (int) UssrCounterEnum.Production,
-                                new ValueIncrementor(160)
+                                IncrementorFactory.Build<ValueIncrementor>(160)
                             }
                         },
                         Name = "Dissidence On Flat",
@@ -158,11 +158,11 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                         {
                             {
                                 (int) UssrCounterEnum.Tax,
-                                new ValueIncrementor(80)
+                                IncrementorFactory.Build<ValueIncrementor>(80)
                             },
                             {
                                 (int) UssrCounterEnum.Communism,
-                                new ValueIncrementor(5)
+                                IncrementorFactory.Build<ValueIncrementor>(5)
                             }
                         },
                         Name = "Hucksterism"
@@ -178,15 +178,15 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                         {
                             {
                                 (int) UssrCounterEnum.Production,
-                                new ValueIncrementor(240)
+                                IncrementorFactory.Build<ValueIncrementor>(240)
                             },
                             {
                                 (int) UssrCounterEnum.Tax,
-                                new ValueIncrementor(80)
+                                IncrementorFactory.Build<ValueIncrementor>(80)
                             },
                             {
                                 (int) UssrCounterEnum.Communism,
-                                new ValueIncrementor(5)
+                                IncrementorFactory.Build<ValueIncrementor>(5)
                             }
                         },
                         Name = "Soda Machine"
@@ -202,15 +202,15 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                         {
                             {
                                 (int) UssrCounterEnum.Production,
-                                new ValueIncrementor(80)
+                                IncrementorFactory.Build<ValueIncrementor>(80)
                             },
                             {
                                 (int) UssrCounterEnum.Tax,
-                                new ValueIncrementor(80)
+                                IncrementorFactory.Build<ValueIncrementor>(80)
                             },
                             {
                                 (int) UssrCounterEnum.Communism,
-                                new ValueIncrementor(5)
+                                IncrementorFactory.Build<ValueIncrementor>(5)
                             }
                         },
                         Name = "Grocery Store"
@@ -226,15 +226,15 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                         {
                             {
                                 (int) UssrCounterEnum.Production,
-                                new PercentageIncrementor(2)
+                                IncrementorFactory.Build<PercentageIncrementor>(2)
                             },
                             {
                                 (int) UssrCounterEnum.Tax,
-                                new ValueIncrementor(80)
+                                IncrementorFactory.Build<ValueIncrementor>(80)
                             },
                             {
                                 (int) UssrCounterEnum.Communism,
-                                new ValueIncrementor(10)
+                                IncrementorFactory.Build<ValueIncrementor>(10)
                             }
                         },
                         Name = "Black market"
@@ -250,11 +250,11 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                         {
                             {
                                 (int) UssrCounterEnum.Tax,
-                                new ValueIncrementor(150)
+                                IncrementorFactory.Build<ValueIncrementor>(150)
                             },
                             {
                                 (int) UssrCounterEnum.Communism,
-                                new ValueIncrementor(10)
+                                IncrementorFactory.Build<ValueIncrementor>(10)
                             }
                         },
                         Name = "Poster agitation"
@@ -270,15 +270,15 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                         {
                             {
                                 (int) UssrCounterEnum.Production,
-                                new ValueIncrementor(100)
+                                IncrementorFactory.Build<ValueIncrementor>(100)
                             },
                             {
                                 (int) UssrCounterEnum.Tax,
-                                new ValueIncrementor(150)
+                                IncrementorFactory.Build<ValueIncrementor>(150)
                             },
                             {
                                 (int) UssrCounterEnum.Communism,
-                                new ValueIncrementor(5)
+                                IncrementorFactory.Build<ValueIncrementor>(5)
                             }
                         },
                         Name = "TV Shows"
@@ -294,11 +294,11 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                         {
                             {
                                 (int) UssrCounterEnum.Production,
-                                new ValueIncrementor(200)
+                                IncrementorFactory.Build<ValueIncrementor>(200)
                             },
                             {
                                 (int) UssrCounterEnum.Communism,
-                                new ValueIncrementor(10)
+                                IncrementorFactory.Build<ValueIncrementor>(10)
                             }
                         },
                         Name = "Censore"
@@ -314,11 +314,11 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                         {
                             {
                                 (int) UssrCounterEnum.Production,
-                                new ValueIncrementor(250)
+                                IncrementorFactory.Build<ValueIncrementor>(250)
                             },
                             {
                                 (int) UssrCounterEnum.Communism,
-                                new ValueIncrementor(5)
+                                IncrementorFactory.Build<ValueIncrementor>(5)
                             }
                         },
                         Name = "Excursion to the mausoleum"
@@ -334,7 +334,7 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                         {
                             {
                                 (int) UssrCounterEnum.Communism,
-                                new ValueIncrementor(30)
+                                IncrementorFactory.Build<ValueIncrementor>(30)
                             }
                         },
                         Name = "Build Lenin Statue"
@@ -350,11 +350,11 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                         {
                             {
                                 (int) UssrCounterEnum.Production,
-                                new PercentageIncrementor(5)
+                                IncrementorFactory.Build<PercentageIncrementor>(5)
                             },
                             {
                                 (int) UssrCounterEnum.Communism,
-                                new ValueIncrementor(10)
+                                IncrementorFactory.Build<ValueIncrementor>(10)
                             }
                         },
                         Name = "Electrofication"
@@ -370,15 +370,15 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                         {
                             {
                                 (int) UssrCounterEnum.Production,
-                                new ValueIncrementor(100)
+                                IncrementorFactory.Build<ValueIncrementor>(100)
                             },
                             {
                                 (int) UssrCounterEnum.Tax,
-                                new ValueIncrementor(100)
+                                IncrementorFactory.Build<ValueIncrementor>(100)
                             },
                             {
                                 (int) UssrCounterEnum.Communism,
-                                new ValueIncrementor(10)
+                                IncrementorFactory.Build<ValueIncrementor>(10)
                             }
                         },
                         Name = "Canned Production"
@@ -394,15 +394,15 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                         {
                             {
                                 (int) UssrCounterEnum.Production,
-                                new ValueIncrementor(150)
+                                IncrementorFactory.Build<ValueIncrementor>(150)
                             },
                             {
                                 (int) UssrCounterEnum.Tax,
-                                new ValueIncrementor(200)
+                                IncrementorFactory.Build<ValueIncrementor>(200)
                             },
                             {
                                 (int) UssrCounterEnum.Communism,
-                                new ValueIncrementor(10)
+                                IncrementorFactory.Build<ValueIncrementor>(10)
                             }
                         },
                         Name = "Candies Production"
@@ -418,15 +418,15 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                         {
                             {
                                 (int) UssrCounterEnum.Production,
-                                new ValueIncrementor(300)
+                                IncrementorFactory.Build<ValueIncrementor>(300)
                             },
                             {
                                 (int) UssrCounterEnum.Tax,
-                                new ValueIncrementor(50)
+                                IncrementorFactory.Build<ValueIncrementor>(50)
                             },
                             {
                                 (int) UssrCounterEnum.Communism,
-                                new ValueIncrementor(15)
+                                IncrementorFactory.Build<ValueIncrementor>(15)
                             }
                         },
                         Name = "Champagne Production"
@@ -442,11 +442,11 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                         {
                             {
                                 (int) UssrCounterEnum.Tax,
-                                new PercentageIncrementor(2)
+                                IncrementorFactory.Build<PercentageIncrementor>(2)
                             },
                             {
                                 (int) UssrCounterEnum.Communism,
-                                new ValueIncrementor(10)
+                                IncrementorFactory.Build<ValueIncrementor>(10)
                             }
                         },
                         Name = "Collectivisation"
@@ -462,11 +462,11 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                         {
                             {
                                 (int) UssrCounterEnum.Production,
-                                new ValueIncrementor(500)
+                                IncrementorFactory.Build<ValueIncrementor>(500)
                             },
                             {
                                 (int) UssrCounterEnum.Communism,
-                                new ValueIncrementor(20)
+                                IncrementorFactory.Build<ValueIncrementor>(20)
                             }
                         },
                         Name = "Corn fields"
@@ -482,11 +482,11 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                         {
                             {
                                 (int) UssrCounterEnum.Tax,
-                                new ValueIncrementor(500)
+                                IncrementorFactory.Build<ValueIncrementor>(500)
                             },
                             {
                                 (int) UssrCounterEnum.Communism,
-                                new ValueIncrementor(25)
+                                IncrementorFactory.Build<ValueIncrementor>(25)
                             }
                         },
                         Name = "Virign Land Campaign"
@@ -502,15 +502,15 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                         {
                             {
                                 (int) UssrCounterEnum.Production,
-                                new ValueIncrementor(500)
+                                IncrementorFactory.Build<ValueIncrementor>(500)
                             },
                             {
                                 (int) UssrCounterEnum.Tax,
-                                new ValueIncrementor(150)
+                                IncrementorFactory.Build<ValueIncrementor>(150)
                             },
                             {
                                 (int) UssrCounterEnum.Communism,
-                                new ValueIncrementor(15)
+                                IncrementorFactory.Build<ValueIncrementor>(15)
                             }
                         },
                         Name = "Cinema"

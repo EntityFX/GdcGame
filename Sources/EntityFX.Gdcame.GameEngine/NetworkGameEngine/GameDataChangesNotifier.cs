@@ -38,8 +38,8 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
         public void AutomaticRefreshed(IGame game)
         {
             var gameData = PrepareGameDataToRefresh(game);
-            _notifyConsumerService.BuildNotifyConsumerClient()
-                .PushGameData(new UserContext {UserId = _userId, UserName = _userName}, gameData);
+            /*_notifyConsumerService.BuildNotifyConsumerClient()
+                .PushGameData(new UserContext {UserId = _userId, UserName = _userName}, gameData);*/
         }
 
         private GameData PrepareGameDataToRefresh(IGame game)

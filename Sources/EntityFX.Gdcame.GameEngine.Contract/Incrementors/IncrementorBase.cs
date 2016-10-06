@@ -2,13 +2,9 @@
 {
     public abstract class IncrementorBase
     {
-        private IncrementorBase()
+        public void Init(int value)
         {
             IncrementorType = GetIncrementorType();
-        }
-
-        protected IncrementorBase(int value) : this()
-        {
             Value = value;
         }
 
