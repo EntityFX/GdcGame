@@ -11,6 +11,7 @@ using EntityFX.Gdcame.GameEngine.NetworkGameEngine;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager.Contract.SessionManager;
 using EntityFX.Gdcame.Manager.Contract.UserManager;
+using System.Threading;
 
 namespace EntityFX.Gdcame.Manager
 {
@@ -29,6 +30,7 @@ namespace EntityFX.Gdcame.Manager
 
         private readonly IGameDataPersisterFactory _gameDataPersisterFactory;
         private readonly Task _backgroundPersisterTask;
+        private readonly CancellationTokenSource _backgroundPersisterTaskToken = new CancellationTokenSource();
         private readonly ConcurrentBag<Tuple<string, string>>[] PersistTimeSlotsUsers = new ConcurrentBag<Tuple<string, string>>[PersistTimeSlotsCount];
         private const int PersistTimeSlotsCount = 60;
         private const int PersistTimeSlotMilliseconds = 1000;
@@ -46,7 +48,7 @@ namespace EntityFX.Gdcame.Manager
                 PersistTimeSlotsUsers[i] = new ConcurrentBag<Tuple<string, string>>();
             }
 
-            _backgroundPersisterTask = Task.Run(() => PerformBackgroundPersisting());
+            _backgroundPersisterTask = Task.Factory.StartNew(a => PerformBackgroundPersisting(), TaskCreationOptions.LongRunning, _backgroundPersisterTaskToken.Token);
 
             _gameTimer = new TaskTimer(TimeSpan.FromSeconds(1), TimerCallback).Start();
         }
@@ -74,11 +76,15 @@ namespace EntityFX.Gdcame.Manager
                 ConcurrentBag<Tuple<string, string>> timeSlot = PersistTimeSlotsUsers[currentTimeSlotId];
                 foreach (Tuple<string, string> timeSlotUser in timeSlot)
                 {
-                    gamesWithUserIdsChunk.Add(new GameWithUserId()
+                    if (UserGamesStorage.ContainsKey(timeSlotUser.Item1))
                     {
-                        Game = UserGamesStorage[timeSlotUser.Item1],
-                        UserId = timeSlotUser.Item2
-                    });
+                        gamesWithUserIdsChunk.Add(new GameWithUserId()
+                        {
+                            Game = UserGamesStorage[timeSlotUser.Item1],
+                            UserId = timeSlotUser.Item2
+                        });
+                    }
+
                     if (gamesWithUserIdsChunk.Count >= PersistUsersChunkSize)
                     {
                         gameDataPersister.PersistGamesData(gamesWithUserIdsChunk);
@@ -96,7 +102,9 @@ namespace EntityFX.Gdcame.Manager
                                                     -
                                                     (int)
                                                         Math.Min(stopwatch.ElapsedMilliseconds, PersistTimeSlotMilliseconds);
-                Task.Delay(millisecondsUntilTimeSlotEnd).Wait();
+                if (_logger != null)
+                    _logger.Debug("PerformBackgroundPersisting: Delay {0} ms", millisecondsUntilTimeSlotEnd);
+                var res = Task.Delay(millisecondsUntilTimeSlotEnd).Wait(millisecondsUntilTimeSlotEnd * 2);
 
                 currentTimeSlotId = (currentTimeSlotId + 1) % PersistTimeSlotsCount;
             }
@@ -106,7 +114,10 @@ namespace EntityFX.Gdcame.Manager
         {
             var sw = new Stopwatch();
             sw.Start();
-            UserGamesStorage.AsParallel().ForAll(_ => _.Value.PerformAutoStep());
+            foreach (var game in UserGamesStorage)
+            {
+                game.Value.PerformAutoStep();
+            }
             if (_logger != null)
                 _logger.Info("Perform steps for {0} active games and {1} sessions: {2}", UserGamesStorage.Count, ClientSessionsStorage.Count, sw.Elapsed);
         }

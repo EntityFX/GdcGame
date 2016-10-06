@@ -8,6 +8,7 @@ using EntityFX.Gdcame.DataAccess.Contract.GameData.Store;
 using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.UserGameSnapshot;
 using MongoDB.Driver;
 using EntityFX.Gdcame.DataAccess.Contract.User;
+using MongoDB.Bson;
 
 namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
 {
@@ -40,20 +41,25 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
         public void UpdateUserGames(StoredGameDataWithUserId[] gameDataWithUserId)
         {
             IMongoCollection<StoredGameDataWithUserId> users = Database.GetCollection<StoredGameDataWithUserId>("StoredGameDataWithUserId");
-            var filter = Builders<StoredGameDataWithUserId>.Filter.In("UserId", gameDataWithUserId.Select(x => x.UserId));
-            
-                gameDataWithUserId.ToList().ForEach(
-                        x =>
-                        {
-                            filter = Builders<StoredGameDataWithUserId>.Filter.Eq("UserId", x.UserId);
-                            var result = users.Find(filter);
 
-                            if (result.FirstOrDefault() == null)
-                                users.InsertOne(x);
-                            else
-                                result.First().StoredGameData = x.StoredGameData;
-                        }
-                    );
+            var groupedByUserId = gameDataWithUserId.GroupBy(_ => _.UserId).Select(_ => _.First());
+            var usersFilter = Builders<StoredGameDataWithUserId>.Filter.In("UserId", groupedByUserId.Select(_ => _.UserId));
+            var usersIdsForUpdateList = users.Find(usersFilter).Project(_ => _.UserId).ToList();
+
+
+            var gameDataForUpdate = groupedByUserId.Where(_ => usersIdsForUpdateList.Contains(_.UserId));
+            var gameDataToCreate = groupedByUserId.Where(_ => !usersIdsForUpdateList.Contains(_.UserId));
+
+            if (gameDataToCreate.Any())
+            {
+                users.InsertMany(gameDataToCreate);
+            }
+
+
+            foreach (var update in gameDataForUpdate)
+            {
+                users.ReplaceOne(Builders<StoredGameDataWithUserId>.Filter.Eq(s => s.UserId, update.UserId), update);
+            }
         }
     }
 }

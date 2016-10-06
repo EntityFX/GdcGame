@@ -331,11 +331,19 @@ namespace EntityFx.Gdcame.Test.Perfomance
         private async Task<ClientConnectionInfo> Login(string login, string password)
         {
             var p = new PasswordAuthProvider(_serviceUri);
-            var token = await p.Login(new PasswordAuthRequest<PasswordAuthData>()
+            try
             {
-                RequestData = new PasswordAuthData() { Password = password, Usename = login }
-            });
-            return new ClientConnectionInfo { Login = login, Context = token };
+                var token = await p.Login(new PasswordAuthRequest<PasswordAuthData>()
+                {
+                    RequestData = new PasswordAuthData() { Password = password, Usename = login }
+                });
+                return new ClientConnectionInfo { Login = login, Context = token };
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex);
+            }
+            return null;
         }
 
         private async Task<object> Logout(ClientConnectionInfo client)

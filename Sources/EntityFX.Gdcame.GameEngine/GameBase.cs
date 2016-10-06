@@ -96,14 +96,15 @@ namespace EntityFX.Gdcame.GameEngine
         private void InitializeFundsDrivers()
         {
             Items = GetFundsDrivers();
-            Items.AsParallel().ForAll(pair =>
+
+            foreach (var item in Items)
             {
-                if (pair.Value.Price == 0)
+                if (item.Value.Price == 0)
                 {
-                    pair.Value.Price = pair.Value.InitialPrice;
+                    item.Value.Price = item.Value.InitialPrice;
                 }
-                pair.Value.InflationPercent = 15;
-            });
+                item.Value.InflationPercent = 15;
+            };
         }
 
         private void InitializeCustomRules()

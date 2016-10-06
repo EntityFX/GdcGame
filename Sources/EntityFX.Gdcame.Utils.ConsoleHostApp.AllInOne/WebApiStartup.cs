@@ -14,6 +14,10 @@ using Owin;
 using Owin.Security.AesDataProtectorProvider;
 using Unity.WebApi;
 using System.Web.Http.Cors;
+using Microsoft.Owin.Cors;
+using System.Web.Cors;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
 {
@@ -41,6 +45,23 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
 
             config.DependencyResolver = new UnityDependencyResolver(container);
 
+            var corsPolicy = new EnableCorsAttribute("*", "*", "GET, POST, OPTIONS, PUT, DELETE");
+
+            // Cors for the Asp.Net Identity (OAuth handler)
+            appBuilder.UseCors(new CorsOptions
+            {
+                PolicyProvider = new CorsPolicyProvider
+                {
+                    PolicyResolver = request =>
+                        request.Path.Value == "/token" ?
+                        corsPolicy.GetCorsPolicyAsync(null, CancellationToken.None) :
+                        Task.FromResult<CorsPolicy>(null)
+                }
+            });
+
+            // Cors for the WebApi
+            config.EnableCors(corsPolicy);
+
             (new ContainerBootstrapper()).Configure(container);
 
             var aumf =
@@ -62,10 +83,12 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
                             config.DependencyResolver.GetService(typeof (ISessionManagerClientFactory)))
             };
 
+
             // Token Generation
             appBuilder.UseOAuthAuthorizationServer(OAuthServerOptions)
                 .UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
-            config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
+
+
             config.MapHttpAttributeRoutes();
             config.Routes.MapHttpRoute("DefaultApi", "api/{controller}/{id}", new {id = RouteParameter.Optional}
                 );
