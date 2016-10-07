@@ -9,17 +9,17 @@ using System.Web.Http;
 using System.Web.Http.Controllers;
 using EntityFX.Gdcame.Manager.Contract.SessionManager;
 using EntityFX.Gdcame.Manager.Contract.UserManager;
-using EntityFX.Gdcame.Presentation.Contract.Model;
+using EntityFX.Gdcame.Application.Contract.Model;
 using EntityFX.Gdcame.Presentation.Web.Api.Providers;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
-using EntityFX.Gdcame.Presentation.Web.Api.Models;
-using EntityFX.Gdcame.Presentation.Contract.Controller;
-using RegisterAccountModel = EntityFX.Gdcame.Presentation.Web.Api.Models.RegisterAccountModel;
+using EntityFX.Gdcame.Application.WebApi.Models;
+using EntityFX.Gdcame.Application.Contract.Controller;
+using RegisterAccountModel = EntityFX.Gdcame.Application.WebApi.Models.RegisterAccountModel;
 
-namespace EntityFX.Gdcame.Presentation.Web.Api.Controllers
+namespace EntityFX.Gdcame.Application.WebApi.Controllers
 {
     [RoutePrefix("api/Auth")]
     public class AuthController : ApiController

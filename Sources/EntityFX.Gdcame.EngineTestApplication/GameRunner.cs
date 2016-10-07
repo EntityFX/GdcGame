@@ -33,11 +33,11 @@ namespace EntityFX.Gdcame.EngineTestApplication
             _timer.Elapsed += _timer_Elapsed;
         }
 
-        private async void _timer_Elapsed(object sender, ElapsedEventArgs e)
+        private void _timer_Elapsed(object sender, ElapsedEventArgs e)
         {
             var sw = new Stopwatch();
             sw.Start();
-            await _game.PerformAutoStep();
+             _game.PerformAutoStep();
             Console.WriteLine(sw.Elapsed);
             DisplayGameData(GetGameData());
         }

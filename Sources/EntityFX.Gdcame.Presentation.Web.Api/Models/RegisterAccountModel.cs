@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EntityFX.Gdcame.Presentation.Web.Api.Models
+namespace EntityFX.Gdcame.Application.WebApi.Models
 {
     public class RegisterAccountModel : Contract.Model.RegisterAccountModel
     {

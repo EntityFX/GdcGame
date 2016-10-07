@@ -1,9 +1,9 @@
 using System;
 using EntityFX.Gdcame.Common.Contract.UserRating;
-using EntityFX.Gdcame.Common.Presentation.Model;
-using EntityFX.Gdcame.Presentation.Contract.Model;
+using EntityFX.Gdcame.Common.Application.Model;
+using EntityFX.Gdcame.Application.Contract.Model;
 
-namespace EntityFX.Gdcame.Presentation.Web.Providers.Providers
+namespace EntityFX.Gdcame.Application.WebApi.Providers
 {
     public interface IGameDataProvider
     {

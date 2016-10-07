@@ -119,9 +119,37 @@ namespace EntityFX.Gdcame.Manager
             {
                 try
                 {
+                    // Parallel.ForEach(UserGamesStorage.Values, game => game.PerformAutoStep());
+                    var calulateGamesChunk = new IGame[100];
+                    var count = 0;
                     foreach (var game in UserGamesStorage.Values)
                     {
-                        game.PerformAutoStep();
+                        if (count < 100)
+                        {
+                            calulateGamesChunk[count] = game;
+                            count++;
+                        } else
+                        {
+                            Task.Factory.StartNew(_ => {
+                                var games = (IGame[])_;
+                                for (int i = 0; i < games.Length; i++)
+                                {
+                                    games[i].PerformAutoStep();
+                                }
+                            }, calulateGamesChunk);
+                            calulateGamesChunk = new IGame[100];
+                            count = 0;
+                        }
+                    }
+                    if (count < 100)
+                    {
+                        Task.Factory.StartNew(_ => {
+                            var games = (IGame[])_;
+                            for (int i = 0; i < games.Length; i++)
+                            {
+                                games[i].PerformAutoStep();
+                            }
+                        }, calulateGamesChunk);
                     }
                 }
                 catch (Exception e)

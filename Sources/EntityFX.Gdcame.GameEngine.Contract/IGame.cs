@@ -22,7 +22,7 @@ namespace EntityFX.Gdcame.GameEngine.Contract
 
         void Initialize();
 
-        Task<int> PerformAutoStep(int iterations = 1);
+        void PerformAutoStep(int iterations = 1);
 
         ManualStepResult PerformManualStep(VerificationManualStepData verificationData);
 

@@ -4,7 +4,7 @@ using EntityFX.Gdcame.Common.Contract.Counters;
 using EntityFX.Gdcame.Common.Contract.Items;
 using EntityFX.Gdcame.Infrastructure.Common;
 
-namespace EntityFX.Gdcame.Common.Presentation.Model.Mappers
+namespace EntityFX.Gdcame.Common.Application.Model.Mappers
 {
     public class GameDataModelMapper : IMapper<GameData, GameDataModel>
     {

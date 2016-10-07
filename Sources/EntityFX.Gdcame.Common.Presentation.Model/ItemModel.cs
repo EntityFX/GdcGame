@@ -4,7 +4,7 @@ using System.ServiceModel;
 using System.Xml.Serialization;
 using EntityFX.Gdcame.Common.Contract.Incrementors;
 
-namespace EntityFX.Gdcame.Common.Presentation.Model
+namespace EntityFX.Gdcame.Common.Application.Model
 {
     [XmlType("Item")]
     public class ItemModel

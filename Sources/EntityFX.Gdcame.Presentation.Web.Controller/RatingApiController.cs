@@ -1,10 +1,10 @@
 ﻿using System.Web.Http;
 using System.Web.Http.Controllers;
 using EntityFX.Gdcame.Common.Contract.UserRating;
-using EntityFX.Gdcame.Presentation.Contract.Controller;
-using EntityFX.Gdcame.Presentation.Web.Providers.Providers;
+using EntityFX.Gdcame.Application.Contract.Controller;
+using EntityFX.Gdcame.Application.WebApi.Providers;
 
-namespace EntityFX.Gdcame.Presentation.Web.Controller
+namespace EntityFX.Gdcame.Application.WebApi.Controller
 {
     public class RatingApiController : ApiController, IRatingApiController
     {

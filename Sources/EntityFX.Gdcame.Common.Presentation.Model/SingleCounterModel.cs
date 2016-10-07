@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace EntityFX.Gdcame.Common.Presentation.Model
+namespace EntityFX.Gdcame.Common.Application.Model
 {
     [DataContract]
     public class SingleCounterModel : CounterModelBase

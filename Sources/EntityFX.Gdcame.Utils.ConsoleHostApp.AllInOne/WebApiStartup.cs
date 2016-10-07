@@ -38,6 +38,11 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
                 appBuilder.UseAesDataProtectorProvider();
             }
 
+            /*appBuilder.Use((c, t) =>
+            {
+                return Task.FromResult(0);
+            });*/
+
             // Configure Web API for self-host. 
                 var config = new HttpConfiguration();
 

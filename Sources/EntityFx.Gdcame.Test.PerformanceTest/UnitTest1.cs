@@ -115,7 +115,7 @@ namespace EntityFx.Gdcame.Test.PerformanceTest
                 for (var iteration = 0; iteration < iterNumber; iteration++)
                 {
                     swList[iteration].Start();
-                    game.PerformAutoStep().Wait();
+                    game.PerformAutoStep();
                     swList[iteration].Stop();
                 }
                 Debug.Print("Ellapsed for {0} iterrations: {1}", iterNumber, csw.Elapsed);

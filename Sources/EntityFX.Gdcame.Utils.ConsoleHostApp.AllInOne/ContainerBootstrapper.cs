@@ -1,9 +1,13 @@
-using System;
-using System.Configuration;
+using EntityFX.Gdcame.Application.Contract.Controller;
+using EntityFX.Gdcame.Application.Contract.Model;
+using EntityFX.Gdcame.Application.Contract.Model.Mappers;
+using EntityFX.Gdcame.Application.WebApi.Controller;
+using EntityFX.Gdcame.Application.WebApi.Models;
+using EntityFX.Gdcame.Application.WebApi.Providers;
+using EntityFX.Gdcame.Common.Application.Model;
+using EntityFX.Gdcame.Common.Application.Model.Mappers;
 using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.Common.Contract.Counters;
-using EntityFX.Gdcame.Common.Presentation.Model;
-using EntityFX.Gdcame.Common.Presentation.Model.Mappers;
 using EntityFX.Gdcame.DataAccess.Contract.GameData;
 using EntityFX.Gdcame.DataAccess.Contract.GameData.Store;
 using EntityFX.Gdcame.DataAccess.Contract.User;
@@ -23,20 +27,16 @@ using EntityFX.Gdcame.Manager.Contract.UserManager;
 using EntityFX.Gdcame.Manager.Mappers.Store;
 using EntityFX.Gdcame.NotifyConsumer;
 using EntityFX.Gdcame.NotifyConsumer.Contract;
-using EntityFX.Gdcame.Presentation.Web.Api.Models;
 using EntityFX.Gdcame.Presentation.Web.Api.Providers;
-using EntityFX.Gdcame.Presentation.Web.Controller;
-using EntityFX.Gdcame.Presentation.Contract.Model;
-using EntityFX.Gdcame.Presentation.Web.Model.Mappers;
-using EntityFX.Gdcame.Presentation.Web.Providers.Providers;
 using EntityFX.Gdcame.Utils.Common;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.SignalR;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
 using PortableLog.NLog;
+using System;
+using System.Configuration;
 using CounterBase = EntityFX.Gdcame.Common.Contract.Counters.CounterBase;
-using EntityFX.Gdcame.Presentation.Contract.Controller;
 
 namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
 {

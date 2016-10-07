@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using EntityFX.Gdcame.Presentation.Contract.Controller;
+using EntityFX.Gdcame.Application.Contract.Controller;
 
 namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 {

@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using EntityFX.Gdcame.Manager.Contract.UserManager;
-using EntityFX.Gdcame.Presentation.Web.Api.Models;
+using EntityFX.Gdcame.Application.WebApi.Models;
 using Microsoft.AspNet.Identity;
 
 namespace EntityFX.Gdcame.Presentation.Web.Api.Providers

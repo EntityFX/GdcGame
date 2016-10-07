@@ -3,10 +3,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using EntityFX.Gdcame.Manager.Contract.AdminManager;
-using EntityFX.Gdcame.Presentation.Contract.Controller;
-using EntityFX.Gdcame.Presentation.Contract.Model;
+using EntityFX.Gdcame.Application.Contract.Controller;
+using EntityFX.Gdcame.Application.Contract.Model;
 
-namespace EntityFX.Gdcame.Presentation.Web.Controller
+namespace EntityFX.Gdcame.Application.WebApi.Controller
 {
     [Authorize]
     [RoutePrefix("api/admin")]

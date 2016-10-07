@@ -1,7 +1,7 @@
 ﻿using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-namespace EntityFX.Gdcame.Common.Presentation.Model
+namespace EntityFX.Gdcame.Common.Application.Model
 {
     [XmlRoot(ElementName = "GameData")]
     public class GameDataModel

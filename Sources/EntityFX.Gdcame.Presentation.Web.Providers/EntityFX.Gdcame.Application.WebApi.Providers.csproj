@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{892D6D25-857F-4CA9-A518-526BBF05C011}</ProjectGuid>
+    <ProjectGuid>{A6F59753-3065-4BB3-85A8-1E0778205407}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EntityFX.Gdcame.Presentation.Web.Controller</RootNamespace>
-    <AssemblyName>EntityFX.Gdcame.Presentation.Web.Controller</AssemblyName>
+    <RootNamespace>EntityFX.Gdcame.Application.WebApi.Providers</RootNamespace>
+    <AssemblyName>EntityFX.Gdcame.Application.WebApi.Providers</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -32,51 +32,43 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="System.Web.Http">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccountController.cs" />
-    <Compile Include="AdminController.cs" />
-    <Compile Include="GameApiController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RatingApiController.cs" />
+    <Compile Include="GameDataProvider.cs" />
+    <Compile Include="IGameDataProvider.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EntityFX.Gdcame.Manager.Contract\EntityFX.Gdcame.Manager.Contract.csproj">
-      <Project>{41696F24-E345-4599-A0C7-0715F64946D8}</Project>
-      <Name>EntityFX.Gdcame.Manager.Contract</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.Presentation.Contract.Controller\EntityFX.Gdcame.Presentation.Contract.Controller.csproj">
-      <Project>{b9608a11-f0f0-47aa-bd55-d6e25a310daa}</Project>
-      <Name>EntityFX.Gdcame.Presentation.Contract.Controller</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.Presentation.Web.Model\EntityFX.Gdcame.Presentation.Contract.Model.csproj">
-      <Project>{0F9C056A-DB5D-48ED-A688-BFD04ED4DFD7}</Project>
-      <Name>EntityFX.Gdcame.Presentation.Contract.Model</Name>
-    </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Common.Contract\EntityFX.Gdcame.Common.Contract.csproj">
       <Project>{89F89C37-F564-47EB-839D-C45ACD9D012A}</Project>
       <Name>EntityFX.Gdcame.Common.Contract</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.Common.Presentation.Model\EntityFX.Gdcame.Common.Presentation.Model.csproj">
+    <ProjectReference Include="..\EntityFX.Gdcame.Common.Presentation.Model\EntityFX.Gdcame.Common.Application.Model.csproj">
       <Project>{3B44AFC0-F207-44E4-9F91-7F24E1F4D342}</Project>
-      <Name>EntityFX.Gdcame.Common.Presentation.Model</Name>
+      <Name>EntityFX.Gdcame.Common.Application.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.Presentation.Web.Providers\EntityFX.Gdcame.Presentation.Web.Providers.csproj">
-      <Project>{A6F59753-3065-4BB3-85A8-1E0778205407}</Project>
-      <Name>EntityFX.Gdcame.Presentation.Web.Providers</Name>
+    <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Common\EntityFX.Gdcame.Infrastructure.Common.csproj">
+      <Project>{924CC67D-9E2B-46BA-BE1D-6C6C780CCFBC}</Project>
+      <Name>EntityFX.Gdcame.Infrastructure.Common</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
+    <ProjectReference Include="..\EntityFX.Gdcame.Manager.Contract\EntityFX.Gdcame.Manager.Contract.csproj">
+      <Project>{41696F24-E345-4599-A0C7-0715F64946D8}</Project>
+      <Name>EntityFX.Gdcame.Manager.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Presentation.Web.Model\EntityFX.Gdcame.Application.Contract.Model.csproj">
+      <Project>{0F9C056A-DB5D-48ED-A688-BFD04ED4DFD7}</Project>
+      <Name>EntityFX.Gdcame.Application.Contract.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Utils.Common\EntityFX.Gdcame.Utils.Common.csproj">
+      <Project>{2AE99E38-4B45-4D8B-B9D5-840B21F82A43}</Project>
+      <Name>EntityFX.Gdcame.Utils.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

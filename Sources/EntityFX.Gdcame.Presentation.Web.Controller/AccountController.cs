@@ -5,11 +5,11 @@ using System.Net;
 using System.Web.Http;
 using EntityFX.Gdcame.Manager.Contract.SessionManager;
 using EntityFX.Gdcame.Manager.Contract.UserManager;
-using EntityFX.Gdcame.Presentation.Contract.Model;
-using EntityFX.Gdcame.Presentation.Contract.Controller;
+using EntityFX.Gdcame.Application.Contract.Model;
+using EntityFX.Gdcame.Application.Contract.Controller;
 using System.Threading.Tasks;
 
-namespace EntityFX.Gdcame.Presentation.Web.Controller
+namespace EntityFX.Gdcame.Application.WebApi.Controller
 {
     [Authorize(Roles = "Admin")]
     [RoutePrefix("api/admin/accounts")]

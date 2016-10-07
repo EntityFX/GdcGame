@@ -1,10 +1,10 @@
-﻿using EntityFX.Gdcame.Presentation.Contract.Controller;
+﻿using EntityFX.Gdcame.Application.Contract.Controller;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using EntityFX.Gdcame.Presentation.Contract.Model;
+using EntityFX.Gdcame.Application.Contract.Model;
 using EntityFX.Gdcame.Utils.WebApiClient.Auth;
 using RestSharp.Portable;
 

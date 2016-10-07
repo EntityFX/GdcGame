@@ -1,4 +1,4 @@
-﻿using EntityFX.Gdcame.Presentation.Web.Api.Models;
+﻿using EntityFX.Gdcame.Application.WebApi.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;

@@ -1,4 +1,4 @@
-﻿namespace EntityFX.Gdcame.Presentation.Web.Api.Models
+﻿namespace EntityFX.Gdcame.Application.WebApi.Models
 {
     public class UserInfoViewModel
     {

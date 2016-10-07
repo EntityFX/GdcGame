@@ -1,6 +1,6 @@
 ﻿using System;
 using EntityFX.Gdcame.Common.Contract;
-using EntityFX.Gdcame.Common.Presentation.Model;
+using EntityFX.Gdcame.Common.Application.Model;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.NotifyConsumer.Contract;
 using Microsoft.AspNet.SignalR;

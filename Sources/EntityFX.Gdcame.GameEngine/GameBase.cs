@@ -39,7 +39,7 @@ namespace EntityFX.Gdcame.GameEngine
 
         private readonly Random _randomiserForVerification = new Random(Environment.TickCount);
 
-        private static readonly object _lockState = new {};
+        private static readonly object _lockState = new { };
         private IEnumerable<GenericCounter> _autoGenericCounters;
         private IEnumerable<GenericCounter> _manualGenericCounters;
         private IEnumerable<DelayedCounter> _delayedCounters;
@@ -68,8 +68,8 @@ namespace EntityFX.Gdcame.GameEngine
                 SecondNumber = _randomiserForVerification.Next(1, 50)
             };
             _currentVerificationSteps = 0;
-            var delta = (int) (_stepsToVerify*0.1);
-            _nextVerificationSteps = _stepsToVerify + _randomiserForVerification.Next(-1*delta, delta);
+            var delta = (int)(_stepsToVerify * 0.1);
+            _nextVerificationSteps = _stepsToVerify + _randomiserForVerification.Next(-1 * delta, delta);
             return verificationManualStepResult;
         }
 
@@ -118,31 +118,29 @@ namespace EntityFX.Gdcame.GameEngine
 
         protected abstract ReadOnlyDictionary<int, ICustomRule> GetCustomRules();
 
-        public async Task<int> PerformAutoStep(int iterations = 1)
+        public void PerformAutoStep(int iterations = 1)
         {
             if (!_isInitialized) throw new Exception("Game is not started");
-            return await Task<int>.Factory.StartNew(() =>
-            {
-                var modifiedCounters = PerformAutoStepInternal(iterations);
-                PostPerformAutoStep(modifiedCounters, iterations);
-                return 0;
-            });
+
+            var modifiedCounters = PerformAutoStepInternal(iterations);
+            PostPerformAutoStep(modifiedCounters, iterations);
+
         }
 
         private IEnumerable<CounterBase> PerformAutoStepInternal(int iterations = 1)
         {
             foreach (var autoGenericCounter in _autoGenericCounters)
             {
-                CashFunds(autoGenericCounter.Value*iterations);
+                CashFunds(autoGenericCounter.Value * iterations);
                 autoGenericCounter.CurrentSteps += iterations;
-                autoGenericCounter.Inflation = autoGenericCounter.CurrentSteps/
+                autoGenericCounter.Inflation = autoGenericCounter.CurrentSteps /
                                                autoGenericCounter.StepsToIncreaseInflation;
             }
             ;
             foreach (var manualGenericCounter in _manualGenericCounters)
             {
                 manualGenericCounter.CurrentSteps -= iterations;
-                manualGenericCounter.Inflation = manualGenericCounter.CurrentSteps/
+                manualGenericCounter.Inflation = manualGenericCounter.CurrentSteps /
                                                  manualGenericCounter.StepsToIncreaseInflation;
             }
             ;
@@ -154,8 +152,8 @@ namespace EntityFX.Gdcame.GameEngine
                 if (delayedCounter.SecondsRemaining == 0)
                 {
                     delayedCounter.IsMining = false;
-                    CashFunds(delayedCounter.Value*iterations);
-                    delayedCounter.SubValue *= 1.2m*iterations;
+                    CashFunds(delayedCounter.Value * iterations);
+                    delayedCounter.SubValue *= 1.2m * iterations;
                 }
                 else
                 {
@@ -174,7 +172,7 @@ namespace EntityFX.Gdcame.GameEngine
             {
                 CashFunds(genericCounter.Value);
                 genericCounter.CurrentSteps++;
-                genericCounter.Inflation = genericCounter.CurrentSteps/genericCounter.StepsToIncreaseInflation;
+                genericCounter.Inflation = genericCounter.CurrentSteps / genericCounter.StepsToIncreaseInflation;
             }
             ManualStepNumber++;
             return _manualGenericCounters;
@@ -194,7 +192,7 @@ namespace EntityFX.Gdcame.GameEngine
                 var result = verficationRequiredResult != null &&
                              verficationRequiredResult.FirstNumber + verficationRequiredResult.SecondNumber ==
                              verificationData.ResultNumber
-                    ? (ManualStepResult) new ManualStepVerifiedResult(true)
+                    ? (ManualStepResult)new ManualStepVerifiedResult(true)
                     : InitializeVerificationSteps();
 
 
@@ -268,7 +266,7 @@ namespace EntityFX.Gdcame.GameEngine
             {
                 PayWithFunds(fundDriver.Price);
                 fundDriver.Price = fundDriver.Price +
-                                          fundDriver.Price*fundDriver.InflationPercent/100.0m;
+                                          fundDriver.Price * fundDriver.InflationPercent / 100.0m;
                 fundDriver.Bought++;
                 var changedCounters = IncrementCounters(fundDriver.Incrementors);
                 PerformBuyFundDriverCustomRule(fundDriver);
@@ -389,7 +387,7 @@ namespace EntityFX.Gdcame.GameEngine
             foreach (var genericCounter in _autoGenericCounters)
             {
                 genericCounter.CurrentSteps -= genericCounter.StepsToIncreaseInflation;
-                genericCounter.Inflation = genericCounter.CurrentSteps/genericCounter.StepsToIncreaseInflation;
+                genericCounter.Inflation = genericCounter.CurrentSteps / genericCounter.StepsToIncreaseInflation;
                 CashFunds(genericCounter.Value);
             }
             GameCash.RootCounter.SubValue += 1;
@@ -397,7 +395,7 @@ namespace EntityFX.Gdcame.GameEngine
 
         public void ActivateDelayedCounter(int counterId)
         {
-            var delayedCounter = (DelayedCounter) GameCash.Counters[counterId];
+            var delayedCounter = (DelayedCounter)GameCash.Counters[counterId];
             if (delayedCounter == null)
             {
                 return;

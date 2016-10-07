@@ -1,7 +1,7 @@
-﻿using EntityFX.Gdcame.Common.Presentation.Model;
+﻿using EntityFX.Gdcame.Common.Application.Model;
 using EntityFX.Gdcame.Infrastructure.Common;
-using EntityFX.Gdcame.Presentation.Contract.Model;
-using EntityFX.Gdcame.Presentation.Web.Api.Models;
+using EntityFX.Gdcame.Application.Contract.Model;
+using EntityFX.Gdcame.Application.WebApi.Models;
 using EntityFX.Gdcame.Utils.WebApiClient;
 using EntityFX.Gdcame.Utils.WebApiClient.Auth;
 using EntityFX.Gdcame.Utils.WebApiClient.Exceptions;
@@ -33,7 +33,7 @@ namespace EntityFx.Gdcame.Test.Perfomance
 
             var performanceTester = new PerfomanceTester(new Uri(serviceAddress), logger);
 
-            performanceTester.TestStartManyGames(50000, RandomString(15));
+            performanceTester.TestStartManyGames(40000, RandomString(15));
             logger.Info("Press any key to close...");
             Console.ReadKey();
 
@@ -472,7 +472,7 @@ namespace EntityFx.Gdcame.Test.Perfomance
             var authApi = new AuthApiClient(new PasswordOAuthContext() { BaseUri = _serviceUri });
             try
             {
-                return await authApi.Register(new EntityFX.Gdcame.Presentation.Web.Api.Models.RegisterAccountModel()
+                return await authApi.Register(new EntityFX.Gdcame.Application.WebApi.Models.RegisterAccountModel()
                 {
                     Login = login,
                     Password = DefaultPassword,

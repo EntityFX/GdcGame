@@ -1,6 +1,6 @@
 ﻿var app = angular.module("gdCameApp", ["ngRoute", "ngStorage"])
 
-app.constant('apiUri', 'gdcame.local:8889');
+app.constant('apiUri', 'gdcame.local');
 
 app.config(function ($routeProvider, $locationProvider) {
     $routeProvider

@@ -10,8 +10,8 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using EntityFX.Gdcame.Utils.WebApiClient.Auth;
 using EntityFX.Gdcame.Utils.WebApiClient;
-using EntityFX.Gdcame.Presentation.Web.Api.Models;
-using EntityFX.Gdcame.Common.Presentation.Model;
+using EntityFX.Gdcame.Application.WebApi.Models;
+using EntityFX.Gdcame.Common.Application.Model;
 
 namespace EntityFx.Gdcame.Test.PerformanceTest
 {

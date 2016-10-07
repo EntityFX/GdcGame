@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using EntityFX.Gdcame.Presentation.Contract.Model;
+using EntityFX.Gdcame.Application.Contract.Model;
 using EntityFX.Gdcame.Utils.WebApiClient.Auth;
 using EntityFX.Gdcame.Utils.WebApiClient.Exceptions;
 using RestSharp.Portable;
