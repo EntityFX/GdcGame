@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using EntityFX.Gdcame.Utils.WebApiClient.Auth;
 using RestSharp.Portable;
+using System;
 
 namespace EntityFX.Gdcame.Utils.WebApiClient
 {
@@ -37,13 +38,23 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
             client.AddHandler("application/json", CustomJsonDeserializer.Default);
             client.AddHandler("text/javascript", CustomJsonDeserializer.Default);
             client.Authenticator = AuthContext.Context;
+            client.IgnoreResponseStatusCode = true;
             try
             {
-                return await client.Execute<TModel>(request);
+                var res = await client.Execute<TModel>(request);
+                if (!res.IsSuccess)
+                {
+                    ExceptionHandlerHelper.HandleNotSuccessRequest(res);
+                }
+                return res;
             }
             catch (HttpRequestException exception)
             {
                 ExceptionHandlerHelper.HandleHttpRequestException(exception);
+            }
+            catch(Exception exception)
+            {
+
             }
             return null;
         }
@@ -64,7 +75,21 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
             client.AddHandler("text/javascript", CustomJsonDeserializer.Default);
             client.Authenticator = AuthContext.Context;
             client.IgnoreResponseStatusCode = true;
-            return await client.Execute<TResponse>(request);
+
+            try
+            {
+                var res = await client.Execute<TResponse>(request);
+                if (!res.IsSuccess)
+                {
+                    ExceptionHandlerHelper.HandleNotSuccessRequest(res);
+                }
+                return res;
+            }
+            catch (HttpRequestException exception)
+            {
+                ExceptionHandlerHelper.HandleHttpRequestException(exception);
+            }
+            return null;
         }
  
     }

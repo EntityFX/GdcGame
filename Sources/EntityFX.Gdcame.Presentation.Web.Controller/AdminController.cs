@@ -8,7 +8,7 @@ using EntityFX.Gdcame.Application.Contract.Model;
 
 namespace EntityFX.Gdcame.Application.WebApi.Controller
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     [RoutePrefix("api/admin")]
     public class AdminController : ApiController, IAdminController
     {

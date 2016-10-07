@@ -17,7 +17,7 @@ namespace EntityFX.Gdcame.Infrastructure.Common
             this.runOnce = runOnce;
         }
 
-        public async void Start()
+        public async Task Start()
         {
             if (!timerRunning)
             {

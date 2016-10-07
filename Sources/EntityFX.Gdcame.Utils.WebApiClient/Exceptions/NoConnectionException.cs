@@ -4,7 +4,7 @@ namespace EntityFX.Gdcame.Utils.WebApiClient.Exceptions
 {
     public class NoConnectionException : ClientException
     {
-        public NoConnectionException(string message, Exception inner) : base(message, inner)
+        public NoConnectionException(ErrorData errorData, string message, Exception inner) : base(errorData, message, inner)
         {
         }
     }

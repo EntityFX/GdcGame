@@ -16,7 +16,7 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
         public async Task<UserSessionsModel[]> GetActiveSessions()
         {
             var response = await ExecuteRequestAsync<UserSessionsModel[]>("/api/admin/sessions");
-            return response.Data;
+            return response != null ? response.Data : new UserSessionsModel[] { };
         }
 
         public async void CloseSessionByGuid(Guid guid)

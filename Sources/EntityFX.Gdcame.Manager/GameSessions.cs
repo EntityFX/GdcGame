@@ -19,22 +19,31 @@ namespace EntityFX.Gdcame.Manager
     {
         private readonly IGameFactory _gameFactory;
 
-        private readonly TaskTimer _gameTimer;
+
         private readonly ILogger _logger;
         private readonly IHashHelper _hashHelper;
 
-        private readonly ConcurrentDictionary<string, IGame> UserGamesStorage =
+        private readonly ConcurrentDictionary<string, IGame> _userGamesStorage =
             new ConcurrentDictionary<string, IGame>();
 
-        private readonly ConcurrentDictionary<Guid, Session> ClientSessionsStorage = new ConcurrentDictionary<Guid, Session>();
+        private readonly ConcurrentDictionary<Guid, Session> _userSessionsStorage = new ConcurrentDictionary<Guid, Session>();
 
         private readonly IGameDataPersisterFactory _gameDataPersisterFactory;
-        private readonly Task _backgroundPersisterTask;
-        private readonly CancellationTokenSource _backgroundPersisterTaskToken = new CancellationTokenSource();
+
+
         private readonly ConcurrentBag<Tuple<string, string>>[] PersistTimeSlotsUsers = new ConcurrentBag<Tuple<string, string>>[PersistTimeSlotsCount];
+
         private const int PersistTimeSlotsCount = 60;
         private const int PersistTimeSlotMilliseconds = 1000;
         private const int PersistUsersChunkSize = 10;
+        private const int SessionLifeInSeconds = 3600;
+        private const int SessionsCheckIntervalInSeconds = 30;
+
+        private readonly CancellationTokenSource _backgroundPersisterTaskToken = new CancellationTokenSource();
+
+        private readonly Task _backgroundPerformAutomaticStepsTask;
+        private readonly Task _backgroundPersisterTask;
+        private readonly Task _backgroundSessionsCheckerTask;
 
         public GameSessions(ILogger logger, IGameFactory gameFactory, IGameDataPersisterFactory gameDataPersisterFactory, IHashHelper hashHelper)
         {
@@ -49,14 +58,13 @@ namespace EntityFX.Gdcame.Manager
             }
 
             _backgroundPersisterTask = Task.Factory.StartNew(a => PerformBackgroundPersisting(), TaskCreationOptions.LongRunning, _backgroundPersisterTaskToken.Token);
-
-            _gameTimer = new TaskTimer(TimeSpan.FromSeconds(1), TimerCallback);
-            _gameTimer.Start();
+            _backgroundPerformAutomaticStepsTask = new TaskTimer(TimeSpan.FromSeconds(1), PerformAutomaticSteps).Start();
+            _backgroundSessionsCheckerTask = new TaskTimer(TimeSpan.FromSeconds(SessionsCheckIntervalInSeconds), PerformSessionsCheckTask).Start();
         }
 
         internal IDictionary<Guid, Session> Sessions
         {
-            get { return ClientSessionsStorage; }
+            get { return _userSessionsStorage; }
         }
 
         private void PerformBackgroundPersisting()
@@ -77,11 +85,11 @@ namespace EntityFX.Gdcame.Manager
                 ConcurrentBag<Tuple<string, string>> timeSlot = PersistTimeSlotsUsers[currentTimeSlotId];
                 foreach (Tuple<string, string> timeSlotUser in timeSlot)
                 {
-                    if (UserGamesStorage.ContainsKey(timeSlotUser.Item1))
+                    if (_userGamesStorage.ContainsKey(timeSlotUser.Item1))
                     {
                         gamesWithUserIdsChunk.Add(new GameWithUserId()
                         {
-                            Game = UserGamesStorage[timeSlotUser.Item1],
+                            Game = _userGamesStorage[timeSlotUser.Item1],
                             UserId = timeSlotUser.Item2
                         });
                     }
@@ -111,7 +119,7 @@ namespace EntityFX.Gdcame.Manager
             }
         }
 
-        private void TimerCallback()
+        private void PerformAutomaticSteps()
         {
             var sw = new Stopwatch();
             sw.Start();
@@ -122,7 +130,7 @@ namespace EntityFX.Gdcame.Manager
                     // Parallel.ForEach(UserGamesStorage.Values, game => game.PerformAutoStep());
                     var calulateGamesChunk = new IGame[100];
                     var count = 0;
-                    foreach (var game in UserGamesStorage.Values)
+                    foreach (var game in _userGamesStorage.Values)
                     {
                         if (count < 100)
                         {
@@ -160,7 +168,33 @@ namespace EntityFX.Gdcame.Manager
             }
 
             if (_logger != null)
-                _logger.Info("Perform steps for {0} active games and {1} sessions: {2}", UserGamesStorage.Count, ClientSessionsStorage.Count, sw.Elapsed);
+                _logger.Info("Perform steps for {0} active games and {1} sessions: {2}", _userGamesStorage.Count, _userSessionsStorage.Count, sw.Elapsed);
+        }
+
+        private void PerformSessionsCheckTask()
+        {
+            var sw = new Stopwatch();
+            sw.Start();
+            lock (_stdLock)
+            {
+                try
+                {
+                    foreach (var session in _userSessionsStorage)
+                    {
+                        if ((DateTime.Now - session.Value.LastActivity) > TimeSpan.FromSeconds(SessionLifeInSeconds))
+                        {
+                            RemoveSession(session.Key);
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    _logger.Error(e);
+                    throw;
+                }
+            }
+            if (_logger != null)
+                _logger.Info("Perform sessions {0} check: {1}",  _userSessionsStorage.Count, sw.Elapsed);
         }
 
         private static readonly object _stdLock = new { };
@@ -179,19 +213,13 @@ namespace EntityFX.Gdcame.Manager
             Session session;
 
             session = GetSession(sessionId);
-            if (session == null)
-            {
-                _logger.Warning("Session {0} doesn't exists", sessionId);
-                throw new InvalidSessionException(string.Format("Session {0} doesn't exists", sessionId), sessionId);
-            }
-
             return GetGame(session.Login);
         }
 
         public IGame GetGame(string username)
         {
             IGame game;
-            if (!UserGamesStorage.TryGetValue(username, out game))
+            if (!_userGamesStorage.TryGetValue(username, out game))
             {
                 _logger.Warning("Cannot get game for user {0}", username);
             }
@@ -204,7 +232,7 @@ namespace EntityFX.Gdcame.Manager
             {
                 return UserGameSessionStatus.Online;
             }
-            if (!UserGamesStorage.ContainsKey(username))
+            if (!_userGamesStorage.ContainsKey(username))
             {
                 return UserGameSessionStatus.GameNotStarted;
             }
@@ -223,16 +251,16 @@ namespace EntityFX.Gdcame.Manager
                     new CustomGameIdentity { AuthenticationType = "Auto", IsAuthenticated = true, Name = user.Login }
             };
 
-            if (!UserGamesStorage.ContainsKey(user.Login))
+            if (!_userGamesStorage.ContainsKey(user.Login))
             {
                 var game = StartGame(user.Id, user.Login);
-                if (!UserGamesStorage.TryAdd(user.Login, game))
+                if (!_userGamesStorage.TryAdd(user.Login, game))
                 {
                     _logger.Warning("Cannot add game for user {0}", user.Login);
                 }
             }
 
-            if (!ClientSessionsStorage.TryAdd(session.SessionIdentifier, session))
+            if (!_userSessionsStorage.TryAdd(session.SessionIdentifier, session))
             {
                 _logger.Warning("Cannot add session {0}", session.SessionIdentifier);
             }
@@ -242,17 +270,22 @@ namespace EntityFX.Gdcame.Manager
         public Session GetSession(Guid sessionId)
         {
             Session session;
-            if (!ClientSessionsStorage.TryGetValue(sessionId, out session))
+            if (!_userSessionsStorage.TryGetValue(sessionId, out session))
             {
-                _logger.Warning("Cannot get session {0}", sessionId);
+                if (session == null)
+                {
+                    _logger.Warning("Session {0} not found", sessionId);
+                    throw new InvalidSessionException(string.Format("Session {0} doesn't exists", sessionId), sessionId);
+                }
             }
+            session.LastActivity = DateTime.Now;
             return session;
         }
 
         public void RemoveSession(Guid sessionId)
         {
             Session session;
-            if (!ClientSessionsStorage.TryRemove(sessionId, out session))
+            if (!_userSessionsStorage.TryRemove(sessionId, out session))
             {
                 _logger.Warning("Cannot remove session {0}", sessionId);
             }
@@ -265,14 +298,14 @@ namespace EntityFX.Gdcame.Manager
             Session session;
             foreach (var userSession in userSessions)
             {
-                if (!ClientSessionsStorage.TryRemove(userSession.SessionIdentifier, out session))
+                if (!_userSessionsStorage.TryRemove(userSession.SessionIdentifier, out session))
                 {
                     _logger.Warning("Cannot remove session {0}", userSession.SessionIdentifier);
                 }
             }
 
             IGame game;
-            if (!UserGamesStorage.TryRemove(user.Login, out game))
+            if (!_userGamesStorage.TryRemove(user.Login, out game))
             {
                 _logger.Warning("Cannot remove game for user {0}", user.Login);
             }
@@ -287,7 +320,7 @@ namespace EntityFX.Gdcame.Manager
 
         public void RemoveAllSessions()
         {
-            ClientSessionsStorage.Clear();
+            _userSessionsStorage.Clear();
         }
 
         private IGame BuildGame(string userId, string userName)

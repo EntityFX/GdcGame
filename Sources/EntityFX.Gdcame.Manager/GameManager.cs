@@ -124,7 +124,7 @@ namespace EntityFX.Gdcame.Manager
             catch (Exception exp)
             {
                 _logger.Error(exp);
-                throw;
+                throw new InvalidSessionException("Game session is not found", sessionId);
             }
             return game;
         }

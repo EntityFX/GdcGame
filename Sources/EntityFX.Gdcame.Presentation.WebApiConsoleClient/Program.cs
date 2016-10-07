@@ -16,11 +16,17 @@ using System.Configuration;
 
 namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 {
+    enum ErrorCodes
+    {
+        OtherError,
+        ValidationError,
+        ServerError,
+        InvalidSessionError,
+        ConnectionError
+    }
+
     class Program
     {
-
-        private static PasswordOAuthContext _session;
-
         private static string _userName;
         private static string _userPassword;
         private static UnityContainer _container;
@@ -93,7 +99,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             Console.Write("Подтвердите пароль: ");
             var confirmPassword = Console.ReadLine();
 
-            var authApi = new AuthApiClient(new PasswordOAuthContext() {BaseUri = new Uri(ConfigurationManager.AppSettings["ServiceBaseAddress"]) });
+            var authApi = new AuthApiClient(new PasswordOAuthContext() { BaseUri = new Uri(ConfigurationManager.AppSettings["ServiceBaseAddress"]) });
 
             try
             {
@@ -106,25 +112,24 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             }
             catch (AggregateException loginException)
             {
-                Console.Clear();
-                var authException = loginException.InnerException as ClientException;
-                if (authException != null)
-                {
-                    PrettyConsole.WriteLineColor(ConsoleColor.Red, "Ошибка: {0}", authException.Message);
-                }
+                GameRunner.HandleClientException(loginException);
             }
 
 
         }
 
-        private async static void UserLogout(PasswordOAuthContext session)
+        private  static void UserLogout(PasswordOAuthContext session)
         {
             var authApi = new AuthApiClient(session);
             Console.Clear();
-            await authApi.Logout();
-            _userName = null;
-            _userPassword = null;
-            _session = null;
+            try
+            {
+                var result = authApi.Logout().Result;
+            }
+            catch (AggregateException loginException)
+            {
+                GameRunner.HandleClientException(loginException);
+            }
         }
 
         private static IGameApiController GetGameClient(PasswordOAuthContext session)
@@ -148,20 +153,13 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             }
             catch (AggregateException loginException)
             {
-                Console.Clear();
-                var authException = loginException.InnerException as WrongAuthException<PasswordAuthData>;
-                if (authException != null)
-                {
-                    PrettyConsole.WriteLineColor(ConsoleColor.Red, "Ошибка: {0}", authException.Message);
-                }
+                GameRunner.HandleClientException(loginException);
                 loginResultTuple = null;
             }
 
             if (loginResultTuple != null)
             {
-                _session = loginResultTuple.Item1;
-                _userName = loginResultTuple.Item2;
-                EnterGame();
+                EnterGame(loginResultTuple);
             }
         }
 
@@ -170,7 +168,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             _exitFlag = false;
             while (!_exitFlag)
             {
-                Console.WriteLine("-=Администрирование=-");
+                Console.WriteLine("-=Главное меню=-");
                 foreach (var item in _mainMenu)
                 {
                     Console.WriteLine(item.Key + " - " + item.Value.MenuText);
@@ -192,13 +190,13 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             }
         }
 
-        private static void EnterGame()
+        private static void EnterGame(Tuple<PasswordOAuthContext, string> loginContext)
         {
             Console.Clear();
-            var gameClient = GetGameClient(_session);
-            var gr = new GameRunner(_userName, _session, gameClient);
-            var adminManagerClient = GetAdminClient(_session);
-            var ac = new AdminConsole( adminManagerClient);
+            var gameClient = GetGameClient(loginContext.Item1);
+            var gr = new GameRunner(loginContext.Item2, loginContext.Item1, gameClient);
+            var adminManagerClient = GetAdminClient(loginContext.Item1);
+            var ac = new AdminConsole(adminManagerClient);
             var gameData = gr.GetGameData();
             gr.DisplayGameData(gameData);
             ConsoleKeyInfo keyInfo;
@@ -210,7 +208,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                     {
                         gr.PerformManualStep();
                     }
-                    else if ((int) keyInfo.Key >= 65 && (int) keyInfo.Key <= 90)
+                    else if ((int)keyInfo.Key >= 65 && (int)keyInfo.Key <= 90)
                     {
                         gr.BuyFundDriver(keyInfo);
                     }
@@ -234,22 +232,24 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                     }
                     else if (keyInfo.Key == ConsoleKey.F3)
                     {
-                        UserLogout(_session);
+                        UserLogout(gr.SessionGuid);
                         break;
                     }
+
+                    if (gr.ErrorCode != null)
+                    {
+                        if (gr.ErrorCode == ErrorCodes.InvalidSessionError)
+                        {
+                            gr.Invalidate();
+                            return;
+                        }
+
+                    }
                 }
-                catch (ClientException faultException)
+
+                catch (Exception e)
                 {
-                    var res = UserLogin(null, null).Result;
-                    _session = res.Item1;
-                    _userName = res.Item2;
-                    gr.SessionGuid = _session;
-                    //ac.SessionGuid = _session;
-                    gr.User = _userName;
-                    gr.SetGameClient(GetGameClient(_session));
-                    //ac.SetAdminClient(GetAdminClient(_sessionGuid));
-                    gr.DisplayGameData(gr.GetGameData());
-                    PrettyConsole.WriteLineColor(ConsoleColor.Red, "Ошибка: {0}", faultException);
+
                 }
             }
         }
@@ -265,7 +265,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                     _userPassword = argsArray.ToArray()[1];
                 }
             }
-            EnterMainMenu();  
+            EnterMainMenu();
         }
 
         internal abstract class GameRunnerBase
@@ -369,8 +369,8 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                         }
                         else
                         {
-                            PrettyConsole.WriteColor(ConsoleColor.White, "{3,2}: {0,26} {1,14:C} x{2,-4} ", fundsDriver.Name,
-                                fundsDriver.Price, fundsDriver.Bought, ((char)charIndex).ToString());
+                            PrettyConsole.WriteColor(ConsoleColor.White, "{3,2}: {0,26} {1,14} x{2,-4} ", fundsDriver.Name,
+                                FormatMoney(fundsDriver.Price), fundsDriver.Bought, ((char)charIndex).ToString());
                         }
                         PrettyConsole.WriteColor(ConsoleColor.Red, "+{0, -4} ", GetIncrementorValueById(fundsDriver, 0));
                         PrettyConsole.WriteColor(ConsoleColor.Cyan, "+{0, -7} ", GetIncrementorValueById(fundsDriver, 1));
@@ -380,6 +380,39 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                     }
                 }
             }
+
+            private static string FormatMoney(decimal money)
+            {
+                if (money < 1000)
+                {
+                    return string.Format("{0}", money);
+                }
+                var tCount = 1;
+                while ((money = money / 1000) > 1000)
+                {
+                    tCount++;
+                }
+
+                string suffix = string.Empty;
+                switch (tCount)
+                {
+                    case 1:
+                        suffix = "k";
+                        break;
+                    case 2:
+                        suffix = "kk";
+                        break;
+                    case 3:
+                        suffix = "kkk";
+                        break;
+                    case 4:
+                        suffix = "kkkk";
+                        break;
+                    default:
+                        break;
+                }
+                return string.Format("{0:N1}{1}", money, suffix);
+            }
         }
 
         internal class GameRunner : GameRunnerBase
@@ -388,6 +421,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 
             private ManualStepResultModel _manualStepResult;
             private int? _verificationResult;
+
 
             public GameRunner(string user, PasswordOAuthContext session, IGameApiController game)
             {
@@ -400,18 +434,25 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 
             public string User { get; set; }
 
+            public ErrorCodes? ErrorCode { get; private set; }
+
             public void SetGameClient(IGameApiController game)
             {
                 _game = game;
             }
 
-            public async void PerformManualStep()
+            public void ClearGameSession()
             {
-                try
+                User = null;
+                SessionGuid = null;
+                ErrorCode = null;
+            }
+
+            public void PerformManualStep()
+            {
+                DoActionAndDisplayGameData(() =>
                 {
-                    _manualStepResult =
-                        await
-                                    _game.PerformManualStepAsync(_verificationResult ?? 0);
+                    _manualStepResult = _game.PerformManualStepAsync(_verificationResult ?? 0).Result;
 
 
                     if (_manualStepResult != null && _manualStepResult.VerificationData != null)
@@ -426,38 +467,17 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                         int.TryParse(readString, out parseResult);
                         _verificationResult = parseResult == 0 ? default(int?) : parseResult;
                     }
-                }
-                catch (Exception exp)
-                {
-                    PrettyConsole.WriteLineColor(ConsoleColor.Red, "Ошибка: {0}", exp);
-                }
-                DisplayGameData(GetGameData());
+                });
             }
 
-            public async void BuyFundDriver(ConsoleKeyInfo keyInfo)
+            public void BuyFundDriver(ConsoleKeyInfo keyInfo)
             {
-                try
-                {
-                    await _game.BuyFundDriverAsync((int)keyInfo.Key - 64);
-                }
-                catch (Exception exp)
-                {
-                    PrettyConsole.WriteLineColor(ConsoleColor.Red, "Ошибка: {0}", exp);
-                }
-                DisplayGameData(GetGameData());
+                DoActionAndDisplayGameData(() => _game.BuyFundDriverAsync((int)keyInfo.Key - 64));
             }
 
-            public async void FightAgainstCorruption()
+            public void FightAgainstCorruption()
             {
-                try
-                {
-                    await _game.FightAgainstInflationAsync();
-                }
-                catch (Exception exp)
-                {
-                    PrettyConsole.WriteLineColor(ConsoleColor.Red, "Ошибка: {0}", exp);
-                }
-                DisplayGameData(GetGameData());
+                DoActionAndDisplayGameData(() => _game.FightAgainstInflationAsync());
             }
 
             public override void DisplayGameData(GameDataModel gameData)
@@ -478,15 +498,76 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                 return _game.GetGameDataAsync().Result;
             }
 
-            public async void PerformFiveYearPlan()
+            public void PerformFiveYearPlan()
             {
-                await _game.ActivateDelayedCounterAsync(3);
-                DisplayGameData(GetGameData());
+                DoActionAndDisplayGameData(() => _game.ActivateDelayedCounterAsync(3));
             }
 
             public void Invalidate()
             {
-                DisplayGameData(GetGameData());
+                DoActionAndDisplayGameData(() => DisplayGameData(GetGameData()));
+            }
+
+            private void DoActionAndDisplayGameData(Action gameAction)
+            {
+                try
+                {
+                    gameAction();
+                    DisplayGameData(GetGameData());
+                }
+                catch (AggregateException exp)
+                {
+                    ErrorCode = HandleClientException(exp);
+                }
+                catch (Exception exp)
+                {
+                    PrettyConsole.WriteLineColor(ConsoleColor.Red, "Ошибка: {0}", exp);
+                }
+
+            }
+
+            public static ErrorCodes HandleClientException(AggregateException exception)
+            {
+                Console.Clear();
+
+                var authException = exception.InnerException as ClientException;
+                if (authException != null)
+                {
+                    var res = HandleClientExceptionErrorData(authException);
+                    PrettyConsole.WriteLineColor(ConsoleColor.Red, "Ошибка: {0}", res.Item2);
+                    return res.Item1;
+                }
+                return ErrorCodes.OtherError;
+            }
+
+            private static Tuple<ErrorCodes,string> HandleClientExceptionErrorData(ClientException exception)
+            {
+                ErrorCodes errorCodes = ErrorCodes.OtherError;
+                if (exception.ErrorData != null)
+                {
+                    string errorData = exception.ErrorData.Message;
+                    var validationData = exception.ErrorData as ValidationErrorData;
+                    if (validationData != null)
+                    {
+                        errorCodes = ErrorCodes.ValidationError;
+                        errorData += validationData.ModelState;
+                    }
+
+                    var serverErrorData = exception.ErrorData as ServerErrorData;
+                    if (serverErrorData != null)
+                    {
+                        if (serverErrorData.ExceptionType.Contains("InvalidSessionException"))
+                        {
+                            errorCodes = ErrorCodes.InvalidSessionError;
+                        } else
+                        {
+                            errorCodes = ErrorCodes.ServerError;
+                        }
+                        errorData = string.Format("Server exception: {0}, type: {1}", serverErrorData.Message, serverErrorData.ExceptionType);
+                    }
+                    return  Tuple.Create(errorCodes, string.Format("{0}, ErrorData: {1}", exception.Message, errorData));
+                }
+                return Tuple.Create(errorCodes, exception.Message);
             }
         }
     }

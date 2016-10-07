@@ -19,25 +19,25 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
         public async Task<bool> DeleteAsync(string id)
         {
             var response = await ExecuteRequestAsync<string, bool>("/api/admin/accounts", Method.DELETE, id);
-            return response.Data;
+            return response != null ? response.Data : false;
         }
 
         public async Task<IEnumerable<AccountInfoModel>> GetAsync(string filter = null)
         {
             var response = await ExecuteRequestAsync<IEnumerable<AccountInfoModel>>("/api/admin/accounts");
-            return response.Data;
+            return response != null ? response.Data : null;
         }
 
         public async Task<AccountInfoModel> GetByIdAsync(string id)
         {
             var response = await ExecuteRequestAsync<AccountInfoModel>(string.Format("/api/admin/accounts/", id));
-            return response.Data;
+            return response != null ? response.Data : null;
         }
 
         public async Task<AccountInfoModel> GetByLoginAsync(string login)
         {
             var response = await ExecuteRequestAsync<AccountInfoModel>(string.Format("/api/admin/accounts/login/{0}", login));
-            return response.Data;
+            return response != null ? response.Data : null;
         }
     }
 }
