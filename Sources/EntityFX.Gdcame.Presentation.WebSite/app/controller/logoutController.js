@@ -4,7 +4,6 @@
         authenticationService.logout()
         .then(function (result) {
             authenticationService.clearCredentials();
-            alert('1');
             $location.path('/login');
         });
     }]);

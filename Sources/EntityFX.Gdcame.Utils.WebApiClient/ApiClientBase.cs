@@ -35,6 +35,7 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
 
             request.Method = method;
             var client = clientFactory.CreateClient();
+            client.Timeout = TimeSpan.FromSeconds(10);
             client.AddHandler("application/json", CustomJsonDeserializer.Default);
             client.AddHandler("text/javascript", CustomJsonDeserializer.Default);
             client.Authenticator = AuthContext.Context;
@@ -48,13 +49,9 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
                 }
                 return res;
             }
-            catch (HttpRequestException exception)
+            catch (Exception exception)
             {
                 ExceptionHandlerHelper.HandleHttpRequestException(exception);
-            }
-            catch(Exception exception)
-            {
-
             }
             return null;
         }
@@ -71,6 +68,7 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
 
             request.Method = method;
             var client = clientFactory.CreateClient();
+            client.Timeout = TimeSpan.FromSeconds(10);
             client.AddHandler("application/json", CustomJsonDeserializer.Default);
             client.AddHandler("text/javascript", CustomJsonDeserializer.Default);
             client.Authenticator = AuthContext.Context;

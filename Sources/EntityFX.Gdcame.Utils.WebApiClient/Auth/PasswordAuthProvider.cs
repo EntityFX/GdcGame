@@ -36,15 +36,16 @@ namespace EntityFX.Gdcame.Utils.WebApiClient.Auth
             {
                 stringToken = await token;
             }
-            catch (HttpRequestException exception)
+            catch (HttpRequestException requestException)
             {
-                ExceptionHandlerHelper.HandleHttpRequestException(exception);
+                ExceptionHandlerHelper.HandleHttpRequestException(requestException);
             }
             catch (UnexpectedResponseException unexpectedResponseException)
             {
-                throw new WrongAuthException<PasswordAuthData>(authRequest.RequestData, unexpectedResponseException.Message, unexpectedResponseException);
+                throw new WrongAuthException<PasswordAuthData>(new WrongAuthData<PasswordAuthData> { RequestData = authRequest.RequestData }
+                    , unexpectedResponseException.Message, unexpectedResponseException);
             }
-            catch
+            catch (Exception exception)
             {
                 //TODO: log here
                 throw;

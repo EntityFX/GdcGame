@@ -13,6 +13,7 @@ using EntityFX.Gdcame.Application.Contract.Model;
 using EntityFX.Gdcame.Utils.WebApiClient.Exceptions;
 using Microsoft.Practices.Unity;
 using System.Configuration;
+using EntityFX.Gdcame.Utils.Common;
 
 namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 {
@@ -22,6 +23,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
         ValidationError,
         ServerError,
         InvalidSessionError,
+        AuthError,
         ConnectionError
     }
 
@@ -29,8 +31,9 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
     {
         private static string _userName;
         private static string _userPassword;
+        private static ServerInfoModel _serverInfo;
         private static UnityContainer _container;
-
+        public static ErrorCodes? ErrorCode { get; private set; }
         private static bool _exitFlag;
 
         private static Dictionary<ConsoleKey, MenuItem> _mainMenu = new Dictionary<ConsoleKey, MenuItem>
@@ -78,7 +81,9 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                 Console.Write("Введите пароль: ");
                 password = Console.ReadLine();
             }
-            var p = new PasswordAuthProvider(new Uri(ConfigurationManager.AppSettings["ServiceBaseAddress"]));
+            var serverInfoUrl = GetApiServerUri(_serverInfo, userName);
+
+            var p = new PasswordAuthProvider(serverInfoUrl);
             var res = await p.Login(new PasswordAuthRequest<PasswordAuthData>()
             {
                 RequestData = new PasswordAuthData() { Password = password, Usename = userName }
@@ -99,7 +104,9 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             Console.Write("Подтвердите пароль: ");
             var confirmPassword = Console.ReadLine();
 
-            var authApi = new AuthApiClient(new PasswordOAuthContext() { BaseUri = new Uri(ConfigurationManager.AppSettings["ServiceBaseAddress"]) });
+            var serverInfoUrl = GetApiServerUri(_serverInfo, userName);
+
+            var authApi = new AuthApiClient(new PasswordOAuthContext() { BaseUri = serverInfoUrl });
 
             try
             {
@@ -112,13 +119,13 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             }
             catch (AggregateException loginException)
             {
-                GameRunner.HandleClientException(loginException);
+                ErrorCode = GameRunner.HandleClientException(loginException.InnerException as IClientException<ErrorData>);
             }
 
 
         }
 
-        private  static void UserLogout(PasswordOAuthContext session)
+        private static void UserLogout(PasswordOAuthContext session)
         {
             var authApi = new AuthApiClient(session);
             Console.Clear();
@@ -128,7 +135,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             }
             catch (AggregateException loginException)
             {
-                GameRunner.HandleClientException(loginException);
+                ErrorCode = GameRunner.HandleClientException(loginException.InnerException as IClientException<ErrorData>);
             }
         }
 
@@ -153,7 +160,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             }
             catch (AggregateException loginException)
             {
-                GameRunner.HandleClientException(loginException);
+                GameRunner.HandleClientException(loginException.InnerException as IClientException<ErrorData>);
                 loginResultTuple = null;
             }
 
@@ -232,13 +239,13 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                     }
                     else if (keyInfo.Key == ConsoleKey.F3)
                     {
-                        UserLogout(gr.SessionGuid);
+                        UserLogout(gr.ServerContext);
                         break;
                     }
 
                     if (gr.ErrorCode != null)
                     {
-                        if (gr.ErrorCode == ErrorCodes.InvalidSessionError)
+                        if (gr.ErrorCode == ErrorCodes.InvalidSessionError || gr.ErrorCode == ErrorCodes.OtherError)
                         {
                             gr.Invalidate();
                             return;
@@ -254,9 +261,40 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             }
         }
 
+        private static ServerInfoModel GetServerContext()
+        {
+            var serverInfoClient = new ServerInfoClient(new PasswordOAuthContext() { BaseUri = new Uri(ConfigurationManager.AppSettings["ServiceBaseAddress"]) });
+            var serverInfo = serverInfoClient.GetServersInfo().Result;
+            return serverInfo;
+        }
+
+        private static Uri GetApiServerUri(ServerInfoModel serverInfo, string login)
+        {
+            var useSubdomainByLogin = Convert.ToBoolean(ConfigurationManager.AppSettings["UseSubdomainByLogin"]);
+            var serviceBaseAddress = ConfigurationManager.AppSettings["ServiceBaseAddress"];
+            var originalApiAddress = new Uri(serviceBaseAddress);
+            if (!useSubdomainByLogin)
+            {
+                return originalApiAddress;
+            }
+            var hasher = new HashHelper();
+            var serverNumber = hasher.GetModuloOfUserIdHash(hasher.GetHashedString(login), serverInfo.CountServers) + 1;
+            return new Uri(string.Format("{2}://ns{0}.{1}/{3}", serverNumber, originalApiAddress.Authority, originalApiAddress.Scheme, originalApiAddress.Fragment));
+        }
+
         private static void MainLoop(IEnumerable<string> args)
         {
             var argsArray = args as string[] ?? args.ToArray();
+            try
+            {
+                _serverInfo = GetServerContext();
+            }
+            catch (AggregateException clientException)
+            {
+                GameRunner.HandleClientException(clientException.InnerException as IClientException<ErrorData>);
+            }
+
+
             if (argsArray.Any())
             {
                 _userName = argsArray.First();
@@ -388,7 +426,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                     return string.Format("{0}", money);
                 }
                 var tCount = 1;
-                while ((money = money / 1000) > 1000)
+                while ((money = money / 1000) > 1000 && tCount < 5)
                 {
                     tCount++;
                 }
@@ -423,14 +461,14 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             private int? _verificationResult;
 
 
-            public GameRunner(string user, PasswordOAuthContext session, IGameApiController game)
+            public GameRunner(string user, PasswordOAuthContext serverContext, IGameApiController game)
             {
-                SessionGuid = session;
+                ServerContext = serverContext;
                 User = user;
                 _game = game;
             }
 
-            public PasswordOAuthContext SessionGuid { get; set; }
+            public PasswordOAuthContext ServerContext { get; set; }
 
             public string User { get; set; }
 
@@ -444,7 +482,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             public void ClearGameSession()
             {
                 User = null;
-                SessionGuid = null;
+                ServerContext = null;
                 ErrorCode = null;
             }
 
@@ -485,7 +523,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                 lock (_stdLock)
                 {
                     Console.SetCursorPosition(0, 0);
-                    PrettyConsole.WriteLineColor(ConsoleColor.DarkRed, "Логин: {0}", User);
+                    PrettyConsole.WriteLineColor(ConsoleColor.DarkRed, "Логин: {0}, Сервер API: {1}", User, ServerContext.BaseUri);
                     PrettyConsole.WriteLineColor(ConsoleColor.DarkGreen, "F2 - Администрирование");
                     PrettyConsole.WriteLineColor(ConsoleColor.DarkGreen, "F3 - Разлогиниться");
                     Console.SetCursorPosition(0, 3);
@@ -517,7 +555,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                 }
                 catch (AggregateException exp)
                 {
-                    ErrorCode = HandleClientException(exp);
+                    ErrorCode = HandleClientException(exp.InnerException as IClientException<ErrorData>);
                 }
                 catch (Exception exp)
                 {
@@ -526,26 +564,29 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 
             }
 
-            public static ErrorCodes HandleClientException(AggregateException exception)
+            public static ErrorCodes HandleClientException(IClientException<ErrorData> exception)
             {
                 Console.Clear();
-
-                var authException = exception.InnerException as ClientException;
-                if (authException != null)
-                {
-                    var res = HandleClientExceptionErrorData(authException);
-                    PrettyConsole.WriteLineColor(ConsoleColor.Red, "Ошибка: {0}", res.Item2);
-                    return res.Item1;
-                }
-                return ErrorCodes.OtherError;
+                var res = HandleClientExceptionErrorData(exception);
+                PrettyConsole.WriteLineColor(ConsoleColor.Red, "Ошибка: {0}", res.Item2);
+                return res.Item1;
             }
 
-            private static Tuple<ErrorCodes,string> HandleClientExceptionErrorData(ClientException exception)
+            private static Tuple<ErrorCodes, string> HandleClientExceptionErrorData<T>(IClientException<T> exception)
+                where T : ErrorData
             {
                 ErrorCodes errorCodes = ErrorCodes.OtherError;
+                string errorData = string.Empty;
                 if (exception.ErrorData != null)
                 {
-                    string errorData = exception.ErrorData.Message;
+                    errorData = exception.ErrorData.Message;
+                    var authException = exception as ClientException<WrongAuthData<PasswordAuthData>>;
+                    if (authException != null)
+                    {
+                        errorCodes = ErrorCodes.AuthError;
+                        errorData += string.Format("Login {0} not exists or wrong password", authException.ErrorData.RequestData.Usename);
+                    }
+
                     var validationData = exception.ErrorData as ValidationErrorData;
                     if (validationData != null)
                     {
@@ -553,21 +594,21 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                         errorData += validationData.ModelState;
                     }
 
-                    var serverErrorData = exception.ErrorData as ServerErrorData;
-                    if (serverErrorData != null)
+                    var invalidSessionException = exception.ErrorData as InvalidSessionException;
+                    if (invalidSessionException != null)
                     {
-                        if (serverErrorData.ExceptionType.Contains("InvalidSessionException"))
-                        {
-                            errorCodes = ErrorCodes.InvalidSessionError;
-                        } else
-                        {
-                            errorCodes = ErrorCodes.ServerError;
-                        }
-                        errorData = string.Format("Server exception: {0}, type: {1}", serverErrorData.Message, serverErrorData.ExceptionType);
+                        errorCodes = ErrorCodes.InvalidSessionError;
+                        errorData += invalidSessionException.ErrorData.SessionGuid;
                     }
-                    return  Tuple.Create(errorCodes, string.Format("{0}, ErrorData: {1}", exception.Message, errorData));
+
+                    var clientExceptionWithServerErrorData = exception.ErrorData as ClientException<ServerErrorData>;
+                    if (clientExceptionWithServerErrorData != null)
+                    {
+                        errorCodes = ErrorCodes.ServerError;
+                        errorData += clientExceptionWithServerErrorData.ErrorData.StackTrace;
+                    }
                 }
-                return Tuple.Create(errorCodes, exception.Message);
+                return Tuple.Create(errorCodes, errorData);
             }
         }
     }

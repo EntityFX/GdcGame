@@ -7,18 +7,16 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
 {
     public class GameClientFactory : IRequestFactory
     {
-        private readonly Uri _baseUri;
-
-        public Uri BaseUri { get; set; }
+        public Uri BaseUri { get; private set; }
 
         public GameClientFactory(Uri baseUri)
         {
-            _baseUri = baseUri;
+            BaseUri = baseUri;
         }
 
         public IRestClient CreateClient()
         {
-            return new RestClient(_baseUri.AbsoluteUri);
+            return new RestClient(BaseUri.AbsoluteUri);
         }
 
         public IRestRequest CreateRequest(string resource)

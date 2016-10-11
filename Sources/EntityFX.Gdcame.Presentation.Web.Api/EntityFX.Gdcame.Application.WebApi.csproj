@@ -109,6 +109,7 @@
     <Compile Include="Providers\ApplicationUserManager.cs" />
     <Compile Include="Providers\CustomOAuthProvider.cs" />
     <Compile Include="Providers\GameUserStore.cs" />
+    <Compile Include="Providers\SessionExceptionHandlerFilterAttribute.cs" />
     <Compile Include="Providers\UserManagerFacotory.cs" />
   </ItemGroup>
   <ItemGroup>

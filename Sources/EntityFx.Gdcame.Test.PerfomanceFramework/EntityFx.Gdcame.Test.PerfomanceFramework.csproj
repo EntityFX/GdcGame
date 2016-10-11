@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{892D6D25-857F-4CA9-A518-526BBF05C011}</ProjectGuid>
+    <ProjectGuid>{6D20F8F3-D439-4577-B08D-6268737E6C3F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EntityFX.Gdcame.Application.WebApi.Controller</RootNamespace>
-    <AssemblyName>EntityFX.Gdcame.Application.WebApi.Controller</AssemblyName>
+    <RootNamespace>EntityFx.Gdcame.Test.PerfomanceFramework</RootNamespace>
+    <AssemblyName>EntityFx.Gdcame.Test.PerfomanceFramework</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -16,7 +16,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\bin\</OutputPath>
+    <OutputPath>..\..\bin\Tests\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -30,54 +30,51 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp.Portable.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=be81bb0f53eab22f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\FubarCoder.RestSharp.Portable.Core.3.3.0\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+MonoTouch10+Xamarin.iOS10\RestSharp.Portable.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="System.Web.Http">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccountController.cs" />
-    <Compile Include="AdminController.cs" />
-    <Compile Include="GameApiController.cs" />
+    <Compile Include="PerformanceApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RatingApiController.cs" />
-    <Compile Include="ServerController.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EntityFX.Gdcame.Manager.Contract\EntityFX.Gdcame.Manager.Contract.csproj">
-      <Project>{41696F24-E345-4599-A0C7-0715F64946D8}</Project>
-      <Name>EntityFX.Gdcame.Manager.Contract</Name>
+    <ProjectReference Include="..\EntityFX.Gdcame.Common.Presentation.Model\EntityFX.Gdcame.Common.Application.Model.csproj">
+      <Project>{3B44AFC0-F207-44E4-9F91-7F24E1F4D342}</Project>
+      <Name>EntityFX.Gdcame.Common.Application.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.Presentation.Contract.Controller\EntityFX.Gdcame.Application.Contract.Controller.csproj">
-      <Project>{b9608a11-f0f0-47aa-bd55-d6e25a310daa}</Project>
-      <Name>EntityFX.Gdcame.Application.Contract.Controller</Name>
+    <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Common\EntityFX.Gdcame.Infrastructure.Common.csproj">
+      <Project>{924CC67D-9E2B-46BA-BE1D-6C6C780CCFBC}</Project>
+      <Name>EntityFX.Gdcame.Infrastructure.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Presentation.Web.Api\EntityFX.Gdcame.Application.WebApi.csproj">
+      <Project>{c6c4637e-f0b7-43df-a692-d8b82245311a}</Project>
+      <Name>EntityFX.Gdcame.Application.WebApi</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Presentation.Web.Model\EntityFX.Gdcame.Application.Contract.Model.csproj">
       <Project>{0F9C056A-DB5D-48ED-A688-BFD04ED4DFD7}</Project>
       <Name>EntityFX.Gdcame.Application.Contract.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.Common.Contract\EntityFX.Gdcame.Common.Contract.csproj">
-      <Project>{89F89C37-F564-47EB-839D-C45ACD9D012A}</Project>
-      <Name>EntityFX.Gdcame.Common.Contract</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.Common.Presentation.Model\EntityFX.Gdcame.Common.Application.Model.csproj">
-      <Project>{3B44AFC0-F207-44E4-9F91-7F24E1F4D342}</Project>
-      <Name>EntityFX.Gdcame.Common.Application.Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.Presentation.Web.Providers\EntityFX.Gdcame.Application.WebApi.Providers.csproj">
-      <Project>{A6F59753-3065-4BB3-85A8-1E0778205407}</Project>
-      <Name>EntityFX.Gdcame.Application.WebApi.Providers</Name>
+    <ProjectReference Include="..\EntityFX.Gdcame.Utils.WebApiClient\EntityFX.Gdcame.Utils.WebApiClient.csproj">
+      <Project>{9B4E7B86-5F2F-4F84-9786-3D7CCB2024F8}</Project>
+      <Name>EntityFX.Gdcame.Utils.WebApiClient</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

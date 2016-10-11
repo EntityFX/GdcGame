@@ -12,6 +12,12 @@ using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.Counters;
 using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.CustomRule;
 using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.FundsDriver;
 using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.UserGameSnapshot;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
+using System.Threading;
+using System.Reflection;
+using Newtonsoft.Json;
 
 namespace EntityFX.Gdcame.DataAccess.Service
 {
@@ -22,6 +28,7 @@ namespace EntityFX.Gdcame.DataAccess.Service
         private readonly ICustomRuleRepository _customRuleRepository;
         private readonly IItemRepository _fundsDriverRepository;
         private object _stdLock = new object();
+        private static object _lock;
 
         public GameDataRetrieveDataAccessBase(GameRepositoryFacade gameRepositoryFacade)
         {
@@ -36,10 +43,10 @@ namespace EntityFX.Gdcame.DataAccess.Service
             if (!_cache.Contains("FundDrivers"))
             {
                 _cache.Set("FundDrivers"
-                    , _fundsDriverRepository.FindAll(new GetAllFundsDriversCriterion())
+                    , Serialize(_fundsDriverRepository.FindAll(new GetAllFundsDriversCriterion()))
                     , new CacheItemPolicy {AbsoluteExpiration = new DateTimeOffset(DateTime.Now.AddDays(1))});
             }
-            return _cache.Get("FundDrivers") as Item[];
+            return Deserialize<Item[]>((string)_cache.Get("FundDrivers"));
         }
 
         protected CounterBase[] GetCounters()
@@ -47,10 +54,10 @@ namespace EntityFX.Gdcame.DataAccess.Service
             if (!_cache.Contains("Counters"))
             {
                 _cache.Set("Counters"
-                    , _countersRepository.FindAll(new GetAllCountersCriterion())
+                    , Serialize(_countersRepository.FindAll(new GetAllCountersCriterion()))
                     , new CacheItemPolicy {AbsoluteExpiration = new DateTimeOffset(DateTime.Now.AddDays(1))});
             }
-            return _cache.Get("Counters") as CounterBase[];
+            return Deserialize<CounterBase[]>((string)_cache.Get("Counters"));
         }
 
         protected CustomRule[] GetCsutomRules()
@@ -58,10 +65,28 @@ namespace EntityFX.Gdcame.DataAccess.Service
             if (!_cache.Contains("CustomRules"))
             {
                 _cache.Set("CustomRules"
-                    , _customRuleRepository.FindAll(new GetAllCustomRulesCriterion())
+                    , Serialize(_customRuleRepository.FindAll(new GetAllCustomRulesCriterion()))
                     , new CacheItemPolicy {AbsoluteExpiration = new DateTimeOffset(DateTime.Now.AddDays(1))});
             }
-            return _cache.Get("CustomRules") as CustomRule[];
+            return Deserialize<CustomRule[]>((string)_cache.Get("CustomRules"));
+        }
+
+        private static string Serialize<T>(T obj)
+        {
+            // In the PCL we do not have the BinaryFormatter
+            return JsonConvert.SerializeObject(obj, new JsonSerializerSettings()
+            {
+                TypeNameHandling = TypeNameHandling.Auto
+            });
+        }
+
+        private static T Deserialize<T>(string data)
+        {
+            // In the PCL we do not have the BinaryFormatter
+            return JsonConvert.DeserializeObject<T>(data, new JsonSerializerSettings()
+            {
+                TypeNameHandling = TypeNameHandling.Auto
+            });
         }
     }
 
@@ -80,9 +105,9 @@ namespace EntityFX.Gdcame.DataAccess.Service
         public GameData GetGameData(string userId)
         {
             var userGameData = _userGameSnapshotRepository.FindByUserId(new GetUserGameSnapshotByIdCriterion(userId));
-            var originalItems = (Item[]) GetFundDrivers().Clone();
-            var originalCounters = (CounterBase[]) GetCounters().Clone();
-            var originalCustomRules = (CustomRule[]) GetCsutomRules().Clone();
+            var originalItems = GetFundDrivers();
+            var originalCounters = GetCounters();
+            var originalCustomRules = GetCsutomRules();
             var cash = new Cash
             {
                 Counters = originalCounters,

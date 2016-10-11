@@ -18,6 +18,7 @@ using Microsoft.Owin.Cors;
 using System.Web.Cors;
 using System.Threading.Tasks;
 using System.Threading;
+using EntityFX.Gdcame.Application.WebApi.Providers;
 
 namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
 {
@@ -45,6 +46,8 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
 
             // Configure Web API for self-host. 
                 var config = new HttpConfiguration();
+
+            config.Filters.Add(new SessionExceptionHandlerFilterAttribute());
 
             var container = new UnityContainer();
 

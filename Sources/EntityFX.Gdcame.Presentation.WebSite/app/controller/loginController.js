@@ -14,7 +14,7 @@
                 $location.path('/');
             })
             .catch(function (reason) {
-
+                alert(reason);
             });
         }
     }]);

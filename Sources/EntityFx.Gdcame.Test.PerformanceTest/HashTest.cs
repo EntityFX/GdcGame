@@ -12,7 +12,9 @@ namespace EntityFx.Gdcame.Test.PerformanceTest
         public void TestHash()
         {
             IHashHelper hh = new HashHelper();
-            Debug.WriteLine(hh.GetHashedString("entityfx"));
+            Debug.WriteLine(hh.GetHashedString("admin"));
+
+            Debug.WriteLine(hh.GetModuloOfUserIdHash(hh.GetHashedString("admin"), 4));
         }
     }
 }

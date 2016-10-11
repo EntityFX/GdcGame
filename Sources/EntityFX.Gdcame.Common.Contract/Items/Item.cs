@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
 using EntityFX.Gdcame.Common.Contract.Incrementors;
+using System;
 
 namespace EntityFX.Gdcame.Common.Contract.Items
 {

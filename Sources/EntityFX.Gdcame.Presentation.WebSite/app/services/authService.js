@@ -1,16 +1,12 @@
 ﻿angular
     .module("gdCameApp")
     .factory("authenticationService",
-        function ($rootScope, $localStorage, $http, $location, apiUri) {
-            var apiServer = "ns1";
-            var authBaseUri = $location.protocol() + "://" + apiServer + '.' + apiUri + '/';
-
+        function ($rootScope, $localStorage, $http, $location, apiUri, apiServiceUri) {
             var authServiceFactory = {
-
                 login: function (login, password) {
                     return $http({
                         method: 'POST',
-                        url: authBaseUri + "token",
+                        url: apiServiceUri.getApiAddressByLogin(login) + "/token",
                         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                         transformRequest: function (obj) {
                             var str = [];
@@ -27,14 +23,17 @@
                 },
 
                 logout: function () {
-                    return $http.post(authBaseUri + "api/auth/logout/")
+                    return $http.post($localStorage.globals.apiAddress + "/api/auth/logout/")
                         .then(function (result) {
                             return result;
+                        })
+                        .catch(function (reason) {
+                            alert(reason);
                         });
                 },
 
                 register: function (user) {
-                    return $http.post(authBaseUri + "api/auth/register/", user)
+                    return $http.post($localStorage.globals.apiAddress + "/api/auth/register/", user)
                         .then(function (result) {
                             return result;
                         });
@@ -47,7 +46,8 @@
                         authData: authData
                     }
                     $localStorage.globals = {
-                        auth: auth
+                        auth: auth,
+                        apiAddress: apiServiceUri.getApiAddressByLogin(login)
                     };
                 },
 

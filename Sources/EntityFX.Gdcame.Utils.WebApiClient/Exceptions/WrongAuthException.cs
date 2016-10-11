@@ -2,15 +2,12 @@
 
 namespace EntityFX.Gdcame.Utils.WebApiClient.Exceptions
 {
-    public class WrongAuthException<TAuthRequestData> : ClientException
+    public class WrongAuthException<TAuthRequestData> : ClientException<WrongAuthData<TAuthRequestData>>
         where TAuthRequestData : class
     {
-        public TAuthRequestData RequestData { get; private set; }
-
-        public WrongAuthException(TAuthRequestData requestData, string message, Exception inner)
-             : base(null, message, inner)
+        public WrongAuthException(WrongAuthData<TAuthRequestData> wrongAuthData, string message, Exception inner)
+             : base(wrongAuthData, message, inner)
         {
-            RequestData = requestData;
         }
     }
 }

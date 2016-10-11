@@ -170,9 +170,9 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
 
             container.RegisterType<IGameApiController, GameApiController>();
             container.RegisterType<IRatingApiController, RatingApiController>();
-            container.RegisterType<IAccountController, AccountController>();
-            container.RegisterType<IOperationContextHelper, NoWcfOperationContextHelper>();
+            container.RegisterType<IServerController, ServerController>();
 
+            container.RegisterType<IOperationContextHelper, NoWcfOperationContextHelper>();
             return container;
         }
 

@@ -1,6 +1,7 @@
 ﻿var app = angular.module("gdCameApp", ["ngRoute", "ngStorage"])
 
 app.constant('apiUri', 'gdcame.local');
+app.constant('serversCount', '4');
 
 app.config(function ($routeProvider, $locationProvider) {
     $routeProvider
@@ -35,6 +36,17 @@ app.factory("gameData",
         return deferred.promise;
     });
 
+angular
+    .module("gdCameApp")
+    .factory("apiServiceUri",
+        function ($rootScope, apiUri, serversCount) {
+            var gdCameApiServiceFactory = {
+                getApiAddressByLogin: function (login) {
+                    return 'http://ns' + (getModuloByUserIdHash(md5(login + '_gdcame'), serversCount) + 1) + '.' + apiUri;
+                },
+            };
+            return gdCameApiServiceFactory;
+        });
 
 app.run(['$rootScope', '$location', '$localStorage', '$http', function ($rootScope, $location, $localStorage, $http) {
     $rootScope.$storage = $localStorage;

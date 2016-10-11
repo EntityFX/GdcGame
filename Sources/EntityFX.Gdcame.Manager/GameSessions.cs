@@ -155,7 +155,10 @@ namespace EntityFX.Gdcame.Manager
                             var games = (IGame[])_;
                             for (int i = 0; i < games.Length; i++)
                             {
-                                games[i].PerformAutoStep();
+                                if (games[i] != null)
+                                {
+                                    games[i].PerformAutoStep();
+                                }
                             }
                         }, calulateGamesChunk);
                     }
