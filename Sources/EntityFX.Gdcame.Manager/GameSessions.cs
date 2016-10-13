@@ -249,6 +249,7 @@ namespace EntityFX.Gdcame.Manager
                 Login = user.Login,
                 UserId = user.Id,
                 SessionIdentifier = Guid.NewGuid(),
+				LastActivity = DateTime.Now,
                 UserRoles = user.IsAdmin ? new[] { UserRole.GenericUser, UserRole.Admin } : new[] { UserRole.GenericUser },
                 Identity =
                     new CustomGameIdentity { AuthenticationType = "Auto", IsAuthenticated = true, Name = user.Login }

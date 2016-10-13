@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -61,7 +61,7 @@
       <Name>EntityFX.Gdcame.Infrastructure.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Presentation.Web.Api\EntityFX.Gdcame.Application.WebApi.csproj">
-      <Project>{c6c4637e-f0b7-43df-a692-d8b82245311a}</Project>
+      <Project>{C6C4637E-F0B7-43DF-A692-D8B82245311A}</Project>
       <Name>EntityFX.Gdcame.Application.WebApi</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Presentation.Web.Model\EntityFX.Gdcame.Application.Contract.Model.csproj">
@@ -71,6 +71,10 @@
     <ProjectReference Include="..\EntityFX.Gdcame.Utils.WebApiClient\EntityFX.Gdcame.Utils.WebApiClient.csproj">
       <Project>{9B4E7B86-5F2F-4F84-9786-3D7CCB2024F8}</Project>
       <Name>EntityFX.Gdcame.Utils.WebApiClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Presentation.Contract.Controller\EntityFX.Gdcame.Application.Contract.Controller.csproj">
+      <Project>{B9608A11-F0F0-47AA-BD55-D6E25A310DAA}</Project>
+      <Name>EntityFX.Gdcame.Application.Contract.Controller</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
