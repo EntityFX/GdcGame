@@ -5,6 +5,7 @@
 
         function calculateGameCounters() {
             $rootScope.gameData.cash.onHand += $rootScope.gameData.cash.counters[2].value;
+            $rootScope.gameData.cash.totalEarned += $rootScope.gameData.cash.counters[2].value;
         }
 
         var gameCalculateInterval = $interval(calculateGameCounters, 1000);

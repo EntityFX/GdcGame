@@ -1,7 +1,7 @@
 ﻿angular
     .module("gdCameApp")
     .factory("authenticationService",
-        function ($rootScope, $localStorage, $http, $location, apiUri, apiServiceUri) {
+        function ($rootScope, $localStorage, $http, $location, apiServiceUri) {
             var authServiceFactory = {
                 login: function (login, password) {
                     return $http({
@@ -33,7 +33,7 @@
                 },
 
                 register: function (user) {
-                    return $http.post($localStorage.globals.apiAddress + "/api/auth/register/", user)
+                    return $http.post(apiServiceUri.getApiAddressByLogin(user.login) + "/api/auth/register/", user)
                         .then(function (result) {
                             return result;
                         });

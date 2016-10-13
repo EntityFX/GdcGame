@@ -26,20 +26,20 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
 
         public int Create(DataAccess.Contract.User.User user)
         {
-            Database.GetCollection<User>("Users").InsertOne(user);
+            Database.GetCollection<User>("User").InsertOne(user);
             return 1;
         }
 
         public void Delete(string id)
         {
-            IMongoCollection<User> users = Database.GetCollection<User>("Users");
+            IMongoCollection<User> users = Database.GetCollection<User>("User");
             var filter = Builders<User>.Filter.Eq("Id", id);
             users.DeleteOne(filter);
         }
 
         public DataAccess.Contract.User.User[] FindAll(GetAllUsersCriterion finalAllCriterion)
         {
-            IMongoCollection<User> users = Database.GetCollection<User>("Users");
+            IMongoCollection<User> users = Database.GetCollection<User>("User");
             var filter = new BsonDocument();
             return users.Find<User>(filter).ToList().ToArray();
         }
@@ -57,7 +57,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
 
         public DataAccess.Contract.User.User FindById(GetUserByIdCriterion findByIdCriterion)
         {
-            IMongoCollection<User> users = Database.GetCollection<User>("Users");
+            IMongoCollection<User> users = Database.GetCollection<User>("User");
             var filter = Builders<User>.Filter.Eq("Id", findByIdCriterion.Id);
             var result = users.Find(filter).ToList();
             return result.FirstOrDefault();
@@ -65,7 +65,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
 
         public DataAccess.Contract.User.User FindByName(GetUserByNameCriterion findByNameCriterion)
         {
-            IMongoCollection<User> users = Database.GetCollection<User>("Users");
+            IMongoCollection<User> users = Database.GetCollection<User>("User");
             var filter = Builders<User>.Filter.Eq("Login", findByNameCriterion.Name);
             var result = users.Find(filter).ToList();
             return result.FirstOrDefault();

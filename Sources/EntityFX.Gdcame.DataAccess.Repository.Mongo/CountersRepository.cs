@@ -40,7 +40,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
                 counterCollection.InsertMany(counters);
             }
 
-            return counterCollection.Find(filter).ToList().ToArray();
+            return counterCollection.Find(filter).SortBy(_ => _.Id).ToList().ToArray();
         }
     }
 }

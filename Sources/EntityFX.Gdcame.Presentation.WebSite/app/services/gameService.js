@@ -1,45 +1,42 @@
 ﻿angular
     .module("gdCameApp")
     .factory("gdCameApiService",
-        function ($rootScope, $http, $location, apiUri) {
-            var apiServer = "ns1";
-            var gameApiServiceBaseUri = $location.protocol() + "://" + apiServer + '.' + apiUri + "/api/game/";
-
+        function ($rootScope, $http, $location, $localStorage, apiServiceUri) {
             var gdCameApiServiceFactory = {
                 getGameData: function() {
-                    return $http.get(gameApiServiceBaseUri + "game-data/")
+                    return $http.get($localStorage.globals.apiAddress + "/api/game/game-data/")
                         .then(function(result) {
                             return result;
                         });
                 },
 
                 getCounters: function() {
-                    return $http.get(gameApiServiceBaseUri + "counters/")
+                    return $http.get($localStorage.globals.apiAddress + "/api/game/counters/")
                         .then(function(result) {
                             return result;
                         });
                 },
 
                 performManualStep: function(data) {
-                    return $http.post(gameApiServiceBaseUri + "perform-step/", data)
+                    return $http.post($localStorage.globals.apiAddress + "/api/game/perform-step/", data)
                         .then(function(result) {
                             return result;
                         });
                 },
 
                 buyFundDriver: function(fundDriverId) {
-                    return $http.post(gameApiServiceBaseUri + "buy-item/", fundDriverId)
+                    return $http.post($localStorage.globals.apiAddress + "/api/game/buy-item/", fundDriverId)
                         .then(function(result) {
                             return result;
                         });
                 },
 
                 fightAgainstInflation: function() {
-                    $http.post(gameApiServiceBaseUri + "fight-inflation/");
+                    $http.post($localStorage.globals.apiAddress + "/api/game/fight-inflation/");
                 },
 
                 activateDelayedCounter: function(counterId) {
-                    $http.post(gameApiServiceBaseUri + "ActivateDelayedCounter/", counterId);
+                    $http.post($localStorage.globals.apiAddress + "/api/game/ActivateDelayedCounter/", counterId);
                 }
             };
             return gdCameApiServiceFactory;

@@ -30,10 +30,16 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
                 Port = int.Parse(ConfigurationManager.AppSettings["WebApiPort"]),
             };
 
-            webApiStartOptions.Urls.Add(string.Format("http://+:{0}", webApiStartOptions.Port));
             if (RuntimeHelper.IsRunningOnMono())
             {
                 webApiStartOptions.ServerFactory = "Nowin";
+                if (Environment.OSVersion.Platform != PlatformID.Unix)
+                {
+                    webApiStartOptions.Urls.Add(string.Format("http://127.0.0.1:{0}", webApiStartOptions.Port));
+                }
+            } else
+            {
+                webApiStartOptions.Urls.Add(string.Format("http://+:{0}", webApiStartOptions.Port));
             }
 
             // Start OWIN host 
