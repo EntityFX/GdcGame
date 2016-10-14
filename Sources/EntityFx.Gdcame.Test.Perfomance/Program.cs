@@ -25,16 +25,22 @@ namespace EntityFx.Gdcame.Test.Perfomance
         static void Main(string[] args)
         {
             var serviceAddress = "http://localhost:9001/";
+            var countRequests = 10000;
             if (args.Length > 0)
             {
                 serviceAddress = args[0];
+            }
+
+            if (args.Length > 1)
+            {
+                countRequests = Convert.ToInt32(args[1]);
             }
 
             var logger = new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger")));
 
             var performanceTester = new PerfomanceTester(new Uri(serviceAddress), logger);
 
-            performanceTester.TestStartManyGames(40000, RandomString(15));
+            performanceTester.TestStartManyGames(countRequests, RandomString(15));
             logger.Info("Press any key to close...");
             Console.ReadKey();
 

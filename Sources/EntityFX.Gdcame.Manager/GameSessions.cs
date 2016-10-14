@@ -129,7 +129,7 @@ namespace EntityFX.Gdcame.Manager
                 try
                 {
                     // Parallel.ForEach(UserGamesStorage.Values, game => game.PerformAutoStep());
-                    var calulateGamesChunk = new IGame[100];
+                    var calulateGamesChunk = new IGame[chunkSize];
                     var count = 0;
                     foreach (var game in _userGamesStorage.Values)
                     {
