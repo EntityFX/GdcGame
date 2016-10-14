@@ -11,6 +11,8 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
     {
         private readonly IAuthContext<IAuthenticator> _authContext;
 
+        private readonly TimeSpan _timeout = TimeSpan.FromSeconds(60);
+
         private IAuthContext<IAuthenticator> AuthContext
         {
             get { return _authContext; }
@@ -35,7 +37,7 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
 
             request.Method = method;
             var client = clientFactory.CreateClient();
-            client.Timeout = TimeSpan.FromSeconds(10);
+            client.Timeout = _timeout;
             client.AddHandler("application/json", CustomJsonDeserializer.Default);
             client.AddHandler("text/javascript", CustomJsonDeserializer.Default);
             client.Authenticator = AuthContext.Context;
@@ -68,7 +70,7 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
 
             request.Method = method;
             var client = clientFactory.CreateClient();
-            client.Timeout = TimeSpan.FromSeconds(10);
+            client.Timeout = _timeout;
             client.AddHandler("application/json", CustomJsonDeserializer.Default);
             client.AddHandler("text/javascript", CustomJsonDeserializer.Default);
             client.Authenticator = AuthContext.Context;

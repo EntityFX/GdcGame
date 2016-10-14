@@ -44,7 +44,7 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
         private StoredGameData PrepareGameDataToPersist(IGame game)
         {
             StoredGameData gameData = _gameDataPersistMapper.Map(game);
-            gameData.Items = game.Items.Values.Select(_ => _fundsDriverPersistMapper.Map(_)).ToArray();
+            gameData.Items = game.Items.Select(_ => _fundsDriverPersistMapper.Map(_)).ToArray();
             game.ModifiedFundsDrivers.Clear();
             return gameData;
         }

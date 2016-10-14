@@ -27,7 +27,7 @@ namespace EntityFX.Gdcame.Manager.Mappers.Store
             {
                 Items = source.Items.Select(fundsDriver =>
                 {
-                    var destinationFundDriver = _fundsDriversContractMapper.Map((fundsDriver.Value));
+                    var destinationFundDriver = _fundsDriversContractMapper.Map((fundsDriver));
                     return destinationFundDriver;
                 }).ToArray(),
                 Cash = _fundsCountersContractMapper.Map(source.GameCash),

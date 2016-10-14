@@ -20,9 +20,7 @@ namespace EntityFX.Gdcame.Manager.Mappers
 
         public Common.Contract.Items.Item Map(Item source, Common.Contract.Items.Item destination)
         {
-            var destinationIncrementors = source.Incrementors.ToDictionary(
-                sourceIncrementor => sourceIncrementor.Key,
-                sourceIncrementor => _incrementorContractMapper.Map(sourceIncrementor.Value));
+            var destinationIncrementors = source.Incrementors.Select(sourceIncrementor => _incrementorContractMapper.Map(sourceIncrementor)).ToArray();
             var customRuleInfo = source.CustomRuleInfo != null ? _customRuleInfoMapper.Map(source.CustomRuleInfo) : null;
             if (customRuleInfo != null) customRuleInfo.FundsDriverId = source.Id;
             return new Common.Contract.Items.Item

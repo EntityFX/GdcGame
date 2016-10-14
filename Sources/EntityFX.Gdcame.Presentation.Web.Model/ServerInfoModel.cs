@@ -8,6 +8,6 @@ namespace EntityFX.Gdcame.Application.Contract.Model
 {
     public class ServerInfoModel
     {
-        public int CountServers { get; set; }
+        public string[] ServerList { get; set; }
     }
 }

@@ -270,7 +270,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 
         private static Uri GetApiServerUri(ServerInfoModel serverInfo, string login)
         {
-            var useSubdomainByLogin = Convert.ToBoolean(ConfigurationManager.AppSettings["UseSubdomainByLogin"]);
+            var useSubdomainByLogin = Convert.ToBoolean(ConfigurationManager.AppSettings["UseServerByLogin"]);
             var serviceBaseAddress = ConfigurationManager.AppSettings["ServiceBaseAddress"];
             var originalApiAddress = new Uri(serviceBaseAddress);
             if (!useSubdomainByLogin)
@@ -278,7 +278,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                 return originalApiAddress;
             }
             var hasher = new HashHelper();
-            var serverNumber = hasher.GetModuloOfUserIdHash(hasher.GetHashedString(login), serverInfo.CountServers) + 1;
+            var serverNumber = hasher.GetModuloOfUserIdHash(hasher.GetHashedString(login), serverInfo.ServerList.Length) + 1;
             return new Uri(string.Format("{2}://ns{0}.{1}/{3}", serverNumber, originalApiAddress.Authority, originalApiAddress.Scheme, originalApiAddress.Fragment));
         }
 
@@ -423,7 +423,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             {
                 if (money < 1000)
                 {
-                    return string.Format("{0}", money);
+                    return string.Format("{0:N1}", money);
                 }
                 var tCount = 1;
                 while ((money = money / 1000) > 1000 && tCount < 5)
@@ -510,7 +510,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 
             public void BuyFundDriver(ConsoleKeyInfo keyInfo)
             {
-                DoActionAndDisplayGameData(() => _game.BuyFundDriverAsync((int)keyInfo.Key - 64));
+                DoActionAndDisplayGameData(() => { var res = _game.BuyFundDriverAsync((int)keyInfo.Key - 65).Result; });
             }
 
             public void FightAgainstCorruption()
@@ -538,7 +538,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 
             public void PerformFiveYearPlan()
             {
-                DoActionAndDisplayGameData(() => _game.ActivateDelayedCounterAsync(3));
+                DoActionAndDisplayGameData(async () => await _game.ActivateDelayedCounterAsync(3));
             }
 
             public void Invalidate()

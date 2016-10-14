@@ -18,7 +18,7 @@ namespace EntityFX.Gdcame.Manager.Mappers.Store
         {
             return new StoredCash
             {
-                Counters = source.Counters.Select(counter => _counterContractMapper.Map(counter.Value)).ToArray(),
+                Counters = source.Counters.Select(counter => _counterContractMapper.Map(counter)).ToArray(),
                 Balance = source.CashOnHand,
                 TotalEarned = source.TotalEarned
             };

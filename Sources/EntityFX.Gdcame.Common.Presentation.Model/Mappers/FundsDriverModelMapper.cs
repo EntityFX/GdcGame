@@ -14,7 +14,7 @@ namespace EntityFX.Gdcame.Common.Application.Model.Mappers
             destination.Bought = source.Bought;
             destination.Id = source.Id;
             destination.Incrementors = source.Incrementors.Select(
-                (pair, i) => new KeyValuePair<int, string>(pair.Key, pair.Value.Value.ToString()))
+                (pair, i) => new KeyValuePair<int, string>(i, pair.Value.ToString()))
                 .ToDictionary(pair => pair.Key, pair => pair.Value);
             destination.InflationPercent = source.InflationPercent;
             destination.Name = source.Name;

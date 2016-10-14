@@ -1,58 +1,59 @@
-[{
-	"_id": 0,
-	"_t": [
-		"CounterBase",
-		"SingleCounter"
-	],
-	"Name": "GDC Points",
-	"Value": "0",
-	"Type": 0
-},
-{
-	"_id": 1,
-	"_t": [
-		"CounterBase",
-		"GenericCounter"
-	],
-	"Name": "Профессионализм",
-	"Value": "0",
-	"Type": 1,
-	"Bonus": "0",
-	"BonusPercentage": 0,
-	"Inflation": 0,
-	"UseInAutoSteps": false,
-	"SubValue": "10",
-	"CurrentSteps": 0,
-	"InflationIncreaseSteps": 200
-},
-{
-	"_id": 2,
-	"_t": [
-		"CounterBase",
-		"GenericCounter"
-	],
-	"Name": "Зарплата",
-	"Value": "0",
-	"Type": 1,
-	"Bonus": "0",
-	"BonusPercentage": 0,
-	"Inflation": 0,
-	"UseInAutoSteps": true,
-	"SubValue": "0",
-	"CurrentSteps": 0,
-	"InflationIncreaseSteps": 2000
-},
-{
-	"_id": 3,
-	"_t": [
-		"CounterBase",
-		"DelayedCounter"
-	],
-	"Name": "Квартальный план",
-	"Value": "5000000",
-	"Type": 2,
-	"UnlockValue": "0",
-	"MiningTimeSeconds": 240,
-	"SecondsRemaining": 0
-}]
-
+[
+  {
+    "_id": 0,
+    "_t": [
+      "CounterBase",
+      "SingleCounter"
+    ],
+    "Name": "GDC Points",
+    "Value": "0",
+    "Type": 0
+  },
+  {
+    "_id": 1,
+    "_t": [
+      "CounterBase",
+      "GenericCounter"
+    ],
+    "Name": "Профессионализм",
+    "Value": "0",
+    "Type": 1,
+    "Bonus": "0",
+    "BonusPercentage": 0,
+    "Inflation": 0,
+    "UseInAutoSteps": false,
+    "SubValue": "10",
+    "CurrentSteps": 0,
+    "InflationIncreaseSteps": 200
+  },
+  {
+    "_id": 2,
+    "_t": [
+      "CounterBase",
+      "GenericCounter"
+    ],
+    "Name": "Зарплата",
+    "Value": "0",
+    "Type": 1,
+    "Bonus": "0",
+    "BonusPercentage": 0,
+    "Inflation": 0,
+    "UseInAutoSteps": true,
+    "SubValue": "0",
+    "CurrentSteps": 0,
+    "InflationIncreaseSteps": 2000
+  },
+  {
+    "_id": 3,
+    "_t": [
+      "CounterBase",
+      "DelayedCounter"
+    ],
+    "Name": "Квартальный план",
+    "Value": "5000000",
+    "Type": 2,
+    "UnlockValue": "0",
+    "MiningTimeSeconds": 240,
+    "SecondsRemaining": 0
+  }
+]

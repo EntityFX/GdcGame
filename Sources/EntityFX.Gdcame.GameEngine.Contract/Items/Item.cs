@@ -21,6 +21,6 @@ namespace EntityFX.Gdcame.GameEngine.Contract.Items
 
         public CustomRuleInfo CustomRuleInfo { get; set; }
 
-        public IDictionary<int, IncrementorBase> Incrementors { get; set; }
+        public IncrementorBase[] Incrementors { get; set; }
     }
 }

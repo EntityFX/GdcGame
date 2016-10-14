@@ -66,7 +66,7 @@ namespace EntityFX.Gdcame.EngineTestApplication
         public override GameData GetGameData()
         {
             var gameData = _gameDataMapper.Map(_game);
-            gameData.Items = _game.Items.Select(_ => _fundsDriverMapper.Map(_.Value)).ToArray();
+            gameData.Items = _game.Items.Select(_ => _fundsDriverMapper.Map(_)).ToArray();
             return gameData;
         }
 
@@ -102,7 +102,7 @@ namespace EntityFX.Gdcame.EngineTestApplication
 
         public void BuyFundDriver(ConsoleKeyInfo keyInfo)
         {
-            _game.BuyFundDriver((int) keyInfo.Key - 64);
+            _game.BuyFundDriver((int) keyInfo.Key - 65);
             DisplayGameData(GetGameData());
         }
 

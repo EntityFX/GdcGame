@@ -18,9 +18,7 @@ namespace EntityFX.Gdcame.EngineTestApplication
         public EntityFX.Gdcame.Common.Contract.Items.Item Map(Item source,
             EntityFX.Gdcame.Common.Contract.Items.Item destination)
         {
-            var destinationIncrementors = source.Incrementors.ToDictionary(
-                sourceIncrementor => sourceIncrementor.Key,
-                sourceIncrementor => _incrementorContractMapper.Map(sourceIncrementor.Value));
+            var destinationIncrementors = source.Incrementors.Select(sourceIncrementor => _incrementorContractMapper.Map(sourceIncrementor)).ToArray();
             return new EntityFX.Gdcame.Common.Contract.Items.Item
             {
                 Id = source.Id,

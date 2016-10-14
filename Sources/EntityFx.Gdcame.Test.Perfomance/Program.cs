@@ -34,7 +34,7 @@ namespace EntityFx.Gdcame.Test.Perfomance
 
             var performanceTester = new PerfomanceTester(new Uri(serviceAddress), logger);
 
-            performanceTester.TestStartManyGames(4000, RandomString(15));
+            performanceTester.TestStartManyGames(40000, RandomString(15));
             logger.Info("Press any key to close...");
             Console.ReadKey();
 

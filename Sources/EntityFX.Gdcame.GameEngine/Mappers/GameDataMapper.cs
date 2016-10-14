@@ -28,11 +28,11 @@ namespace EntityFX.Gdcame.GameEngine.Mappers
 
         private CounterBase[] PrepareCountersToPersist(IGame game)
         {
-            var counters = new CounterBase[game.GameCash.Counters.Count];
+            var counters = new CounterBase[game.GameCash.Counters.Length];
             foreach (var sourceCounter in game.GameCash.Counters)
             {
                 CounterBase destinationCouner = null;
-                var sourcenGenericCounter = sourceCounter.Value as GenericCounter;
+                var sourcenGenericCounter = sourceCounter as GenericCounter;
                 if (sourcenGenericCounter != null)
                 {
                     var destinationGenericCounter = new Common.Contract.Counters.GenericCounter
@@ -46,13 +46,13 @@ namespace EntityFX.Gdcame.GameEngine.Mappers
                     destinationCouner = destinationGenericCounter;
                     destinationCouner.Type = 1;
                 }
-                var sourceSingleCounter = sourceCounter.Value as SingleCounter;
+                var sourceSingleCounter = sourceCounter as SingleCounter;
                 if (sourceSingleCounter != null)
                 {
                     destinationCouner = new Common.Contract.Counters.SingleCounter();
                     destinationCouner.Type = 0;
                 }
-                var sourceDelayedCounter = sourceCounter.Value as DelayedCounter;
+                var sourceDelayedCounter = sourceCounter as DelayedCounter;
                 if (sourceDelayedCounter != null)
                 {
                     var destinationDelayedCounter = new Common.Contract.Counters.DelayedCounter
@@ -66,9 +66,9 @@ namespace EntityFX.Gdcame.GameEngine.Mappers
                 }
                 if (destinationCouner != null)
                 {
-                    destinationCouner.Name = sourceCounter.Value.Name;
-                    destinationCouner.Id = sourceCounter.Value.Id;
-                    destinationCouner.Value = sourceCounter.Value.Value;
+                    destinationCouner.Name = sourceCounter.Name;
+                    destinationCouner.Id = sourceCounter.Id;
+                    destinationCouner.Value = sourceCounter.Value;
                 }
                 if (destinationCouner != null) counters[destinationCouner.Id] = destinationCouner;
             }

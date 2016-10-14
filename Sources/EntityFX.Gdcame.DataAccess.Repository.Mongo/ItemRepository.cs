@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
 {
-    public class ItemRepository :  IItemRepository
+    public class ItemRepository : IItemRepository
     {
         private IMongoDatabase Database
         {
@@ -31,11 +31,11 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
                 Item[] items = new Item[] {
                     new Item() {
                     Id = 1, Name = "Item", Price = 300, IsUnlocked = true, InitialValue = 100
-                        , Incrementors = new Dictionary<int, Incrementor>() {
-                            { 0, new Incrementor() { Value = 1, IncrementorType = IncrementorTypeEnum.ValueIncrementor } },
-                            { 1, new Incrementor() { Value = 10, IncrementorType = IncrementorTypeEnum.ValueIncrementor } },
-                            { 2, new Incrementor() { Value = 0, IncrementorType = IncrementorTypeEnum.ValueIncrementor } }
-                            }
+                        , Incrementors = new Incrementor[] {
+                            new Incrementor() { Value = 1, IncrementorType = IncrementorTypeEnum.ValueIncrementor },
+                            new Incrementor() { Value = 10, IncrementorType = IncrementorTypeEnum.ValueIncrementor },
+                            new Incrementor() { Value = 0, IncrementorType = IncrementorTypeEnum.ValueIncrementor }
+                         }
                     }
                 };
                 itemCollection.InsertMany(items);

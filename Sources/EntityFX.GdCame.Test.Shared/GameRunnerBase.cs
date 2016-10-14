@@ -32,9 +32,7 @@ namespace EntityFx.GdCame.Test.Shared
 
         private string GetIncrementorValueById(Item item, int incrmentorId)
         {
-            var incrementor = item.Incrementors.ContainsKey(incrmentorId)
-                ? item.Incrementors[incrmentorId]
-                : null;
+            var incrementor = item.Incrementors[incrmentorId];
             if (incrementor != null)
             {
                 return string.Format("{0}{1}", incrementor.Value,

@@ -31,18 +31,12 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef.Mappers
             destination.CustomRuleInfo = source.CustomRule != null
                 ? new CustomRuleInfo {CustomRuleId = source.CustomRule.Id}
                 : null;
-            destination.Incrementors = new Dictionary<int, Incrementor>();
+            destination.Incrementors = new Incrementor[source.Incrementors.Count];
             foreach (var incrementor in source.Incrementors)
             {
-                destination.Incrementors.Add(incrementor.CounterId ?? 0, _incrementorContractMapper.Map(incrementor));
-            }
-            for (var i = 0; i < 3; i++)
-            {
-                if (!destination.Incrementors.ContainsKey(i))
-                {
-                    destination.Incrementors.Add(i,
-                        new Incrementor {IncrementorType = IncrementorTypeEnum.ValueIncrementor, Value = 0});
-                }
+                destination.Incrementors[incrementor.Id] = incrementor.CounterId == null 
+                    ? new Incrementor { IncrementorType = IncrementorTypeEnum.ValueIncrementor, Value = 0 } 
+                : _incrementorContractMapper.Map(incrementor);
             }
             return destination;
         }

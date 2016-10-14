@@ -16,7 +16,7 @@ namespace EntityFX.Gdcame.Application.WebApi.Controller
         [Route("")]
         public async Task<ServerInfoModel> GetServersInfo()
         {
-            return await Task.Run(() => new ServerInfoModel() { CountServers = 4 });
+            return await Task.Run(() => new ServerInfoModel() { ServerList = new[]{ "127.0.0.1" } });
         }
     }
 }

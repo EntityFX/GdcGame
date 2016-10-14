@@ -123,6 +123,7 @@ namespace EntityFX.Gdcame.Manager
         {
             var sw = new Stopwatch();
             sw.Start();
+            var chunkSize = 500;
             lock (_stdLock)
             {
                 try
@@ -132,7 +133,7 @@ namespace EntityFX.Gdcame.Manager
                     var count = 0;
                     foreach (var game in _userGamesStorage.Values)
                     {
-                        if (count < 100)
+                        if (count < chunkSize)
                         {
                             calulateGamesChunk[count] = game;
                             count++;
@@ -145,11 +146,11 @@ namespace EntityFX.Gdcame.Manager
                                     games[i].PerformAutoStep();
                                 }
                             }, calulateGamesChunk);
-                            calulateGamesChunk = new IGame[100];
+                            calulateGamesChunk = new IGame[chunkSize];
                             count = 0;
                         }
                     }
-                    if (count < 100)
+                    if (count < chunkSize)
                     {
                         Task.Factory.StartNew(_ => {
                             var games = (IGame[])_;

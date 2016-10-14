@@ -28,7 +28,7 @@ namespace EntityFX.Gdcame.Manager.Mappers
             {
                 Items = source.Items.Select(fundsDriver =>
                 {
-                    var destinationFundDriver = _fundsDriversContractMapper.Map((fundsDriver.Value));
+                    var destinationFundDriver = _fundsDriversContractMapper.Map((fundsDriver));
                     destinationFundDriver.IsUnlocked = destinationFundDriver.UnlockValue <=
                                                      source.GameCash.RootCounter.Value;
                     return destinationFundDriver;

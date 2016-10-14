@@ -14,6 +14,7 @@ using DelayedCounter = EntityFX.Gdcame.Common.Contract.Counters.DelayedCounter;
 using GenericCounter = EntityFX.Gdcame.Common.Contract.Counters.GenericCounter;
 using IncrementorTypeEnum = EntityFX.Gdcame.Common.Contract.Incrementors.IncrementorTypeEnum;
 using SingleCounter = EntityFX.Gdcame.Common.Contract.Counters.SingleCounter;
+using System.Linq;
 
 namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
 {
@@ -86,31 +87,28 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
 
         public int StepsToPersist { get; private set; }
 
-        protected override ReadOnlyDictionary<int, Item> GetFundsDrivers()
+        protected override Item[] GetFundsDrivers()
         {
-            var result = new Dictionary<int, Item>();
+            var result = new Item[_gameData.Items.Length];
             foreach (var item in _gameData.Items)
             {
-                var incrementors = new Dictionary<int, IncrementorBase>();
-                foreach (var incrementor in item.Incrementors)
+                IncrementorBase[] incrementors = item.Incrementors.Select<Common.Contract.Incrementors.Incrementor, IncrementorBase>(incrementor =>
                 {
-                    IncrementorBase value;
-                    if (incrementor.Value.IncrementorType == IncrementorTypeEnum.ValueIncrementor)
+                    if (incrementor.IncrementorType == IncrementorTypeEnum.ValueIncrementor)
                     {
-                        value = IncrementorFactory.Build<ValueIncrementor>(incrementor.Value.Value);
+                        return IncrementorFactory.Build<ValueIncrementor>(incrementor.Value);
                     }
-                    else if (incrementor.Value.IncrementorType == IncrementorTypeEnum.PercentageIncrementor)
+                    else if (incrementor.IncrementorType == IncrementorTypeEnum.PercentageIncrementor)
                     {
-                        value = IncrementorFactory.Build<PercentageIncrementor>(incrementor.Value.Value);
+                        return IncrementorFactory.Build<PercentageIncrementor>(incrementor.Value);
                     }
                     else
                     {
-                        value = null;
+                        return null;
                     }
-                    incrementors.Add(incrementor.Key, value);
-                }
+                }).ToArray();
 
-                result.Add(item.Id, new Item
+                result[item.Id] = new Item
                 {
                     Id = item.Id,
                     Name = item.Name,
@@ -127,16 +125,15 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
                             CurrentIndex = item.CustomRuleInfo.CurrentIndex
                         }
                         : null
-                });
+                };
             }
-            return new ReadOnlyDictionary<int, Item>(result);
+            return result;
         }
 
         protected override GameCash GetFundsCounters()
         {
             var fundsCounters = _gameData.Cash;
-            var counters = new Dictionary<int, Contract.Counters.CounterBase>();
-            var inc = 0;
+            var counters = new Contract.Counters.CounterBase[_gameData.Cash.Counters.Length];
             foreach (var sourceCounter in fundsCounters.Counters)
             {
                 var destinationCouner = MappingDictionary[sourceCounter.GetType()](sourceCounter);
@@ -145,8 +142,7 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
                     destinationCouner.Name = sourceCounter.Name;
                     destinationCouner.Id = sourceCounter.Id;
                 }
-                counters.Add(inc, destinationCouner);
-                inc++;
+                counters[destinationCouner.Id] =  destinationCouner;
             }
             return new GameCash
             {
@@ -179,7 +175,7 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
             //throw new NotImplementedException("commented out previous line!!!");
         }
 
-        protected override void PostPerformAutoStep(IEnumerable<Contract.Counters.CounterBase> modifiedCounters,
+        protected override void PostPerformAutoStep(Contract.Counters.CounterBase[] modifiedCounters,
             int iterations)
         {
             /*lock (_syslock)

@@ -27,7 +27,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef.Mappers
             destination.Picture = source.Picture;
             foreach (var incrementor in source.Incrementors)
             {
-                destination.Incrementors.Add(_incrementorContractMapper.Map(incrementor.Value));
+                destination.Incrementors.Add(_incrementorContractMapper.Map(incrementor));
             }
             return destination;
         }

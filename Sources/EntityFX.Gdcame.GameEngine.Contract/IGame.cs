@@ -8,7 +8,7 @@ namespace EntityFX.Gdcame.GameEngine.Contract
 {
     public interface IGame
     {
-        ReadOnlyDictionary<int, Item> Items { get; }
+        Item[] Items { get; }
 
         Dictionary<int, Item> ModifiedFundsDrivers { get; }
 

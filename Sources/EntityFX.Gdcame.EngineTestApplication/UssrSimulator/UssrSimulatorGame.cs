@@ -11,57 +11,61 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
 {
     public class UssrSimulatorGame : GameBase
     {
-        private readonly object _lockObject = new {};
+        private readonly object _lockObject = new { };
 
         public decimal Communism
         {
-            get { return GameCash.Counters[(int) UssrCounterEnum.Communism].SubValue; }
+            get { return GameCash.Counters[(int)UssrCounterEnum.Communism].SubValue; }
         }
 
         public decimal Production
         {
-            get { return GameCash.Counters[(int) UssrCounterEnum.Production].SubValue; }
+            get { return GameCash.Counters[(int)UssrCounterEnum.Production].SubValue; }
         }
 
         public decimal Taxes
         {
-            get { return GameCash.Counters[(int) UssrCounterEnum.Tax].SubValue; }
+            get { return GameCash.Counters[(int)UssrCounterEnum.Tax].SubValue; }
         }
 
         public decimal FiveYearPlan
         {
-            get { return GameCash.Counters[(int) UssrCounterEnum.FiveYearPlan].SubValue; }
+            get { return GameCash.Counters[(int)UssrCounterEnum.FiveYearPlan].SubValue; }
         }
 
-        protected override ReadOnlyDictionary<int, Item> GetFundsDrivers()
+        protected override Item[] GetFundsDrivers()
         {
-            return new ReadOnlyDictionary<int, Item>(new Dictionary<int, Item>
-            {
-                {
-                    1,
+            return new Item[] {
                     new Item
                     {
                         InitialPrice = 200,
-                        Incrementors = new Dictionary<int, IncrementorBase>
+                        Incrementors = new IncrementorBase[]
                         {
-                            {
-                                (int) UssrCounterEnum.Production,
-                                IncrementorFactory.Build<ValueIncrementor>(10)
-                            },
-                            {
-                                (int) UssrCounterEnum.Communism,
-                                IncrementorFactory.Build<ValueIncrementor>(1)
-                            }
+                            IncrementorFactory.Build<ValueIncrementor>(1),
+                            IncrementorFactory.Build<ValueIncrementor>(10),
+                            IncrementorFactory.Build<ValueIncrementor>(0),
                         },
                         Name = "Matches"
-                    }
-                },
+                    },
+                    new Item
+                    {
+                        InitialPrice = 400,
+                                                UnlockBalance = 5,
+                        Incrementors = new IncrementorBase[]
+                        {
+                            IncrementorFactory.Build<ValueIncrementor>(1),
+                            IncrementorFactory.Build<ValueIncrementor>(0),
+                            IncrementorFactory.Build<ValueIncrementor>(10),
+                        },
+                        Name = "Bubble gum"
+                    },
+                /*},
                 {
                     2,
                     new Item
                     {
                         InitialPrice = 400,
-                        UnlockBalance = 5,
+
                         Incrementors = new Dictionary<int, IncrementorBase>
                         {
                             {
@@ -515,61 +519,54 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
                         },
                         Name = "Cinema"
                     }
-                }
-            });
+                }*/
+            };
         }
 
         protected override GameCash GetFundsCounters()
         {
-            var counters = new Dictionary<int, CounterBase>
+            var counters = new CounterBase[]
             {
+                new SingleCounter
                 {
-                    (int) UssrCounterEnum.Communism,
-                    new SingleCounter
-                    {
-                        Id = 0,
-                        Name = "Communism"
-                    }
+                    Id = (int) UssrCounterEnum.Communism,
+                    Name = "Communism"
+                }
+
+                ,
+                new GenericCounter
+                {
+                    Id = (int) UssrCounterEnum.Production,
+                    Name = "Production",
+                    SubValue = 10,
+                    StepsToIncreaseInflation = 1000
+                }
+
+                ,
+                new GenericCounter
+                {
+                    Id = (int) UssrCounterEnum.Tax,
+                    Name = "Tax",
+                    IsUsedInAutoStep = true,
+                    StepsToIncreaseInflation = 2000
                 },
+
+                new DelayedCounter
                 {
-                    (int) UssrCounterEnum.Production,
-                    new GenericCounter
-                    {
-                        Id = 1,
-                        Name = "Production",
-                        SubValue = 10,
-                        StepsToIncreaseInflation = 1000
-                    }
-                },
-                {
-                    (int) UssrCounterEnum.Tax,
-                    new GenericCounter
-                    {
-                        Id = 2,
-                        Name = "Tax",
-                        IsUsedInAutoStep = true,
-                        StepsToIncreaseInflation = 2000
-                    }
-                },
-                {
-                    (int) UssrCounterEnum.FiveYearPlan,
-                    new DelayedCounter
-                    {
-                        Id = 3,
-                        Name = "Five Year Plan",
-                        UnlockValue = 10000,
-                        SecondsToAchieve = 14400,
-                        SecondsRemaining = 0,
-                        IsMining = false,
-                        SubValue = 5000000
-                    }
+                    Id = (int) UssrCounterEnum.FiveYearPlan,
+                    Name = "Five Year Plan",
+                    UnlockValue = 10000,
+                    SecondsToAchieve = 14400,
+                    SecondsRemaining = 0,
+                    IsMining = false,
+                    SubValue = 5000000
                 }
             };
 
             return new GameCash
             {
                 Counters = counters,
-                RootCounter = counters[(int) UssrCounterEnum.Communism]
+                RootCounter = counters[(int)UssrCounterEnum.Communism]
             };
         }
 
@@ -587,7 +584,7 @@ namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
         {
         }
 
-        protected override void PostPerformAutoStep(IEnumerable<CounterBase> modifiedCounters, int iterations)
+        protected override void PostPerformAutoStep(CounterBase[] modifiedCounters, int iterations)
         {
         }
 

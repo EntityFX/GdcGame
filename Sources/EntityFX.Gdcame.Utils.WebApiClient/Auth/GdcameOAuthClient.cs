@@ -81,7 +81,7 @@ namespace EntityFX.Gdcame.Utils.WebApiClient.Auth
         {
             IRestClient client = RequestFactoryExtensions.CreateClient(Factory, this.AccessTokenServiceEndpoint);
             client.IgnoreResponseStatusCode = true;
-            client.Timeout = TimeSpan.FromSeconds(10);
+            client.Timeout = TimeSpan.FromSeconds(60);
             IRestRequest request = RequestFactoryExtensions.CreateRequest(Factory, this.AccessTokenServiceEndpoint, Method.POST);
             BeforeAfterRequestArgs args1 = new BeforeAfterRequestArgs();
             args1.Client = client;

@@ -10,6 +10,6 @@ namespace EntityFX.Gdcame.GameEngine.Contract.Counters
 
         public CounterBase RootCounter { get; set; }
 
-        public IDictionary<int, CounterBase> Counters { get; set; }
+        public CounterBase[] Counters { get; set; }
     }
 }

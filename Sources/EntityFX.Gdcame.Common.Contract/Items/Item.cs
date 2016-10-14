@@ -42,6 +42,6 @@ namespace EntityFX.Gdcame.Common.Contract.Items
         public CustomRuleInfo CustomRuleInfo { get; set; }
 
         [DataMember]
-        public IDictionary<int, Incrementor> Incrementors { get; set; }
+        public Incrementor[] Incrementors { get; set; }
     }
 }

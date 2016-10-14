@@ -54,7 +54,6 @@ namespace EntityFX.Gdcame.Utils.Common
                 }
 
                 value = (value + x * _2_Pow_4Pos_ByModulo) % modulo;
-                Debug.WriteLine("x: {0}, value: {1}, pow: {2}", x, value, _2_Pow_4Pos_ByModulo);
                 _2_Pow_4Pos_ByModulo = (_2_Pow_4Pos_ByModulo << 4) % modulo;
             }
 

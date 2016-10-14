@@ -49,7 +49,7 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
             var fundsDrivers = new List<Common.Contract.Items.Item>();
             foreach (var fundDriver in game.Items)
             {
-                var fundDriverMapped = _fundsDriverRefreshMapper.Map(fundDriver.Value);
+                var fundDriverMapped = _fundsDriverRefreshMapper.Map(fundDriver);
                 fundDriverMapped.IsUnlocked = gameData.Cash.Counters[0].Value >= fundDriverMapped.UnlockValue;
                 fundsDrivers.Add(fundDriverMapped);
             }
