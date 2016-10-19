@@ -45,13 +45,16 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
             });*/
 
             // Configure Web API for self-host. 
-                var config = new HttpConfiguration();
+            var container = new UnityContainer();
+            var config = new HttpConfiguration();
+            config.DependencyResolver = new UnityDependencyResolver(container);
+            (new ContainerBootstrapper()).Configure(container);
 
             config.Filters.Add(new SessionExceptionHandlerFilterAttribute());
+            config.Filters.Add(container.Resolve<GlobalExceptionHandlerFilterAttribute>());
 
-            var container = new UnityContainer();
 
-            config.DependencyResolver = new UnityDependencyResolver(container);
+
 
             var corsPolicy = new EnableCorsAttribute("*", "*", "GET, POST, OPTIONS, PUT, DELETE");
 
@@ -70,7 +73,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
             // Cors for the WebApi
             config.EnableCors(corsPolicy);
 
-            (new ContainerBootstrapper()).Configure(container);
+
 
             var aumf =
                 (ApplicationUserManagerFacotory)
@@ -105,6 +108,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
             var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
             jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             jsonFormatter.SerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
+
             appBuilder.UseWebApi(config);
         }
     }

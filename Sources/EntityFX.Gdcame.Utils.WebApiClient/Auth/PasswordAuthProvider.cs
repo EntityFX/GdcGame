@@ -14,9 +14,12 @@ namespace EntityFX.Gdcame.Utils.WebApiClient.Auth
     {
         private readonly Uri _baseUri;
 
-        public PasswordAuthProvider(Uri baseUri)
+        public TimeSpan? Timeout { get; private set; }
+
+        public PasswordAuthProvider(Uri baseUri, TimeSpan? timeout = null)
         {
             _baseUri = baseUri;
+            Timeout = timeout;
         }
 
         public async Task<PasswordOAuthContext> Login(IAuthRequestData<PasswordAuthData> authRequest)
@@ -27,7 +30,7 @@ namespace EntityFX.Gdcame.Utils.WebApiClient.Auth
                 {
                     ClientId = authRequest.RequestData.Usename,
                     ClientSecret = authRequest.RequestData.Password
-                }, _baseUri);
+                }, _baseUri, Timeout);
             Task<string> token;
             string stringToken = string.Empty;
             token =

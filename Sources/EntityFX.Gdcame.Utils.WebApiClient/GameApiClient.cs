@@ -10,6 +10,7 @@ using EntityFX.Gdcame.Application.Contract.Model;
 using EntityFX.Gdcame.Utils.WebApiClient.Auth;
 using Newtonsoft.Json.Linq;
 using RestSharp.Portable;
+using System;
 
 namespace EntityFX.Gdcame.Utils.WebApiClient
 {
@@ -55,7 +56,7 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
             return response.Data;
         }
 
-        public GameApiClient(IAuthContext<IAuthenticator> authContext) : base(authContext)
+        public GameApiClient(IAuthContext<IAuthenticator> authContext, TimeSpan? timeout = null) : base(authContext, timeout)
         {
         }
     }

@@ -13,9 +13,10 @@ namespace EntityFX.Gdcame.Utils.WebApiClient.Auth
     {
         private readonly Uri _endpointUri;
 
-        public GdcameOAuthClient(IRequestFactory factory, IClientConfiguration configuration, Uri endpointUri) : base(factory, configuration)
+        public GdcameOAuthClient(IRequestFactory factory, IClientConfiguration configuration, Uri endpointUri, TimeSpan? timeout) : base(factory, configuration)
         {
             _endpointUri = endpointUri;
+            Timeout = timeout != null ? (TimeSpan)timeout : TimeSpan.FromSeconds(60);
         }
 
         protected override UserInfo ParseUserInfo(string content)
@@ -45,6 +46,8 @@ namespace EntityFX.Gdcame.Utils.WebApiClient.Auth
         protected override Endpoint UserInfoServiceEndpoint {
             get { return null;}
         }
+
+        public TimeSpan Timeout { get; private set; }
 
         /// <summary>
         /// Called before the request to get the access token
@@ -81,7 +84,7 @@ namespace EntityFX.Gdcame.Utils.WebApiClient.Auth
         {
             IRestClient client = RequestFactoryExtensions.CreateClient(Factory, this.AccessTokenServiceEndpoint);
             client.IgnoreResponseStatusCode = true;
-            client.Timeout = TimeSpan.FromSeconds(60);
+            client.Timeout = Timeout;
             IRestRequest request = RequestFactoryExtensions.CreateRequest(Factory, this.AccessTokenServiceEndpoint, Method.POST);
             BeforeAfterRequestArgs args1 = new BeforeAfterRequestArgs();
             args1.Client = client;

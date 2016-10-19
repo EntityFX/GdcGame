@@ -47,6 +47,7 @@
     <Compile Include="GameManager\VerificationManualStepData.cs" />
     <Compile Include="GameManager\VerificationManualStepResult.cs" />
     <Compile Include="RatingManager\IRatingManager.cs" />
+    <Compile Include="ServerManager\IServerManager.cs" />
     <Compile Include="SessionManager\InvalidSessionException.cs" />
     <Compile Include="InvalidSessionFault.cs" />
     <Compile Include="SessionManager\ISessionManager.cs" />

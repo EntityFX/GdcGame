@@ -1,4 +1,5 @@
 ﻿using EntityFX.Gdcame.DataAccess.Contract.GameData;
+using EntityFX.Gdcame.DataAccess.Contract.Server;
 using EntityFX.Gdcame.DataAccess.Contract.User;
 using EntityFX.Gdcame.DataAccess.Repository.Contract;
 using EntityFX.Gdcame.Infrastructure.Common;
@@ -32,6 +33,7 @@ namespace EntityFX.Gdcame.DataAccess.Service
                 }
                 )
                 );
+            container.RegisterType<IServerDataAccessService, ServerDataAccessService>();
             return container;
         }
     }

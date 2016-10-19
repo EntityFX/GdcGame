@@ -11,16 +11,18 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
     {
         private readonly IAuthContext<IAuthenticator> _authContext;
 
-        private readonly TimeSpan _timeout = TimeSpan.FromSeconds(60);
 
         private IAuthContext<IAuthenticator> AuthContext
         {
             get { return _authContext; }
         }
 
-        protected ApiClientBase(IAuthContext<IAuthenticator> authContext)
+        public TimeSpan Timeout { get; private set; }
+
+        protected ApiClientBase(IAuthContext<IAuthenticator> authContext, TimeSpan? timeout)
         {
             _authContext = authContext;
+            Timeout = timeout != null ? (TimeSpan)timeout : TimeSpan.FromSeconds(60);
         }
         
         protected async Task<IRestResponse<TModel>> ExecuteRequestAsync<TModel>(string requestUriPath, Method method = Method.GET, IEnumerable<Parameter> parameters = null)
@@ -37,7 +39,7 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
 
             request.Method = method;
             var client = clientFactory.CreateClient();
-            client.Timeout = _timeout;
+            client.Timeout = Timeout;
             client.AddHandler("application/json", CustomJsonDeserializer.Default);
             client.AddHandler("text/javascript", CustomJsonDeserializer.Default);
             client.Authenticator = AuthContext.Context;
@@ -70,7 +72,7 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
 
             request.Method = method;
             var client = clientFactory.CreateClient();
-            client.Timeout = _timeout;
+            client.Timeout = Timeout;
             client.AddHandler("application/json", CustomJsonDeserializer.Default);
             client.AddHandler("text/javascript", CustomJsonDeserializer.Default);
             client.Authenticator = AuthContext.Context;

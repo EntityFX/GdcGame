@@ -23,7 +23,7 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
             return response.Data;
         }
 
-        public AuthApiClient(IAuthContext<IAuthenticator> authContext) : base(authContext)
+        public AuthApiClient(IAuthContext<IAuthenticator> authContext, TimeSpan? timeout = null) : base(authContext, timeout)
         {
         }
     }

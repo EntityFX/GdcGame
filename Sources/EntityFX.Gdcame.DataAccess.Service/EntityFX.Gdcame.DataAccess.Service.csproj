@@ -78,6 +78,7 @@
     <Compile Include="ContainerBootstrapper.cs" />
     <Compile Include="GameDataRetrieveDataAccessService.cs" />
     <Compile Include="GameDataStoreDataAccessService.cs" />
+    <Compile Include="ServerDataAccess.cs" />
     <Compile Include="UserDataAccessService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

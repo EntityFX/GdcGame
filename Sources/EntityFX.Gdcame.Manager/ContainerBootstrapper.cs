@@ -12,6 +12,7 @@ using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager.Contract.AdminManager;
 using EntityFX.Gdcame.Manager.Contract.GameManager;
 using EntityFX.Gdcame.Manager.Contract.RatingManager;
+using EntityFX.Gdcame.Manager.Contract.ServerManager;
 using EntityFX.Gdcame.Manager.Contract.SessionManager;
 using EntityFX.Gdcame.Manager.Contract.UserManager;
 using EntityFX.Gdcame.Manager.Mappers;
@@ -73,6 +74,9 @@ namespace EntityFX.Gdcame.Manager
                 new InterceptionBehavior<PolicyInjectionBehavior>()
                 , new Interceptor<InterfaceInterceptor>());
             container.RegisterType<IAdminManager, AdminManager>(
+                new InterceptionBehavior<PolicyInjectionBehavior>()
+                , new Interceptor<InterfaceInterceptor>());
+            container.RegisterType<IServerManager, ServerManager>(
                 new InterceptionBehavior<PolicyInjectionBehavior>()
                 , new Interceptor<InterfaceInterceptor>());
             return container;

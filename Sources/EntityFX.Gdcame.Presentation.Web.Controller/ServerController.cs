@@ -6,17 +6,25 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using EntityFX.Gdcame.Application.Contract.Model;
+using EntityFX.Gdcame.Manager.Contract.ServerManager;
 
 namespace EntityFX.Gdcame.Application.WebApi.Controller
 {
     [RoutePrefix("api/server-info")]
     public class ServerController : ApiController, IServerController
     {
+        private readonly IServerManager _serverManager;
+
+        public ServerController(IServerManager serverManager)
+        {
+            _serverManager = serverManager;
+        }
+
         [HttpGet]
         [Route("")]
         public async Task<ServerInfoModel> GetServersInfo()
         {
-            return await Task.Run(() => new ServerInfoModel() { ServerList = new[]{ "127.0.0.1" } });
+            return await Task.Run(() => new ServerInfoModel() { ServerList = _serverManager.GetServers() });
         }
     }
 }

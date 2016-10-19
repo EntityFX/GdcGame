@@ -57,6 +57,7 @@
     <Compile Include="GameData\Store\StoredGenericCounter.cs" />
     <Compile Include="GameData\Store\StoredIncrementor.cs" />
     <Compile Include="GameData\Store\StoredSingleCounter.cs" />
+    <Compile Include="Server\IServerDataAccess.cs" />
     <Compile Include="User\IUserDataAccessService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User\User.cs" />

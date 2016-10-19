@@ -12,7 +12,7 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
 {
     public class AccountApiClient : ApiClientBase, IAccountController
     {
-        public AccountApiClient(IAuthContext<IAuthenticator> authContext) : base(authContext)
+        public AccountApiClient(IAuthContext<IAuthenticator> authContext, TimeSpan? timeout = null) : base(authContext, timeout)
         {
         }
 

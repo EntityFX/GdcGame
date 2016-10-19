@@ -12,11 +12,11 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
 {
     public class ServerInfoClient : ApiClientBase, IServerController
     {
-        public ServerInfoClient() : base(null)
+        public ServerInfoClient(TimeSpan? timeout) : base(null, timeout)
         {
         }
 
-        public ServerInfoClient(IAuthContext<IAuthenticator> authContext) : base(authContext)
+        public ServerInfoClient(IAuthContext<IAuthenticator> authContext, TimeSpan? timeout = null) : base(authContext, timeout)
         {
         }
 

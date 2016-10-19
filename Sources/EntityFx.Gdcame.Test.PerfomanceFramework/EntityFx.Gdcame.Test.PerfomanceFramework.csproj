@@ -68,6 +68,10 @@
       <Project>{0F9C056A-DB5D-48ED-A688-BFD04ED4DFD7}</Project>
       <Name>EntityFX.Gdcame.Application.Contract.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Utils.Common\EntityFX.Gdcame.Utils.Common.csproj">
+      <Project>{2AE99E38-4B45-4D8B-B9D5-840B21F82A43}</Project>
+      <Name>EntityFX.Gdcame.Utils.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Utils.WebApiClient\EntityFX.Gdcame.Utils.WebApiClient.csproj">
       <Project>{9B4E7B86-5F2F-4F84-9786-3D7CCB2024F8}</Project>
       <Name>EntityFX.Gdcame.Utils.WebApiClient</Name>

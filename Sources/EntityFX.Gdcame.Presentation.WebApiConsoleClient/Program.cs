@@ -13,7 +13,10 @@ using EntityFX.Gdcame.Application.Contract.Model;
 using EntityFX.Gdcame.Utils.WebApiClient.Exceptions;
 using Microsoft.Practices.Unity;
 using System.Configuration;
+using System.IO;
+using System.Web.Hosting;
 using EntityFX.Gdcame.Utils.Common;
+using Newtonsoft.Json;
 
 namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 {
@@ -31,7 +34,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
     {
         private static string _userName;
         private static string _userPassword;
-        private static ServerInfoModel _serverInfo;
+        private static string[] _serverInfo;
         private static UnityContainer _container;
         public static ErrorCodes? ErrorCode { get; private set; }
         private static bool _exitFlag;
@@ -261,25 +264,27 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             }
         }
 
-        private static ServerInfoModel GetServerContext()
+
+        public static string[] GetServers()
         {
-            var serverInfoClient = new ServerInfoClient(new PasswordOAuthContext() { BaseUri = new Uri(ConfigurationManager.AppSettings["ServiceBaseAddress"]) });
-            var serverInfo = serverInfoClient.GetServersInfo().Result;
-            return serverInfo;
+            if (!File.Exists("servers.json"))
+            {
+                return null;
+            }
+            // deserialize JSON directly from a file
+            using (StreamReader file = File.OpenText("servers.json"))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.TypeNameHandling = TypeNameHandling.Auto;
+                return (string[])serializer.Deserialize(file, typeof(string[]));
+            }
         }
 
-        private static Uri GetApiServerUri(ServerInfoModel serverInfo, string login)
+        private static Uri GetApiServerUri(string[] serversList, string login)
         {
-            var useSubdomainByLogin = Convert.ToBoolean(ConfigurationManager.AppSettings["UseServerByLogin"]);
-            var serviceBaseAddress = ConfigurationManager.AppSettings["ServiceBaseAddress"];
-            var originalApiAddress = new Uri(serviceBaseAddress);
-            if (!useSubdomainByLogin)
-            {
-                return originalApiAddress;
-            }
             var hasher = new HashHelper();
-            var serverNumber = hasher.GetModuloOfUserIdHash(hasher.GetHashedString(login), serverInfo.ServerList.Length) + 1;
-            return new Uri(string.Format("{2}://ns{0}.{1}/{3}", serverNumber, originalApiAddress.Authority, originalApiAddress.Scheme, originalApiAddress.Fragment));
+            var serverNumber = hasher.GetModuloOfUserIdHash(hasher.GetHashedString(login), serversList.Length);
+            return new Uri(string.Format("http://{0}:{1}/",serversList[serverNumber], ConfigurationManager.AppSettings["ServicePort"]));
         }
 
         private static void MainLoop(IEnumerable<string> args)
@@ -287,7 +292,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             var argsArray = args as string[] ?? args.ToArray();
             try
             {
-                _serverInfo = GetServerContext();
+                _serverInfo = GetServers();
             }
             catch (AggregateException clientException)
             {
