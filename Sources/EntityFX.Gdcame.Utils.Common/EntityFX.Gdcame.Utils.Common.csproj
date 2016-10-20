@@ -61,6 +61,7 @@
     <Compile Include="InvalidSessionFaultHandler.cs" />
     <Compile Include="ISessionManagerClientFactory.cs" />
     <Compile Include="NotifyConsumerClientFactory.cs" />
+    <Compile Include="NoWcfOperationContextHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RuntimeHelper.cs" />
     <Compile Include="SessionManagerClientFactory.cs" />

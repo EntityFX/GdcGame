@@ -1,9 +1,9 @@
 using System;
 using EntityFX.Gdcame.Infrastructure.Common;
 
-namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
+namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOneCore
 {
-    internal class NoWcfOperationContextHelper : IOperationContext, IOperationContextHelper
+    public class NoWcfOperationContextHelper : IOperationContext, IOperationContextHelper
     {
         private static readonly Lazy<IOperationContext> ObjInstance =
             new Lazy<IOperationContext>(() => new NoWcfOperationContextHelper());

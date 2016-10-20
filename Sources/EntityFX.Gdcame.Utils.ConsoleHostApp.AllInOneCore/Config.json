@@ -1,0 +1,8 @@
+﻿{
+  "AppConfiguration": {
+    "SignalRPort": 9080,
+    "WebApiPort": 9001,
+    "RepositoryProvider": "Mongo",
+    "MongoConnectionString" : "mongodb://admin:P%40ssw0rd@10.10.139.148:27017/gdcame?authSource=gdcame"
+  } 
+}

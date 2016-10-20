@@ -19,14 +19,22 @@ using System.Web.Cors;
 using System.Threading.Tasks;
 using System.Threading;
 using EntityFX.Gdcame.Application.WebApi.Providers;
+using EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOneCore;
+using Microsoft.Owin.Security.DataProtection;
 
-namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
+namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter
 {
     public class WebApiStartup
     {
+        private readonly AppConfiguration _appConfiguration;
         public static OAuthAuthorizationServerOptions OAuthOptions { get; private set; }
 
         public static string PublicClientId { get; private set; }
+
+        public WebApiStartup(AppConfiguration appConfiguration)
+        {
+            _appConfiguration = appConfiguration;
+        }
 
 
         // This code configures Web API. The Startup class is specified as a type
@@ -48,7 +56,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
             var container = new UnityContainer();
             var config = new HttpConfiguration();
             config.DependencyResolver = new UnityDependencyResolver(container);
-            (new ContainerBootstrapper()).Configure(container);
+            (new ContainerBootstrapper(_appConfiguration)).Configure(container);
 
             config.Filters.Add(new SessionExceptionHandlerFilterAttribute());
             config.Filters.Add(container.Resolve<GlobalExceptionHandlerFilterAttribute>());

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Utils.WebApiClient.Exceptions;
 using RestSharp.Portable.Authenticators;
 using RestSharp.Portable.Authenticators.OAuth2;
@@ -12,9 +13,15 @@ namespace EntityFX.Gdcame.Utils.WebApiClient.Auth
 {
     public class PasswordAuthProvider : IAuthProvider<PasswordAuthData, PasswordOAuthContext>
     {
+        private readonly ILogger _logger;
         private readonly Uri _baseUri;
 
         public TimeSpan? Timeout { get; private set; }
+
+        public PasswordAuthProvider(ILogger logger)
+        {
+            _logger = logger;
+        }
 
         public PasswordAuthProvider(Uri baseUri, TimeSpan? timeout = null)
         {
@@ -50,8 +57,7 @@ namespace EntityFX.Gdcame.Utils.WebApiClient.Auth
             }
             catch (Exception exception)
             {
-                //TODO: log here
-                throw;
+                _logger.Error(exception);
             }
 
             return new PasswordOAuthContext()

@@ -36,12 +36,20 @@ using Microsoft.Practices.Unity.InterceptionExtension;
 using PortableLog.NLog;
 using System;
 using System.Configuration;
+using EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOneCore;
 using CounterBase = EntityFX.Gdcame.Common.Contract.Counters.CounterBase;
 
-namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
+namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter
 {
     public class ContainerBootstrapper : IContainerBootstrapper
     {
+        private readonly AppConfiguration _appConfiguration;
+
+        public ContainerBootstrapper(AppConfiguration appConfiguration)
+        {
+            _appConfiguration = appConfiguration;
+        }
+
         public IUnityContainer Configure(IUnityContainer container)
         {
             //container.AddNewExtension<Interception>();
@@ -54,7 +62,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
 
             var childBootstrappers = new IContainerBootstrapper[]
                         {
-                GetRepositoryProvider(ConfigurationManager.AppSettings["RepositoryProvider"]),
+                GetRepositoryProvider(_appConfiguration.RepositoryProvider),
                 new DataAccess.Service.ContainerBootstrapper(),
                 new Manager.ContainerBootstrapper(),
                 new NotifyConsumer.ContainerBootstrapper()
@@ -183,7 +191,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
                 case "EntityFramework":
                     return new DataAccess.Repository.Ef.ContainerBootstrapper();
                 case "Mongo":
-                    return new DataAccess.Repository.Mongo.ContainerBootstrapper(ConfigurationManager.AppSettings["MongoConnectionString"]);
+                    return new DataAccess.Repository.Mongo.ContainerBootstrapper(_appConfiguration.MongoConnectionString);
                 case "LocalStorage":
                 default:
                     return new DataAccess.Repository.LocalStorage.ContainerBootstrapper();

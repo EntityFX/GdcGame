@@ -257,7 +257,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                     }
                 }
 
-                catch (Exception e)
+                catch (Exception)
                 {
 
                 }
