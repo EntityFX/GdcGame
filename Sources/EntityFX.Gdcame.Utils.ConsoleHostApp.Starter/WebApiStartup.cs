@@ -26,13 +26,15 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter
 {
     public class WebApiStartup
     {
+        private readonly IUnityContainer _unityContainer;
         private readonly AppConfiguration _appConfiguration;
         public static OAuthAuthorizationServerOptions OAuthOptions { get; private set; }
 
         public static string PublicClientId { get; private set; }
 
-        public WebApiStartup(AppConfiguration appConfiguration)
+        public WebApiStartup(IUnityContainer unityContainer, AppConfiguration appConfiguration)
         {
+            _unityContainer = unityContainer;
             _appConfiguration = appConfiguration;
         }
 
@@ -46,20 +48,10 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter
             {
                 appBuilder.UseAesDataProtectorProvider();
             }
-
-            /*appBuilder.Use((c, t) =>
-            {
-                return Task.FromResult(0);
-            });*/
-
-            // Configure Web API for self-host. 
-            var container = new UnityContainer();
             var config = new HttpConfiguration();
-            config.DependencyResolver = new UnityDependencyResolver(container);
-            (new ContainerBootstrapper(_appConfiguration)).Configure(container);
-
+            config.DependencyResolver = new UnityDependencyResolver(_unityContainer);
             config.Filters.Add(new SessionExceptionHandlerFilterAttribute());
-            config.Filters.Add(container.Resolve<GlobalExceptionHandlerFilterAttribute>());
+            config.Filters.Add(_unityContainer.Resolve<GlobalExceptionHandlerFilterAttribute>());
 
 
 
