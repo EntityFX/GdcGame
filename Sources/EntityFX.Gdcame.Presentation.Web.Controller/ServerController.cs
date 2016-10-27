@@ -26,5 +26,20 @@ namespace EntityFX.Gdcame.Application.WebApi.Controller
         {
             return await Task.Run(() => new ServerInfoModel() { ServerList = _serverManager.GetServers() });
         }
+
+        [HttpGet]
+        [Route("echo")]
+        public string Echo(string text)
+        {
+            return string.Format("OK: {0}", text);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "GenericUser")]
+        [Route("echo-auth")]
+        public string EchoAuth(string text)
+        {
+            return string.Format("OK: {0}", text);
+        }
     }
 }

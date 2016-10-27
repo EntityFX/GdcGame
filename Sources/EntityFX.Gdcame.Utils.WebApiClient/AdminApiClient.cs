@@ -19,6 +19,11 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
             return response != null ? response.Data : new UserSessionsModel[] { };
         }
 
+        public ServerStatisticsInfoModel GetStatistics()
+        {
+            return ExecuteRequestAsync<ServerStatisticsInfoModel>("/api/admin/statistics").Result.Data;
+        }
+
         public async void CloseSessionByGuid(Guid guid)
         {
             await ExecuteRequestAsync<object, object>("/api/admin/sessions/guid", Method.DELETE, guid);

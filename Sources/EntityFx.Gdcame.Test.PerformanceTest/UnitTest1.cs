@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using EntityFX.Gdcame.Common.Contract;
@@ -8,9 +9,11 @@ using EntityFX.Gdcame.DataAccess.Service;
 using EntityFX.Gdcame.GameEngine.NetworkGameEngine;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager;
+using EntityFX.Gdcame.Manager.Contract.AdminManager;
 using EntityFX.Gdcame.Manager.Contract.GameManager;
 using EntityFX.Gdcame.Manager.Contract.SessionManager;
 using EntityFX.Gdcame.Manager.Contract.UserManager;
+using EntityFX.Gdcame.Manager.Workers;
 using EntityFX.Gdcame.NotifyConsumer.Contract;
 using EntityFX.Gdcame.Utils.Common;
 using Microsoft.Practices.Unity;
@@ -56,7 +59,17 @@ namespace EntityFx.Gdcame.Test.PerformanceTest
 
             container.RegisterType<IHashHelper, HashHelper>();
 
-            container.RegisterInstance(new GameSessions(container.Resolve<ILogger>(), container.Resolve<IGameFactory>(), container.Resolve<IGameDataPersisterFactory>(), container.Resolve<IHashHelper>()));
+            container.RegisterInstance(new PerformanceInfo());
+
+            container.RegisterInstance(
+                new GameSessions(container.Resolve<ILogger>(),
+                container.Resolve<IGameFactory>(), container.Resolve<PerformanceInfo>()));
+
+            var workers = new List<IWorker>();
+            workers.Add(container.Resolve<CalculationWorker>());
+            workers.Add(container.Resolve<PersistenceWorker>());
+            workers.Add(container.Resolve<SessionValidationWorker>());
+            workers.ForEach(_ => _.Run());
 
             container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessDocumentService>(
                 );

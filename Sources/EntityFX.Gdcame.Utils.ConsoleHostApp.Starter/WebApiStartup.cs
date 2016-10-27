@@ -43,7 +43,6 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter
         // parameter in the WebApp.Start method.
         public void Configuration(IAppBuilder appBuilder)
         {
-
             if (RuntimeHelper.IsRunningOnMono())
             {
                 appBuilder.UseAesDataProtectorProvider();
@@ -77,11 +76,11 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter
 
             var aumf =
                 (ApplicationUserManagerFacotory)
-                    config.DependencyResolver.GetService(typeof (ApplicationUserManagerFacotory));
+                    config.DependencyResolver.GetService(typeof(ApplicationUserManagerFacotory));
             // Configure the db context and user manager to use a single instance per request
             // app.CreatePerOwinContext(ApplicationDbContext.Create);
             appBuilder.CreatePerOwinContext<ApplicationUserManager>(
-                (options, context) => { return (ApplicationUserManager) aumf.Create(options, context); });
+                (options, context) => { return (ApplicationUserManager)aumf.Create(options, context); });
 
             var OAuthServerOptions = new OAuthAuthorizationServerOptions
             {
@@ -91,7 +90,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter
                 Provider =
                     new CustomOAuthProvider("GameApi",
                         (ISessionManagerClientFactory)
-                            config.DependencyResolver.GetService(typeof (ISessionManagerClientFactory)))
+                            config.DependencyResolver.GetService(typeof(ISessionManagerClientFactory)))
             };
 
 

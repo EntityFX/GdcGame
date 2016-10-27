@@ -48,5 +48,8 @@ namespace EntityFX.Gdcame.Manager.Contract.AdminManager
         [FaultContract(typeof (InsufficientPermissionsFault))]
         [CustomPrincipalPermission(AllowedRoles = new[] {UserRole.Admin})]
         void ReloadGame(string username);
+
+
+        StatisticsInfo GetStatisticsInfo();
     }
 }

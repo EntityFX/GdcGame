@@ -57,10 +57,14 @@
     <Compile Include="BuyItemModel.cs" />
     <Compile Include="ManualStepResultModel.cs" />
     <Compile Include="Mappers\FundsDriverBuyInfoMapper.cs" />
+    <Compile Include="Mappers\StatisticsInfoMapper.cs" />
+    <Compile Include="PerformanceInfoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegisterAccountModel.cs" />
+    <Compile Include="ResourcesUsageInfoModel.cs" />
     <Compile Include="ServerInfoModel.cs" />
     <Compile Include="SessionInfoModel.cs" />
+    <Compile Include="ServerStatisticsInfoModel.cs" />
     <Compile Include="UserSessionsModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

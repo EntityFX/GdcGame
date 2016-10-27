@@ -57,5 +57,10 @@ namespace EntityFX.Gdcame.Manager
         {
             throw new NotImplementedException();
         }
+
+        public StatisticsInfo GetStatisticsInfo()
+        {
+            return  _gameSessions.GetStatisticsInfo();
+        }
     }
 }

@@ -100,6 +100,7 @@
       <Link>PrettyConsole.cs</Link>
     </Compile>
     <Compile Include="AdminConsole.cs" />
+    <Compile Include="ApiHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

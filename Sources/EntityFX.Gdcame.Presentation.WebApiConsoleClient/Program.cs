@@ -53,6 +53,8 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             }
         };
 
+        private static int _serverPort;
+
         private static void ExitMainMenu()
         {
             _exitFlag = true;
@@ -69,30 +71,12 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                 }
             }
             _container = new UnityContainer();
-
+            _serverPort = Convert.ToInt32(ConfigurationManager.AppSettings["ServicePort"]);
             MainLoop(listArgs);
 
         }
 
-        private static async Task<Tuple<PasswordOAuthContext, string>> UserLogin(string userName, string password)
-        {
-            if (string.IsNullOrEmpty(userName))
-            {
-                Console.Write("Введите логин: ");
-                userName = Console.ReadLine();
 
-                Console.Write("Введите пароль: ");
-                password = Console.ReadLine();
-            }
-            var serverInfoUrl = GetApiServerUri(_serverInfo, userName);
-
-            var p = new PasswordAuthProvider(serverInfoUrl);
-            var res = await p.Login(new PasswordAuthRequest<PasswordAuthData>()
-            {
-                RequestData = new PasswordAuthData() { Password = password, Usename = userName }
-            });
-            return new Tuple<PasswordOAuthContext, string>(res, userName);
-        }
 
         private static void RegisterAccount()
         {
@@ -107,7 +91,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             Console.Write("Подтвердите пароль: ");
             var confirmPassword = Console.ReadLine();
 
-            var serverInfoUrl = GetApiServerUri(_serverInfo, userName);
+            var serverInfoUrl = ApiHelper.GetApiServerUri(_serverInfo, userName, _serverPort);
 
             var authApi = new AuthApiClient(new PasswordOAuthContext() { BaseUri = serverInfoUrl });
 
@@ -128,48 +112,34 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 
         }
 
-        private static void UserLogout(PasswordOAuthContext session)
-        {
-            var authApi = new AuthApiClient(session);
-            Console.Clear();
-            try
-            {
-                var result = authApi.Logout().Result;
-            }
-            catch (AggregateException loginException)
-            {
-                ErrorCode = GameRunner.HandleClientException(loginException.InnerException as IClientException<ErrorData>);
-            }
-        }
-
-        private static IGameApiController GetGameClient(PasswordOAuthContext session)
-        {
-            return new GameApiClient(session);
-        }
-
-        private static IAdminController GetAdminClient(PasswordOAuthContext session)
-        {
-            return new AdminApiClient(session);
-        }
-
         private static void TryLogin()
         {
             Tuple<PasswordOAuthContext, string> loginResultTuple;
+            if (string.IsNullOrEmpty(_userName))
+            {
+                Console.Write("Введите логин: ");
+                _userName = Console.ReadLine();
+
+                Console.Write("Введите пароль: ");
+                _userPassword = Console.ReadLine();
+            }
             try
             {
                 Console.Clear();
                 Console.WriteLine("-=Вход=-");
-                loginResultTuple = UserLogin(_userName, _userPassword).Result;
+                loginResultTuple = ApiHelper.UserLogin(_serverInfo, _serverPort, _userName, _userPassword).Result;
             }
             catch (AggregateException loginException)
             {
                 GameRunner.HandleClientException(loginException.InnerException as IClientException<ErrorData>);
                 loginResultTuple = null;
+                _userName = null;
             }
 
             if (loginResultTuple != null)
             {
                 EnterGame(loginResultTuple);
+                Console.Clear();
             }
         }
 
@@ -203,10 +173,11 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
         private static void EnterGame(Tuple<PasswordOAuthContext, string> loginContext)
         {
             Console.Clear();
-            var gameClient = GetGameClient(loginContext.Item1);
+
+            var gameClient = ApiHelper.GetGameClient(loginContext.Item1);
             var gr = new GameRunner(loginContext.Item2, loginContext.Item1, gameClient);
-            var adminManagerClient = GetAdminClient(loginContext.Item1);
-            var ac = new AdminConsole(adminManagerClient);
+            var adminManagerClient = ApiHelper.GetAdminClient(loginContext.Item1);
+            var ac = new AdminConsole(loginContext.Item2, _userPassword, loginContext.Item1, adminManagerClient, _serverInfo, _serverPort);
             var gameData = gr.GetGameData();
             gr.DisplayGameData(gameData);
             ConsoleKeyInfo keyInfo;
@@ -242,7 +213,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                     }
                     else if (keyInfo.Key == ConsoleKey.F3)
                     {
-                        UserLogout(gr.ServerContext);
+                        ErrorCode = ApiHelper.UserLogout(gr.ServerContext);
                         break;
                     }
 
@@ -264,35 +235,12 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             }
         }
 
-
-        public static string[] GetServers()
-        {
-            if (!File.Exists("servers.json"))
-            {
-                return null;
-            }
-            // deserialize JSON directly from a file
-            using (StreamReader file = File.OpenText("servers.json"))
-            {
-                JsonSerializer serializer = new JsonSerializer();
-                serializer.TypeNameHandling = TypeNameHandling.Auto;
-                return (string[])serializer.Deserialize(file, typeof(string[]));
-            }
-        }
-
-        private static Uri GetApiServerUri(string[] serversList, string login)
-        {
-            var hasher = new HashHelper();
-            var serverNumber = hasher.GetModuloOfUserIdHash(hasher.GetHashedString(login), serversList.Length);
-            return new Uri(string.Format("http://{0}:{1}/",serversList[serverNumber], ConfigurationManager.AppSettings["ServicePort"]));
-        }
-
         private static void MainLoop(IEnumerable<string> args)
         {
             var argsArray = args as string[] ?? args.ToArray();
             try
             {
-                _serverInfo = GetServers();
+                _serverInfo = ApiHelper.GetServers();
             }
             catch (AggregateException clientException)
             {

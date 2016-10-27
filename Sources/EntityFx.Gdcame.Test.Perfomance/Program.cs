@@ -29,14 +29,14 @@ namespace EntityFx.Gdcame.Test.Perfomance
         {
             Uri[] serviceAddressList;
             var countRequests = 10000;
-            var port = 80;
+            var port = 9001;
             if (args.Length > 0)
             {
                 port = Convert.ToInt32(args[0]);
             }
             else
             {
-                serviceAddressList = GetServers().Select(_ => new Uri("http://" + _)).ToArray();
+                serviceAddressList = GetServers().Select(_ => new Uri("http://" + _ + ":" + port)).ToArray();
             }
 
             if (args.Length > 2)
@@ -59,6 +59,11 @@ namespace EntityFx.Gdcame.Test.Perfomance
             var logger = new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger")));
 
             var performanceTester = new PerfomanceTester(serviceAddressList, logger);
+
+           /* var authContext = new PasswordOAuthContext() { BaseUri = new Uri("http://localhost:9001")};
+            var gameClient = new ServerInfoClient(authContext);
+            var res = gameClient.Echo("dsfdsf");*/
+            performanceTester.TestEcho(countRequests, RandomString(15));
 
             performanceTester.TestStartManyGames(countRequests, RandomString(15));
             logger.Info("Press any key to close...");
@@ -146,6 +151,61 @@ namespace EntityFx.Gdcame.Test.Perfomance
             _performanceApi = new PerformanceApi(serviceUriList, logger);
         }
 
+        public void TestEcho(int countAccounts, string text)
+        {
+            var sw = new Stopwatch();
+            Tuple<PerformanceAggregate, string[]> getGameDataResult = null;
+            _logger.Info("\tStart echo  {0} in parallel", countAccounts);
+            sw.Restart();
+            try
+            {
+                getGameDataResult = _performanceApi.DoParallelTask(0, countAccounts, ParallelismFactor, i => _performanceApi.Echo(text), counter =>
+                {
+                    if (counter % ParallelismFactor == 0)
+                    {
+                        Console.WriteLine("Echoed {0} times", counter);
+                    }
+                });
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e);
+            }
+            if (getGameDataResult != null) PrintPerfomanceAggregateResults(getGameDataResult.Item1);
+            _logger.Info("\tDone echo for {0} accounts, elapsed: {1}, {2} milliseconds per one", countAccounts, sw.Elapsed, sw.Elapsed.TotalMilliseconds / countAccounts);
+
+            _logger.Info("\tStart register {0} accounts in parallel", countAccounts);
+            sw.Restart();
+            var registerManyAccountsResult = _performanceApi.RegisterManyAccounts(countAccounts, text, true);
+            PrintPerfomanceAggregateResults(registerManyAccountsResult);
+            _logger.Info("\tDone register {0} accounts, elapsed: {1}, {2} milliseconds per one", countAccounts, sw.Elapsed, sw.Elapsed.TotalMilliseconds / countAccounts);
+
+            _logger.Info("\tStart login {0} accounts in parallel", countAccounts);
+            var loginManyAccountsResult = _performanceApi.LoginManyClients(countAccounts, text);
+            PrintPerfomanceAggregateResults(loginManyAccountsResult.Item1);
+            _logger.Info("\tDone login {0} accounts, elapsed: {1}, {2} milliseconds per one", countAccounts, sw.Elapsed, sw.Elapsed.TotalMilliseconds / countAccounts);
+
+
+            _logger.Info("\tStart echo with auth {0} in parallel", countAccounts);
+            sw.Restart();
+            try
+            {
+                getGameDataResult = _performanceApi.DoParallelTask(0, countAccounts, ParallelismFactor, i => _performanceApi.EchoAuth(loginManyAccountsResult.Item2[i], text), counter =>
+                {
+                    if (counter % ParallelismFactor == 0)
+                    {
+                        Console.WriteLine("Echoed {0} times", counter);
+                    }
+                });
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e);
+            }
+            if (getGameDataResult != null) PrintPerfomanceAggregateResults(getGameDataResult.Item1);
+            _logger.Info("\tDone echo for {0} accounts, elapsed: {1}, {2} milliseconds per one", countAccounts, sw.Elapsed, sw.Elapsed.TotalMilliseconds / countAccounts);
+        }
+
         public void TestStartManyGames(int countAccounts, string accounLoginPrefix)
         {
             var testResult = new List<TestResultItem>();
@@ -168,7 +228,11 @@ namespace EntityFx.Gdcame.Test.Perfomance
             Tuple<PerformanceAggregate, GameDataModel[]> getGameDataResult = null;
             try
             {
-                getGameDataResult = _performanceApi.DoParallelTask(0, countAccounts, ParallelismFactor, i => _performanceApi.GetGameData(loginManyAccountsResult.Item2[i]), counter =>
+                getGameDataResult = _performanceApi.DoParallelTask(0, countAccounts, ParallelismFactor, i =>
+                    {
+                        return loginManyAccountsResult.Item2[i] != null ? _performanceApi.GetGameData(loginManyAccountsResult.Item2[i]) : null;
+                    }
+                , counter =>
                 {
                     if (counter % ParallelismFactor == 0)
                     {

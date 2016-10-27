@@ -18,14 +18,10 @@ namespace EntityFX.Gdcame.Utils.WebApiClient.Auth
 
         public TimeSpan? Timeout { get; private set; }
 
-        public PasswordAuthProvider(ILogger logger)
-        {
-            _logger = logger;
-        }
-
-        public PasswordAuthProvider(Uri baseUri, TimeSpan? timeout = null)
+        public PasswordAuthProvider(Uri baseUri, ILogger logger = null, TimeSpan? timeout = null)
         {
             _baseUri = baseUri;
+            _logger = logger;
             Timeout = timeout;
         }
 

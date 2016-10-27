@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="IHashHelper.cs" />
     <Compile Include="IMapperFactory.cs" />
+    <Compile Include="IWorker.cs" />
     <Compile Include="MapperFactory.cs" />
     <Compile Include="IConfigurationProvider.cs" />
     <Compile Include="IContainerBootstrapper.cs" />

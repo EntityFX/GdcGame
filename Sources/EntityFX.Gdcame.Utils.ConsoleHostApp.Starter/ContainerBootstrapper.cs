@@ -35,7 +35,9 @@ using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
 using PortableLog.NLog;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
+using EntityFX.Gdcame.Manager.Workers;
 using EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOneCore;
 using CounterBase = EntityFX.Gdcame.Common.Contract.Counters.CounterBase;
 
@@ -110,7 +112,11 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter
 
             container.RegisterType<IHashHelper, HashHelper>();
 
-            container.RegisterInstance(new GameSessions(container.Resolve<ILogger>(), container.Resolve<IGameFactory>(), container.Resolve<IGameDataPersisterFactory>(), container.Resolve<IHashHelper>()));
+            container.RegisterInstance(new PerformanceInfo());
+
+            container.RegisterInstance(
+                new GameSessions(container.Resolve<ILogger>(), 
+                container.Resolve<IGameFactory>(), container.Resolve<PerformanceInfo>()));
 
             container.RegisterType<INotifyConsumerService, NotifyConsumerService>(new InjectionConstructor(
                 new ResolvedParameter<ILogger>(),
@@ -122,15 +128,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter
                 , new Interceptor<InterfaceInterceptor>()
                 );
 
-            container.RegisterType<IGameDataChangesNotifier, GameDataChangesNotifier>(
-                new InjectionConstructor(
-                    new ResolvedParameter<string>(),
-                    new ResolvedParameter<string>(),
-                    new ResolvedParameter<IGameDataStoreDataAccessService>(),
-                    new ResolvedParameter<IMapperFactory>(),
-                    new ResolvedParameter<INotifyConsumerClientFactory>()
-                    )
-                );
+            container.RegisterType<IGameDataChangesNotifier, GameDataChangesNotifier>();
 
             container.RegisterType<INotifyConsumerClientFactory, NotifyConsumerClientFactory>(new InjectionConstructor(
                 new ResolvedParameter<IUnityContainer>(),
@@ -149,6 +147,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter
             container.RegisterType<IMapper<Gdcame.Common.Contract.Items.Item, ItemModel>, FundsDriverModelMapper>();
             container.RegisterType<IMapper<GameData, GameDataModel>, GameDataModelMapper>();
             container.RegisterType<IMapper<BuyFundDriverResult, BuyItemModel>, FundsDriverBuyInfoMapper>();
+            container.RegisterType<IMapper<StatisticsInfo, ServerStatisticsInfoModel>, StatisticsInfoMapper>();
             container.RegisterType<IGameClientFactory, NoWcfGameManagerFactory>();
             container.RegisterType<ISessionManagerClientFactory, SessionManagerClientFactory>();
 
@@ -184,7 +183,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter
             return container;
         }
 
-        public IContainerBootstrapper GetRepositoryProvider(string providerName)
+        private IContainerBootstrapper GetRepositoryProvider(string providerName)
         {
             switch (providerName)
             {

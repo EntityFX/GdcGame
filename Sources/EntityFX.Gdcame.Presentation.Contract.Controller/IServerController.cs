@@ -9,6 +9,8 @@ namespace EntityFX.Gdcame.Application.Contract.Controller
 {
     public interface IServerController
     {
-         Task<ServerInfoModel> GetServersInfo();
+        Task<ServerInfoModel> GetServersInfo();
+        string Echo(string text);
+        string EchoAuth(string text);
     }
 }

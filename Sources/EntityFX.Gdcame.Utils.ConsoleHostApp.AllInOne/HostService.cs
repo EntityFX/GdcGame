@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using EntityFX.Gdcame.Infrastructure.Common;
+using EntityFX.Gdcame.Manager.Workers;
 using EntityFX.Gdcame.Utils.Common;
 using EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOneCore;
 using EntityFX.Gdcame.Utils.ConsoleHostApp.Starter;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Owin.Hosting;
+using Microsoft.Practices.ObjectBuilder2;
 using Microsoft.Practices.Unity;
 using Topshelf;
 
@@ -19,6 +22,9 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
         private IWebHost _webHost;
         private AppConfiguration AppConfiguration { get; }
 
+        private IList<IWorker> _workers = new List<IWorker>();
+
+
         public HostService()
         {
             CoreStartup.AppConfiguration = new AppConfiguration()
@@ -29,7 +35,11 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
                 SignalRPort = int.Parse(ConfigurationManager.AppSettings["WebApiPort"]),
             };
             AppConfiguration = CoreStartup.AppConfiguration;
+
             CoreStartup.Container = (new ContainerBootstrapper(AppConfiguration)).Configure(new UnityContainer());
+            ConfigureWorkers(CoreStartup.Container);
+
+
             _currentClassLogger = CoreStartup.Container.Resolve<ILogger>();
             _webApiStartOptions = new StartOptions
             {
@@ -51,7 +61,12 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
             }
 
             _webHost = new WebHostBuilder()
-                .UseKestrel()
+                .UseKestrel(options =>
+                {
+                    options.MaxRequestBufferSize = 4*1014*1024;
+                    options.UseConnectionLogging();
+                    options.ThreadCount = Environment.ProcessorCount;
+                })
                 .UseStartup<CoreStartup>()
                 .UseUrls(_webApiStartOptions.Urls.ToArray())
                 .Build();
@@ -60,6 +75,9 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
         public bool Start(HostControl hostControl)
         {
             _webHost.Start();
+
+            StartWorkers();
+
             _currentClassLogger.Info(RuntimeHelper.GetRuntimeInfo());
             _currentClassLogger.Info("SignalR server running on {0}", CoreStartup.AppConfiguration.WebApiPort);
             _currentClassLogger.Info("Web server running on {0}", AppConfiguration.WebApiPort);
@@ -70,6 +88,18 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
         public bool Stop(HostControl hostControl)
         {
             return true;
+        }
+
+        public void ConfigureWorkers(IUnityContainer container)
+        {
+            _workers.Add(container.Resolve<CalculationWorker>());
+            _workers.Add(container.Resolve<PersistenceWorker>());
+            _workers.Add(container.Resolve<SessionValidationWorker>());
+        }
+
+        public void StartWorkers()
+        {
+            _workers.ForEach(_ => _.Run());
         }
     }
 }

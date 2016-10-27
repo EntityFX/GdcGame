@@ -86,7 +86,7 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
 
     public class PerformanceApi
     {
-        public const int ParallelismFactor = 256;
+        public const int ParallelismFactor = 128;
 
         private ClientConnectionInfo[] ClientConnections { get; set; }
 
@@ -120,7 +120,6 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
                 {
                     registerTasks.Add(task(i1));
                 }
-                Task.WaitAll(registerTasks.ToArray());
                 tasksResultList.AddRange(Task.WhenAll(registerTasks).Result);
                 lock (stdLock)
                 {
@@ -160,7 +159,7 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
         {
             if (useParallel)
             {
-                return DoParallelTask(0, countAccounts, ParallelismFactor, async i1 => await RegisterAccount(string.Format("{0}{1}", accounLoginPrefix, i1)), counter =>
+                return DoParallelTask(0, countAccounts, ParallelismFactor,  i1 => RegisterAccount(string.Format("{0}{1}", accounLoginPrefix, i1)), counter =>
                 {
                     if (counter % ParallelismFactor == 0)
                     {
@@ -251,7 +250,7 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
         public Task<Tuple<PerformanceCounter, ClientConnectionInfo>> Login(string login, string password)
         {
             var serverUri = GetApiServerUri(_serviceUriList, login);
-            var p = new PasswordAuthProvider(serverUri);
+            var p = new PasswordAuthProvider(serverUri, _logger);
             return DoPerformanceMeasureAction(async () =>
             {
                 var token = await p.Login(new PasswordAuthRequest<PasswordAuthData>()
@@ -272,7 +271,7 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
         {
             var serverUri = GetApiServerUri(_serviceUriList, login);
             var authApi = new AuthApiClient(new PasswordOAuthContext() { BaseUri = serverUri });
-            return DoPerformanceMeasureAction(async () => await authApi.Register(new EntityFX.Gdcame.Application.WebApi.Models.RegisterAccountModel()
+            return DoPerformanceMeasureAction(() => authApi.Register(new EntityFX.Gdcame.Application.WebApi.Models.RegisterAccountModel()
             {
                 Login = login,
                 Password = DefaultPassword,
@@ -301,6 +300,19 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
         {
             var gameClient = new GameApiClient(client.Context);
             return DoPerformanceMeasureAction(async () => await gameClient.PerformManualStepAsync(), client.Context.BaseUri.ToString());
+        }
+
+        public Task<Tuple<PerformanceCounter, string>> EchoAuth(ClientConnectionInfo client, string text)
+        {
+            var gameClient = new ServerInfoClient(client.Context);
+            return DoPerformanceMeasureAction(async () => await Task.FromResult(gameClient.Echo(text)), _serviceUriList[0].ToString());
+        }
+
+        public Task<Tuple<PerformanceCounter, string>> Echo(string text)
+        {
+            var authContext = new PasswordOAuthContext() { BaseUri = _serviceUriList[0] };
+            var gameClient = new ServerInfoClient(authContext);
+            return DoPerformanceMeasureAction(async () => await Task.FromResult(gameClient.Echo(text)), _serviceUriList[0].ToString());
         }
 
         private static Uri GetApiServerUri(Uri[] serversUriList, string login)

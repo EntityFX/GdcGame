@@ -9,6 +9,8 @@ namespace EntityFX.Gdcame.Application.Contract.Controller
 
         Task<UserSessionsModel[]> GetActiveSessions();
 
+        ServerStatisticsInfoModel GetStatistics();
+
         void CloseSessionByGuid(Guid guid);
 
         void CloseAllUserSessions(string username);

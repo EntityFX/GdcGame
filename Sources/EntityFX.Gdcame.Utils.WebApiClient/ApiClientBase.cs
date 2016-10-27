@@ -5,6 +5,8 @@ using EntityFX.Gdcame.Utils.WebApiClient.Auth;
 using RestSharp.Portable;
 using System;
 
+
+
 namespace EntityFX.Gdcame.Utils.WebApiClient
 {
     public abstract class ApiClientBase
@@ -33,7 +35,8 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
             {
                 foreach (var parameter in parameters)
                 {
-                    request.Parameters.Add(parameter);
+                    request.AddParameter(parameter);
+                    //request.Parameters.Add(parameter);
                 }
             }
 

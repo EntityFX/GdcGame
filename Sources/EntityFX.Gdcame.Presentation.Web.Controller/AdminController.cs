@@ -5,6 +5,7 @@ using System.Web.Http;
 using EntityFX.Gdcame.Manager.Contract.AdminManager;
 using EntityFX.Gdcame.Application.Contract.Controller;
 using EntityFX.Gdcame.Application.Contract.Model;
+using EntityFX.Gdcame.Infrastructure.Common;
 
 namespace EntityFX.Gdcame.Application.WebApi.Controller
 {
@@ -13,10 +14,13 @@ namespace EntityFX.Gdcame.Application.WebApi.Controller
     public class AdminController : ApiController, IAdminController
     {
         private readonly IAdminManager _adminManager;
+        private readonly IMapperFactory _mapperFactory;
 
-        public AdminController(IAdminManager adminManager)
+        public AdminController(IAdminManager adminManager,
+            IMapperFactory mapperFactory)
         {
             _adminManager = adminManager;
+            _mapperFactory = mapperFactory;
         }
 
         [HttpGet]
@@ -35,6 +39,13 @@ namespace EntityFX.Gdcame.Application.WebApi.Controller
                                     LastActivity = s.LastActivity
                                 }).ToArray()
             }).ToArray());
+        }
+
+        [HttpGet]
+        [Route("statistics")]
+        public ServerStatisticsInfoModel GetStatistics()
+        {
+            return _mapperFactory.Build<StatisticsInfo, ServerStatisticsInfoModel>().Map(_adminManager.GetStatisticsInfo());
         }
 
         [HttpDelete]

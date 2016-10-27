@@ -55,11 +55,21 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
                 users.InsertMany(gameDataToCreate);
             }
 
+            var models = gameDataForUpdate.Select(update => new ReplaceOneModel<StoredGameDataWithUserId>(Builders<StoredGameDataWithUserId>.Filter.Eq(s => s.UserId, update.UserId), update) {IsUpsert = true}).ToList();
+            if (models.Count > 0)
+            {
+                users.BulkWrite(models);
+            }
 
-            foreach (var update in gameDataForUpdate)
+            /*var filter = Builders<StoredGameDataWithUserId>.Filter.In(s => s.UserId,
+                gameDataForUpdate.Select(_ => _.UserId));
+            var update = Builders<StoredGameDataWithUserId>.Update.PushEach()
+            users.UpdateMany()*/
+            /*foreach (var update in gameDataForUpdate)
             {
                 users.ReplaceOne(Builders<StoredGameDataWithUserId>.Filter.Eq(s => s.UserId, update.UserId), update);
-            }
+                users.B
+            }*/
         }
     }
 }
