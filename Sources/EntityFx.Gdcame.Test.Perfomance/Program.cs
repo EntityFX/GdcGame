@@ -1,10 +1,6 @@
 ﻿using EntityFX.Gdcame.Common.Application.Model;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Application.Contract.Model;
-using EntityFX.Gdcame.Application.WebApi.Models;
-using EntityFX.Gdcame.Utils.WebApiClient;
-using EntityFX.Gdcame.Utils.WebApiClient.Auth;
-using EntityFX.Gdcame.Utils.WebApiClient.Exceptions;
 using PortableLog.NLog;
 using System;
 using System.Collections.Concurrent;
@@ -27,6 +23,8 @@ namespace EntityFx.Gdcame.Test.Perfomance
 
         static void Main(string[] args)
         {
+            System.Net.ServicePointManager.DefaultConnectionLimit = 15000;
+
             Uri[] serviceAddressList;
             var countRequests = 10000;
             var port = 9001;

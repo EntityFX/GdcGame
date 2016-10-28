@@ -86,7 +86,7 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
 
     public class PerformanceApi
     {
-        public const int ParallelismFactor = 128;
+        public const int ParallelismFactor = 256;
 
         private ClientConnectionInfo[] ClientConnections { get; set; }
 

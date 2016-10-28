@@ -42,6 +42,16 @@ namespace EntityFX.Gdcame.Manager.Workers
             }
             gameSessions.GameStarted += GameSessions_GameStarted;
             gameSessions.GameRemoved += GameSessions_GameRemoved;
+            gameSessions.AllGamesRemoved += GameSessions_AllGamesRemoved;
+        }
+
+        private void GameSessions_AllGamesRemoved(object sender, EventArgs e)
+        {
+            for (int i = 0; i < PersistTimeSlotsUsers.Length; i++)
+            {
+                PersistTimeSlotsUsers[i] = new ConcurrentBag<Tuple<string, string>>();
+            }
+            GC.Collect();
         }
 
         private void GameSessions_GameRemoved(object sender, Tuple<string, string> e)

@@ -62,6 +62,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 
         private static void Main(string[] args)
         {
+            Console.SetWindowSize(100,50);
             var listArgs = args.ToList();
             if (args.Length > 0)
             {
@@ -214,6 +215,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                     else if (keyInfo.Key == ConsoleKey.F3)
                     {
                         ErrorCode = ApiHelper.UserLogout(gr.ServerContext);
+                        _userName = null;
                         break;
                     }
 

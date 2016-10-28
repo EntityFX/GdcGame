@@ -18,5 +18,7 @@ namespace EntityFX.Gdcame.Manager.Contract.AdminManager
         public PerformanceInfo PerformanceInfo { get; set; }
         [DataMember]
         public ResourcesUsageInfo ResourcesUsageInfo { get; set; }
+        [DataMember]
+        public SystemInfo SystemInfo { get; set; }
     }
 }

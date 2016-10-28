@@ -111,8 +111,13 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter
             container.RegisterType<IGameDataPersisterFactory, GameDataPersisterFactory>();
 
             container.RegisterType<IHashHelper, HashHelper>();
+            container.RegisterInstance<IPerformanceHelper>(new PerformanceHelper());
 
             container.RegisterInstance(new PerformanceInfo());
+            container.RegisterInstance(new SystemInfo()
+            {
+                CpusCount = Environment.ProcessorCount, Os = Environment.OSVersion.ToString(), Runtime = RuntimeHelper.GetRuntimeName(), MemoryTotal = RuntimeHelper.GetTotalMemoryInMb()
+            });
 
             container.RegisterInstance(
                 new GameSessions(container.Resolve<ILogger>(), 

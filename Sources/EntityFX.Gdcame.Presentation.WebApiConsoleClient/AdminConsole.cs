@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
+
 using System.Threading.Tasks;
+using System.Timers;
 using System.Web.UI.WebControls;
+using EntityFx.GdCame.Test.Shared;
 using EntityFX.Gdcame.Application.Contract.Controller;
 using EntityFX.Gdcame.Application.Contract.Model;
 using EntityFX.Gdcame.Utils.WebApiClient.Auth;
@@ -23,7 +25,6 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
     {
         private readonly string _password;
         private readonly PasswordOAuthContext _serverContext;
-        private readonly Lazy<PasswordOAuthContext[]> _serversAuthContextsList;
         private readonly string[] _serversList;
         private readonly int _servicePort;
         private readonly string _user;
@@ -32,8 +33,13 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
         private IAdminController _adminManagerClient;
         //Dictionary<string, Delegate> _menu;
         private bool _exitFlag;
+        private bool _isMainMenu;
 
         private Dictionary<ConsoleKey, MenuItem> _menu;
+
+        private Timer _statisticsUpdateTimer;
+
+        private PasswordOAuthContext[] _serversAuthContextList;
 
         public AdminConsole(string user, string password, PasswordOAuthContext serverContext,
             IAdminController adminManagerClient, string[] serversList, int servicePort)
@@ -44,37 +50,14 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             _serversList = serversList;
             _servicePort = servicePort;
 
-            _serversAuthContextsList = new Lazy<PasswordOAuthContext[]>(() =>
-            {
-                return Task.WhenAll(
 
-                    _serversList.Select(
-                            server =>
-                                new PasswordAuthProvider(
-                                    new Uri(string.Format("http://{0}:{1}/", server, _servicePort))))
-                        .Select(async passwordProvider =>
-                            {
-                                try
-                                {
-                                    return await passwordProvider.Login(new PasswordAuthRequest<PasswordAuthData>
-                                    {
-                                        RequestData = new PasswordAuthData { Password = _password, Usename = _user }
-                                    });
-                                }
-                                catch (Exception)
-                                {
-                                    return null;
-                                    ;
-                                }
-
-                            }
-                        )).Result;
-
-            });
+            _statisticsUpdateTimer = new Timer(5000);
+            _statisticsUpdateTimer.Elapsed += GetStatisticsCallback;
 
             SetAdminClient(adminManagerClient);
             InitMenu();
         }
+
 
         private Guid SessionGuid { get; }
 
@@ -116,14 +99,33 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                 {ConsoleKey.F7, new MenuItem {MenuText = "Обнулить пользователя", MenuAction = WipeUser}},
                 {ConsoleKey.F8, new MenuItem {MenuText = "Статистика", MenuAction = GetStatistics}},
                 {ConsoleKey.F9, new MenuItem {MenuText = "Echo", MenuAction = Echo}},
+                {ConsoleKey.Backspace, new MenuItem {MenuText = "Закрыть все игры", MenuAction = StopAllGames}},
                 {ConsoleKey.Escape, new MenuItem {MenuText = "Выход", MenuAction = Exit}}
             };
+        }
+
+        private void StopAllGames()
+        {
+            Task.WhenAll(DoAuthServers().Where(_ => _ != null).Select(_ => Task.Factory.StartNew(
+                () =>
+                {
+                    try
+                    {
+
+                        ApiHelper.GetAdminClient(_).StopAllGames();
+
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+                }))).Wait();
         }
 
         private void Echo()
         {
             var echoResults = Task.WhenAll(
-                _serversAuthContextsList.Value.Where(_ => _ != null).Select(_ => Task.Factory.StartNew(
+                DoAuthServers().Where(_ => _ != null).Select(_ => Task.Factory.StartNew(
                 () =>
                 {
                     try
@@ -146,57 +148,113 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 
         private void GetStatistics()
         {
-            while (!_exitFlag)
+            _serversAuthContextList = DoAuthServers();
+            _statisticsUpdateTimer.Start();
+        }
+
+        private PasswordOAuthContext[] DoAuthServers()
+        {
+            return Task.WhenAll(
+
+                    _serversList.Select(
+                            server =>
+                                new PasswordAuthProvider(
+                                    new Uri(string.Format("http://{0}:{1}/", server, _servicePort))))
+                        .Select(async passwordProvider =>
+                        {
+                            try
+                            {
+                                return await passwordProvider.Login(new PasswordAuthRequest<PasswordAuthData>
+                                {
+                                    RequestData = new PasswordAuthData { Password = _password, Usename = _user }
+                                });
+                            }
+                            catch (Exception)
+                            {
+                                return null;
+                                ;
+                            }
+
+                        }
+                        )).Result;
+        }
+
+        public void GetStatisticsCallback(object sender, ElapsedEventArgs e)
+        {
+            var statistics = Task.WhenAll(
+              _serversAuthContextList.Where(_ => _ != null).Select(_ => Task.Factory.StartNew(
+                  () =>
+                  {
+                      try
+                      {
+                          var result = new Tuple<Uri, ServerStatisticsInfoModel>(_.BaseUri,
+                              ApiHelper.GetAdminClient(_).GetStatistics());
+                          return result;
+                      }
+                      catch (Exception)
+                      {
+                          return new Tuple<Uri, ServerStatisticsInfoModel>(_.BaseUri, null);
+                      }
+                  }))
+              ).Result;
+
+            Console.Clear();
+            foreach (var serverStatisticsInfoModel in statistics)
             {
-                if (Console.KeyAvailable && Console.ReadKey().Key == ConsoleKey.Escape)
-                {
-                    _exitFlag = true;
-                    break;
-                }
-                var statistics = Task.WhenAll(
-               _serversAuthContextsList.Value.Where(_ => _ != null).Select(_ => Task.Factory.StartNew(
-                   () =>
-                   {
-                       try
-                       {
-                           var result = new Tuple<Uri, ServerStatisticsInfoModel>(_.BaseUri,
-                               ApiHelper.GetAdminClient(_).GetStatistics());
-                           return result;
-                       }
-                       catch (Exception)
-                       {
-                           return new Tuple<Uri, ServerStatisticsInfoModel>(_.BaseUri, null);
-                       }
-                   }))
-               ).Result;
-
-                Console.Clear();
-                Console.WriteLine("+{0}+", new string('-', 73));
-                Console.WriteLine("|{0,24}|{1,7}|{2,8}|{3,11}|{4,9}|{5,9}|", "Сервер", "Игр", "Сессий", "Uptime", "Расч/цикл", "Сохр/цикл");
-                Console.WriteLine("+{0}+", new string('-', 73));
-                foreach (var serverStatisticsInfoModel in statistics)
-                {
-                    Console.Write("|{0,-24}|", serverStatisticsInfoModel.Item1);
-                    if (serverStatisticsInfoModel.Item2 != null)
-                    {
-                        Console.WriteLine("{0,7}|{1,8}|{2,11:hh\\:mm\\:ss}|{3,9}|{4,9}|"
-                            , serverStatisticsInfoModel.Item2.ActiveGamesCount
-                            , serverStatisticsInfoModel.Item2.ActiveSessionsCount
-                            , serverStatisticsInfoModel.Item2.ServerUptime
-                            , serverStatisticsInfoModel.Item2.PerformanceInfo.CalculationsPerCycle.TotalMilliseconds
-                            , serverStatisticsInfoModel.Item2.PerformanceInfo.PersistencePerCycle.TotalMilliseconds
-                        );
-                    }
-                    else
-                    {
-                        Console.WriteLine("{0,45}|", "Недоступен");
-                    }
-                    Console.WriteLine("+{0}+", new string('-', 73));
-                }
-                Thread.Sleep(5000);
+                Console.WriteLine(serverStatisticsInfoModel.Item1);
+                Console.WriteLine("\tИгр: {0,6}; Сессий: {1,6} \tUptime: {2:dd\\.hh\\:mm\\:ss}", serverStatisticsInfoModel.Item2.ActiveGamesCount
+                        , serverStatisticsInfoModel.Item2.ActiveSessionsCount
+                        , serverStatisticsInfoModel.Item2.ServerUptime);
+                Console.WriteLine(
+                                    "\tВычисл/цикл: {0,6} ms;\tСохран/цикл: {1,6} ms"
+                                    , serverStatisticsInfoModel.Item2.PerformanceInfo != null ? serverStatisticsInfoModel.Item2.PerformanceInfo.CalculationsPerCycle.TotalMilliseconds : 0
+                        , serverStatisticsInfoModel.Item2.PerformanceInfo != null ? serverStatisticsInfoModel.Item2.PerformanceInfo.PersistencePerCycle.TotalMilliseconds : 0);
+                Console.WriteLine("\tOS: {0}", serverStatisticsInfoModel.Item2.SystemInfo.Os);
+                Console.WriteLine("\tRuntime: {0}", serverStatisticsInfoModel.Item2.SystemInfo.Runtime);
+                Console.WriteLine("\tCPUs: {0}; RAM: {1} Mb", serverStatisticsInfoModel.Item2.SystemInfo.CpusCount, serverStatisticsInfoModel.Item2.SystemInfo.MemoryTotal);
+                Console.Write("\tCPU: {0:N1} % ", serverStatisticsInfoModel.Item2.ResourcesUsageInfo.CpuUsed);
+                PrintMarker(serverStatisticsInfoModel.Item2.ResourcesUsageInfo.CpuUsed, 50);
+                var memoryPercent = (serverStatisticsInfoModel.Item2.SystemInfo.MemoryTotal -
+                                     serverStatisticsInfoModel.Item2.ResourcesUsageInfo.MemoryAvailable)
+                                    /serverStatisticsInfoModel.Item2.SystemInfo.MemoryTotal*100;
+                Console.WriteLine("\tRAM Доступно: {0} Mb, Процесс: {1} Mb "
+                    , serverStatisticsInfoModel.Item2.ResourcesUsageInfo.MemoryAvailable
+                    , serverStatisticsInfoModel.Item2.ResourcesUsageInfo.MemoryUsedByProcess);
+                Console.Write("\tRAM: {0:N1} % ", memoryPercent);
+                PrintMarker(memoryPercent, 50);
+                Console.WriteLine();
             }
+        }
 
-
+        private void PrintMarker(float cpuUsage, int size)
+        {
+            var progressLines = (int)Math.Round(cpuUsage / 100 * size);
+            Console.Write("\t[");
+            var greenLines = 0;
+            var yellowLines = 0;
+            var redLines = 0;
+            var empty = 0;
+            if (cpuUsage < 80)
+            {
+                greenLines = progressLines;
+            }
+            else if (cpuUsage >= 80 && cpuUsage < 95)
+            {
+                greenLines = 80 * size / 100;
+                yellowLines = progressLines - greenLines;
+            }
+            else if (cpuUsage > 95)
+            {
+                greenLines = 80 * size / 100;
+                yellowLines = 15 * size / 100;
+                redLines = progressLines - greenLines - yellowLines;
+            }
+            empty = size - progressLines;
+            PrettyConsole.WriteColor(ConsoleColor.Green, new string('|', greenLines));
+            PrettyConsole.WriteColor(ConsoleColor.Yellow, new string('|', yellowLines));
+            PrettyConsole.WriteColor(ConsoleColor.Red, new string('|', redLines));
+            PrettyConsole.WriteColor(ConsoleColor.DarkGray, new string(' ', empty));
+            Console.WriteLine(']');
         }
 
         public void StartMenu()
@@ -206,8 +264,10 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             _exitFlag = false;
             while (!_exitFlag)
             {
+                _isMainMenu = true;
                 ShowMenu();
                 var key = Console.ReadKey();
+                _isMainMenu = false;
                 Console.Clear();
 
                 try
@@ -240,6 +300,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
         {
             Console.WriteLine("Нажмите любую клавишу...");
             Console.ReadKey();
+            _statisticsUpdateTimer.Stop();
         }
 
 

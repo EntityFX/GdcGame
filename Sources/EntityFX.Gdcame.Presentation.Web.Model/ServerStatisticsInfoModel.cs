@@ -15,5 +15,7 @@ namespace EntityFX.Gdcame.Application.Contract.Model
         public PerformanceInfoModel PerformanceInfo { get; set; }
 
         public ResourcesUsageInfoModel ResourcesUsageInfo { get; set; }
+
+        public SystemInfoModel SystemInfo { get; set; }
     }
 }

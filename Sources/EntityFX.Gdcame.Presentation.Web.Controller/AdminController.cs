@@ -83,11 +83,25 @@ namespace EntityFX.Gdcame.Application.WebApi.Controller
             await Task.Run(() => _adminManager.WipeUser(username));
         }
 
-        [HttpPost]
+        [HttpDelete]
         [Route("reload-game")]
         public async void ReloadGame([FromBody] string username)
         {
             await Task.Run(() => _adminManager.ReloadGame(username));
+        }
+
+        [HttpDelete]
+        [Route("games/user")]
+        public void StopGame(string username)
+        {
+            _adminManager.StopGame(username);
+        }
+
+        [HttpDelete]
+        [Route("games/all")]
+        public void StopAllGames()
+        {
+            _adminManager.StopAllGames();
         }
     }
 }

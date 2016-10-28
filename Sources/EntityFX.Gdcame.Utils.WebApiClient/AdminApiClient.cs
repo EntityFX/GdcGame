@@ -53,5 +53,15 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
         {
             await ExecuteRequestAsync<string, object>("/api/admin/reload-game", Method.POST, username);
         }
+
+        public void StopGame(string username)
+        {
+            var res = ExecuteRequestAsync<string, object>("/api/admin/games/user", Method.DELETE, username).Result;
+        }
+
+        public void StopAllGames()
+        {
+            var res = ExecuteRequestAsync<string, object>("/api/admin/games/all", Method.DELETE).Result;
+        }
     }
 }

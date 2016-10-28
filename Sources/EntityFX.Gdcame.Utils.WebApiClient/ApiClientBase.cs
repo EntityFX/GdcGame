@@ -26,7 +26,7 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
             _authContext = authContext;
             Timeout = timeout != null ? (TimeSpan)timeout : TimeSpan.FromSeconds(60);
         }
-        
+
         protected async Task<IRestResponse<TModel>> ExecuteRequestAsync<TModel>(string requestUriPath, Method method = Method.GET, IEnumerable<Parameter> parameters = null)
         {
             var clientFactory = new GameClientFactory(AuthContext.BaseUri);
@@ -41,61 +41,66 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
             }
 
             request.Method = method;
-            var client = clientFactory.CreateClient();
-            client.Timeout = Timeout;
-            client.AddHandler("application/json", CustomJsonDeserializer.Default);
-            client.AddHandler("text/javascript", CustomJsonDeserializer.Default);
-            client.Authenticator = AuthContext.Context;
-            client.IgnoreResponseStatusCode = true;
-            try
+            using (var client = clientFactory.CreateClient())
             {
-                var res = await client.Execute<TModel>(request);
-                if (!res.IsSuccess)
+                client.Timeout = Timeout;
+                client.AddHandler("application/json", CustomJsonDeserializer.Default);
+                client.AddHandler("text/javascript", CustomJsonDeserializer.Default);
+                client.Authenticator = AuthContext.Context;
+                client.IgnoreResponseStatusCode = true;
+                try
                 {
-                    ExceptionHandlerHelper.HandleNotSuccessRequest(res);
+                    var res = await client.Execute<TModel>(request);
+                    if (!res.IsSuccess)
+                    {
+                        ExceptionHandlerHelper.HandleNotSuccessRequest(res);
+                    }
+                    return res;
                 }
-                return res;
+                catch (Exception exception)
+                {
+                    ExceptionHandlerHelper.HandleHttpRequestException(exception);
+                }
+                return null;
             }
-            catch (Exception exception)
-            {
-                ExceptionHandlerHelper.HandleHttpRequestException(exception);
-            }
-            return null;
         }
 
         protected async Task<IRestResponse<TResponse>> ExecuteRequestAsync<TRequest, TResponse>(string requestUriPath, Method method = Method.GET, TRequest data = null)
-            where TRequest : class 
+            where TRequest : class
         {
             var clientFactory = new GameClientFactory(AuthContext.BaseUri);
             var request = clientFactory.CreateRequest(requestUriPath);
+
             if (data != null)
             {
                 request.AddBody(data);
             }
 
             request.Method = method;
-            var client = clientFactory.CreateClient();
-            client.Timeout = Timeout;
-            client.AddHandler("application/json", CustomJsonDeserializer.Default);
-            client.AddHandler("text/javascript", CustomJsonDeserializer.Default);
-            client.Authenticator = AuthContext.Context;
-            client.IgnoreResponseStatusCode = true;
+            using (var client = clientFactory.CreateClient())
+            {
+                client.Timeout = Timeout;
+                client.AddHandler("application/json", CustomJsonDeserializer.Default);
+                client.AddHandler("text/javascript", CustomJsonDeserializer.Default);
+                client.Authenticator = AuthContext.Context;
+                client.IgnoreResponseStatusCode = true;
 
-            try
-            {
-                var res = await client.Execute<TResponse>(request);
-                if (!res.IsSuccess)
+                try
                 {
-                    ExceptionHandlerHelper.HandleNotSuccessRequest(res);
+                    var res = await client.Execute<TResponse>(request);
+                    if (!res.IsSuccess)
+                    {
+                        ExceptionHandlerHelper.HandleNotSuccessRequest(res);
+                    }
+                    return res;
                 }
-                return res;
+                catch (HttpRequestException exception)
+                {
+                    ExceptionHandlerHelper.HandleHttpRequestException(exception);
+                }
+                return null;
             }
-            catch (HttpRequestException exception)
-            {
-                ExceptionHandlerHelper.HandleHttpRequestException(exception);
-            }
-            return null;
         }
- 
+
     }
 }

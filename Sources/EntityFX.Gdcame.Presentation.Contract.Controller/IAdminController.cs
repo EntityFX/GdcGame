@@ -22,5 +22,9 @@ namespace EntityFX.Gdcame.Application.Contract.Controller
         void WipeUser(string username);
 
         void ReloadGame(string username);
+
+        void StopGame(string username);
+
+        void StopAllGames();
     }
 }

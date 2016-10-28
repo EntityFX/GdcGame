@@ -6,8 +6,10 @@ namespace EntityFX.Gdcame.Manager.Contract.AdminManager
     public class ResourcesUsageInfo
     {
         [DataMember]
-        public long MemoryUsed { get; set; }
+        public float MemoryAvailable { get; set; }
         [DataMember]
-        public short CpuUsed { get; set; }
+        public float MemoryUsedByProcess { get; set; }
+        [DataMember]
+        public float CpuUsed { get; set; }
     }
 }

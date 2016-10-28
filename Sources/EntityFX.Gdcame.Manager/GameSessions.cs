@@ -26,8 +26,6 @@ namespace EntityFX.Gdcame.Manager
             new ConcurrentDictionary<string, IGame>();
         private readonly ConcurrentDictionary<Guid, Session> _userSessionsStorage = new ConcurrentDictionary<Guid, Session>();
 
-        private readonly DateTime _serverStartTime = DateTime.Now;
-
         private readonly PerformanceInfo _performanceInfo;
 
         public GameSessions(ILogger logger, IGameFactory gameFactory, PerformanceInfo performanceInfo)
@@ -170,30 +168,31 @@ namespace EntityFX.Gdcame.Manager
             }
         }
 
+        public void RemoveAllGames()
+        {
+            RemoveAllSessions();
+            _userGamesStorage.Clear();
+            if (AllGamesRemoved != null)
+            {
+                AllGamesRemoved(this, null);
+            }
+        }
+
         public void RemoveAllSessions()
         {
             _userSessionsStorage.Clear();
         }
 
-        public StatisticsInfo GetStatisticsInfo()
+        public PerformanceInfo PerformanceInfo
         {
-            return new StatisticsInfo()
-            {
-                ActiveSessionsCount = _userSessionsStorage.Count,
-                ActiveGamesCount = _userGamesStorage.Count,
-                ServerStartDateTime = _serverStartTime,
-                ServerUptime = DateTime.Now - _serverStartTime,
-                PerformanceInfo = _performanceInfo,
-                ResourcesUsageInfo = new ResourcesUsageInfo()
-                {
-                    
-                }
-            };
+            get { return _performanceInfo; }
         }
 
         public event EventHandler<Tuple<string, string>> GameStarted;
 
         public event EventHandler<Tuple<string, string>> GameRemoved;
+
+        public event EventHandler AllGamesRemoved;
 
         private IGame BuildGame(string userId, string userName)
         {

@@ -22,7 +22,15 @@ namespace EntityFX.Gdcame.Application.Contract.Model.Mappers
                 ResourcesUsageInfo = new ResourcesUsageInfoModel()
                 {
                     CpuUsed = source.ResourcesUsageInfo.CpuUsed,
-                    MemoryUsed = source.ResourcesUsageInfo.MemoryUsed
+                    MemoryAvailable = source.ResourcesUsageInfo.MemoryAvailable,
+                    MemoryUsedByProcess = source.ResourcesUsageInfo.MemoryUsedByProcess
+                },
+                SystemInfo = new SystemInfoModel()
+                {
+                    CpusCount = source.SystemInfo.CpusCount,
+                    Os = source.SystemInfo.Os,
+                    Runtime = source.SystemInfo.Runtime,
+                    MemoryTotal = source.SystemInfo.MemoryTotal,
                 }
             };
         }

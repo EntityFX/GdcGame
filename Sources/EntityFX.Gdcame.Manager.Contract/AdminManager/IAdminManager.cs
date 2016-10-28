@@ -49,7 +49,11 @@ namespace EntityFX.Gdcame.Manager.Contract.AdminManager
         [CustomPrincipalPermission(AllowedRoles = new[] {UserRole.Admin})]
         void ReloadGame(string username);
 
-
+        [OperationContract]
         StatisticsInfo GetStatisticsInfo();
+        [OperationContract]
+        void StopGame(string login);
+        [OperationContract]
+        void StopAllGames();
     }
 }

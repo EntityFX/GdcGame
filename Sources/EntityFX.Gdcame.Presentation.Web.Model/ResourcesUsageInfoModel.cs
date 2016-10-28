@@ -4,7 +4,8 @@ namespace EntityFX.Gdcame.Application.Contract.Model
 {
     public class ResourcesUsageInfoModel
     {
-        public long MemoryUsed { get; set; }
-        public short CpuUsed { get; set; }
+        public float MemoryAvailable { get; set; }
+        public float MemoryUsedByProcess { get; set; }
+        public float CpuUsed { get; set; }
     }
 }

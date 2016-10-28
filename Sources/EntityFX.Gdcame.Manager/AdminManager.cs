@@ -2,17 +2,23 @@
 using System.Linq;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager.Contract.AdminManager;
+using EntityFX.Gdcame.Manager.Contract.UserManager;
 
 namespace EntityFX.Gdcame.Manager
 {
     public class AdminManager : IAdminManager
     {
         private readonly GameSessions _gameSessions;
+        private readonly IPerformanceHelper _performanceHelper;
+        private readonly SystemInfo _systemInfo;
         private readonly IOperationContextHelper _operationContextHelper;
+        private static readonly DateTime ServerStartTime = DateTime.Now;
 
-        public AdminManager(IOperationContextHelper operationContextHelper, GameSessions gameSessions)
+        public AdminManager(IOperationContextHelper operationContextHelper, GameSessions gameSessions, IPerformanceHelper performanceHelper, SystemInfo systemInfo)
         {
             _gameSessions = gameSessions;
+            _performanceHelper = performanceHelper;
+            _systemInfo = systemInfo;
             _operationContextHelper = operationContextHelper;
         }
 
@@ -60,7 +66,31 @@ namespace EntityFX.Gdcame.Manager
 
         public StatisticsInfo GetStatisticsInfo()
         {
-            return  _gameSessions.GetStatisticsInfo();
+            return new StatisticsInfo()
+            {
+                ActiveSessionsCount = _gameSessions.Sessions.Count,
+                ActiveGamesCount = _gameSessions.Games.Count,
+                ServerStartDateTime = ServerStartTime,
+                ServerUptime = DateTime.Now - ServerStartTime,
+                PerformanceInfo = _gameSessions.PerformanceInfo,
+                ResourcesUsageInfo = new ResourcesUsageInfo()
+                {
+                    CpuUsed = _performanceHelper.CpuUsage,
+                    MemoryAvailable = _performanceHelper.MemoryUsage,
+                    MemoryUsedByProcess = _performanceHelper.MemoryUsageByProcess
+                },
+                SystemInfo = _systemInfo
+            };
+        }
+
+        public void StopGame(string login)
+        {
+            _gameSessions.RemoveGame(new UserData() { Login = login });
+        }
+
+        public void StopAllGames()
+        {
+            _gameSessions.RemoveAllGames();
         }
     }
 }
