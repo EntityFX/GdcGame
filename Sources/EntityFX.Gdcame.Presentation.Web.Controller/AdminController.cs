@@ -6,6 +6,7 @@ using EntityFX.Gdcame.Manager.Contract.AdminManager;
 using EntityFX.Gdcame.Application.Contract.Controller;
 using EntityFX.Gdcame.Application.Contract.Model;
 using EntityFX.Gdcame.Infrastructure.Common;
+using EntityFX.Gdcame.Manager.Contract.Workermanager;
 
 namespace EntityFX.Gdcame.Application.WebApi.Controller
 {
@@ -14,12 +15,14 @@ namespace EntityFX.Gdcame.Application.WebApi.Controller
     public class AdminController : ApiController, IAdminController
     {
         private readonly IAdminManager _adminManager;
+        private readonly IWorkerManager _workerManager;
         private readonly IMapperFactory _mapperFactory;
 
-        public AdminController(IAdminManager adminManager,
+        public AdminController(IAdminManager adminManager, IWorkerManager workerManager,
             IMapperFactory mapperFactory)
         {
             _adminManager = adminManager;
+            _workerManager = workerManager;
             _mapperFactory = mapperFactory;
         }
 
@@ -45,7 +48,10 @@ namespace EntityFX.Gdcame.Application.WebApi.Controller
         [Route("statistics")]
         public ServerStatisticsInfoModel GetStatistics()
         {
-            return _mapperFactory.Build<StatisticsInfo, ServerStatisticsInfoModel>().Map(_adminManager.GetStatisticsInfo());
+            var statistics = _mapperFactory.Build<StatisticsInfo, ServerStatisticsInfoModel>().Map(_adminManager.GetStatisticsInfo());
+            statistics.ActiveWorkers =
+                _workerManager.GetWorkersStatus().Where(_ => _.IsRunning).Select(_ => _.Name).ToArray();
+            return statistics;
         }
 
         [HttpDelete]

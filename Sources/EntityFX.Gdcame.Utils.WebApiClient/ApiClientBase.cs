@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
-using System.Net.Http;
 using System.Threading.Tasks;
 using EntityFX.Gdcame.Utils.WebApiClient.Auth;
-using RestSharp.Portable;
 using System;
-
+using System.Diagnostics.Eventing.Reader;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using RestSharp;
+using RestSharp.Authenticators;
 
 
 namespace EntityFX.Gdcame.Utils.WebApiClient
@@ -19,50 +22,68 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
             get { return _authContext; }
         }
 
-        public TimeSpan Timeout { get; private set; }
+        public int Timeout { get; private set; }
 
-        protected ApiClientBase(IAuthContext<IAuthenticator> authContext, TimeSpan? timeout)
+        protected ApiClientBase(IAuthContext<IAuthenticator> authContext, int? timeout)
         {
             _authContext = authContext;
-            Timeout = timeout != null ? (TimeSpan)timeout : TimeSpan.FromSeconds(60);
+            Timeout = timeout != null ? (int)timeout : 60000;
         }
 
         protected async Task<IRestResponse<TModel>> ExecuteRequestAsync<TModel>(string requestUriPath, Method method = Method.GET, IEnumerable<Parameter> parameters = null)
         {
             var clientFactory = new GameClientFactory(AuthContext.BaseUri);
             var request = clientFactory.CreateRequest(requestUriPath);
+
             if (parameters != null)
             {
-                foreach (var parameter in parameters)
+                if (parameters.Any(_ => string.IsNullOrEmpty(_.Name)))
                 {
-                    request.AddParameter(parameter);
-                    //request.Parameters.Add(parameter);
+                    request.AddJsonBody(parameters.FirstOrDefault(_ => string.IsNullOrEmpty(_.Name)).Value);
                 }
+                else
+                {
+                    request.RequestFormat = DataFormat.Json;
+                    foreach (var parameter in parameters)
+                    {
+                        request.AddParameter(parameter);
+                        //request.Parameters.Add(parameter);
+                    }
+                }
+
+
+
             }
 
+
             request.Method = method;
-            using (var client = clientFactory.CreateClient())
+            var client = clientFactory.CreateClient();
+
+            client.Timeout = Timeout;
+            client.AddHandler("application/json", CustomJsonDeserializer.Default);
+            client.AddHandler("text/javascript", CustomJsonDeserializer.Default);
+            client.Authenticator = AuthContext.Context;
+            //client.IgnoreResponseStatusCode = true;
+            try
             {
-                client.Timeout = Timeout;
-                client.AddHandler("application/json", CustomJsonDeserializer.Default);
-                client.AddHandler("text/javascript", CustomJsonDeserializer.Default);
-                client.Authenticator = AuthContext.Context;
-                client.IgnoreResponseStatusCode = true;
-                try
-                {
-                    var res = await client.Execute<TModel>(request);
-                    if (!res.IsSuccess)
+                var res = await client.ExecuteTaskAsync<TModel>(request);
+                if (
+                    new HttpStatusCode[]
                     {
-                        ExceptionHandlerHelper.HandleNotSuccessRequest(res);
-                    }
-                    return res;
-                }
-                catch (Exception exception)
+                        HttpStatusCode.BadRequest, HttpStatusCode.Forbidden, HttpStatusCode.Unauthorized, HttpStatusCode.BadGateway, HttpStatusCode.InternalServerError
+
+                    }.Contains(res.StatusCode))
                 {
-                    ExceptionHandlerHelper.HandleHttpRequestException(exception);
+                    ExceptionHandlerHelper.HandleNotSuccessRequest(res);
                 }
-                return null;
+                return res;
             }
+            catch (Exception exception)
+            {
+                ExceptionHandlerHelper.HandleHttpRequestException(exception);
+            }
+            return null;
+
         }
 
         protected async Task<IRestResponse<TResponse>> ExecuteRequestAsync<TRequest, TResponse>(string requestUriPath, Method method = Method.GET, TRequest data = null)
@@ -70,37 +91,41 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
         {
             var clientFactory = new GameClientFactory(AuthContext.BaseUri);
             var request = clientFactory.CreateRequest(requestUriPath);
-
+            request.RequestFormat = DataFormat.Json;
             if (data != null)
             {
                 request.AddBody(data);
             }
 
             request.Method = method;
-            using (var client = clientFactory.CreateClient())
+            var client = clientFactory.CreateClient();
+
+            client.Timeout = Timeout;
+            client.AddHandler("application/json", CustomJsonDeserializer.Default);
+            client.AddHandler("text/javascript", CustomJsonDeserializer.Default);
+            client.Authenticator = AuthContext.Context;
+
+
+            try
             {
-                client.Timeout = Timeout;
-                client.AddHandler("application/json", CustomJsonDeserializer.Default);
-                client.AddHandler("text/javascript", CustomJsonDeserializer.Default);
-                client.Authenticator = AuthContext.Context;
-                client.IgnoreResponseStatusCode = true;
-
-                try
-                {
-                    var res = await client.Execute<TResponse>(request);
-                    if (!res.IsSuccess)
+                var res = await client.ExecuteTaskAsync<TResponse>(request);
+                if (
+                    new HttpStatusCode[]
                     {
-                        ExceptionHandlerHelper.HandleNotSuccessRequest(res);
-                    }
-                    return res;
-                }
-                catch (HttpRequestException exception)
-                {
-                    ExceptionHandlerHelper.HandleHttpRequestException(exception);
-                }
-                return null;
-            }
-        }
+                        HttpStatusCode.BadRequest, HttpStatusCode.Forbidden, HttpStatusCode.Unauthorized, HttpStatusCode.BadGateway, HttpStatusCode.InternalServerError
 
+                    }.Contains(res.StatusCode))
+                {
+                    ExceptionHandlerHelper.HandleNotSuccessRequest(res);
+                }
+                return res;
+            }
+            catch (HttpRequestException exception)
+            {
+                ExceptionHandlerHelper.HandleHttpRequestException(exception);
+            }
+            return null;
+        }
     }
+
 }

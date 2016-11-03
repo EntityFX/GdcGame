@@ -9,7 +9,6 @@ using EntityFx.GdCame.Test.Shared;
 using EntityFX.Gdcame.Application.Contract.Controller;
 using EntityFX.Gdcame.Application.Contract.Model;
 using EntityFX.Gdcame.Utils.WebApiClient.Auth;
-using RestSharp.Portable.Authenticators.OAuth2.Infrastructure;
 
 namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 {
@@ -40,6 +39,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
         private Timer _statisticsUpdateTimer;
 
         private PasswordOAuthContext[] _serversAuthContextList;
+        private object _stdLock = new {};
 
         public AdminConsole(string user, string password, PasswordOAuthContext serverContext,
             IAdminController adminManagerClient, string[] serversList, int servicePort)
@@ -198,29 +198,58 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                   }))
               ).Result;
 
+            lock (_stdLock)
+            {
+                PrintStatistics(statistics);
+            }
+        }
+
+        private void PrintStatistics(Tuple<Uri, ServerStatisticsInfoModel>[] statistics)
+        {
             Console.Clear();
             foreach (var serverStatisticsInfoModel in statistics)
             {
                 Console.WriteLine(serverStatisticsInfoModel.Item1);
-                Console.WriteLine("\tИгр: {0,6}; Сессий: {1,6} \tUptime: {2:dd\\.hh\\:mm\\:ss}", serverStatisticsInfoModel.Item2.ActiveGamesCount
-                        , serverStatisticsInfoModel.Item2.ActiveSessionsCount
-                        , serverStatisticsInfoModel.Item2.ServerUptime);
-                Console.WriteLine(
-                                    "\tВычисл/цикл: {0,6} ms;\tСохран/цикл: {1,6} ms"
-                                    , serverStatisticsInfoModel.Item2.PerformanceInfo != null ? serverStatisticsInfoModel.Item2.PerformanceInfo.CalculationsPerCycle.TotalMilliseconds : 0
-                        , serverStatisticsInfoModel.Item2.PerformanceInfo != null ? serverStatisticsInfoModel.Item2.PerformanceInfo.PersistencePerCycle.TotalMilliseconds : 0);
-                Console.WriteLine("\tOS: {0}", serverStatisticsInfoModel.Item2.SystemInfo.Os);
-                Console.WriteLine("\tRuntime: {0}", serverStatisticsInfoModel.Item2.SystemInfo.Runtime);
-                Console.WriteLine("\tCPUs: {0}; RAM: {1} Mb", serverStatisticsInfoModel.Item2.SystemInfo.CpusCount, serverStatisticsInfoModel.Item2.SystemInfo.MemoryTotal);
-                Console.Write("\tCPU: {0:N1} % ", serverStatisticsInfoModel.Item2.ResourcesUsageInfo.CpuUsed);
+                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-15}", "Игр:");
+                PrettyConsole.WriteColor(ConsoleColor.Cyan, "{0,-9}", serverStatisticsInfoModel.Item2.ActiveGamesCount);
+                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-15}", "Сессий:");
+                PrettyConsole.WriteColor(ConsoleColor.Cyan, "{0,-9} ", serverStatisticsInfoModel.Item2.ActiveSessionsCount);
+                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-10}", "Uptime:");
+                PrettyConsole.WriteLineColor(ConsoleColor.Cyan, "{0:dd\\.hh\\:mm\\:ss}", serverStatisticsInfoModel.Item2.ServerUptime);
+
+                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-15}", "Пользовтелей:");
+                PrettyConsole.WriteColor(ConsoleColor.Cyan, "{0,-9}", serverStatisticsInfoModel.Item2.RegistredUsersCount);
+
+                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-15}", "Вычисл / цикл:");
+                PrettyConsole.WriteColor(ConsoleColor.Cyan, "{0,-9} ms", serverStatisticsInfoModel.Item2.PerformanceInfo != null ? serverStatisticsInfoModel.Item2.PerformanceInfo.CalculationsPerCycle.TotalMilliseconds : 0);
+                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-15}", "Сохран / цикл:");
+                PrettyConsole.WriteLineColor(ConsoleColor.Cyan, "{0,-9} ", serverStatisticsInfoModel.Item2.PerformanceInfo != null ? serverStatisticsInfoModel.Item2.PerformanceInfo.PersistencePerCycle.TotalMilliseconds : 0);
+
+                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-15}", "OS:");
+                PrettyConsole.WriteLineColor(ConsoleColor.Cyan, serverStatisticsInfoModel.Item2.SystemInfo.Os);
+
+                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-15}", "Runtime: ");
+                PrettyConsole.WriteLineColor(ConsoleColor.Cyan, serverStatisticsInfoModel.Item2.SystemInfo.Runtime);
+
+                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-15}", "CPUs:");
+                PrettyConsole.WriteColor(ConsoleColor.Cyan, "{0,-9}", serverStatisticsInfoModel.Item2.SystemInfo.CpusCount);
+                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-15}", "RAM:");
+                PrettyConsole.WriteLineColor(ConsoleColor.Cyan, "{0,-9} Mb", serverStatisticsInfoModel.Item2.SystemInfo.MemoryTotal);
+
+                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-15}", "CPU:");
+                PrettyConsole.WriteColor(ConsoleColor.Cyan, "{0,-5:N1} %", serverStatisticsInfoModel.Item2.ResourcesUsageInfo.CpuUsed);
                 PrintMarker(serverStatisticsInfoModel.Item2.ResourcesUsageInfo.CpuUsed, 50);
+
                 var memoryPercent = (serverStatisticsInfoModel.Item2.SystemInfo.MemoryTotal -
                                      serverStatisticsInfoModel.Item2.ResourcesUsageInfo.MemoryAvailable)
-                                    /serverStatisticsInfoModel.Item2.SystemInfo.MemoryTotal*100;
-                Console.WriteLine("\tRAM Доступно: {0} Mb, Процесс: {1} Mb "
-                    , serverStatisticsInfoModel.Item2.ResourcesUsageInfo.MemoryAvailable
-                    , serverStatisticsInfoModel.Item2.ResourcesUsageInfo.MemoryUsedByProcess);
-                Console.Write("\tRAM: {0:N1} % ", memoryPercent);
+                                    / serverStatisticsInfoModel.Item2.SystemInfo.MemoryTotal * 100;
+                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-15}", "RAM Доступно: ");
+                PrettyConsole.WriteColor(ConsoleColor.Cyan, "{0,-9} Mb", serverStatisticsInfoModel.Item2.ResourcesUsageInfo.MemoryAvailable);
+                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-15}", "Процесс: ");
+                PrettyConsole.WriteLineColor(ConsoleColor.Cyan, "{0,-9:N1} Mb", serverStatisticsInfoModel.Item2.ResourcesUsageInfo.MemoryUsedByProcess);
+
+                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-15}", "RAM:");
+                PrettyConsole.WriteColor(ConsoleColor.Cyan, "{0,-5:N1} % ", memoryPercent);
                 PrintMarker(memoryPercent, 50);
                 Console.WriteLine();
             }

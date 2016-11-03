@@ -3,13 +3,14 @@ using System.Threading.Tasks;
 using EntityFX.Gdcame.Application.Contract.Controller;
 using EntityFX.Gdcame.Application.Contract.Model;
 using EntityFX.Gdcame.Utils.WebApiClient.Auth;
-using RestSharp.Portable;
+using RestSharp;
+using RestSharp.Authenticators;
 
 namespace EntityFX.Gdcame.Utils.WebApiClient
 {
     public class AdminApiClient : ApiClientBase, IAdminController
     {
-        public AdminApiClient(IAuthContext<IAuthenticator> authContext, TimeSpan? timeout = null) : base(authContext, timeout)
+        public AdminApiClient(IAuthContext<IAuthenticator> authContext, int? timeout = null) : base(authContext, timeout)
         {
         }
 

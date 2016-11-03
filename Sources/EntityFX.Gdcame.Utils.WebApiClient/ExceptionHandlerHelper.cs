@@ -1,9 +1,11 @@
 using System.Net;
 using System.Net.Http;
 using EntityFX.Gdcame.Utils.WebApiClient.Exceptions;
-using RestSharp.Portable;
+
 using Newtonsoft.Json.Linq;
 using System;
+using EntityFX.Gdcame.Utils.WebApiClient.Auth;
+using RestSharp;
 
 namespace EntityFX.Gdcame.Utils.WebApiClient
 {

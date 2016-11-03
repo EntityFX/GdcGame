@@ -60,6 +60,8 @@
     <Compile Include="SessionManager\UserRole.cs" />
     <Compile Include="UserManager\ISimpleUserManager.cs" />
     <Compile Include="UserManager\UserData.cs" />
+    <Compile Include="Workermanager\IWorkerManager.cs" />
+    <Compile Include="Workermanager\WorkerStatus.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Practices.ServiceLocation">
@@ -80,6 +82,10 @@
     <ProjectReference Include="..\EntityFX.Gdcame.Common.Contract\EntityFX.Gdcame.Common.Contract.csproj">
       <Project>{89F89C37-F564-47EB-839D-C45ACD9D012A}</Project>
       <Name>EntityFX.Gdcame.Common.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Common\EntityFX.Gdcame.Infrastructure.Common.csproj">
+      <Project>{924CC67D-9E2B-46BA-BE1D-6C6C780CCFBC}</Project>
+      <Name>EntityFX.Gdcame.Infrastructure.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

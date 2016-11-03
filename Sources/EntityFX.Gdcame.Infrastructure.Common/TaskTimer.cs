@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace EntityFX.Gdcame.Infrastructure.Common
@@ -31,12 +32,17 @@ namespace EntityFX.Gdcame.Infrastructure.Common
             timerRunning = false;
         }
 
+        public bool IsRunning
+        {
+            get { return timerRunning; }
+        }
+
         private async Task RunTimer()
         {
             while (timerRunning)
             {
-                await Task.Delay(interval);
-
+                var task =  Task.Delay(interval);
+                await task;
                 if (timerRunning)
                 {
                     tick();

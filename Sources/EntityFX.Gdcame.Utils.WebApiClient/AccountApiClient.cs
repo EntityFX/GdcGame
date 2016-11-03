@@ -6,13 +6,15 @@ using System.Text;
 using System.Threading.Tasks;
 using EntityFX.Gdcame.Application.Contract.Model;
 using EntityFX.Gdcame.Utils.WebApiClient.Auth;
-using RestSharp.Portable;
+using RestSharp;
+using RestSharp.Authenticators;
+
 
 namespace EntityFX.Gdcame.Utils.WebApiClient
 {
     public class AccountApiClient : ApiClientBase, IAccountController
     {
-        public AccountApiClient(IAuthContext<IAuthenticator> authContext, TimeSpan? timeout = null) : base(authContext, timeout)
+        public AccountApiClient(IAuthContext<IAuthenticator> authContext, int? timeout = null) : base(authContext, timeout)
         {
         }
 

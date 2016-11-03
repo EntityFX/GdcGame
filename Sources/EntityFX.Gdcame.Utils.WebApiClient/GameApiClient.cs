@@ -8,9 +8,10 @@ using EntityFX.Gdcame.Common.Application.Model;
 using EntityFX.Gdcame.Application.Contract.Controller;
 using EntityFX.Gdcame.Application.Contract.Model;
 using EntityFX.Gdcame.Utils.WebApiClient.Auth;
-using Newtonsoft.Json.Linq;
-using RestSharp.Portable;
 using System;
+using System.Net.Mime;
+using RestSharp;
+using RestSharp.Authenticators;
 
 namespace EntityFX.Gdcame.Utils.WebApiClient
 {
@@ -52,11 +53,11 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
         public async Task<BuyItemModel> BuyFundDriverAsync(int id)
         {
             var response = await ExecuteRequestAsync<BuyItemModel>("/api/game/buy-item", Method.POST
-                , new List<Parameter>() { new Parameter() {Type = ParameterType.RequestBody, Value = id} });
+                , new List<Parameter>() { new Parameter() {Type = ParameterType.RequestBody, Value = id, Name = "", ContentType = "application/json" }});
             return response.Data;
         }
 
-        public GameApiClient(IAuthContext<IAuthenticator> authContext, TimeSpan? timeout = null) : base(authContext, timeout)
+        public GameApiClient(IAuthContext<IAuthenticator> authContext, int? timeout = null) : base(authContext, timeout)
         {
         }
     }

@@ -25,5 +25,8 @@ namespace EntityFX.Gdcame.DataAccess.Contract.User
 
         [OperationContract]
         User[] FindAll();
+
+        [OperationContract]
+        int Count();
     }
 }

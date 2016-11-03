@@ -55,6 +55,11 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
             //return result.FirstOrDefault();
         }
 
+        public int Count()
+        {
+            return (int)Database.GetCollection<User>("User").Count(new BsonDocument());
+        }
+
         public DataAccess.Contract.User.User FindById(GetUserByIdCriterion findByIdCriterion)
         {
             IMongoCollection<User> users = Database.GetCollection<User>("User");

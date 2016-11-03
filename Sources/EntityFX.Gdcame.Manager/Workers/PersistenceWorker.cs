@@ -25,15 +25,20 @@ namespace EntityFX.Gdcame.Manager.Workers
         private readonly TaskTimer _backgroundPersistenceTimer;
         private Task _backgroundPersisterTask;
         private readonly CancellationTokenSource _backgroundPersisterTaskToken = new CancellationTokenSource();
-        private readonly ConcurrentBag<Tuple<string, string>>[] PersistTimeSlotsUsers = new ConcurrentBag<Tuple<string, string>>[PersistTimeSlotsCount];
 
-        public PersistenceWorker(ILogger logger, GameSessions gameSessions, IGameDataPersisterFactory gameDataPersisterFactory, IHashHelper hashHelper, PerformanceInfo performanceInfo)
+        private readonly ConcurrentBag<Tuple<string, string>>[] PersistTimeSlotsUsers =
+            new ConcurrentBag<Tuple<string, string>>[PersistTimeSlotsCount];
+
+        public PersistenceWorker(ILogger logger, GameSessions gameSessions,
+            IGameDataPersisterFactory gameDataPersisterFactory, IHashHelper hashHelper, PerformanceInfo performanceInfo)
         {
             _logger = logger;
             _gameSessions = gameSessions;
             _gameDataPersisterFactory = gameDataPersisterFactory;
             _hashHelper = hashHelper;
             _performanceInfo = performanceInfo;
+
+            Name = "Games persistence worker";
 
             _gameDataPersisterFactory = gameDataPersisterFactory;
             for (int i = 0; i < PersistTimeSlotsUsers.Length; i++)
@@ -67,63 +72,94 @@ namespace EntityFX.Gdcame.Manager.Workers
         private void GameSessions_GameStarted(object sender, Tuple<string, string> e)
         {
             int timeSlotId = _hashHelper.GetModuloOfUserIdHash(e.Item1, PersistTimeSlotsCount);
+
             PersistTimeSlotsUsers[timeSlotId].Add(new Tuple<string, string>(e.Item1, e.Item2));
+        }
+
+        public bool IsRunning
+        {
+            get
+            {
+                return _backgroundPersisterTask.Status == TaskStatus.Running
+                       || _backgroundPersisterTask.Status == TaskStatus.WaitingForActivation
+                       || _backgroundPersisterTask.Status == TaskStatus.RanToCompletion;
+            }
         }
 
         public void Run()
         {
-            _backgroundPersisterTask = Task.Factory.StartNew(a => PerformBackgroundPersisting(), TaskCreationOptions.LongRunning, _backgroundPersisterTaskToken.Token);
+            _backgroundPersisterTask = Task.Factory.StartNew(a => PerformBackgroundPersisting(),
+                TaskCreationOptions.LongRunning, _backgroundPersisterTaskToken.Token).ContinueWith(c =>
+            {
+                if (c.IsFaulted)
+                {
+                    _logger.Error(c.Exception.InnerException);
+                }
+            });
         }
+
+        public string Name { get; }
 
         private void PerformBackgroundPersisting()
         {
             IGameDataPersister gameDataPersister = _gameDataPersisterFactory.BuildGameDataPersister();
             int currentTimeSlotId = 0;
-
+            var stopwatch = new Stopwatch();
             // Infinite loop that is persisting User Games that are spread among TimeSlots
             while (true)
             {
-                if (_logger != null)
-                    _logger.Info("Perform persist cycle");
 
-                var stopwatch = new Stopwatch();
-                stopwatch.Start();
-
-                var gamesWithUserIdsChunk = new List<GameWithUserId>();
-                ConcurrentBag<Tuple<string, string>> timeSlot = PersistTimeSlotsUsers[currentTimeSlotId];
-                foreach (Tuple<string, string> timeSlotUser in timeSlot)
+                try
                 {
-                    if (_gameSessions.Games.ContainsKey(timeSlotUser.Item1))
-                    {
-                        gamesWithUserIdsChunk.Add(new GameWithUserId()
-                        {
-                            Game = _gameSessions.Games[timeSlotUser.Item1],
-                            UserId = timeSlotUser.Item2
-                        });
-                    }
+                    if (_logger != null)
+                        _logger.Info("Perform persist cycle");
 
-                    if (gamesWithUserIdsChunk.Count >= PersistUsersChunkSize)
+
+                    stopwatch.Restart();
+
+                    var gamesWithUserIdsChunk = new List<GameWithUserId>();
+                    ConcurrentBag<Tuple<string, string>> timeSlot = PersistTimeSlotsUsers[currentTimeSlotId];
+                    foreach (Tuple<string, string> timeSlotUser in timeSlot)
+                    {
+                        if (_gameSessions.Games.ContainsKey(timeSlotUser.Item1))
+                        {
+                            gamesWithUserIdsChunk.Add(new GameWithUserId()
+                            {
+                                Game = _gameSessions.Games[timeSlotUser.Item1],
+                                UserId = timeSlotUser.Item2
+                            });
+                        }
+
+                        if (gamesWithUserIdsChunk.Count >= PersistUsersChunkSize)
+                        {
+                            gameDataPersister.PersistGamesData(gamesWithUserIdsChunk);
+                            gamesWithUserIdsChunk = new List<GameWithUserId>();
+                        }
+                    }
+                    if (gamesWithUserIdsChunk.Count > 0)
                     {
                         gameDataPersister.PersistGamesData(gamesWithUserIdsChunk);
-                        gamesWithUserIdsChunk = new List<GameWithUserId>();
                     }
+
+                    stopwatch.Stop();
+
+                    int millisecondsUntilTimeSlotEnd = PersistTimeSlotMilliseconds
+                                                        -
+                                                        (int)
+                                                            Math.Min(stopwatch.ElapsedMilliseconds, PersistTimeSlotMilliseconds);
+                    _performanceInfo.PersistencePerCycle = stopwatch.Elapsed;
+                    if (_logger != null)
+                        _logger.Debug("PerformBackgroundPersisting: Delay {0} ms", millisecondsUntilTimeSlotEnd);
+                    var res = Task.Delay(millisecondsUntilTimeSlotEnd).Wait(millisecondsUntilTimeSlotEnd * 2);
+                    currentTimeSlotId = (currentTimeSlotId + 1) % PersistTimeSlotsCount;
                 }
-                if (gamesWithUserIdsChunk.Count > 0)
+                catch (Exception exception)
                 {
-                    gameDataPersister.PersistGamesData(gamesWithUserIdsChunk);
+                        _logger.Error(exception);
+                    throw;
                 }
 
-                stopwatch.Stop();
 
-                int millisecondsUntilTimeSlotEnd = PersistTimeSlotMilliseconds
-                                                    -
-                                                    (int)
-                                                        Math.Min(stopwatch.ElapsedMilliseconds, PersistTimeSlotMilliseconds);
-                _performanceInfo.PersistencePerCycle = stopwatch.Elapsed;
-                if (_logger != null)
-                    _logger.Debug("PerformBackgroundPersisting: Delay {0} ms", millisecondsUntilTimeSlotEnd);
-                var res = Task.Delay(millisecondsUntilTimeSlotEnd).Wait(millisecondsUntilTimeSlotEnd * 2);
-                currentTimeSlotId = (currentTimeSlotId + 1) % PersistTimeSlotsCount;
             }
         }
     }

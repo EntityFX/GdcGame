@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using EntityFX.Gdcame.DataAccess.Contract.User;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager.Contract.AdminManager;
 using EntityFX.Gdcame.Manager.Contract.UserManager;
@@ -10,14 +11,20 @@ namespace EntityFX.Gdcame.Manager
     {
         private readonly GameSessions _gameSessions;
         private readonly IPerformanceHelper _performanceHelper;
+        private readonly IUserDataAccessService _userDataAccessService;
         private readonly SystemInfo _systemInfo;
         private readonly IOperationContextHelper _operationContextHelper;
         private static readonly DateTime ServerStartTime = DateTime.Now;
 
-        public AdminManager(IOperationContextHelper operationContextHelper, GameSessions gameSessions, IPerformanceHelper performanceHelper, SystemInfo systemInfo)
+        public AdminManager(IOperationContextHelper operationContextHelper
+            , GameSessions gameSessions
+            , IPerformanceHelper performanceHelper
+            , IUserDataAccessService userDataAccessService
+            , SystemInfo systemInfo)
         {
             _gameSessions = gameSessions;
             _performanceHelper = performanceHelper;
+            _userDataAccessService = userDataAccessService;
             _systemInfo = systemInfo;
             _operationContextHelper = operationContextHelper;
         }
@@ -70,6 +77,7 @@ namespace EntityFX.Gdcame.Manager
             {
                 ActiveSessionsCount = _gameSessions.Sessions.Count,
                 ActiveGamesCount = _gameSessions.Games.Count,
+                RegistredUsersCount = _userDataAccessService.Count(),
                 ServerStartDateTime = ServerStartTime,
                 ServerUptime = DateTime.Now - ServerStartTime,
                 PerformanceInfo = _gameSessions.PerformanceInfo,

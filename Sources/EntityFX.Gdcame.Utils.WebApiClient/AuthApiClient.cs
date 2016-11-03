@@ -4,7 +4,8 @@ using System.Threading.Tasks;
 using EntityFX.Gdcame.Application.Contract.Model;
 using EntityFX.Gdcame.Utils.WebApiClient.Auth;
 using EntityFX.Gdcame.Utils.WebApiClient.Exceptions;
-using RestSharp.Portable;
+using RestSharp;
+using RestSharp.Authenticators;
 
 namespace EntityFX.Gdcame.Utils.WebApiClient
 {
@@ -23,7 +24,7 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
             return response.Data;
         }
 
-        public AuthApiClient(IAuthContext<IAuthenticator> authContext, TimeSpan? timeout = null) : base(authContext, timeout)
+        public AuthApiClient(IAuthContext<IAuthenticator> authContext, int? timeout = null) : base(authContext, timeout)
         {
         }
     }

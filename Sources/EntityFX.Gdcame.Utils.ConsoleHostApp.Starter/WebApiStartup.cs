@@ -86,7 +86,8 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter
             {
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/token"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(30),
+                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(60),
+               
                 Provider =
                     new CustomOAuthProvider("GameApi",
                         (ISessionManagerClientFactory)

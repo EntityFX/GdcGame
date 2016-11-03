@@ -12,6 +12,7 @@ namespace EntityFX.Gdcame.Application.Contract.Model.Mappers
             {
                 ActiveGamesCount = source.ActiveGamesCount,
                 ActiveSessionsCount = source.ActiveSessionsCount,
+                RegistredUsersCount = source.RegistredUsersCount,
                 ServerStartDateTime = source.ServerStartDateTime,
                 ServerUptime = source.ServerUptime,
                 PerformanceInfo = new PerformanceInfoModel()

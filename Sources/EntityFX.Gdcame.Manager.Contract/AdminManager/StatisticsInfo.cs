@@ -11,6 +11,8 @@ namespace EntityFX.Gdcame.Manager.Contract.AdminManager
         [DataMember]
         public int ActiveGamesCount { get; set; }
         [DataMember]
+        public int RegistredUsersCount { get; set; }
+        [DataMember]
         public TimeSpan ServerUptime { get; set; }
         [DataMember]
         public DateTime ServerStartDateTime { get; set; }

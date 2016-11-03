@@ -1,5 +1,5 @@
 using System;
-using RestSharp.Portable;
+using RestSharp.Authenticators;
 
 namespace EntityFX.Gdcame.Utils.WebApiClient.Auth
 {

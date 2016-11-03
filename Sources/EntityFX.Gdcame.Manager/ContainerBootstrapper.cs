@@ -15,6 +15,7 @@ using EntityFX.Gdcame.Manager.Contract.RatingManager;
 using EntityFX.Gdcame.Manager.Contract.ServerManager;
 using EntityFX.Gdcame.Manager.Contract.SessionManager;
 using EntityFX.Gdcame.Manager.Contract.UserManager;
+using EntityFX.Gdcame.Manager.Contract.Workermanager;
 using EntityFX.Gdcame.Manager.Mappers;
 using EntityFX.Gdcame.Manager.Mappers.Store;
 using Microsoft.Practices.Unity;
@@ -79,6 +80,11 @@ namespace EntityFX.Gdcame.Manager
             container.RegisterType<IServerManager, ServerManager>(
                 new InterceptionBehavior<PolicyInjectionBehavior>()
                 , new Interceptor<InterfaceInterceptor>());
+            container.RegisterType<IWorkerManager, WorkerManager>(
+                new InterceptionBehavior<PolicyInjectionBehavior>()
+                , new Interceptor<InterfaceInterceptor>());
+
+            container.RegisterInstance<IWorkerManager>(container.Resolve<WorkerManager>());
             return container;
         }
     }

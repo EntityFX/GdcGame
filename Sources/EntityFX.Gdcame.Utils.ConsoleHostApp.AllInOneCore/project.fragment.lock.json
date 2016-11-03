@@ -1,0 +1,614 @@
+{
+  "version": 2,
+  "exports": {
+    "EntityFX.Gdcame.Common.Contract/1.0.0": {
+      "type": "project",
+      "framework": ".NETFramework,Version=v4.5",
+      "compile": {
+        "../../bin/EntityFX.Gdcame.Common.Contract.dll": {}
+      },
+      "runtime": {
+        "../../bin/EntityFX.Gdcame.Common.Contract.dll": {},
+        "../packages/CommonServiceLocator.1.3/lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {},
+        "../packages/Unity.4.0.1/lib/portable-net45+wp80+win8+wpa81+MonoAndroid10+MonoTouch10/Microsoft.Practices.Unity.dll": {}
+      },
+      "contentFiles": {
+        "../../bin/EntityFX.Gdcame.Common.Contract.pdb": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true
+        }
+      }
+    },
+    "EntityFX.Gdcame.Common.Application.Model/1.0.0": {
+      "type": "project",
+      "framework": ".NETFramework,Version=v4.5",
+      "compile": {
+        "../../bin/EntityFX.Gdcame.Common.Application.Model.dll": {}
+      },
+      "runtime": {
+        "../../bin/EntityFX.Gdcame.Common.Application.Model.dll": {}
+      },
+      "contentFiles": {
+        "../../bin/EntityFX.Gdcame.Common.Application.Model.pdb": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true
+        }
+      }
+    },
+    "EntityFX.Gdcame.DataAccess.Contract/1.0.0": {
+      "type": "project",
+      "framework": ".NETFramework,Version=v4.5",
+      "compile": {
+        "../../bin/EntityFX.Gdcame.DataAccess.Contract.dll": {}
+      },
+      "runtime": {
+        "../../bin/EntityFX.Gdcame.DataAccess.Contract.dll": {},
+        "../packages/CommonServiceLocator.1.3/lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {},
+        "../packages/Unity.4.0.1/lib/portable-net45+wp80+win8+wpa81+MonoAndroid10+MonoTouch10/Microsoft.Practices.Unity.dll": {}
+      },
+      "contentFiles": {
+        "../../bin/EntityFX.Gdcame.DataAccess.Contract.pdb": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true
+        }
+      }
+    },
+    "EntityFX.Gdcame.DataAccess.Model.Ef/1.0.0": {
+      "type": "project",
+      "framework": ".NETFramework,Version=v4.5.1",
+      "compile": {
+        "../../bin/EntityFX.Gdcame.DataAccess.Model.Ef.dll": {}
+      },
+      "runtime": {
+        "../../bin/EntityFX.Gdcame.DataAccess.Model.Ef.dll": {},
+        "../packages/EntityFramework.6.1.3/lib/net45/EntityFramework.SqlServer.dll": {},
+        "../packages/EntityFramework.6.1.3/lib/net45/EntityFramework.dll": {}
+      },
+      "contentFiles": {
+        "../../bin/EntityFX.Gdcame.DataAccess.Model.Ef.pdb": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true
+        }
+      }
+    },
+    "EntityFX.Gdcame.DataAccess.Repository.Contract/1.0.0": {
+      "type": "project",
+      "framework": ".NETFramework,Version=v4.5",
+      "compile": {
+        "../../bin/EntityFX.Gdcame.DataAccess.Repository.Contract.dll": {}
+      },
+      "runtime": {
+        "../../bin/EntityFX.Gdcame.DataAccess.Repository.Contract.dll": {}
+      },
+      "contentFiles": {
+        "../../bin/EntityFX.Gdcame.DataAccess.Repository.Contract.pdb": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true
+        }
+      }
+    },
+    "EntityFX.Gdcame.DataAccess.Repository.LocalStorage/1.0.0": {
+      "type": "project",
+      "framework": ".NETFramework,Version=v4.5.1",
+      "compile": {
+        "../../bin/EntityFX.Gdcame.DataAccess.Repository.LocalStorage.dll": {}
+      },
+      "runtime": {
+        "../../bin/EntityFX.Gdcame.DataAccess.Repository.LocalStorage.dll": {},
+        "../packages/Newtonsoft.Json.9.0.1/lib/net45/Newtonsoft.Json.dll": {},
+        "../packages/Unity.4.0.1/lib/portable-net45+wp80+win8+wpa81+MonoAndroid10+MonoTouch10/Microsoft.Practices.Unity.dll": {}
+      },
+      "contentFiles": {
+        "../../bin/EntityFX.Gdcame.DataAccess.Repository.LocalStorage.pdb": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true
+        },
+        "../../bin/storage/counters/counters.json": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true,
+          "outputPath": "storage/counters/counters.json"
+        },
+        "../../bin/storage/items/items.json": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true,
+          "outputPath": "storage/items/items.json"
+        },
+        "../../bin/storage/users/46c32d64a3050e03f52c4461211aa2e8.json": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true,
+          "outputPath": "storage/users/46c32d64a3050e03f52c4461211aa2e8.json"
+        },
+        "../../bin/storage/users/admin.index": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true,
+          "outputPath": "storage/users/admin.index"
+        }
+      }
+    },
+    "EntityFX.Gdcame.DataAccess.Repository.Mongo/1.0.0": {
+      "type": "project",
+      "framework": ".NETFramework,Version=v4.5.1",
+      "compile": {
+        "../../bin/EntityFX.Gdcame.DataAccess.Repository.Mongo.dll": {}
+      },
+      "runtime": {
+        "../../bin/EntityFX.Gdcame.DataAccess.Repository.Mongo.dll": {},
+        "../packages/CommonServiceLocator.1.3/lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {},
+        "../packages/MongoDB.Bson.2.3.0/lib/net45/MongoDB.Bson.dll": {},
+        "../packages/MongoDB.Driver.2.3.0/lib/net45/MongoDB.Driver.dll": {},
+        "../packages/MongoDB.Driver.Core.2.3.0/lib/net45/MongoDB.Driver.Core.dll": {},
+        "../packages/Unity.4.0.1/lib/net45/Microsoft.Practices.Unity.Configuration.dll": {},
+        "../packages/Unity.4.0.1/lib/net45/Microsoft.Practices.Unity.RegistrationByConvention.dll": {},
+        "../packages/Unity.4.0.1/lib/net45/Microsoft.Practices.Unity.dll": {}
+      },
+      "contentFiles": {
+        "../../bin/EntityFX.Gdcame.DataAccess.Repository.Mongo.pdb": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true
+        },
+        "../../bin/mongo-scripts/data/counter.json": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true,
+          "outputPath": "mongo-scripts/data/counter.json"
+        },
+        "../../bin/mongo-scripts/data/item.json": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true,
+          "outputPath": "mongo-scripts/data/item.json"
+        },
+        "../../bin/mongo-scripts/data/user.json": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true,
+          "outputPath": "mongo-scripts/data/user.json"
+        },
+        "../../bin/mongo-scripts/gdcame.js": {
+          "buildAction": "Content",
+          "codeLanguage": "any",
+          "copyToOutput": true,
+          "outputPath": "mongo-scripts/gdcame.js"
+        },
+        "../../bin/mongo-scripts/import.cmd": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true,
+          "outputPath": "mongo-scripts/import.cmd"
+        }
+      }
+    },
+    "EntityFX.Gdcame.DataAccess.Repository.Ef/1.0.0": {
+      "type": "project",
+      "framework": ".NETFramework,Version=v4.5.1",
+      "compile": {
+        "../../bin/EntityFX.Gdcame.DataAccess.Repository.Ef.dll": {}
+      },
+      "runtime": {
+        "../../bin/EntityFX.Gdcame.DataAccess.Repository.Ef.dll": {},
+        "../packages/CommonServiceLocator.1.3/lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {},
+        "../packages/EntityFramework.6.1.3/lib/net45/EntityFramework.SqlServer.dll": {},
+        "../packages/EntityFramework.6.1.3/lib/net45/EntityFramework.dll": {},
+        "../packages/Newtonsoft.Json.6.0.4/lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {},
+        "../packages/Unity.4.0.1/lib/net45/Microsoft.Practices.Unity.Configuration.dll": {},
+        "../packages/Unity.4.0.1/lib/net45/Microsoft.Practices.Unity.RegistrationByConvention.dll": {},
+        "../packages/Unity.4.0.1/lib/net45/Microsoft.Practices.Unity.dll": {}
+      },
+      "contentFiles": {
+        "../../bin/EntityFX.Gdcame.DataAccess.Repository.Ef.pdb": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true
+        }
+      }
+    },
+    "EntityFX.Gdcame.DataAccess.Service/1.0.0": {
+      "type": "project",
+      "framework": ".NETFramework,Version=v4.5.1",
+      "compile": {
+        "../../bin/EntityFX.Gdcame.DataAccess.Service.dll": {}
+      },
+      "runtime": {
+        "../../bin/EntityFX.Gdcame.DataAccess.Service.dll": {},
+        "../packages/CommonServiceLocator.1.3/lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {},
+        "../packages/EntityFramework.6.1.3/lib/net45/EntityFramework.SqlServer.dll": {},
+        "../packages/EntityFramework.6.1.3/lib/net45/EntityFramework.dll": {},
+        "../packages/Newtonsoft.Json.9.0.1/lib/net45/Newtonsoft.Json.dll": {},
+        "../packages/Unity.4.0.1/lib/net45/Microsoft.Practices.Unity.Configuration.dll": {},
+        "../packages/Unity.4.0.1/lib/net45/Microsoft.Practices.Unity.RegistrationByConvention.dll": {},
+        "../packages/Unity.4.0.1/lib/net45/Microsoft.Practices.Unity.dll": {},
+        "../packages/Unity.Interception.4.0.1/lib/Net45/Microsoft.Practices.Unity.Interception.dll": {},
+        "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETPortable/v4.5/Profile/Profile7/System.Runtime.Serialization.Xml.dll": {}
+      },
+      "contentFiles": {
+        "../../bin/EntityFX.Gdcame.DataAccess.Service.pdb": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true
+        }
+      }
+    },
+    "EntityFX.Gdcame.GameEngine.Contract/1.0.0": {
+      "type": "project",
+      "framework": ".NETFramework,Version=v4.5",
+      "compile": {
+        "../../bin/EntityFX.Gdcame.GameEngine.Contract.dll": {}
+      },
+      "runtime": {
+        "../../bin/EntityFX.Gdcame.GameEngine.Contract.dll": {},
+        "../packages/CommonServiceLocator.1.3/lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {},
+        "../packages/Unity.4.0.1/lib/portable-net45+wp80+win8+wpa81+MonoAndroid10+MonoTouch10/Microsoft.Practices.Unity.dll": {}
+      },
+      "contentFiles": {
+        "../../bin/EntityFX.Gdcame.GameEngine.Contract.pdb": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true
+        }
+      }
+    },
+    "EntityFX.Gdcame.GameEngine/1.0.0": {
+      "type": "project",
+      "framework": ".NETFramework,Version=v4.5",
+      "compile": {
+        "../../bin/EntityFX.Gdcame.GameEngine.dll": {}
+      },
+      "runtime": {
+        "../../bin/EntityFX.Gdcame.GameEngine.dll": {},
+        "../packages/CommonServiceLocator.1.3/lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {},
+        "../packages/Unity.4.0.1/lib/portable-net45+wp80+win8+wpa81+MonoAndroid10+MonoTouch10/Microsoft.Practices.Unity.dll": {}
+      },
+      "contentFiles": {
+        "../../bin/EntityFX.Gdcame.GameEngine.pdb": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true
+        }
+      }
+    },
+    "EntityFX.Gdcame.Infrastructure.Common/1.0.0": {
+      "type": "project",
+      "framework": ".NETFramework,Version=v4.5",
+      "compile": {
+        "../../bin/EntityFX.Gdcame.Infrastructure.Common.dll": {}
+      },
+      "runtime": {
+        "../../bin/EntityFX.Gdcame.Infrastructure.Common.dll": {},
+        "../packages/CommonServiceLocator.1.3/lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {},
+        "../packages/PortableLog.Core.1.0.2/lib/portable-net45+wp80+win8+wpa81/PortableLog.Core.dll": {},
+        "../packages/PortableLog.NLog.1.0.2/lib/portable-net45+wp80+win8+wpa81/PortableLog.NLog.dll": {},
+        "../packages/Unity.4.0.1/lib/portable-net45+wp80+win8+wpa81+MonoAndroid10+MonoTouch10/Microsoft.Practices.Unity.dll": {},
+        "../packages/Unity.Interception.4.0.1/lib/Net45/Microsoft.Practices.Unity.Interception.dll": {}
+      },
+      "contentFiles": {
+        "../../bin/EntityFX.Gdcame.Infrastructure.Common.pdb": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true
+        }
+      }
+    },
+    "EntityFX.Gdcame.Infrastructure.Repository.EF/1.0.0": {
+      "type": "project",
+      "framework": ".NETFramework,Version=v4.5.1",
+      "compile": {
+        "../../bin/EntityFX.Gdcame.Infrastructure.Repository.EF.dll": {}
+      },
+      "runtime": {
+        "../../bin/EntityFX.Gdcame.Infrastructure.Repository.EF.dll": {},
+        "../packages/EntityFramework.6.1.3/lib/net45/EntityFramework.dll": {}
+      },
+      "contentFiles": {
+        "../../bin/EntityFX.Gdcame.Infrastructure.Repository.EF.pdb": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true
+        }
+      }
+    },
+    "EntityFX.Gdcame.Infrastructure.Repository/1.0.0": {
+      "type": "project",
+      "framework": ".NETFramework,Version=v4.5",
+      "compile": {
+        "../../bin/EntityFX.Gdcame.Infrastructure.Repository.dll": {}
+      },
+      "runtime": {
+        "../../bin/EntityFX.Gdcame.Infrastructure.Repository.dll": {},
+        "../packages/CommonServiceLocator.1.3/lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {},
+        "../packages/Unity.4.0.1/lib/net45/Microsoft.Practices.Unity.Configuration.dll": {},
+        "../packages/Unity.4.0.1/lib/net45/Microsoft.Practices.Unity.RegistrationByConvention.dll": {},
+        "../packages/Unity.4.0.1/lib/net45/Microsoft.Practices.Unity.dll": {}
+      },
+      "contentFiles": {
+        "../../bin/EntityFX.Gdcame.Infrastructure.Repository.pdb": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true
+        }
+      }
+    },
+    "EntityFX.Gdcame.Manager.Contract/1.0.0": {
+      "type": "project",
+      "framework": ".NETFramework,Version=v4.5",
+      "compile": {
+        "../../bin/EntityFX.Gdcame.Manager.Contract.dll": {}
+      },
+      "runtime": {
+        "../../bin/EntityFX.Gdcame.Manager.Contract.dll": {},
+        "../packages/CommonServiceLocator.1.3/lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {},
+        "../packages/Unity.4.0.1/lib/portable-net45+wp80+win8+wpa81+MonoAndroid10+MonoTouch10/Microsoft.Practices.Unity.dll": {}
+      },
+      "contentFiles": {
+        "../../bin/EntityFX.Gdcame.Manager.Contract.pdb": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true
+        }
+      }
+    },
+    "EntityFX.Gdcame.Manager/1.0.0": {
+      "type": "project",
+      "framework": ".NETFramework,Version=v4.5",
+      "compile": {
+        "../../bin/EntityFX.Gdcame.Manager.dll": {}
+      },
+      "runtime": {
+        "../../bin/EntityFX.Gdcame.Manager.dll": {},
+        "../packages/CommonServiceLocator.1.3/lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {},
+        "../packages/Unity.4.0.1/lib/portable-net45+wp80+win8+wpa81+MonoAndroid10+MonoTouch10/Microsoft.Practices.Unity.dll": {},
+        "../packages/Unity.Interception.4.0.1/lib/Net45/Microsoft.Practices.Unity.Interception.dll": {}
+      },
+      "contentFiles": {
+        "../../bin/EntityFX.Gdcame.Manager.pdb": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true
+        }
+      }
+    },
+    "EntityFX.Gdcame.NotifyConsumer.Contract/1.0.0": {
+      "type": "project",
+      "framework": ".NETFramework,Version=v4.5",
+      "compile": {
+        "../../bin/EntityFX.Gdcame.NotifyConsumer.Contract.dll": {}
+      },
+      "runtime": {
+        "../../bin/EntityFX.Gdcame.NotifyConsumer.Contract.dll": {}
+      },
+      "contentFiles": {
+        "../../bin/EntityFX.Gdcame.NotifyConsumer.Contract.pdb": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true
+        }
+      }
+    },
+    "EntityFX.Gdcame.NotifyConsumer/1.0.0": {
+      "type": "project",
+      "framework": ".NETFramework,Version=v4.5.1",
+      "compile": {
+        "../../bin/EntityFX.Gdcame.NotifyConsumer.dll": {}
+      },
+      "runtime": {
+        "../../bin/EntityFX.Gdcame.NotifyConsumer.dll": {},
+        "../packages/Microsoft.AspNet.SignalR.Core.2.2.1/lib/net45/Microsoft.AspNet.SignalR.Core.dll": {},
+        "../packages/Microsoft.Net.Http.2.2.29/lib/portable-net45+win8/System.Net.Http.Extensions.dll": {},
+        "../packages/Microsoft.Net.Http.2.2.29/lib/portable-net45+win8/System.Net.Http.Primitives.dll": {},
+        "../packages/Microsoft.Owin.3.0.1/lib/net45/Microsoft.Owin.dll": {},
+        "../packages/Microsoft.Owin.Security.3.0.1/lib/net45/Microsoft.Owin.Security.dll": {},
+        "../packages/Owin.1.0/lib/net40/Owin.dll": {},
+        "../packages/Unity.4.0.1/lib/net45/Microsoft.Practices.Unity.dll": {}
+      },
+      "contentFiles": {
+        "../../bin/EntityFX.Gdcame.NotifyConsumer.pdb": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true
+        }
+      }
+    },
+    "EntityFX.Gdcame.Application.Contract.Controller/1.0.0": {
+      "type": "project",
+      "framework": ".NETFramework,Version=v4.5",
+      "compile": {
+        "../../bin/EntityFX.Gdcame.Application.Contract.Controller.dll": {}
+      },
+      "runtime": {
+        "../../bin/EntityFX.Gdcame.Application.Contract.Controller.dll": {},
+        "../packages/Microsoft.AspNet.WebApi.Client.5.2.3/lib/portable-wp8+netcore45+net45+wp81+wpa81/System.Net.Http.Formatting.dll": {},
+        "../packages/Microsoft.Net.Http.2.2.29/lib/portable-net45+win8/System.Net.Http.Extensions.dll": {},
+        "../packages/Microsoft.Net.Http.2.2.29/lib/portable-net45+win8/System.Net.Http.Primitives.dll": {},
+        "../packages/Newtonsoft.Json.9.0.1/lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
+      },
+      "contentFiles": {
+        "../../bin/EntityFX.Gdcame.Application.Contract.Controller.pdb": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true
+        }
+      }
+    },
+    "EntityFX.Gdcame.Application.WebApi/1.0.0": {
+      "type": "project",
+      "framework": ".NETFramework,Version=v4.5.1",
+      "compile": {
+        "../../bin/EntityFX.Gdcame.Application.WebApi.dll": {}
+      },
+      "runtime": {
+        "../../bin/EntityFX.Gdcame.Application.WebApi.dll": {},
+        "../packages/CommonServiceLocator.1.3/lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {},
+        "../packages/Microsoft.AspNet.Identity.Core.2.2.1/lib/net45/Microsoft.AspNet.Identity.Core.dll": {},
+        "../packages/Microsoft.AspNet.Identity.Owin.2.2.1/lib/net45/Microsoft.AspNet.Identity.Owin.dll": {},
+        "../packages/Microsoft.AspNet.WebApi.Client.5.2.3/lib/net45/System.Net.Http.Formatting.dll": {},
+        "../packages/Microsoft.AspNet.WebApi.Core.5.2.3/lib/net45/System.Web.Http.dll": {},
+        "../packages/Microsoft.AspNet.WebApi.Owin.5.2.3/lib/net45/System.Web.Http.Owin.dll": {},
+        "../packages/Microsoft.Owin.3.0.1/lib/net45/Microsoft.Owin.dll": {},
+        "../packages/Microsoft.Owin.Security.3.0.1/lib/net45/Microsoft.Owin.Security.dll": {},
+        "../packages/Microsoft.Owin.Security.Cookies.3.0.1/lib/net45/Microsoft.Owin.Security.Cookies.dll": {},
+        "../packages/Microsoft.Owin.Security.OAuth.3.0.1/lib/net45/Microsoft.Owin.Security.OAuth.dll": {},
+        "../packages/Owin.1.0/lib/net40/Owin.dll": {},
+        "../packages/Unity.4.0.1/lib/net45/Microsoft.Practices.Unity.Configuration.dll": {},
+        "../packages/Unity.4.0.1/lib/net45/Microsoft.Practices.Unity.RegistrationByConvention.dll": {},
+        "../packages/Unity.4.0.1/lib/net45/Microsoft.Practices.Unity.dll": {}
+      },
+      "contentFiles": {
+        "../../bin/EntityFX.Gdcame.Application.WebApi.pdb": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true
+        }
+      }
+    },
+    "EntityFX.Gdcame.Application.WebApi.Controller/1.0.0": {
+      "type": "project",
+      "framework": ".NETFramework,Version=v4.5.1",
+      "compile": {
+        "../../bin/EntityFX.Gdcame.Application.WebApi.Controller.dll": {}
+      },
+      "runtime": {
+        "../../bin/EntityFX.Gdcame.Application.WebApi.Controller.dll": {},
+        "../packages/Microsoft.AspNet.WebApi.Core.5.2.3/lib/net45/System.Web.Http.dll": {}
+      },
+      "contentFiles": {
+        "../../bin/EntityFX.Gdcame.Application.WebApi.Controller.pdb": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true
+        }
+      }
+    },
+    "EntityFX.Gdcame.Application.Contract.Model/1.0.0": {
+      "type": "project",
+      "framework": ".NETFramework,Version=v4.5",
+      "compile": {
+        "../../bin/EntityFX.Gdcame.Application.Contract.Model.dll": {}
+      },
+      "runtime": {
+        "../../bin/EntityFX.Gdcame.Application.Contract.Model.dll": {}
+      },
+      "contentFiles": {
+        "../../bin/EntityFX.Gdcame.Application.Contract.Model.pdb": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true
+        }
+      }
+    },
+    "EntityFX.Gdcame.Application.WebApi.Providers/1.0.0": {
+      "type": "project",
+      "framework": ".NETFramework,Version=v4.5.1",
+      "compile": {
+        "../../bin/EntityFX.Gdcame.Application.WebApi.Providers.dll": {}
+      },
+      "runtime": {
+        "../../bin/EntityFX.Gdcame.Application.WebApi.Providers.dll": {}
+      },
+      "contentFiles": {
+        "../../bin/EntityFX.Gdcame.Application.WebApi.Providers.pdb": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true
+        }
+      }
+    },
+    "EntityFX.Gdcame.Utils.Common/1.0.0": {
+      "type": "project",
+      "framework": ".NETFramework,Version=v4.5.1",
+      "compile": {
+        "../../bin/EntityFX.Gdcame.Utils.Common.dll": {}
+      },
+      "runtime": {
+        "../../bin/EntityFX.Gdcame.Utils.Common.dll": {},
+        "../packages/Unity.4.0.1/lib/net45/Microsoft.Practices.Unity.dll": {},
+        "../packages/Unity.Interception.4.0.1/lib/Net45/Microsoft.Practices.Unity.Interception.dll": {}
+      },
+      "contentFiles": {
+        "../../bin/EntityFX.Gdcame.Utils.Common.pdb": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true
+        }
+      }
+    },
+    "EntityFX.Gdcame.Utils.ConsoleHostApp.Starter/1.0.0": {
+      "type": "project",
+      "framework": ".NETFramework,Version=v4.5.1",
+      "compile": {
+        "bin/Debug/EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.dll": {}
+      },
+      "runtime": {
+        "../packages/CommonServiceLocator.1.3/lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {},
+        "../packages/Microsoft.AspNet.Cors.5.2.3/lib/net45/System.Web.Cors.dll": {},
+        "../packages/Microsoft.AspNet.Identity.Core.2.2.1/lib/net45/Microsoft.AspNet.Identity.Core.dll": {},
+        "../packages/Microsoft.AspNet.Identity.Owin.2.2.1/lib/net45/Microsoft.AspNet.Identity.Owin.dll": {},
+        "../packages/Microsoft.AspNet.SignalR.Core.2.2.1/lib/net45/Microsoft.AspNet.SignalR.Core.dll": {},
+        "../packages/Microsoft.AspNet.WebApi.Client.5.2.3/lib/net45/System.Net.Http.Formatting.dll": {},
+        "../packages/Microsoft.AspNet.WebApi.Core.5.2.3/lib/net45/System.Web.Http.dll": {},
+        "../packages/Microsoft.AspNet.WebApi.Cors.5.2.3/lib/net45/System.Web.Http.Cors.dll": {},
+        "../packages/Microsoft.AspNet.WebApi.Owin.5.2.3/lib/net45/System.Web.Http.Owin.dll": {},
+        "../packages/Microsoft.AspNetCore.DataProtection.1.0.0/lib/net451/Microsoft.AspNetCore.DataProtection.dll": {},
+        "../packages/Microsoft.AspNetCore.DataProtection.Abstractions.1.0.0/lib/net451/Microsoft.AspNetCore.DataProtection.Abstractions.dll": {},
+        "../packages/Microsoft.AspNetCore.Http.Abstractions.1.0.0/lib/net451/Microsoft.AspNetCore.Http.Abstractions.dll": {},
+        "../packages/Microsoft.AspNetCore.Http.Features.1.0.0/lib/net451/Microsoft.AspNetCore.Http.Features.dll": {},
+        "../packages/Microsoft.AspNetCore.Owin.1.0.0/lib/net451/Microsoft.AspNetCore.Owin.dll": {},
+        "../packages/Microsoft.Extensions.DependencyInjection.Abstractions.1.0.0/lib/netstandard1.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {},
+        "../packages/Microsoft.Extensions.Primitives.1.0.0/lib/netstandard1.0/Microsoft.Extensions.Primitives.dll": {},
+        "../packages/Microsoft.Owin.3.0.1/lib/net45/Microsoft.Owin.dll": {},
+        "../packages/Microsoft.Owin.Cors.3.0.1/lib/net45/Microsoft.Owin.Cors.dll": {},
+        "../packages/Microsoft.Owin.Host.HttpListener.3.0.1/lib/net45/Microsoft.Owin.Host.HttpListener.dll": {},
+        "../packages/Microsoft.Owin.Hosting.3.0.1/lib/net45/Microsoft.Owin.Hosting.dll": {},
+        "../packages/Microsoft.Owin.Security.3.0.1/lib/net45/Microsoft.Owin.Security.dll": {},
+        "../packages/Microsoft.Owin.Security.OAuth.3.0.1/lib/net45/Microsoft.Owin.Security.OAuth.dll": {},
+        "../packages/Newtonsoft.Json.9.0.1/lib/net45/Newtonsoft.Json.dll": {},
+        "../packages/Owin.1.0/lib/net40/Owin.dll": {},
+        "../packages/Owin.Security.AesDataProtectorProvider.1.1.0.0/lib/net45/Owin.Security.AesDataProtectorProvider.dll": {},
+        "../packages/PortableLog.Core.1.0.2/lib/portable-net45+wp80+win8+wpa81/PortableLog.Core.dll": {},
+        "../packages/PortableLog.NLog.1.0.2/lib/portable-net45+wp80+win8+wpa81/PortableLog.NLog.dll": {},
+        "../packages/System.Text.Encodings.Web.4.0.0/lib/netstandard1.0/System.Text.Encodings.Web.dll": {},
+        "../packages/Unity.4.0.1/lib/net45/Microsoft.Practices.Unity.Configuration.dll": {},
+        "../packages/Unity.4.0.1/lib/net45/Microsoft.Practices.Unity.RegistrationByConvention.dll": {},
+        "../packages/Unity.4.0.1/lib/net45/Microsoft.Practices.Unity.dll": {},
+        "../packages/Unity.Interception.4.0.1/lib/Net45/Microsoft.Practices.Unity.Interception.Configuration.dll": {},
+        "../packages/Unity.Interception.4.0.1/lib/Net45/Microsoft.Practices.Unity.Interception.dll": {},
+        "../packages/Unity.WebAPI.5.2.3/lib/net45/Unity.WebApi.dll": {},
+        "bin/Debug/EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.dll": {}
+      },
+      "contentFiles": {
+        "bin/Debug/EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.pdb": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true
+        }
+      }
+    },
+    "EntityFX.Gdcame.NotifyConsumer.Signalr/1.0.0": {
+      "type": "project",
+      "framework": ".NETFramework,Version=v4.5.1",
+      "compile": {
+        "../../bin/EntityFX.Gdcame.NotifyConsumer.Signalr.dll": {}
+      },
+      "runtime": {
+        "../../bin/EntityFX.Gdcame.NotifyConsumer.Signalr.dll": {},
+        "../packages/Microsoft.AspNet.SignalR.Core.2.2.1/lib/net45/Microsoft.AspNet.SignalR.Core.dll": {}
+      },
+      "contentFiles": {
+        "../../bin/EntityFX.Gdcame.NotifyConsumer.Signalr.pdb": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true
+        }
+      }
+    }
+  }
+}

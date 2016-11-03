@@ -94,6 +94,7 @@
     <Compile Include="ServerManager.cs" />
     <Compile Include="SessionManager.cs" />
     <Compile Include="SimpleUserManager.cs" />
+    <Compile Include="WorkerManager.cs" />
     <Compile Include="Workers\CalculationWorker.cs" />
     <Compile Include="Workers\PersistenceWorker.cs" />
     <Compile Include="Workers\SessionValidationWorker.cs" />

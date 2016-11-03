@@ -37,6 +37,7 @@ using PortableLog.NLog;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using EntityFX.Gdcame.Manager.Contract.Workermanager;
 using EntityFX.Gdcame.Manager.Workers;
 using EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOneCore;
 using CounterBase = EntityFX.Gdcame.Common.Contract.Counters.CounterBase;
@@ -156,26 +157,9 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter
             container.RegisterType<IGameClientFactory, NoWcfGameManagerFactory>();
             container.RegisterType<ISessionManagerClientFactory, SessionManagerClientFactory>();
 
-            container.RegisterType<ISessionManager, SessionManager>(
-    new InterceptionBehavior<PolicyInjectionBehavior>(),
-    new Interceptor<InterfaceInterceptor>());
 
-            container.RegisterType<IRatingManager, RatingManager>(
-                new InterceptionBehavior<PolicyInjectionBehavior>(),
-                new Interceptor<InterfaceInterceptor>());
-
-            container.RegisterType<IGameManager, GameManager>(
-                new InterceptionBehavior<PolicyInjectionBehavior>()
-                , new Interceptor<InterfaceInterceptor>());
-            container.RegisterType<ISimpleUserManager, SimpleUserManager>(
-                new InterceptionBehavior<PolicyInjectionBehavior>()
-                , new Interceptor<InterfaceInterceptor>());
-            container.RegisterType<IAdminManager, AdminManager>(
-                new InterceptionBehavior<PolicyInjectionBehavior>()
-                , new Interceptor<InterfaceInterceptor>());
 
             container.RegisterType<ApplicationUserManagerFacotory>();
-            container.RegisterType<UserManager<GameUser>, ApplicationUserManager>();
             container.RegisterType<IUserStore<GameUser>, GameUserStore>();
             //container.RegisterType<IAccountController,AuthController>();
             container.RegisterType<IGameDataProvider, GameDataProvider>();
@@ -185,6 +169,9 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter
             container.RegisterType<IServerController, ServerController>();
 
             container.RegisterType<IOperationContextHelper, NoWcfOperationContextHelper>();
+
+            container.RegisterType<UserManager<GameUser>, ApplicationUserManager>();
+
             return container;
         }
 

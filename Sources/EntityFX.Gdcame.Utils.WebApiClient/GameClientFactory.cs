@@ -1,11 +1,11 @@
 using System;
-using RestSharp.Portable;
-using RestSharp.Portable.Authenticators.OAuth2.Infrastructure;
-using RestSharp.Portable.HttpClient;
+using RestSharp;
+
+
 
 namespace EntityFX.Gdcame.Utils.WebApiClient
 {
-    public class GameClientFactory : IRequestFactory
+    public class GameClientFactory 
     {
         public Uri BaseUri { get; private set; }
 

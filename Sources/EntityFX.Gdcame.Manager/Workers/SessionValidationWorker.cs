@@ -21,11 +21,24 @@ namespace EntityFX.Gdcame.Manager.Workers
             _logger = logger;
             _gameSessions = gameSessions;
             _backgroundSessionsCheckerTimer = new TaskTimer(TimeSpan.FromSeconds(SessionsCheckIntervalInSeconds), PerformSessionsCheckTask);
+            Name = "Session Validation Worker";
         }
 
         public void Run()
         {
             _backgroundSessionsCheckerTask = _backgroundSessionsCheckerTimer.Start();
+        }
+
+        public string Name { get; }
+
+        public bool IsRunning
+        {
+            get
+            {
+                return _backgroundSessionsCheckerTask.Status == TaskStatus.Running
+                       || _backgroundSessionsCheckerTask.Status == TaskStatus.WaitingForActivation
+                       || _backgroundSessionsCheckerTask.Status == TaskStatus.RanToCompletion;
+            }
         }
 
         private void PerformSessionsCheckTask()

@@ -539,7 +539,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                     if (authException != null)
                     {
                         errorCodes = ErrorCodes.AuthError;
-                        errorData += string.Format("Login {0} not exists or wrong password", authException.ErrorData.RequestData.Usename);
+                        errorData += string.Format(" Login {0} not exists or wrong password", authException.ErrorData.RequestData.Usename);
                     }
 
                     var validationData = exception.ErrorData as ValidationErrorData;

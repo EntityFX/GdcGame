@@ -22,12 +22,26 @@ namespace EntityFX.Gdcame.Manager.Workers
             _gameSessions = gameSessions;
             _performanceInfo = performanceInfo;
             _backgroundPerformAutomaticStepsTimer = new TaskTimer(TimeSpan.FromSeconds(1), PerformAutomaticSteps);
+
+            Name = "Games Calculation worker";
         }
 
         public void Run()
         {
             _backgroundPerformAutomaticStepsTask = _backgroundPerformAutomaticStepsTimer.Start();
         }
+
+        public bool IsRunning
+        {
+            get
+            {
+                return _backgroundPerformAutomaticStepsTask.Status == TaskStatus.Running
+                       || _backgroundPerformAutomaticStepsTask.Status == TaskStatus.WaitingForActivation
+                       || _backgroundPerformAutomaticStepsTask.Status == TaskStatus.RanToCompletion;
+            }
+        }
+
+        public string Name { get; }
 
         private void PerformAutomaticSteps()
         {

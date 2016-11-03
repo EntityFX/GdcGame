@@ -47,5 +47,10 @@ namespace EntityFX.Gdcame.DataAccess.Service
         {
             return _userRepository.FindAll(new GetAllUsersCriterion());
         }
+
+        public int Count()
+        {
+            return _userRepository.Count();
+        }
     }
 }

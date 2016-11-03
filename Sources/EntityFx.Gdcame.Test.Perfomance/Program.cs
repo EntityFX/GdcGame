@@ -11,59 +11,111 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using CommandLine;
 using EntityFx.Gdcame.Test.PerfomanceFramework;
 using Newtonsoft.Json;
 using PerformanceCounter = EntityFx.Gdcame.Test.PerfomanceFramework.PerformanceCounter;
 
 namespace EntityFx.Gdcame.Test.Perfomance
 {
-    class Program
+    interface ITest
     {
+        void Run(RunTestSubOptions options);
 
+        string Name { get; }
+    }
 
-        static void Main(string[] args)
+    public abstract class TestBase
+    {
+        private static Random random = new Random();
+
+        public string Name { get; protected set; }
+
+        public static string RandomString(int length)
         {
-            System.Net.ServicePointManager.DefaultConnectionLimit = 15000;
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
 
-            Uri[] serviceAddressList;
-            var countRequests = 10000;
-            var port = 9001;
-            if (args.Length > 0)
-            {
-                port = Convert.ToInt32(args[0]);
-            }
-            else
-            {
-                serviceAddressList = GetServers().Select(_ => new Uri("http://" + _ + ":" + port)).ToArray();
-            }
+        protected Uri[] GetServers(RunTestSubOptions options)
+        {
+            return options.ServersList != null && options.ServersList.Any()
+                ? options.ServersList.Select(_ => new Uri("http://" + _ + ":" + options.Port)).ToArray()
+                : GetServers().Select(_ => new Uri("http://" + _ + ":" + options.Port)).ToArray();
+        }
 
-            if (args.Length > 2)
+        protected string[] GetServers()
+        {
+            if (!File.Exists("../servers.json"))
             {
-                serviceAddressList = new[]
-                {
-                    new Uri(args[2])
-                };
+                return null;
             }
-            else
+            // deserialize JSON directly from a file
+            using (StreamReader file = File.OpenText("../servers.json"))
             {
-                serviceAddressList = GetServers().Select(_ => new Uri("http://"+ _ + ":" + port)).ToArray();
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.TypeNameHandling = TypeNameHandling.Auto;
+                return (string[])serializer.Deserialize(file, typeof(string[]));
             }
+        }
+    }
 
-            if (args.Length > 1)
-            {
-                countRequests = Convert.ToInt32(args[1]);
-            }
+    public class EchoTest : TestBase, ITest
+    {
+        public EchoTest()
+        {
+            Name = "Echo";
+        }
 
+        public void Run(RunTestSubOptions options)
+        {
             var logger = new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger")));
 
+            Uri[] serviceAddressList = GetServers(options);
+
+
+            var performanceTester = new PerfomanceTester(serviceAddressList, logger);
+            performanceTester.TestEcho(options.RequestsCount, RandomString(15), options.Concurrent);
+        }
+
+    }
+
+    public class EchoAuthTest : TestBase, ITest
+    {
+        public EchoAuthTest()
+        {
+            Name = "Echo with registration and auth";
+        }
+
+        public void Run(RunTestSubOptions options)
+        {
+            var logger = new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger")));
+
+            Uri[] serviceAddressList = GetServers(options);
+
+
+            var performanceTester = new PerfomanceTester(serviceAddressList, logger);
+            performanceTester.TestEchoAuth(options.RequestsCount, RandomString(15), options.Concurrent);
+        }
+
+    }
+
+    public class RegressionTest : TestBase, ITest
+    {
+        public RegressionTest()
+        {
+            Name = "Regression Test";
+        }
+
+        public void Run(RunTestSubOptions options)
+        {
+            var logger = new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger")));
+
+            Uri[] serviceAddressList = GetServers(options);
             var performanceTester = new PerfomanceTester(serviceAddressList, logger);
 
-           /* var authContext = new PasswordOAuthContext() { BaseUri = new Uri("http://localhost:9001")};
-            var gameClient = new ServerInfoClient(authContext);
-            var res = gameClient.Echo("dsfdsf");*/
-            performanceTester.TestEcho(countRequests, RandomString(15));
-
-            performanceTester.TestStartManyGames(countRequests, RandomString(15));
+            performanceTester.TestStartManyGames(options.RequestsCount, RandomString(15));
             logger.Info("Press any key to close...");
             Console.ReadKey();
 
@@ -89,28 +141,44 @@ namespace EntityFx.Gdcame.Test.Perfomance
             logger.Info("Press any key to close...");
             Console.ReadKey();
         }
+    }
 
-        private static Random random = new Random();
-        public static string RandomString(int length)
+    class Program
+    {
+        private static Dictionary<int, ITest> Tests = new Dictionary<int, ITest>()
         {
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            return new string(Enumerable.Repeat(chars, length)
-              .Select(s => s[random.Next(s.Length)]).ToArray());
+            {0, new EchoTest()},
+            {1, new EchoAuthTest()},
+        };
+
+        static void Main(string[] args)
+        {
+            System.Net.ServicePointManager.DefaultConnectionLimit = 15000;
+            //ThreadPool.SetMaxThreads(2000, 2000);
+            var cmdOptions = new CmdOptions();
+            Parser.Default.ParseArguments<TestsListSubOption, RunTestSubOptions>(args)
+                .MapResult(
+                    (TestsListSubOption tl) => DisplayTestList(tl),
+                    (RunTestSubOptions t) => RunTests(t), errors => 1
+                );
         }
 
-        public static string[] GetServers()
+        private static object RunTests(RunTestSubOptions runTestSubOptions)
         {
-            if (!File.Exists("../servers.json"))
+            if (Tests.ContainsKey(runTestSubOptions.TestNumber))
             {
-                return null;
+                Tests[runTestSubOptions.TestNumber].Run(runTestSubOptions);
             }
-            // deserialize JSON directly from a file
-            using (StreamReader file = File.OpenText("../servers.json"))
+            return 0;
+        }
+
+        private static object DisplayTestList(TestsListSubOption tl)
+        {
+            foreach (var test in Tests)
             {
-                JsonSerializer serializer = new JsonSerializer();
-                serializer.TypeNameHandling = TypeNameHandling.Auto;
-                return (string[])serializer.Deserialize(file, typeof(string[]));
+                Console.WriteLine("{0}: {1}", test.Key, test.Value.Name);
             }
+            return null;
         }
     }
 
@@ -149,32 +217,14 @@ namespace EntityFx.Gdcame.Test.Perfomance
             _performanceApi = new PerformanceApi(serviceUriList, logger);
         }
 
-        public void TestEcho(int countAccounts, string text)
+        public void TestEchoAuth(int countAccounts, string text, bool isParallel)
         {
             var sw = new Stopwatch();
             Tuple<PerformanceAggregate, string[]> getGameDataResult = null;
-            _logger.Info("\tStart echo  {0} in parallel", countAccounts);
-            sw.Restart();
-            try
-            {
-                getGameDataResult = _performanceApi.DoParallelTask(0, countAccounts, ParallelismFactor, i => _performanceApi.Echo(text), counter =>
-                {
-                    if (counter % ParallelismFactor == 0)
-                    {
-                        Console.WriteLine("Echoed {0} times", counter);
-                    }
-                });
-            }
-            catch (Exception e)
-            {
-                _logger.Error(e);
-            }
-            if (getGameDataResult != null) PrintPerfomanceAggregateResults(getGameDataResult.Item1);
-            _logger.Info("\tDone echo for {0} accounts, elapsed: {1}, {2} milliseconds per one", countAccounts, sw.Elapsed, sw.Elapsed.TotalMilliseconds / countAccounts);
 
             _logger.Info("\tStart register {0} accounts in parallel", countAccounts);
             sw.Restart();
-            var registerManyAccountsResult = _performanceApi.RegisterManyAccounts(countAccounts, text, true);
+            var registerManyAccountsResult = _performanceApi.RegisterManyAccounts(countAccounts, text, isParallel);
             PrintPerfomanceAggregateResults(registerManyAccountsResult);
             _logger.Info("\tDone register {0} accounts, elapsed: {1}, {2} milliseconds per one", countAccounts, sw.Elapsed, sw.Elapsed.TotalMilliseconds / countAccounts);
 
@@ -186,20 +236,100 @@ namespace EntityFx.Gdcame.Test.Perfomance
 
             _logger.Info("\tStart echo with auth {0} in parallel", countAccounts);
             sw.Restart();
-            try
+            if (isParallel)
             {
-                getGameDataResult = _performanceApi.DoParallelTask(0, countAccounts, ParallelismFactor, i => _performanceApi.EchoAuth(loginManyAccountsResult.Item2[i], text), counter =>
+                try
                 {
-                    if (counter % ParallelismFactor == 0)
-                    {
-                        Console.WriteLine("Echoed {0} times", counter);
-                    }
-                });
+                    getGameDataResult = _performanceApi.DoParallelTasks(0, countAccounts, ParallelismFactor,
+                        i => _performanceApi.Echo(loginManyAccountsResult.Item2[i], text)
+                        , counter =>
+                        {
+                            if (counter % ParallelismFactor == 0)
+                            {
+                                Console.WriteLine("Echoed {0} times", counter);
+                            }
+                        });
+                }
+                catch (Exception e)
+                {
+                    _logger.Error(e);
+                }
             }
-            catch (Exception e)
+            else
             {
-                _logger.Error(e);
+                try
+                {
+                    getGameDataResult = _performanceApi.DoSequenceTask(0, countAccounts,
+                        i => _performanceApi.Echo(loginManyAccountsResult.Item2[i], text)
+                        , counter =>
+                        {
+                            if (counter % ParallelismFactor == 0)
+                            {
+                                Console.WriteLine("Echoed {0} times", counter);
+                            }
+                        });
+                }
+                catch (Exception e)
+                {
+                    _logger.Error(e);
+                }
             }
+            if (getGameDataResult != null) PrintPerfomanceAggregateResults(getGameDataResult.Item1);
+            _logger.Info("\tDone echo for {0} accounts, elapsed: {1}, {2} milliseconds per one", countAccounts, sw.Elapsed, sw.Elapsed.TotalMilliseconds / countAccounts);
+
+            var adminConnection = _performanceApi.LoginAsAdmin().Result.Item2;
+            _performanceApi.StopAllGames(adminConnection);
+        }
+
+        public void TestEcho(int countAccounts, string text, bool isParallel)
+        {
+            var sw = new Stopwatch();
+            Tuple<PerformanceAggregate, string[]> getGameDataResult = null;
+            _logger.Info("\tStart echo  {0} in parallel={1}", countAccounts, isParallel);
+
+            var serverConnections = _performanceApi.GetServerConnections(countAccounts);
+
+            sw.Restart();
+
+            if (isParallel)
+            {
+                try
+                {
+                    getGameDataResult = _performanceApi.DoParallelTasks(0, countAccounts, ParallelismFactor,
+                        i => _performanceApi.Echo(serverConnections[i], text)
+                        , counter =>
+                        {
+                            if (counter%ParallelismFactor == 0)
+                            {
+                                Console.WriteLine("Echoed {0} times", counter);
+                            }
+                        });
+                }
+                catch (Exception e)
+                {
+                    _logger.Error(e);
+                }
+            }
+            else
+            {
+                try
+                {
+                    getGameDataResult = _performanceApi.DoSequenceTask(0, countAccounts,
+                        i => _performanceApi.Echo(serverConnections[i], text)
+                        , counter =>
+                        {
+                            if (counter % ParallelismFactor == 0)
+                            {
+                                Console.WriteLine("Echoed {0} times", counter);
+                            }
+                        });
+                }
+                catch (Exception e)
+                {
+                    _logger.Error(e);
+                }
+            }
+
             if (getGameDataResult != null) PrintPerfomanceAggregateResults(getGameDataResult.Item1);
             _logger.Info("\tDone echo for {0} accounts, elapsed: {1}, {2} milliseconds per one", countAccounts, sw.Elapsed, sw.Elapsed.TotalMilliseconds / countAccounts);
         }
@@ -226,7 +356,7 @@ namespace EntityFx.Gdcame.Test.Perfomance
             Tuple<PerformanceAggregate, GameDataModel[]> getGameDataResult = null;
             try
             {
-                getGameDataResult = _performanceApi.DoParallelTask(0, countAccounts, ParallelismFactor, i =>
+                getGameDataResult = _performanceApi.DoParallelTasks(0, countAccounts, ParallelismFactor, i =>
                     {
                         return loginManyAccountsResult.Item2[i] != null ? _performanceApi.GetGameData(loginManyAccountsResult.Item2[i]) : null;
                     }
@@ -254,7 +384,7 @@ namespace EntityFx.Gdcame.Test.Perfomance
             foreach (var serverErrorsCount in performanceAggregate.PerformanceStatisticsByServer)
             {
                 Console.WriteLine("\t{0}:", serverErrorsCount.Key);
-                Console.WriteLine("\t\tTotal={0}, Mi ={1}, Max={2}, Avg={3} ms", 
+                Console.WriteLine("\t\tTotal={0}, Mi ={1}, Max={2}, Avg={3} ms",
                     serverErrorsCount.Value.TotalElapsed, serverErrorsCount.Value.Min, serverErrorsCount.Value.Max, serverErrorsCount.Value.AvgMilliSeconds);
                 Console.WriteLine("\t\t Errors: {0}", serverErrorsCount.Value.CountErrors);
             }

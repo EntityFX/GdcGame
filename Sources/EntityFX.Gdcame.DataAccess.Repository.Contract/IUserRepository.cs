@@ -9,5 +9,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Contract
         User FindByName(GetUserByNameCriterion findByIdCriterion);
 
         User[] FindByFilter(GetUsersBySearchStringCriterion findByIdCriterion);
+
+        int Count();
     }
 }

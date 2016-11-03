@@ -8,11 +8,65 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using EntityFX.Gdcame.Utils.Common;
 
 namespace EntityFx.Gdcame.Test.PerfomanceFramework
 {
+    public static class ParallelTasks
+    {
+        /// <summary>
+        /// Starts the given tasks and waits for them to complete. This will run, at most, the specified number of tasks in parallel.
+        /// <para>NOTE: If one of the given tasks has already been started, an exception will be thrown.</para>
+        /// </summary>
+        /// <param name="tasksToRun">The tasks to run.</param>
+        /// <param name="maxTasksToRunInParallel">The maximum number of tasks to run in parallel.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        public static async Task StartAndWaitAllThrottledAsync(IEnumerable<Task> tasksToRun, int maxTasksToRunInParallel, CancellationToken cancellationToken = new CancellationToken())
+        {
+            await StartAndWaitAllThrottledAsync(tasksToRun, maxTasksToRunInParallel, -1, cancellationToken);
+        }
+
+        /// <summary>
+        /// Starts the given tasks and waits for them to complete. This will run the specified number of tasks in parallel.
+        /// <para>NOTE: If a timeout is reached before the Task completes, another Task may be started, potentially running more than the specified maximum allowed.</para>
+        /// <para>NOTE: If one of the given tasks has already been started, an exception will be thrown.</para>
+        /// </summary>
+        /// <param name="tasksToRun">The tasks to run.</param>
+        /// <param name="maxTasksToRunInParallel">The maximum number of tasks to run in parallel.</param>
+        /// <param name="timeoutInMilliseconds">The maximum milliseconds we should allow the max tasks to run in parallel before allowing another task to start. Specify -1 to wait indefinitely.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        public static async Task StartAndWaitAllThrottledAsync(IEnumerable<Task> tasksToRun, int maxTasksToRunInParallel, int timeoutInMilliseconds, CancellationToken cancellationToken = new CancellationToken())
+        {
+            // Convert to a list of tasks so that we don't enumerate over it multiple times needlessly.
+            var tasks = tasksToRun.ToList();
+
+            using (var throttler = new SemaphoreSlim(maxTasksToRunInParallel))
+            {
+                var postTaskTasks = new List<Task>();
+
+                // Have each task notify the throttler when it completes so that it decrements the number of tasks currently running.
+                tasks.ForEach(t => postTaskTasks.Add(t.ContinueWith(tsk => throttler.Release())));
+
+                // Start running each task.
+                foreach (var task in tasks)
+                {
+                    // Increment the number of tasks currently running and wait if too many are running.
+                    await throttler.WaitAsync(timeoutInMilliseconds, cancellationToken);
+
+                    cancellationToken.ThrowIfCancellationRequested();
+                    //task.Start();
+                }
+
+                // Wait for all of the provided tasks to complete.
+                // We wait on the list of "post" tasks instead of the original tasks, otherwise there is a potential race condition where the throttler's using block is exited before some Tasks have had their "post" action completed, which references the throttler, resulting in an exception due to accessing a disposed object.
+                await Task.WhenAll(postTaskTasks.ToArray());
+            }
+        }
+    }
+
+
     public class ClientConnectionInfo
     {
         public string Login { get; set; }
@@ -53,7 +107,8 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
 
         public TimeSpan TotalElapsed { get; set; }
 
-        public TimeSpan Min {
+        public TimeSpan Min
+        {
             get { return PerformanceCounters.Min(_ => _.Elapsed); }
         }
 
@@ -74,19 +129,22 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
 
         public IDictionary<string, PerformanceAggregate> PerformanceStatisticsByServer
         {
-            get { return PerformanceCounters.GroupBy(_ => _.ServerUri).ToDictionary(
-                _ => _.Key, 
-                _ => new PerformanceAggregate
-                {
-                    PerformanceCounters = _.ToArray(),
-                    TotalElapsed = TimeSpan.FromMilliseconds(_.Sum(p => p.Elapsed.Milliseconds))
-                }); }
+            get
+            {
+                return PerformanceCounters.GroupBy(_ => _.ServerUri).ToDictionary(
+              _ => _.Key,
+              _ => new PerformanceAggregate
+              {
+                  PerformanceCounters = _.ToArray(),
+                  TotalElapsed = TimeSpan.FromMilliseconds(_.Sum(p => p.Elapsed.Milliseconds))
+              });
+            }
         }
     }
 
     public class PerformanceApi
     {
-        public const int ParallelismFactor = 256;
+        private const int ParallelismFactor = 256;
 
         private ClientConnectionInfo[] ClientConnections { get; set; }
 
@@ -105,28 +163,53 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
             _logger = logger;
         }
 
-        public Tuple<PerformanceAggregate, T[]> DoParallelTask<T>(int from, int to, int parallelism, Func<int, Task<Tuple<PerformanceCounter, T>>> task, Action<int> iterrationAction)
+        public Tuple<PerformanceAggregate, T[]> DoParallelTasks<T>(int from, int to, int parallelism, Func<int, Task<Tuple<PerformanceCounter, T>>> task, Action<int> iterrationAction)
         {
             var counter = 0;
-            object stdLock = new { };
             var result = new PerformanceAggregate();
-            var tasksResultList = new List<Tuple<PerformanceCounter, T>> ();
+            var tasksResultList = new List<Tuple<PerformanceCounter, T>>();
             var sw = new Stopwatch();
+            ThreadPool.SetMaxThreads(parallelism*2, parallelism*2);
             sw.Start();
+            /*Parallel.For(from, to, (i) =>
+            {
+                tasksResultList.Add(task(i).Result);
+                iterrationAction(counter);
+                Interlocked.Increment(ref counter);
+            });*/
             for (var i = from; i < to; i += parallelism)
             {
-                List<Task<Tuple<PerformanceCounter,T>>> registerTasks = new List<Task<Tuple<PerformanceCounter, T>>>();
-                for (int i1 = i; i1 < ((i + parallelism) > to ? to : i + parallelism); i1++)
+                var tasks = new Task[(i + parallelism) > to ? to - i : parallelism];
+                for (int pi = 0; pi < tasks.Length; pi++)
                 {
-                    registerTasks.Add(task(i1));
+                    tasks[pi] = task(i + pi);
                 }
-                tasksResultList.AddRange(Task.WhenAll(registerTasks).Result);
-                lock (stdLock)
-                {
-                    iterrationAction(counter);
-                    counter += parallelism;
-                }
+                //ParallelTasks.StartAndWaitAllThrottledAsync(registerTasks, 1000).Wait();
+                Task.WaitAll(tasks);
+                tasksResultList.AddRange(tasks.Cast<Task<Tuple<PerformanceCounter, T>>>().Select(_ => _.Result));
+                iterrationAction(counter);
+                Interlocked.Add(ref counter, parallelism);
             };
+            result.TotalElapsed = sw.Elapsed;
+            result.PerformanceCounters = tasksResultList.Select(_ => _.Item1).ToArray();
+            return Tuple.Create(result, tasksResultList.Select(_ => _.Item2).ToArray());
+        }
+
+        public Tuple<PerformanceAggregate, T[]> DoSequenceTask<T>(int from, int to, Func<int, Task<Tuple<PerformanceCounter, T>>> task, Action<int> iterrationAction)
+        {
+            var counter = 0;
+            var result = new PerformanceAggregate();
+            var tasksResultList = new List<Tuple<PerformanceCounter, T>>();
+            var sw = new Stopwatch();
+            sw.Start();
+            for (var i = from; i < to; i++)
+            {
+                tasksResultList.Add(task(i).Result);
+                if (i % 256 == 0)
+                {
+                    iterrationAction(i);
+                }
+            }
             result.TotalElapsed = sw.Elapsed;
             result.PerformanceCounters = tasksResultList.Select(_ => _.Item1).ToArray();
             return Tuple.Create(result, tasksResultList.Select(_ => _.Item2).ToArray());
@@ -159,50 +242,94 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
         {
             if (useParallel)
             {
-                return DoParallelTask(0, countAccounts, ParallelismFactor,  i1 => RegisterAccount(string.Format("{0}{1}", accounLoginPrefix, i1)), counter =>
+                return DoParallelTasks(0, countAccounts, ParallelismFactor, async i1 => await RegisterAccount(string.Format("{0}{1}", accounLoginPrefix, i1)), counter =>
+               {
+                   if (counter % ParallelismFactor == 0)
+                   {
+                       Console.WriteLine("Registered {0} accounts", counter);
+                   }
+               }).Item1;
+                var res = new Tuple<PerformanceCounter, object>[countAccounts];
+                var sw = new Stopwatch();
+                sw.Start();
+                Parallel.For(0, countAccounts,
+                    async i1 => res[i1] = await RegisterAccount(string.Format("{0}{1}", accounLoginPrefix, i1)));
+                var p = new PerformanceAggregate()
                 {
-                    if (counter % ParallelismFactor == 0)
-                    {
-                        Console.WriteLine("Registered {0} accounts", counter);
-                    }
-                }).Item1;
+                    PerformanceCounters = res.Select(_ => _.Item1).ToArray(),
+                    TotalElapsed = sw.Elapsed
+                };
+                return p;
             }
             else
             {
-                for (var i = 0; i < countAccounts; ++i)
-                {
-                    var res = RegisterAccount(string.Format("{0}{1}", accounLoginPrefix, i)).Result;
-                };
-                return null;
+                return DoSequenceTask(0, countAccounts,
+                    i1 => RegisterAccount(string.Format("{0}{1}", accounLoginPrefix, i1)), i => {
+                        if (i % ParallelismFactor == 0)
+                        {
+                            Console.WriteLine("Registered {0} accounts", i);
+                        }
+                    }).Item1;
             }
         }
 
         public PerformanceAggregate DeleteManyAccounts(ClientConnectionInfo adminConnectionInfo, int countAccounts, string accounLoginPrefix, bool useParallel)
         {
-            return DoParallelTask(0, countAccounts, ParallelismFactor, async i1 => await FindAndDeleteAccount(adminConnectionInfo, string.Format("{0}{1}", accounLoginPrefix, i1)), counter =>
+            return DoParallelTasks(0, countAccounts, ParallelismFactor, async i1 => await FindAndDeleteAccount(adminConnectionInfo, string.Format("{0}{1}", accounLoginPrefix, i1)), counter =>
             {
                 if (counter % ParallelismFactor == 0)
                 {
                     Console.WriteLine("Deleted {0} accounts", counter);
                 }
             }).Item1;
-            /*for (var i = 0; i < countAccounts; ++i)
-            {
-                var deleteResult = FindAndDeleteAccount(adminConnectionInfo, string.Format("{0}{1}", accounLoginPrefix, i));
-                if (deleteResult)
+        }
+
+        public void StopAllGames(ClientConnectionInfo adminConnectionInfo)
+        {
+            Task.WhenAll(DoAuthServersWithAdmin(_serviceUriList, "admin").Where(_ => _ != null).Select(_ => Task.Factory.StartNew(
+                () =>
                 {
-                    successDeleted++;
-                }
-                else
-                {
-                    notFound++;
-                }
-            };*/
+                    try
+                    {
+                        new AdminApiClient(_).StopAllGames();
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+                }))).Wait();
+        }
+
+        private PasswordOAuthContext[] DoAuthServersWithAdmin(Uri[] serversList, string adminLogin, string password = DefaultPassword)
+        {
+            return Task.WhenAll(
+
+                    serversList.Select(
+                            server =>
+                                new PasswordAuthProvider(
+                                    server))
+                        .Select(async passwordProvider =>
+                        {
+                            try
+                            {
+                                return await passwordProvider.Login(new PasswordAuthRequest<PasswordAuthData>
+                                {
+                                    RequestData = new PasswordAuthData { Password = password, Usename = adminLogin }
+                                });
+                            }
+                            catch (Exception)
+                            {
+                                return null;
+                                ;
+                            }
+
+                        }
+                        )).Result;
         }
 
         public Tuple<PerformanceAggregate, ClientConnectionInfo[]> LoginManyClients(int countAccounts, string accounLoginPrefix)
         {
-            return DoParallelTask<ClientConnectionInfo>(0, countAccounts, ParallelismFactor, i1 =>
+            return DoParallelTasks<ClientConnectionInfo>(0, countAccounts, ParallelismFactor, i1 =>
             {
                 var loginResult = Login(string.Format("{0}{1}", accounLoginPrefix, i1), DefaultPassword);
                 return loginResult;
@@ -222,23 +349,17 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
             return loginTasks.Select(_ => _.Result).ToArray();*/
         }
 
+
+
         public PerformanceAggregate LogoutManyClients(ClientConnectionInfo[] clients)
         {
-            return DoParallelTask(0, clients.Length, ParallelismFactor, i1 => Logout(clients[i1]), counter =>
+            return DoParallelTasks(0, clients.Length, ParallelismFactor, i1 => Logout(clients[i1]), counter =>
             {
                 if (counter % ParallelismFactor == 0)
                 {
                     Console.WriteLine("Logged out {0} accounts", counter);
                 }
             }).Item1;
-
-
-            /*foreach (var client in clients)
-            {
-                logoutTasks.Add(Logout(client));
-            }
-
-            Task.WaitAll(logoutTasks.ToArray());*/
         }
 
 
@@ -255,10 +376,27 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
             {
                 var token = await p.Login(new PasswordAuthRequest<PasswordAuthData>()
                 {
-                    RequestData = new PasswordAuthData() {Password = password, Usename = login}
+                    RequestData = new PasswordAuthData() { Password = password, Usename = login }
                 });
-                return new ClientConnectionInfo {Login = login, Context = token};
+                return new ClientConnectionInfo { Login = login, Context = token };
             }, serverUri.ToString());
+        }
+
+        public ClientConnectionInfo[] GetServerConnections(int countRequests)
+        {
+            var result = new ClientConnectionInfo[countRequests];
+            for (int r = 0, s = 0; r < countRequests; r++)
+            {
+                result[r] = GetConnection(s);
+                s = s == _serviceUriList.Length - 1 ? 0 : s + 1;
+            }
+            return result;
+        }
+
+        public ClientConnectionInfo GetConnection(int serverNumber)
+        {
+            var serverUri = _serviceUriList[serverNumber];
+            return new ClientConnectionInfo { Context = new PasswordOAuthContext() { BaseUri = serverUri } };
         }
 
         public Task<Tuple<PerformanceCounter, object>> Logout(ClientConnectionInfo client)
@@ -271,7 +409,7 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
         {
             var serverUri = GetApiServerUri(_serviceUriList, login);
             var authApi = new AuthApiClient(new PasswordOAuthContext() { BaseUri = serverUri });
-            return DoPerformanceMeasureAction(() => authApi.Register(new EntityFX.Gdcame.Application.WebApi.Models.RegisterAccountModel()
+            return DoPerformanceMeasureAction(async () => await authApi.Register(new EntityFX.Gdcame.Application.WebApi.Models.RegisterAccountModel()
             {
                 Login = login,
                 Password = DefaultPassword,
@@ -302,17 +440,46 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
             return DoPerformanceMeasureAction(async () => await gameClient.PerformManualStepAsync(), client.Context.BaseUri.ToString());
         }
 
-        public Task<Tuple<PerformanceCounter, string>> EchoAuth(ClientConnectionInfo client, string text)
+        public async Task<Tuple<PerformanceCounter, string>> Echo(ClientConnectionInfo client, string text)
         {
-            var gameClient = new ServerInfoClient(client.Context);
-            return DoPerformanceMeasureAction(async () => await Task.FromResult(gameClient.Echo(text)), _serviceUriList[0].ToString());
+            Random r = new Random(54657);
+            return await DoPerformanceMeasureAction(() =>
+            {
+                var gameClient = new ServerInfoClient(client.Context);
+                //return Task.Delay(r.Next(5,500)).ContinueWith<string>(_ =>  "ok");
+                return Task.Run(() =>
+                {
+                    return gameClient.Echo(text);
+                });
+            }, client.Context.BaseUri.ToString());
         }
 
-        public Task<Tuple<PerformanceCounter, string>> Echo(string text)
+        public string Echo2(ClientConnectionInfo client, string text)
         {
-            var authContext = new PasswordOAuthContext() { BaseUri = _serviceUriList[0] };
-            var gameClient = new ServerInfoClient(authContext);
-            return DoPerformanceMeasureAction(async () => await Task.FromResult(gameClient.Echo(text)), _serviceUriList[0].ToString());
+            var gameClient = new ServerInfoClient(client.Context);
+            return gameClient.Echo(text);
+        }
+
+        public Task<string> Echo1(ClientConnectionInfo client, string text)
+        {
+            /* var gameClient = new ServerInfoClient(client.Context);
+             return Task.Run(() =>
+             {
+                 var performanceCounter = new PerformanceCounter()
+                 {
+                     ServerUri = client.Context.BaseUri.ToString(), ErrorMessage = null
+                 };
+                 var res = gameClient.Echo(text);
+                 //Thread.Sleep(500);
+                 return new Tuple<PerformanceCounter, string>(performanceCounter, "dfgd");
+             });*/
+            return Task.Run(() =>
+            {
+                var gameClient = new ServerInfoClient(client.Context);
+                return gameClient.Echo(text);
+            })
+
+        ;
         }
 
         private static Uri GetApiServerUri(Uri[] serversUriList, string login)

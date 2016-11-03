@@ -60,6 +60,10 @@
     <Reference Include="PortableLog.NLog">
       <HintPath>..\packages\PortableLog.NLog.1.0.2\lib\portable-net45+wp80+win8+wpa81\PortableLog.NLog.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RestSharp.105.2.3\lib\net451\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="RestSharp.Portable.Core">
       <HintPath>..\packages\FubarCoder.RestSharp.Portable.Core.3.3.0\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+MonoTouch10+Xamarin.iOS10\RestSharp.Portable.Core.dll</HintPath>
     </Reference>
@@ -160,7 +164,7 @@
       <Name>EntityFX.Gdcame.Utils.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Utils.WebApiClient\EntityFX.Gdcame.Utils.WebApiClient.csproj">
-      <Project>{9b4e7b86-5f2f-4f84-9786-3d7ccb2024f8}</Project>
+      <Project>{9B4E7B86-5F2F-4F84-9786-3D7CCB2024F8}</Project>
       <Name>EntityFX.Gdcame.Utils.WebApiClient</Name>
     </ProjectReference>
   </ItemGroup>

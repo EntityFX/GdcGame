@@ -69,6 +69,12 @@ namespace EntityFX.Gdcame.DataAccess.Repository.LocalStorage
             ).ToArray();
         }
 
+        public int Count()
+        {
+            var di = new DirectoryInfo(GetUserStorageFilePath()).GetFiles("*.json");
+            return di.Length;
+        }
+
         public DataAccess.Contract.User.User FindById(GetUserByIdCriterion findByIdCriterion)
         {
             if (!File.Exists(GetUserStorageFilePath(findByIdCriterion.Id + ".json")))

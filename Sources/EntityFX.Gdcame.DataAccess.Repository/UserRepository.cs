@@ -110,5 +110,10 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef
                     .ToArray();
             }
         }
+
+        public int Count()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

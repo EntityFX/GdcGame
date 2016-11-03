@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using EntityFX.Gdcame.Infrastructure.Common;
+using EntityFX.Gdcame.Manager.Contract.Workermanager;
 using EntityFX.Gdcame.Manager.Workers;
 using EntityFX.Gdcame.Utils.Common;
 using EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOneCore;
@@ -22,8 +23,6 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
         private IWebHost _webHost;
         private AppConfiguration AppConfiguration { get; }
 
-        private IList<IWorker> _workers = new List<IWorker>();
-
 
         public HostService()
         {
@@ -37,7 +36,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
             AppConfiguration = CoreStartup.AppConfiguration;
 
             CoreStartup.Container = (new ContainerBootstrapper(AppConfiguration)).Configure(new UnityContainer());
-            ConfigureWorkers(CoreStartup.Container);
+            ConfigureWorkers(CoreStartup.Container.Resolve<IWorkerManager>(),CoreStartup.Container);
 
 
             _currentClassLogger = CoreStartup.Container.Resolve<ILogger>();
@@ -76,7 +75,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
         {
             _webHost.Start();
 
-            StartWorkers();
+            StartWorkers(CoreStartup.Container.Resolve<IWorkerManager>());
 
             _currentClassLogger.Info(RuntimeHelper.GetRuntimeInfo());
             _currentClassLogger.Info("SignalR server running on {0}", CoreStartup.AppConfiguration.WebApiPort);
@@ -90,16 +89,16 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
             return true;
         }
 
-        public void ConfigureWorkers(IUnityContainer container)
+        public void ConfigureWorkers(IWorkerManager workerManager, IUnityContainer container)
         {
-            _workers.Add(container.Resolve<CalculationWorker>());
-            _workers.Add(container.Resolve<PersistenceWorker>());
-            _workers.Add(container.Resolve<SessionValidationWorker>());
+            workerManager.Add(container.Resolve<CalculationWorker>());
+            workerManager.Add(container.Resolve<PersistenceWorker>());
+            workerManager.Add(container.Resolve<SessionValidationWorker>());
         }
 
-        public void StartWorkers()
+        public void StartWorkers(IWorkerManager workerManager)
         {
-            _workers.ForEach(_ => _.Run());
+            workerManager.StartAll();
         }
     }
 }
