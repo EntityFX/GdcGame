@@ -135,13 +135,11 @@ Global
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{6A8CFFC2-2467-4C6E-93DC-6C76B43E0180}.BuildServer|Any CPU.ActiveCfg = BuildServer|Any CPU
-		{6A8CFFC2-2467-4C6E-93DC-6C76B43E0180}.BuildServer|Any CPU.Build.0 = BuildServer|Any CPU
 		{6A8CFFC2-2467-4C6E-93DC-6C76B43E0180}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6A8CFFC2-2467-4C6E-93DC-6C76B43E0180}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A8CFFC2-2467-4C6E-93DC-6C76B43E0180}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A8CFFC2-2467-4C6E-93DC-6C76B43E0180}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4FF756A4-148E-4E5D-8AAF-7558660F621E}.BuildServer|Any CPU.ActiveCfg = BuildServer|Any CPU
-		{4FF756A4-148E-4E5D-8AAF-7558660F621E}.BuildServer|Any CPU.Build.0 = BuildServer|Any CPU
 		{4FF756A4-148E-4E5D-8AAF-7558660F621E}.BuildServer|Any CPU.Deploy.0 = BuildServer|Any CPU
 		{4FF756A4-148E-4E5D-8AAF-7558660F621E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4FF756A4-148E-4E5D-8AAF-7558660F621E}.Debug|Any CPU.Build.0 = Debug|Any CPU
@@ -258,7 +256,6 @@ Global
 		{2AE99E38-4B45-4D8B-B9D5-840B21F82A43}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2AE99E38-4B45-4D8B-B9D5-840B21F82A43}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9F0FABF3-4DEB-4389-B659-092A2BA29E7C}.BuildServer|Any CPU.ActiveCfg = BuildServer|Any CPU
-		{9F0FABF3-4DEB-4389-B659-092A2BA29E7C}.BuildServer|Any CPU.Build.0 = BuildServer|Any CPU
 		{9F0FABF3-4DEB-4389-B659-092A2BA29E7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9F0FABF3-4DEB-4389-B659-092A2BA29E7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F0FABF3-4DEB-4389-B659-092A2BA29E7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
