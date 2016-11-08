@@ -38,11 +38,11 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
             users.InsertMany(gameDataWithUserId);
         }
     
-        public void UpdateUserGames(StoredGameDataWithUserId[] gameDataWithUserId)
+        public void CreateOrUpdateUserGames(StoredGameDataWithUserId[] gameDataWithUserId)
         {
             IMongoCollection<StoredGameDataWithUserId> users = Database.GetCollection<StoredGameDataWithUserId>("StoredGameDataWithUserId");
 
-            var groupedByUserId = gameDataWithUserId.GroupBy(_ => _.UserId).Select(_ => _.First());
+            var groupedByUserId = gameDataWithUserId.GroupBy(_ => _.UserId).Select(_ => _.First()).ToArray();
             var usersFilter = Builders<StoredGameDataWithUserId>.Filter.In("UserId", groupedByUserId.Select(_ => _.UserId));
             var usersIdsForUpdateList = users.Find(usersFilter).Project(_ => _.UserId).ToList();
 
@@ -55,21 +55,11 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
                 users.InsertMany(gameDataToCreate);
             }
 
-            var models = gameDataForUpdate.Select(update => new ReplaceOneModel<StoredGameDataWithUserId>(Builders<StoredGameDataWithUserId>.Filter.Eq(s => s.UserId, update.UserId), update) {IsUpsert = true}).ToList();
+            var models = gameDataForUpdate.Select(update => new ReplaceOneModel<StoredGameDataWithUserId>(Builders<StoredGameDataWithUserId>.Filter.Eq(s => s.UserId, update.UserId), update) { IsUpsert = true}).ToList();
             if (models.Count > 0)
             {
                 users.BulkWrite(models);
             }
-
-            /*var filter = Builders<StoredGameDataWithUserId>.Filter.In(s => s.UserId,
-                gameDataForUpdate.Select(_ => _.UserId));
-            var update = Builders<StoredGameDataWithUserId>.Update.PushEach()
-            users.UpdateMany()*/
-            /*foreach (var update in gameDataForUpdate)
-            {
-                users.ReplaceOne(Builders<StoredGameDataWithUserId>.Filter.Eq(s => s.UserId, update.UserId), update);
-                users.B
-            }*/
         }
     }
 }

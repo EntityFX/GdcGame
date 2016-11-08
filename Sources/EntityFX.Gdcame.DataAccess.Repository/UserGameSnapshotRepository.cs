@@ -45,7 +45,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef
 
         }
 
-        public void UpdateUserGames(StoredGameDataWithUserId[] listOfGameDataWithUserId)
+        public void CreateOrUpdateUserGames(StoredGameDataWithUserId[] listOfGameDataWithUserId)
         {
             using (var uow = _unitOfWorkFactory.Create())
             {
@@ -53,8 +53,9 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef
                 {
                     var userEntity = uow.CreateEntity<UserGameDataSnapshotEntity>();
                     userEntity.Data = Serialize(gameDataWithUserId.StoredGameData);
-                    userEntity.UserId = gameDataWithUserId.UserId.ToString();
-
+                    userEntity.UserId = gameDataWithUserId.UserId;
+                    userEntity.CreateDateTime = gameDataWithUserId.CreateDateTime;
+                    userEntity.UpdateDateTime = gameDataWithUserId.UpdateDateTime;
                     uow.AttachEntity(userEntity);
                 }
 

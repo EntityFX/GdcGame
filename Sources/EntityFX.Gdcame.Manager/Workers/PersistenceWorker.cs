@@ -26,8 +26,8 @@ namespace EntityFX.Gdcame.Manager.Workers
         private Task _backgroundPersisterTask;
         private readonly CancellationTokenSource _backgroundPersisterTaskToken = new CancellationTokenSource();
 
-        private readonly ConcurrentBag<Tuple<string, string>>[] PersistTimeSlotsUsers =
-            new ConcurrentBag<Tuple<string, string>>[PersistTimeSlotsCount];
+        private readonly ConcurrentBag<Tuple<string, string, DateTime>>[] PersistTimeSlotsUsers =
+            new ConcurrentBag<Tuple<string, string, DateTime>>[PersistTimeSlotsCount];
 
         public PersistenceWorker(ILogger logger, GameSessions gameSessions,
             IGameDataPersisterFactory gameDataPersisterFactory, IHashHelper hashHelper, PerformanceInfo performanceInfo)
@@ -43,7 +43,7 @@ namespace EntityFX.Gdcame.Manager.Workers
             _gameDataPersisterFactory = gameDataPersisterFactory;
             for (int i = 0; i < PersistTimeSlotsUsers.Length; i++)
             {
-                PersistTimeSlotsUsers[i] = new ConcurrentBag<Tuple<string, string>>();
+                PersistTimeSlotsUsers[i] = new ConcurrentBag<Tuple<string, string, DateTime>>();
             }
             gameSessions.GameStarted += GameSessions_GameStarted;
             gameSessions.GameRemoved += GameSessions_GameRemoved;
@@ -54,7 +54,7 @@ namespace EntityFX.Gdcame.Manager.Workers
         {
             for (int i = 0; i < PersistTimeSlotsUsers.Length; i++)
             {
-                PersistTimeSlotsUsers[i] = new ConcurrentBag<Tuple<string, string>>();
+                PersistTimeSlotsUsers[i] = new ConcurrentBag<Tuple<string, string, DateTime>>();
             }
             GC.Collect();
         }
@@ -73,7 +73,7 @@ namespace EntityFX.Gdcame.Manager.Workers
         {
             int timeSlotId = _hashHelper.GetModuloOfUserIdHash(e.Item1, PersistTimeSlotsCount);
 
-            PersistTimeSlotsUsers[timeSlotId].Add(new Tuple<string, string>(e.Item1, e.Item2));
+            PersistTimeSlotsUsers[timeSlotId].Add(new Tuple<string, string, DateTime>(e.Item1, e.Item2, DateTime.Now));
         }
 
         public bool IsRunning
@@ -118,15 +118,17 @@ namespace EntityFX.Gdcame.Manager.Workers
                     stopwatch.Restart();
 
                     var gamesWithUserIdsChunk = new List<GameWithUserId>();
-                    ConcurrentBag<Tuple<string, string>> timeSlot = PersistTimeSlotsUsers[currentTimeSlotId];
-                    foreach (Tuple<string, string> timeSlotUser in timeSlot)
+                    ConcurrentBag<Tuple<string, string, DateTime>> timeSlot = PersistTimeSlotsUsers[currentTimeSlotId];
+                    foreach (Tuple<string, string, DateTime> timeSlotUser in timeSlot)
                     {
                         if (_gameSessions.Games.ContainsKey(timeSlotUser.Item1))
                         {
                             gamesWithUserIdsChunk.Add(new GameWithUserId()
                             {
                                 Game = _gameSessions.Games[timeSlotUser.Item1],
-                                UserId = timeSlotUser.Item2
+                                UserId = timeSlotUser.Item2,
+                                CreateDateTime = timeSlotUser.Item3,
+                                UpdateDateTime = DateTime.Now
                             });
                         }
 

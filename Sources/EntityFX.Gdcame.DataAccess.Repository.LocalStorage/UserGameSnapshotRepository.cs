@@ -49,7 +49,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository.LocalStorage
             }
         }
 
-        public void UpdateUserGames(StoredGameDataWithUserId[] listOfGameDataWithUserId)
+        public void CreateOrUpdateUserGames(StoredGameDataWithUserId[] listOfGameDataWithUserId)
         {
             CreateUserGames(listOfGameDataWithUserId);
         }

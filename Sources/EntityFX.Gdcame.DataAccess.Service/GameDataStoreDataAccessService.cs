@@ -16,7 +16,7 @@ namespace EntityFX.Gdcame.DataAccess.Service
 
         public void StoreGameDataForUsers(StoredGameDataWithUserId[] listOfGameDataWithUserId)
         {
-            _userGameSnapshotRepository.UpdateUserGames(listOfGameDataWithUserId);
+            _userGameSnapshotRepository.CreateOrUpdateUserGames(listOfGameDataWithUserId);
             
             ///////var userGame = _userGameSnapshotRepository.FindByUserId(new GetUserGameSnapshotByIdCriterion(userId));
 

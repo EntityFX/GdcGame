@@ -36,11 +36,11 @@ namespace EntityFX.Gdcame.Presentation.Web.Api.Providers
         /// </summary>
         /// <param name="user" />
         /// <returns />
-        public virtual Task<string> GetPasswordHashAsync(GameUser user)
+        public virtual async Task<string> GetPasswordHashAsync(GameUser user)
         {
             if (user == null)
                 throw new ArgumentNullException("user");
-            return Task.FromResult(user.PasswordHash);
+            return await Task.FromResult(user.PasswordHash);
         }
 
         /// <summary>
@@ -48,9 +48,9 @@ namespace EntityFX.Gdcame.Presentation.Web.Api.Providers
         /// </summary>
         /// <param name="user" />
         /// <returns />
-        public virtual Task<bool> HasPasswordAsync(GameUser user)
+        public virtual async Task<bool> HasPasswordAsync(GameUser user)
         {
-            return Task.FromResult(user.PasswordHash != null);
+            return await Task.FromResult(user.PasswordHash != null);
         }
 
         public void Dispose()
@@ -64,12 +64,12 @@ namespace EntityFX.Gdcame.Presentation.Web.Api.Providers
 
         }
 
-        public Task CreateAsync(GameUser user)
+        public async Task CreateAsync(GameUser user)
         {
-            return
-                Task.Run(
-                    () =>
-                        _simpleUserManager.Create(new UserData {Login = user.UserName, PasswordHash = user.PasswordHash}));
+
+            await Task.Run(
+                () =>
+                    _simpleUserManager.Create(new UserData { Login = user.UserName, PasswordHash = user.PasswordHash }));
         }
 
         public Task UpdateAsync(GameUser user)
@@ -77,14 +77,14 @@ namespace EntityFX.Gdcame.Presentation.Web.Api.Providers
             throw new NotImplementedException();
         }
 
-        public Task DeleteAsync(GameUser user)
+        public async Task DeleteAsync(GameUser user)
         {
-            return (new TaskFactory()).StartNew(() => _simpleUserManager.Delete(user.Id));
+            await (new TaskFactory()).StartNew(() => _simpleUserManager.Delete(user.Id));
         }
 
-        public Task<GameUser> FindByIdAsync(string userId)
+        public async Task<GameUser> FindByIdAsync(string userId)
         {
-            return Task.Run(() =>
+            return await Task.Run(() =>
             {
                 var res = _simpleUserManager.FindById(userId);
                 if (res != null)
@@ -100,9 +100,9 @@ namespace EntityFX.Gdcame.Presentation.Web.Api.Providers
             });
         }
 
-        public Task<GameUser> FindByNameAsync(string userName)
+        public async Task<GameUser> FindByNameAsync(string userName)
         {
-            return Task.Run(() =>
+            return await Task.Run(() =>
             {
                 var res = _simpleUserManager.Find(userName);
                 if (res != null)
@@ -124,14 +124,14 @@ namespace EntityFX.Gdcame.Presentation.Web.Api.Providers
             throw new NotImplementedException();
         }
 
-        public Task<string> GetEmailAsync(GameUser user)
+        public async Task<string> GetEmailAsync(GameUser user)
         {
-            return Task.FromResult(user.UserName);
+            return await Task.FromResult(user.UserName);
         }
 
-        public Task<bool> GetEmailConfirmedAsync(GameUser user)
+        public async Task<bool> GetEmailConfirmedAsync(GameUser user)
         {
-            return Task.FromResult(true);
+            return await Task.FromResult(true);
         }
 
         public Task SetEmailConfirmedAsync(GameUser user, bool confirmed)
@@ -139,9 +139,9 @@ namespace EntityFX.Gdcame.Presentation.Web.Api.Providers
             throw new NotImplementedException();
         }
 
-        public Task<GameUser> FindByEmailAsync(string email)
+        public async Task<GameUser> FindByEmailAsync(string email)
         {
-            return (new TaskFactory()).StartNew(() =>
+            return await (new TaskFactory()).StartNew(() =>
             {
                 var res = _simpleUserManager.Find(email);
                 if (res != null)

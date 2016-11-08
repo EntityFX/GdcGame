@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using EntityFX.Gdcame.DataAccess.Contract.GameData;
 using EntityFX.Gdcame.DataAccess.Contract.GameData.Store;
@@ -35,7 +36,9 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
                 listOfGameDataWithUserId[i] = new StoredGameDataWithUserId()
                 {
                     StoredGameData = gameData,
-                    UserId = gameWithUserId.UserId
+                    UserId = gameWithUserId.UserId,
+                    CreateDateTime = gameWithUserId.CreateDateTime,
+                    UpdateDateTime = DateTime.Now
                 };
             }
             _gameDataStoreDataAccessService.StoreGameDataForUsers(listOfGameDataWithUserId);

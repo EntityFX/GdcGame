@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EntityFX.Gdcame.DataAccess.Model.Ef
@@ -10,5 +11,7 @@ namespace EntityFX.Gdcame.DataAccess.Model.Ef
         public string UserId { get; set; }
 
         public string Data { get; set; }
+        public DateTime CreateDateTime { get; set; }
+        public DateTime? UpdateDateTime { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 namespace EntityFX.Gdcame.DataAccess.Contract.GameData.Store
 {
@@ -9,5 +10,9 @@ namespace EntityFX.Gdcame.DataAccess.Contract.GameData.Store
         public StoredGameData StoredGameData { get; set; }
         [DataMember]
         public string UserId { get; set; }
+        [DataMember]
+        public DateTime CreateDateTime { get; set; }
+        [DataMember]
+        public DateTime? UpdateDateTime { get; set; }
     }
 }

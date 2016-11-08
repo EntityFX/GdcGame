@@ -1,6 +1,8 @@
 ﻿CREATE TABLE dbo.UserGameDataSnapshot (
   UserId CHAR(32) NOT NULL
- ,Data NTEXT NOT NULL
+ ,Data NTEXT NOT NULL,
+ 	[CreateDateTime] DATETIME NOT NULL,
+	[UpdateDateTime] DATETIME 
  ,CONSTRAINT PK_UserGameSnapshot PRIMARY KEY CLUSTERED (UserId)
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
