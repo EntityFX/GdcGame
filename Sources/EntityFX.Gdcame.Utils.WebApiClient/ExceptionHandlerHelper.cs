@@ -28,6 +28,12 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
 
         public static void HandleNotSuccessRequest(IRestResponse response)
         {
+            if (response.ResponseStatus == ResponseStatus.Error)
+            {
+                throw new NoConnectionException(new ErrorData() {Message = response.ErrorMessage}, response.ErrorMessage,
+                    response.ErrorException);
+            }
+
 
             JToken token = null;
             try

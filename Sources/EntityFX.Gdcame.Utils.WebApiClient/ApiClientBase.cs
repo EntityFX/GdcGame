@@ -72,7 +72,7 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
                     {
                         HttpStatusCode.BadRequest, HttpStatusCode.Forbidden, HttpStatusCode.Unauthorized, HttpStatusCode.BadGateway, HttpStatusCode.InternalServerError
 
-                    }.Contains(res.StatusCode))
+                    }.Contains(res.StatusCode) || res.ResponseStatus == ResponseStatus.Error)
                 {
                     ExceptionHandlerHelper.HandleNotSuccessRequest(res);
                 }

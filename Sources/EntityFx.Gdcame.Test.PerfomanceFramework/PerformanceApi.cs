@@ -74,20 +74,38 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
         public PasswordOAuthContext Context { get; set; }
     }
 
-    public class TestResultItem
+    public class TestActionResultItem
     {
-        public string ActionName { get; set; }
-
         public TimeSpan TotalElapsed { get; set; }
 
+        public string ActionName { get; set; }
+
+        public string ActionDescription { get; set; }
+
         public double ElapsedMilliseconds { get; set; }
+
+        public TestStatistics TestStatistics { get; set; }
+
+        public PerformanceCounter[] PerformanceCounters { get; set; }
+
+        public IDictionary<string, TestStatistics> PerformanceStatisticsByServer { get; set; }
     }
 
-    public class TestInfo
+    public class TestStatistics
+    {
+
+        public TimeSpan Elapsed { get; set; }
+        public TimeSpan Min { get; set; }
+        public TimeSpan Max { get; set; }
+        public int CountErrors { get; set; }
+        public double AvgMilliseconds { get; set; }
+    }
+
+    public class TestResultInfo
     {
         public string TestName { get; set; }
 
-        public List<TestResultItem> TestResults { get; set; }
+        public TestActionResultItem[] TestActionResults { get; set; }
     }
 
     public class PerformanceCounter
@@ -154,7 +172,7 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
 
         private readonly ILogger _logger;
 
-        private readonly List<TestInfo> _testsInfo = new List<TestInfo>();
+        private readonly List<TestResultInfo> _testsInfo = new List<TestResultInfo>();
 
 
         public PerformanceApi(Uri[] serviceUriList, ILogger logger)
@@ -221,9 +239,10 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
             var performanceCounter = new PerformanceCounter();
             sw.Start();
             var result = default(T);
+            Task<T> task;
             try
             {
-                var task = action();
+                task = action();
                 result = await task;
                 performanceCounter.Elapsed = await task.ContinueWith((_, s) => ((Stopwatch)s).Elapsed, sw);
                 performanceCounter.IsSuccess = true;

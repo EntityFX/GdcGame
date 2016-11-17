@@ -64,7 +64,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
                 {
                     options.MaxRequestBufferSize = 4*1014*1024;
                     options.UseConnectionLogging();
-                    options.ThreadCount = Environment.ProcessorCount;
+                    options.ThreadCount = 1000;
                 })
                 .UseStartup<CoreStartup>()
                 .UseUrls(_webApiStartOptions.Urls.ToArray())
