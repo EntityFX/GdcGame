@@ -65,7 +65,7 @@
     <Compile Include="IAccountController.cs" />
     <Compile Include="IAdminController.cs" />
     <Compile Include="IGameApiController.cs" />
-    <Compile Include="IRatingApiController.cs" />
+    <Compile Include="IRaitingController.cs" />
     <Compile Include="IServerController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -43,7 +43,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef
             container.RegisterType<IQuery<GetAllUsersCriterion, IEnumerable<UserEntity>>, GetAllUsersQuery>();
             container.RegisterType<IQuery<GetUsersBySearchStringCriterion, IEnumerable<UserEntity>>, GetUsersBySearchStringQuery>();
             container
-                .RegisterType<IQuery<GetAllUsersRatingsCriterion, IEnumerable<UserRating>>, GetAllUsersRatingsQuery>();
+                .RegisterType<IQuery<GetAllUsersRatingsCriterion, IEnumerable<RatingStatistics>>, GetAllUsersRatingsQuery>();
             container
                 .RegisterType
                 <IQuery<GetAllFundsDriversCriterion, IEnumerable<FundsDriverEntity>>, GetAllFundsDriversQuery>();

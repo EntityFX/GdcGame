@@ -39,6 +39,10 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=5.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.5.1.1\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http" />
@@ -55,11 +59,15 @@
     <Compile Include="AccountController.cs" />
     <Compile Include="AdminController.cs" />
     <Compile Include="GameApiController.cs" />
+    <Compile Include="LocalRatingController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RatingApiController.cs" />
     <Compile Include="ServerController.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EntityFX.Gdcame.Application.Rating.Controller\EntityFX.Gdcame.Application.Rating.Controller.csproj">
+      <Project>{E1C99406-19E6-4D12-A7FB-ED5818DAE973}</Project>
+      <Name>EntityFX.Gdcame.Application.Rating.Controller</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Common\EntityFX.Gdcame.Infrastructure.Common.csproj">
       <Project>{924CC67D-9E2B-46BA-BE1D-6C6C780CCFBC}</Project>
       <Name>EntityFX.Gdcame.Infrastructure.Common</Name>
@@ -91,6 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

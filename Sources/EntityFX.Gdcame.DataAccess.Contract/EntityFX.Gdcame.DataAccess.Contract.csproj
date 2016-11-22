@@ -66,6 +66,9 @@
     <Compile Include="GameData\Store\StoredGenericCounter.cs" />
     <Compile Include="GameData\Store\StoredIncrementor.cs" />
     <Compile Include="GameData\Store\StoredSingleCounter.cs" />
+    <Compile Include="Rating\ILocalRaitingDataAccess.cs" />
+    <Compile Include="Rating\IRatingDataAccess.cs" />
+    <Compile Include="Rating\RatingHistory.cs" />
     <Compile Include="Server\IServerDataAccess.cs" />
     <Compile Include="User\IUserDataAccessService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

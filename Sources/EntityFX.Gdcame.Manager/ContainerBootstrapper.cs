@@ -85,6 +85,12 @@ namespace EntityFX.Gdcame.Manager
                 , new Interceptor<InterfaceInterceptor>());
 
             container.RegisterInstance<IWorkerManager>(container.Resolve<WorkerManager>());
+
+
+            container.RegisterType<IRatingManager, RatingManager>(
+                new InterceptionBehavior<PolicyInjectionBehavior>()
+                , new Interceptor<InterfaceInterceptor>());
+
             return container;
         }
     }

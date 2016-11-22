@@ -9,19 +9,19 @@ using EntityFX.Gdcame.Infrastructure.Repository.Query;
 namespace EntityFX.Gdcame.DataAccess.Repository.Ef.Queries.UserRating
 {
     public class GetAllUsersRatingsQuery : QueryBase,
-        IQuery<GetAllUsersRatingsCriterion, IEnumerable<Common.Contract.UserRating.UserRating>>
+        IQuery<GetAllUsersRatingsCriterion, IEnumerable<Common.Contract.UserRating.RatingStatistics>>
     {
         public GetAllUsersRatingsQuery(DbContext dbContext)
             : base(dbContext)
         {
         }
 
-        public IEnumerable<Common.Contract.UserRating.UserRating> Execute(GetAllUsersRatingsCriterion criterion)
+        public IEnumerable<Common.Contract.UserRating.RatingStatistics> Execute(GetAllUsersRatingsCriterion criterion)
         {
             var userRatings =
-                DbContext.Set<UserEntity>().AsEnumerable().Select(u => new Common.Contract.UserRating.UserRating
+                DbContext.Set<UserEntity>().AsEnumerable().Select(u => new Common.Contract.UserRating.RatingStatistics
                 {
-                    UserName = u.Email
+                    //UserName = u.Email
                 });
 
             return userRatings;

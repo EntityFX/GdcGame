@@ -7,12 +7,6 @@ namespace EntityFX.Gdcame.Manager.Contract.RatingManager
     public interface IRatingManager
     {
         [OperationContract]
-        UserRating[] GetUsersRatingByCount(int count);
-
-        [OperationContract]
-        UserRating FindUserRatingByUserName(string userName);
-
-        [OperationContract]
-        UserRating[] FindUserRatingByUserNameAndAroundUsers(string userName, int count);
+        RatingStatistics[] GetRaiting(int top = 500);
     }
 }

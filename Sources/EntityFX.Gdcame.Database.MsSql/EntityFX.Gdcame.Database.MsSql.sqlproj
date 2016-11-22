@@ -124,4 +124,7 @@
     <None Include="Data\GdCame\Counters.sql" />
     <None Include="Data\GdCame\Items.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="EntityFX.Gdcame.Database.MsSql.refactorlog" />
+  </ItemGroup>
 </Project>

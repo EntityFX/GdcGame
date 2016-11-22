@@ -5,6 +5,6 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Contract
 {
     public interface IUserRatingRepository
     {
-        UserRating[] GetAllUserRatings(GetAllUsersRatingsCriterion findAllUsersRatingsCriterion);
+        RatingStatistics[] GetAllUserRatings(GetAllUsersRatingsCriterion findAllUsersRatingsCriterion);
     }
 }

@@ -41,6 +41,7 @@ using EntityFX.Gdcame.Manager.Contract.Workermanager;
 using EntityFX.Gdcame.Manager.Workers;
 using EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOneCore;
 using CounterBase = EntityFX.Gdcame.Common.Contract.Counters.CounterBase;
+using EntityFX.Gdcame.Application.Rating.Controller;
 
 namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter
 {
@@ -160,18 +161,18 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter
 
 
             container.RegisterType<ApplicationUserManagerFacotory>();
-            container.RegisterType<IUserStore<GameUser>, GameUserStore>();
-            //container.RegisterType<IAccountController,AuthController>();
+            container.RegisterType<IUserStore<GameUser>, GameUserStore>();          
             container.RegisterType<IGameDataProvider, GameDataProvider>();
 
             container.RegisterType<IGameApiController, GameApiController>();
-            container.RegisterType<IRatingApiController, RatingApiController>();
+          //  container.RegisterType<IRatingController, RatingController>();
+            container.RegisterType<IRatingController, LocalRatingController>();
             container.RegisterType<IServerController, ServerController>();
 
             container.RegisterType<IOperationContextHelper, NoWcfOperationContextHelper>();
 
             container.RegisterType<UserManager<GameUser>, ApplicationUserManager>();
-
+            
             return container;
         }
 

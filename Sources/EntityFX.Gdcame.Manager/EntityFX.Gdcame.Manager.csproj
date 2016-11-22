@@ -84,6 +84,7 @@
     <Compile Include="IGameDataPersisterFactory.cs" />
     <Compile Include="IGameFactory.cs" />
     <Compile Include="IPerformanceHelper.cs" />
+    <Compile Include="LocalRatingManager.cs" />
     <Compile Include="Mappers\CounterContractMapper.cs" />
     <Compile Include="Mappers\CustomRuleInfoContractMapper.cs" />
     <Compile Include="Mappers\FundsCountersContractMapper.cs" />
@@ -106,6 +107,8 @@
     <Compile Include="WorkerManager.cs" />
     <Compile Include="Workers\CalculationWorker.cs" />
     <Compile Include="Workers\PersistenceWorker.cs" />
+    <Compile Include="Workers\RatingAggregationWorker.cs" />
+    <Compile Include="Workers\RatingCalculationWorker.cs" />
     <Compile Include="Workers\SessionValidationWorker.cs" />
   </ItemGroup>
   <ItemGroup>

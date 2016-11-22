@@ -93,13 +93,30 @@ namespace EntityFX.Gdcame.Manager
 
         public Guid AddSession(User user)
         {
+            UserRole[] userRoles;
+            switch ((UserRole)user.Role)
+            {
+                case UserRole.Admin:
+                    userRoles = new[] { UserRole.GenericUser, UserRole.Admin };
+                    break;
+                case UserRole.GenericUser:
+                default:
+                    userRoles = new[] { UserRole.GenericUser};
+                    break;
+                case UserRole.System:
+                    userRoles = new[] { UserRole.System, UserRole.Admin };
+                    break;
+            }
+
             var session = new Session
             {
                 Login = user.Login,
                 UserId = user.Id,
                 SessionIdentifier = Guid.NewGuid(),
                 LastActivity = DateTime.Now,
-                UserRoles = user.IsAdmin ? new[] { UserRole.GenericUser, UserRole.Admin } : new[] { UserRole.GenericUser },
+
+
+                UserRoles = userRoles,
                 Identity =
                     new CustomGameIdentity { AuthenticationType = "Auto", IsAuthenticated = true, Name = user.Login }
             };

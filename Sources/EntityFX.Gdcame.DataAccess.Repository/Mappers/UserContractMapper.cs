@@ -11,7 +11,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef.Mappers
             destination = destination ?? new User();
             destination.Id = source.Id;
             destination.Login = source.Email;
-            destination.IsAdmin = source.IsAdmin;
+            destination.Role = source.Role;
             destination.PasswordHash = source.Secret;
             return destination;
         }

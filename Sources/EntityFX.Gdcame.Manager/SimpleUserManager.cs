@@ -36,7 +36,9 @@ namespace EntityFX.Gdcame.Manager
             return user != null
                 ? new UserData
                 {
-                    Id = user.Id, Login = user.Login, PasswordHash = user.PasswordHash,
+                    Id = user.Id,
+                    Login = user.Login,
+                    PasswordHash = user.PasswordHash,
                     UserRoles = GetUserRoles(user)
                 }
                 : null;
@@ -46,7 +48,11 @@ namespace EntityFX.Gdcame.Manager
         {
             var user = _userDataAccess.FindByName(login);
             return user != null
-                ? new UserData {Id = user.Id, Login = user.Login, PasswordHash = user.PasswordHash,
+                ? new UserData
+                {
+                    Id = user.Id,
+                    Login = user.Login,
+                    PasswordHash = user.PasswordHash,
                     UserRoles = GetUserRoles(user)
                 }
                 : null;
@@ -56,7 +62,11 @@ namespace EntityFX.Gdcame.Manager
         {
             return _userDataAccess.FindByFilter(searchString)
                 .Select(user =>
-                    new UserData {Id = user.Id, Login = user.Login, PasswordHash = user.PasswordHash,
+                    new UserData
+                    {
+                        Id = user.Id,
+                        Login = user.Login,
+                        PasswordHash = user.PasswordHash,
                         UserRoles = GetUserRoles(user)
                     })
                 .ToArray();
@@ -64,13 +74,25 @@ namespace EntityFX.Gdcame.Manager
 
         public void Create(UserData login)
         {
+            uint userRole;
+
+            if (login.UserRoles.Contains(UserRole.System))
+            {
+                userRole = (uint)UserRole.System;
+            } else if (login.UserRoles.Contains(UserRole.Admin))
+            {
+                userRole = (uint)UserRole.Admin;
+            } else
+            {
+                userRole = (uint)UserRole.GenericUser;
+            }
             try
             {
                 _userDataAccess.Create(new User
                 {
                     Id = _hashHelper.GetHashedString(login.Login),
                     Login = login.Login,
-                    IsAdmin = login.UserRoles != null && login.UserRoles.Contains(UserRole.Admin),
+                    Role = userRole,
                     PasswordHash = login.PasswordHash
                 });
             }
@@ -92,10 +114,17 @@ namespace EntityFX.Gdcame.Manager
         private UserRole[] GetUserRoles(User user)
         {
             var roles = new List<UserRole> { UserRole.GenericUser };
-            if (user.IsAdmin)
+            switch ((UserRole)user.Role)
             {
-                roles.Add(UserRole.Admin);
+                case UserRole.Admin:
+                    roles.Add(UserRole.Admin);
+                    break;
+                case UserRole.System:
+                    roles.Add(UserRole.System);
+                    break;
             }
+
+
             return roles.ToArray();
         }
     }

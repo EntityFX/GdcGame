@@ -11,7 +11,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository.LocalStorage
 {
     public class UserRatingRepository : IUserRatingRepository
     {
-        public UserRating[] GetAllUserRatings(GetAllUsersRatingsCriterion findAllUsersRatingsCriterion)
+        public RatingStatistics[] GetAllUserRatings(GetAllUsersRatingsCriterion findAllUsersRatingsCriterion)
         {
             throw new NotImplementedException();
         }

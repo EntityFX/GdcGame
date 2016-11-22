@@ -6,6 +6,7 @@ namespace EntityFX.Gdcame.Manager.Contract.SessionManager
     public enum UserRole
     {
         [EnumMember] GenericUser,
-        [EnumMember] Admin
+        [EnumMember] Admin,
+        [EnumMember] System
     }
 }

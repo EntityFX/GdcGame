@@ -69,6 +69,7 @@
     <Compile Include="Mappers\StatisticsInfoMapper.cs" />
     <Compile Include="PerformanceInfoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RatingStatisticsModel.cs" />
     <Compile Include="RegisterAccountModel.cs" />
     <Compile Include="ResourcesUsageInfoModel.cs" />
     <Compile Include="ServerInfoModel.cs" />

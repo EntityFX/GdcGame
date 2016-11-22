@@ -17,12 +17,12 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef
             _unitOfWorkFactory = unitOfWorkFactory;
         }
 
-        public UserRating[] GetAllUserRatings(GetAllUsersRatingsCriterion findAllUsersRatingsCriterion)
+        public RatingStatistics[] GetAllUserRatings(GetAllUsersRatingsCriterion findAllUsersRatingsCriterion)
         {
             using (var uow = _unitOfWorkFactory.Create())
             {
                 var findQuery = uow.BuildQuery();
-                return findQuery.For<IEnumerable<UserRating>>()
+                return findQuery.For<IEnumerable<RatingStatistics>>()
                     .With(findAllUsersRatingsCriterion)
                     .ToArray();
             }
