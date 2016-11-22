@@ -113,6 +113,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="deploy_scripts\stop_server.cmd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="deploy_scripts\restart_server.cmd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
