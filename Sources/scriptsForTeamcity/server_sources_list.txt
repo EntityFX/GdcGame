@@ -1,0 +1,6 @@
+bin\*.dll
+bin\*.exe
+..\..\..\lib_for_build\Libuv.1.9.0\runtimes\win7-x86\native\libuv.dll
+bin\mongo-scripts
+bin\deploy_scripts
+bin\storage
