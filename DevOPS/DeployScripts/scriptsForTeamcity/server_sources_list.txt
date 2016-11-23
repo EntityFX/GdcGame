@@ -4,3 +4,4 @@ bin\*.exe
 bin\mongo-scripts
 bin\deploy_scripts
 bin\storage
+DevOPS\DeployScripts\scriptsForTeamcity\cmds
