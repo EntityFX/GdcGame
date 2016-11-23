@@ -4,7 +4,7 @@ $pass = ConvertTo-SecureString -AsPlainText $Password -Force
 $Cred = New-Object System.Management.Automation.PSCredential -ArgumentList $Username,$pass
 
 $TEAMCITY_HOME = $env:TEAMCITY_HOME
-$scriptPath = echo $env:GDCame_Bins'\deploy_scripts\restart_server.cmd'
+$scriptPath = echo $env:GDCame_Bins'\deploy_scripts\stop_server.cmd'
 $scriptBlock = [Scriptblock]::Create($scriptPath)
 
 $serverlist = Get-Content $TEAMCITY_HOME\scripts\server_list.txt
