@@ -1,7 +1,7 @@
 $TEAMCITY_HOME = $env:TEAMCITY_HOME
 $DESTINATION = "SharedTest"
 
-$serverlist = Get-Content DevOPS\DeployScripts\scriptsForTeamcity\server_list.txt
+$serverlist = Get-Content $TEAMCITY_HOME\scripts\server_list.txt
 $sourceslist = Get-Content DevOPS\DeployScripts\scriptsForTeamcity\server_sources_list.txt
 
 foreach ($server in $serverlist) {
