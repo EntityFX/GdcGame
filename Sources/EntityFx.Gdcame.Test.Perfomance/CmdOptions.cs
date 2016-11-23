@@ -43,5 +43,8 @@ namespace EntityFx.Gdcame.Test.Perfomance
 
         [Option("admin-password", Default = "P@ssw0rd", HelpText = "Admin password", Required = false)]
         public string AdminPassword { get; set; }
+
+        [Option('f', "parallelism", Default = 256, HelpText = "Parallelism factor", Required = false)]
+        public int Parallelism { get; set; }
     }
 }

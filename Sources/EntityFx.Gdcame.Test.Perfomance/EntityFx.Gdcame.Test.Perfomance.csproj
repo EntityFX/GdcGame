@@ -68,8 +68,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CmdOptions.cs" />
+    <Compile Include="Tests\EchoAuthTest.cs" />
+    <Compile Include="Tests\EchoTest.cs" />
+    <Compile Include="Tests\ITest.cs" />
+    <Compile Include="PerfomanceTester.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tests\RegressionTest.cs" />
+    <Compile Include="Tests\TestBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
