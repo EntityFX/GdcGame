@@ -1,8 +1,7 @@
-$TEAMCITY_HOME = $env:TEAMCITY_HOME
 $DESTINATION = "SharedTest"
 
-$serverlist = Get-Content $TEAMCITY_HOME\scripts\server_list.txt
-$sourceslist = Get-Content $TEAMCITY_HOME\scripts\server_sources_list.txt
+$serverlist = Get-Content server_list.txt
+$sourceslist = Get-Content server_sources_list.txt
 
 foreach ($server in $serverlist) {
 	net use X: "\\$server\$DESTINATION" /user:Administrator P@ssw0rd
