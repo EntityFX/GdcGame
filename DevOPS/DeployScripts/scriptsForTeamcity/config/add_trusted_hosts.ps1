@@ -1,0 +1,1 @@
+winrm s winrm/config/client '@{TrustedHosts="10.10.139.138,10.10.139.167"}'
