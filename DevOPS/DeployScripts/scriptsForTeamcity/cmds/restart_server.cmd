@@ -1,2 +1,2 @@
-%GDCame_Bins%\EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.exe install --autostart
-%GDCame_Bins%\EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.exe start
+..\EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.exe install --autostart
+..\EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.exe start
