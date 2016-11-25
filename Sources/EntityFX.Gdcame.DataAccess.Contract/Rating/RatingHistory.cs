@@ -9,10 +9,10 @@ namespace EntityFX.Gdcame.DataAccess.Contract.Rating
 {
     public class RatingHistory
     {
-        string UserID { get; set;}
-        DateTime Data { get; set;}
-        int ManualStepsCount { get; set;}
-        decimal TotalEarned { get; set; }
-        int RootCounter { get; set; }
+        public string UserID { get; set; }
+        public DateTime Data { get; set; }
+        public int ManualStepsCount { get; set; }
+        public decimal TotalEarned { get; set; }
+        public int RootCounter { get; set; }
     }
 }

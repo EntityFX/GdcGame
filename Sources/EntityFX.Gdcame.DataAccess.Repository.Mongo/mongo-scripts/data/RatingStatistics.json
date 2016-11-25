@@ -1,0 +1,28 @@
+[
+    {
+        "UserID": "70",
+        "ManualStepsCount":
+         
+            {
+                "Day": 12,
+                "Week": 154,
+                "Total": 369
+            }
+        ,
+        "TotalEarned": 
+        
+            {
+                "Day": 12,
+                "Week": 154,
+                "Total": 369
+            }
+        ,
+        "RootCounter": 
+        
+            {
+                "Day": 12,
+                "Week": 154,
+                "Total": 369
+            }        
+    }  
+]

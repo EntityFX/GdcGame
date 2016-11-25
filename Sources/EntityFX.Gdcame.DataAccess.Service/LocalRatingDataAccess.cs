@@ -36,7 +36,7 @@ namespace EntityFX.Gdcame.DataAccess.Service
                {
                 new RatingStatistics
                 {
-                    UserID = "39",
+                    UserID = "Y39",
                     MunualStepsCount = new CountValues { Day = 123, Week = 233, Total = 588 },
                     TotalEarned = new CountValues { Day = 623, Week = 745, Total = 987 },
                     RootCounter = new CountValues { Day = 623, Week = 745, Total = 987 }
