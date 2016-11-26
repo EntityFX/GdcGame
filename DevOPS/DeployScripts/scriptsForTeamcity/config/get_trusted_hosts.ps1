@@ -1,0 +1,1 @@
+winrm get winrm/config/client
