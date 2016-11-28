@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
 {
-    public class RatingHistoryRepository: IRatingHistoryRepository
+    public class RatingHistoryRepository : IRatingHistoryRepository
     {
         private IMongoDatabase Database
         {
@@ -26,7 +26,6 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
         public void CleanOldHistory(TimeSpan period)
         {
             IMongoCollection<RatingHistory> collection = Database.GetCollection<RatingHistory>("RatingHistory");
-            period = new TimeSpan(7, 0, 0, 0);
             var dataFilter = DateTime.Now.Subtract(period);
             var filter = Builders<RatingHistory>.Filter.Lt("Data", dataFilter);
             var result = collection.DeleteMany(filter);
@@ -36,56 +35,45 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
         public void PersistRatingHistory(RatingHistory ratingHistory)
         {
             IMongoCollection<RatingHistory> collection = Database.GetCollection<RatingHistory>("RatingHistory");
-            collection.InsertOneAsync(ratingHistory);
+            collection.InsertOne(ratingHistory);
         }
 
         public RatingHistory[] ReadHistoryWithUsersIds(string[] userslds, TimeSpan period)
         {
-            period = new TimeSpan(7, 0, 0, 0);
-            // List<RatingHistory> usersRating = new List<RatingHistory>();
-            IMongoCollection<RatingHistory> collection = Database.GetCollection<RatingHistory>("RatingHistory");
-            var filter1 = Builders<RatingHistory>.Filter.In("UserId", userslds);
+            IMongoCollection<RatingHistoryBase> collection = Database.GetCollection<RatingHistoryBase>("RatingHistory");
+            var filter1 = Builders<RatingHistoryBase>.Filter.In("UserId", userslds);
             var dataFilter = DateTime.Now.Subtract(period);
-            var filter2 = Builders<RatingHistory>.Filter.Gte("Data", dataFilter);
-            var filterAnd = Builders<RatingHistory>.Filter.And(new List<FilterDefinition<RatingHistory>> { filter1, filter2 });
+            var filter2 = Builders<RatingHistoryBase>.Filter.Gte("Data", dataFilter);
+            var filterAnd = Builders<RatingHistoryBase>.Filter.And(new List<FilterDefinition<RatingHistoryBase>> { filter1, filter2 });
             var usersRating = collection.Find(filterAnd).ToList();
-            return usersRating.ToArray();
+
+            return ConverterRatingHistoryBaseAsRatingHistory(usersRating).ToArray();
         }
-
-
-        //public RatingStatistics[] GetRaiting(int top = 500)
-        //{
-        //    //var filter = Builders<RatingStatistics>.Filter.Gte("TotalEarned.Total", 0);          
-        //    //var user = collection.Find(filter);
-        //    IMongoCollection<RatingStatistics> collection = Database.GetCollection<RatingStatistics>("RatingStatistics");
-        //    var filter1 = new BsonDocument();           
-        //    var allUser = collection.Find(filter1).ToList();
-        //    var uaser500 = allUser.OrderByDescending(a => a.TotalEarned.Total).Take(500).ToArray();
-        //    return uaser500;
-        //}
-        //public void CreateOrUpdateUsersRatingStatistics(RatingStatistics[] ratingStatistics)
-        //{
-        //    foreach (var userRating in ratingStatistics)
-        //    {
-        //        CreateOrReplaceUsersRatingStatistics(userRating);
-        //    }
-        //}
-
-        //private void CreateOrReplaceUsersRatingStatistics(RatingStatistics ratingStatistics)
-        //{
-        //    IMongoCollection<RatingStatistics> collection = Database.GetCollection<RatingStatistics>("RatingStatistics");
-        //    var filter = Builders<RatingStatistics>.Filter.Eq("UserId", ratingStatistics.UserId);
-        //    var findUser = collection.Find(filter).ToList();
-        //    if (findUser.Count == 0)
-        //    {
-        //        collection.InsertOne(ratingStatistics);
-        //    }
-        //    else
-        //    {
-        //        var result = collection.ReplaceOne(filter, ratingStatistics);
-        //    }
-
-        //}
+        private List<RatingHistory> ConverterRatingHistoryBaseAsRatingHistory(List<RatingHistoryBase> ratingHistoryBase)
+        {
+            List<RatingHistory> rating = new List<RatingHistory>();
+            foreach (var ratingHistory in ratingHistoryBase)
+            {
+                rating.Add(new RatingHistory
+                {
+                    UserId=ratingHistory.UserId,
+                    Data=ratingHistory.Data,
+                    ManualStepsCount=ratingHistory.ManualStepsCount,
+                    RootCounter=ratingHistory.RootCounter,
+                    TotalEarned=ratingHistory.TotalEarned,
+                });
+            }
+            return rating;
+        }
+        private class RatingHistoryBase
+        {
+            public Object _id { get; set; }
+            public string UserId { get; set; }
+            public DateTime Data { get; set; }
+            public int ManualStepsCount { get; set; }
+            public decimal TotalEarned { get; set; }
+            public int RootCounter { get; set; }
+        }
 
     }
 }

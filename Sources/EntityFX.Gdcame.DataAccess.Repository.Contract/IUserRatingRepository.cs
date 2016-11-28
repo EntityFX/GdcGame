@@ -1,4 +1,5 @@
 ﻿using EntityFX.Gdcame.Common.Contract.UserRating;
+using EntityFX.Gdcame.DataAccess.Contract.Rating;
 using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.UserRating;
 
 namespace EntityFX.Gdcame.DataAccess.Repository.Contract

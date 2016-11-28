@@ -61,6 +61,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserGameSessionStatus.cs" />
     <Compile Include="UserRating\CountValues.cs" />
+    <Compile Include="UserRating\RatingHistory.cs" />
     <Compile Include="UserRating\RatingStatistics.cs" />
   </ItemGroup>
   <ItemGroup>

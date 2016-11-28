@@ -14,6 +14,12 @@ namespace EntityFX.Gdcame.DataAccess.Service
         private readonly IRatingStatisticsRepository _ratingStatisticsRepository;
         private readonly IRatingHistoryRepository _ratingHistoryRepository;
 
+        public LocalRatingDataAccess(IRatingStatisticsRepository ratingStatisticsRepository, IRatingHistoryRepository ratingHistoryRepository)
+        {
+            _ratingStatisticsRepository = ratingStatisticsRepository;
+            _ratingHistoryRepository = ratingHistoryRepository;
+        }
+
         public void PersistRatingHistory(RatingHistory ratingHistory)
         {
             _ratingHistoryRepository.PersistRatingHistory(ratingHistory);

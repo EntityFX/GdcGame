@@ -9,7 +9,7 @@ using EntityFX.Gdcame.Common.Contract.UserRating;
 namespace EntityFX.Gdcame.DataAccess.Contract.Rating
 {
     [ServiceContract]
-    public interface ILocalRatingDataAccess : IRatingDataAccessBase
+    public interface ILocalRatingDataAccess : IRatingDataAccess
     {
         [OperationContract]
         void PersistRatingHistory(RatingHistory ratingHistory);

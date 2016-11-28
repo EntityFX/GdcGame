@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using EntityFX.Gdcame.Common.Contract.UserRating;
 using EntityFX.Gdcame.DataAccess.Repository.Contract;
 using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.UserRating;
 using EntityFX.Gdcame.Infrastructure.Repository.UnitOfWork;
+using EntityFX.Gdcame.DataAccess.Contract.Rating;
+using EntityFX.Gdcame.Common.Contract.UserRating;
 
 namespace EntityFX.Gdcame.DataAccess.Repository.Ef
 {
