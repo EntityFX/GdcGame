@@ -3,7 +3,7 @@ using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Utils.Common;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace EntityFx.Gdcame.Test.PerformanceTest
+namespace EntityFx.Gdcame.Test.Unit
 {
     [TestClass]
     public class HashTest

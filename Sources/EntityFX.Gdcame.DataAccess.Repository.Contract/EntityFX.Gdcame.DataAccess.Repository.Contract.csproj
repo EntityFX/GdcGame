@@ -74,8 +74,8 @@
     <Compile Include="ICountersRepository.cs" />
     <Compile Include="ICustomRuleRepository.cs" />
     <Compile Include="IItemRepository.cs" />
-    <Compile Include="IRatingRepository.cs" />
-    <Compile Include="ILocalRatinRepository.cs" />
+    <Compile Include="IRatingStatisticsRepository.cs" />
+    <Compile Include="IRatingHistoryRepository.cs" />
     <Compile Include="IUserGameSnapshotRepository.cs" />
     <Compile Include="IUserRatingRepository.cs" />
     <Compile Include="IUserRepository.cs" />

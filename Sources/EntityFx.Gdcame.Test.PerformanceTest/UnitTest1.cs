@@ -21,7 +21,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PortableLog.NLog;
 using ContainerBootstrapper = EntityFX.Gdcame.Manager.ContainerBootstrapper;
 
-namespace EntityFx.Gdcame.Test.PerformanceTest
+namespace EntityFx.Gdcame.Test.Unit
 {
     [TestClass]
     public class UnitTest1 : IDisposable

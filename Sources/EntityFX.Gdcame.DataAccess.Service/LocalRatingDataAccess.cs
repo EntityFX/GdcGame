@@ -5,51 +5,38 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EntityFX.Gdcame.Common.Contract.UserRating;
+using EntityFX.Gdcame.DataAccess.Repository.Contract;
 
 namespace EntityFX.Gdcame.DataAccess.Service
 {
     class LocalRatingDataAccess : ILocalRatingDataAccess
     {
+        private readonly IRatingStatisticsRepository _ratingStatisticsRepository;
+        private readonly IRatingHistoryRepository _ratingHistoryRepository;
+
         public void PersistRatingHistory(RatingHistory ratingHistory)
         {
-            throw new NotImplementedException();
+            _ratingHistoryRepository.PersistRatingHistory(ratingHistory);
         }
 
-        public void ReadHistoryWithUsersIds(string[] userslds, TimeSpan period)
+        public RatingHistory[] ReadHistoryWithUsersIds(string[] userslds, TimeSpan period)
         {
-            throw new NotImplementedException();
+            return _ratingHistoryRepository.ReadHistoryWithUsersIds(userslds, period);
         }
 
         public void CleanOldHistory(TimeSpan period)
         {
-            throw new NotImplementedException();
+            _ratingHistoryRepository.CleanOldHistory(period);
         }
 
         public void CreateOrUpdateUsersRatingStatistics(RatingStatistics[] ratingStatistics)
         {
-            throw new NotImplementedException();
+            _ratingStatisticsRepository.CreateOrUpdateUsersRatingStatistics(ratingStatistics);
         }
 
         public RatingStatistics[] GetRaiting(int top = 500)
         {
-            RatingStatistics[] rating =
-               {
-                new RatingStatistics
-                {
-                    UserID = "Y39",
-                    MunualStepsCount = new CountValues { Day = 123, Week = 233, Total = 588 },
-                    TotalEarned = new CountValues { Day = 623, Week = 745, Total = 987 },
-                    RootCounter = new CountValues { Day = 623, Week = 745, Total = 987 }
-                },
-                new RatingStatistics
-                {
-                    UserID = "70",
-                    MunualStepsCount = new CountValues { Day = 548, Week = 658, Total = 1860 },
-                    TotalEarned = new CountValues { Day = 564, Week = 688, Total = 1234 },
-                    RootCounter = new CountValues { Day = 623, Week = 745, Total = 987 }
-                }
-            };
-            return rating;
+           return _ratingStatisticsRepository.GetRaiting(top);
         }
 
     }

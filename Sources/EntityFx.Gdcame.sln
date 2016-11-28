@@ -83,7 +83,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Console", "Console", "{7D99
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Utils.Common", "EntityFX.Gdcame.Utils.Common\EntityFX.Gdcame.Utils.Common.csproj", "{2AE99E38-4B45-4D8B-B9D5-840B21F82A43}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFx.Gdcame.Test.PerformanceTest", "EntityFx.Gdcame.Test.PerformanceTest\EntityFx.Gdcame.Test.PerformanceTest.csproj", "{9F0FABF3-4DEB-4389-B659-092A2BA29E7C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFx.Gdcame.Test.Unit", "EntityFx.Gdcame.Test.PerformanceTest\EntityFx.Gdcame.Test.Unit.csproj", "{9F0FABF3-4DEB-4389-B659-092A2BA29E7C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Infrastructure.Repository.EF", "EntityFX.Gdcame.Infrastructure.Repository.EF\EntityFX.Gdcame.Infrastructure.Repository.EF.csproj", "{E92BA217-1681-453A-AEF8-888028A12070}"
 EndProject

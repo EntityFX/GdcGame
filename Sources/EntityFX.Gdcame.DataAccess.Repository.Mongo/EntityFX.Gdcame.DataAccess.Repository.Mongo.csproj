@@ -85,9 +85,9 @@
     <Compile Include="CustomRuleRepository.cs" />
     <Compile Include="DictionaryRepresentationConvention.cs" />
     <Compile Include="ItemRepository.cs" />
-    <Compile Include="LocalRatingRepository.cs" />
+    <Compile Include="RatingStatisticsRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RatingRepository.cs" />
+    <Compile Include="RatingHistoryRepository.cs" />
     <Compile Include="UserGameSnapshotRepository.cs" />
     <Compile Include="UserRepository.cs" />
   </ItemGroup>

@@ -11,39 +11,20 @@ namespace EntityFX.Gdcame.DataAccess.Service
 {
     public class RatingDataAccess : IRatingDataAccess
     {
-        private readonly IRatingRepository _ratingRepository;
+        private readonly IRatingStatisticsRepository _ratingStatisticsRepository;
 
-        public RatingDataAccess(IRatingRepository ratingRepository)
+        public RatingDataAccess(IRatingStatisticsRepository ratingRepository)
         {
-            _ratingRepository = ratingRepository;
+            _ratingStatisticsRepository = ratingRepository;
         }
         public void CreateOrUpdateUsersRatingStatistics(RatingStatistics[] ratingStatistics)
         {
-            throw new NotImplementedException();
+            _ratingStatisticsRepository.CreateOrUpdateUsersRatingStatistics(ratingStatistics);
         }
 
         public RatingStatistics[] GetRaiting(int top = 500)
         {
-
-            return _ratingRepository.GetRaiting(top);
-            //RatingStatistics[] rating =
-            //  {
-            //    new RatingStatistics
-            //    {
-            //        UserID = "Yaroslav",
-            //        MunualStepsCount = new CountValues { Day = 123, Week = 233, Total = 588 },
-            //        TotalEarned = new CountValues { Day = 623, Week = 745, Total = 987 },
-            //         RootCounter = new CountValues { Day = 623, Week = 745, Total = 987 }
-            //    },
-            //    new RatingStatistics
-            //    {
-            //        UserID = "70",
-            //        MunualStepsCount = new CountValues { Day = 548, Week = 658, Total = 1860 },
-            //        TotalEarned = new CountValues { Day = 564, Week = 688, Total = 1234 },
-            //        RootCounter = new CountValues { Day = 623, Week = 745, Total = 987 }
-            //    }
-            //};
-            //return rating;
+            return _ratingStatisticsRepository.GetRaiting(top);
         }
     }
 }

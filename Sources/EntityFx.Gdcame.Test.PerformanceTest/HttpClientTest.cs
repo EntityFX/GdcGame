@@ -13,7 +13,7 @@ using EntityFX.Gdcame.Utils.WebApiClient;
 using EntityFX.Gdcame.Application.WebApi.Models;
 using EntityFX.Gdcame.Common.Application.Model;
 
-namespace EntityFx.Gdcame.Test.PerformanceTest
+namespace EntityFx.Gdcame.Test.Unit
 {
 
     [TestClass]

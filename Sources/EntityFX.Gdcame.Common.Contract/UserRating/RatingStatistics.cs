@@ -7,9 +7,9 @@ namespace EntityFX.Gdcame.Common.Contract.UserRating
     public class RatingStatistics
     {
         [DataMember]
-        public object Id { get; set; }
+        public int Id { get; set; }
         [DataMember]
-        public string UserID { get; set; }
+        public string UserId { get; set; }
 
         [DataMember]
         public CountValues MunualStepsCount  { get; set; }

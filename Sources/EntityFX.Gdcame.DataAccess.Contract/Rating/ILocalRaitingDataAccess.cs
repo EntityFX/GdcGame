@@ -9,13 +9,13 @@ using EntityFX.Gdcame.Common.Contract.UserRating;
 namespace EntityFX.Gdcame.DataAccess.Contract.Rating
 {
     [ServiceContract]
-    public interface ILocalRatingDataAccess : IRatingDataAccess
+    public interface ILocalRatingDataAccess : IRatingDataAccessBase
     {
         [OperationContract]
         void PersistRatingHistory(RatingHistory ratingHistory);
 
         [OperationContract]
-        void ReadHistoryWithUsersIds(string[] userslds, TimeSpan period);
+        RatingHistory[] ReadHistoryWithUsersIds(string[] userslds, TimeSpan period);
 
         [OperationContract]
         void CleanOldHistory(TimeSpan period);

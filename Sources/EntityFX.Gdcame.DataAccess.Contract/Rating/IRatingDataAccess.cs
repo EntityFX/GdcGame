@@ -9,12 +9,8 @@ using EntityFX.Gdcame.Common.Contract.UserRating;
 namespace EntityFX.Gdcame.DataAccess.Contract.Rating
 {
     [ServiceContract]
-    public interface IRatingDataAccess 
+    public interface IRatingDataAccess:IRatingDataAccessBase
     {
-        [OperationContract]
-        void CreateOrUpdateUsersRatingStatistics(RatingStatistics[] ratingStatistics);
-
-        [OperationContract]
-        RatingStatistics[] GetRaiting(int top = 500);
+       
     }
 }

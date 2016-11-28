@@ -19,10 +19,10 @@ namespace EntityFX.Gdcame.Application.Contract.Model
 
     public class CountValuesModel
     {
-        public double Day { get; set; }
+        public decimal Day { get; set; }
 
-        public double Week { get; set; }
+        public decimal Week { get; set; }
 
-        public double Total { get; set; }
+        public decimal Total { get; set; }
     }
 }

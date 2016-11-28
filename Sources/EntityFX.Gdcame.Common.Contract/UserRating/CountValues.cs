@@ -11,10 +11,10 @@ namespace EntityFX.Gdcame.Common.Contract.UserRating
     public class CountValues
     {
         [DataMember]
-        public double Day { get; set; }
+        public decimal Day { get; set; }
         [DataMember]
-        public double Week { get; set; }
+        public decimal Week { get; set; }
         [DataMember]
-        public double Total { get; set; }
+        public decimal Total { get; set; }
     }
 }
