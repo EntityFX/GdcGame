@@ -1,5 +1,6 @@
 ﻿using EntityFX.Gdcame.Common.Contract.UserRating;
 using EntityFX.Gdcame.DataAccess.Contract.Rating;
+using EntityFX.Gdcame.Manager.Contract.RatingManager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace EntityFX.Gdcame.Manager
 {
-    public class LocalRatingManager
+    public class LocalRatingManager:ILocalRatingManager
     {
         private readonly ILocalRatingDataAccess _ratingManager;
 

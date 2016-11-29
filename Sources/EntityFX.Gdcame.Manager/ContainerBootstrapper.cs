@@ -90,7 +90,9 @@ namespace EntityFX.Gdcame.Manager
             container.RegisterType<IRatingManager, RatingManager>(
                 new InterceptionBehavior<PolicyInjectionBehavior>()
                 , new Interceptor<InterfaceInterceptor>());
-
+            container.RegisterType<ILocalRatingManager,LocalRatingManager>(
+                new InterceptionBehavior<PolicyInjectionBehavior>()
+                , new Interceptor<InterfaceInterceptor>());
             return container;
         }
     }
