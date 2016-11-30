@@ -13,5 +13,5 @@ $($ActiveFolder | get-vm).Name
 
 Start-VMsByPath -Path "KAZ03/Lab/AS-GDC-Gdcame/app"
 
-Get-IPsByFolder -Path $ActiveFolder -OutputPath $OutputPathForInternal -IPStartsWith "10.10." -Timeout 240 -Verbose
+Get-IPsByFolder -Path $ActiveFolder -MachineNameStartsAt "node" -OutputPath $OutputPathForInternal -IPStartsWith "10.10." -Timeout 240 -Verbose
 Get-IPsByFolder -Path $ActiveFolder -MachineNameStartsAt "node" -OutputPath $OutputPathForExternal -IPStartsWith "169." -Timeout 240 -Verbose

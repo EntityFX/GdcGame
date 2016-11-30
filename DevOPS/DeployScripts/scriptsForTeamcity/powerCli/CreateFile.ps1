@@ -7,6 +7,11 @@ Function CreateFile
 	[switch]$Force = $False
     )
 
+    if($InputPath -eq "")
+    {
+	$inputPath = $DefaultLoggingFileName
+    }
+
     if([System.IO.Path]::GetExtension($InputPath) -ne "")
     {
         $pathIsFile = $True
