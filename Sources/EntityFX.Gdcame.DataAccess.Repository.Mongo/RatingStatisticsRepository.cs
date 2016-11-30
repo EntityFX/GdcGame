@@ -62,10 +62,17 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
             //{
             //    CreateOrReplaceUsersRatingStatistics(userRating);
             //}
-
+            List<RatingStatistics> pushUsersRatingStatistics = new List<RatingStatistics>();
+            foreach (var userRatingStatistic in ratingStatistics)
+            {
+                if (userRatingStatistic != null)
+                {
+                    pushUsersRatingStatistics.Add(userRatingStatistic);
+                }
+            }
             IMongoCollection<RatingStatistics> collection = Database.GetCollection<RatingStatistics>("RatingStatistics");
 
-            var groupedByUserId = ratingStatistics.GroupBy(_ => _.UserId).Select(_ => _.First()).ToArray();
+            var groupedByUserId = pushUsersRatingStatistics.GroupBy(_ => _.UserId).Select(_ => _.First()).ToArray();
             var usersFilter = Builders<RatingStatistics>.Filter.In("UserId", groupedByUserId.Select(_ => _.UserId));
             var usersIdsForUpdateList = collection.Find(usersFilter).Project(_ => _.UserId).ToList();
 

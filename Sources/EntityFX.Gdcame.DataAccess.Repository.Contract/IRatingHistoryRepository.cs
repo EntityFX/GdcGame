@@ -10,7 +10,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Contract
 {
     public interface IRatingHistoryRepository
     {
-        void PersistRatingHistory(RatingHistory ratingHistory);
+        void PersistUsersRatingHistory(RatingHistory[] usersRatingHistory);
         RatingHistory[] ReadHistoryWithUsersIds(string[] userslds, TimeSpan period);
         void CleanOldHistory(TimeSpan period);
     }

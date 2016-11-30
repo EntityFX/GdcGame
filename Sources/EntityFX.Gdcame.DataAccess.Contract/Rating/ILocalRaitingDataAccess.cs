@@ -12,7 +12,7 @@ namespace EntityFX.Gdcame.DataAccess.Contract.Rating
     public interface ILocalRatingDataAccess : IRatingDataAccess
     {
         [OperationContract]
-        void PersistRatingHistory(RatingHistory ratingHistory);
+        void PersistUsersRatingHistory(RatingHistory[] ratingHistory);
 
         [OperationContract]
         RatingHistory[] ReadHistoryWithUsersIds(string[] userslds, TimeSpan period);

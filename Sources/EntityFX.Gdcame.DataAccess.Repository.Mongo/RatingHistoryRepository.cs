@@ -32,11 +32,6 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
         }
 
 
-        public void PersistRatingHistory(RatingHistory ratingHistory)
-        {
-            IMongoCollection<RatingHistory> collection = Database.GetCollection<RatingHistory>("RatingHistory");
-            collection.InsertOne(ratingHistory);
-        }
 
         public RatingHistory[] ReadHistoryWithUsersIds(string[] userslds, TimeSpan period)
         {
@@ -65,6 +60,21 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
             }
             return rating;
         }
+
+        public void PersistUsersRatingHistory(RatingHistory[] usersRatingHistory)
+        {
+            List<RatingHistory> pushUsersHistory = new List<RatingHistory>();
+            foreach (var userRatingHistory in usersRatingHistory)
+            {
+                if (userRatingHistory != null)
+                {
+                    pushUsersHistory.Add(userRatingHistory);
+                }
+            }
+            IMongoCollection<RatingHistory> collection = Database.GetCollection<RatingHistory>("RatingHistory");       
+            collection.InsertMany(pushUsersHistory);
+        }
+
         private class RatingHistoryBase
         {
             public Object _id { get; set; }

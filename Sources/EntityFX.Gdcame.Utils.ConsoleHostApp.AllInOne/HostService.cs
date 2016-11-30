@@ -94,6 +94,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
             workerManager.Add(container.Resolve<CalculationWorker>());
             workerManager.Add(container.Resolve<PersistenceWorker>());
             workerManager.Add(container.Resolve<SessionValidationWorker>());
+            workerManager.Add(container.Resolve<RatingCalculationWorker>());
         }
 
         public void StartWorkers(IWorkerManager workerManager)

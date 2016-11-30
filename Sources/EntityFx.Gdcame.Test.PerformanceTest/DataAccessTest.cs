@@ -75,7 +75,7 @@ namespace EntityFx.Gdcame.Test.Unit
                 RootCounter=225,
                 TotalEarned=928,
             };
-            _testHistoryRating.PersistRatingHistory(ratingHistory);
+           // _testHistoryRating.PersistRatingHistory(ratingHistory);
         }
         [TestMethod]
         public void  ReadHistoryWithUsersIds()

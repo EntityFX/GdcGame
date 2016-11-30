@@ -20,9 +20,9 @@ namespace EntityFX.Gdcame.DataAccess.Service
             _ratingHistoryRepository = ratingHistoryRepository;
         }
 
-        public void PersistRatingHistory(RatingHistory ratingHistory)
+        public void PersistUsersRatingHistory(RatingHistory[] ratingHistory)
         {
-            _ratingHistoryRepository.PersistRatingHistory(ratingHistory);
+            _ratingHistoryRepository.PersistUsersRatingHistory(ratingHistory);
         }
 
         public RatingHistory[] ReadHistoryWithUsersIds(string[] userslds, TimeSpan period)
