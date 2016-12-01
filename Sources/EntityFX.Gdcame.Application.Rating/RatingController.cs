@@ -21,7 +21,7 @@ namespace EntityFX.Gdcame.Application.Rating
 
         [HttpGet]
         [Route("")]
-        public override RatingStatisticsModel[] GetRaiting(int top = 500)
+        public override Task<RatingStatisticsModel[]> GetRaiting(int top = 500)
         {
             return base.GetRaiting(top);
         }

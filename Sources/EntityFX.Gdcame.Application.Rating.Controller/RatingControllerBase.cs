@@ -21,9 +21,9 @@ namespace EntityFX.Gdcame.Application.Rating.Controller
             _raitingManager = raitingManager;
         }
 
-        public virtual RatingStatisticsModel[] GetRaiting(int top = 500)
+        public virtual Task<RatingStatisticsModel[]> GetRaiting(int top = 500)
         {
-            return ConvertAllRaitingStatisticsAsRaitingStatisticsModel(_raitingManager.GetRaiting(top));
+            return Task.Factory.StartNew(() => ConvertAllRaitingStatisticsAsRaitingStatisticsModel(_raitingManager.GetRaiting(top)));
         }
 
         private RatingStatisticsModel[] ConvertAllRaitingStatisticsAsRaitingStatisticsModel(RatingStatistics[] raitingStatistics)
@@ -38,7 +38,7 @@ namespace EntityFX.Gdcame.Application.Rating.Controller
             {
                 AllRSModel.Add(ConvertRaitingStatisticsAsRaitingStatisticsModel(raitingStatistics[i]));
                 //RatingStatisticsModel _nextRSModel = Mapper.Map<RatingStatistics, RatingStatisticsModel>(raitingStatistics[i]);
-               // AllRSModel.Add(_nextRSModel);
+                // AllRSModel.Add(_nextRSModel);
             }
             //foreach (var _raiting in raitingStatistics)
             //{
@@ -51,6 +51,7 @@ namespace EntityFX.Gdcame.Application.Rating.Controller
 
             RatingStatisticsModel _RSModel = new RatingStatisticsModel
             {
+                Login = RatingStatistics.Login,
                 UserID = RatingStatistics.UserId,
                 MunualStepsCount = ConvertCountValuesModelAsCountValues(RatingStatistics.ManualStepsCount),
                 RootCounter = ConvertCountValuesModelAsCountValues(RatingStatistics.RootCounter),
@@ -72,5 +73,5 @@ namespace EntityFX.Gdcame.Application.Rating.Controller
         }
     }
 
-   
+
 }

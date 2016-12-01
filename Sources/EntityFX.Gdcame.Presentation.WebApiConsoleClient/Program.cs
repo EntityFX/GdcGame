@@ -15,6 +15,11 @@ using Microsoft.Practices.Unity;
 using System.Configuration;
 using System.IO;
 using System.Web.Hosting;
+using EntityFX.Gdcame.Application.WebApi.Controller;
+using EntityFX.Gdcame.DataAccess.Repository.Contract;
+using EntityFX.Gdcame.DataAccess.Repository.Mongo;
+using EntityFX.Gdcame.DataAccess.Service;
+using EntityFX.Gdcame.Manager;
 using EntityFX.Gdcame.Utils.Common;
 using Newtonsoft.Json;
 
@@ -44,10 +49,12 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             {
                 ConsoleKey.F1,
                 new MenuItem {MenuText = "Войти и играть", MenuAction = TryLogin}
-            },            {
+            },
+            {
                 ConsoleKey.F2,
                 new MenuItem {MenuText = "Зарегать аккаунт", MenuAction = RegisterAccount}
-            }, {
+            },
+            {
                 ConsoleKey.Escape,
                 new MenuItem {MenuText = "Выход", MenuAction = ExitMainMenu}
             }
@@ -62,7 +69,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 
         private static void Main(string[] args)
         {
-            Console.SetWindowSize(100,50);
+            Console.SetWindowSize(100, 50);
             var listArgs = args.ToList();
             if (args.Length > 0)
             {
@@ -77,7 +84,16 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 
         }
 
-
+        private static void RatingMenu(Tuple<PasswordOAuthContext, string> loginContext)
+        {
+            var ratingClient = ApiHelper.GetRatingController(loginContext.Item1);
+            var ratingData = ratingClient.GetRaiting(500).Result;
+            foreach (var data in ratingData)
+            {
+                Console.Clear();
+                Console.Write($"Имя={data.UserID}, Количество шагов={data.MunualStepsCount.Total}, GDC Points={data.RootCounter.Total}, Всего заработано={data.TotalEarned}");
+            }
+        }
 
         private static void RegisterAccount()
         {
@@ -218,7 +234,10 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                         _userName = null;
                         break;
                     }
-
+                    else if (keyInfo.Key == ConsoleKey.F4)
+                    {
+                        RatingMenu(loginContext);
+                    }
                     if (gr.ErrorCode != null)
                     {
                         if (gr.ErrorCode == ErrorCodes.InvalidSessionError || gr.ErrorCode == ErrorCodes.OtherError)

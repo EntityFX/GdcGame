@@ -6,7 +6,9 @@ namespace EntityFX.Gdcame.Common.Contract.UserRating
     [DataContract]
     public class RatingStatistics
     {
-        
+        [DataMember]
+        public string Login { get; set; }
+
         [DataMember]
         public string UserId { get; set; }
 

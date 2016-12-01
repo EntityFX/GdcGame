@@ -61,6 +61,7 @@
     <Compile Include="Auth\PasswordAuthRequest.cs" />
     <Compile Include="Auth\PasswordOAuthContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RatingApiClient.cs" />
     <Compile Include="ServerInfoClient.cs" />
   </ItemGroup>
   <ItemGroup>

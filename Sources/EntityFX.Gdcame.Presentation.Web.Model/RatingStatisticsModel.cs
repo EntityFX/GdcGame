@@ -10,6 +10,8 @@ namespace EntityFX.Gdcame.Application.Contract.Model
     {
         public string UserID { get; set; }
 
+        public string Login { get; set; }
+
         public CountValuesModel MunualStepsCount { get; set; }
 
         public CountValuesModel TotalEarned { get; set; }

@@ -9,6 +9,6 @@ namespace EntityFX.Gdcame.Application.Contract.Controller
 {
     public interface IRatingController
     {
-        RatingStatisticsModel[] GetRaiting(int top = 500);
+        Task<RatingStatisticsModel[]> GetRaiting(int top = 500);
     }
 }

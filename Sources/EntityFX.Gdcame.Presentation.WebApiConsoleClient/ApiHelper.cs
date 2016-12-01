@@ -3,6 +3,10 @@ using System.Configuration;
 using System.IO;
 using System.Threading.Tasks;
 using EntityFX.Gdcame.Application.Contract.Controller;
+using EntityFX.Gdcame.Application.WebApi.Controller;
+using EntityFX.Gdcame.DataAccess.Repository.Mongo;
+using EntityFX.Gdcame.DataAccess.Service;
+using EntityFX.Gdcame.Manager;
 using EntityFX.Gdcame.Utils.Common;
 using EntityFX.Gdcame.Utils.WebApiClient;
 using EntityFX.Gdcame.Utils.WebApiClient.Auth;
@@ -74,6 +78,11 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
         public static IServerController GetServerInfoClient(PasswordOAuthContext session)
         {
             return new ServerInfoClient(session);
+        }
+
+        public static IRatingController GetRatingController(PasswordOAuthContext session)
+        {
+            return new RatingApiClient(session);
         }
     }
 }
