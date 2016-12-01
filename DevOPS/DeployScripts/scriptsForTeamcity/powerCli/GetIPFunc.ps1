@@ -20,7 +20,7 @@ function Get-IPsByFolder
     do
     {
         $virtualMachines = $Path | get-vm | Sort-Object Name | Get-Unique | where-object {$_.Name.StartsWith($MachineNameStartsAt)}
-        $startedSrevers = $($virtualMachines | where-object {($_.Guest.IPAddress -ne $null) -and $($($($_.Guest.IPAddress | where-object { $_.Length -le 15 }).Count) -gt 0) }).Count#$ipAdresses.Count #$_.Guest.IPAddress -ne $null
+        $startedSrevers = 0#$($virtualMachines | where-object {($_.Guest.IPAddress -ne $null) -and $($($($_.Guest.IPAddress | where-object { $_.Length -le 15 }).Count) -gt 0) }).Count#$ipAdresses.Count #$_.Guest.IPAddress -ne $null
 
         $ipAdresses = $virtualMachines.Guest.IPAddress | where-object {$_.Length -le 15}
         $ipAdresses = $ipAdresses | select-object -unique

@@ -6,12 +6,12 @@ $OutputPathForInternal = CreateFile -InputPath "$WorkDir\nodesInternalIpAddresse
 $OutputPathForExternal = CreateFile -InputPath "$WorkDir\nodesExternalIpAddresses.json" -Force
 
 Add-PSSnapin  VMware.VimAutomation.Core #&"C:\Program Files (x86)\VMware\Infrastructure\vSphere PowerCLI\Scripts\Initialize-PowerCLIEnvironment.ps1"
-Connect-VIServer vcenter.russia.local
+Connect-VIServer vcenter.russia.local | out-null
 
 $ActiveFolder = Get-FolderByPath "KAZ03/Lab/AS-GDC-Gdcame/app"
-$($ActiveFolder | get-vm).Name
+#$($ActiveFolder | get-vm).Name
 
-Start-VMsByPath -Path "KAZ03/Lab/AS-GDC-Gdcame/app"
+Start-VMsByPath -Path "KAZ03/Lab/AS-GDC-Gdcame/app" | out-null
 
-Get-IPsByFolder -Path $ActiveFolder -MachineNameStartsAt "node" -OutputPath $OutputPathForInternal -IPStartsWith "10.10." -Timeout 240 -Verbose
-Get-IPsByFolder -Path $ActiveFolder -MachineNameStartsAt "node" -OutputPath $OutputPathForExternal -IPStartsWith "169." -Timeout 240 -Verbose
+Get-IPsByFolder -Path $ActiveFolder -MachineNameStartsAt "node" -OutputPath $OutputPathForInternal -IPStartsWith "169." -Timeout 240 -Verbose
+Get-IPsByFolder -Path $ActiveFolder -MachineNameStartsAt "node" -OutputPath $OutputPathForExternal -IPStartsWith "10.10." -Timeout 240 -Verbose
