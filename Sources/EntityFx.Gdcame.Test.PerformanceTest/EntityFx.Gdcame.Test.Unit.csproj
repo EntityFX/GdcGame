@@ -133,6 +133,10 @@
       <Project>{0932d8b3-29eb-4546-987a-b246421a9b87}</Project>
       <Name>EntityFX.Gdcame.DataAccess.Contract</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Repository.Contract\EntityFX.Gdcame.DataAccess.Repository.Contract.csproj">
+      <Project>{C1B1F481-6E3E-464C-A983-CB56AD430C1D}</Project>
+      <Name>EntityFX.Gdcame.DataAccess.Repository.Contract</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Repository.Mongo\EntityFX.Gdcame.DataAccess.Repository.Mongo.csproj">
       <Project>{0F77947A-9E4C-4663-A7EE-C43A4D357217}</Project>
       <Name>EntityFX.Gdcame.DataAccess.Repository.Mongo</Name>
@@ -156,6 +160,10 @@
     <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Common\EntityFX.Gdcame.Infrastructure.Common.csproj">
       <Project>{924CC67D-9E2B-46BA-BE1D-6C6C780CCFBC}</Project>
       <Name>EntityFX.Gdcame.Infrastructure.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Repository\EntityFX.Gdcame.Infrastructure.Repository.csproj">
+      <Project>{95745c95-a356-4e4a-9ac5-25abd9659831}</Project>
+      <Name>EntityFX.Gdcame.Infrastructure.Repository</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Manager.Contract\EntityFX.Gdcame.Manager.Contract.csproj">
       <Project>{41696F24-E345-4599-A0C7-0715F64946D8}</Project>

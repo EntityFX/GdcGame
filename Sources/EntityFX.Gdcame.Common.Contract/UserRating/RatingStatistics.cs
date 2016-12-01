@@ -11,7 +11,7 @@ namespace EntityFX.Gdcame.Common.Contract.UserRating
         public string UserId { get; set; }
 
         [DataMember]
-        public CountValues MunualStepsCount  { get; set; }
+        public CountValues ManualStepsCount  { get; set; }
 
         [DataMember]
         public CountValues TotalEarned { get; set; }

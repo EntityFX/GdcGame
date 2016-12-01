@@ -52,7 +52,7 @@ namespace EntityFX.Gdcame.Application.Rating.Controller
             RatingStatisticsModel _RSModel = new RatingStatisticsModel
             {
                 UserID = RatingStatistics.UserId,
-                MunualStepsCount = ConvertCountValuesModelAsCountValues(RatingStatistics.MunualStepsCount),
+                MunualStepsCount = ConvertCountValuesModelAsCountValues(RatingStatistics.ManualStepsCount),
                 RootCounter = ConvertCountValuesModelAsCountValues(RatingStatistics.RootCounter),
                 TotalEarned = ConvertCountValuesModelAsCountValues(RatingStatistics.TotalEarned)
 

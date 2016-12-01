@@ -215,7 +215,6 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
 
         public Tuple<PerformanceAggregate, T[]> DoSequenceTask<T>(int from, int to, Func<int, Task<Tuple<PerformanceCounter, T>>> task, Action<int> iterrationAction)
         {
-            var counter = 0;
             var result = new PerformanceAggregate();
             var tasksResultList = new List<Tuple<PerformanceCounter, T>>();
             var sw = new Stopwatch();
@@ -268,17 +267,6 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
                        Console.WriteLine("Registered {0} accounts", counter);
                    }
                }).Item1;
-                var res = new Tuple<PerformanceCounter, object>[countAccounts];
-                var sw = new Stopwatch();
-                sw.Start();
-                Parallel.For(0, countAccounts,
-                    async i1 => res[i1] = await RegisterAccount(string.Format("{0}{1}", accounLoginPrefix, i1)));
-                var p = new PerformanceAggregate()
-                {
-                    PerformanceCounters = res.Select(_ => _.Item1).ToArray(),
-                    TotalElapsed = sw.Elapsed
-                };
-                return p;
             }
             else
             {

@@ -10,6 +10,7 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using EntityFX.Gdcame.DataAccess.Contract.Rating;
+using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.RatingHistory;
 
 namespace EntityFx.Gdcame.Test.Unit
 {
@@ -26,7 +27,7 @@ namespace EntityFx.Gdcame.Test.Unit
             {
                 //Id = 45,
                 UserId = "Y391",
-                MunualStepsCount = new CountValues { Day = 123, Week = 233, Total = 588 },
+                ManualStepsCount = new CountValues { Day = 123, Week = 233, Total = 588 },
                 TotalEarned = new CountValues { Day = 623, Week = 745, Total = 987 },
                 RootCounter = new CountValues { Day = 623, Week = 745, Total = 987 }
             };
@@ -34,7 +35,7 @@ namespace EntityFx.Gdcame.Test.Unit
             {
                 //Id = 12,
                 UserId = "Y392",
-                MunualStepsCount = new CountValues { Day = 123, Week = 233, Total = 588 },
+                ManualStepsCount = new CountValues { Day = 123, Week = 233, Total = 588 },
                 TotalEarned = new CountValues { Day = 623, Week = 745, Total = 987 },
                 RootCounter = new CountValues { Day = 623, Week = 745, Total = 987 }
             };
@@ -42,7 +43,7 @@ namespace EntityFx.Gdcame.Test.Unit
             {
                 //Id = 123,
                 UserId = "Y393",
-                MunualStepsCount = new CountValues { Day = 123, Week = 233, Total = 588 },
+                ManualStepsCount = new CountValues { Day = 123, Week = 233, Total = 588 },
                 TotalEarned = new CountValues { Day = 623, Week = 745, Total = 987 },
                 RootCounter = new CountValues { Day = 623, Week = 745, Total = 987 }
             };
@@ -85,7 +86,7 @@ namespace EntityFx.Gdcame.Test.Unit
             RatingHistoryRepository _testHistoryRating = new RatingHistoryRepository(database);
             string[] userslds = new string[] { "accepted" };
             TimeSpan period = new TimeSpan(24, 0, 0);
-            var history= _testHistoryRating.ReadHistoryWithUsersIds(userslds, period);
+            var history= _testHistoryRating.ReadHistoryWithUsersIds(new GetUsersRatingHistoryCriterion() { UsersIds = userslds, Period = period});
 
         }
         [TestMethod]

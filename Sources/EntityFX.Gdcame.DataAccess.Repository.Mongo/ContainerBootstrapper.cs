@@ -11,6 +11,7 @@ using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Bson.Serialization.Options;
 using MongoDB.Bson.Serialization;
 using EntityFX.Gdcame.Common.Contract.Counters;
+using EntityFX.Gdcame.Common.Contract.UserRating;
 using EntityFX.Gdcame.DataAccess.Contract.GameData.Store;
 using MongoDB.Bson.Serialization.IdGenerators;
 
@@ -60,6 +61,13 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
 
 
             BsonClassMap.RegisterClassMap<StoredGameDataWithUserId>(cm =>
+            {
+                cm.AutoMap();
+                cm.SetIdMember(cm.GetMemberMap(x => x.UserId)
+                  .SetIdGenerator(StringObjectIdGenerator.Instance));
+            });
+
+            BsonClassMap.RegisterClassMap<RatingStatistics>(cm =>
             {
                 cm.AutoMap();
                 cm.SetIdMember(cm.GetMemberMap(x => x.UserId)

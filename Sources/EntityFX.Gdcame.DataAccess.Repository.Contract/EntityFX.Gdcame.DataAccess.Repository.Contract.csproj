@@ -61,6 +61,7 @@
     <Compile Include="Criterions\Counters\GetAllCountersCriterion.cs" />
     <Compile Include="Criterions\CustomRule\GetAllCustomRulesCriterion.cs" />
     <Compile Include="Criterions\FundsDriver\GetAllFundsDriversCriterion.cs" />
+    <Compile Include="Criterions\RatingHistory\GetUsersRatingHistoryCriterion.cs" />
     <Compile Include="Criterions\UserCounter\GetUserCountersByUserIdCriterion.cs" />
     <Compile Include="Criterions\UserCustomRuleInfo\GetUserCustomRuleInfoByUserIdCriterion.cs" />
     <Compile Include="Criterions\UserFundsDriver\GetUserFundsDriverByUserIdCriterion.cs" />

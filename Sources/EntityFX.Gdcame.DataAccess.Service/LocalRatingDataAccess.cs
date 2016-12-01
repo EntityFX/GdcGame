@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using EntityFX.Gdcame.Common.Contract.UserRating;
 using EntityFX.Gdcame.DataAccess.Repository.Contract;
+using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.RatingHistory;
 
 namespace EntityFX.Gdcame.DataAccess.Service
 {
@@ -27,7 +28,7 @@ namespace EntityFX.Gdcame.DataAccess.Service
 
         public RatingHistory[] ReadHistoryWithUsersIds(string[] userslds, TimeSpan period)
         {
-            return _ratingHistoryRepository.ReadHistoryWithUsersIds(userslds, period);
+            return _ratingHistoryRepository.ReadHistoryWithUsersIds(new GetUsersRatingHistoryCriterion(){ UsersIds =  userslds, Period = period});
         }
 
         public void CleanOldHistory(TimeSpan period)

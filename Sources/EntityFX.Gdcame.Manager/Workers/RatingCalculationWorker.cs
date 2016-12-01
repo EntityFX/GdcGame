@@ -13,10 +13,10 @@ namespace EntityFX.Gdcame.Manager.Workers
 {
     public class RatingCalculationWorker : IWorker
     {
-        private const int TimeSaveInSeconds = 30;       
+        private const int TimeSaveInSeconds = 5;       
         private const int ChunkSize = 500;
         private readonly ILogger _logger;
-        private GameSessions _gameSessions;
+        private readonly GameSessions _gameSessions;
         private readonly ILocalRatingDataAccess _localRatingDataAccess;
         private readonly TaskTimer _backgroundSaveHistoryCheckerTimer;
         private Task _backgroundSaveHistoryCheckerTask;
@@ -27,7 +27,7 @@ namespace EntityFX.Gdcame.Manager.Workers
             _logger = logger;
             _gameSessions = gameSessions;
             _localRatingDataAccess = localRatingDataAccess;
-            _backgroundSaveHistoryCheckerTimer = new TaskTimer(TimeSpan.FromSeconds(TimeSaveInSeconds), SaveHistoryCheckTask);
+            _backgroundSaveHistoryCheckerTimer = new TaskTimer(TimeSpan.FromSeconds(TimeSaveInSeconds), PerformRatingCalculation);
             Name = "Rating Calculation Worker";
         }
 
@@ -48,7 +48,7 @@ namespace EntityFX.Gdcame.Manager.Workers
             }
         }
 
-        private void SaveHistoryCheckTask()
+        private void PerformRatingCalculation()
         {
             var sw = new Stopwatch();
             sw.Start();
@@ -56,8 +56,8 @@ namespace EntityFX.Gdcame.Manager.Workers
             {
                 try
                 {
-                    SaveHistory();
-                    RecalculationRatingStatisticsAllUsers();
+                    SaveRatingHistory();
+                    RecalculateRatingStatisticsForActiveUsers();
                     CleanOldHistory();
                 }
                 catch (Exception e)
@@ -67,21 +67,21 @@ namespace EntityFX.Gdcame.Manager.Workers
                 }
             }
             if (_logger != null)
-                _logger.Info("Perform sessions {0} check: {1}", _gameSessions.Sessions.Count, sw.Elapsed);
+                _logger.Info("Perform rating calculation for {0} games, ellapsed: {1}", _gameSessions.Games.Count, sw.Elapsed);
         }
 
-        private void SaveHistory()
+        private void SaveRatingHistory()
         {           
             var ratingHistoryChunk = new RatingHistory[ChunkSize];
             var count = 0;
-            RatingHistory userRatingHistory;
+            var userIdentities = _gameSessions.Identities;
             foreach (var game in _gameSessions.Games)
             {
                 if (count < ChunkSize)
                 {
-                    userRatingHistory = new RatingHistory
+                    var userRatingHistory = new RatingHistory
                     {
-                        UserId = game.Key,
+                        UserId = userIdentities[game.Key],
                         ManualStepsCount = game.Value.ManualStepNumber,
                         RootCounter = (int)game.Value.GameCash.RootCounter.Value,
                         Data = DateTime.Now,
@@ -126,57 +126,52 @@ namespace EntityFX.Gdcame.Manager.Workers
             //    _localRatingDataAccess.PersistUsersRatingHistory(ratingHistoryChunk);
             //};
         }
-        private void RecalculationRatingStatisticsAllUsers()
+        private void RecalculateRatingStatisticsForActiveUsers()
         {
             int ChunkSizeUsers = 100;
-            List<string> userId = new List<string>();
+            var users = new string[ChunkSizeUsers];
             var count = 0;
+            var userIdentities = _gameSessions.Identities;
             foreach (var game in _gameSessions.Games)
             {
                 if (count < ChunkSizeUsers)
                 {
-                    userId.Add(game.Key);
+                    users[count] = userIdentities[game.Key];
                     count++;
                 }
                 else
                 {
-                    if (userId.FirstOrDefault() != null)
+                    if (users.FirstOrDefault() != null)
                     {
-                        RecalculationRatingStatisticsChunkUsers(userId);
-                        userId = new List<string>();
+                        RecalculationRatingStatisticsChunkUsers(users);
+                        users = new string[ChunkSizeUsers];
                         count = 0;
                     }
                 }
             }
             if (count < ChunkSizeUsers)
             {
-                if (userId.FirstOrDefault() != null)
+                if (users.FirstOrDefault() != null)
                 {
-                    RecalculationRatingStatisticsChunkUsers(userId);
-                    userId = new List<string>();
+                    RecalculationRatingStatisticsChunkUsers(users);
+                    users = new string[ChunkSizeUsers];
                     count = 0;
                 }
             }
         }
 
-        private void RecalculationRatingStatisticsChunkUsers(List<string> userId)
+        private void RecalculationRatingStatisticsChunkUsers(string[] users)
         {
             TimeSpan periodWeek = new TimeSpan(7, 0, 0, 0);
             //TimeSpan periodTotal = new TimeSpan(7, 0, 0, 0);
             List<RatingStatistics> usersNewRating = new List<RatingStatistics>();
-            var ratingHistoryDay = _localRatingDataAccess.ReadHistoryWithUsersIds(userId.ToArray(), periodWeek);
+            var readHistoryWithUsersIdsForWeek = _localRatingDataAccess.ReadHistoryWithUsersIds(users, periodWeek);
             //var usersId=
-            ratingHistoryDay.OrderBy(t => t.Data);
-            List<RatingHistory> userHistoreTotal = new List<RatingHistory>();
 
-            foreach (var user in userId)
+            var ratingHistoryGroupedByUser = readHistoryWithUsersIdsForWeek.GroupBy(g => g.UserId);
+            foreach (var ratingHistoryOfUser in ratingHistoryGroupedByUser)
             {
-                foreach (var oneUserHistory in ratingHistoryDay)
-                    if (oneUserHistory.UserId == user)
-                    {
-                        userHistoreTotal.Add(oneUserHistory);
-                    }
-                usersNewRating.Add(RecalculationRatingStatisticsOneUser(userHistoreTotal));
+                usersNewRating.Add(RecalculationRatingStatisticsOneUser(ratingHistoryOfUser.ToList()));
             }
             _localRatingDataAccess.CreateOrUpdateUsersRatingStatistics(usersNewRating.ToArray());
 
@@ -190,7 +185,7 @@ namespace EntityFX.Gdcame.Manager.Workers
             RatingStatistics userRatingNew = new RatingStatistics
             {
                 UserId = lastDataUser.UserId,
-                MunualStepsCount = new CountValues { Day = lastDataUser.ManualStepsCount, Week = lastDataUser.ManualStepsCount, Total = lastDataUser.ManualStepsCount },
+                ManualStepsCount = new CountValues { Day = lastDataUser.ManualStepsCount, Week = lastDataUser.ManualStepsCount, Total = lastDataUser.ManualStepsCount },
                 RootCounter = new CountValues { Day = lastDataUser.RootCounter, Week = lastDataUser.RootCounter, Total = lastDataUser.RootCounter },
                 TotalEarned = new CountValues { Day = lastDataUser.TotalEarned, Week = lastDataUser.TotalEarned, Total = lastDataUser.TotalEarned },
             };
@@ -201,7 +196,7 @@ namespace EntityFX.Gdcame.Manager.Workers
                 TimeSpan periodDay = new TimeSpan(1, 0, 0, 0);
                 var userHistoryDay = userHistoreTotal.FindAll(t => t.Data >= lastDataUser.Data.Subtract(periodDay)).OrderBy(t => t.Data);
                 var firstDataUserDay = userHistoryDay.FirstOrDefault();
-                userRatingNew.MunualStepsCount.Day = lastDataUser.ManualStepsCount - firstDataUserDay.ManualStepsCount;
+                userRatingNew.ManualStepsCount.Day = lastDataUser.ManualStepsCount - firstDataUserDay.ManualStepsCount;
                 userRatingNew.RootCounter.Day = lastDataUser.RootCounter - firstDataUserDay.RootCounter;
                 userRatingNew.TotalEarned.Day = lastDataUser.TotalEarned - firstDataUserDay.TotalEarned;
 
@@ -209,7 +204,7 @@ namespace EntityFX.Gdcame.Manager.Workers
                 TimeSpan periodWeek = new TimeSpan(7, 0, 0, 0);
                 var userHistoryWeek = userHistoreTotal.FindAll(t => t.Data >= lastDataUser.Data.Subtract(periodWeek)).OrderBy(t => t.Data);
                 var firstDataUserWeek = userHistoryDay.FirstOrDefault();
-                userRatingNew.MunualStepsCount.Week = lastDataUser.ManualStepsCount - firstDataUserDay.ManualStepsCount;
+                userRatingNew.ManualStepsCount.Week = lastDataUser.ManualStepsCount - firstDataUserDay.ManualStepsCount;
                 userRatingNew.RootCounter.Week = lastDataUser.RootCounter - firstDataUserWeek.ManualStepsCount;
                 userRatingNew.TotalEarned.Total = lastDataUser.TotalEarned - firstDataUserWeek.TotalEarned;
             }
