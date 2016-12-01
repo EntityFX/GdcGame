@@ -22,7 +22,10 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
             Database = database;
         }
 
-
+        /// <summary>
+        /// Clean Old History less than period
+        /// </summary>
+        /// <param name="period"></param>
         public void CleanOldHistory(TimeSpan period)
         {
             IMongoCollection<RatingHistory> collection = Database.GetCollection<RatingHistory>("RatingHistory");
@@ -44,6 +47,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
 
             return ConverterRatingHistoryBaseAsRatingHistory(usersRating).ToArray();
         }
+
         private List<RatingHistory> ConverterRatingHistoryBaseAsRatingHistory(List<RatingHistoryBase> ratingHistoryBase)
         {
             List<RatingHistory> rating = new List<RatingHistory>();

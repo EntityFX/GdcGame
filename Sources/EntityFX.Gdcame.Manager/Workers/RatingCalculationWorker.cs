@@ -13,8 +13,7 @@ namespace EntityFX.Gdcame.Manager.Workers
 {
     public class RatingCalculationWorker : IWorker
     {
-        private const int TimeSaveInSeconds = 20;
-        private const int SessionsCheckIntervalInSeconds = 30;
+        private const int TimeSaveInSeconds = 30;       
         private const int ChunkSize = 500;
         private readonly ILogger _logger;
         private GameSessions _gameSessions;
@@ -58,9 +57,8 @@ namespace EntityFX.Gdcame.Manager.Workers
                 try
                 {
                     SaveHistory();
-                    ChankUsersRatingStatistics();
-                    // RecalculationRatingStatistics();
-                    //  CleanOldHistory();
+                    RecalculationRatingStatisticsAllUsers();
+                    CleanOldHistory();
                 }
                 catch (Exception e)
                 {
@@ -73,7 +71,7 @@ namespace EntityFX.Gdcame.Manager.Workers
         }
 
         private void SaveHistory()
-        {
+        {           
             var ratingHistoryChunk = new RatingHistory[ChunkSize];
             var count = 0;
             RatingHistory userRatingHistory;
@@ -85,7 +83,7 @@ namespace EntityFX.Gdcame.Manager.Workers
                     {
                         UserId = game.Key,
                         ManualStepsCount = game.Value.ManualStepNumber,
-                        RootCounter = (Int32)game.Value.GameCash.RootCounter.Value,
+                        RootCounter = (int)game.Value.GameCash.RootCounter.Value,
                         Data = DateTime.Now,
                         TotalEarned = game.Value.GameCash.TotalEarned,
                     };
@@ -128,13 +126,14 @@ namespace EntityFX.Gdcame.Manager.Workers
             //    _localRatingDataAccess.PersistUsersRatingHistory(ratingHistoryChunk);
             //};
         }
-        private void ChankUsersRatingStatistics()
+        private void RecalculationRatingStatisticsAllUsers()
         {
+            int ChunkSizeUsers = 100;
             List<string> userId = new List<string>();
             var count = 0;
             foreach (var game in _gameSessions.Games)
             {
-                if (count < ChunkSize)
+                if (count < ChunkSizeUsers)
                 {
                     userId.Add(game.Key);
                     count++;
@@ -143,24 +142,24 @@ namespace EntityFX.Gdcame.Manager.Workers
                 {
                     if (userId.FirstOrDefault() != null)
                     {
-                        RecalculationRatingStatistics(userId);
+                        RecalculationRatingStatisticsChunkUsers(userId);
                         userId = new List<string>();
                         count = 0;
                     }
                 }
             }
-            if (count < ChunkSize)
+            if (count < ChunkSizeUsers)
             {
                 if (userId.FirstOrDefault() != null)
                 {
-                    RecalculationRatingStatistics(userId);
+                    RecalculationRatingStatisticsChunkUsers(userId);
                     userId = new List<string>();
                     count = 0;
                 }
             }
         }
 
-        private void RecalculationRatingStatistics(List<string> userId)
+        private void RecalculationRatingStatisticsChunkUsers(List<string> userId)
         {
             TimeSpan periodWeek = new TimeSpan(7, 0, 0, 0);
             //TimeSpan periodTotal = new TimeSpan(7, 0, 0, 0);
@@ -169,33 +168,53 @@ namespace EntityFX.Gdcame.Manager.Workers
             //var usersId=
             ratingHistoryDay.OrderBy(t => t.Data);
             List<RatingHistory> userHistoreTotal = new List<RatingHistory>();
-            
+
             foreach (var user in userId)
             {
                 foreach (var oneUserHistory in ratingHistoryDay)
-                    if (oneUserHistory.UserId ==user)
+                    if (oneUserHistory.UserId == user)
                     {
                         userHistoreTotal.Add(oneUserHistory);
                     }
                 usersNewRating.Add(RecalculationRatingStatisticsOneUser(userHistoreTotal));
             }
-
             _localRatingDataAccess.CreateOrUpdateUsersRatingStatistics(usersNewRating.ToArray());
 
         }
 
         private RatingStatistics RecalculationRatingStatisticsOneUser(List<RatingHistory> userHistoreTotal)
         {
-            userHistoreTotal.OrderByDescending(t => t.Data);
-            var lastRecordHistory = userHistoreTotal.FirstOrDefault();
+
+            var lastDataUser = userHistoreTotal.OrderByDescending(t => t.Data).FirstOrDefault();
+            //add the values for the Total
             RatingStatistics userRatingNew = new RatingStatistics
-               {
-                    UserId = lastRecordHistory.UserId,
-                    MunualStepsCount = new CountValues { Day = lastRecordHistory.RootCounter, Week = lastRecordHistory.ManualStepsCount, Total = lastRecordHistory.ManualStepsCount },
-                    RootCounter = new CountValues { Day = lastRecordHistory.RootCounter, Week = lastRecordHistory.ManualStepsCount, Total = lastRecordHistory.RootCounter },
-                    TotalEarned = new CountValues { Day = lastRecordHistory.RootCounter, Week = lastRecordHistory.ManualStepsCount, Total = lastRecordHistory.TotalEarned },
-                };
+            {
+                UserId = lastDataUser.UserId,
+                MunualStepsCount = new CountValues { Day = lastDataUser.ManualStepsCount, Week = lastDataUser.ManualStepsCount, Total = lastDataUser.ManualStepsCount },
+                RootCounter = new CountValues { Day = lastDataUser.RootCounter, Week = lastDataUser.RootCounter, Total = lastDataUser.RootCounter },
+                TotalEarned = new CountValues { Day = lastDataUser.TotalEarned, Week = lastDataUser.TotalEarned, Total = lastDataUser.TotalEarned },
+            };
+            if (userHistoreTotal.Count >= 2)
+            {
+                // add the values for the day
+                // var dataExtreme= lastRecordHistory.Data.Subtract(period);
+                TimeSpan periodDay = new TimeSpan(1, 0, 0, 0);
+                var userHistoryDay = userHistoreTotal.FindAll(t => t.Data >= lastDataUser.Data.Subtract(periodDay)).OrderBy(t => t.Data);
+                var firstDataUserDay = userHistoryDay.FirstOrDefault();
+                userRatingNew.MunualStepsCount.Day = lastDataUser.ManualStepsCount - firstDataUserDay.ManualStepsCount;
+                userRatingNew.RootCounter.Day = lastDataUser.RootCounter - firstDataUserDay.RootCounter;
+                userRatingNew.TotalEarned.Day = lastDataUser.TotalEarned - firstDataUserDay.TotalEarned;
+
+                //add the values for the 7 day
+                TimeSpan periodWeek = new TimeSpan(7, 0, 0, 0);
+                var userHistoryWeek = userHistoreTotal.FindAll(t => t.Data >= lastDataUser.Data.Subtract(periodWeek)).OrderBy(t => t.Data);
+                var firstDataUserWeek = userHistoryDay.FirstOrDefault();
+                userRatingNew.MunualStepsCount.Week = lastDataUser.ManualStepsCount - firstDataUserDay.ManualStepsCount;
+                userRatingNew.RootCounter.Week = lastDataUser.RootCounter - firstDataUserWeek.ManualStepsCount;
+                userRatingNew.TotalEarned.Total = lastDataUser.TotalEarned - firstDataUserWeek.TotalEarned;
+            }
             return userRatingNew;
+            
         }
 
         //private void RecalculationRatingStatistics()
@@ -252,39 +271,39 @@ namespace EntityFX.Gdcame.Manager.Workers
         //    // _localRatingDataAccess.CreateOrUpdateUsersRatingStatistics(usersNewRating.ToArray());
         //    // PersistRatingStatistics(usersNewRating.ToArray());
         //}
-        private void PersistRatingStatistics(RatingStatistics[] ratingStatistics)
-        {
-            var ratingStatisticsChunk = new RatingStatistics[ChunkSize];
-            var count = 0;
-            foreach (var userRating in ratingStatistics)
-            {
-                if (count < ChunkSize)
-                {
-                    ratingStatisticsChunk[count] = userRating;
-                    count++;
-                }
-                else
-                {
-                    if (ratingStatisticsChunk.FirstOrDefault() != null)
-                    {
-                        _localRatingDataAccess.CreateOrUpdateUsersRatingStatistics(ratingStatisticsChunk);
-                        ratingStatisticsChunk = new RatingStatistics[ChunkSize];
-                        count = 0;
-                    }
-                }
-            }
-            if (count < ChunkSize)
-            {
-                if (ratingStatisticsChunk.FirstOrDefault() != null)
-                {
-                    _localRatingDataAccess.CreateOrUpdateUsersRatingStatistics(ratingStatisticsChunk);
-                    ratingStatisticsChunk = new RatingStatistics[ChunkSize];
-                    count = 0;
-                }
-            }
+        //private void PersistRatingStatistics(RatingStatistics[] ratingStatistics)
+        //{
+        //    var ratingStatisticsChunk = new RatingStatistics[ChunkSize];
+        //    var count = 0;
+        //    foreach (var userRating in ratingStatistics)
+        //    {
+        //        if (count < ChunkSize)
+        //        {
+        //            ratingStatisticsChunk[count] = userRating;
+        //            count++;
+        //        }
+        //        else
+        //        {
+        //            if (ratingStatisticsChunk.FirstOrDefault() != null)
+        //            {
+        //                _localRatingDataAccess.CreateOrUpdateUsersRatingStatistics(ratingStatisticsChunk);
+        //                ratingStatisticsChunk = new RatingStatistics[ChunkSize];
+        //                count = 0;
+        //            }
+        //        }
+        //    }
+        //    if (count < ChunkSize)
+        //    {
+        //        if (ratingStatisticsChunk.FirstOrDefault() != null)
+        //        {
+        //            _localRatingDataAccess.CreateOrUpdateUsersRatingStatistics(ratingStatisticsChunk);
+        //            ratingStatisticsChunk = new RatingStatistics[ChunkSize];
+        //            count = 0;
+        //        }
+        //    }
 
 
-        }
+        //}
         private void CleanOldHistory()
         {
             TimeSpan periodWeek = new TimeSpan(7, 0, 0, 0);
