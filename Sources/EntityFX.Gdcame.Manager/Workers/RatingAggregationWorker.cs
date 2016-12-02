@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EntityFX.Gdcame.DataAccess.Contract.Server;
 
 namespace EntityFX.Gdcame.Manager.Workers
 {
@@ -15,16 +16,16 @@ namespace EntityFX.Gdcame.Manager.Workers
         private const int ChunkSize = 500;
         private readonly ILogger _logger;
         private GameSessions _gameSessions;
-        private readonly ILocalRatingDataAccess _localRatingDataAccess;
+        private readonly IServerDataAccessService _serverDataAccessService;
         private readonly TaskTimer _backgroundSaveHistoryCheckerTimer;
         private Task _backgroundSaveHistoryCheckerTask;
         private object _stdLock = new { };
 
-        public RatingAggregationWorker(ILogger logger, GameSessions gameSessions, ILocalRatingDataAccess localRatingDataAccess)
+        public RatingAggregationWorker(ILogger logger, GameSessions gameSessions, IServerDataAccessService serverDataAccessService)
         {
             _logger = logger;
             _gameSessions = gameSessions;
-            _localRatingDataAccess = localRatingDataAccess;
+            _serverDataAccessService = serverDataAccessService;
             _backgroundSaveHistoryCheckerTimer = new TaskTimer(TimeSpan.FromSeconds(TimeSaveInSeconds), SaveHistoryCheckTask);
             Name = "Rating Aggregation Worker";
         }

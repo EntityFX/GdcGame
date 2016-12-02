@@ -5,7 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EntityFX.Gdcame.Application.Contract.Model;
-using EntityFX.Gdcame.Utils.WebApiClient.Auth;
+using EntityFX.Gdcame.Infrastructure.Api;
+using EntityFX.Gdcame.Infrastructure.Api.Auth;
 using RestSharp;
 using RestSharp.Authenticators;
 

@@ -288,6 +288,10 @@
       <Project>{2AE99E38-4B45-4D8B-B9D5-840B21F82A43}</Project>
       <Name>EntityFX.Gdcame.Utils.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Utils.Shared\EntityFX.Gdcame.Utils.Shared.csproj">
+      <Project>{3ECE9730-0627-49A5-8E13-E8D571488E57}</Project>
+      <Name>EntityFX.Gdcame.Utils.Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />

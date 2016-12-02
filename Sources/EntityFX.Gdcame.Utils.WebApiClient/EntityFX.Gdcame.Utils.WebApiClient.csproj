@@ -43,23 +43,7 @@
     <Compile Include="AccountApiClient.cs" />
     <Compile Include="AdminApiClient.cs" />
     <Compile Include="AuthApiClient.cs" />
-    <Compile Include="ApiClientBase.cs" />
-    <Compile Include="Auth\EmptyAuthContext.cs" />
-    <Compile Include="CustomJsonDeserializer.cs" />
-    <Compile Include="Exceptions\InvalidSessionException.cs" />
-    <Compile Include="Exceptions\WrongAuthException.cs" />
-    <Compile Include="Exceptions\ClientException.cs" />
-    <Compile Include="ExceptionHandlerHelper.cs" />
     <Compile Include="GameApiClient.cs" />
-    <Compile Include="GameClientFactory.cs" />
-    <Compile Include="Auth\IAuthContext.cs" />
-    <Compile Include="Auth\IAuthProvider.cs" />
-    <Compile Include="Auth\IAuthRequestData.cs" />
-    <Compile Include="Exceptions\NoConnectionException.cs" />
-    <Compile Include="Auth\PasswordAuthData.cs" />
-    <Compile Include="Auth\PasswordAuthProvider.cs" />
-    <Compile Include="Auth\PasswordAuthRequest.cs" />
-    <Compile Include="Auth\PasswordOAuthContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RatingApiClient.cs" />
     <Compile Include="ServerInfoClient.cs" />
@@ -90,6 +74,10 @@
     <ProjectReference Include="..\EntityFX.Gdcame.Common.Presentation.Model\EntityFX.Gdcame.Common.Application.Model.csproj">
       <Project>{3B44AFC0-F207-44E4-9F91-7F24E1F4D342}</Project>
       <Name>EntityFX.Gdcame.Common.Application.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Api\EntityFX.Gdcame.Infrastructure.Api.csproj">
+      <Project>{694C9D89-2BBE-46AE-9953-4A2AB09FF500}</Project>
+      <Name>EntityFX.Gdcame.Infrastructure.Api</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Common\EntityFX.Gdcame.Infrastructure.Common.csproj">
       <Project>{924CC67D-9E2B-46BA-BE1D-6C6C780CCFBC}</Project>

@@ -8,10 +8,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using EntityFX.Gdcame.Utils.WebApiClient.Auth;
 using EntityFX.Gdcame.Utils.WebApiClient;
 using EntityFX.Gdcame.Application.WebApi.Models;
 using EntityFX.Gdcame.Common.Application.Model;
+using EntityFX.Gdcame.Infrastructure.Api.Auth;
 
 namespace EntityFx.Gdcame.Test.Unit
 {

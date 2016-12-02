@@ -17,16 +17,16 @@ namespace EntityFX.Gdcame.Manager.Workers
         private const int ChunkSize = 500;
         private readonly ILogger _logger;
         private readonly GameSessions _gameSessions;
-        private readonly ILocalRatingDataAccess _localRatingDataAccess;
+        private readonly ILocalNodeRatingDataAccess _localNodeRatingDataAccess;
         private readonly TaskTimer _backgroundSaveHistoryCheckerTimer;
         private Task _backgroundSaveHistoryCheckerTask;
         private object _stdLock = new { };
 
-        public RatingCalculationWorker(ILogger logger, GameSessions gameSessions, ILocalRatingDataAccess localRatingDataAccess)
+        public RatingCalculationWorker(ILogger logger, GameSessions gameSessions, ILocalNodeRatingDataAccess localNodeRatingDataAccess)
         {
             _logger = logger;
             _gameSessions = gameSessions;
-            _localRatingDataAccess = localRatingDataAccess;
+            _localNodeRatingDataAccess = localNodeRatingDataAccess;
             _backgroundSaveHistoryCheckerTimer = new TaskTimer(TimeSpan.FromSeconds(TimeSaveInSeconds), PerformRatingCalculation);
             Name = "Rating Calculation Worker";
         }
@@ -94,7 +94,7 @@ namespace EntityFX.Gdcame.Manager.Workers
                 {
                     if (ratingHistoryChunk.FirstOrDefault() != null)
                     {
-                        _localRatingDataAccess.PersistUsersRatingHistory(ratingHistoryChunk);
+                        _localNodeRatingDataAccess.PersistUsersRatingHistory(ratingHistoryChunk);
                         ratingHistoryChunk = new RatingHistory[ChunkSize];
                         count = 0;
                     }
@@ -104,7 +104,7 @@ namespace EntityFX.Gdcame.Manager.Workers
             {
                 if (ratingHistoryChunk.FirstOrDefault() != null)
                 {
-                    _localRatingDataAccess.PersistUsersRatingHistory(ratingHistoryChunk);
+                    _localNodeRatingDataAccess.PersistUsersRatingHistory(ratingHistoryChunk);
                     ratingHistoryChunk = new RatingHistory[ChunkSize];
                     count = 0;
                 }
@@ -165,7 +165,7 @@ namespace EntityFX.Gdcame.Manager.Workers
             TimeSpan periodWeek = new TimeSpan(7, 0, 0, 0);
             //TimeSpan periodTotal = new TimeSpan(7, 0, 0, 0);
             List<RatingStatistics> usersNewRating = new List<RatingStatistics>();
-            var readHistoryWithUsersIdsForWeek = _localRatingDataAccess.ReadHistoryWithUsersIds(users, periodWeek);
+            var readHistoryWithUsersIdsForWeek = _localNodeRatingDataAccess.ReadHistoryWithUsersIds(users, periodWeek);
             //var usersId=
 
             var ratingHistoryGroupedByUser = readHistoryWithUsersIdsForWeek.GroupBy(g => g.UserId);
@@ -173,7 +173,7 @@ namespace EntityFX.Gdcame.Manager.Workers
             {
                 usersNewRating.Add(RecalculationRatingStatisticsOneUser(ratingHistoryOfUser.ToList()));
             }
-            _localRatingDataAccess.CreateOrUpdateUsersRatingStatistics(usersNewRating.ToArray());
+            _localNodeRatingDataAccess.CreateOrUpdateUsersRatingStatistics(usersNewRating.ToArray());
 
         }
 
@@ -302,7 +302,7 @@ namespace EntityFX.Gdcame.Manager.Workers
         private void CleanOldHistory()
         {
             TimeSpan periodWeek = new TimeSpan(7, 0, 0, 0);
-            _localRatingDataAccess.CleanOldHistory(periodWeek);
+            _localNodeRatingDataAccess.CleanOldHistory(periodWeek);
         }
     }
 }

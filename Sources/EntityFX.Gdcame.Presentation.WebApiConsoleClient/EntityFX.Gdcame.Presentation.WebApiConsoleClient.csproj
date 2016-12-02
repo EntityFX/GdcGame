@@ -47,10 +47,6 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper, Version=5.2.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.5.2.0\lib\net45\AutoMapper.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
       <Private>True</Private>
@@ -122,41 +118,25 @@
       <Project>{3B44AFC0-F207-44E4-9F91-7F24E1F4D342}</Project>
       <Name>EntityFX.Gdcame.Common.Application.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Repository.Contract\EntityFX.Gdcame.DataAccess.Repository.Contract.csproj">
-      <Project>{C1B1F481-6E3E-464C-A983-CB56AD430C1D}</Project>
-      <Name>EntityFX.Gdcame.DataAccess.Repository.Contract</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Repository.Mongo\EntityFX.Gdcame.DataAccess.Repository.Mongo.csproj">
-      <Project>{0F77947A-9E4C-4663-A7EE-C43A4D357217}</Project>
-      <Name>EntityFX.Gdcame.DataAccess.Repository.Mongo</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Service\EntityFX.Gdcame.DataAccess.Service.csproj">
-      <Project>{2008F2C2-C1FA-4CB9-8A99-A9406AC4967D}</Project>
-      <Name>EntityFX.Gdcame.DataAccess.Service</Name>
+    <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Api\EntityFX.Gdcame.Infrastructure.Api.csproj">
+      <Project>{694C9D89-2BBE-46AE-9953-4A2AB09FF500}</Project>
+      <Name>EntityFX.Gdcame.Infrastructure.Api</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Common\EntityFX.Gdcame.Infrastructure.Common.csproj">
       <Project>{924cc67d-9e2b-46ba-be1d-6c6c780ccfbc}</Project>
       <Name>EntityFX.Gdcame.Infrastructure.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.Manager\EntityFX.Gdcame.Manager.csproj">
-      <Project>{56A380DE-2370-4C2D-8C8E-EAF3163C92EC}</Project>
-      <Name>EntityFX.Gdcame.Manager</Name>
-    </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Presentation.Contract.Controller\EntityFX.Gdcame.Application.Contract.Controller.csproj">
       <Project>{b9608a11-f0f0-47aa-bd55-d6e25a310daa}</Project>
       <Name>EntityFX.Gdcame.Application.Contract.Controller</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.Presentation.Web.Controller\EntityFX.Gdcame.Application.WebApi.Controller.csproj">
-      <Project>{892D6D25-857F-4CA9-A518-526BBF05C011}</Project>
-      <Name>EntityFX.Gdcame.Application.WebApi.Controller</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Presentation.Web.Model\EntityFX.Gdcame.Application.Contract.Model.csproj">
       <Project>{0F9C056A-DB5D-48ED-A688-BFD04ED4DFD7}</Project>
       <Name>EntityFX.Gdcame.Application.Contract.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.Utils.Common\EntityFX.Gdcame.Utils.Common.csproj">
-      <Project>{2AE99E38-4B45-4D8B-B9D5-840B21F82A43}</Project>
-      <Name>EntityFX.Gdcame.Utils.Common</Name>
+    <ProjectReference Include="..\EntityFX.Gdcame.Utils.Shared\EntityFX.Gdcame.Utils.Shared.csproj">
+      <Project>{3ECE9730-0627-49A5-8E13-E8D571488E57}</Project>
+      <Name>EntityFX.Gdcame.Utils.Shared</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Utils.WebApiClient\EntityFX.Gdcame.Utils.WebApiClient.csproj">
       <Project>{9B4E7B86-5F2F-4F84-9786-3D7CCB2024F8}</Project>

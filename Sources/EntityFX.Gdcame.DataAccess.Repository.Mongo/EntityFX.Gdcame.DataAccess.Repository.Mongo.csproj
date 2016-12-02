@@ -84,7 +84,9 @@
     <Compile Include="CountersRepository.cs" />
     <Compile Include="CustomRuleRepository.cs" />
     <Compile Include="DictionaryRepresentationConvention.cs" />
+    <Compile Include="GlobalRatingRepository.cs" />
     <Compile Include="ItemRepository.cs" />
+    <Compile Include="Mappers\TopRatingStatisticsDocumentMapper.cs" />
     <Compile Include="RatingStatisticsRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RatingHistoryRepository.cs" />

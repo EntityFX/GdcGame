@@ -8,6 +8,8 @@ using EntityFX.Gdcame.Manager.Contract.RatingManager;
 using System.Web.Http;
 using EntityFX.Gdcame.Application.Contract.Model;
 using EntityFX.Gdcame.Application.Contract.Controller;
+using EntityFX.Gdcame.Common.Application.Model;
+using EntityFX.Gdcame.Infrastructure.Common;
 
 namespace EntityFX.Gdcame.Application.WebApi.Controller
 {
@@ -16,13 +18,14 @@ namespace EntityFX.Gdcame.Application.WebApi.Controller
     //[AllowAnonymous()]
     public class LocalRatingController : RatingControllerBase, IRatingController
     {
-        public LocalRatingController(IRatingManager raitingManager) : base(raitingManager)
+        public LocalRatingController(IRatingManager raitingManager, IMapperFactory mapperFactory) 
+            : base(raitingManager, mapperFactory)
         {
         }
 
         [HttpGet]
         [Route("")]
-        public override Task<RatingStatisticsModel[]> GetRaiting(int top = 500)
+        public override Task<TopRatingStatisticsModel> GetRaiting(int top = 500)
         {
             return base.GetRaiting(top);
         }

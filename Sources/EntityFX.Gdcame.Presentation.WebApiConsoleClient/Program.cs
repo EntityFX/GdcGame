@@ -6,21 +6,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using EntityFx.GdCame.Test.Shared;
 using EntityFX.Gdcame.Utils.WebApiClient;
-using EntityFX.Gdcame.Utils.WebApiClient.Auth;
 using EntityFX.Gdcame.Common.Application.Model;
 using EntityFX.Gdcame.Application.Contract.Controller;
 using EntityFX.Gdcame.Application.Contract.Model;
-using EntityFX.Gdcame.Utils.WebApiClient.Exceptions;
 using Microsoft.Practices.Unity;
 using System.Configuration;
 using System.IO;
 using System.Web.Hosting;
-using EntityFX.Gdcame.Application.WebApi.Controller;
-using EntityFX.Gdcame.DataAccess.Repository.Contract;
-using EntityFX.Gdcame.DataAccess.Repository.Mongo;
-using EntityFX.Gdcame.DataAccess.Service;
-using EntityFX.Gdcame.Manager;
-using EntityFX.Gdcame.Utils.Common;
+using EntityFX.Gdcame.Infrastructure.Api.Auth;
+using EntityFX.Gdcame.Infrastructure.Api.Exceptions;
 using Newtonsoft.Json;
 
 namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
@@ -87,10 +81,10 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
         private static void RatingMenu(IRatingController ratingClient)
         {
             var ratingData = ratingClient.GetRaiting(500).Result;
-            foreach (var data in ratingData)
+            foreach (var data in ratingData.ManualStepsCount.Day)
             {
                 Console.Clear();
-                Console.Write($"Имя: {data.Login}\r\nКоличество шагов:\r\n \tЗа день: {data.MunualStepsCount.Day} За неделю: {data.MunualStepsCount.Week} Всего: {data.MunualStepsCount.Total}\r\nGDC Points:\r\n \tЗа день: {data.RootCounter.Day} За неделю: {data.RootCounter.Week} Всего: {data.RootCounter.Total}\r\nДеньги:\r\n \tЗа день: {data.TotalEarned.Day} За неделю: {data.TotalEarned.Week} Всего: {data.TotalEarned.Total}\r\n");
+                Console.Write($"Имя: {data.Login}\r\nКоличество шагов:\r\n \tЗа день: {data.Value}");
             }
         }
 

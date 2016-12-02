@@ -10,13 +10,13 @@ using System.Web.Http.Controllers;
 using EntityFX.Gdcame.Manager.Contract.SessionManager;
 using EntityFX.Gdcame.Manager.Contract.UserManager;
 using EntityFX.Gdcame.Application.Contract.Model;
-using EntityFX.Gdcame.Presentation.Web.Api.Providers;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using EntityFX.Gdcame.Application.WebApi.Models;
 using EntityFX.Gdcame.Application.Contract.Controller;
+using EntityFX.Gdcame.Application.WebApi.Providers;
 using RegisterAccountModel = EntityFX.Gdcame.Application.WebApi.Models.RegisterAccountModel;
 
 namespace EntityFX.Gdcame.Application.WebApi.Controllers

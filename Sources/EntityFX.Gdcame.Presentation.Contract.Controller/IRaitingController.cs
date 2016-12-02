@@ -4,11 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EntityFX.Gdcame.Common.Application.Model;
 
 namespace EntityFX.Gdcame.Application.Contract.Controller
 {
     public interface IRatingController
     {
-        Task<RatingStatisticsModel[]> GetRaiting(int top = 500);
+        Task<TopRatingStatisticsModel> GetRaiting(int top = 500);
     }
 }

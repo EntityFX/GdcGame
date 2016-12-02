@@ -2,7 +2,6 @@
 using EntityFX.Gdcame.Common.Application.Model;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Utils.WebApiClient;
-using EntityFX.Gdcame.Utils.WebApiClient.Auth;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,7 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using EntityFX.Gdcame.Utils.Common;
+using EntityFX.Gdcame.Infrastructure.Api.Auth;
+using EntityFX.Gdcame.Utils.Shared;
 
 namespace EntityFx.Gdcame.Test.PerfomanceFramework
 {
@@ -416,7 +416,7 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
         {
             var serverUri = GetApiServerUri(_serviceUriList, login);
             var authApi = new AuthApiClient(new PasswordOAuthContext() { BaseUri = serverUri });
-            return DoPerformanceMeasureAction(async () => await authApi.Register(new EntityFX.Gdcame.Application.WebApi.Models.RegisterAccountModel()
+            return DoPerformanceMeasureAction(async () => await authApi.Register(new RegisterAccountModel()
             {
                 Login = login,
                 Password = DefaultPassword,

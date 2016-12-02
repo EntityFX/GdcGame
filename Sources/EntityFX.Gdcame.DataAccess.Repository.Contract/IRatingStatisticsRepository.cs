@@ -11,6 +11,6 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Contract
     public interface IRatingStatisticsRepository
     {
         void CreateOrUpdateUsersRatingStatistics(RatingStatistics[] ratingStatistics);
-        RatingStatisticsUserInfo[] GetRaiting(int top = 500);
+        TopRatingStatistics GetRaiting(int top = 500);
     }
 }

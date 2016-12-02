@@ -13,6 +13,7 @@ using MongoDB.Bson.Serialization;
 using EntityFX.Gdcame.Common.Contract.Counters;
 using EntityFX.Gdcame.Common.Contract.UserRating;
 using EntityFX.Gdcame.DataAccess.Contract.GameData.Store;
+using EntityFX.Gdcame.DataAccess.Repository.Mongo.Mappers;
 using MongoDB.Bson.Serialization.IdGenerators;
 
 namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
@@ -77,6 +78,8 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
             BsonClassMap.RegisterClassMap<StoredGenericCounter>();
             BsonClassMap.RegisterClassMap<StoredSingleCounter>();
             BsonClassMap.RegisterClassMap<StoredDelayedCounter>();
+
+            container.RegisterType<IMapper<TopRatingStatistics, List<TopRatingStatisticsDocument>>, TopRatingStatisticsDocumentMapper>();
 
             container.RegisterType<IUserRepository, UserRepository>();
             container.RegisterType<IItemRepository, ItemRepository>();

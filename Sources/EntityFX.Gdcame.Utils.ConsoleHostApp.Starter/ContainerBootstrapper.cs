@@ -1,11 +1,9 @@
 using EntityFX.Gdcame.Application.Contract.Controller;
 using EntityFX.Gdcame.Application.Contract.Model;
-using EntityFX.Gdcame.Application.Contract.Model.Mappers;
 using EntityFX.Gdcame.Application.WebApi.Controller;
 using EntityFX.Gdcame.Application.WebApi.Models;
 using EntityFX.Gdcame.Application.WebApi.Providers;
 using EntityFX.Gdcame.Common.Application.Model;
-using EntityFX.Gdcame.Common.Application.Model.Mappers;
 using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.Common.Contract.Counters;
 using EntityFX.Gdcame.DataAccess.Contract.GameData;
@@ -27,7 +25,6 @@ using EntityFX.Gdcame.Manager.Contract.UserManager;
 using EntityFX.Gdcame.Manager.Mappers.Store;
 using EntityFX.Gdcame.NotifyConsumer;
 using EntityFX.Gdcame.NotifyConsumer.Contract;
-using EntityFX.Gdcame.Presentation.Web.Api.Providers;
 using EntityFX.Gdcame.Utils.Common;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.SignalR;
@@ -42,6 +39,9 @@ using EntityFX.Gdcame.Manager.Workers;
 using EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOneCore;
 using CounterBase = EntityFX.Gdcame.Common.Contract.Counters.CounterBase;
 using EntityFX.Gdcame.Application.Rating.Controller;
+using EntityFX.Gdcame.Application.WebApi.Mappers;
+using EntityFX.Gdcame.Common.Contract.UserRating;
+using EntityFX.Gdcame.Utils.Shared;
 
 namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter
 {
@@ -155,6 +155,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter
             container.RegisterType<IMapper<GameData, GameDataModel>, GameDataModelMapper>();
             container.RegisterType<IMapper<BuyFundDriverResult, BuyItemModel>, FundsDriverBuyInfoMapper>();
             container.RegisterType<IMapper<StatisticsInfo, ServerStatisticsInfoModel>, StatisticsInfoMapper>();
+            container.RegisterType<IMapper<TopRatingStatistics, TopRatingStatisticsModel>, TopRatingStatisticsModelMapper>();
             container.RegisterType<IGameClientFactory, NoWcfGameManagerFactory>();
             container.RegisterType<ISessionManagerClientFactory, SessionManagerClientFactory>();
 

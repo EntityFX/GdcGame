@@ -7,7 +7,6 @@ using System.Web.Cors;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using EntityFX.Gdcame.Application.WebApi.Providers;
-using EntityFX.Gdcame.Presentation.Web.Api.Providers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.DependencyInjection;

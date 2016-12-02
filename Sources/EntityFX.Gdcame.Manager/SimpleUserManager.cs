@@ -75,8 +75,11 @@ namespace EntityFX.Gdcame.Manager
         public void Create(UserData login)
         {
             uint userRole;
-
-            if (login.UserRoles.Contains(UserRole.System))
+            if (login.UserRoles == null)
+            {
+                userRole = (uint)UserRole.GenericUser;
+            }
+            else if (login.UserRoles.Contains(UserRole.System))
             {
                 userRole = (uint)UserRole.System;
             } else if (login.UserRoles.Contains(UserRole.Admin))

@@ -16,7 +16,6 @@ namespace EntityFX.Gdcame.DataAccess.Repository.LocalStorage
             container.RegisterType<IUserRepository, UserRepository>();
             container.RegisterType<IItemRepository, ItemRepository>();
             container.RegisterType<ICountersRepository, CountersRepository>();
-            container.RegisterType<IUserRatingRepository, UserRatingRepository>();
             container.RegisterType<ICustomRuleRepository, CustomRuleRepository>();
             container.RegisterType<IUserGameSnapshotRepository, UserGameSnapshotRepository>();
             return container;

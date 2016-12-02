@@ -2,7 +2,8 @@
 using EntityFX.Gdcame.Application.Contract.Controller;
 using EntityFX.Gdcame.Application.Contract.Model;
 using EntityFX.Gdcame.Common.Application.Model;
-using EntityFX.Gdcame.Utils.WebApiClient.Auth;
+using EntityFX.Gdcame.Infrastructure.Api;
+using EntityFX.Gdcame.Infrastructure.Api.Auth;
 using RestSharp.Authenticators;
 
 namespace EntityFX.Gdcame.Utils.WebApiClient
@@ -13,9 +14,9 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
         {
         }
 
-        public async Task<RatingStatisticsModel[]> GetRaiting(int top = 500)
+        public async Task<TopRatingStatisticsModel> GetRaiting(int top = 500)
         {
-            var response = await ExecuteRequestAsync<RatingStatisticsModel[]>("/api/rating");
+            var response = await ExecuteRequestAsync<TopRatingStatisticsModel>("/api/rating");
             return response.Data;
         }
     }

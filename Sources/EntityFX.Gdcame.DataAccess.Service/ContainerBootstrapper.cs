@@ -36,7 +36,7 @@ namespace EntityFX.Gdcame.DataAccess.Service
                 );
             container.RegisterType<IServerDataAccessService, ServerDataAccessService>();
 
-            container.RegisterType<ILocalRatingDataAccess, LocalRatingDataAccess>();
+            container.RegisterType<ILocalNodeRatingDataAccess, LocalNodeRatingDataAccess>();
             container.RegisterType<IRatingDataAccess, RatingDataAccess>();
             return container;
         }

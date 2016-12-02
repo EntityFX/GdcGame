@@ -21,7 +21,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\bin\Tests\</OutputPath>
+    <OutputPath>..\..\bin\Tests\unit\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -157,6 +157,10 @@
       <Project>{19D1BC2F-D0EB-4012-BCF2-CED6F3B926B2}</Project>
       <Name>EntityFX.Gdcame.GameEngine</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Api\EntityFX.Gdcame.Infrastructure.Api.csproj">
+      <Project>{694C9D89-2BBE-46AE-9953-4A2AB09FF500}</Project>
+      <Name>EntityFX.Gdcame.Infrastructure.Api</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Common\EntityFX.Gdcame.Infrastructure.Common.csproj">
       <Project>{924CC67D-9E2B-46BA-BE1D-6C6C780CCFBC}</Project>
       <Name>EntityFX.Gdcame.Infrastructure.Common</Name>
@@ -196,6 +200,10 @@
     <ProjectReference Include="..\EntityFX.Gdcame.Utils.Common\EntityFX.Gdcame.Utils.Common.csproj">
       <Project>{2ae99e38-4b45-4d8b-b9d5-840b21f82a43}</Project>
       <Name>EntityFX.Gdcame.Utils.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Utils.Shared\EntityFX.Gdcame.Utils.Shared.csproj">
+      <Project>{3ECE9730-0627-49A5-8E13-E8D571488E57}</Project>
+      <Name>EntityFX.Gdcame.Utils.Shared</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Utils.WebApiClient\EntityFX.Gdcame.Utils.WebApiClient.csproj">
       <Project>{9B4E7B86-5F2F-4F84-9786-3D7CCB2024F8}</Project>

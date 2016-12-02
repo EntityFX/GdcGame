@@ -2,11 +2,12 @@
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
-using EntityFX.Gdcame.Manager.Contract.UserManager;
 using EntityFX.Gdcame.Application.WebApi.Models;
+using EntityFX.Gdcame.Manager.Contract.SessionManager;
+using EntityFX.Gdcame.Manager.Contract.UserManager;
 using Microsoft.AspNet.Identity;
 
-namespace EntityFX.Gdcame.Presentation.Web.Api.Providers
+namespace EntityFX.Gdcame.Application.WebApi.Providers
 {
     public class GameUserStore : IUserStore<GameUser>, IUserPasswordStore<GameUser>, IDisposable /*, IUserEmailStore<GameUser>*/
     {
@@ -69,7 +70,7 @@ namespace EntityFX.Gdcame.Presentation.Web.Api.Providers
 
             await Task.Run(
                 () =>
-                    _simpleUserManager.Create(new UserData { Login = user.UserName, PasswordHash = user.PasswordHash }));
+                    _simpleUserManager.Create(new UserData { Login = user.UserName, PasswordHash = user.PasswordHash, UserRoles = new UserRole[] {UserRole.GenericUser}}));
         }
 
         public Task UpdateAsync(GameUser user)

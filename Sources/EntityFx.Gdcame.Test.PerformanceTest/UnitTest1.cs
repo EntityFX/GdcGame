@@ -16,6 +16,7 @@ using EntityFX.Gdcame.Manager.Contract.UserManager;
 using EntityFX.Gdcame.Manager.Workers;
 using EntityFX.Gdcame.NotifyConsumer.Contract;
 using EntityFX.Gdcame.Utils.Common;
+using EntityFX.Gdcame.Utils.Shared;
 using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PortableLog.NLog;

@@ -56,12 +56,12 @@ namespace EntityFx.Gdcame.Test.Perfomance.Tests
 
         protected string[] GetServers()
         {
-            if (!File.Exists("../servers.json"))
+            if (!File.Exists("servers.json"))
             {
                 return null;
             }
             // deserialize JSON directly from a file
-            using (StreamReader file = File.OpenText("../servers.json"))
+            using (StreamReader file = File.OpenText("servers.json"))
             {
                 JsonSerializer serializer = new JsonSerializer();
                 serializer.TypeNameHandling = TypeNameHandling.Auto;
