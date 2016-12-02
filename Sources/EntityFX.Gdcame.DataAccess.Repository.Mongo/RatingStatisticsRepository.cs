@@ -9,6 +9,7 @@ using MongoDB.Driver;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using EntityFX.Gdcame.Common.Contract.UserRating;
+using EntityFX.Gdcame.DataAccess.Contract.User;
 
 namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
 {
@@ -24,16 +25,67 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
             Database = database;
         }
 
-        public RatingStatistics[] GetRaiting(int top = 500)
+
+
+        public RatingStatisticsUserInfo[] GetRaiting(int top = 500)
         {
-            IMongoCollection<RatingStatistics> collection = Database.GetCollection<RatingStatistics>("RatingStatistics");
-            //var filter1 = Builders<RatingStatistics>.Filter.Exists("UserId");
-            //var filter2 = Builders<RatingStatistics>.Filter.Exists("MunualStepsCount");
-            //var filter3 = Builders<RatingStatistics>.Filter.Exists("TotalEarned");
-            //var filter4 = Builders<RatingStatistics>.Filter.Exists("RootCounter");
-            //var filterAnd = Builders<RatingStatistics>.Filter.And(new List<FilterDefinition<RatingStatistics>> { filter1, filter2, filter3, filter4 });
-            var filter = new BsonDocument();
-            return collection.Find(filter).ToList().ToArray();
+            IMongoCollection<RatingStatistics> ratingCollection = Database.GetCollection<RatingStatistics>("RatingStatistics");
+            var aggregate = ratingCollection.Aggregate()
+                .Lookup("User", "_id", "_id", "UserInfo");
+            var ratingStatistics = aggregate.Project(doc => new RatingStatisticsUserInfo()
+            {
+                UserId = (string)doc["_id"],
+                Login = (string)(doc["UserInfo.Login"][0]),
+                ManualStepsCount = new CountValues()
+                {
+                    Day = (decimal)doc["ManualStepsCount"]["Day"],
+                    Week = (decimal)doc["ManualStepsCount"]["Week"],
+                    Total = (decimal)doc["ManualStepsCount"]["Total"]
+                },
+                RootCounter = new CountValues()
+                {
+                    Day = (decimal)doc["RootCounter"]["Day"],
+                    Week = (decimal)doc["RootCounter"]["Week"],
+                    Total = (decimal)doc["RootCounter"]["Total"]
+                },
+                TotalEarned = new CountValues()
+                {
+                    Day = (decimal)doc["TotalEarned"]["Day"],
+                    Week = (decimal)doc["TotalEarned"]["Week"],
+                    Total = (decimal)doc["TotalEarned"]["Total"]
+                },
+            }).ToList().ToArray();
+            //.Unwind("UserInfo")
+            //,"Login":"UserInfo.Login","_id":0)
+            //;
+            //List<RatingStatisticsUserInfo> ratingStatistics = new List<RatingStatisticsUserInfo>();
+            //foreach (var doc in aggregate)
+            //{
+            //    ratingStatistics.Add(new RatingStatisticsUserInfo()
+            //    {
+            //        UserId = (string)doc["_id"],
+            //        Login = (string)doc["UserInfo"]["Login"],
+            //        ManualStepsCount = new CountValues()
+            //        {
+            //            Day = (decimal)doc["ManualStepsCount"]["Day"],
+            //            Week = (decimal)doc["ManualStepsCount"]["Week"],
+            //            Total = (decimal)doc["ManualStepsCount"]["Total"]
+            //        },
+            //        RootCounter = new CountValues()
+            //        {
+            //            Day = (decimal)doc["ManualStepsCount"]["Day"],
+            //            Week = (decimal)doc["ManualStepsCount"]["Week"],
+            //            Total = (decimal)doc["ManualStepsCount"]["Total"]
+            //        },
+            //        TotalEarned = new CountValues()
+            //        {
+            //            Day = (decimal)doc["ManualStepsCount"]["Day"],
+            //            Week = (decimal)doc["ManualStepsCount"]["Week"],
+            //            Total = (decimal)doc["ManualStepsCount"]["Total"]
+            //        },
+            //    });
+            //}
+            return ratingStatistics.ToArray();
         }
 
 

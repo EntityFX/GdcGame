@@ -55,11 +55,11 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
             {
                 rating.Add(new RatingHistory
                 {
-                    UserId=ratingHistory.UserId,
-                    Data=ratingHistory.Data,
-                    ManualStepsCount=ratingHistory.ManualStepsCount,
-                    RootCounter=ratingHistory.RootCounter,
-                    TotalEarned=ratingHistory.TotalEarned,
+                    UserId = ratingHistory.UserId,
+                    Data = ratingHistory.Data,
+                    ManualStepsCount = ratingHistory.ManualStepsCount,
+                    RootCounter = ratingHistory.RootCounter,
+                    TotalEarned = ratingHistory.TotalEarned,
                 });
             }
             return rating;
@@ -75,13 +75,14 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
                     pushUsersHistory.Add(userRatingHistory);
                 }
             }
-            IMongoCollection<RatingHistory> collection = Database.GetCollection<RatingHistory>("RatingHistory");       
+            IMongoCollection<RatingHistory> collection = Database.GetCollection<RatingHistory>("RatingHistory");
             collection.InsertMany(pushUsersHistory);
         }
 
         private class RatingHistoryItem
         {
             public ObjectId Id { get; set; }
+            public string Login { get; set; }
             public string UserId { get; set; }
             public DateTime Data { get; set; }
             public int ManualStepsCount { get; set; }

@@ -15,6 +15,6 @@ namespace EntityFX.Gdcame.DataAccess.Contract.Rating
         void CreateOrUpdateUsersRatingStatistics(RatingStatistics[] ratingStatistics);
 
         [OperationContract]
-        RatingStatistics[] GetRaiting(int top = 500);
+        RatingStatisticsUserInfo[] GetRaiting(int top = 500);
     }
 }

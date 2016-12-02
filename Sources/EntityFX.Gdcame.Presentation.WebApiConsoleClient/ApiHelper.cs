@@ -80,7 +80,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             return new ServerInfoClient(session);
         }
 
-        public static IRatingController GetRatingController(PasswordOAuthContext session)
+        public static IRatingController GetRatingClient(PasswordOAuthContext session)
         {
             return new RatingApiClient(session);
         }

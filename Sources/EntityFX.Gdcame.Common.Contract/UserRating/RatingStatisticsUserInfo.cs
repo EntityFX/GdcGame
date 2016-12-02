@@ -4,8 +4,11 @@ using System.Runtime.Serialization;
 namespace EntityFX.Gdcame.Common.Contract.UserRating
 {
     [DataContract]
-    public class RatingStatistics
+    public class RatingStatisticsUserInfo
     {
+        [DataMember]
+        public string Login { get; set; }
+
         [DataMember]
         public string UserId { get; set; }
 

@@ -62,6 +62,7 @@
     <Compile Include="UserGameSessionStatus.cs" />
     <Compile Include="UserRating\CountValues.cs" />
     <Compile Include="UserRating\RatingHistory.cs" />
+    <Compile Include="UserRating\RatingStatisticsUserInfo.cs" />
     <Compile Include="UserRating\RatingStatistics.cs" />
   </ItemGroup>
   <ItemGroup>

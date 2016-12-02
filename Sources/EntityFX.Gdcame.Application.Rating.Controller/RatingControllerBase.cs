@@ -26,17 +26,17 @@ namespace EntityFX.Gdcame.Application.Rating.Controller
             return Task.Factory.StartNew(() => ConvertAllRaitingStatisticsAsRaitingStatisticsModel(_raitingManager.GetRaiting(top)));
         }
 
-        private RatingStatisticsModel[] ConvertAllRaitingStatisticsAsRaitingStatisticsModel(RatingStatistics[] raitingStatistics)
+        private RatingStatisticsModel[] ConvertAllRaitingStatisticsAsRaitingStatisticsModel(RatingStatisticsUserInfo[] raitingStatistics)
         {
             //Mapper.Initialize(cfg =>
             //{
             //    cfg.CreateMap<RatingStatistics, RatingStatisticsModel>();
             //    cfg.CreateMap<CountValues, CountValuesModel>();
             //});
-            List<RatingStatisticsModel> AllRSModel = new List<RatingStatisticsModel>();
+            List<RatingStatisticsModel> allRsModel = new List<RatingStatisticsModel>();
             for (int i = 0; i < raitingStatistics.Length; i++)
             {
-                AllRSModel.Add(ConvertRaitingStatisticsAsRaitingStatisticsModel(raitingStatistics[i]));
+                allRsModel.Add(ConvertRaitingStatisticsAsRaitingStatisticsModel(raitingStatistics[i]));
                 //RatingStatisticsModel _nextRSModel = Mapper.Map<RatingStatistics, RatingStatisticsModel>(raitingStatistics[i]);
                 // AllRSModel.Add(_nextRSModel);
             }
@@ -44,22 +44,22 @@ namespace EntityFX.Gdcame.Application.Rating.Controller
             //{
             //    RatingStatisticsModel _nextRSModel = Mapper.Map<RatingStatistics, RatingStatisticsModel>(_raiting);
             //}
-            return AllRSModel.ToArray();
+            return allRsModel.ToArray();
         }
-        private RatingStatisticsModel ConvertRaitingStatisticsAsRaitingStatisticsModel(RatingStatistics RatingStatistics)
+        private RatingStatisticsModel ConvertRaitingStatisticsAsRaitingStatisticsModel(RatingStatisticsUserInfo ratingStatistics)
         {
 
-            RatingStatisticsModel _RSModel = new RatingStatisticsModel
+            RatingStatisticsModel rsModel = new RatingStatisticsModel
             {
-                Login = RatingStatistics.Login,
-                UserID = RatingStatistics.UserId,
-                MunualStepsCount = ConvertCountValuesModelAsCountValues(RatingStatistics.ManualStepsCount),
-                RootCounter = ConvertCountValuesModelAsCountValues(RatingStatistics.RootCounter),
-                TotalEarned = ConvertCountValuesModelAsCountValues(RatingStatistics.TotalEarned)
+                Login = ratingStatistics.Login,
+                UserID = ratingStatistics.UserId,
+                MunualStepsCount = ConvertCountValuesModelAsCountValues(ratingStatistics.ManualStepsCount),
+                RootCounter = ConvertCountValuesModelAsCountValues(ratingStatistics.RootCounter),
+                TotalEarned = ConvertCountValuesModelAsCountValues(ratingStatistics.TotalEarned)
 
             };
 
-            return _RSModel;
+            return rsModel;
         }
         private CountValuesModel ConvertCountValuesModelAsCountValues(CountValues _countValues)
         {

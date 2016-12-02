@@ -84,14 +84,13 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 
         }
 
-        private static void RatingMenu(Tuple<PasswordOAuthContext, string> loginContext)
+        private static void RatingMenu(IRatingController ratingClient)
         {
-            var ratingClient = ApiHelper.GetRatingController(loginContext.Item1);
             var ratingData = ratingClient.GetRaiting(500).Result;
             foreach (var data in ratingData)
             {
                 Console.Clear();
-                Console.Write($"Имя={data.UserID}, Количество шагов={data.MunualStepsCount.Total}, GDC Points={data.RootCounter.Total}, Всего заработано={data.TotalEarned}");
+                Console.Write($"Имя: {data.Login}\r\nКоличество шагов:\r\n \tЗа день: {data.MunualStepsCount.Day} За неделю: {data.MunualStepsCount.Week} Всего: {data.MunualStepsCount.Total}\r\nGDC Points:\r\n \tЗа день: {data.RootCounter.Day} За неделю: {data.RootCounter.Week} Всего: {data.RootCounter.Total}\r\nДеньги:\r\n \tЗа день: {data.TotalEarned.Day} За неделю: {data.TotalEarned.Week} Всего: {data.TotalEarned.Total}\r\n");
             }
         }
 
@@ -196,6 +195,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             var adminManagerClient = ApiHelper.GetAdminClient(loginContext.Item1);
             var ac = new AdminConsole(loginContext.Item2, _userPassword, loginContext.Item1, adminManagerClient, _serverInfo, _serverPort);
             var gameData = gr.GetGameData();
+            var rc = ApiHelper.GetRatingClient(loginContext.Item1);
             gr.DisplayGameData(gameData);
             ConsoleKeyInfo keyInfo;
             while ((keyInfo = Console.ReadKey(true)).Key != ConsoleKey.Escape)
@@ -236,7 +236,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                     }
                     else if (keyInfo.Key == ConsoleKey.F4)
                     {
-                        RatingMenu(loginContext);
+                        RatingMenu(rc);
                     }
                     if (gr.ErrorCode != null)
                     {
@@ -500,6 +500,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                     PrettyConsole.WriteLineColor(ConsoleColor.DarkRed, "Логин: {0}, Сервер API: {1}", User, ServerContext.BaseUri);
                     PrettyConsole.WriteLineColor(ConsoleColor.DarkGreen, "F2 - Администрирование");
                     PrettyConsole.WriteLineColor(ConsoleColor.DarkGreen, "F3 - Разлогиниться");
+                    PrettyConsole.WriteLineColor(ConsoleColor.DarkGreen, "F4 - Меню рейтинга");
                     Console.SetCursorPosition(0, 3);
                     base.DisplayGameData(gameData);
                 }

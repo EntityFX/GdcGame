@@ -7,6 +7,6 @@ namespace EntityFX.Gdcame.Manager.Contract.RatingManager
     public interface IRatingManager
     {
         [OperationContract]
-        RatingStatistics[] GetRaiting(int top = 500);
+        RatingStatisticsUserInfo[] GetRaiting(int top = 500);
     }
 }

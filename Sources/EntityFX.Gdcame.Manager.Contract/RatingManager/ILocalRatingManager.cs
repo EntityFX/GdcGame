@@ -12,6 +12,6 @@ namespace EntityFX.Gdcame.Manager.Contract.RatingManager
     public interface ILocalRatingManager
     {
         [OperationContract]
-        RatingStatistics[] GetRaiting(int top = 500);
+        RatingStatisticsUserInfo[] GetRaiting(int top = 500);
     }
 }

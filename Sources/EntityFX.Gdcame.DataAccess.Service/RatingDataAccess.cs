@@ -22,7 +22,7 @@ namespace EntityFX.Gdcame.DataAccess.Service
             _ratingStatisticsRepository.CreateOrUpdateUsersRatingStatistics(ratingStatistics);
         }
 
-        public RatingStatistics[] GetRaiting(int top = 500)
+        public RatingStatisticsUserInfo[] GetRaiting(int top = 500)
         {
             return _ratingStatisticsRepository.GetRaiting(top);
         }
