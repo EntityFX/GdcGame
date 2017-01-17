@@ -31,18 +31,18 @@ namespace EntityFX.Gdcame.Application.WebApi.Controller
 
         [HttpPost]
         [Route("fight-inflation")]
-        public async Task<bool> FightAgainstInflationAsync()
+        public async Task<CashModel> FightAgainstInflationAsync()
         {
             await Task.Factory.StartNew(() => _gameDataProvider.FightAgainstInflation());
-            return true;
+            return _gameDataProvider.GetCounters();
         }
 
         [HttpPost]
         [Route("activate-delayed-counter")]
-        public async Task<bool> ActivateDelayedCounterAsync([FromBody] int counterId)
+        public async Task<CashModel> ActivateDelayedCounterAsync([FromBody] int counterId)
         {
             await Task.Factory.StartNew(() => _gameDataProvider.ActivateDelayedCounter(counterId));
-            return true;
+            return _gameDataProvider.GetCounters();
         }
 
         [HttpGet]

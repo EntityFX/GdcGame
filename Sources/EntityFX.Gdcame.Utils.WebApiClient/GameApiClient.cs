@@ -26,15 +26,15 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
             return response.Data;
         }
 
-        public async Task<bool> FightAgainstInflationAsync()
+        public async Task<CashModel> FightAgainstInflationAsync()
         {
-            var response = await ExecuteRequestAsync<bool>("/api/game/fight-inflation", Method.POST);
+            var response = await ExecuteRequestAsync<CashModel>("/api/game/fight-inflation", Method.POST);
             return response.Data;
         }
 
-        public async Task<bool> ActivateDelayedCounterAsync(int counterId)
+        public async Task<CashModel> ActivateDelayedCounterAsync(int counterId)
         {
-            var response = await ExecuteRequestAsync<bool>("/api/game/activate-delayed-counter", Method.POST);
+            var response = await ExecuteRequestAsync<CashModel>("/api/game/activate-delayed-counter", Method.POST);
 
             return response.Data;
         }

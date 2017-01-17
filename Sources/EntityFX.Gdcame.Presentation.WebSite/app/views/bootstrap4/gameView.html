@@ -1,0 +1,31 @@
+﻿<section class="container-fluid">
+    <div class="content row">
+        <div class="col-xl-3 col-lg-4 col-md-4 col-sm-12">
+            <div class="affix">
+                <counters></counters>
+                <div class="content row ">
+                    <div class="col-12 center-block">
+                        <button type="button" class="btn btn-primary w-100 btn-lg" ng-click="performManualStep()">РАБОТАЙ !!!</button>
+                    </div>
+                </div>
+                <section class="row" ng-show="visibility">
+                    <div class="col-12 center-block">
+                        <form class="form-inline">
+                            <label>{{verificationData.firstNumber}}</label>
+                            +
+                            <label>{{verificationData.secondNumber}}</label>
+                            =
+                            <div class="form-group">
+                                <input type="text" class="input-small" ng-model="verificationNumber">
+                                <button type="button" class="btn btn-info" ng-click="performManualStep()">Send</button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <div class="col-xl-9 col-lg-8 col-md-8 col-sm-12">
+            <items></items>
+        </div>
+    </div>
+</section>

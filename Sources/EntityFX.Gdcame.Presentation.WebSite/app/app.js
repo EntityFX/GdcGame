@@ -1,19 +1,18 @@
-﻿var app = angular.module("gdCameApp", ["ngRoute", "ngStorage"])
-
+﻿var app = angular.module("gdCameApp", ["ngRoute", "ngStorage"]);
 app.constant('apiUri', 'gdcame.local');
-app.constant('serversCount', '4');
+app.constant('viewTheme', 'bootstrap4');
 app.constant('serverIps', [
-    '10.10.139.51', '10.10.139.138', '10.10.139.167', '10.10.139.52'
+    'localhost:9001'
 ]);
 
-app.config(function ($routeProvider, $locationProvider) {
+app.config(function ($routeProvider, $locationProvider, viewTheme) {
     $routeProvider
     .when("/login", {
-        templateUrl: "app/views/loginView.html",
+        templateUrl: "app/views/" + viewTheme + "/loginView.html",
         controller: "LoginController"
     })
     .when("/", {
-        templateUrl: "app/views/gameView.html",
+        templateUrl: "app/views/" + viewTheme + "/gameView.html",
         controller: "GameController"
     })
     .when("/logout", {
@@ -21,11 +20,11 @@ app.config(function ($routeProvider, $locationProvider) {
         template: ""
     })
     .when("/register", {
-        templateUrl: "app/views/registerView.html",
+        templateUrl: "app/views/" + viewTheme + "/registerView.html",
         controller: "RegisterController"
     })
     .when("/rating", {
-        templateUrl: "app/views/reatingView.html",
+        templateUrl: "app/views/" + viewTheme + "/ratingView.html",
     })
     .otherwise({ redirectTo: '/login' });
 });
@@ -42,11 +41,11 @@ app.factory("gameData",
 angular
     .module("gdCameApp")
     .factory("apiServiceUri",
-        function ($rootScope, apiUri, serversCount, serverIps) {
+        function ($rootScope, apiUri, serverIps) {
             var useServerIps = serverIps != undefined && serverIps.length > 0;
             var gdCameApiServiceFactory = {
                 getApiAddressByLogin: function (login) {
-                    var userServerNumber = getModuloByUserIdHash(md5(login + '_gdcame'), serversCount);
+                    var userServerNumber = getModuloByUserIdHash(md5(login + '_gdcame'), serverIps.length);
                     return 'http://' + (useServerIps ? serverIps[userServerNumber] : 'ns' + (userServerNumber + 1) + '.' + apiUri);
                 },
             };

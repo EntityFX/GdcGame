@@ -1,0 +1,26 @@
+﻿<nav class="navbar navbar-toggleable-md navbar-light fixed-top bg-info">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#loginNavbar" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="#/">GDCame</a>
+    <div class="collapse navbar-collapse">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link active" href="#/">GDCame</a>
+            <a class="nav-item nav-link" href="#/rating">Rating</a>
+        </div>
+    </div>
+    <div class="collapse navbar-collapse justify-content-end" id="loginNavbar">
+        <div  ng-if="isAuthenticated" class="navbar-nav">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    67567 {{login}}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="#/logout">Logout</a>
+                </div>
+            </li>
+        </div>
+    </div>
+
+
+</nav>

@@ -8,59 +8,23 @@
     <title>GDCame</title>
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <link href="/assets/css/bootstrap.css" rel="stylesheet" />
-    <link href="/assets/css/bootstrap-theme.css" rel="stylesheet" />
-    <link href="/assets/css/gdcame.css" rel="stylesheet" />
+    <link href="/assets/css/bootstrap4/bootstrap.css" rel="stylesheet" />
+    <link href="/assets/css/bootstrap4/gdcame-bootstrap.css" rel="stylesheet" />
 
 </head>
 
 
-<body>
+<body class="body-top">
+    
+    <game-menu></game-menu>
 
-    <nav class="navbar navbar-fixed-top navbar-default">
-
-        <div class="container">
-
-            <div class="navbar-header">
-
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-
-                <a class="navbar-brand" href="#/">GDCame</a>
-
-                <a class="navbar-brand" href="#/rating">Rating</a>
-
-            </div>
-
-            <div id="navbar" class="navbar-collapse collapse">
-
-                <ul class="nav navbar-nav navbar-right">
-                    <li ng-if="$storage.globals.auth" class="dropdown">
-                        <a href="?" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{$storage.globals.auth.login}} <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#/logout">Logout</a></li>
-                        </ul>
-                    </li>
-                </ul>
-
-            </div>
-
-        </div>
-
-    </nav>
-    <section class="container-fluid">
-        <ng-view></ng-view>
-    </section>
+    <ng-view></ng-view>
 
 
     <script type="text/javascript" src="/assets/js/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/assets/js/angular.min.js"></script>
+    <script type="text/javascript" src="/assets/js/bootstrap4/bootstrap.js"></script>
+    <script type="text/javascript" src="/assets/js/bootstrap4/bootstrap.affix.js"></script>
+    <script type="text/javascript" src="/assets/js/angular.js"></script>
     <script type="text/javascript" src="/assets/js/angular-route.min.js"></script>
     <script type="text/javascript" src="/assets/js/ngStorage.min.js"></script>
 
@@ -78,12 +42,22 @@
     <script type="text/javascript" src="/app/controller/gameController.js"></script>
     <script type="text/javascript" src="/app/controller/countersController.js"></script>
     <script type="text/javascript" src="/app/controller/itemsController.js"></script>
- 
+    <script type="text/javascript" src="/app/controller/gameMenuController.js"></script>
+
     <script type="text/javascript" src="/app/components/countersComponent.js"></script>
     <script type="text/javascript" src="/app/components/itemsComponent.js"></script>
-
+    <script type="text/javascript" src="/app/components/gameMenuComponent.js"></script>
     <!--script type="text/javascript" src="http://localhost:8080/signalr/hubs"></script-->
-
+    <script>
+        $('.affix').affix({
+            offset: {
+                top: 200,
+                bottom: function () {
+                    return (this.bottom = $('.footer').outerHeight(true));
+                }
+            }
+        })
+    </script>
 </body>
 
 </html>

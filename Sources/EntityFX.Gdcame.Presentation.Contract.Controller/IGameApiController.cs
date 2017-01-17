@@ -8,9 +8,9 @@ namespace EntityFX.Gdcame.Application.Contract.Controller
     {
         Task<ManualStepResultModel> PerformManualStepAsync(int? id);
 
-        Task<bool> FightAgainstInflationAsync();
+        Task<CashModel> FightAgainstInflationAsync();
 
-        Task<bool> ActivateDelayedCounterAsync(int counterId);
+        Task<CashModel> ActivateDelayedCounterAsync(int counterId);
 
         Task<GameDataModel> GetGameDataAsync();
 

@@ -1,0 +1,66 @@
+﻿<div layout="row" layout-padding layout-wrap layout-margin ng-cloak layout-align="space-around">
+    <md-content class="md-padding" layout-xs="column" layout="row">
+        <div flex-xs flex-gt-xs="50" layout="column">
+            <md-card>
+                <md-card-header>
+                    <md-card-avatar>
+                        <img class="md-user-avatar" src="img/100-2.jpeg" />
+                    </md-card-avatar>
+                    <md-card-header-text>
+                        <span class="md-title">User</span>
+                        <span class="md-subhead">subhead</span>
+                    </md-card-header-text>
+                </md-card-header>
+                <img ng-src="{{imagePath}}" class="md-card-image" alt="Washed Out">
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">In-card mixed actions</span>
+                        <span class="md-subhead">Reversed</span>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-actions layout="row" layout-align="start center">
+                    <md-button>Action 1</md-button>
+                    <md-button>Action 2</md-button>
+                    <md-card-icon-actions>
+                        <md-button class="md-icon-button" aria-label="toggle">
+                            <md-icon md-svg-icon="md-toggle-arrow"></md-icon>
+                        </md-button>
+                    </md-card-icon-actions>
+                </md-card-actions>
+                <md-card-content>
+                    <p>
+                        The titles of Washed Out's breakthrough song and the first single from Paracosm share the
+                        two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
+                    </p>
+                </md-card-content>
+            </md-card>
+        </div>
+    </md-content>
+
+    <counters></counters>
+    <button type="button" class="btn btn-info btn-lg" ng-click="performManualStep()">WORK HARD !!</button>
+    <button type="button" class="btn btn-danger btn-lg" ng-click="activateDelayedCounter()" ng-disabled="isDoQuarterGoalDisabled">Do quarter goal</button>
+    <section class="row" ng-show="visibility">
+        <br/>
+        <br/>
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4 center-block">
+            <form class="form-inline">
+                <label>{{verificationData.firstNumber}}</label>
+                +
+                <label>{{verificationData.secondNumber}}</label>
+                =
+                <div class="form-group">
+                    <input type="text" class="input-small" ng-model="verificationNumber">
+                    <button type="button" class="btn btn-info btn-lg" ng-click="performManualStep()">Send</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-4">
+        </div>
+    </section>
+</div>
+
+
+<items></items>

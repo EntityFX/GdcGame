@@ -2,6 +2,8 @@
     .module("gdCameApp")
     .component("items",
     {
-        templateUrl: "/app/views/itemsView.html",
+        templateUrl: function (viewTheme) {
+            return "/app/views/" + viewTheme + "/itemsView.html";
+        },
         controller: 'ItemsController'
     });
