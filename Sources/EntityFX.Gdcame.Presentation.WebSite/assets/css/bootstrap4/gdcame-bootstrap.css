@@ -60,6 +60,12 @@
     }
 }
 
+@media (min-width: 576px) {
+    dd>dl.row {
+        margin-bottom: 0;
+    }
+}
+
 @media (min-width: 768px) and (max-width: 991px) {
     .affix {
         width: 300px;

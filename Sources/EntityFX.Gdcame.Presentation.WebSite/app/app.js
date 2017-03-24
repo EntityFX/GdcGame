@@ -24,7 +24,11 @@ app.config(function ($routeProvider, $locationProvider, viewTheme) {
         controller: "RegisterController"
     })
     .when("/rating", {
-        templateUrl: "app/views/" + viewTheme + "/ratingView.html",
+        templateUrl: "app/views/" + viewTheme + "/ratingView.html"
+    })
+    .when("/admin/statistics", {
+        templateUrl: "app/views/" + viewTheme + "/adminStatisticsView.html",
+        controller: "AdminStatisticsController"
     })
     .otherwise({ redirectTo: '/login' });
 });
