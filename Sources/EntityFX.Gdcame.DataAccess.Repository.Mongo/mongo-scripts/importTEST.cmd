@@ -1,0 +1,1 @@
+"C:\Program Files\MongoDB\Server\3.2\bin\mongoimport" -v --host %1 10.10.139.148 -d "gdcame" -c "RatingStatistics" --file data\RatingStatistics.json --type json  --jsonArray

@@ -3,7 +3,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 
-namespace EntityFX.Gdcame.Presentation.Web.Api.Providers
+namespace EntityFX.Gdcame.Application.WebApi.Providers
 {
     public class ApplicationUserManager : UserManager<GameUser>
     {

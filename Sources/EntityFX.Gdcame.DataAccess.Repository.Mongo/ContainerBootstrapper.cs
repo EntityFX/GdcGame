@@ -11,7 +11,9 @@ using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Bson.Serialization.Options;
 using MongoDB.Bson.Serialization;
 using EntityFX.Gdcame.Common.Contract.Counters;
+using EntityFX.Gdcame.Common.Contract.UserRating;
 using EntityFX.Gdcame.DataAccess.Contract.GameData.Store;
+using EntityFX.Gdcame.DataAccess.Repository.Mongo.Mappers;
 using MongoDB.Bson.Serialization.IdGenerators;
 
 namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
@@ -66,16 +68,26 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
                   .SetIdGenerator(StringObjectIdGenerator.Instance));
             });
 
+            BsonClassMap.RegisterClassMap<RatingStatistics>(cm =>
+            {
+                cm.AutoMap();
+                cm.SetIdMember(cm.GetMemberMap(x => x.UserId)
+                  .SetIdGenerator(StringObjectIdGenerator.Instance));
+            });
+
             BsonClassMap.RegisterClassMap<StoredGenericCounter>();
             BsonClassMap.RegisterClassMap<StoredSingleCounter>();
             BsonClassMap.RegisterClassMap<StoredDelayedCounter>();
 
+            container.RegisterType<IMapper<TopRatingStatistics, List<TopRatingStatisticsDocument>>, TopRatingStatisticsDocumentMapper>();
+
             container.RegisterType<IUserRepository, UserRepository>();
             container.RegisterType<IItemRepository, ItemRepository>();
-            container.RegisterType<ICountersRepository, CountersRepository>();
-            container.RegisterType<IUserRatingRepository, UserRatingRepository>();
+            container.RegisterType<ICountersRepository, CountersRepository>();         
             container.RegisterType<ICustomRuleRepository, CustomRuleRepository>();
             container.RegisterType<IUserGameSnapshotRepository, UserGameSnapshotRepository>();
+            container.RegisterType<IRatingHistoryRepository, RatingHistoryRepository>();
+            container.RegisterType<IRatingStatisticsRepository, RatingStatisticsRepository>();
             container.RegisterInstance<IMongoDatabase>(MongoDatabase);
             return container;
         }

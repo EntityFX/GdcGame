@@ -6,5 +6,5 @@
 	[Salt] NVARCHAR(255) NULL,
 	[CreateDateTime] DATETIME NOT NULL,
 	[UpdateDateTime] DATETIME, 
-    [IsAdmin] BIT NOT NULL DEFAULT 0,
+    [Role] INT NOT NULL DEFAULT 0,
 )

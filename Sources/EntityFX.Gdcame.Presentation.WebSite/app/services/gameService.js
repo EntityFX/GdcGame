@@ -32,11 +32,15 @@
                 },
 
                 fightAgainstInflation: function() {
-                    $http.post($localStorage.globals.apiAddress + "/api/game/fight-inflation/");
+                    return $http.post($localStorage.globals.apiAddress + "/api/game/fight-inflation/").then(function (result) {
+                        return result;
+                    });
                 },
 
                 activateDelayedCounter: function(counterId) {
-                    $http.post($localStorage.globals.apiAddress + "/api/game/ActivateDelayedCounter/", counterId);
+                    return $http.post($localStorage.globals.apiAddress + "/api/game/ActivateDelayedCounter/", counterId).then(function (result) {
+                        return result;
+                    });
                 }
             };
             return gdCameApiServiceFactory;

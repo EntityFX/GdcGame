@@ -166,9 +166,9 @@ namespace EntityFX.Gdcame.DataAccess.Service
             };
         }
 
-        public UserRating[] GetUserRatings()
+        public RatingStatistics[] GetUserRatings()
         {
-            return new UserRating[0];
+            return new RatingStatistics[0];
         }
     }
 }

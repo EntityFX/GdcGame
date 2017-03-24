@@ -3,10 +3,10 @@ using System.Configuration;
 using System.IO;
 using System.Threading.Tasks;
 using EntityFX.Gdcame.Application.Contract.Controller;
-using EntityFX.Gdcame.Utils.Common;
+using EntityFX.Gdcame.Infrastructure.Api.Auth;
+using EntityFX.Gdcame.Infrastructure.Api.Exceptions;
+using EntityFX.Gdcame.Utils.Shared;
 using EntityFX.Gdcame.Utils.WebApiClient;
-using EntityFX.Gdcame.Utils.WebApiClient.Auth;
-using EntityFX.Gdcame.Utils.WebApiClient.Exceptions;
 using Newtonsoft.Json;
 
 namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
@@ -74,6 +74,11 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
         public static IServerController GetServerInfoClient(PasswordOAuthContext session)
         {
             return new ServerInfoClient(session);
+        }
+
+        public static IRatingController GetRatingClient(PasswordOAuthContext session)
+        {
+            return new RatingApiClient(session);
         }
     }
 }

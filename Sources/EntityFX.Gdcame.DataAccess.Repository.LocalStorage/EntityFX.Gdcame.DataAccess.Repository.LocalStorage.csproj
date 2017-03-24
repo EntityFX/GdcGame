@@ -63,7 +63,6 @@
     <Compile Include="ItemRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserGameSnapshotRepository.cs" />
-    <Compile Include="UserRatingRepository.cs" />
     <Compile Include="UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>

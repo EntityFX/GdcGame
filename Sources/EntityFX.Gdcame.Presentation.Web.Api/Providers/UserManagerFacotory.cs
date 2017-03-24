@@ -4,7 +4,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Practices.Unity;
 
-namespace EntityFX.Gdcame.Presentation.Web.Api.Providers
+namespace EntityFX.Gdcame.Application.WebApi.Providers
 {
     // Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
 

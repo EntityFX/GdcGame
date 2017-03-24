@@ -1,0 +1,33 @@
+﻿<section class="container">
+    <div class="row">
+        <div class="col-xl-2">
+            <counters></counters>
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-info btn-lg" ng-click="performManualStep()">WORK HARD !!</button>
+            </div>
+        </div>
+        <div class="col-xl-8">
+            <section class="row" ng-show="visibility">
+                <br />
+                <br />
+                <div class="col-md-4">
+                </div>
+                <div class="col-md-4 center-block">
+                    <form class="form-inline">
+                        <label>{{verificationData.firstNumber}}</label>
+                        +
+                        <label>{{verificationData.secondNumber}}</label>
+                        =
+                        <div class="form-group">
+                            <input type="text" class="input-small" ng-model="verificationNumber">
+                            <button type="button" class="btn btn-info btn-lg" ng-click="performManualStep()">Send</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-4">
+                </div>
+            </section>
+            <items></items>
+        </div>
+    </div>
+</section>

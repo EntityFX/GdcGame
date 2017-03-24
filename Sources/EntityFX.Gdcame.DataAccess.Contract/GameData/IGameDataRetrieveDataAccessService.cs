@@ -10,6 +10,6 @@ namespace EntityFX.Gdcame.DataAccess.Contract.GameData
         Common.Contract.GameData GetGameData(string userId);
 
         [OperationContract]
-        UserRating[] GetUserRatings();
+        RatingStatistics[] GetUserRatings();
     }
 }

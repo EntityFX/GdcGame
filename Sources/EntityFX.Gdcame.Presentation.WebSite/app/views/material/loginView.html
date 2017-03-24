@@ -1,0 +1,34 @@
+﻿<md-content  class="md-padding" layout-xs="column" layout="row">
+    <div layout="column">
+        <md-card md-theme="default" md-theme-watch>
+            <md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline">Card with image</span>
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-content>
+                <form name="projectForm" ng-submit="login()">
+                    <md-input-container class="md-block">
+                        <label>Login</label>
+                        <input md-maxlength="30" required md-no-asterisk name="login" id="login" placeholder="Login" ng-model="user.login">
+                        <div ng-messages="user.login.$error">
+                            <div ng-message="required">This is required.</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container class="md-block">
+                        <label>Login</label>
+                        <input type="password" md-maxlength="30" required md-no-asterisk name="password" id="password" placeholder="Password" ng-model="user.password">
+                        <div ng-messages="user.password.$error">
+                            <div ng-message="required">This is required.</div>
+                        </div>
+                    </md-input-container>
+
+                    <md-card-actions layout="row" layout-align="end center">
+                        <md-button class="md-primary" type="submit">Submit</md-button>
+                        <md-button class="md-primary" ng-href="register">Create an acount</md-button>
+                    </md-card-actions>
+                </form>
+            </md-card-content>
+        </md-card>
+    </div>
+</md-content>

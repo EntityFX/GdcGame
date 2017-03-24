@@ -1,8 +1,8 @@
-﻿using EntityFX.Gdcame.Common.Contract;
+﻿using EntityFX.Gdcame.Application.WebApi.Mappers;
+using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.Common.Contract.Counters;
 using EntityFX.Gdcame.Common.Contract.Items;
 using EntityFX.Gdcame.Common.Application.Model;
-using EntityFX.Gdcame.Common.Application.Model.Mappers;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.NotifyConsumer.Contract;
 using EntityFX.Gdcame.NotifyConsumer.Signalr;

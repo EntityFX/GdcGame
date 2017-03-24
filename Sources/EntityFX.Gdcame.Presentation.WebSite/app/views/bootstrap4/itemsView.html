@@ -1,0 +1,27 @@
+﻿
+<div class="row">
+    <div class="card-deck" >
+        <div class="card mb-3" ng-click="buyFundDriver(item.id)" data-id="{{item.id}}" ng-class="{'disabled':item.unlockBalance > $root.gameData.cash.counters[0].value}" ng-repeat="item in items" ng-if="item">
+            <img class="card-img-top w-100 img-fluid" src="/images/item-1.jpg" alt="{{item.name}}" />
+            <div class="card-block" ng-if="item.unlockBalance <= $root.gameData.cash.counters[0].value">
+                <h6 class="card-title">{{item.name}}</h6>
+                <span class="card-text" ng-repeat="incrementor in item.incrementors track by $index">
+                    <span class="incrementor" ng-class="{'text-danger':$index == 0,'text-primary':$index == 1,'text-success':$index == 2}">
+                        +{{incrementor}}
+                    </span>
+                </span>
+                <p class="buy-vount-multiplier pull-right">x{{item.bought}}</p>
+            </div>
+            <div class="card-block" ng-if="item.unlockBalance > $root.gameData.cash.counters[0].value">
+                <strong class="card-title">Необходимо <span class="text-danger">{{item.unlockBalance}}</span> GDC points для покупки</strong>
+                <span class="card-text" ng-repeat="incrementor in item.incrementors track by $index">
+                    <span class="incrementor">
+                    </span>
+                </span>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-primary w-100 text-center" ng-class="{'disabled':item.unlockBalance > $root.gameData.cash.counters[0].value}">{{item.price | currency}}</button>
+            </div>
+        </div>
+    </div>
+</div>

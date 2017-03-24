@@ -6,16 +6,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using EntityFx.GdCame.Test.Shared;
 using EntityFX.Gdcame.Utils.WebApiClient;
-using EntityFX.Gdcame.Utils.WebApiClient.Auth;
 using EntityFX.Gdcame.Common.Application.Model;
 using EntityFX.Gdcame.Application.Contract.Controller;
 using EntityFX.Gdcame.Application.Contract.Model;
-using EntityFX.Gdcame.Utils.WebApiClient.Exceptions;
 using Microsoft.Practices.Unity;
 using System.Configuration;
 using System.IO;
 using System.Web.Hosting;
-using EntityFX.Gdcame.Utils.Common;
+using EntityFX.Gdcame.Infrastructure.Api.Auth;
+using EntityFX.Gdcame.Infrastructure.Api.Exceptions;
 using Newtonsoft.Json;
 
 namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
@@ -44,10 +43,12 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             {
                 ConsoleKey.F1,
                 new MenuItem {MenuText = "Войти и играть", MenuAction = TryLogin}
-            },            {
+            },
+            {
                 ConsoleKey.F2,
                 new MenuItem {MenuText = "Зарегать аккаунт", MenuAction = RegisterAccount}
-            }, {
+            },
+            {
                 ConsoleKey.Escape,
                 new MenuItem {MenuText = "Выход", MenuAction = ExitMainMenu}
             }
@@ -62,7 +63,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 
         private static void Main(string[] args)
         {
-            Console.SetWindowSize(100,50);
+            Console.SetWindowSize(100, 50);
             var listArgs = args.ToList();
             if (args.Length > 0)
             {
@@ -77,7 +78,15 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 
         }
 
-
+        private static void RatingMenu(IRatingController ratingClient)
+        {
+            var ratingData = ratingClient.GetRaiting(500).Result;
+            foreach (var data in ratingData.ManualStepsCount.Day)
+            {
+                Console.Clear();
+                Console.Write($"Имя: {data.Login}\r\nКоличество шагов:\r\n \tЗа день: {data.Value}");
+            }
+        }
 
         private static void RegisterAccount()
         {
@@ -180,6 +189,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             var adminManagerClient = ApiHelper.GetAdminClient(loginContext.Item1);
             var ac = new AdminConsole(loginContext.Item2, _userPassword, loginContext.Item1, adminManagerClient, _serverInfo, _serverPort);
             var gameData = gr.GetGameData();
+            var rc = ApiHelper.GetRatingClient(loginContext.Item1);
             gr.DisplayGameData(gameData);
             ConsoleKeyInfo keyInfo;
             while ((keyInfo = Console.ReadKey(true)).Key != ConsoleKey.Escape)
@@ -218,7 +228,10 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                         _userName = null;
                         break;
                     }
-
+                    else if (keyInfo.Key == ConsoleKey.F4)
+                    {
+                        RatingMenu(rc);
+                    }
                     if (gr.ErrorCode != null)
                     {
                         if (gr.ErrorCode == ErrorCodes.InvalidSessionError || gr.ErrorCode == ErrorCodes.OtherError)
@@ -481,6 +494,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                     PrettyConsole.WriteLineColor(ConsoleColor.DarkRed, "Логин: {0}, Сервер API: {1}", User, ServerContext.BaseUri);
                     PrettyConsole.WriteLineColor(ConsoleColor.DarkGreen, "F2 - Администрирование");
                     PrettyConsole.WriteLineColor(ConsoleColor.DarkGreen, "F3 - Разлогиниться");
+                    PrettyConsole.WriteLineColor(ConsoleColor.DarkGreen, "F4 - Меню рейтинга");
                     Console.SetCursorPosition(0, 3);
                     base.DisplayGameData(gameData);
                 }

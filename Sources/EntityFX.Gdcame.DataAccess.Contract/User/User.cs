@@ -12,7 +12,7 @@ namespace EntityFX.Gdcame.DataAccess.Contract.User
         public string Login { get; set; }
 
         [DataMember]
-        public bool IsAdmin { get; set; }
+        public uint Role { get; set; }
 
         [DataMember]
         public string PasswordHash { get; set; }

@@ -16,7 +16,7 @@ namespace EntityFX.Gdcame.DataAccess.Model.Ef
 
         public string Salt { get; set; }
 
-        public bool IsAdmin { get; set; }
+        public uint Role { get; set; }
 
         public DateTime CreateDateTime { get; set; }
 

@@ -57,10 +57,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Mappers\CounterModelMapper.cs" />
-    <Compile Include="Mappers\FundsCounterModelMapper.cs" />
-    <Compile Include="Mappers\FundsDriverModelMapper.cs" />
-    <Compile Include="Mappers\GameDataModelMapper.cs" />
     <Compile Include="CounterModelBase.cs" />
     <Compile Include="DelayedCounterModel.cs" />
     <Compile Include="CashModel.cs" />
@@ -69,9 +65,15 @@
     <Compile Include="GenericCounterModel.cs" />
     <Compile Include="SingleCounterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TopRatingStatistics.cs" />
+    <Compile Include="TopStatisticsAggregate.cs" />
+    <Compile Include="TopStatisticsCounter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Mappers\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

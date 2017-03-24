@@ -9,7 +9,7 @@
                 $location.path('/login');
             })
             .catch(function (reason) {
-                alert(reason.data.message)
+                alert(reason.data.message);
             });
         };
     }]);

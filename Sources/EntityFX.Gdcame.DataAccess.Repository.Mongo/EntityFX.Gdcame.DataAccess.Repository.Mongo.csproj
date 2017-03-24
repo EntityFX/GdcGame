@@ -84,10 +84,13 @@
     <Compile Include="CountersRepository.cs" />
     <Compile Include="CustomRuleRepository.cs" />
     <Compile Include="DictionaryRepresentationConvention.cs" />
+    <Compile Include="GlobalRatingRepository.cs" />
     <Compile Include="ItemRepository.cs" />
+    <Compile Include="Mappers\TopRatingStatisticsDocumentMapper.cs" />
+    <Compile Include="RatingStatisticsRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RatingHistoryRepository.cs" />
     <Compile Include="UserGameSnapshotRepository.cs" />
-    <Compile Include="UserRatingRepository.cs" />
     <Compile Include="UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -119,6 +122,8 @@
     <None Include="mongo-scripts\data\Item.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="mongo-scripts\data\RatingHistory.json" />
+    <None Include="mongo-scripts\data\RatingStatistics.json" />
     <None Include="mongo-scripts\data\User.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

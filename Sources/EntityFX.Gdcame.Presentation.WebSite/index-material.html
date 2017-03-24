@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+
+
+<html ng-app="gdCameApp">
+
+<head>
+
+    <title>GDCame</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.11.2/angular-material.min.css">
+</head>
+
+
+<body>
+    <div ng-controller="MainMenuController" ng-cloak>
+        <md-content>
+            <md-toolbar class="md-hue-2">
+                    <div class="md-toolbar-tools">
+                        <h2>
+                            <span>GDCame</span>
+                        </h2>
+                        <md-button ng-href="#/" aria-label="Learn More">Home</md-button>
+                        <md-button ng-href="#/rating" aria-label="Learn More">Rating</md-button>
+                        <span flex></span>
+                        <md-button ng-if="$storage.globals.auth" ng-href="#/logout" class="md-raised" aria-label="Learn More">{{$storage.globals.auth.login}}</md-button>
+                    </div>
+            </md-toolbar>
+        </md-content>
+    </div>
+    <section class="container-fluid">
+        <ng-view></ng-view>
+    </section>
+
+
+    <script type="text/javascript" src="/assets/js/jquery-1.10.2.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script type="text/javascript" src="/assets/js/angular-route.min.js"></script>
+
+
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-aria.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-messages.min.js"></script>
+
+    <!-- Angular Material Library -->
+    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+
+    <script type="text/javascript" src="/assets/js/ngStorage.min.js"></script>
+
+    <script type="text/javascript" src="/assets/js/md5.min.js"></script>
+    <script type="text/javascript" src="/assets/js/utils.js"></script>
+
+    <script type="text/javascript" src="/app/app.js"></script>
+
+    <script type="text/javascript" src="/app/services/gameService.js"></script>
+    <script type="text/javascript" src="/app/services/authService.js"></script>
+
+    <script type="text/javascript" src="/app/controller/loginController.js"></script>
+    <script type="text/javascript" src="/app/controller/logoutController.js"></script>
+    <script type="text/javascript" src="/app/controller/registerController.js"></script>
+    <script type="text/javascript" src="/app/controller/gameController.js"></script>
+    <script type="text/javascript" src="/app/controller/countersController.js"></script>
+    <script type="text/javascript" src="/app/controller/itemsController.js"></script>
+    <script type="text/javascript" src="/app/controller/mainMenuController.js"></script>
+
+    <script type="text/javascript" src="/app/components/countersComponent.js"></script>
+    <script type="text/javascript" src="/app/components/itemsComponent.js"></script>
+
+    <!--script type="text/javascript" src="http://localhost:8080/signalr/hubs"></script-->
+
+</body>
+
+</html>

@@ -1,0 +1,83 @@
+﻿<section class="container-fluid">
+    <div class="content row">
+        <div class="col-12">
+            <div class="card" ng-repeat="(server, data) in serversStatistics">
+                <div class="card-header">
+                    <h4>{{server}}</h4>
+                </div>
+                <div class="card-block">
+                    <dl class="row">
+                        <dt class="col-sm-3 col-lg-2">OS</dt>
+                        <dd class="col-sm-9 col-lg-10">{{data.systemInfo.os}}</dd>
+                        <dt class="col-sm-3 col-lg-2">Runtime</dt>
+                        <dd class="col-sm-9 col-lg-10">{{data.systemInfo.runtime}}</dd>
+                        <dt class="col-sm-3 col-lg-2">Games statistics</dt>
+                        <dd class="col-sm-9 col-lg-10">
+                            <dl class="row">
+                                <dt class="col-sm-3">Active Games</dt>
+                                <dd class="col-sm-3">{{data.activeGamesCount}}</dd>
+                                <dt class="col-sm-3">Active Sessions</dt>
+                                <dd class="col-sm-3">{{data.activeSessionsCount}}</dd>
+                                <dt class="col-sm-3">Registered users</dt>
+                                <dd class="col-sm-3">{{data.registredUsersCount}}</dd>
+                            </dl>
+                        </dd>
+                        <dt class="col-sm-3 col-lg-2">Hardware</dt>
+                        <dd class="col-sm-9 col-lg-10">
+                            <dl class="row">
+                                <dt class="col-sm-3">CPUs</dt>
+                                <dd class="col-sm-3">{{data.systemInfo.cpusCount}}</dd>
+                                <dt class="col-sm-3">Memory</dt>
+                                <dd class="col-sm-3">{{data.systemInfo.memoryTotal}}</dd>
+                            </dl>
+                        </dd>
+                        <dt class="col-sm-3 col-lg-2">Server start time</dt>
+                        <dd class="col-sm-9 col-lg-10">{{data.serverStartDateTime}}</dd>
+                        <dt class="col-sm-3 col-lg-2">Server uptime</dt>
+                        <dd class="col-sm-9 col-lg-10">{{data.serverUptime}}</dd>
+                        <dt class="col-sm-3 col-lg-2">Performance</dt>
+                        <dd class="col-sm-9 col-lg-10">
+                            <dl class="row">
+                                <dt class="col-md-3 col-sm-4">Calculations Per Cycle</dt>
+                                <dd class="col-md-3 col-sm-8">{{data.performanceInfo.calculationsPerCycle}}</dd>                                
+                                <dt class="col-md-3 col-sm-4">Persistence Per Cycle</dt>
+                                <dd class="col-md-3 col-sm-8">{{data.performanceInfo.persistencePerCycle}}</dd>
+                            </dl>
+                        </dd>
+                        <dt class="col-sm-3 col-lg-2">Usage</dt>
+                        <dd class="col-sm-9 col-lg-10">
+                            <dl class="row">
+                                <dt class="col-md-3 col-sm-4">Cpu</dt>
+                                <dd class="col-md-3 col-sm-8">
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-striped"
+                                             role="progressbar"
+                                             style="width: {{data.resourcesUsageInfo.cpuUsed}}%"
+                                             aria-valuenow="{{data.resourcesUsageInfo.cpuUsed}}"
+                                             aria-valuemin="0" aria-valuemax="100"
+                                             ng-class="{'bg-success':data.resourcesUsageInfo.cpuUsed < 79,'bg-warning':data.resourcesUsageInfo.cpuUsed < 84 && data.resourcesUsageInfo.cpuUsed >= 80,'bg-danger':data.resourcesUsageInfo.cpuUsed>=95}">{{data.resourcesUsageInfo.cpuUsed | number:2}}%</div>
+                                    </div>
+                                </dd>
+                                <dt class="col-md-3 col-sm-4">Ram</dt>
+                                <dd class="col-md-3 col-sm-8">
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-striped"
+                                             role="progressbar"
+                                             style="width: {{(data.systemInfo.memoryTotal-data.resourcesUsageInfo.memoryAvailable)/data.systemInfo.memoryTotal * 100}}% "
+                                             aria-valuenow="{{data.resourcesUsageInfo.cpuUsed}}"
+                                             aria-valuemin="0" aria-valuemax="100"
+                                             ng-class="{'bg-success':(data.systemInfo.memoryTotal-data.resourcesUsageInfo.memoryAvailable)/data.systemInfo.memoryTotal * 100 < 79,'bg-warning':(data.systemInfo.memoryTotal-data.resourcesUsageInfo.memoryAvailable)/data.systemInfo.memoryTotal * 100 < 95 && (data.systemInfo.memoryTotal-data.resourcesUsageInfo.memoryAvailable)/data.systemInfo.memoryTotal * 100 >= 80,'bg-danger':(data.systemInfo.memoryTotal-data.resourcesUsageInfo.memoryAvailable)/data.systemInfo.memoryTotal * 100>=95}">
+                                            {{(data.systemInfo.memoryTotal-data.resourcesUsageInfo.memoryAvailable)/data.systemInfo.memoryTotal * 100 | number:2}}%
+                                        </div>
+                                    </div>
+                                </dd>
+                                <dt class="col-md-3 col-sm-4">Used By Process</dt>
+                                <dd class="col-md-9 col-sm-8">{{data.resourcesUsageInfo.memoryUsedByProcess}}</dd>
+                            </dl>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

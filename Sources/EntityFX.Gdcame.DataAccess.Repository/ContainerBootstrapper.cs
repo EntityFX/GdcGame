@@ -12,14 +12,12 @@ using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.CustomRule;
 using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.FundsDriver;
 using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.User;
 using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.UserGameSnapshot;
-using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.UserRating;
 using EntityFX.Gdcame.DataAccess.Repository.Ef.Mappers;
 using EntityFX.Gdcame.DataAccess.Repository.Ef.Queries.Counetrs;
 using EntityFX.Gdcame.DataAccess.Repository.Ef.Queries.CustomRule;
 using EntityFX.Gdcame.DataAccess.Repository.Ef.Queries.FundsDriver;
 using EntityFX.Gdcame.DataAccess.Repository.Ef.Queries.User;
 using EntityFX.Gdcame.DataAccess.Repository.Ef.Queries.UserGameSnapshot;
-using EntityFX.Gdcame.DataAccess.Repository.Ef.Queries.UserRating;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Infrastructure.Repository.EF;
 using EntityFX.Gdcame.Infrastructure.Repository.Query;
@@ -43,8 +41,6 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef
             container.RegisterType<IQuery<GetAllUsersCriterion, IEnumerable<UserEntity>>, GetAllUsersQuery>();
             container.RegisterType<IQuery<GetUsersBySearchStringCriterion, IEnumerable<UserEntity>>, GetUsersBySearchStringQuery>();
             container
-                .RegisterType<IQuery<GetAllUsersRatingsCriterion, IEnumerable<UserRating>>, GetAllUsersRatingsQuery>();
-            container
                 .RegisterType
                 <IQuery<GetAllFundsDriversCriterion, IEnumerable<FundsDriverEntity>>, GetAllFundsDriversQuery>();
             container.RegisterType<IQuery<GetAllCountersCriterion, IEnumerable<CounterEntity>>, GetAllCountersQuery>();
@@ -65,7 +61,6 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef
             container.RegisterType<IUserRepository, UserRepository>();
             container.RegisterType<IItemRepository, ItemRepository>();
             container.RegisterType<ICountersRepository, CountersRepository>();
-            container.RegisterType<IUserRatingRepository, UserRatingRepository>();
             container.RegisterType<ICustomRuleRepository, CustomRuleRepository>();
             container.RegisterType<IUserGameSnapshotRepository, UserGameSnapshotRepository>();
             return container;

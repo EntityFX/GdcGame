@@ -13,25 +13,29 @@
                     $scope.cash.totalEarned = value.totalEarned;
                     $scope.cash.onHand = value.onHand;
 
-                    value.counters.forEach(function (item) {
-                        var oldCounter = $rootScope.gameData.cash.counters.filter(function (counter) {
-                            return counter.id === item.id;
-                        })[0];
-
-                        if (oldCounter != undefined) {
-
-                            oldCounter.value = item.value;
-                            if (item.type = 1) {
-                                oldCounter.subValue = item.subValue;
-                                oldCounter.bonusPercentage = item.bonusPercentage;
-                                oldCounter.bonus = item.bonus;
-                                oldCounter.inflation = item.inflation;
-                            }
-                            if (item.type = 2) {
-                                oldCounter.unlockValue = item.unlockValue;
-                            }
-                        }
-                    });
+                    updateCounters(value.counters, $rootScope);
                 });
+
+            function updateCounters(counters, scope) {
+                counters.forEach(function(item) {
+                    var oldCounter = scope.gameData.cash.counters.filter(function(counter) {
+                        return counter.id === item.id;
+                    })[0];
+
+                    if (oldCounter != undefined) {
+
+                        oldCounter.value = item.value;
+                        if (item.type = 1) {
+                            oldCounter.subValue = item.subValue;
+                            oldCounter.bonusPercentage = item.bonusPercentage;
+                            oldCounter.bonus = item.bonus;
+                            oldCounter.inflation = item.inflation;
+                        }
+                        if (item.type = 2) {
+                            oldCounter.unlockValue = item.unlockValue;
+                        }
+                    }
+                });
+            }
         }
     ]);

@@ -16,8 +16,8 @@
 
 
         //$.connection.hub.url = $location.protocol() + "://" + $location.host() + ":8080/signalr";
-        $scope.isTakeRestDisabled = true;
-        $scope.isDoQuarterGoalDisabled = true;
+        $rootScope.isTakeRestDisabled = true;
+        $rootScope.isDoQuarterGoalDisabled = true;
         /*var hub = $.connection.gameDataHub;
         if (hub != null) {
             hub.client.getGameData = function(data) {
@@ -36,7 +36,7 @@
 
         gameData.then(function (data) {
             $rootScope.gameData = data;
-            $scope.isTakeRestDisabled = isTakeRestActive();
+            $rootScope.isTakeRestDisabled = isTakeRestActive();
         });
 
         $scope.performManualStep = function () {
@@ -63,15 +63,24 @@
 
         $scope.$on("counters.update",
             function (event, value) {
-                $scope.isTakeRestDisabled = isTakeRestActive();
+                $rootScope.isTakeRestDisabled = isTakeRestActive();
             });
 
-        $scope.fightAgainstInflation = function () {
-            gdCameApiService.fightAgainstInflation();
-        };
-        $scope.activateDelayedCounter = function () {
-            gdCameApiService.activateDelayedCounter($rootScope.gameData.cash.counters[3].id);
-        };
+        $scope.$on('fightAgainstInflation', function (event, arg) {
+            gdCameApiService.fightAgainstInflation().then(function (value) {
+                if (value.data) {
+                    $rootScope.$broadcast("counters.update", value.data);
+                }
+            });
+        });
+
+        $scope.$on('activateDelayedCounter', function (event, arg) {
+            gdCameApiService.activateDelayedCounter($rootScope.gameData.cash.counters[3].id).then(function (value) {
+                if (value.data) {
+                    $rootScope.$broadcast("counters.update", value.data);
+                }
+            });
+        });
 
         function isTakeRestActive() {
             return $rootScope.gameData.cash.counters[2].inflation == 0;

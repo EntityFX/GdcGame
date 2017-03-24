@@ -1,0 +1,44 @@
+﻿<section class="container">
+    <section class="content row">
+
+        <div class="col-md-3">
+
+        </div>
+
+        <div class="col-md-6">
+            <div class="container">
+                <form ng-submit="login()">
+                    <div class="form-group row">
+                        <label for="login" class="col-sm-4 col-form-label">Логин</label>
+                        <div class="col-sm-8">
+                            <input type="login" class="form-control" id="login" placeholder="Логин" ng-model="user.login">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="password" class="col-sm-4 col-form-label">Пароль</label>
+                        <div class="col-sm-8">
+                            <input type="password" class="form-control" id="password" placeholder="Пароль" ng-model="user.password">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="offset-sm-4 col-sm-3">
+                            <button type="submit" class="btn btn-primary">Войти</button>
+                        </div>
+                        <div class="col-sm-5">
+                            <a href="#/register" class="btn btn-info float-right">Зарегистрироваться</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
+        </div>
+
+        <div class="col-md-3">
+
+
+        </div>
+
+    </section>
+</section>
+

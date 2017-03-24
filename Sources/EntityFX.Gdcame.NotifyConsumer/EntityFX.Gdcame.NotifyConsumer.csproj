@@ -106,6 +106,10 @@
       <Project>{6C13790D-5C7A-4D9F-9D8B-4CD28F3536F6}</Project>
       <Name>EntityFX.Gdcame.NotifyConsumer.Signalr</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Presentation.Web.Api\EntityFX.Gdcame.Application.WebApi.csproj">
+      <Project>{C6C4637E-F0B7-43DF-A692-D8B82245311A}</Project>
+      <Name>EntityFX.Gdcame.Application.WebApi</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

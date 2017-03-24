@@ -3,9 +3,25 @@
     "$rootScope", "$scope", "gameData", "gdCameApiService",
     function ($rootScope, $scope, gameData, gdCameApiService) {
         $scope.items = [];
+        $scope.itemsGroups = [];
 
         gameData.then(function (data) {
             $scope.items = data.items;
+            var indexInGroup = 0;
+            var itemsGroup = [];
+            $scope.items.forEach(function (value, index) {
+                if (indexInGroup === 4) {
+                    $scope.itemsGroups.push(itemsGroup);
+                    itemsGroup = [];
+                    indexInGroup = 0;
+                }
+                itemsGroup.push(value);
+                indexInGroup++;
+            });
+            if (itemsGroup.length > 0) {
+                itemsGroup.push(new Array(4 - itemsGroup.length));
+                $scope.itemsGroups.push(itemsGroup);
+            }
         });
 
         $scope.$on("update.items",

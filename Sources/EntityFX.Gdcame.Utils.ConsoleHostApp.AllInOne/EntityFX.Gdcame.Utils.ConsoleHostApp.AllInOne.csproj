@@ -363,6 +363,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EntityFX.Gdcame.Application.Rating.Controller\EntityFX.Gdcame.Application.Rating.Controller.csproj">
+      <Project>{e1c99406-19e6-4d12-a7fb-ed5818dae973}</Project>
+      <Name>EntityFX.Gdcame.Application.Rating.Controller</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Common.Contract\EntityFX.Gdcame.Common.Contract.csproj">
       <Project>{89F89C37-F564-47EB-839D-C45ACD9D012A}</Project>
       <Name>EntityFX.Gdcame.Common.Contract</Name>

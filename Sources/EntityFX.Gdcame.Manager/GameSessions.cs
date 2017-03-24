@@ -25,6 +25,8 @@ namespace EntityFX.Gdcame.Manager
         private readonly ConcurrentDictionary<string, IGame> _userGamesStorage =
             new ConcurrentDictionary<string, IGame>();
         private readonly ConcurrentDictionary<Guid, Session> _userSessionsStorage = new ConcurrentDictionary<Guid, Session>();
+        private readonly ConcurrentDictionary<string, string> _userIdentities =
+            new ConcurrentDictionary<string, string>();
 
         private readonly PerformanceInfo _performanceInfo;
 
@@ -45,7 +47,10 @@ namespace EntityFX.Gdcame.Manager
             get { return _userGamesStorage; }
         }
 
-
+        internal IDictionary<string, string> Identities
+        {
+            get { return _userIdentities; }
+        }
 
         private static readonly object _stdLock = new { };
 
@@ -93,13 +98,30 @@ namespace EntityFX.Gdcame.Manager
 
         public Guid AddSession(User user)
         {
+            UserRole[] userRoles;
+            switch ((UserRole)user.Role)
+            {
+                case UserRole.Admin:
+                    userRoles = new[] { UserRole.GenericUser, UserRole.Admin };
+                    break;
+                case UserRole.GenericUser:
+                default:
+                    userRoles = new[] { UserRole.GenericUser};
+                    break;
+                case UserRole.System:
+                    userRoles = new[] { UserRole.System, UserRole.Admin };
+                    break;
+            }
+
             var session = new Session
             {
                 Login = user.Login,
                 UserId = user.Id,
                 SessionIdentifier = Guid.NewGuid(),
                 LastActivity = DateTime.Now,
-                UserRoles = user.IsAdmin ? new[] { UserRole.GenericUser, UserRole.Admin } : new[] { UserRole.GenericUser },
+
+
+                UserRoles = userRoles,
                 Identity =
                     new CustomGameIdentity { AuthenticationType = "Auto", IsAuthenticated = true, Name = user.Login }
             };
@@ -116,6 +138,11 @@ namespace EntityFX.Gdcame.Manager
             if (!_userSessionsStorage.TryAdd(session.SessionIdentifier, session))
             {
                 _logger.Warning("Cannot add session {0}", session.SessionIdentifier);
+            }
+
+            if (!_userIdentities.TryAdd(session.Login, session.UserId))
+            {
+                _logger.Warning("Cannot add user identifier {0}", session.SessionIdentifier);
             }
             return session.SessionIdentifier;
         }
@@ -142,19 +169,20 @@ namespace EntityFX.Gdcame.Manager
             {
                 _logger.Warning("Cannot remove session {0}", sessionId);
             }
+            string userId;
+            if (!_userIdentities.TryRemove(session.UserId, out userId))
+            {
+                _logger.Warning("Cannot remove user identifier {0}", session.UserId);
+            }
         }
 
         public void RemoveGame(UserData user)
         {
 
             var userSessions = Sessions.Values.Where(_ => _.Login == user.Login);
-            Session session;
             foreach (var userSession in userSessions)
             {
-                if (!_userSessionsStorage.TryRemove(userSession.SessionIdentifier, out session))
-                {
-                    _logger.Warning("Cannot remove session {0}", userSession.SessionIdentifier);
-                }
+                RemoveSession(userSession.SessionIdentifier);
             }
 
             IGame game;
@@ -181,6 +209,7 @@ namespace EntityFX.Gdcame.Manager
         public void RemoveAllSessions()
         {
             _userSessionsStorage.Clear();
+            _userIdentities.Clear();
         }
 
         public PerformanceInfo PerformanceInfo

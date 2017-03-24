@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 using EntityFX.Gdcame.Common.Application.Model;
 using EntityFX.Gdcame.Application.Contract.Controller;
 using EntityFX.Gdcame.Application.Contract.Model;
-using EntityFX.Gdcame.Utils.WebApiClient.Auth;
 using System;
 using System.Net.Mime;
+using EntityFX.Gdcame.Infrastructure.Api;
+using EntityFX.Gdcame.Infrastructure.Api.Auth;
 using RestSharp;
 using RestSharp.Authenticators;
 
@@ -25,15 +26,15 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
             return response.Data;
         }
 
-        public async Task<bool> FightAgainstInflationAsync()
+        public async Task<CashModel> FightAgainstInflationAsync()
         {
-            var response = await ExecuteRequestAsync<bool>("/api/game/fight-inflation", Method.POST);
+            var response = await ExecuteRequestAsync<CashModel>("/api/game/fight-inflation", Method.POST);
             return response.Data;
         }
 
-        public async Task<bool> ActivateDelayedCounterAsync(int counterId)
+        public async Task<CashModel> ActivateDelayedCounterAsync(int counterId)
         {
-            var response = await ExecuteRequestAsync<bool>("/api/game/activate-delayed-counter", Method.POST);
+            var response = await ExecuteRequestAsync<CashModel>("/api/game/activate-delayed-counter", Method.POST);
 
             return response.Data;
         }

@@ -8,7 +8,7 @@ using System.Web.UI.WebControls;
 using EntityFx.GdCame.Test.Shared;
 using EntityFX.Gdcame.Application.Contract.Controller;
 using EntityFX.Gdcame.Application.Contract.Model;
-using EntityFX.Gdcame.Utils.WebApiClient.Auth;
+using EntityFX.Gdcame.Infrastructure.Api.Auth;
 
 namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 {

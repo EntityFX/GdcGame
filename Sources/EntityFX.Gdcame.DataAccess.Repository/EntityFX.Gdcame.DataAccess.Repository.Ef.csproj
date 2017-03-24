@@ -93,12 +93,10 @@
     <Compile Include="Queries\CustomRule\GetAllCustomRuleQuery.cs" />
     <Compile Include="Queries\FundsDriver\GetAllFundsDriversQuery.cs" />
     <Compile Include="Queries\UserGameSnapshot\GetUserGameSnapshotByIdQuery.cs" />
-    <Compile Include="Queries\UserRating\GetAllUsersRatingsQuery.cs" />
     <Compile Include="Queries\User\GetAllUsersQuery.cs" />
     <Compile Include="Queries\User\GetUserByNameQuery.cs" />
     <Compile Include="Queries\User\GetUserByIdQuery.cs" />
     <Compile Include="UserGameSnapshotRepository.cs" />
-    <Compile Include="UserRatingRepository.cs" />
     <Compile Include="UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>

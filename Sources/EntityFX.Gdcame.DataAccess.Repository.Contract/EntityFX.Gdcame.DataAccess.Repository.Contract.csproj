@@ -61,12 +61,13 @@
     <Compile Include="Criterions\Counters\GetAllCountersCriterion.cs" />
     <Compile Include="Criterions\CustomRule\GetAllCustomRulesCriterion.cs" />
     <Compile Include="Criterions\FundsDriver\GetAllFundsDriversCriterion.cs" />
+    <Compile Include="Criterions\RatingHistory\GetUsersRatingHistoryCriterion.cs" />
+    <Compile Include="Criterions\RatingStatistics\GetRatingStatisticsCriterion.cs" />
     <Compile Include="Criterions\UserCounter\GetUserCountersByUserIdCriterion.cs" />
     <Compile Include="Criterions\UserCustomRuleInfo\GetUserCustomRuleInfoByUserIdCriterion.cs" />
     <Compile Include="Criterions\UserFundsDriver\GetUserFundsDriverByUserIdCriterion.cs" />
     <Compile Include="Criterions\UserGameCounter\GetUserGameCounterByIdCriterion.cs" />
     <Compile Include="Criterions\UserGameSnapshot\GetUserGameSnapshotByIdCriterion.cs" />
-    <Compile Include="Criterions\UserRating\GetAllUsersRatingsCriterion.cs" />
     <Compile Include="Criterions\User\GetAllUsersCriterion.cs" />
     <Compile Include="Criterions\User\GetUserByIdCriterion.cs" />
     <Compile Include="Criterions\User\GetUserByNameCriterion.cs" />
@@ -74,11 +75,13 @@
     <Compile Include="ICountersRepository.cs" />
     <Compile Include="ICustomRuleRepository.cs" />
     <Compile Include="IItemRepository.cs" />
+    <Compile Include="IRatingStatisticsRepository.cs" />
+    <Compile Include="IRatingHistoryRepository.cs" />
     <Compile Include="IUserGameSnapshotRepository.cs" />
-    <Compile Include="IUserRatingRepository.cs" />
     <Compile Include="IUserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GameRepositoryFacade.cs" />
+    <Compile Include="IGlobalRatingRepository.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

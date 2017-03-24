@@ -65,7 +65,6 @@
     <Compile Include="GameDataCachingInterceptionBehavior.cs" />
     <Compile Include="GameDataPersisterFactory.cs" />
     <Compile Include="GameFactory.cs" />
-    <Compile Include="HashHelper.cs" />
     <Compile Include="IGameClientFactory.cs" />
     <Compile Include="InvalidSessionFaultHandler.cs" />
     <Compile Include="ISessionManagerClientFactory.cs" />

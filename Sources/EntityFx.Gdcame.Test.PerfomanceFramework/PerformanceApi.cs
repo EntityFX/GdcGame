@@ -2,7 +2,6 @@
 using EntityFX.Gdcame.Common.Application.Model;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Utils.WebApiClient;
-using EntityFX.Gdcame.Utils.WebApiClient.Auth;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,7 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using EntityFX.Gdcame.Utils.Common;
+using EntityFX.Gdcame.Infrastructure.Api.Auth;
+using EntityFX.Gdcame.Utils.Shared;
 
 namespace EntityFx.Gdcame.Test.PerfomanceFramework
 {
@@ -215,7 +215,6 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
 
         public Tuple<PerformanceAggregate, T[]> DoSequenceTask<T>(int from, int to, Func<int, Task<Tuple<PerformanceCounter, T>>> task, Action<int> iterrationAction)
         {
-            var counter = 0;
             var result = new PerformanceAggregate();
             var tasksResultList = new List<Tuple<PerformanceCounter, T>>();
             var sw = new Stopwatch();
@@ -268,17 +267,6 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
                        Console.WriteLine("Registered {0} accounts", counter);
                    }
                }).Item1;
-                var res = new Tuple<PerformanceCounter, object>[countAccounts];
-                var sw = new Stopwatch();
-                sw.Start();
-                Parallel.For(0, countAccounts,
-                    async i1 => res[i1] = await RegisterAccount(string.Format("{0}{1}", accounLoginPrefix, i1)));
-                var p = new PerformanceAggregate()
-                {
-                    PerformanceCounters = res.Select(_ => _.Item1).ToArray(),
-                    TotalElapsed = sw.Elapsed
-                };
-                return p;
             }
             else
             {
@@ -428,7 +416,7 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
         {
             var serverUri = GetApiServerUri(_serviceUriList, login);
             var authApi = new AuthApiClient(new PasswordOAuthContext() { BaseUri = serverUri });
-            return DoPerformanceMeasureAction(async () => await authApi.Register(new EntityFX.Gdcame.Application.WebApi.Models.RegisterAccountModel()
+            return DoPerformanceMeasureAction(async () => await authApi.Register(new RegisterAccountModel()
             {
                 Login = login,
                 Password = DefaultPassword,
