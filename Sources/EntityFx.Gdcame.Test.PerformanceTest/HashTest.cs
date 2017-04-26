@@ -15,6 +15,7 @@ namespace EntityFx.Gdcame.Test.Unit
             IHashHelper hh = new HashHelper();
             Debug.WriteLine(hh.GetHashedString("admin"));
 
+            //TODO: Use Rendezvous Hashing algorithm.
             Debug.WriteLine(hh.GetModuloOfUserIdHash(hh.GetHashedString("admin"), 4));
         }
     }

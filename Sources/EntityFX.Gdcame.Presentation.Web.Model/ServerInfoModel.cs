@@ -8,6 +8,7 @@ namespace EntityFX.Gdcame.Application.Contract.Model
 {
     public class ServerInfoModel
     {
+        //TODO: add floating point ServerWeight property.
         public string[] ServerList { get; set; }
     }
 }

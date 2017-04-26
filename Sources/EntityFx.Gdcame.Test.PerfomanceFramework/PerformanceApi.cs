@@ -492,6 +492,7 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
         private static Uri GetApiServerUri(Uri[] serversUriList, string login)
         {
             var hasher = new HashHelper();
+            //TODO: Use Rendezvous Hashing algorithm.
             var serverNumber = hasher.GetModuloOfUserIdHash(hasher.GetHashedString(login), serversUriList.Length);
             return serversUriList[serverNumber];
         }

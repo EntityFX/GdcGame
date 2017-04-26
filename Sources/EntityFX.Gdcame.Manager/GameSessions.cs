@@ -54,6 +54,7 @@ namespace EntityFX.Gdcame.Manager
 
         private static readonly object _stdLock = new { };
 
+        //TODO: make public
         private IGame StartGame(string userId, string login)
         {
             var game = BuildGame(userId, login);
@@ -64,7 +65,7 @@ namespace EntityFX.Gdcame.Manager
             }
             return game;
         }
-
+        //TODO: add FreezeUserGame(userId, login) that will set IsFreezed property of Game that will be checked by Game methods.
         public IGame GetGame(Guid sessionId)
         {
             Session session;

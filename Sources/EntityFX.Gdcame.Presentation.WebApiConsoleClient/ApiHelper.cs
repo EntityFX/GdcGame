@@ -42,6 +42,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
         public static Uri GetApiServerUri(string[] serversList, string login, int port)
         {
             var hasher = new HashHelper();
+            //TODO: Use Rendezvous Hashing algorithm.
             var serverNumber = hasher.GetModuloOfUserIdHash(hasher.GetHashedString(login), serversList.Length);
             return new Uri(string.Format("http://{0}:{1}/", serversList[serverNumber], port));
         }
