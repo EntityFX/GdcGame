@@ -5,8 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOneCore;
 using Microsoft.AspNetCore.Builder;
+
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Practices.Unity;
+using Owin;
 
 namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter
 {
@@ -27,6 +29,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter
             {
                 appBuilder.SetDataProtectionProvider(app);
                 new WebApiStartup(Container, AppConfiguration).Configuration(appBuilder);
+                appBuilder.UseNancy(new Nancy.Owin.NancyOptions() { Bootstrapper = new NancyWebAppBootstrapper() });
             });
         }
     }
