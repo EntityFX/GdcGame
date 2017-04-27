@@ -29,7 +29,7 @@ namespace EntityFX.Gdcame.Manager.Workers
             _backgroundSessionsCheckerTask = _backgroundSessionsCheckerTimer.Start();
         }
 
-        public string Name { get; }
+        public string Name { get; private set; }
 
         public bool IsRunning
         {

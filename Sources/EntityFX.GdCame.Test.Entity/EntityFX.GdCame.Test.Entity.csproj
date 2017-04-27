@@ -136,6 +136,10 @@
       <Project>{BEEA0656-542B-4C48-A480-CEFF662DD29F}</Project>
       <Name>EntityFX.Gdcame.GameEngine.Contract</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Repository\EntityFX.Gdcame.Infrastructure.Repository.csproj">
+      <Project>{95745c95-a356-4e4a-9ac5-25abd9659831}</Project>
+      <Name>EntityFX.Gdcame.Infrastructure.Repository</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

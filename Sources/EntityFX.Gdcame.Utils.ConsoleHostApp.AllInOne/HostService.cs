@@ -21,7 +21,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
         private readonly StartOptions _webApiStartOptions;
         private readonly ILogger _currentClassLogger;
         private IWebHost _webHost;
-        private AppConfiguration AppConfiguration { get; }
+        private AppConfiguration AppConfiguration { get; set; }
 
 
         public HostService()

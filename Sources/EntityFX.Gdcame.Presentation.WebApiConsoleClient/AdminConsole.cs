@@ -59,7 +59,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
         }
 
 
-        private Guid SessionGuid { get; }
+        private Guid SessionGuid { get;  set; }
 
         private void SetAdminClient(IAdminController adminManagerClient)
         {

@@ -11,9 +11,9 @@ namespace EntityFX.Gdcame.Application.WebApi.Mappers
         {
             return new TopRatingStatisticsModel()
             {
-                ManualStepsCount = MapRatingStatisticsAggregate(source?.ManualStepsCount),
-                TotalEarned = MapRatingStatisticsAggregate(source?.TotalEarned),
-                RootCounter = MapRatingStatisticsAggregate(source?.RootCounter),
+                ManualStepsCount = MapRatingStatisticsAggregate(source.ManualStepsCount),
+                TotalEarned = MapRatingStatisticsAggregate(source.TotalEarned),
+                RootCounter = MapRatingStatisticsAggregate(source.RootCounter),
             };
         }
 
@@ -21,9 +21,9 @@ namespace EntityFX.Gdcame.Application.WebApi.Mappers
         {
             return new TopStatisticsAggregateModel()
             {
-                Day = source?.Day?.Select(MapRatingStatisticsCounter).ToArray(),
-                Week = source?.Week?.Select(MapRatingStatisticsCounter).ToArray(),
-                Total = source?.Total?.Select(MapRatingStatisticsCounter).ToArray(),
+                Day = source.Day.Select(MapRatingStatisticsCounter).ToArray(),
+                Week = source.Week.Select(MapRatingStatisticsCounter).ToArray(),
+                Total = source.Total.Select(MapRatingStatisticsCounter).ToArray(),
             };
         }
 

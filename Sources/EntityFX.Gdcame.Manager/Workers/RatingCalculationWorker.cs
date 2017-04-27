@@ -36,7 +36,7 @@ namespace EntityFX.Gdcame.Manager.Workers
             _backgroundSaveHistoryCheckerTask = _backgroundSaveHistoryCheckerTimer.Start();
         }
 
-        public string Name { get; }
+        public string Name { get; private set; }
 
         public bool IsRunning
         {

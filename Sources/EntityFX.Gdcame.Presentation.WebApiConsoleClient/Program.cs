@@ -84,7 +84,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             foreach (var data in ratingData.ManualStepsCount.Day)
             {
                 Console.Clear();
-                Console.Write($"Имя: {data.Login}\r\nКоличество шагов:\r\n \tЗа день: {data.Value}");
+                Console.Write("Имя: {0}\r\nКоличество шагов:\r\n \tЗа день: {1}", data.Login, data.Value);
             }
         }
 
