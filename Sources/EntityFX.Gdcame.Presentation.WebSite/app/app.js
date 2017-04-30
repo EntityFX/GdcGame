@@ -1,11 +1,25 @@
-﻿var app = angular.module("gdCameApp", ["ngRoute", "ngStorage"]);
+﻿var app = angular.module("gdCameApp", ['ui.router',"ngStorage"]);
 app.constant('apiUri', 'gdcame.local');
 app.constant('viewTheme', 'bootstrap4');
 app.constant('serverIps', [
     'localhost:9001'
 ]);
 
-app.config(function ($routeProvider, $locationProvider, viewTheme) {
+app.config(function ($stateProvider, $urlRouterProvider, viewTheme) {
+
+    $urlRouterProvider.otherwise("/login");
+
+    $stateProvider.state('login', {
+        url: '/login',
+        component: 'login'
+    });
+
+    $stateProvider.state('game', {
+        url: '/',
+        component: 'game'
+    });
+
+    /*
     $routeProvider
     .when("/login", {
         templateUrl: "app/views/" + viewTheme + "/loginView.html",
@@ -30,7 +44,7 @@ app.config(function ($routeProvider, $locationProvider, viewTheme) {
         templateUrl: "app/views/" + viewTheme + "/adminStatisticsView.html",
         controller: "AdminStatisticsController"
     })
-    .otherwise({ redirectTo: '/login' });
+    .otherwise({ redirectTo: '/login' });*/
 });
 
 app.factory("gameData",
@@ -41,6 +55,20 @@ app.factory("gameData",
         });
         return deferred.promise;
     });
+
+app.config(function($httpProvider) {
+    $httpProvider.responseInterceptors.push(function(promise) {
+        return promise.then(function(response) {
+                return response;
+            },
+            function(response) {
+                if (response.status === 500) {
+                    alert("Server error!");
+                }
+                return $q.reject(response);
+            });
+    });
+});
 
 angular
     .module("gdCameApp")

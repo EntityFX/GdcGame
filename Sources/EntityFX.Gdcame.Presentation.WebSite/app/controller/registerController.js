@@ -5,11 +5,11 @@
 
         $scope.register = function () {
             authenticationService.register($scope.user)
-            .then(function (value) {
-                $location.path('/login');
-            })
-            .catch(function (reason) {
-                alert(reason.data.message);
-            });
+                .then(function(value) {
+                        $location.path('/login');
+                    },
+                    function(response) {
+                        alert(JSON.stringify(reason.data.message));
+                    });
         };
     }]);

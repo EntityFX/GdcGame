@@ -23,13 +23,7 @@
                 },
 
                 logout: function () {
-                    return $http.post($localStorage.globals.apiAddress + "/api/auth/logout/")
-                        .then(function (result) {
-                            return result;
-                        })
-                        .catch(function (reason) {
-                            alert(reason);
-                        });
+                    return $http.post($localStorage.globals.apiAddress + "/api/auth/logout/");
                 },
 
                 register: function (user) {
