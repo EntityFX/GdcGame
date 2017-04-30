@@ -43,7 +43,8 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
         {
             var hasher = new HashHelper();
             //TODO: Use Rendezvous Hashing algorithm.
-            var serverNumber = hasher.GetModuloOfUserIdHash(hasher.GetHashedString(login), serversList.Length);
+            //            var serverNumber = hasher.GetModuloOfUserIdHash(hasher.GetHashedString(login), serversList.Length);
+            var serverNumber = hasher.GetServerNumberByRendezvousHashing(hasher.GetHashedString(login));
             return new Uri(string.Format("http://{0}:{1}/", serversList[serverNumber], port));
         }
 

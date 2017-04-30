@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 using EntityFX.Gdcame.Infrastructure.Common;
@@ -7,6 +8,15 @@ namespace EntityFX.Gdcame.Utils.Shared
 {
     public class HashHelper : IHashHelper
     {
+        private RendezvousHash rendezvousHash;
+
+        public HashHelper()
+        {
+            HashSet<Node> nodes = NodeHelper.GetListOfNodes();
+            IHashFunction hasher = new Md5HashFunction();
+            RendezvousHash rendezvousHash = new RendezvousHash(hasher, nodes);
+        }
+
         public string GetHashedString(string input)
         {
             var inputBytes = Encoding.ASCII.GetBytes(input + "_gdcame");
@@ -57,6 +67,11 @@ namespace EntityFX.Gdcame.Utils.Shared
             }
 
             return (int)value;
+        }
+
+        public int GetServerNumberByRendezvousHashing(string userId)
+        {
+            return rendezvousHash.DetermineResponsibleNode(userId).NodeId;
         }
     }
 }
