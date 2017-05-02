@@ -61,15 +61,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="app\shared\AuthDataService.ts" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="app\login\loginComponent.js">
+    <TypeScriptCompile Include="app\login\LoginComponent.ts">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </TypeScriptCompile>
     <Content Include="app\components\gameMenuComponent.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -86,9 +87,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="app\controller\gameController.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="app\login\loginController.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="app\controller\logoutController.js">
@@ -245,7 +243,6 @@
     <None Include="app\views\bootstrap3\ratingView.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Content Include="app\shared\controllerBase.js" />
     <Content Include="app\views\bootstrap4\adminStatisticsView.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -2606,8 +2603,13 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <TypeScriptCompile Include="app\login\LoginController.ts" />
+    <TypeScriptCompile Include="app\shared\ApiServiceBase.ts" />
+    <TypeScriptCompile Include="app\shared\ApiUriService.ts" />
+    <TypeScriptCompile Include="app\shared\UserApiService.ts" />
     <TypeScriptCompile Include="app\shared\ControllerBase.ts" />
     <TypeScriptCompile Include="app\types.d.ts" />
+    <TypeScriptCompile Include="app\Utils.ts" />
     <TypeScriptCompile Include="Scripts\typings\angular-ui-bootstrap\index.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angular-ui-router\index.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-animate.d.ts" />
