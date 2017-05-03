@@ -61,7 +61,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="app\shared\AuthDataService.ts" />
+    <TypeScriptCompile Include="app\shared\services\AuthDataService.ts" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -98,16 +98,12 @@
     <Content Include="app\services\adminService.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="app\services\authService.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="app\components\countersComponent.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="app\components\itemsComponent.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="app\services\gameDataService.js" />
     <Content Include="app\services\gameService.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -2605,11 +2601,12 @@
   <ItemGroup>
     <TypeScriptCompile Include="app\login\LoginController.ts" />
     <TypeScriptCompile Include="app\shared\ApiServiceBase.ts" />
-    <TypeScriptCompile Include="app\shared\ApiUriService.ts" />
-    <TypeScriptCompile Include="app\shared\UserApiService.ts" />
+    <TypeScriptCompile Include="app\shared\services\ApiUriService.ts" />
+    <TypeScriptCompile Include="app\shared\services\GameApiService.ts" />
+    <TypeScriptCompile Include="app\shared\services\UserApiService.ts" />
     <TypeScriptCompile Include="app\shared\ControllerBase.ts" />
     <TypeScriptCompile Include="app\types.d.ts" />
-    <TypeScriptCompile Include="app\Utils.ts" />
+    <TypeScriptCompile Include="app\shared\Utils.ts" />
     <TypeScriptCompile Include="Scripts\typings\angular-ui-bootstrap\index.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angular-ui-router\index.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-animate.d.ts" />

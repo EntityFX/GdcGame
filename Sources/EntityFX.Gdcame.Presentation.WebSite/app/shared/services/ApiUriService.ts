@@ -1,4 +1,4 @@
-﻿/// <reference path="../../Scripts/typings/js-md5/md5.d.ts" />
+﻿/// <reference path="../../../Scripts/typings/js-md5/md5.d.ts" />
 
 namespace Gdcame.Services {
     export class ApiUriService implements IApiUriService {
