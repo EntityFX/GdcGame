@@ -35,12 +35,13 @@ declare namespace Gdcame.Services {
 
     export interface IApiUriService {
         getApiAddressByLogin(login: string): string;
+        setApiAddressByLogin(login:string): void;
     }
 
     export interface IGameApiService {
         getGameData(): HttpPromise<GameData>;
         getCounters(): HttpPromise<Cash>;
-        performManualStep(data): HttpPromise<ManualStepResult>;
+        performManualStep(verificationNumber: number): HttpPromise<ManualStepResult>;
         buyFundDriver(fundDriverId: number): HttpPromise<BuyItem>;
         fightAgainstInflation(): HttpPromise<Cash>;
         activateDelayedCounter(counterId: number): HttpPromise<Cash>;

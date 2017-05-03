@@ -1,4 +1,4 @@
-﻿namespace Gdcame.Services
+﻿module Gdcame.Services
 {
     export class AuthDataService extends ApiServiceBase implements IAuthenticateService
     {
@@ -7,7 +7,7 @@
         private localStorage: any;
         private q: angular.IQService;
 
-        public constructor($http: angular.IHttpService, $q: angular.IQService, $localStorage, apiServiceUri: IApiUriService, userService: IUserService) {
+        public constructor($http: angular.IHttpService, $q: angular.IQService, $localStorage : any, apiServiceUri: IApiUriService, userService: IUserService) {
             super($http);
             this.apiServiceUri = apiServiceUri;
             this.localStorage = $localStorage;
@@ -15,7 +15,7 @@
             this.q = $q;
         }
 
-        public setCredentials(authData: AuthToken, login): void {
+        public setCredentials(authData: AuthToken, login: string): void {
             this.http.defaults.headers.common['Authorization'] = authData.token_type + ' ' + authData.access_token; // jshint ignore:line
             const auth = {
                 login: login,
