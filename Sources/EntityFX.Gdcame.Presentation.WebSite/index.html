@@ -8,7 +8,7 @@
     <title>GDCame</title>
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <link href="/assets/css/bootstrap4/bootstrap.css" rel="stylesheet" />
+    <link href="/content/bootstrap.css" rel="stylesheet" />
     <link href="/assets/css/bootstrap4/gdcame-bootstrap.css" rel="stylesheet" />
 
 </head>
@@ -16,40 +16,45 @@
 
 <body class="body-top">
     
-    <game-menu></game-menu>
+    <menu></menu>
 
 <div ui-view=""></div>
 
     <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
-    <script type="text/javascript" src="/assets/js/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript" src="/assets/js/bootstrap4/bootstrap.js"></script>
-    <script type="text/javascript" src="/assets/js/bootstrap4/bootstrap.affix.js"></script>
-    <script type="text/javascript" src="/assets/js/angular.js"></script>
-    <script type="text/javascript" src="/assets/js/angular-ui-router.js"></script>
-    <script type="text/javascript" src="/assets/js/ngStorage.min.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery-3.1.1.js"></script>
+    <script type="text/javascript" src="/Scripts/bootstrap.js"></script>
+    <!--<script type="text/javascript" src="/assets/js/bootstrap4/bootstrap.affix.js"></script>-->
+    <script type="text/javascript" src="/Scripts/angular.js"></script>
+    <script type="text/javascript" src="/Scripts/angular-ui-router.js"></script>
+    <script type="text/javascript" src="/Scripts/ngStorage.js"></script>
 
-    <script type="text/javascript" src="/assets/js/md5.min.js"></script>
-    <script type="text/javascript" src="/assets/js/utils.js"></script>
+    <script type="text/javascript" src="/Scripts/md5.min.js"></script>
+    <script type="text/javascript" src="/app/shared/Utils.js"></script>
 
     <script type="text/javascript" src="/app/app.js"></script>
 
-    <script type="text/javascript" src="/app/services/gameService.js"></script>
-    <script type="text/javascript" src="/app/services/authService.js"></script>
-    <script type="text/javascript" src="/app/services/adminService.js"></script>
+    <script type="text/javascript" src="/app/shared/ApiServiceBase.js"></script>
+    <script type="text/javascript" src="/app/shared/ControllerBase.js"></script>
 
-    <script type="text/javascript" src="/app/controller/loginController.js"></script>
-    <script type="text/javascript" src="/app/controller/logoutController.js"></script>
-    <script type="text/javascript" src="/app/controller/registerController.js"></script>
-    <script type="text/javascript" src="/app/controller/gameController.js"></script>
-    <script type="text/javascript" src="/app/controller/countersController.js"></script>
-    <script type="text/javascript" src="/app/controller/itemsController.js"></script>
-    <script type="text/javascript" src="/app/controller/gameMenuController.js"></script>
-    <script type="text/javascript" src="/app/controller/adminStatisticsController.js"></script>
+    <script type="text/javascript" src="/app/shared/services/AdminApiService.js"></script>
+    <script type="text/javascript" src="/app/shared/services/ApiUriService.js"></script>
+    <script type="text/javascript" src="/app/shared/services/AuthDataService.js"></script>
+    <script type="text/javascript" src="/app/shared/services/GameApiService.js"></script>
+    <script type="text/javascript" src="/app/shared/services/RatingApiService.js"></script>
+    <script type="text/javascript" src="/app/shared/services/UserApiService.js"></script>
 
-    <script type="text/javascript" src="/app/components/loginComponent.js"></script>
-    <script type="text/javascript" src="/app/components/countersComponent.js"></script>
-    <script type="text/javascript" src="/app/components/itemsComponent.js"></script>
-    <script type="text/javascript" src="/app/components/gameMenuComponent.js"></script>
+    <script type="text/javascript" src="/app/counters/CountersController.js"></script>
+    <script type="text/javascript" src="/app/counters/CountersComponent.js"></script>
+    <script type="text/javascript" src="/app/login/LoginController.js"></script>
+    <script type="text/javascript" src="/app/login/LoginComponent.js"></script>
+    <script type="text/javascript" src="/app/register/RegisterController.js"></script>
+    <script type="text/javascript" src="/app/register/RegisterComponent.js"></script>
+    <script type="text/javascript" src="/app/register/RegisterDataService.js"></script>
+    <script type="text/javascript" src="/app/menu/MenuController.js"></script>
+    <script type="text/javascript" src="/app/menu/MenuComponent.js"></script>
+    <script type="text/javascript" src="/app/game/GameController.js"></script>
+    <script type="text/javascript" src="/app/game/GameComponent.js"></script>
+
     <!--script type="text/javascript" src="http://localhost:8080/signalr/hubs"></script-->
     <script>
         $('.affix').affix({

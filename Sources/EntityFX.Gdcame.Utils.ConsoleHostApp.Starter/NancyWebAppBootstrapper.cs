@@ -22,10 +22,13 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter
         {
             base.ConfigureConventions(conventions);
             conventions.StaticContentsConventions.Add(
-                StaticContentConventionBuilder.AddDirectory("app", "website/app", "js", "html")
+                StaticContentConventionBuilder.AddDirectory("app", "website/app", "js", "ts", "map", "html")
             );
             conventions.StaticContentsConventions.Add(
-                StaticContentConventionBuilder.AddDirectory("assets", "website/assets", "js", "html", "css", "svg", "ttf", "eot", "woff", "woff2")
+                StaticContentConventionBuilder.AddDirectory("content", "website/content", "css", "map")
+            );
+            conventions.StaticContentsConventions.Add(
+                StaticContentConventionBuilder.AddDirectory("scripts", "website/scripts", "js")
             );
             conventions.StaticContentsConventions.Add(
                 StaticContentConventionBuilder.AddDirectory("images", "website/images", "png", "jpg")

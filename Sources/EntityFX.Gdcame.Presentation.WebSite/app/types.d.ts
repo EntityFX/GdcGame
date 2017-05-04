@@ -23,8 +23,15 @@ declare namespace Gdcame.Services {
         logout(): HttpPromise<any>;
     }
 
-    export interface IUserService extends IAuthenticateService {
+    export interface ISessionService {
+        getLogin(): string;
+    }
+
+    export interface IRegisterDataService {
         register(user: RegisterData): HttpPromise<any>;
+    }
+
+    export interface IUserApiService extends IAuthenticateService, IRegisterDataService {
     }
 
     export class AuthRequestTokenData {
@@ -33,9 +40,9 @@ declare namespace Gdcame.Services {
         password: string;
     }
 
-    export interface IApiUriService {
+    export interface IUriService {
         getApiAddressByLogin(login: string): string;
-        setApiAddressByLogin(login:string): void;
+        getSesionApiAddress(): string;
     }
 
     export interface IGameApiService {
@@ -102,6 +109,73 @@ declare namespace Gdcame.Services {
     export class BuyItem {
         ItemBuyInfo: Item;
         ModifiedCountersInfo: Cash;
+    }
+
+    export interface IAdminApiService {
+        getStatistics(serverAddress: string): HttpPromise<ServerStatisticsInfo>;
+        getActiveSessions(serverAddress: string): HttpPromise<Array<UserSessions>>;
+    }
+
+    export class ServerStatisticsInfo {
+        ActiveSessionsCount: number;
+        ActiveGamesCount: number;
+        RegistredUsersCount: number;
+        ServerUptime: string;
+        ServerStartDateTime: string;
+        PerformanceInfoModel: PerformanceInfo;
+        ResourcesUsageInfoModel: ResourcesUsageInfo;
+        SystemInfoModel: SystemInfo;
+        ActiveWorkers: Array<string>;
+    }
+
+    export class PerformanceInfo {
+        CalculationsPerCycle: string;
+        PersistencePerCycl: string;
+    }
+
+    export class ResourcesUsageInfo {
+        MemoryAvailable: number;
+        MemoryUsedByProcess: number;
+        CpuUsed: number;
+    }
+
+    export class SystemInfo {
+        Runtime: string;
+        Os: string;
+        CpusCount: number;
+        MemoryTotal: number;
+    }
+
+    export class UserSessions {
+        Login: string;
+        Sessions: Array<SessionInfo>;
+    }
+
+    export class SessionInfo {
+        SessionIdentifier: string;
+        LastActivity: string;
+    }
+
+    export interface IRatingApiService {
+        getRaiting(serverAddress: string, top: number): angular.IHttpPromise<TopRatingStatisticsModel>;
+    }
+
+    export class TopRatingStatisticsModel {
+        ManualStepsCount: TopStatisticsAggregate;
+        TotalEarned: TopStatisticsAggregate;
+        RootCounter: TopStatisticsAggregate;
+    }
+
+    export class TopStatisticsCounter {
+        Login: string;
+        UserId: string;
+        Value: number;
+    }
+
+    export class TopStatisticsAggregate {
+        Day: Array<TopStatisticsCounter>;
+        Week: Array<TopStatisticsCounter>;
+        Total: Array<TopStatisticsCounter>;
     }
 }
 

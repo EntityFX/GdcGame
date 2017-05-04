@@ -1,4 +1,17 @@
-﻿angular.module("gdCameApp").controller('CountersController',
+﻿/// <reference path="../shared/ControllerBase.ts" />
+/// <reference path="../types.d.ts" />
+/// <reference path="../../Scripts/typings/angularjs/angular.d.ts" />
+namespace Gdcame.Controllers {
+    import Cash = Services.Cash;
+
+    export class CountersController extends Controllers.ControllerBase {
+        public cash: Cash; 
+    }
+
+    angular.module("gdCameApp").controller("CountersController", CountersController);
+}
+
+/*angular.module("gdCameApp").controller('CountersController',
     [
         "$rootScope", "$scope", function ($rootScope, $scope) {
             $rootScope.$watch("gameData",
@@ -38,4 +51,4 @@
                 });
             }
         }
-    ]);
+    ]);*/

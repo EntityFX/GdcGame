@@ -1,15 +1,17 @@
 ﻿/// <reference path="../../../Scripts/typings/js-md5/md5.d.ts" />
 
 namespace Gdcame.Services {
-    export class ApiUriService implements IApiUriService {
+    export class UriService implements Gdcame.Services.IUriService {
         private serverIps: string[];
         private apiUri: string;
         private useServerIps: boolean;
+        private localStorage: angular.storage.IStorageService;
 
-        constructor(apiUri: string, serverIps: Array<string>) {
+        constructor($localStorage: angular.storage.IStorageService, apiUri: string, serverIps: Array<string>) {
             this.serverIps = serverIps;
             this.apiUri = apiUri;
             this.useServerIps = serverIps != undefined && serverIps.length > 0;
+            this.localStorage = $localStorage;
         }
 
         getApiAddressByLogin(login: string) {
@@ -17,11 +19,14 @@ namespace Gdcame.Services {
             return 'http://' + (this.useServerIps ? this.serverIps[userServerNumber] : 'ns' + (userServerNumber + 1) + '.' + this.apiUri);
         }
 
+        getSesionApiAddress(): string {
+            return this.localStorage["globals"].apiAddress;
+        }
     }
 
-    angular.module("gdCameApp").service("ApiUriService", ApiUriService);
+    angular.module("gdCameApp").service("UriService", UriService);
 
-    ApiUriService.$inject = [
-        "apiUri", "serverIps"
+    UriService.$inject = [
+        "$localStorage", "apiUri", "serverIps"
     ];
 }

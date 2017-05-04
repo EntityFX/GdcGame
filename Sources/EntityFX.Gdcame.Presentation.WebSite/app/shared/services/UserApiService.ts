@@ -4,11 +4,11 @@ namespace Gdcame.Services {
     import HttpService = angular.IHttpService;
     import RequestConfig = angular.IRequestConfig;
 
-    export class UserApiService extends ApiServiceBase implements IUserService {
-        private apiServiceUri: IApiUriService;
+    export class UserApiService extends ApiServiceBase implements Services.IUserApiService {
+        private apiServiceUri: Gdcame.Services.IUriService;
         private apiAuthServiceAddress: string;
 
-        public constructor($http: HttpService, apiServiceUri : IApiUriService) {
+        public constructor($http: HttpService, apiServiceUri : Services.IUriService) {
             super($http);
             this.apiServiceUri = apiServiceUri;
         }
@@ -46,10 +46,9 @@ namespace Gdcame.Services {
         }
     }
 
-
-    angular.module("gdCameApp").controller("UserApiService", UserApiService);
+    angular.module("gdCameApp").service("UserApiService", UserApiService);
 
     UserApiService.$inject = [
-        "$http", "UserApiService"
+        "$http", "UriService"
     ];
 }

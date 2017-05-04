@@ -1,9 +1,10 @@
 ﻿angular
     .module("gdCameApp")
-    .component("gameMenu",
+    .component("menu",
     {
         templateUrl: function (viewTheme) {
             return "/app/views/"+viewTheme+"/gameMenuView.html";
         },
-        controller: 'GameMenuController'
+        controller: 'MenuController',
+        controllerAs: "controller"
     });

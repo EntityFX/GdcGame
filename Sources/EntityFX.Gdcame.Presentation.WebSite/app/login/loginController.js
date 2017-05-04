@@ -13,7 +13,6 @@ var Gdcame;
 (function (Gdcame) {
     var Controllers;
     (function (Controllers) {
-        var ControllerBase = GdCame.Controllers.ControllerBase;
         var LoginController = (function (_super) {
             __extends(LoginController, _super);
             function LoginController($location, authenticationService) {
@@ -33,10 +32,10 @@ var Gdcame;
                 });
             };
             return LoginController;
-        }(ControllerBase));
+        }(Controllers.ControllerBase));
         angular.module("gdCameApp").controller("LoginController", LoginController);
         LoginController.$inject = [
-            "$location", "authenticationService"
+            "$location", "AuthDataService"
         ];
     })(Controllers = Gdcame.Controllers || (Gdcame.Controllers = {}));
 })(Gdcame || (Gdcame = {}));

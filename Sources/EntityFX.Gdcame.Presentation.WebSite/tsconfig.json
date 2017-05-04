@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "noEmitOnError": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "target": "es5",
+    "types": [],
+    "outDir": "../../bin/website/app/",
+    "mapRoot": "/app"
+  },
+  "exclude": [
+    "node_modules",
+    "wwwroot"
+  ]
+}

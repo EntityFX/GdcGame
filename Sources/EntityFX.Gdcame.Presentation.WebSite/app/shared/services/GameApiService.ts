@@ -1,15 +1,41 @@
 ﻿module Gdcame.Services {
-    export class GameApiService extends ApiServiceBase implements  Services.IGameApiService {
-        getGameData(): angular.IHttpPromise<Gdcame.Services.GameData> { throw new Error("Not implemented"); }
+    import HttpService = angular.IHttpService;
+    export class GameApiService extends ApiServiceBase implements Services.IGameApiService {
+        private apiServiceUri: Services.IUriService;
 
-        getCounters(): angular.IHttpPromise<Gdcame.Services.Cash> { throw new Error("Not implemented"); }
+        constructor($http: HttpService, apiServiceUri: Services.IUriService) {
+            super($http);
+            this.apiServiceUri = apiServiceUri;
+        }
 
-        performManualStep(verificationNumber: number): angular.IHttpPromise<Gdcame.Services.ManualStepResult> { throw new Error("Not implemented"); }
+        getGameData(): angular.IHttpPromise<Gdcame.Services.GameData> {
+            return this.http.get(`${this.apiServiceUri.getSesionApiAddress()}/api/game/game-data/`);
+        }
 
-        buyFundDriver(fundDriverId: number): angular.IHttpPromise<Gdcame.Services.BuyItem> { throw new Error("Not implemented"); }
+        getCounters(): angular.IHttpPromise<Gdcame.Services.Cash> {
+            return this.http.get(`${this.apiServiceUri.getSesionApiAddress()}/api/game/counters/`);
+        }
 
-        fightAgainstInflation(): angular.IHttpPromise<Gdcame.Services.Cash> { throw new Error("Not implemented"); }
+        performManualStep(verificationNumber: number): angular.IHttpPromise<Gdcame.Services.ManualStepResult> {
+            return this.http.post(`${this.apiServiceUri.getSesionApiAddress()}/api/game/perform-step/`, verificationNumber);
+        }
 
-        activateDelayedCounter(counterId: number): angular.IHttpPromise<Gdcame.Services.Cash> { throw new Error("Not implemented"); }
+        buyFundDriver(fundDriverId: number): angular.IHttpPromise<Gdcame.Services.BuyItem> {
+            return this.http.post(`${this.apiServiceUri.getSesionApiAddress()}/api/game/buy-item/`, fundDriverId);
+        }
+
+        fightAgainstInflation(): angular.IHttpPromise<Gdcame.Services.Cash> {
+            return this.http.post(`${this.apiServiceUri.getSesionApiAddress()}/api/game/fight-inflation/`, {});
+        }
+
+        activateDelayedCounter(counterId: number): angular.IHttpPromise<Gdcame.Services.Cash> {
+            return this.http.post(`${this.apiServiceUri.getSesionApiAddress()}/api/game/ActivateDelayedCounter/`, counterId);
+        }
     }
+
+    angular.module("gdCameApp").service("GameApiService", GameApiService);
+
+    GameApiService.$inject = [
+        "$http", "UriService"
+    ];
 }

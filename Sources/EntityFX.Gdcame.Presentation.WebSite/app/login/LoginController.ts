@@ -2,12 +2,11 @@
 
 namespace Gdcame.Controllers {
     import AuthData = Services.AuthData;
-    import ControllerBase = GdCame.Controllers.ControllerBase;
     import LocationService = angular.ILocationService;
     import AuthenticateService = Services.IAuthenticateService;
     import AuthToken = Services.AuthToken;
 
-    class LoginController extends ControllerBase {
+    class LoginController extends Controllers.ControllerBase {
         private user: AuthData = { login: 'admin', password: "P@ssw0rd" };
         private location: LocationService;
         private authenticationService: AuthenticateService;
@@ -23,7 +22,7 @@ namespace Gdcame.Controllers {
                 .then((value : AuthToken) : void => {
                     this.location.path('/');
                 }, (error: any) : void => {
-                    this.showMessage("error", <string>error.data);
+                    this.showMessage("error", JSON.stringify(error));
                 });
         }
     }
@@ -31,6 +30,6 @@ namespace Gdcame.Controllers {
     angular.module("gdCameApp").controller("LoginController", LoginController);
 
     LoginController.$inject = [
-        "$location", "authenticationService"
+        "$location", "AuthDataService"
     ];
 }
