@@ -48,9 +48,25 @@
     <Compile Include="Rendezvous Hashing\RendezvousHash.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Contract\EntityFX.Gdcame.DataAccess.Contract.csproj">
+      <Project>{0932d8b3-29eb-4546-987a-b246421a9b87}</Project>
+      <Name>EntityFX.Gdcame.DataAccess.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Service\EntityFX.Gdcame.DataAccess.Service.csproj">
+      <Project>{2008f2c2-c1fa-4cb9-8a99-a9406ac4967d}</Project>
+      <Name>EntityFX.Gdcame.DataAccess.Service</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Common\EntityFX.Gdcame.Infrastructure.Common.csproj">
       <Project>{924CC67D-9E2B-46BA-BE1D-6C6C780CCFBC}</Project>
       <Name>EntityFX.Gdcame.Infrastructure.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Manager.Contract\EntityFX.Gdcame.Manager.Contract.csproj">
+      <Project>{41696f24-e345-4599-a0c7-0715f64946d8}</Project>
+      <Name>EntityFX.Gdcame.Manager.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Manager\EntityFX.Gdcame.Manager.csproj">
+      <Project>{56a380de-2370-4c2d-8c8e-eaf3163c92ec}</Project>
+      <Name>EntityFX.Gdcame.Manager</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

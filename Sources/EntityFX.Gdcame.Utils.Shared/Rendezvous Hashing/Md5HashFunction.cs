@@ -27,7 +27,27 @@ namespace EntityFX.Gdcame.Utils.Shared.Rendezvous_Hashing
 
         private long StringToLong(String str)
         {
-            return Convert.ToInt64(str);
+            //            return Convert.ToInt64(str);
+            Int64 value = 0;
+            Int64 _2_Pow_4Pos_ByModulo = 1;
+            for (int i = str.Length - 1; i >= 0; i--)
+            {
+                int x = 0;
+                char c = str[i];
+                if ((c >= 'a') && (c <= 'f'))
+                {
+                    x = c - 'a' + 10;
+                }
+                else if ((c >= '0') && (c <= '9'))
+                {
+                    x = c - '0';
+                }
+            
+                value = (value + x * _2_Pow_4Pos_ByModulo);
+                _2_Pow_4Pos_ByModulo = (_2_Pow_4Pos_ByModulo << 4);
+            }
+            
+            return (int)value;
         }
 
     }

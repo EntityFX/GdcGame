@@ -16,7 +16,9 @@ namespace EntityFx.Gdcame.Test.Unit
             Debug.WriteLine(hh.GetHashedString("admin"));
 
             //TODO: Use Rendezvous Hashing algorithm.
-            Debug.WriteLine(hh.GetModuloOfUserIdHash(hh.GetHashedString("admin"), 4));
+            //            Debug.WriteLine(hh.GetModuloOfUserIdHash(hh.GetHashedString("admin"), 4));
+            //todo:remove GetHashedString
+            Debug.WriteLine(hh.GetServerNumberByRendezvousHashing(hh.GetHashedString("admin")));
         }
     }
 }
