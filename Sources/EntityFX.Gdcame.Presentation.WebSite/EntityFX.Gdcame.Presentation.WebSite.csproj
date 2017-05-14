@@ -79,9 +79,6 @@
     <TypeScriptCompile Include="app\counters\CountersController.ts" />
     <Content Include="app\items\itemsController.js" />
     <TypeScriptCompile Include="app\game\gameController.ts" />
-    <Content Include="app\logout\logoutController.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <TypeScriptCompile Include="app\register\registerController.ts" />
     <TypeScriptCompile Include="app\shared\services\AdminApiService.ts" />
     <TypeScriptCompile Include="app\counters\CountersComponent.ts" />
@@ -2571,7 +2568,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="app\logout\" />
+  </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app\login\LoginController.ts" />
     <TypeScriptCompile Include="app\shared\ApiServiceBase.ts" />
