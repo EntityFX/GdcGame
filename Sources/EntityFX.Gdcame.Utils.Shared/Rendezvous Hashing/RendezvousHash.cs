@@ -95,10 +95,10 @@ namespace EntityFX.Gdcame.Utils.Shared.Rendezvous_Hashing
             // Write the string to a file.append mode is enabled so that the log
             // lines get appended to  test.txt than wiping content and writing the log
 
-            System.IO.StreamWriter file = new System.IO.StreamWriter("F:\\projects\\RG-Architects\\RG-Architects - Copy\\bin\\logs\\log.txt", true);
-            file.WriteLine(lines);
-
-            file.Close();
+//            System.IO.StreamWriter file = new System.IO.StreamWriter("F:\\projects\\RG-Architects\\RG-Architects - Copy\\bin\\logs\\log.txt", true);
+//            file.WriteLine(lines);
+//
+//            file.Close();
 
         }
     }
