@@ -28,7 +28,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter
                 StaticContentConventionBuilder.AddDirectory("content", "website/content", "css", "map")
             );
             conventions.StaticContentsConventions.Add(
-                StaticContentConventionBuilder.AddDirectory("scripts", "website/scripts", "js")
+                StaticContentConventionBuilder.AddDirectory("Scripts", "website/Scripts", "js", "map")
             );
             conventions.StaticContentsConventions.Add(
                 StaticContentConventionBuilder.AddDirectory("images", "website/images", "png", "jpg")
