@@ -7,6 +7,7 @@ using EntityFX.Gdcame.Application.Contract.Controller;
 using EntityFX.Gdcame.Application.Contract.Model;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager.Contract.Workermanager;
+using Newtonsoft.Json;
 
 namespace EntityFX.Gdcame.Application.WebApi.Controller
 {
@@ -60,9 +61,10 @@ namespace EntityFX.Gdcame.Application.WebApi.Controller
         {
             Console.WriteLine("---AdminController going to update Nodes List---");
             System.IO.StreamWriter file = new System.IO.StreamWriter("servers2.json");
-            file.WriteLine(newServersList);
+            var jsonList = JsonConvert.SerializeObject(newServersList);
+            file.WriteLine(jsonList);
             file.Close();
-            return "Nodes List updated: " + newServersList;
+            return "Nodes List updated: " + jsonList;
         }
 
         [HttpDelete]
