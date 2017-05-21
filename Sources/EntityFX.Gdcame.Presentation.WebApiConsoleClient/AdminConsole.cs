@@ -99,6 +99,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                 {ConsoleKey.F7, new MenuItem {MenuText = "Обнулить пользователя", MenuAction = WipeUser}},
                 {ConsoleKey.F8, new MenuItem {MenuText = "Статистика", MenuAction = GetStatistics}},
                 {ConsoleKey.F9, new MenuItem {MenuText = "Echo", MenuAction = Echo}},
+                {ConsoleKey.F10, new MenuItem {MenuText = "Обновить список серверов", MenuAction = UpdateNodesList}},
                 {ConsoleKey.Backspace, new MenuItem {MenuText = "Закрыть все игры", MenuAction = StopAllGames}},
                 {ConsoleKey.Escape, new MenuItem {MenuText = "Выход", MenuAction = Exit}}
             };
@@ -201,6 +202,31 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             lock (_stdLock)
             {
                 PrintStatistics(statistics);
+            }
+        }
+
+        private void UpdateNodesList()
+        {
+            string[] newServersList = ApiHelper.GetServers();//todo:replace with serverManager
+            var results = Task.WhenAll(
+                DoAuthServers().Where(_ => _ != null).Select(_ => Task.Factory.StartNew(
+                    () =>
+                    {
+                        try
+                        {
+                            var result = new Tuple<Uri, string>(_.BaseUri,
+                                ApiHelper.GetAdminClient(_).UpdateNodesList(newServersList));
+                            return result;
+                        }
+                        catch (Exception)
+                        {
+                            return new Tuple<Uri, string>(_.BaseUri, null);
+                        }
+                    }))
+            ).Result;
+            foreach (var echo in results)
+            {
+                Console.WriteLine("{0}:{1}", echo.Item1, echo.Item2);
             }
         }
 

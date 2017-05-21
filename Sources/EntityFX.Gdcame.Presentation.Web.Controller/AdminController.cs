@@ -54,6 +54,17 @@ namespace EntityFX.Gdcame.Application.WebApi.Controller
             return statistics;
         }
 
+        [HttpGet]
+        [Route("update_nodes_list")]
+        public string UpdateNodesList([FromUri] string[] newServersList)
+        {
+            Console.WriteLine("---AdminController going to update Nodes List---");
+            System.IO.StreamWriter file = new System.IO.StreamWriter("servers2.json");
+            file.WriteLine(newServersList);
+            file.Close();
+            return "Nodes List updated: " + newServersList;
+        }
+
         [HttpDelete]
         [Route("sessions/guid")]
         public async void CloseSessionByGuid([FromBody] Guid guid)
