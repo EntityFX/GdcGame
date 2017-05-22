@@ -112,6 +112,9 @@
     </None>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="servers_to_update.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EntityFX.Gdcame.Common.Presentation.Model\EntityFX.Gdcame.Common.Application.Model.csproj">

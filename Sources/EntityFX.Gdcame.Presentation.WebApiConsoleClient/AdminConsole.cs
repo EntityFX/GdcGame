@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 using System.Threading.Tasks;
@@ -207,7 +208,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 
         private void UpdateNodesList()
         {
-            string[] newServersList = ApiHelper.GetServers();//todo:replace with serverManager
+            string[] newServersList = ApiHelper.GetServers("servers_to_update.json");//todo:replace with serverManager?
             var results = Task.WhenAll(
                 DoAuthServers().Where(_ => _ != null).Select(_ => Task.Factory.StartNew(
                     () =>

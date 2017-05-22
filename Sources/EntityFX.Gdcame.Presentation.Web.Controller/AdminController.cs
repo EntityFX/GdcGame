@@ -60,7 +60,7 @@ namespace EntityFX.Gdcame.Application.WebApi.Controller
         public string UpdateNodesList([FromUri] string[] newServersList)
         {
             Console.WriteLine("---AdminController going to update Nodes List---");
-            System.IO.StreamWriter file = new System.IO.StreamWriter("servers2.json");
+            System.IO.StreamWriter file = new System.IO.StreamWriter("servers.json");
             var jsonList = JsonConvert.SerializeObject(newServersList);
             file.WriteLine(jsonList);
             file.Close();
