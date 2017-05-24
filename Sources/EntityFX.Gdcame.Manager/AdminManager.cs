@@ -1,9 +1,11 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using EntityFX.Gdcame.DataAccess.Contract.User;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager.Contract.AdminManager;
 using EntityFX.Gdcame.Manager.Contract.UserManager;
+//using Newtonsoft.Json;
 
 namespace EntityFX.Gdcame.Manager
 {
@@ -100,5 +102,13 @@ namespace EntityFX.Gdcame.Manager
         {
             _gameSessions.RemoveAllGames();
         }
+
+        public bool UpdateNodeData()
+        {
+            //for all users, check new node
+            //move user into deffirent node if needed
+            return false;
+        }
     }
+
 }
