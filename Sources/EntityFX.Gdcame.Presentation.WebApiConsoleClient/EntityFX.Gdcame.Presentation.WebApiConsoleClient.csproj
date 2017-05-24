@@ -112,7 +112,7 @@
     </None>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <None Include="servers_to_update.json">
+    <None Include="NodesListToUpdateServers.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

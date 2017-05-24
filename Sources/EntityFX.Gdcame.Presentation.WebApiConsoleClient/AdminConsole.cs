@@ -208,7 +208,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 
         private void UpdateNodesList()
         {
-            string[] newServersList = ApiHelper.GetServers("servers_to_update.json");//todo:replace with serverManager?
+            string[] newServersList = ApiHelper.GetServers("NodesListToUpdateServers.json");//todo:replace with serverManager?
             var results = Task.WhenAll(
                 DoAuthServers().Where(_ => _ != null).Select(_ => Task.Factory.StartNew(
                     () =>
