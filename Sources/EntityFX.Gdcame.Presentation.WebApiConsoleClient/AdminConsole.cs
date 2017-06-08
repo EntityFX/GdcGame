@@ -159,13 +159,18 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 
         private PasswordOAuthContext[] DoAuthServers()
         {
+            return DoAuthServers(_serversList);
+        }
+
+        private PasswordOAuthContext[] DoAuthServers(string[] newServersList)
+        {
             return Task.WhenAll(
 
-                    _serversList.Select(
-                            server =>
-                                new PasswordAuthProvider(
-                                    new Uri(string.Format("http://{0}:{1}/", server, _servicePort))))
-                        .Select(async passwordProvider =>
+                newServersList.Select(
+                        server =>
+                            new PasswordAuthProvider(
+                                new Uri(string.Format("http://{0}:{1}/", server, _servicePort))))
+                    .Select(async passwordProvider =>
                         {
                             try
                             {
@@ -181,7 +186,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                             }
 
                         }
-                        )).Result;
+                    )).Result;
         }
 
         public void GetStatisticsCallback(object sender, ElapsedEventArgs e)
@@ -213,7 +218,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
         {
             string[] newServersList = ServerApiHelper.GetServers("NodesListToUpdateServers.json");//todo:replace with serverManager?
             var results = Task.WhenAll(
-                DoAuthServers().Where(_ => _ != null).Select(_ => Task.Factory.StartNew(
+                DoAuthServers(newServersList).Where(_ => _ != null).Select(_ => Task.Factory.StartNew(
                     () =>
                     {
                         try
