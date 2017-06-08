@@ -62,9 +62,8 @@ namespace EntityFX.Gdcame.Manager.Workers
         private void GameSessions_GameRemoved(object sender, Tuple<string, string> e)
         {
             //TODO: Use Hashing algorithm.
-            //            int timeSlotId = _hashHelper.GetModuloOfUserIdHash(e.Item1, PersistTimeSlotsCount);
-
-            int timeSlotId = _hashHelper.GetServerNumberByRendezvousHashing(e.Item1);
+            //int timeSlotId = _hashHelper.GetModuloOfUserIdHash(e.Item1, PersistTimeSlotsCount);
+            int timeSlotId = _hashHelper.GetModulo(e.Item1, PersistTimeSlotsCount);
             var userTimeSlot = PersistTimeSlotsUsers[timeSlotId].FirstOrDefault(_ => _.Item2 == e.Item2);
             if (userTimeSlot != null)
             {
@@ -76,8 +75,8 @@ namespace EntityFX.Gdcame.Manager.Workers
         private void GameSessions_GameStarted(object sender, Tuple<string, string> e)
         {
             //TODO: Use Hashing algorithm.
-            //            int timeSlotId = _hashHelper.GetModuloOfUserIdHash(e.Item1, PersistTimeSlotsCount);
-            int timeSlotId = _hashHelper.GetServerNumberByRendezvousHashing(e.Item1);
+            //int timeSlotId = _hashHelper.GetModuloOfUserIdHash(e.Item1, PersistTimeSlotsCount);
+            int timeSlotId = _hashHelper.GetModulo(e.Item1, PersistTimeSlotsCount);
 
             PersistTimeSlotsUsers[timeSlotId].Add(new Tuple<string, string, DateTime>(e.Item1, e.Item2, DateTime.Now));
         }

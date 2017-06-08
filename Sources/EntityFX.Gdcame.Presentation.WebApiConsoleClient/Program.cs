@@ -15,7 +15,7 @@ using System.IO;
 using System.Web.Hosting;
 using EntityFX.Gdcame.Infrastructure.Api.Auth;
 using EntityFX.Gdcame.Infrastructure.Api.Exceptions;
-using Newtonsoft.Json;
+using EntityFX.Gdcame.Utils.Shared;
 
 namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 {
@@ -255,7 +255,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             var argsArray = args as string[] ?? args.ToArray();
             try
             {
-                _serverInfo = ApiHelper.GetServers();
+                _serverInfo = ServerApiHelper.GetServers();
             }
             catch (AggregateException clientException)
             {

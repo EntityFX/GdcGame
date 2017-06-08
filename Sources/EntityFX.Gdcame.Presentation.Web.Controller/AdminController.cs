@@ -1,13 +1,20 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using EntityFX.Gdcame.Manager.Contract.AdminManager;
 using EntityFX.Gdcame.Application.Contract.Controller;
 using EntityFX.Gdcame.Application.Contract.Model;
+using EntityFX.Gdcame.DataAccess.Contract.User;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager.Contract.Workermanager;
+using EntityFX.Gdcame.Utils.Shared;
 using Newtonsoft.Json;
+using EntityFX.Gdcame.DataAccess.Service;
+using System.Configuration;
 
 namespace EntityFX.Gdcame.Application.WebApi.Controller
 {
@@ -18,13 +25,18 @@ namespace EntityFX.Gdcame.Application.WebApi.Controller
         private readonly IAdminManager _adminManager;
         private readonly IWorkerManager _workerManager;
         private readonly IMapperFactory _mapperFactory;
+        private readonly IUserDataAccessService _userDataAccessService;
+
+        private readonly IHashHelper hashHelper;
 
         public AdminController(IAdminManager adminManager, IWorkerManager workerManager,
-            IMapperFactory mapperFactory)
+            IMapperFactory mapperFactory, IUserDataAccessService userDataAccessService)
         {
             _adminManager = adminManager;
             _workerManager = workerManager;
             _mapperFactory = mapperFactory;
+            _userDataAccessService = userDataAccessService;
+            hashHelper = new HashHelper();
         }
 
         [HttpGet]
@@ -60,14 +72,43 @@ namespace EntityFX.Gdcame.Application.WebApi.Controller
         public string UpdateNodesList([FromUri] string[] newServersList)
         {
             Console.WriteLine("---AdminController going to update Nodes List---");
+            string[] oldServersList = ServerApiHelper.GetServers();
             string jsonServerList = UpdateNodesListInFile(newServersList);
-            _adminManager.UpdateNodeData();
+            UpdateNodeData(oldServersList, newServersList);
             return "Nodes List updated: " + jsonServerList;
         }
 
+
+        private void UpdateNodeData(string[] oldServersList, string[] newServersList)
+        {
+            User[] users = _userDataAccessService.FindAll();
+            foreach (var user in users)
+            {
+                int oldNumber = hashHelper.GetServerNumberByRendezvousHashing(user.Login, oldServersList);
+                int newNumber = hashHelper.GetServerNumberByRendezvousHashing(user.Login, newServersList);
+                if (oldNumber!=newNumber)
+                {
+                    //add user to new server
+                    int userId = new DatabasesProvider().addUser(newServersList[newNumber], user);
+
+                    if (userId != 0)
+                    {
+                          //delete user form currrent server
+                          _userDataAccessService.Delete(user.Id);
+                    }
+                    else
+                    {
+                        Console.WriteLine(String.Format("User {0} was not added.",
+                            user));
+                    }
+                }
+            }
+        }
+
+        
+
         private string UpdateNodesListInFile(string[] newServersList)
         {
-            //todo: move to adminManager
             System.IO.StreamWriter file = new System.IO.StreamWriter("servers.json");
             var jsonList = JsonConvert.SerializeObject(newServersList);
             file.WriteLine(jsonList);

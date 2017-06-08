@@ -10,6 +10,7 @@ using EntityFx.GdCame.Test.Shared;
 using EntityFX.Gdcame.Application.Contract.Controller;
 using EntityFX.Gdcame.Application.Contract.Model;
 using EntityFX.Gdcame.Infrastructure.Api.Auth;
+using EntityFX.Gdcame.Utils.Shared;
 
 namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 {
@@ -41,6 +42,8 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 
         private PasswordOAuthContext[] _serversAuthContextList;
         private object _stdLock = new {};
+
+        private HashHelper hasher = new HashHelper();
 
         public AdminConsole(string user, string password, PasswordOAuthContext serverContext,
             IAdminController adminManagerClient, string[] serversList, int servicePort)
@@ -208,7 +211,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 
         private void UpdateNodesList()
         {
-            string[] newServersList = ApiHelper.GetServers("NodesListToUpdateServers.json");//todo:replace with serverManager?
+            string[] newServersList = ServerApiHelper.GetServers("NodesListToUpdateServers.json");//todo:replace with serverManager?
             var results = Task.WhenAll(
                 DoAuthServers().Where(_ => _ != null).Select(_ => Task.Factory.StartNew(
                     () =>

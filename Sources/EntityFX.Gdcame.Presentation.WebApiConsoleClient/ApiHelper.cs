@@ -7,7 +7,6 @@ using EntityFX.Gdcame.Infrastructure.Api.Auth;
 using EntityFX.Gdcame.Infrastructure.Api.Exceptions;
 using EntityFX.Gdcame.Utils.Shared;
 using EntityFX.Gdcame.Utils.WebApiClient;
-using Newtonsoft.Json;
 
 namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 {
@@ -45,28 +44,8 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             //TODO: Use Rendezvous Hashing algorithm.
             //            var serverNumber = hasher.GetModuloOfUserIdHash(hasher.GetHashedString(login), serversList.Length);
             //todo: use not hsshed string
-            var serverNumber = hasher.GetServerNumberByRendezvousHashing(hasher.GetHashedString(login));
+            var serverNumber = hasher.GetServerNumberByRendezvousHashing(hasher.GetHashedString(login), serversList);
             return new Uri(string.Format("http://{0}:{1}/", serversList[serverNumber], port));
-        }
-
-        public static string[] GetServers()
-        {
-            return GetServers("servers.json");
-        }
-
-        public static string[] GetServers(string fileName)
-        {
-            if (!File.Exists(fileName))
-            {
-                return null;
-            }
-            // deserialize JSON directly from a file
-            using (StreamReader file = File.OpenText(fileName))
-            {
-                JsonSerializer serializer = new JsonSerializer();
-                serializer.TypeNameHandling = TypeNameHandling.Auto;
-                return (string[])serializer.Deserialize(file, typeof(string[]));
-            }
         }
 
         public static IGameApiController GetGameClient(PasswordOAuthContext session)

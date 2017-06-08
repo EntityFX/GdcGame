@@ -44,6 +44,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml.Linq" />
@@ -67,6 +68,14 @@
     <ProjectReference Include="..\EntityFX.Gdcame.Application.Rating.Controller\EntityFX.Gdcame.Application.Rating.Controller.csproj">
       <Project>{E1C99406-19E6-4D12-A7FB-ED5818DAE973}</Project>
       <Name>EntityFX.Gdcame.Application.Rating.Controller</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Contract\EntityFX.Gdcame.DataAccess.Contract.csproj">
+      <Project>{0932d8b3-29eb-4546-987a-b246421a9b87}</Project>
+      <Name>EntityFX.Gdcame.DataAccess.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Service\EntityFX.Gdcame.DataAccess.Service.csproj">
+      <Project>{2008F2C2-C1FA-4CB9-8A99-A9406AC4967D}</Project>
+      <Name>EntityFX.Gdcame.DataAccess.Service</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Common\EntityFX.Gdcame.Infrastructure.Common.csproj">
       <Project>{924CC67D-9E2B-46BA-BE1D-6C6C780CCFBC}</Project>
@@ -95,6 +104,10 @@
     <ProjectReference Include="..\EntityFX.Gdcame.Presentation.Web.Providers\EntityFX.Gdcame.Application.WebApi.Providers.csproj">
       <Project>{A6F59753-3065-4BB3-85A8-1E0778205407}</Project>
       <Name>EntityFX.Gdcame.Application.WebApi.Providers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Utils.Shared\EntityFX.Gdcame.Utils.Shared.csproj">
+      <Project>{3ece9730-0627-49a5-8e13-e8d571488e57}</Project>
+      <Name>EntityFX.Gdcame.Utils.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

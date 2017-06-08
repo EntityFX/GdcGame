@@ -49,6 +49,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="IDatabasesProvider.cs" />
     <Compile Include="IHashHelper.cs" />
     <Compile Include="IMapperFactory.cs" />
     <Compile Include="IWorker.cs" />
@@ -89,6 +90,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Contract\EntityFX.Gdcame.DataAccess.Contract.csproj">
+      <Project>{0932D8B3-29EB-4546-987A-B246421A9B87}</Project>
+      <Name>EntityFX.Gdcame.DataAccess.Contract</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

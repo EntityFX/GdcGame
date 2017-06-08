@@ -179,16 +179,8 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter
 
         private IContainerBootstrapper GetRepositoryProvider(string providerName)
         {
-            switch (providerName)
-            {
-                case "EntityFramework":
-                    return new DataAccess.Repository.Ef.ContainerBootstrapper();
-                case "Mongo":
-                    return new DataAccess.Repository.Mongo.ContainerBootstrapper(_appConfiguration.MongoConnectionString);
-                case "LocalStorage":
-                default:
-                    return new DataAccess.Repository.LocalStorage.ContainerBootstrapper();
-            }
+            return new DatabasesProvider(providerName).GetRepositoryProvider(_appConfiguration.MongoConnectionString);
         }
+        
     }
 }

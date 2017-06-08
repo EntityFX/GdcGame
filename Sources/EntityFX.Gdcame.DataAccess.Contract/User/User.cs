@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 namespace EntityFX.Gdcame.DataAccess.Contract.User
 {
@@ -16,5 +17,10 @@ namespace EntityFX.Gdcame.DataAccess.Contract.User
 
         [DataMember]
         public string PasswordHash { get; set; }
+
+        public override string ToString()
+        {
+            return String.Format("User [Id = {0}, Login ={1}, Role={2}]",Id, Login, Role);
+        }
     }
 }
