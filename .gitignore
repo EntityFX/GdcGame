@@ -14,3 +14,4 @@
 /Sources/*/obj/*
 EntityFx.EconomicsArcade.TestApplication.v12.suo
 *.userprefs
+*.dbmdl

@@ -55,5 +55,8 @@ namespace EntityFX.Gdcame.Manager.Contract.AdminManager
         void StopGame(string login);
         [OperationContract]
         void StopAllGames();
+
+        [OperationContract]
+        bool UpdateNodeData();
     }
 }

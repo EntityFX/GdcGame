@@ -51,12 +51,17 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 
         public static string[] GetServers()
         {
-            if (!File.Exists("servers.json"))
+            return GetServers("servers.json");
+        }
+
+        public static string[] GetServers(string fileName)
+        {
+            if (!File.Exists(fileName))
             {
                 return null;
             }
             // deserialize JSON directly from a file
-            using (StreamReader file = File.OpenText("servers.json"))
+            using (StreamReader file = File.OpenText(fileName))
             {
                 JsonSerializer serializer = new JsonSerializer();
                 serializer.TypeNameHandling = TypeNameHandling.Auto;

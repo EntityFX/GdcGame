@@ -7,6 +7,7 @@ using EntityFX.Gdcame.Application.Contract.Controller;
 using EntityFX.Gdcame.Application.Contract.Model;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager.Contract.Workermanager;
+using Newtonsoft.Json;
 
 namespace EntityFX.Gdcame.Application.WebApi.Controller
 {
@@ -52,6 +53,26 @@ namespace EntityFX.Gdcame.Application.WebApi.Controller
             statistics.ActiveWorkers =
                 _workerManager.GetWorkersStatus().Where(_ => _.IsRunning).Select(_ => _.Name).ToArray();
             return statistics;
+        }
+
+        [HttpGet]
+        [Route("update_nodes_list")]
+        public string UpdateNodesList([FromUri] string[] newServersList)
+        {
+            Console.WriteLine("---AdminController going to update Nodes List---");
+            string jsonServerList = UpdateNodesListInFile(newServersList);
+            _adminManager.UpdateNodeData();
+            return "Nodes List updated: " + jsonServerList;
+        }
+
+        private string UpdateNodesListInFile(string[] newServersList)
+        {
+            //todo: move to adminManager
+            System.IO.StreamWriter file = new System.IO.StreamWriter("servers.json");
+            var jsonList = JsonConvert.SerializeObject(newServersList);
+            file.WriteLine(jsonList);
+            file.Close();
+            return jsonList;
         }
 
         [HttpDelete]

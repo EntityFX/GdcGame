@@ -11,6 +11,8 @@ namespace EntityFX.Gdcame.Application.Contract.Controller
 
         ServerStatisticsInfoModel GetStatistics();
 
+        string UpdateNodesList(string[] newServersList);
+
         void CloseSessionByGuid(Guid guid);
 
         void CloseAllUserSessions(string username);

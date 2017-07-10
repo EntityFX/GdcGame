@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using EntityFX.Gdcame.Application.Contract.Controller;
 using EntityFX.Gdcame.Application.Contract.Model;
@@ -24,6 +25,18 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
         public ServerStatisticsInfoModel GetStatistics()
         {
             return ExecuteRequestAsync<ServerStatisticsInfoModel>("/api/admin/statistics").Result.Data;
+        }
+
+        public string UpdateNodesList(string[] newServersList)
+        {
+            List <Parameter> parameters =  new List<Parameter>();
+            foreach (var server in newServersList)
+            {
+                parameters.Add(new Parameter() { Type = ParameterType.QueryString, Name = "newServersList", Value = server });
+            }
+            var response = ExecuteRequestAsync<string>("/api/admin/update_nodes_list", Method.GET, parameters);
+            var data = response.Result;
+            return data.Data;
         }
 
         public async void CloseSessionByGuid(Guid guid)
