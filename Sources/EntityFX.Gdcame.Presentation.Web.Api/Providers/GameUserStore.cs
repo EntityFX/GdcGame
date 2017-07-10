@@ -9,7 +9,7 @@ using Microsoft.AspNet.Identity;
 
 namespace EntityFX.Gdcame.Application.WebApi.Providers
 {
-    public class GameUserStore : IUserStore<GameUser>, IUserPasswordStore<GameUser>, IDisposable /*, IUserEmailStore<GameUser>*/
+    public class GameUserStore : IUserStore<GameUser>, IUserPasswordStore<GameUser>, IDisposable , IUserEmailStore<GameUser>
     {
         private readonly ISimpleUserManager _simpleUserManager;
 

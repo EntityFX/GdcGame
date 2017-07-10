@@ -26,7 +26,7 @@ namespace EntityFX.Gdcame.Application.WebApi.Providers
             UserValidator = new UserValidator<GameUser>(this)
             {
                 AllowOnlyAlphanumericUserNames = true,
-                RequireUniqueEmail = false
+                RequireUniqueEmail = true
             };
             // Configure validation logic for passwords
             PasswordValidator = _passwordValidator;

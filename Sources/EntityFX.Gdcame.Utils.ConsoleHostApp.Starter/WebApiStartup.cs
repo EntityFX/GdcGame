@@ -48,8 +48,8 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter
             }
             var config = new HttpConfiguration();
             config.DependencyResolver = new UnityDependencyResolver(_unityContainer);
-            config.Filters.Add(new SessionExceptionHandlerFilterAttribute());
-            config.Filters.Add(_unityContainer.Resolve<GlobalExceptionHandlerFilterAttribute>());
+            config.Filters.Add(_unityContainer.Resolve<SessionExceptionHandlerFilterAttribute>());
+            config.Filters.Add(new ValidateModelAttribute());
 
 
 

@@ -62,6 +62,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="app\game\GameComponent.ts" />
     <TypeScriptCompile Include="app\register\RegisterComponent.ts" />
+    <TypeScriptCompile Include="app\shared\directives\compareTo.ts" />
     <TypeScriptCompile Include="app\shared\services\AuthDataService.ts" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <TypeScriptCompile Include="Scripts\typings\ngstorage\ngstorage.d.ts" />
@@ -72,6 +73,15 @@
     </TypeScriptCompile>
     <TypeScriptCompile Include="app\menu\MenuController.ts" />
     <TypeScriptCompile Include="app\register\RegisterDataService.ts" />
+    <Content Include="fonts\fontawesome-webfont.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="styles\font-awesome.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="styles\gdcame.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="tsconfig.json" />
     <TypeScriptCompile Include="app\login\LoginComponent.ts" />
     <TypeScriptCompile Include="app\menu\MenuComponent.ts" />
@@ -85,25 +95,25 @@
     <Content Include="app\items\itemsComponent.js" />
     <TypeScriptCompile Include="app\shared\services\RatingApiService.ts" />
     <Content Include="app\rating\ratingComponent.js" />
-    <Content Include="Content\bootstrap-grid.css">
+    <Content Include="styles\bootstrap-grid.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\bootstrap-grid.min.css">
+    <Content Include="styles\bootstrap-grid.min.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\bootstrap-reboot.css">
+    <Content Include="styles\bootstrap-reboot.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\bootstrap-reboot.min.css">
+    <Content Include="styles\bootstrap-reboot.min.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\bootstrap.css">
+    <Content Include="styles\bootstrap.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\bootstrap.min.css">
+    <Content Include="styles\bootstrap.min.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\ui-bootstrap-csp.css">
+    <Content Include="styles\ui-bootstrap-csp.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\angular-animate.js">
@@ -2480,22 +2490,37 @@
     <Content Include="Scripts\i18n\angular-locale_zu.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\bootstrap.min.css.map">
+    <Content Include="styles\bootstrap.min.css.map">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\bootstrap.css.map">
+    <Content Include="styles\bootstrap.css.map">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\bootstrap-reboot.min.css.map">
+    <Content Include="styles\bootstrap-reboot.min.css.map">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\bootstrap-reboot.css.map">
+    <Content Include="styles\bootstrap-reboot.css.map">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\bootstrap-grid.min.css.map">
+    <Content Include="styles\bootstrap-grid.min.css.map">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\bootstrap-grid.css.map">
+    <Content Include="styles\bootstrap-grid.css.map">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="fonts\fontawesome-webfont.eot">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="fonts\fontawesome-webfont.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="fonts\fontawesome-webfont.woff">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="fonts\fontawesome-webfont.woff2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="fonts\FontAwesome.otf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Scripts\jquery-3.1.1.intellisense.js">

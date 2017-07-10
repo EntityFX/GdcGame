@@ -1,4 +1,4 @@
-﻿var app = angular.module("gdCameApp", ['ui.router',"ngStorage"]);
+﻿var app = angular.module("gdCameApp", ['ui.router', 'ngMessages', "ngStorage"]);
 app.constant('apiUri', 'gdcame.local');
 app.constant('viewTheme', 'bootstrap4');
 app.constant('serverIps', [

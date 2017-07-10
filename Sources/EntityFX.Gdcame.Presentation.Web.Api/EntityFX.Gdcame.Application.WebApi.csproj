@@ -127,6 +127,7 @@
     <Compile Include="Providers\GameUserStore.cs" />
     <Compile Include="Providers\SessionExceptionHandlerFilterAttribute.cs" />
     <Compile Include="Providers\UserManagerFacotory.cs" />
+    <Compile Include="Providers\ValidateModelAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

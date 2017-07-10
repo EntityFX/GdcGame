@@ -7,6 +7,9 @@ namespace Gdcame.Controllers {
 
     class RegisterController extends Controllers.ControllerBase {
         public registerData: RegisterData = {} as RegisterData;
+        public error: string;
+        public registerInProgress: boolean = false;
+
         private location: LocationService;
         private registerDataService: RegisterDataService;
 
@@ -17,13 +20,17 @@ namespace Gdcame.Controllers {
         }
 
         public register() {
+            this.error = null;
+            this.registerInProgress = true;
             this.registerDataService.register(this.registerData)
                 .then((response) => {
-                        this.location.path('/login');
-                    },
-                    response => {
-                        alert(JSON.stringify(response.message));
-                    });
+                    this.location.path('/login');
+                },
+                response => {
+                    this.error = JSON.stringify(response.message);
+                }).finally(() => {
+                    this.registerInProgress = false;
+                });;
         };
 
     }

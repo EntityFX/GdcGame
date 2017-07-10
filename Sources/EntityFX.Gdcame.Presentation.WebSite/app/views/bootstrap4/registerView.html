@@ -1,42 +1,56 @@
 ﻿<section class="container">
     <section class="content row">
 
-        <div class="col-md-3">
+        <div class="col-sm-1 col-md-2" col-lg-3>
 
         </div>
 
-        <div class="col-md-6">
+        <div class="col-sm-10 col-md-8 col-lg-6">
             <div class="alert alert-danger" ng-if="controller.error" role="alert">
-                <strong>Oh snap!</strong> {{controller.error}}
+                <strong>Ошибка</strong> {{controller.error}}
             </div>
             <div class="container">
-                <form ng-submit="controller.register()" name="registerForm" novalidate>
-                    <div class="form-group row">
+                <form ng-submit="controller.register()" name="controller.registerForm" novalidate>
+                    <div class="form-group row" ng-class="{'has-warning' : controller.registerForm.login.$invalid && !controller.registerForm.login.$pristine}">
                         <label for="login" class="col-sm-4 col-form-label">Логин</label>
                         <div class="col-sm-8">
                             <input type="email" class="form-control" id="login" name="login" placeholder="Логин" ng-model="controller.registerData.login" required>
-                            <span class="help-block" ng-show="registerForm.login.$invalid && !registerForm.login.$pristine">Login required</span>
+                            <ng-messages for="controller.registerForm.login.$error" ng-if="controller.registerForm.login.$dirty">
+                                <div class="form-control-feedback" ng-message="email">Должен быть e-mail</div>
+                                <div class="form-control-feedback" ng-message="required">Обязательное поле</div>
+                            </ng-messages>
                         </div>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group row" ng-class="{'has-warning' : controller.registerForm.password.$invalid && !controller.registerForm.password.$pristine}">
                         <label for="password" class="col-sm-4 col-form-label">Пароль</label>
                         <div class="col-sm-8">
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Пароль" ng-model="controller.registerData.password" required ng-minlength="8">
-                            <span class="help-block" ng-if="registerForm.password.$invalid && !registerForm.password.$pristine">Password minimum length 8</span>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Пароль" 
+                                   ng-model="controller.registerData.password" 
+                                   required ng-minlength="8"
+                                   ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*[\!@#$%^&+=])/">
+                            <ng-messages for="controller.registerForm.password.$error" ng-if="controller.registerForm.password.$dirty">
+                                <div class="form-control-feedback" ng-message="minlength">Пароль должен быть больше 8 символов</div>
+                                <div class="form-control-feedback" ng-message="required">Обязательное поле</div>
+                                <div class="form-control-feedback" ng-message="pattern">Пароль должен содержать спецсимволы, заглавные и строчные латинские буквы</div>
+                            </ng-messages>
                         </div>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group row" ng-class="{'has-warning' : controller.registerForm.confirmPassword.$invalid && !controller.registerForm.confirmPassword.$pristine}">
                         <label for="confirm-password" class="col-sm-4 col-form-label">Повтори пароль</label>
                         <div class="col-sm-8">
-                            <input type="password" class="form-control" id="confirm-password" placeholder="Повтори пароль" ng-model="controller.registerData.confirmPassword">
+                            <input type="password" class="form-control" id="confirm-password" name="confirmPassword" placeholder="Повтори пароль"
+                                   ng-model="controller.registerData.confirmPassword"
+                                   compare-to="controller.registerData.password">
+                            <ng-messages for="controller.registerForm.confirmPassword.$error" ng-if="controller.registerForm.confirmPassword.$dirty">
+                                <div class="form-control-feedback" ng-message="required">Обязательное поле</div>
+                                <div class="form-control-feedback" ng-message="compareTo">Пароли не совпадают</div>
+                            </ng-messages>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="offset-sm-4 col-sm-3">
-                            <button type="submit" class="btn btn-primary" ng-disabled="registerForm.$invalid">Register</button>
-                        </div>
-                        <div class="col-sm-5">
-                            <a href="#/login" class="btn btn-info float-right">Go Login</a>
+                        <div class="offset-sm-4 col-sm-8">
+                            <button type="submit" class="btn btn-primary btn-block" ng-disabled="controller.registerForm.$pristine|| controller.registerForm.$invalid || controller.registerInProgress" data-loading-text="<i class='fa fa-spinner fa-spin '></i>" loading loading-value="controller.registerInProgress">Зарегистрироваться</button>
+                            <a href="#/login" ui-sref="login" class="btn btn-info btn-block">Войти</a>
                         </div>
                     </div>
                 </form>
@@ -45,8 +59,7 @@
 
         </div>
 
-        <div class="col-md-3">
-
+        <div class="col-sm-1 col-md-2" col-lg-3>
 
         </div>
 

@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Security.Cryptography;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Controllers;
+using System.Web.Http.Results;
 using EntityFX.Gdcame.Manager.Contract.SessionManager;
 using EntityFX.Gdcame.Manager.Contract.UserManager;
 using EntityFX.Gdcame.Application.Contract.Model;
@@ -62,14 +66,14 @@ namespace EntityFX.Gdcame.Application.WebApi.Controllers
         // POST api/Auth/Register
         [Route("Register")]
         [HttpPost]
-        public async Task<IHttpActionResult> Register(RegisterAccountModel model)
+        public async Task<HttpResponseMessage> Register(RegisterAccountModel model)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
             }
 
-            var user = new GameUser {UserName = model.Login};
+            var user = new GameUser { UserName = model.Login };
 
             var result = await UserManager.CreateAsync(user, model.Password);
 
@@ -78,7 +82,7 @@ namespace EntityFX.Gdcame.Application.WebApi.Controllers
                 return GetErrorResult(result);
             }
 
-            return Ok();
+            return Request.CreateResponse(HttpStatusCode.OK);
         }
 
 
@@ -100,30 +104,20 @@ namespace EntityFX.Gdcame.Application.WebApi.Controllers
             get { return Request.GetOwinContext().Authentication; }
         }
 
-        private IHttpActionResult GetErrorResult(IdentityResult result)
+        private HttpResponseMessage GetErrorResult(IdentityResult result)
         {
             if (result == null)
             {
-                return InternalServerError();
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Cannot register");
             }
 
             if (!result.Succeeded)
             {
-                if (result.Errors != null)
-                {
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError("", error);
-                    }
-                }
 
-                if (ModelState.IsValid)
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, new HttpError("Cannot register")
                 {
-                    // No ModelState errors are available to send, so just return an empty BadRequest.
-                    return BadRequest();
-                }
-
-                return BadRequest(ModelState);
+                    MessageDetail = string.Join(";", result.Errors)
+                });
             }
 
             return null;
@@ -185,12 +179,12 @@ namespace EntityFX.Gdcame.Application.WebApi.Controllers
             {
                 const int bitsPerByte = 8;
 
-                if (strengthInBits%bitsPerByte != 0)
+                if (strengthInBits % bitsPerByte != 0)
                 {
                     throw new ArgumentException("strengthInBits must be evenly divisible by 8.", "strengthInBits");
                 }
 
-                var strengthInBytes = strengthInBits/bitsPerByte;
+                var strengthInBytes = strengthInBits / bitsPerByte;
 
                 var data = new byte[strengthInBytes];
                 _random.GetBytes(data);

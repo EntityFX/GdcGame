@@ -15,6 +15,14 @@ namespace EntityFX.Gdcame.Application.WebApi.Providers
 {
     public class SessionExceptionHandlerFilterAttribute : ExceptionFilterAttribute
     {
+        private readonly ILogger _logger;
+
+
+        public SessionExceptionHandlerFilterAttribute(ILogger logger)
+        {
+            _logger = logger;
+        }
+
         public override void OnException(HttpActionExecutedContext context)
         {
             var invalidSessionException = context.Exception as InvalidSessionException;
@@ -26,22 +34,19 @@ namespace EntityFX.Gdcame.Application.WebApi.Providers
                         ExceptionType = context.Exception.GetType().ToString(),
                         MessageDetail = invalidSessionException.SessionGuid.ToString()
                     });
+                return;
             }
-        }
-    }
 
-    public class GlobalExceptionHandlerFilterAttribute : ExceptionFilterAttribute
-    {
-        private readonly ILogger _logger;
-
-        public GlobalExceptionHandlerFilterAttribute(ILogger logger)
-        {
-            _logger = logger;
-        }
-
-        public override void OnException(HttpActionExecutedContext context)
-        {
-            _logger.Error(context.Exception);
+            if (context.Exception != null)
+            {
+                _logger.Error(context.Exception);
+                context.Response = context.Request.CreateErrorResponse(HttpStatusCode.InternalServerError,
+                    new HttpError(context.Exception.Message)
+                    {
+                        ExceptionType = context.Exception.GetType().ToString(),
+                        MessageDetail = context.Exception.Message
+                    });
+            }
         }
     }
 }
