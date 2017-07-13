@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Practices.Unity;
 
-namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Fast
+namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Fast.MainServer
 {
     public class CoreStartup
     {

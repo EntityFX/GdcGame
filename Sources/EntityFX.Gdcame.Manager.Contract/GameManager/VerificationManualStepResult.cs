@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace EntityFX.Gdcame.Manager.Contract.GameManager
+namespace EntityFX.Gdcame.Manager.Contract.MainServer.GameManager
 {
     [DataContract]
     public class VerificationManualStepResult

@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace EntityFX.Gdcame.Application.WebApi.Models
+namespace EntityFX.Gdcame.Application.Api.MainServer.Models
 {
-    public class RegisterAccountModel : Contract.Model.RegisterAccountModel
+    public class RegisterAccountModel : Contract.Model.MainServer.RegisterAccountModel
     {
         [Required]
         [Display(Name = "Login")]

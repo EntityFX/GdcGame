@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using EntityFX.Gdcame.Utils.Common;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Owin.Hosting;
 
-namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Fast
+namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Fast.MainServer
 {
     class Program
     {

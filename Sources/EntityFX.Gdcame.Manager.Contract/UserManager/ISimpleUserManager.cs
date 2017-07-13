@@ -1,6 +1,6 @@
 ﻿using System.ServiceModel;
 
-namespace EntityFX.Gdcame.Manager.Contract.UserManager
+namespace EntityFX.Gdcame.Manager.Contract.MainServer.UserManager
 {
     /// <summary>
     /// </summary>

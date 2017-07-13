@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace EntityFX.Gdcame.Manager.Contract.SessionManager
+namespace EntityFX.Gdcame.Manager.Contract.MainServer.SessionManager
 {
     [DataContract]
     public enum UserRole

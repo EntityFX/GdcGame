@@ -7,9 +7,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using EntityFX.Gdcame.GameEngine.NetworkGameEngine;
 using EntityFX.Gdcame.Infrastructure.Common;
-using EntityFX.Gdcame.Manager.Contract.AdminManager;
+using EntityFX.Gdcame.Manager.Contract.MainServer.AdminManager;
 
-namespace EntityFX.Gdcame.Manager.Workers
+namespace EntityFX.Gdcame.Manager.MainServer.Workers
 {
     public class PersistenceWorker : IWorker
     {
@@ -22,7 +22,6 @@ namespace EntityFX.Gdcame.Manager.Workers
         private readonly IGameDataPersisterFactory _gameDataPersisterFactory;
         private readonly IHashHelper _hashHelper;
         private readonly PerformanceInfo _performanceInfo;
-        private readonly TaskTimer _backgroundPersistenceTimer;
         private Task _backgroundPersisterTask;
         private readonly CancellationTokenSource _backgroundPersisterTaskToken = new CancellationTokenSource();
 

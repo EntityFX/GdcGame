@@ -3,9 +3,9 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using EntityFX.Gdcame.GameEngine.Contract;
 using EntityFX.Gdcame.Infrastructure.Common;
-using EntityFX.Gdcame.Manager.Contract.AdminManager;
+using EntityFX.Gdcame.Manager.Contract.MainServer.AdminManager;
 
-namespace EntityFX.Gdcame.Manager.Workers
+namespace EntityFX.Gdcame.Manager.MainServer.Workers
 {
     public class CalculationWorker : IWorker
     {
@@ -14,14 +14,14 @@ namespace EntityFX.Gdcame.Manager.Workers
         private readonly GameSessions _gameSessions;
         private readonly PerformanceInfo _performanceInfo;
         private object _stdLock = new {};
-        private readonly TaskTimer _backgroundPerformAutomaticStepsTimer;
+        private readonly ITaskTimer _backgroundPerformAutomaticStepsTimer;
         private Task _backgroundPerformAutomaticStepsTask;
-        public CalculationWorker(ILogger logger, GameSessions gameSessions, PerformanceInfo performanceInfo)
+        public CalculationWorker(ILogger logger, GameSessions gameSessions, PerformanceInfo performanceInfo, ITaskTimerFactory taskTimerFactory)
         {
             _logger = logger;
             _gameSessions = gameSessions;
             _performanceInfo = performanceInfo;
-            _backgroundPerformAutomaticStepsTimer = new TaskTimer(TimeSpan.FromSeconds(1), PerformAutomaticSteps);
+            _backgroundPerformAutomaticStepsTimer = taskTimerFactory.Build(TimeSpan.FromSeconds(1), PerformAutomaticSteps);
 
             Name = "Games Calculation worker";
         }

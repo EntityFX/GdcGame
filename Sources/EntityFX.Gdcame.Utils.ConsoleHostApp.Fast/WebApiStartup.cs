@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using System.Net.Http.Formatting;
 using System.Threading;
@@ -8,14 +7,12 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using EntityFX.Gdcame.Utils.Common;
 using Microsoft.Owin.Cors;
-using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Owin;
 using Owin.Security.AesDataProtectorProvider;
-using Unity.WebApi;
 
-namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Fast
+namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Fast.MainServer
 {
     public class WebApiStartup
     {

@@ -1,6 +1,6 @@
 ﻿using System.Security.Principal;
 
-namespace EntityFX.Gdcame.Manager
+namespace EntityFX.Gdcame.Manager.MainServer
 {
     public class CustomGameIdentity : IIdentity
     {

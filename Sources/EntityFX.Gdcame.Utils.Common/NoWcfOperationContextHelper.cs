@@ -1,7 +1,7 @@
 using System;
 using EntityFX.Gdcame.Infrastructure.Common;
 
-namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOneCore
+namespace EntityFX.Gdcame.Utils.Common
 {
     public class NoWcfOperationContextHelper : IOperationContext, IOperationContextHelper
     {

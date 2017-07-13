@@ -1,8 +1,10 @@
 ﻿using EntityFX.Gdcame.Application.Contract.Model;
+using EntityFX.Gdcame.Common.Application.Model;
 using EntityFX.Gdcame.Infrastructure.Common;
-using EntityFX.Gdcame.Manager.Contract.AdminManager;
+using EntityFX.Gdcame.Manager.Contract.MainServer.AdminManager;
+using ServerStatisticsInfoModel = EntityFX.Gdcame.Application.Contract.Model.MainServer.ServerStatisticsInfoModel;
 
-namespace EntityFX.Gdcame.Application.WebApi.Mappers
+namespace EntityFX.Gdcame.Application.Api.MainServer.Mappers
 {
     public class StatisticsInfoMapper : IMapper<StatisticsInfo, ServerStatisticsInfoModel>
     {

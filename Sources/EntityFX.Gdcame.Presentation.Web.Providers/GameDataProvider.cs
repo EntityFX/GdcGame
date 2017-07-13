@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Web;
+using EntityFX.Gdcame.Application.Contract.Model;
+using EntityFX.Gdcame.Application.Contract.Model.MainServer;
+using EntityFX.Gdcame.Common.Application.Model;
 using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.Common.Contract.Counters;
-using EntityFX.Gdcame.Common.Contract.UserRating;
-using EntityFX.Gdcame.Common.Application.Model;
 using EntityFX.Gdcame.Infrastructure.Common;
-using EntityFX.Gdcame.Manager.Contract.GameManager;
-using EntityFX.Gdcame.Manager.Contract.RatingManager;
-using EntityFX.Gdcame.Manager.Contract.UserManager;
-using EntityFX.Gdcame.Application.Contract.Model;
-using EntityFX.Gdcame.Utils.Common;
+using EntityFX.Gdcame.Manager.Contract.MainServer.GameManager;
+using EntityFX.Gdcame.Manager.Contract.MainServer.UserManager;
+using EntityFX.Gdcame.Utils.MainServer;
 
-namespace EntityFX.Gdcame.Application.WebApi.Providers
+namespace EntityFX.Gdcame.Application.Providers.MainServer
 {
     public class GameDataProvider : IGameDataProvider
     {

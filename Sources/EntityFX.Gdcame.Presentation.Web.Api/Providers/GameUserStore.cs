@@ -2,12 +2,12 @@
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
-using EntityFX.Gdcame.Application.WebApi.Models;
-using EntityFX.Gdcame.Manager.Contract.SessionManager;
-using EntityFX.Gdcame.Manager.Contract.UserManager;
+using EntityFX.Gdcame.Application.Api.MainServer.Models;
+using EntityFX.Gdcame.Manager.Contract.MainServer.SessionManager;
+using EntityFX.Gdcame.Manager.Contract.MainServer.UserManager;
 using Microsoft.AspNet.Identity;
 
-namespace EntityFX.Gdcame.Application.WebApi.Providers
+namespace EntityFX.Gdcame.Application.Api.MainServer.Providers
 {
     public class GameUserStore : IUserStore<GameUser>, IUserPasswordStore<GameUser>, IDisposable , IUserEmailStore<GameUser>
     {

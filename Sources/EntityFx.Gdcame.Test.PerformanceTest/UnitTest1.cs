@@ -9,18 +9,20 @@ using EntityFX.Gdcame.DataAccess.Service;
 using EntityFX.Gdcame.GameEngine.NetworkGameEngine;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager;
-using EntityFX.Gdcame.Manager.Contract.AdminManager;
-using EntityFX.Gdcame.Manager.Contract.GameManager;
-using EntityFX.Gdcame.Manager.Contract.SessionManager;
-using EntityFX.Gdcame.Manager.Contract.UserManager;
-using EntityFX.Gdcame.Manager.Workers;
+using EntityFX.Gdcame.Manager.Contract.MainServer.AdminManager;
+using EntityFX.Gdcame.Manager.Contract.MainServer.GameManager;
+using EntityFX.Gdcame.Manager.Contract.MainServer.SessionManager;
+using EntityFX.Gdcame.Manager.Contract.MainServer.UserManager;
+using EntityFX.Gdcame.Manager.MainServer;
+using EntityFX.Gdcame.Manager.MainServer.Workers;
 using EntityFX.Gdcame.NotifyConsumer.Contract;
 using EntityFX.Gdcame.Utils.Common;
-using EntityFX.Gdcame.Utils.Shared;
+using EntityFX.Gdcame.Utils.Common.Hashing;
+using EntityFX.Gdcame.Utils.MainServer;
 using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PortableLog.NLog;
-using ContainerBootstrapper = EntityFX.Gdcame.Manager.ContainerBootstrapper;
+using ContainerBootstrapper = EntityFX.Gdcame.Manager.MainServer.ContainerBootstrapper;
 
 namespace EntityFx.Gdcame.Test.Unit
 {

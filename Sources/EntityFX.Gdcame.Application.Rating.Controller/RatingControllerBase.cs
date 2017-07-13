@@ -1,19 +1,13 @@
-﻿
-using EntityFX.Gdcame.Application.Contract.Controller;
-using EntityFX.Gdcame.Application.Contract.Model;
-using EntityFX.Gdcame.Common.Application.Model;
-using EntityFX.Gdcame.Manager.Contract.RatingManager;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web.Http;
+using EntityFX.Gdcame.Application.Contract.Controller.Common;
+using EntityFX.Gdcame.Common.Application.Model;
 using EntityFX.Gdcame.Common.Contract.UserRating;
 using EntityFX.Gdcame.Infrastructure.Common;
+using EntityFX.Gdcame.Manager.Contract.Common.RatingManager;
 
-namespace EntityFX.Gdcame.Application.Rating.Controller
+
+namespace EntityFX.Gdcame.Application.Api.Common
 {
     public abstract class RatingControllerBase : ApiController, IRatingController
     {
@@ -31,6 +25,4 @@ namespace EntityFX.Gdcame.Application.Rating.Controller
             return Task.Factory.StartNew(() => _topRatingStatisticsMapper.Map(_raitingManager.GetRaiting(top)));
         }
     }
-
-
 }

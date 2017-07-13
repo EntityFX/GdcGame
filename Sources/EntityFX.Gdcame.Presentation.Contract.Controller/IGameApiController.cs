@@ -1,8 +1,9 @@
 ﻿using System.Threading.Tasks;
-using EntityFX.Gdcame.Common.Application.Model;
 using EntityFX.Gdcame.Application.Contract.Model;
+using EntityFX.Gdcame.Application.Contract.Model.MainServer;
+using EntityFX.Gdcame.Common.Application.Model;
 
-namespace EntityFX.Gdcame.Application.Contract.Controller
+namespace EntityFX.Gdcame.Application.Contract.Controller.MainServer
 {
     public interface IGameApiController
     {

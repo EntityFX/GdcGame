@@ -2,7 +2,7 @@
 using System.Runtime.Serialization;
 using System.Security.Principal;
 
-namespace EntityFX.Gdcame.Manager.Contract.SessionManager
+namespace EntityFX.Gdcame.Manager.Contract.MainServer.SessionManager
 {
     [DataContract]
     public class Session

@@ -1,4 +1,4 @@
-﻿using EntityFX.Gdcame.Application.WebApi.Mappers;
+﻿using EntityFX.Gdcame.Application.Api.MainServer.Mappers;
 using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.Common.Contract.Counters;
 using EntityFX.Gdcame.Common.Contract.Items;

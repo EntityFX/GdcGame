@@ -2,14 +2,16 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
-using EntityFX.Gdcame.Manager.Contract.AdminManager;
 using EntityFX.Gdcame.Application.Contract.Controller;
+using EntityFX.Gdcame.Application.Contract.Controller.MainServer;
 using EntityFX.Gdcame.Application.Contract.Model;
+using EntityFX.Gdcame.Application.Contract.Model.MainServer;
 using EntityFX.Gdcame.Infrastructure.Common;
-using EntityFX.Gdcame.Manager.Contract.Workermanager;
+using EntityFX.Gdcame.Manager.Contract.Common.WorkerManager;
+using EntityFX.Gdcame.Manager.Contract.MainServer.AdminManager;
 using Newtonsoft.Json;
 
-namespace EntityFX.Gdcame.Application.WebApi.Controller
+namespace EntityFX.Gdcame.Application.Api.Controller.MainServer
 {
     [Authorize(Roles = "Admin")]
     [RoutePrefix("api/admin")]

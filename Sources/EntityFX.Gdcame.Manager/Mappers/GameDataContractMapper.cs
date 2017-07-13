@@ -6,16 +6,16 @@ using EntityFX.Gdcame.GameEngine.Contract.Counters;
 using EntityFX.Gdcame.GameEngine.Contract.Items;
 using EntityFX.Gdcame.Infrastructure.Common;
 
-namespace EntityFX.Gdcame.Manager.Mappers
+namespace EntityFX.Gdcame.Manager.MainServer.Mappers
 {
     public class GameDataContractMapper : IMapper<IGame, GameData>
     {
         private readonly IMapper<GameCash, Cash> _fundsCountersContractMapper;
-        private readonly IMapper<Item, Common.Contract.Items.Item> _fundsDriversContractMapper;
+        private readonly IMapper<Item, Gdcame.Common.Contract.Items.Item> _fundsDriversContractMapper;
 
         public GameDataContractMapper(
             IMapper<GameCash, Cash> fundsCountersContractMapper,
-            IMapper<Item, Common.Contract.Items.Item> fundsDriversContractMapper
+            IMapper<Item, Gdcame.Common.Contract.Items.Item> fundsDriversContractMapper
             )
         {
             _fundsCountersContractMapper = fundsCountersContractMapper;

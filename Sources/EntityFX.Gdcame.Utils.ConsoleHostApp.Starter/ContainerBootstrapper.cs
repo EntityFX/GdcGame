@@ -1,11 +1,20 @@
+using System;
+using EntityFX.Gdcame.Application.Api.Common;
+using EntityFX.Gdcame.Application.Api.Common.Mappers;
+using EntityFX.Gdcame.Application.Api.Controller.MainServer;
+using EntityFX.Gdcame.Application.Api.MainServer.Mappers;
+using EntityFX.Gdcame.Application.Api.MainServer.Models;
+using EntityFX.Gdcame.Application.Api.MainServer.Providers;
 using EntityFX.Gdcame.Application.Contract.Controller;
+using EntityFX.Gdcame.Application.Contract.Controller.Common;
+using EntityFX.Gdcame.Application.Contract.Controller.MainServer;
 using EntityFX.Gdcame.Application.Contract.Model;
-using EntityFX.Gdcame.Application.WebApi.Controller;
-using EntityFX.Gdcame.Application.WebApi.Models;
-using EntityFX.Gdcame.Application.WebApi.Providers;
+using EntityFX.Gdcame.Application.Contract.Model.MainServer;
+using EntityFX.Gdcame.Application.Providers.MainServer;
 using EntityFX.Gdcame.Common.Application.Model;
 using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.Common.Contract.Counters;
+using EntityFX.Gdcame.Common.Contract.UserRating;
 using EntityFX.Gdcame.DataAccess.Contract.GameData;
 using EntityFX.Gdcame.DataAccess.Contract.GameData.Store;
 using EntityFX.Gdcame.DataAccess.Contract.User;
@@ -17,33 +26,24 @@ using EntityFX.Gdcame.GameEngine.Contract.Items;
 using EntityFX.Gdcame.GameEngine.NetworkGameEngine;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager;
-using EntityFX.Gdcame.Manager.Contract.AdminManager;
-using EntityFX.Gdcame.Manager.Contract.GameManager;
-using EntityFX.Gdcame.Manager.Contract.RatingManager;
-using EntityFX.Gdcame.Manager.Contract.SessionManager;
-using EntityFX.Gdcame.Manager.Contract.UserManager;
-using EntityFX.Gdcame.Manager.Mappers.Store;
+using EntityFX.Gdcame.Manager.Contract.Common;
+using EntityFX.Gdcame.Manager.Contract.MainServer.AdminManager;
+using EntityFX.Gdcame.Manager.Contract.MainServer.GameManager;
+using EntityFX.Gdcame.Manager.MainServer;
+using EntityFX.Gdcame.Manager.MainServer.Mappers.Store;
 using EntityFX.Gdcame.NotifyConsumer;
 using EntityFX.Gdcame.NotifyConsumer.Contract;
 using EntityFX.Gdcame.Utils.Common;
+using EntityFX.Gdcame.Utils.Common.Hashing;
+using EntityFX.Gdcame.Utils.MainServer;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.SignalR;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
 using PortableLog.NLog;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using EntityFX.Gdcame.Manager.Contract.Workermanager;
-using EntityFX.Gdcame.Manager.Workers;
-using EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOneCore;
 using CounterBase = EntityFX.Gdcame.Common.Contract.Counters.CounterBase;
-using EntityFX.Gdcame.Application.Rating.Controller;
-using EntityFX.Gdcame.Application.WebApi.Mappers;
-using EntityFX.Gdcame.Common.Contract.UserRating;
-using EntityFX.Gdcame.Utils.Shared;
 
-namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter
+namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
 {
     public class ContainerBootstrapper : IContainerBootstrapper
     {
@@ -68,7 +68,8 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter
                         {
                 GetRepositoryProvider(_appConfiguration.RepositoryProvider),
                 new DataAccess.Service.ContainerBootstrapper(),
-                new Manager.ContainerBootstrapper(),
+                new Manager.Common.ContainerBootstrapper(),
+                new Manager.MainServer.ContainerBootstrapper(),
                 new NotifyConsumer.ContainerBootstrapper()
                         };
             Array.ForEach(childBootstrappers, _ => _.Configure(container));
@@ -102,6 +103,8 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter
             /////
 
             container.RegisterType<IGameFactory, GameFactory>();
+            container.RegisterType<ITaskTimerFactory, TaskTimerFactory>();
+            container.RegisterType<ITaskTimer, GenericTaskTimer>();
 
             container.RegisterType<IGameDataPersister, GameDataPersister>(
                 new InjectionConstructor(

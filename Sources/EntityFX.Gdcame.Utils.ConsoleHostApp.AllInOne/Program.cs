@@ -1,30 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Net;
-using System.Net.Http.Formatting;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Web.Cors;
-using System.Web.Http;
-using System.Web.Http.Cors;
-using EntityFX.Gdcame.Application.WebApi.Providers;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.DataProtection;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Owin;
-using Microsoft.Owin.Builder;
-using Microsoft.Owin.Cors;
-using Microsoft.Owin.Security.DataProtection;
-using Microsoft.Owin.Security.OAuth;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using Owin;
-using Owin.Security.AesDataProtectorProvider;
-using Topshelf;
-using Topshelf.Logging;
-using Unity.WebApi;
+﻿using Topshelf;
 
-
-namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
+namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.MainServer
 {
     internal class Program
     {

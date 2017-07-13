@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using EntityFx.Gdcame.Test.PerfomanceFramework;
 using EntityFX.Gdcame.Application.Contract.Model;
+using EntityFX.Gdcame.Application.Contract.Model.MainServer;
 using EntityFX.Gdcame.Common.Application.Model;
 using EntityFX.Gdcame.Infrastructure.Common;
 using PerformanceCounter = EntityFx.Gdcame.Test.PerfomanceFramework.PerformanceCounter;

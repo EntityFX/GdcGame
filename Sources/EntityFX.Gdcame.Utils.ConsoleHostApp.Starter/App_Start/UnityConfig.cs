@@ -1,8 +1,6 @@
 using Microsoft.Practices.Unity;
-using System.Web.Http;
-using Unity.WebApi;
 
-namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter
+namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
 {
     public static class UnityConfig
     {

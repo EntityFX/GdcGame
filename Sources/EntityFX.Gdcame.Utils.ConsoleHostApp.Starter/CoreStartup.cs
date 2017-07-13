@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOneCore;
+﻿using EntityFX.Gdcame.Utils.Common;
+using EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer;
 using Microsoft.AspNetCore.Builder;
 
 using Microsoft.Extensions.DependencyInjection;

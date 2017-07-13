@@ -117,10 +117,6 @@
       <Project>{95745C95-A356-4E4A-9AC5-25ABD9659831}</Project>
       <Name>EntityFX.Gdcame.Infrastructure.Repository</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.Utils.Common\EntityFX.Gdcame.Utils.Common.csproj">
-      <Project>{2AE99E38-4B45-4D8B-B9D5-840B21F82A43}</Project>
-      <Name>EntityFX.Gdcame.Utils.Common</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

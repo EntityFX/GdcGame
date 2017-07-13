@@ -1,17 +1,12 @@
-﻿using EntityFX.Gdcame.Application.Rating.Controller;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EntityFX.Gdcame.Manager.Contract.RatingManager;
+﻿using System.Threading.Tasks;
 using System.Web.Http;
-using EntityFX.Gdcame.Application.Contract.Model;
-using EntityFX.Gdcame.Application.Contract.Controller;
+using EntityFX.Gdcame.Application.Api.Common;
+using EntityFX.Gdcame.Application.Contract.Controller.Common;
 using EntityFX.Gdcame.Common.Application.Model;
 using EntityFX.Gdcame.Infrastructure.Common;
+using EntityFX.Gdcame.Manager.Contract.Common.RatingManager;
 
-namespace EntityFX.Gdcame.Application.WebApi.Controller
+namespace EntityFX.Gdcame.Application.Api.Controller.MainServer
 {
     [Authorize(Roles = "System")]
     [RoutePrefix("api/rating")]

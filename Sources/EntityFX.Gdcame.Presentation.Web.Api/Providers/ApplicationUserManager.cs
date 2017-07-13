@@ -1,9 +1,9 @@
-﻿using EntityFX.Gdcame.Application.WebApi.Models;
+﻿using EntityFX.Gdcame.Application.Api.MainServer.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 
-namespace EntityFX.Gdcame.Application.WebApi.Providers
+namespace EntityFX.Gdcame.Application.Api.MainServer.Providers
 {
     public class ApplicationUserManager : UserManager<GameUser>
     {

@@ -3,7 +3,7 @@ using EntityFX.Gdcame.Common.Application.Model;
 using EntityFX.Gdcame.Common.Contract.Counters;
 using EntityFX.Gdcame.Infrastructure.Common;
 
-namespace EntityFX.Gdcame.Application.WebApi.Mappers
+namespace EntityFX.Gdcame.Application.Api.MainServer.Mappers
 {
     public class FundsCounterModelMapper : IMapper<Cash, CashModel>
     {

@@ -1,20 +1,16 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.DataAccess.Contract.User;
 using EntityFX.Gdcame.GameEngine.Contract;
-using EntityFX.Gdcame.GameEngine.NetworkGameEngine;
 using EntityFX.Gdcame.Infrastructure.Common;
-using EntityFX.Gdcame.Manager.Contract.SessionManager;
-using EntityFX.Gdcame.Manager.Contract.UserManager;
-using System.Threading;
-using EntityFX.Gdcame.Manager.Contract.AdminManager;
+using EntityFX.Gdcame.Manager.Contract.MainServer.AdminManager;
+using EntityFX.Gdcame.Manager.Contract.MainServer.SessionManager;
+using EntityFX.Gdcame.Manager.Contract.MainServer.UserManager;
 
-namespace EntityFX.Gdcame.Manager
+namespace EntityFX.Gdcame.Manager.MainServer
 {
     public class GameSessions : IDisposable
     {

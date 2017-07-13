@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace EntityFX.Gdcame.Manager.Contract.AdminManager
+namespace EntityFX.Gdcame.Manager.Contract.MainServer.AdminManager
 {
     [DataContract]
     public class StatisticsInfo

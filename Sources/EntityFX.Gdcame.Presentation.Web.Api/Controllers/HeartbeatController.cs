@@ -1,7 +1,7 @@
 ﻿using System.Web.Http;
 using System.Web.Http.Controllers;
 
-namespace EntityFX.Gdcame.Application.WebApi.Controllers
+namespace EntityFX.Gdcame.Application.Api.MainServer.Controllers
 {
     public class HeartbeatController : ApiController
     {

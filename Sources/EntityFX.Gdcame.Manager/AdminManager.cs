@@ -1,13 +1,14 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
 using EntityFX.Gdcame.DataAccess.Contract.User;
 using EntityFX.Gdcame.Infrastructure.Common;
-using EntityFX.Gdcame.Manager.Contract.AdminManager;
-using EntityFX.Gdcame.Manager.Contract.UserManager;
+using EntityFX.Gdcame.Manager.Contract.Common;
+using EntityFX.Gdcame.Manager.Contract.MainServer.AdminManager;
+using EntityFX.Gdcame.Manager.Contract.MainServer.UserManager;
+
 //using Newtonsoft.Json;
 
-namespace EntityFX.Gdcame.Manager
+namespace EntityFX.Gdcame.Manager.MainServer
 {
     public class AdminManager : IAdminManager
     {

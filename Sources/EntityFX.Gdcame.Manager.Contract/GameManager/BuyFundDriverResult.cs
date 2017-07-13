@@ -2,7 +2,7 @@
 using EntityFX.Gdcame.Common.Contract.Counters;
 using EntityFX.Gdcame.Common.Contract.Items;
 
-namespace EntityFX.Gdcame.Manager.Contract.GameManager
+namespace EntityFX.Gdcame.Manager.Contract.MainServer.GameManager
 {
     [DataContract]
     public class BuyFundDriverResult

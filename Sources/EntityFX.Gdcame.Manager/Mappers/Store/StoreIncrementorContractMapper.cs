@@ -2,7 +2,7 @@
 using EntityFX.Gdcame.GameEngine.Contract.Incrementors;
 using EntityFX.Gdcame.Infrastructure.Common;
 
-namespace EntityFX.Gdcame.Manager.Mappers.Store
+namespace EntityFX.Gdcame.Manager.MainServer.Mappers.Store
 {
     public class StoreIncrementorContractMapper : IMapper<IncrementorBase, StoredIncrementor>
     {

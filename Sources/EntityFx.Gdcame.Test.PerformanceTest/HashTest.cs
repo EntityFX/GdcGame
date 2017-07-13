@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Utils.Common;
-using EntityFX.Gdcame.Utils.Shared;
+using EntityFX.Gdcame.Utils.Common.Hashing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace EntityFx.Gdcame.Test.Unit

@@ -2,7 +2,7 @@
 using EntityFX.Gdcame.Common.Contract.Counters;
 using EntityFX.Gdcame.Infrastructure.Common;
 
-namespace EntityFX.Gdcame.Application.WebApi.Mappers
+namespace EntityFX.Gdcame.Application.Api.MainServer.Mappers
 {
     public class CounterModelMapper : IMapper<CounterBase, CounterModelBase>
     {

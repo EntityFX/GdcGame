@@ -1,7 +1,6 @@
 ﻿using System.Web.Http;
-using System.Web.Http.Controllers;
 
-namespace EntityFX.Gdcame.Application.WebApi.Controllers
+namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Fast.MainServer
 {
     [RoutePrefix("api/server-info")]
     public class HeartbeatController : ApiController

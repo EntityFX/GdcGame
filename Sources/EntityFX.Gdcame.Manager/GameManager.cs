@@ -5,19 +5,19 @@ using EntityFX.Gdcame.GameEngine.Contract;
 using EntityFX.Gdcame.GameEngine.Contract.Counters;
 using EntityFX.Gdcame.GameEngine.Contract.Items;
 using EntityFX.Gdcame.Infrastructure.Common;
-using EntityFX.Gdcame.Manager.Contract.GameManager;
-using EntityFX.Gdcame.Manager.Contract.SessionManager;
+using EntityFX.Gdcame.Manager.Contract.MainServer.GameManager;
+using EntityFX.Gdcame.Manager.Contract.MainServer.SessionManager;
 using ManualStepResult = EntityFX.Gdcame.GameEngine.Contract.ManualStepResult;
 
-namespace EntityFX.Gdcame.Manager
+namespace EntityFX.Gdcame.Manager.MainServer
 {
     public class GameManager : IGameManager
     {
         private readonly IMapper<GameCash, Cash> _countersContractMapper;
-        private readonly IMapper<Item, Common.Contract.Items.Item> _fundsDriverContractMapper;
+        private readonly IMapper<Item, Gdcame.Common.Contract.Items.Item> _fundsDriverContractMapper;
         private readonly IMapper<IGame, GameData> _gameDataContractMapper;
         private readonly GameSessions _gameSessions;
-        private readonly IMapper<ManualStepResult, Contract.GameManager.ManualStepResult> _manualStepResultMapper;
+        private readonly IMapper<ManualStepResult, Contract.MainServer.GameManager.ManualStepResult> _manualStepResultMapper;
 
         private readonly IMapperFactory _mapperFactory;
         private readonly IOperationContextHelper _operationContextHelper;
@@ -35,8 +35,8 @@ namespace EntityFX.Gdcame.Manager
 
             _gameDataContractMapper = _mapperFactory.Build<IGame, GameData>();
             _countersContractMapper = _mapperFactory.Build<GameCash, Cash>();
-            _fundsDriverContractMapper = _mapperFactory.Build<Item, Common.Contract.Items.Item>();
-            _manualStepResultMapper = _mapperFactory.Build<ManualStepResult, Contract.GameManager.ManualStepResult>();
+            _fundsDriverContractMapper = _mapperFactory.Build<Item, Gdcame.Common.Contract.Items.Item>();
+            _manualStepResultMapper = _mapperFactory.Build<ManualStepResult, Contract.MainServer.GameManager.ManualStepResult>();
         }
 
         public BuyFundDriverResult BuyFundDriver(int fundDriverId)
@@ -53,7 +53,7 @@ namespace EntityFX.Gdcame.Manager
             return null;
         }
 
-        public Contract.GameManager.ManualStepResult PerformManualStep(
+        public Contract.MainServer.GameManager.ManualStepResult PerformManualStep(
             VerificationManualStepResult verificationManualStepResult)
         {
             var res = GetSessionGame().PerformManualStep(verificationManualStepResult != null

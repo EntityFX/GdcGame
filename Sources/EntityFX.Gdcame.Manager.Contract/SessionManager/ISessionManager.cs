@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ServiceModel;
 
-namespace EntityFX.Gdcame.Manager.Contract.SessionManager
+namespace EntityFX.Gdcame.Manager.Contract.MainServer.SessionManager
 {
     [ServiceContract]
     public interface ISessionManager

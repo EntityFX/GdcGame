@@ -3,7 +3,7 @@ using EntityFX.Gdcame.GameEngine.Contract.Incrementors;
 using EntityFX.Gdcame.Infrastructure.Common;
 using IncrementorTypeEnum = EntityFX.Gdcame.Common.Contract.Incrementors.IncrementorTypeEnum;
 
-namespace EntityFX.Gdcame.Manager.Mappers
+namespace EntityFX.Gdcame.Manager.MainServer.Mappers
 {
     public class IncrementorContractMapper : IMapper<IncrementorBase, Incrementor>
     {

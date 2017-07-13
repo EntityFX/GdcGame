@@ -1,7 +1,7 @@
 ﻿using System.Runtime.Serialization;
-using EntityFX.Gdcame.Manager.Contract.SessionManager;
+using EntityFX.Gdcame.Manager.Contract.MainServer.SessionManager;
 
-namespace EntityFX.Gdcame.Manager.Contract.UserManager
+namespace EntityFX.Gdcame.Manager.Contract.MainServer.UserManager
 {
     [DataContract]
     public class UserData

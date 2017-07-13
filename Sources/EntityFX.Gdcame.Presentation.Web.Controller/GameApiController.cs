@@ -4,12 +4,14 @@ using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Controllers;
-using EntityFX.Gdcame.Common.Application.Model;
-using EntityFX.Gdcame.Application.Contract.Model;
-using EntityFX.Gdcame.Application.WebApi.Providers;
 using EntityFX.Gdcame.Application.Contract.Controller;
+using EntityFX.Gdcame.Application.Contract.Controller.MainServer;
+using EntityFX.Gdcame.Application.Contract.Model;
+using EntityFX.Gdcame.Application.Contract.Model.MainServer;
+using EntityFX.Gdcame.Application.Providers.MainServer;
+using EntityFX.Gdcame.Common.Application.Model;
 
-namespace EntityFX.Gdcame.Application.WebApi.Controller
+namespace EntityFX.Gdcame.Application.Api.Controller.MainServer
 {
     [Authorize]
     [RoutePrefix("api/game")]

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EntityFX.Gdcame.Application.Contract.Model
+namespace EntityFX.Gdcame.Application.Contract.Model.MainServer
 {
     public class SessionInfoModel
     {

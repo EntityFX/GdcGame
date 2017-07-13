@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using EntityFX.Gdcame.DataAccess.Contract.User;
 using EntityFX.Gdcame.Infrastructure.Common;
-using EntityFX.Gdcame.Manager.Contract.SessionManager;
-using EntityFX.Gdcame.Manager.Contract.UserManager;
+using EntityFX.Gdcame.Manager.Contract.MainServer.SessionManager;
+using EntityFX.Gdcame.Manager.Contract.MainServer.UserManager;
 
-namespace EntityFX.Gdcame.Manager
+namespace EntityFX.Gdcame.Manager.MainServer
 {
     public class SimpleUserManager : ISimpleUserManager
     {

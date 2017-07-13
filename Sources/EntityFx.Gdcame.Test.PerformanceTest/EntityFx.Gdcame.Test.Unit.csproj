@@ -171,13 +171,13 @@
       <Project>{95745c95-a356-4e4a-9ac5-25abd9659831}</Project>
       <Name>EntityFX.Gdcame.Infrastructure.Repository</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.Manager.Contract\EntityFX.Gdcame.Manager.Contract.csproj">
+    <ProjectReference Include="..\EntityFX.Gdcame.Manager.Contract\EntityFX.Gdcame.Manager.Contract.MainServer.csproj">
       <Project>{41696F24-E345-4599-A0C7-0715F64946D8}</Project>
-      <Name>EntityFX.Gdcame.Manager.Contract</Name>
+      <Name>EntityFX.Gdcame.Manager.Contract.MainServer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.Manager\EntityFX.Gdcame.Manager.csproj">
+    <ProjectReference Include="..\EntityFX.Gdcame.Manager\EntityFX.Gdcame.Manager.MainServer.csproj">
       <Project>{56A380DE-2370-4C2D-8C8E-EAF3163C92EC}</Project>
-      <Name>EntityFX.Gdcame.Manager</Name>
+      <Name>EntityFX.Gdcame.Manager.MainServer</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.NotifyConsumer.Contract\EntityFX.Gdcame.NotifyConsumer.Contract.csproj">
       <Project>{aa98b2be-929c-4bba-b352-e3095dbeb96b}</Project>
@@ -187,25 +187,25 @@
       <Project>{560b4d9d-4f4c-4659-8860-1c628448d154}</Project>
       <Name>EntityFX.Gdcame.NotifyConsumer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.Presentation.Contract.Controller\EntityFX.Gdcame.Application.Contract.Controller.csproj">
+    <ProjectReference Include="..\EntityFX.Gdcame.Presentation.Contract.Controller\EntityFX.Gdcame.Application.Contract.Controller.MainServer.csproj">
       <Project>{B9608A11-F0F0-47AA-BD55-D6E25A310DAA}</Project>
-      <Name>EntityFX.Gdcame.Application.Contract.Controller</Name>
+      <Name>EntityFX.Gdcame.Application.Contract.Controller.MainServer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.Presentation.Web.Api\EntityFX.Gdcame.Application.WebApi.csproj">
+    <ProjectReference Include="..\EntityFX.Gdcame.Presentation.Web.Api\EntityFX.Gdcame.Application.Api.MainServer.csproj">
       <Project>{C6C4637E-F0B7-43DF-A692-D8B82245311A}</Project>
-      <Name>EntityFX.Gdcame.Application.WebApi</Name>
+      <Name>EntityFX.Gdcame.Application.Api.MainServer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.Presentation.Web.Model\EntityFX.Gdcame.Application.Contract.Model.csproj">
+    <ProjectReference Include="..\EntityFX.Gdcame.Presentation.Web.Model\EntityFX.Gdcame.Application.Contract.Model.MainServer.csproj">
       <Project>{0F9C056A-DB5D-48ED-A688-BFD04ED4DFD7}</Project>
-      <Name>EntityFX.Gdcame.Application.Contract.Model</Name>
+      <Name>EntityFX.Gdcame.Application.Contract.Model.MainServer</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Utils.Common\EntityFX.Gdcame.Utils.Common.csproj">
-      <Project>{2ae99e38-4b45-4d8b-b9d5-840b21f82a43}</Project>
+      <Project>{12C5304D-AE3E-4FF0-8E09-D7B3D3EA90DC}</Project>
       <Name>EntityFX.Gdcame.Utils.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.Utils.Shared\EntityFX.Gdcame.Utils.Shared.csproj">
-      <Project>{3ECE9730-0627-49A5-8E13-E8D571488E57}</Project>
-      <Name>EntityFX.Gdcame.Utils.Shared</Name>
+    <ProjectReference Include="..\EntityFX.Gdcame.Utils.MainServer\EntityFX.Gdcame.Utils.MainServer.csproj">
+      <Project>{2AE99E38-4B45-4D8B-B9D5-840B21F82A43}</Project>
+      <Name>EntityFX.Gdcame.Utils.MainServer</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Utils.WebApiClient\EntityFX.Gdcame.Utils.WebApiClient.csproj">
       <Project>{9B4E7B86-5F2F-4F84-9786-3D7CCB2024F8}</Project>

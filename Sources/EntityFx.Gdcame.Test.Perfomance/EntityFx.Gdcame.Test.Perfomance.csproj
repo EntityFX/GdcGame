@@ -94,9 +94,9 @@
       <Project>{3B44AFC0-F207-44E4-9F91-7F24E1F4D342}</Project>
       <Name>EntityFX.Gdcame.Common.Application.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.Presentation.Web.Model\EntityFX.Gdcame.Application.Contract.Model.csproj">
+    <ProjectReference Include="..\EntityFX.Gdcame.Presentation.Web.Model\EntityFX.Gdcame.Application.Contract.Model.MainServer.csproj">
       <Project>{0F9C056A-DB5D-48ED-A688-BFD04ED4DFD7}</Project>
-      <Name>EntityFX.Gdcame.Application.Contract.Model</Name>
+      <Name>EntityFX.Gdcame.Application.Contract.Model.MainServer</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFx.Gdcame.Test.PerfomanceFramework\EntityFx.Gdcame.Test.PerfomanceFramework.csproj">
       <Project>{6D20F8F3-D439-4577-B08D-6268737E6C3F}</Project>

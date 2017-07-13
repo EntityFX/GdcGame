@@ -1,17 +1,11 @@
-﻿using EntityFX.Gdcame.Manager.Contract.SessionManager;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Filters;
 using EntityFX.Gdcame.Infrastructure.Common;
+using EntityFX.Gdcame.Manager.Contract.MainServer.SessionManager;
 
-
-namespace EntityFX.Gdcame.Application.WebApi.Providers
+namespace EntityFX.Gdcame.Application.Api.MainServer.Providers
 {
     public class SessionExceptionHandlerFilterAttribute : ExceptionFilterAttribute
     {

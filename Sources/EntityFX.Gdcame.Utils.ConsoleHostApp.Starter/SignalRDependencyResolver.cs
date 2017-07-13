@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.AspNet.SignalR;
 using Microsoft.Practices.Unity;
 
-namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOneCore
+namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
 {
     internal class SignalRDependencyResolver : DefaultDependencyResolver
     {

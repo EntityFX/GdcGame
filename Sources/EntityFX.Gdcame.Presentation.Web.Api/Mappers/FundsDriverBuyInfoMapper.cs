@@ -1,11 +1,12 @@
 ﻿using EntityFX.Gdcame.Application.Contract.Model;
+using EntityFX.Gdcame.Application.Contract.Model.MainServer;
 using EntityFX.Gdcame.Common.Application.Model;
 using EntityFX.Gdcame.Common.Contract.Counters;
 using EntityFX.Gdcame.Common.Contract.Items;
 using EntityFX.Gdcame.Infrastructure.Common;
-using EntityFX.Gdcame.Manager.Contract.GameManager;
+using EntityFX.Gdcame.Manager.Contract.MainServer.GameManager;
 
-namespace EntityFX.Gdcame.Application.WebApi.Mappers
+namespace EntityFX.Gdcame.Application.Api.MainServer.Mappers
 {
     public class FundsDriverBuyInfoMapper : IMapper<BuyFundDriverResult, BuyItemModel>
     {

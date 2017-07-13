@@ -9,40 +9,42 @@ using EntityFX.Gdcame.GameEngine.Contract.Items;
 using EntityFX.Gdcame.GameEngine.Mappers;
 using EntityFX.Gdcame.GameEngine.NetworkGameEngine;
 using EntityFX.Gdcame.Infrastructure.Common;
-using EntityFX.Gdcame.Manager.Contract.AdminManager;
-using EntityFX.Gdcame.Manager.Contract.GameManager;
-using EntityFX.Gdcame.Manager.Contract.RatingManager;
-using EntityFX.Gdcame.Manager.Contract.ServerManager;
-using EntityFX.Gdcame.Manager.Contract.SessionManager;
-using EntityFX.Gdcame.Manager.Contract.UserManager;
-using EntityFX.Gdcame.Manager.Contract.Workermanager;
-using EntityFX.Gdcame.Manager.Mappers;
-using EntityFX.Gdcame.Manager.Mappers.Store;
+using EntityFX.Gdcame.Manager.Common;
+using EntityFX.Gdcame.Manager.Contract.Common.RatingManager;
+using EntityFX.Gdcame.Manager.Contract.Common.ServerManager;
+using EntityFX.Gdcame.Manager.Contract.Common.WorkerManager;
+using EntityFX.Gdcame.Manager.Contract.MainServer.AdminManager;
+using EntityFX.Gdcame.Manager.Contract.MainServer.GameManager;
+
+using EntityFX.Gdcame.Manager.Contract.MainServer.SessionManager;
+using EntityFX.Gdcame.Manager.Contract.MainServer.UserManager;
+using EntityFX.Gdcame.Manager.MainServer.Mappers;
+using EntityFX.Gdcame.Manager.MainServer.Mappers.Store;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
 using CounterBase = EntityFX.Gdcame.GameEngine.Contract.Counters.CounterBase;
 using ManualStepResult = EntityFX.Gdcame.GameEngine.Contract.ManualStepResult;
 
-namespace EntityFX.Gdcame.Manager
+namespace EntityFX.Gdcame.Manager.MainServer
 {
     public class ContainerBootstrapper : IContainerBootstrapper
     {
         public IUnityContainer Configure(IUnityContainer container)
         {
             container.RegisterType<IMapper<IncrementorBase, Incrementor>, IncrementorContractMapper>();
-            container.RegisterType<IMapper<CounterBase, Common.Contract.Counters.CounterBase>, CounterContractMapper>();
+            container.RegisterType<IMapper<CounterBase, EntityFX.Gdcame.Common.Contract.Counters.CounterBase>, CounterContractMapper>();
             container
                 .RegisterType
                 <IMapper<GameCash, Cash>, FundsCountersContractMapper>();
-            container.RegisterType<IMapper<Item, Common.Contract.Items.Item>, FundsDriverContractMapper>();
+            container.RegisterType<IMapper<Item, Gdcame.Common.Contract.Items.Item>, FundsDriverContractMapper>();
             container
                 .RegisterType
-                <IMapper<CustomRuleInfo, Common.Contract.Items.CustomRuleInfo>, CustomRuleInfoContractMapper>();
+                <IMapper<CustomRuleInfo, Gdcame.Common.Contract.Items.CustomRuleInfo>, CustomRuleInfoContractMapper>();
             container.RegisterType<IMapper<IGame, GameData>, GameDataContractMapper>();
             container.RegisterType<IMapper<IGame, GameData>, GameDataMapper>("GameDataMapper");
             container
                 .RegisterType
-                <IMapper<ManualStepResult, Contract.GameManager.ManualStepResult>, ManualStepContractMapper>();
+                <IMapper<ManualStepResult, Contract.MainServer.GameManager.ManualStepResult>, ManualStepContractMapper>();
 
             container.RegisterType<IGame, NetworkGame>();
 
@@ -64,9 +66,7 @@ namespace EntityFX.Gdcame.Manager
                 new InterceptionBehavior<PolicyInjectionBehavior>(),
                 new Interceptor<InterfaceInterceptor>());
 
-            container.RegisterType<IRatingManager, RatingManager>(
-                new InterceptionBehavior<PolicyInjectionBehavior>(),
-                new Interceptor<InterfaceInterceptor>());
+
 
             container.RegisterType<IGameManager, GameManager>(
                 new InterceptionBehavior<PolicyInjectionBehavior>()
@@ -77,19 +77,7 @@ namespace EntityFX.Gdcame.Manager
             container.RegisterType<IAdminManager, AdminManager>(
                 new InterceptionBehavior<PolicyInjectionBehavior>()
                 , new Interceptor<InterfaceInterceptor>());
-            container.RegisterType<IServerManager, ServerManager>(
-                new InterceptionBehavior<PolicyInjectionBehavior>()
-                , new Interceptor<InterfaceInterceptor>());
-            container.RegisterType<IWorkerManager, WorkerManager>(
-                new InterceptionBehavior<PolicyInjectionBehavior>()
-                , new Interceptor<InterfaceInterceptor>());
 
-            container.RegisterInstance<IWorkerManager>(container.Resolve<WorkerManager>());
-
-
-            container.RegisterType<IRatingManager, RatingManager>(
-                new InterceptionBehavior<PolicyInjectionBehavior>()
-                , new Interceptor<InterfaceInterceptor>());
             return container;
         }
     }

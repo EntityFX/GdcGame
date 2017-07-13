@@ -1,8 +1,8 @@
 ﻿using System;
 using System.ServiceModel;
-using EntityFX.Gdcame.Manager.Contract.SessionManager;
+using EntityFX.Gdcame.Manager.Contract.MainServer.SessionManager;
 
-namespace EntityFX.Gdcame.Manager.Contract.AdminManager
+namespace EntityFX.Gdcame.Manager.Contract.MainServer.AdminManager
 {
     [ServiceContract]
     public interface IAdminManager

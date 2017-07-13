@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EntityFX.Gdcame.Manager.Contract.SessionManager
+namespace EntityFX.Gdcame.Manager.Contract.MainServer.SessionManager
 {
     public class InvalidSessionException : InvalidOperationException
     {

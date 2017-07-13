@@ -1,15 +1,13 @@
-﻿using EntityFX.Gdcame.Common.Contract.UserRating;
-using EntityFX.Gdcame.DataAccess.Contract.Rating;
-using EntityFX.Gdcame.GameEngine.Contract;
-using EntityFX.Gdcame.Infrastructure.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using EntityFX.Gdcame.Common.Contract.UserRating;
+using EntityFX.Gdcame.DataAccess.Contract.Rating;
+using EntityFX.Gdcame.Infrastructure.Common;
 
-namespace EntityFX.Gdcame.Manager.Workers
+namespace EntityFX.Gdcame.Manager.MainServer.Workers
 {
     public class RatingCalculationWorker : IWorker
     {
@@ -18,16 +16,16 @@ namespace EntityFX.Gdcame.Manager.Workers
         private readonly ILogger _logger;
         private readonly GameSessions _gameSessions;
         private readonly ILocalNodeRatingDataAccess _localNodeRatingDataAccess;
-        private readonly TaskTimer _backgroundSaveHistoryCheckerTimer;
+        private readonly ITaskTimer _backgroundSaveHistoryCheckerTimer;
         private Task _backgroundSaveHistoryCheckerTask;
         private object _stdLock = new { };
 
-        public RatingCalculationWorker(ILogger logger, GameSessions gameSessions, ILocalNodeRatingDataAccess localNodeRatingDataAccess)
+        public RatingCalculationWorker(ILogger logger, GameSessions gameSessions, ILocalNodeRatingDataAccess localNodeRatingDataAccess, ITaskTimerFactory taskTimerFactory)
         {
             _logger = logger;
             _gameSessions = gameSessions;
             _localNodeRatingDataAccess = localNodeRatingDataAccess;
-            _backgroundSaveHistoryCheckerTimer = new TaskTimer(TimeSpan.FromSeconds(TimeSaveInSeconds), PerformRatingCalculation);
+            _backgroundSaveHistoryCheckerTimer = taskTimerFactory.Build(TimeSpan.FromSeconds(TimeSaveInSeconds), PerformRatingCalculation);
             Name = "Rating Calculation Worker";
         }
 

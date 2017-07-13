@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using EntityFX.Gdcame.Utils.Common;
+using EntityFX.Gdcame.Utils.MainServer;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security.OAuth;
 
-namespace EntityFX.Gdcame.Application.WebApi.Providers
+namespace EntityFX.Gdcame.Application.Api.MainServer.Providers
 {
     public class CustomOAuthProvider : OAuthAuthorizationServerProvider
     {

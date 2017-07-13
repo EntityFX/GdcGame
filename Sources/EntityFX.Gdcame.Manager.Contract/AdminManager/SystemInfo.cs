@@ -1,4 +1,4 @@
-﻿namespace EntityFX.Gdcame.Manager.Contract.AdminManager
+﻿namespace EntityFX.Gdcame.Manager.Contract.MainServer.AdminManager
 {
     public class SystemInfo
     {

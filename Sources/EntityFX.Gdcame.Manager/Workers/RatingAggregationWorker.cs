@@ -1,14 +1,10 @@
-﻿using EntityFX.Gdcame.DataAccess.Contract.Rating;
-using EntityFX.Gdcame.Infrastructure.Common;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using EntityFX.Gdcame.DataAccess.Contract.Server;
+using EntityFX.Gdcame.Infrastructure.Common;
 
-namespace EntityFX.Gdcame.Manager.Workers
+namespace EntityFX.Gdcame.Manager.MainServer.Workers
 {
     public class RatingAggregationWorker
     {
@@ -17,16 +13,16 @@ namespace EntityFX.Gdcame.Manager.Workers
         private readonly ILogger _logger;
         private GameSessions _gameSessions;
         private readonly IServerDataAccessService _serverDataAccessService;
-        private readonly TaskTimer _backgroundSaveHistoryCheckerTimer;
+        private readonly ITaskTimer _backgroundSaveHistoryCheckerTimer;
         private Task _backgroundSaveHistoryCheckerTask;
         private object _stdLock = new { };
 
-        public RatingAggregationWorker(ILogger logger, GameSessions gameSessions, IServerDataAccessService serverDataAccessService)
+        public RatingAggregationWorker(ILogger logger, GameSessions gameSessions, IServerDataAccessService serverDataAccessService, ITaskTimerFactory taskTimerFactory)
         {
             _logger = logger;
             _gameSessions = gameSessions;
             _serverDataAccessService = serverDataAccessService;
-            _backgroundSaveHistoryCheckerTimer = new TaskTimer(TimeSpan.FromSeconds(TimeSaveInSeconds), SaveHistoryCheckTask);
+            _backgroundSaveHistoryCheckerTimer = taskTimerFactory.Build(TimeSpan.FromSeconds(TimeSaveInSeconds), SaveHistoryCheckTask);
             Name = "Rating Aggregation Worker";
         }
 

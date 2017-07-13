@@ -1,8 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-//using System.Web.Mvc;
+﻿//using System.Web.Mvc;
 
 
-namespace EntityFX.Gdcame.Application.Contract.Model
+namespace EntityFX.Gdcame.Application.Contract.Model.MainServer
 {
     public class RegisterAccountModel
     {

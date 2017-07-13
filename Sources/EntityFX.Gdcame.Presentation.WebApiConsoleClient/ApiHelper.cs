@@ -3,9 +3,10 @@ using System.Configuration;
 using System.IO;
 using System.Threading.Tasks;
 using EntityFX.Gdcame.Application.Contract.Controller;
+using EntityFX.Gdcame.Application.Contract.Controller.Common;
+using EntityFX.Gdcame.Application.Contract.Controller.MainServer;
 using EntityFX.Gdcame.Infrastructure.Api.Auth;
 using EntityFX.Gdcame.Infrastructure.Api.Exceptions;
-using EntityFX.Gdcame.Utils.Shared;
 using EntityFX.Gdcame.Utils.WebApiClient;
 using Newtonsoft.Json;
 
@@ -41,12 +42,13 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 
         public static Uri GetApiServerUri(string[] serversList, string login, int port)
         {
-            var hasher = new HashHelper();
+           // var hasher = new HashHelper();
             //TODO: Use Rendezvous Hashing algorithm.
             //            var serverNumber = hasher.GetModuloOfUserIdHash(hasher.GetHashedString(login), serversList.Length);
             //todo: use not hsshed string
-            var serverNumber = hasher.GetServerNumberByRendezvousHashing(hasher.GetHashedString(login));
-            return new Uri(string.Format("http://{0}:{1}/", serversList[serverNumber], port));
+            //var serverNumber = hasher.GetServerNumberByRendezvousHashing(hasher.GetHashedString(login));
+            //return new Uri(string.Format("http://{0}:{1}/", serversList[serverNumber], port));
+            return null;
         }
 
         public static string[] GetServers()

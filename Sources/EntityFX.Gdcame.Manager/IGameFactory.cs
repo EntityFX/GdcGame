@@ -1,6 +1,6 @@
 using EntityFX.Gdcame.GameEngine.Contract;
 
-namespace EntityFX.Gdcame.Manager
+namespace EntityFX.Gdcame.Manager.MainServer
 {
     public interface IGameFactory
     {

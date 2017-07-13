@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using EntityFX.Gdcame.Application.Contract.Model;
+using EntityFX.Gdcame.Application.Contract.Model.MainServer;
 
-namespace EntityFX.Gdcame.Application.Contract.Controller
+namespace EntityFX.Gdcame.Application.Contract.Controller.MainServer
 {
     public interface IAdminController
     {

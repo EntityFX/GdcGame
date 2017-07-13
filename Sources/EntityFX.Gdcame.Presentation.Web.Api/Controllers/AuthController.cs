@@ -5,25 +5,20 @@ using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Security.Cryptography;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using System.Web.Http.Controllers;
-using System.Web.Http.Results;
-using EntityFX.Gdcame.Manager.Contract.SessionManager;
-using EntityFX.Gdcame.Manager.Contract.UserManager;
-using EntityFX.Gdcame.Application.Contract.Model;
+using EntityFX.Gdcame.Application.Api.MainServer.Models;
+using EntityFX.Gdcame.Application.Api.MainServer.Providers;
+using EntityFX.Gdcame.Infrastructure.Api.ApiResult;
+using EntityFX.Gdcame.Manager.Contract.MainServer.SessionManager;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
-using EntityFX.Gdcame.Application.WebApi.Models;
-using EntityFX.Gdcame.Application.Contract.Controller;
-using EntityFX.Gdcame.Application.WebApi.Providers;
-using RegisterAccountModel = EntityFX.Gdcame.Application.WebApi.Models.RegisterAccountModel;
+using RegisterAccountModel = EntityFX.Gdcame.Application.Api.MainServer.Models.RegisterAccountModel;
 
-namespace EntityFX.Gdcame.Application.WebApi.Controllers
+namespace EntityFX.Gdcame.Application.Api.MainServer.Controllers
 {
     [RoutePrefix("api/Auth")]
     public class AuthController : ApiController
@@ -113,10 +108,14 @@ namespace EntityFX.Gdcame.Application.WebApi.Controllers
 
             if (!result.Succeeded)
             {
-
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, new HttpError("Cannot register")
+                return Request.CreateResponse(HttpStatusCode.BadRequest, new ApiErrorResult()
                 {
-                    MessageDetail = string.Join(";", result.Errors)
+                    Message = "Cannot register",
+                    ErrorDetails = result.Errors.Select(error => new ApiErrorData()
+                    {
+                        Code = 0,
+                        Message = error
+                    }).ToArray()
                 });
             }
 

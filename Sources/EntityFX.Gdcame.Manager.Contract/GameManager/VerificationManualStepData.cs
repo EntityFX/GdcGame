@@ -1,7 +1,7 @@
 ﻿using System.Runtime.Serialization;
 using EntityFX.Gdcame.Common.Contract.Counters;
 
-namespace EntityFX.Gdcame.Manager.Contract.GameManager
+namespace EntityFX.Gdcame.Manager.Contract.MainServer.GameManager
 {
     [DataContract]
     [KnownType(typeof (NoVerficationRequiredResult))]

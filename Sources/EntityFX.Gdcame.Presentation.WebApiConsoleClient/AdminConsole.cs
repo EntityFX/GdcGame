@@ -8,7 +8,9 @@ using System.Timers;
 using System.Web.UI.WebControls;
 using EntityFx.GdCame.Test.Shared;
 using EntityFX.Gdcame.Application.Contract.Controller;
+using EntityFX.Gdcame.Application.Contract.Controller.MainServer;
 using EntityFX.Gdcame.Application.Contract.Model;
+using EntityFX.Gdcame.Application.Contract.Model.MainServer;
 using EntityFX.Gdcame.Infrastructure.Api.Auth;
 
 namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient

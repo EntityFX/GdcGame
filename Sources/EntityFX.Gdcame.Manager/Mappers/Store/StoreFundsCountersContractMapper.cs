@@ -3,7 +3,7 @@ using EntityFX.Gdcame.DataAccess.Contract.GameData.Store;
 using EntityFX.Gdcame.GameEngine.Contract.Counters;
 using EntityFX.Gdcame.Infrastructure.Common;
 
-namespace EntityFX.Gdcame.Manager.Mappers.Store
+namespace EntityFX.Gdcame.Manager.MainServer.Mappers.Store
 {
     public class StoreFundsCountersContractMapper : IMapper<GameCash, StoredCash>
     {

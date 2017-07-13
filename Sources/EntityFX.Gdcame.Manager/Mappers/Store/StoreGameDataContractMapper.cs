@@ -5,7 +5,7 @@ using EntityFX.Gdcame.GameEngine.Contract.Counters;
 using EntityFX.Gdcame.GameEngine.Contract.Items;
 using EntityFX.Gdcame.Infrastructure.Common;
 
-namespace EntityFX.Gdcame.Manager.Mappers.Store
+namespace EntityFX.Gdcame.Manager.MainServer.Mappers.Store
 {
     public class StoreGameDataContractMapper : IMapper<IGame, StoredGameData>
     {

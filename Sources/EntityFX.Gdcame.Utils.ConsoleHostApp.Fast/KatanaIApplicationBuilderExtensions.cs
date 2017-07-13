@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Owin.Builder;
 using Owin;
 
-namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Fast
+namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Fast.MainServer
 {
     using AppFunc = Func<IDictionary<string, object>, Task>;
     using DataProtectionProviderDelegate = Func<string[], Tuple<Func<byte[], byte[]>, Func<byte[], byte[]>>>;

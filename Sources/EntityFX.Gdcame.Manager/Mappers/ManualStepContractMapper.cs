@@ -5,18 +5,18 @@ using EntityFX.Gdcame.Common.Contract.Counters;
 using EntityFX.Gdcame.GameEngine.Contract;
 using EntityFX.Gdcame.GameEngine.Contract.Counters;
 using EntityFX.Gdcame.Infrastructure.Common;
-using EntityFX.Gdcame.Manager.Contract.GameManager;
+using EntityFX.Gdcame.Manager.Contract.MainServer.GameManager;
 using ManualStepResult = EntityFX.Gdcame.GameEngine.Contract.ManualStepResult;
 
-namespace EntityFX.Gdcame.Manager.Mappers
+namespace EntityFX.Gdcame.Manager.MainServer.Mappers
 {
-    public class ManualStepContractMapper : IMapper<ManualStepResult, Contract.GameManager.ManualStepResult>
+    public class ManualStepContractMapper : IMapper<ManualStepResult, Contract.MainServer.GameManager.ManualStepResult>
     {
-        private static readonly IDictionary<Type, Func<ManualStepResult, Contract.GameManager.ManualStepResult>>
+        private static readonly IDictionary<Type, Func<ManualStepResult, Contract.MainServer.GameManager.ManualStepResult>>
             MappingDictionary =
-                new ReadOnlyDictionary<Type, Func<ManualStepResult, Contract.GameManager.ManualStepResult>>(new Dictionary
-                    <Type, Func<ManualStepResult, Contract.GameManager.ManualStepResult>>(
-                    new Dictionary<Type, Func<ManualStepResult, Contract.GameManager.ManualStepResult>>
+                new ReadOnlyDictionary<Type, Func<ManualStepResult, Contract.MainServer.GameManager.ManualStepResult>>(new Dictionary
+                    <Type, Func<ManualStepResult, Contract.MainServer.GameManager.ManualStepResult>>(
+                    new Dictionary<Type, Func<ManualStepResult, Contract.MainServer.GameManager.ManualStepResult>>
                     {
                         {
                             typeof (ManualStepNoVerficationRequiredResult), entity => new NoVerficationRequiredResult()
@@ -43,8 +43,8 @@ namespace EntityFX.Gdcame.Manager.Mappers
             _countersContractMapper = countersContractMapper;
         }
 
-        public Contract.GameManager.ManualStepResult Map(ManualStepResult source,
-            Contract.GameManager.ManualStepResult destination = null)
+        public Contract.MainServer.GameManager.ManualStepResult Map(ManualStepResult source,
+            Contract.MainServer.GameManager.ManualStepResult destination = null)
         {
             var result = MappingDictionary[source.GetType()](source);
 

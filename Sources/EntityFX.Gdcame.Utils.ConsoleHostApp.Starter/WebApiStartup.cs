@@ -1,10 +1,17 @@
 using System;
 using System.Linq;
 using System.Net.Http.Formatting;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Web.Cors;
 using System.Web.Http;
-using System.Xml.Serialization;
+using System.Web.Http.Cors;
+using EntityFX.Gdcame.Application.Api.Common.Providers;
+using EntityFX.Gdcame.Application.Api.MainServer.Providers;
 using EntityFX.Gdcame.Utils.Common;
+using EntityFX.Gdcame.Utils.MainServer;
 using Microsoft.Owin;
+using Microsoft.Owin.Cors;
 using Microsoft.Owin.Security.OAuth;
 using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
@@ -12,16 +19,8 @@ using Newtonsoft.Json.Serialization;
 using Owin;
 using Owin.Security.AesDataProtectorProvider;
 using Unity.WebApi;
-using System.Web.Http.Cors;
-using Microsoft.Owin.Cors;
-using System.Web.Cors;
-using System.Threading.Tasks;
-using System.Threading;
-using EntityFX.Gdcame.Application.WebApi.Providers;
-using EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOneCore;
-using Microsoft.Owin.Security.DataProtection;
 
-namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter
+namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
 {
     public class WebApiStartup
     {

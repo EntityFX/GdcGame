@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using EntityFX.Gdcame.Infrastructure.Common;
 
-namespace EntityFX.Gdcame.Manager.Workers
+namespace EntityFX.Gdcame.Manager.MainServer.Workers
 {
     public class SessionValidationWorker : IWorker
     {
@@ -11,16 +11,16 @@ namespace EntityFX.Gdcame.Manager.Workers
         private const int SessionsCheckIntervalInSeconds = 30;
 
         private readonly ILogger _logger;
-        private GameSessions _gameSessions;
-        private readonly TaskTimer _backgroundSessionsCheckerTimer;
+        private readonly GameSessions _gameSessions;
+        private readonly ITaskTimer _backgroundSessionsCheckerTimer;
         private Task _backgroundSessionsCheckerTask;
         private object _stdLock = new {};
 
-        public SessionValidationWorker(ILogger logger, GameSessions gameSessions)
+        public SessionValidationWorker(ILogger logger, GameSessions gameSessions, ITaskTimerFactory taskTimerFactory)
         {
             _logger = logger;
             _gameSessions = gameSessions;
-            _backgroundSessionsCheckerTimer = new TaskTimer(TimeSpan.FromSeconds(SessionsCheckIntervalInSeconds), PerformSessionsCheckTask);
+            _backgroundSessionsCheckerTimer = taskTimerFactory.Build(TimeSpan.FromSeconds(SessionsCheckIntervalInSeconds), PerformSessionsCheckTask);
             Name = "Session Validation Worker";
         }
 

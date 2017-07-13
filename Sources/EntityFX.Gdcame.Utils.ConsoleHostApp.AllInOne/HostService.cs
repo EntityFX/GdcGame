@@ -1,20 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using EntityFX.Gdcame.Infrastructure.Common;
-using EntityFX.Gdcame.Manager.Contract.Workermanager;
-using EntityFX.Gdcame.Manager.Workers;
+using EntityFX.Gdcame.Manager.Contract.Common.WorkerManager;
+using EntityFX.Gdcame.Manager.MainServer.Workers;
 using EntityFX.Gdcame.Utils.Common;
-using EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOneCore;
 using EntityFX.Gdcame.Utils.ConsoleHostApp.Starter;
+using EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Owin.Hosting;
-using Microsoft.Practices.ObjectBuilder2;
 using Microsoft.Practices.Unity;
 using Topshelf;
 
-namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne
+namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.MainServer
 {
     internal class HostService : ServiceControl
     {

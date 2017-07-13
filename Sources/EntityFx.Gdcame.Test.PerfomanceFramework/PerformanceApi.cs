@@ -9,8 +9,10 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using EntityFX.Gdcame.Application.Contract.Model.MainServer;
 using EntityFX.Gdcame.Infrastructure.Api.Auth;
-using EntityFX.Gdcame.Utils.Shared;
+using EntityFX.Gdcame.Utils.Common.Hashing;
+
 
 namespace EntityFx.Gdcame.Test.PerfomanceFramework
 {
