@@ -16,7 +16,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -24,7 +24,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -78,11 +78,6 @@
     <Compile Include="AppConfiguration.cs" />
     <Compile Include="CoreApplicationBuilderExtensions.cs" />
     <Compile Include="GenericTaskTimer.cs" />
-    <Compile Include="Hashing\HashHelper.cs" />
-    <Compile Include="Hashing\IHashFunction.cs" />
-    <Compile Include="Hashing\Md5HashFunction.cs" />
-    <Compile Include="Hashing\Node.cs" />
-    <Compile Include="Hashing\RendezvousHash.cs" />
     <Compile Include="NoWcfOperationContextHelper.cs" />
     <Compile Include="PerformanceHelper.cs" />
     <Compile Include="PortableTaskTimer.cs" />
@@ -91,14 +86,6 @@
     <Compile Include="TaskTimerBase.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Contract\EntityFX.Gdcame.DataAccess.Contract.csproj">
-      <Project>{0932d8b3-29eb-4546-987a-b246421a9b87}</Project>
-      <Name>EntityFX.Gdcame.DataAccess.Contract</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Service\EntityFX.Gdcame.DataAccess.Service.csproj">
-      <Project>{2008F2C2-C1FA-4CB9-8A99-A9406AC4967D}</Project>
-      <Name>EntityFX.Gdcame.DataAccess.Service</Name>
-    </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Common\EntityFX.Gdcame.Infrastructure.Common.csproj">
       <Project>{924CC67D-9E2B-46BA-BE1D-6C6C780CCFBC}</Project>
       <Name>EntityFX.Gdcame.Infrastructure.Common</Name>

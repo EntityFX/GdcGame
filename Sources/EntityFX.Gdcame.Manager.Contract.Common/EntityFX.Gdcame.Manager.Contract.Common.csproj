@@ -50,6 +50,7 @@
     <Compile Include="RatingManager\IRatingManager.cs" />
     <Compile Include="ServerManager\IServerManager.cs" />
     <Compile Include="WorkerManager\IWorkerManager.cs" />
+    <Compile Include="WorkerManager\WorkerBase.cs" />
     <Compile Include="WorkerManager\WorkerStatus.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

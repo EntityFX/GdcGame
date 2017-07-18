@@ -34,7 +34,7 @@ using EntityFX.Gdcame.Manager.MainServer.Mappers.Store;
 using EntityFX.Gdcame.NotifyConsumer;
 using EntityFX.Gdcame.NotifyConsumer.Contract;
 using EntityFX.Gdcame.Utils.Common;
-using EntityFX.Gdcame.Utils.Common.Hashing;
+using EntityFX.Gdcame.Utils.Hashing;
 using EntityFX.Gdcame.Utils.MainServer;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.SignalR;

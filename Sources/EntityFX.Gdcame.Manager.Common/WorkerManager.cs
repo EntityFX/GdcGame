@@ -37,7 +37,8 @@ namespace EntityFX.Gdcame.Manager.MainServer
                 workersStatusList.Add(new WorkerStatus()
                 {
                     IsRunning = worker.IsRunning,
-                    Name = worker.Name
+                    Name = worker.Name,
+                    Ticks = worker.Ticks
                 });
             }
             return workersStatusList.ToArray();

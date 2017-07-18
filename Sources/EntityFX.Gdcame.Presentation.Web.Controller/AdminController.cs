@@ -53,7 +53,11 @@ namespace EntityFX.Gdcame.Application.Api.Controller.MainServer
         {
             var statistics = _mapperFactory.Build<StatisticsInfo, ServerStatisticsInfoModel>().Map(_adminManager.GetStatisticsInfo());
             statistics.ActiveWorkers =
-                _workerManager.GetWorkersStatus().Where(_ => _.IsRunning).Select(_ => _.Name).ToArray();
+                _workerManager.GetWorkersStatus().Where(_ => _.IsRunning).Select(
+
+                _ => string.Format("Name: {0}, IsRunning: {1}, Ticks: {2}", _.Name, _.IsRunning, _.Ticks)
+
+            ).ToArray();
             return statistics;
         }
 
@@ -81,7 +85,7 @@ namespace EntityFX.Gdcame.Application.Api.Controller.MainServer
         [Route("sessions/guid")]
         public async void CloseSessionByGuid([FromBody] Guid guid)
         {
-            await Task.Run(() =>_adminManager.CloseSessionByGuid(guid));
+            await Task.Run(() => _adminManager.CloseSessionByGuid(guid));
         }
 
         [HttpDelete]
@@ -110,6 +114,20 @@ namespace EntityFX.Gdcame.Application.Api.Controller.MainServer
         public async void WipeUser([FromBody] string username)
         {
             await Task.Run(() => _adminManager.WipeUser(username));
+        }
+
+        [HttpPost]
+        [Route("servers")]
+        public async void AddServer(string address)
+        {
+            await Task.Run(() => _adminManager.AddServer(address));
+        }
+
+        [HttpDelete]
+        [Route("servers")]
+        public async void RemoveServer(string address)
+        {
+            await Task.Run(() => _adminManager.RemoveServer(address));
         }
 
         [HttpDelete]

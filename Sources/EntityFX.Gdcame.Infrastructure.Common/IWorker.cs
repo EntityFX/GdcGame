@@ -7,5 +7,9 @@
         string Name { get; }
 
         bool IsRunning { get; }
+
+        long Ticks { get; }
+
+        void IncrementTick();
     }
 }

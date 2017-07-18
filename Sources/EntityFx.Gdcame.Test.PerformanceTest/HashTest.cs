@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics;
 using EntityFX.Gdcame.Infrastructure.Common;
-using EntityFX.Gdcame.Utils.Common;
-using EntityFX.Gdcame.Utils.Common.Hashing;
+using EntityFX.Gdcame.Utils.Hashing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace EntityFx.Gdcame.Test.Unit
@@ -18,7 +17,12 @@ namespace EntityFx.Gdcame.Test.Unit
             //TODO: Use Rendezvous Hashing algorithm.
             //            Debug.WriteLine(hh.GetModuloOfUserIdHash(hh.GetHashedString("admin"), 4));
             //todo:remove GetHashedString
-            Debug.WriteLine(hh.GetServerNumberByRendezvousHashing(hh.GetHashedString("admin")));
+            Debug.WriteLine(hh.GetServerNumberByUserId(
+            new[]{
+                "127.0.0.1",
+                "127.0.0.2"
+            }
+            , hh.GetHashedString("admin")));
         }
     }
 }

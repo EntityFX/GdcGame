@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
-namespace EntityFX.Gdcame.Utils.Common.Hashing
+namespace EntityFX.Gdcame.Utils.Hashing
 {
     class RendezvousHash
     {
@@ -15,7 +16,6 @@ namespace EntityFX.Gdcame.Utils.Common.Hashing
         private long ComputeScore(Node node, String userKey)
         {
             long hash = hasher.GetHash(node.ServerNumber + "." + userKey);
-            RendezvousHash.Logger(string.Format("Hash for [{0}:{1}] is [{2}]", node.ServerAddress, node.ServerNumber, hash));
             return hash;
         }
 
@@ -24,9 +24,8 @@ namespace EntityFX.Gdcame.Utils.Common.Hashing
 	     * 
 	     * @return true if the node was in the list ?
 	     */
-        public bool Remove(List<Node> nodes, Node node)
+        public bool Remove(IList<Node> nodes, Node node)
         {
-            RendezvousHash.Logger(string.Format("Remove [{0}:{1}] from {2}.", node.ServerAddress, node.ServerNumber, nodes));
             return nodes.Remove(node);
         }
         public bool Remove(List<string> nodes, Node node)
@@ -39,20 +38,20 @@ namespace EntityFX.Gdcame.Utils.Common.Hashing
          * 
          * @return true if node did not previously exist in the list ?
          */
-        public void Add(List<Node> nodes, Node node)
+        public void Add(IList<Node> nodes, Node node)
         {
             nodes.Add(node);
         }
-        public void Add(List<string> nodes, Node node)
+
+        public void Add(IList<string> nodes, Node node)
         {
-            RendezvousHash.Logger(string.Format("Add [{0}:{1}] to {2}.", node.ServerAddress, node.ServerNumber, nodes));
             Add(GetNodesList(nodes), node);
         }
 
         /**
 	    * Return a node for a given key
 	    */
-        public Node DetermineResponsibleNode(String userKey, List<Node> nodes)
+        public Node DetermineResponsibleNode(String userKey, IEnumerable<Node> nodes)
         {
             long maxValue = Int64.MinValue;//=Long.MinValue?
             Node max = null;
@@ -65,8 +64,6 @@ namespace EntityFX.Gdcame.Utils.Common.Hashing
                     maxValue = nodesHash;
                 }
             }
-            RendezvousHash.Logger(string.Format("Responsable node for userKey = {0} is [{1}:{2}].",
-                userKey, max.ServerAddress, max.ServerNumber));
             return max;
         }
 
@@ -75,28 +72,10 @@ namespace EntityFX.Gdcame.Utils.Common.Hashing
             return DetermineResponsibleNode(userKey, GetNodesList(nodes));
         }
 
-        private List<Node> GetNodesList(List<string> nodes)
+        private IList<Node> GetNodesList(IEnumerable<string> nodes)
         {
-            List<Node> nodesList = new List<Node>();
-            for (int i = 0; i < nodes.Count; i++)
-            {
-                nodesList.Add(new Node(nodes[i], i));
-            }
-            return nodesList;
+            return nodes.Select((n, i) => new Node(n, i)).ToList();
         }
 
-        //todo delete
-        public static void Logger(String lines)
-        {
-
-            // Write the string to a file.append mode is enabled so that the log
-            // lines get appended to  test.txt than wiping content and writing the log
-
-//            System.IO.StreamWriter file = new System.IO.StreamWriter("F:\\projects\\RG-Architects\\RG-Architects - Copy\\bin\\logs\\log.txt", true);
-//            file.WriteLine(lines);
-//
-//            file.Close();
-
-        }
     }
 }

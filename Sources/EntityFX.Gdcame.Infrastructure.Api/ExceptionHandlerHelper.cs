@@ -13,7 +13,10 @@ namespace EntityFX.Gdcame.Infrastructure.Api
             var webException = (httpRequestException != null) ?  httpRequestException.InnerException as WebException : null;
             if (webException != null && (webException.Status == WebExceptionStatus.ConnectFailure || webException.Status  == WebExceptionStatus.UnknownError))
             {
-                throw new NoConnectionException(null, webException.Message, webException);
+                throw new NoConnectionException(new NoServerConnectionData()
+                {
+                    Message = webException.Message,
+                }, webException.Message, webException);
             }
             throw new ClientException<ServerErrorData>(new ServerErrorData
             {
@@ -27,7 +30,7 @@ namespace EntityFX.Gdcame.Infrastructure.Api
         {
             if (response.ResponseStatus == ResponseStatus.Error)
             {
-                throw new NoConnectionException(new ErrorData() {Message = response.ErrorMessage}, response.ErrorMessage,
+                throw new NoConnectionException(new NoServerConnectionData() {Message = response.ErrorMessage, Uri = response.ResponseUri}, response.ErrorMessage,
                     response.ErrorException);
             }
 

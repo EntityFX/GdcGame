@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 using EntityFX.Gdcame.GameEngine.Contract;
 using EntityFX.Gdcame.Infrastructure.Common;
+using EntityFX.Gdcame.Manager.Contract.Common.WorkerManager;
 using EntityFX.Gdcame.Manager.Contract.MainServer.AdminManager;
 
 namespace EntityFX.Gdcame.Manager.MainServer.Workers
 {
-    public class CalculationWorker : IWorker
+    public class CalculationWorker : WorkerBase, IWorker
     {
         private const int ChunkSize = 500;
         private readonly ILogger _logger;
@@ -26,12 +28,12 @@ namespace EntityFX.Gdcame.Manager.MainServer.Workers
             Name = "Games Calculation worker";
         }
 
-        public void Run()
+        public override void Run()
         {
             _backgroundPerformAutomaticStepsTask = _backgroundPerformAutomaticStepsTimer.Start();
         }
 
-        public bool IsRunning
+        public override bool IsRunning
         {
             get
             {
@@ -41,7 +43,7 @@ namespace EntityFX.Gdcame.Manager.MainServer.Workers
             }
         }
 
-        public string Name { get; private set; }
+
 
         private void PerformAutomaticSteps()
         {

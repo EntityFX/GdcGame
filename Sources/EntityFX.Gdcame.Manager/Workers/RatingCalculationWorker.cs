@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using EntityFX.Gdcame.Common.Contract.UserRating;
 using EntityFX.Gdcame.DataAccess.Contract.Rating;
 using EntityFX.Gdcame.Infrastructure.Common;
+using EntityFX.Gdcame.Manager.Contract.Common.WorkerManager;
 
 namespace EntityFX.Gdcame.Manager.MainServer.Workers
 {
-    public class RatingCalculationWorker : IWorker
+    public class RatingCalculationWorker : WorkerBase, IWorker
     {
         private const int TimeSaveInSeconds = 5;       
         private const int ChunkSize = 500;
@@ -29,14 +30,12 @@ namespace EntityFX.Gdcame.Manager.MainServer.Workers
             Name = "Rating Calculation Worker";
         }
 
-        public void Run()
+        public override void Run()
         {
             _backgroundSaveHistoryCheckerTask = _backgroundSaveHistoryCheckerTimer.Start();
         }
 
-        public string Name { get; private set; }
-
-        public bool IsRunning
+        public override bool IsRunning
         {
             get
             {

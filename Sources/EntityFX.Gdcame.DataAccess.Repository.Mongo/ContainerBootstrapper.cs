@@ -88,6 +88,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
             container.RegisterType<IUserGameSnapshotRepository, UserGameSnapshotRepository>();
             container.RegisterType<IRatingHistoryRepository, RatingHistoryRepository>();
             container.RegisterType<IRatingStatisticsRepository, RatingStatisticsRepository>();
+            container.RegisterType<IServerRepository, ServerRepository>();
             container.RegisterInstance<IMongoDatabase>(MongoDatabase);
             return container;
         }

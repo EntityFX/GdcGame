@@ -17,7 +17,7 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
 {
     public class ServerInfoClient : ApiClientBase, IServerController
     {
-        public ServerInfoClient(int? timeout) : base(null, timeout)
+        public ServerInfoClient(int? timeout = null) : base(null, timeout)
         {
         }
 

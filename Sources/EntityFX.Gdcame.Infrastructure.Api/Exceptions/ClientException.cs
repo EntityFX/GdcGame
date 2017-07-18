@@ -58,6 +58,11 @@ namespace EntityFX.Gdcame.Infrastructure.Api.Exceptions
         public dynamic ModelState { get; set; }
     }
 
+    public class NoServerConnectionData : ErrorData
+    {
+        public Uri Uri { get; set; }
+    }
+
     public class WrongAuthData<TAuthRequestData> : ErrorData
     {
         public TAuthRequestData RequestData { get; set; }

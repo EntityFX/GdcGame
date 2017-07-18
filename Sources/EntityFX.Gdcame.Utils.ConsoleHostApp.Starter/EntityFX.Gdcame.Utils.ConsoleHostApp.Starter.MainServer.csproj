@@ -309,6 +309,10 @@
       <Project>{12C5304D-AE3E-4FF0-8E09-D7B3D3EA90DC}</Project>
       <Name>EntityFX.Gdcame.Utils.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Utils.Hashing\EntityFX.Gdcame.Utils.Hashing.csproj">
+      <Project>{720E76E7-71E2-4570-BD4A-A38B2858BD56}</Project>
+      <Name>EntityFX.Gdcame.Utils.Hashing</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Utils.MainServer\EntityFX.Gdcame.Utils.MainServer.csproj">
       <Project>{2AE99E38-4B45-4D8B-B9D5-840B21F82A43}</Project>
       <Name>EntityFX.Gdcame.Utils.MainServer</Name>

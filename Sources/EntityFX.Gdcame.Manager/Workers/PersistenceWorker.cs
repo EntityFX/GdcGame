@@ -5,13 +5,15 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using EntityFX.Gdcame.DataAccess.Contract.Server;
 using EntityFX.Gdcame.GameEngine.NetworkGameEngine;
 using EntityFX.Gdcame.Infrastructure.Common;
+using EntityFX.Gdcame.Manager.Contract.Common.WorkerManager;
 using EntityFX.Gdcame.Manager.Contract.MainServer.AdminManager;
 
 namespace EntityFX.Gdcame.Manager.MainServer.Workers
 {
-    public class PersistenceWorker : IWorker
+    public class PersistenceWorker : WorkerBase, IWorker
     {
         private const int PersistTimeSlotsCount = 60;
         private const int PersistTimeSlotMilliseconds = 1000;
@@ -22,6 +24,7 @@ namespace EntityFX.Gdcame.Manager.MainServer.Workers
         private readonly IGameDataPersisterFactory _gameDataPersisterFactory;
         private readonly IHashHelper _hashHelper;
         private readonly PerformanceInfo _performanceInfo;
+        private readonly IServerDataAccessService _serverDataAccessService;
         private Task _backgroundPersisterTask;
         private readonly CancellationTokenSource _backgroundPersisterTaskToken = new CancellationTokenSource();
 
@@ -29,13 +32,14 @@ namespace EntityFX.Gdcame.Manager.MainServer.Workers
             new ConcurrentBag<Tuple<string, string, DateTime>>[PersistTimeSlotsCount];
 
         public PersistenceWorker(ILogger logger, GameSessions gameSessions,
-            IGameDataPersisterFactory gameDataPersisterFactory, IHashHelper hashHelper, PerformanceInfo performanceInfo)
+            IGameDataPersisterFactory gameDataPersisterFactory, IHashHelper hashHelper, PerformanceInfo performanceInfo, IServerDataAccessService serverDataAccessService)
         {
             _logger = logger;
             _gameSessions = gameSessions;
             _gameDataPersisterFactory = gameDataPersisterFactory;
             _hashHelper = hashHelper;
             _performanceInfo = performanceInfo;
+            _serverDataAccessService = serverDataAccessService;
 
             Name = "Games persistence worker";
 
@@ -61,9 +65,8 @@ namespace EntityFX.Gdcame.Manager.MainServer.Workers
         private void GameSessions_GameRemoved(object sender, Tuple<string, string> e)
         {
             //TODO: Use Hashing algorithm.
-            //            int timeSlotId = _hashHelper.GetModuloOfUserIdHash(e.Item1, PersistTimeSlotsCount);
+                        int timeSlotId = _hashHelper.GetModuloOfUserIdHash(e.Item1, PersistTimeSlotsCount);
 
-            int timeSlotId = _hashHelper.GetServerNumberByRendezvousHashing(e.Item1);
             var userTimeSlot = PersistTimeSlotsUsers[timeSlotId].FirstOrDefault(_ => _.Item2 == e.Item2);
             if (userTimeSlot != null)
             {
@@ -75,13 +78,13 @@ namespace EntityFX.Gdcame.Manager.MainServer.Workers
         private void GameSessions_GameStarted(object sender, Tuple<string, string> e)
         {
             //TODO: Use Hashing algorithm.
-            //            int timeSlotId = _hashHelper.GetModuloOfUserIdHash(e.Item1, PersistTimeSlotsCount);
-            int timeSlotId = _hashHelper.GetServerNumberByRendezvousHashing(e.Item1);
+                        int timeSlotId = _hashHelper.GetModuloOfUserIdHash(e.Item1, PersistTimeSlotsCount);
+
 
             PersistTimeSlotsUsers[timeSlotId].Add(new Tuple<string, string, DateTime>(e.Item1, e.Item2, DateTime.Now));
         }
 
-        public bool IsRunning
+        public override bool IsRunning
         {
             get
             {
@@ -91,7 +94,7 @@ namespace EntityFX.Gdcame.Manager.MainServer.Workers
             }
         }
 
-        public void Run()
+        public override void Run()
         {
             _backgroundPersisterTask = Task.Factory.StartNew(a => PerformBackgroundPersisting(),
                 TaskCreationOptions.LongRunning, _backgroundPersisterTaskToken.Token).ContinueWith(c =>
@@ -102,8 +105,6 @@ namespace EntityFX.Gdcame.Manager.MainServer.Workers
                 }
             });
         }
-
-        public string Name { get; private set; }
 
         private void PerformBackgroundPersisting()
         {

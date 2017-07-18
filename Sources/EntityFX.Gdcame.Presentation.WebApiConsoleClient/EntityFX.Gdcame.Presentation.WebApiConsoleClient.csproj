@@ -100,8 +100,6 @@
     <Compile Include="..\EntityFX.GdCame.Test.Shared\PrettyConsole.cs">
       <Link>PrettyConsole.cs</Link>
     </Compile>
-    <Compile Include="AdminConsole.cs" />
-    <Compile Include="ApiHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -110,11 +108,10 @@
       <Link>servers.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="App.config" />
-    <None Include="packages.config" />
-    <None Include="NodesListToUpdateServers.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EntityFX.Gdcame.Application.Contract.Controller.Common\EntityFX.Gdcame.Application.Contract.Controller.Common.csproj">
@@ -132,6 +129,10 @@
     <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Common\EntityFX.Gdcame.Infrastructure.Common.csproj">
       <Project>{924cc67d-9e2b-46ba-be1d-6c6c780ccfbc}</Project>
       <Name>EntityFX.Gdcame.Infrastructure.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Presentation.ConsoleClient.Common\EntityFX.Gdcame.Presentation.ConsoleClient.Common.csproj">
+      <Project>{805FA369-C681-4204-B16B-CFE3AE2FA813}</Project>
+      <Name>EntityFX.Gdcame.Presentation.ConsoleClient.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Presentation.Contract.Controller\EntityFX.Gdcame.Application.Contract.Controller.MainServer.csproj">
       <Project>{b9608a11-f0f0-47aa-bd55-d6e25a310daa}</Project>

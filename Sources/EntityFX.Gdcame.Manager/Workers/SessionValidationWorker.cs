@@ -2,10 +2,11 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 using EntityFX.Gdcame.Infrastructure.Common;
+using EntityFX.Gdcame.Manager.Contract.Common.WorkerManager;
 
 namespace EntityFX.Gdcame.Manager.MainServer.Workers
 {
-    public class SessionValidationWorker : IWorker
+    public class SessionValidationWorker : WorkerBase, IWorker
     {
         private const int SessionLifeInSeconds = 3600;
         private const int SessionsCheckIntervalInSeconds = 30;
@@ -24,14 +25,13 @@ namespace EntityFX.Gdcame.Manager.MainServer.Workers
             Name = "Session Validation Worker";
         }
 
-        public void Run()
+        public override void Run()
         {
             _backgroundSessionsCheckerTask = _backgroundSessionsCheckerTimer.Start();
         }
 
-        public string Name { get; private set; }
 
-        public bool IsRunning
+        public override bool IsRunning
         {
             get
             {

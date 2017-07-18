@@ -18,25 +18,15 @@ using EntityFX.Gdcame.Application.Contract.Controller.MainServer;
 using EntityFX.Gdcame.Application.Contract.Model.MainServer;
 using EntityFX.Gdcame.Infrastructure.Api.Auth;
 using EntityFX.Gdcame.Infrastructure.Api.Exceptions;
+using EntityFX.Gdcame.Presentation.ConsoleClient.Common;
 using Newtonsoft.Json;
 
 namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 {
-    enum ErrorCodes
-    {
-        OtherError,
-        ValidationError,
-        ServerError,
-        InvalidSessionError,
-        AuthError,
-        ConnectionError
-    }
-
     class Program
     {
         private static string _userName;
         private static string _userPassword;
-        private static string[] _serverInfo;
         private static UnityContainer _container;
         public static ErrorCodes? ErrorCode { get; private set; }
         private static bool _exitFlag;
@@ -58,6 +48,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
         };
 
         private static int _serverPort;
+        private static string _mainServer;
 
         private static void ExitMainMenu()
         {
@@ -77,6 +68,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             }
             _container = new UnityContainer();
             _serverPort = Convert.ToInt32(ConfigurationManager.AppSettings["ServicePort"]);
+            _mainServer = ConfigurationManager.AppSettings["Server"];
             MainLoop(listArgs);
 
         }
@@ -104,7 +96,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             Console.Write("Подтвердите пароль: ");
             var confirmPassword = Console.ReadLine();
 
-            var serverInfoUrl = ApiHelper.GetApiServerUri(_serverInfo, userName, _serverPort);
+            var serverInfoUrl = ApiHelper.GetApiServerUri(ApiHelper.GetServers(new Uri(string.Format("{0}:{1}",_mainServer, _serverPort))), userName, _serverPort);
 
             var authApi = new AuthApiClient(new PasswordOAuthContext() { BaseUri = serverInfoUrl });
 
@@ -119,7 +111,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             }
             catch (AggregateException loginException)
             {
-                ErrorCode = GameRunner.HandleClientException(loginException.InnerException as IClientException<ErrorData>);
+                ErrorCode = ApiHelper.HandleClientException(loginException.InnerException as IClientException<ErrorData>) as ErrorCodes?;
             }
 
 
@@ -140,11 +132,11 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             {
                 Console.Clear();
                 Console.WriteLine("-=Вход=-");
-                loginResultTuple = ApiHelper.UserLogin(_serverInfo, _serverPort, _userName, _userPassword).Result;
+                loginResultTuple = ApiHelper.UserLogin(ApiHelper.GetServers(new Uri(string.Format("{0}:{1}", _mainServer, _serverPort))), _serverPort, _userName, _userPassword).Result;
             }
             catch (AggregateException loginException)
             {
-                GameRunner.HandleClientException(loginException.InnerException as IClientException<ErrorData>);
+                ApiHelper.HandleClientException(loginException.InnerException as IClientException<ErrorData>);
                 loginResultTuple = null;
                 _userName = null;
             }
@@ -190,7 +182,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             var gameClient = ApiHelper.GetGameClient(loginContext.Item1);
             var gr = new GameRunner(loginContext.Item2, loginContext.Item1, gameClient);
             var adminManagerClient = ApiHelper.GetAdminClient(loginContext.Item1);
-            var ac = new AdminConsole(loginContext.Item2, _userPassword, loginContext.Item1, adminManagerClient, _serverInfo, _serverPort);
+
             var gameData = gr.GetGameData();
             var rc = ApiHelper.GetRatingClient(loginContext.Item1);
             gr.DisplayGameData(gameData);
@@ -221,8 +213,6 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                     }
                     else if (keyInfo.Key == ConsoleKey.F2)
                     {
-                        ac.StartMenu();
-
                         gr.Invalidate();
                     }
                     else if (keyInfo.Key == ConsoleKey.F3)
@@ -256,16 +246,6 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
         private static void MainLoop(IEnumerable<string> args)
         {
             var argsArray = args as string[] ?? args.ToArray();
-            try
-            {
-                _serverInfo = ApiHelper.GetServers();
-            }
-            catch (AggregateException clientException)
-            {
-                GameRunner.HandleClientException(clientException.InnerException as IClientException<ErrorData>);
-            }
-
-
             if (argsArray.Any())
             {
                 _userName = argsArray.First();
@@ -527,7 +507,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                 }
                 catch (AggregateException exp)
                 {
-                    ErrorCode = HandleClientException(exp.InnerException as IClientException<ErrorData>);
+                    ErrorCode = ApiHelper.HandleClientException(exp.InnerException as IClientException<ErrorData>);
                 }
                 catch (Exception exp)
                 {
@@ -536,52 +516,6 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 
             }
 
-            public static ErrorCodes HandleClientException(IClientException<ErrorData> exception)
-            {
-                Console.Clear();
-                var res = HandleClientExceptionErrorData(exception);
-                PrettyConsole.WriteLineColor(ConsoleColor.Red, "Ошибка: {0}", res.Item2);
-                return res.Item1;
-            }
-
-            private static Tuple<ErrorCodes, string> HandleClientExceptionErrorData<T>(IClientException<T> exception)
-                where T : ErrorData
-            {
-                ErrorCodes errorCodes = ErrorCodes.OtherError;
-                string errorData = string.Empty;
-                if (exception.ErrorData != null)
-                {
-                    errorData = exception.ErrorData.Message;
-                    var authException = exception as ClientException<WrongAuthData<PasswordAuthData>>;
-                    if (authException != null)
-                    {
-                        errorCodes = ErrorCodes.AuthError;
-                        errorData += string.Format(" Login {0} not exists or wrong password", authException.ErrorData.RequestData.Usename);
-                    }
-
-                    var validationData = exception.ErrorData as ValidationErrorData;
-                    if (validationData != null)
-                    {
-                        errorCodes = ErrorCodes.ValidationError;
-                        errorData += validationData.ModelState;
-                    }
-
-                    var invalidSessionException = exception.ErrorData as InvalidSessionException;
-                    if (invalidSessionException != null)
-                    {
-                        errorCodes = ErrorCodes.InvalidSessionError;
-                        errorData += invalidSessionException.ErrorData.SessionGuid;
-                    }
-
-                    var clientExceptionWithServerErrorData = exception.ErrorData as ClientException<ServerErrorData>;
-                    if (clientExceptionWithServerErrorData != null)
-                    {
-                        errorCodes = ErrorCodes.ServerError;
-                        errorData += clientExceptionWithServerErrorData.ErrorData.StackTrace;
-                    }
-                }
-                return Tuple.Create(errorCodes, errorData);
-            }
         }
     }
 }

@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="ApiClientBase.cs" />
     <Compile Include="ApiResult\ApiResultBase.cs" />
+    <Compile Include="Auth\AnonimousAuthContext.cs" />
     <Compile Include="Auth\EmptyAuthContext.cs" />
     <Compile Include="Auth\IAuthContext.cs" />
     <Compile Include="Auth\IAuthProvider.cs" />

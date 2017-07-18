@@ -1,4 +1,4 @@
-﻿namespace EntityFX.Gdcame.Utils.Common.Hashing
+﻿namespace EntityFX.Gdcame.Utils.Hashing
 {
     class Node
     {

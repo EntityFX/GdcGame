@@ -11,7 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using EntityFX.Gdcame.Application.Contract.Model.MainServer;
 using EntityFX.Gdcame.Infrastructure.Api.Auth;
-using EntityFX.Gdcame.Utils.Common.Hashing;
+using EntityFX.Gdcame.Utils.Hashing;
 
 
 namespace EntityFx.Gdcame.Test.PerfomanceFramework
@@ -494,10 +494,7 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
         private static Uri GetApiServerUri(Uri[] serversUriList, string login)
         {
             var hasher = new HashHelper();
-            //TODO: Use Rendezvous Hashing algorithm.
-            //            var serverNumber = hasher.GetModuloOfUserIdHash(hasher.GetHashedString(login), serversUriList.Length);
-            //todo remove hashed string
-            var serverNumber = hasher.GetServerNumberByRendezvousHashing(hasher.GetHashedString(login));
+            var serverNumber = hasher.GetServerNumberByUserId(serversUriList.Select(u => u.ToString()).ToArray(), hasher.GetHashedString(login));
             return serversUriList[serverNumber];
         }
     }

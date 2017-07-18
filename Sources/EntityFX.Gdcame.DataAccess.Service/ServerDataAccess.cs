@@ -6,24 +6,32 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EntityFX.Gdcame.DataAccess.Repository.Contract;
 
 namespace EntityFX.Gdcame.DataAccess.Service
 {
     public class ServerDataAccessService : IServerDataAccessService
     {
-        public string[] GetServers()
+        private readonly IServerRepository _serverRepository;
+
+        public ServerDataAccessService(IServerRepository serverRepository)
         {
-            if (!File.Exists(Path.Combine("servers.json")))
-            {
-                return null;
-            }
-            // deserialize JSON directly from a file
-            using (StreamReader file = File.OpenText(Path.Combine("servers.json")))
-            {
-                JsonSerializer serializer = new JsonSerializer();
-                serializer.TypeNameHandling = TypeNameHandling.Auto;
-                return (string[])serializer.Deserialize(file, typeof(string[]));
-            }
+            _serverRepository = serverRepository;
+        }
+
+        public Server[] GetServers()
+        {
+            return _serverRepository.FindServers();
+        }
+
+        public void AddServer(string server)
+        {
+            _serverRepository.Create(server);
+        }
+
+        public void RemoveServer(string server)
+        {
+            _serverRepository.Delete(server);
         }
     }
 }

@@ -151,6 +151,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Utils.Commo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Application.Contract.Controller.Common", "EntityFX.Gdcame.Application.Contract.Controller.Common\EntityFX.Gdcame.Application.Contract.Controller.Common.csproj", "{34DA3755-975D-4194-8B02-7FA0476B23F0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Presentation.AdminConsoleClient", "EntityFX.Gdcame.Presentation.AdminConsoleClient\EntityFX.Gdcame.Presentation.AdminConsoleClient.csproj", "{1301F6A5-274D-410C-A633-C1316D5BA8E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Presentation.ConsoleClient.Common", "EntityFX.Gdcame.Presentation.ConsoleClient.Common\EntityFX.Gdcame.Presentation.ConsoleClient.Common.csproj", "{805FA369-C681-4204-B16B-CFE3AE2FA813}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Utils.Hashing", "EntityFX.Gdcame.Utils.Hashing\EntityFX.Gdcame.Utils.Hashing.csproj", "{720E76E7-71E2-4570-BD4A-A38B2858BD56}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		BuildServer|Any CPU = BuildServer|Any CPU
@@ -434,6 +440,24 @@ Global
 		{34DA3755-975D-4194-8B02-7FA0476B23F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34DA3755-975D-4194-8B02-7FA0476B23F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34DA3755-975D-4194-8B02-7FA0476B23F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1301F6A5-274D-410C-A633-C1316D5BA8E5}.BuildServer|Any CPU.ActiveCfg = Release|Any CPU
+		{1301F6A5-274D-410C-A633-C1316D5BA8E5}.BuildServer|Any CPU.Build.0 = Release|Any CPU
+		{1301F6A5-274D-410C-A633-C1316D5BA8E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1301F6A5-274D-410C-A633-C1316D5BA8E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1301F6A5-274D-410C-A633-C1316D5BA8E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1301F6A5-274D-410C-A633-C1316D5BA8E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{805FA369-C681-4204-B16B-CFE3AE2FA813}.BuildServer|Any CPU.ActiveCfg = Release|Any CPU
+		{805FA369-C681-4204-B16B-CFE3AE2FA813}.BuildServer|Any CPU.Build.0 = Release|Any CPU
+		{805FA369-C681-4204-B16B-CFE3AE2FA813}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{805FA369-C681-4204-B16B-CFE3AE2FA813}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{805FA369-C681-4204-B16B-CFE3AE2FA813}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{805FA369-C681-4204-B16B-CFE3AE2FA813}.Release|Any CPU.Build.0 = Release|Any CPU
+		{720E76E7-71E2-4570-BD4A-A38B2858BD56}.BuildServer|Any CPU.ActiveCfg = Release|Any CPU
+		{720E76E7-71E2-4570-BD4A-A38B2858BD56}.BuildServer|Any CPU.Build.0 = Release|Any CPU
+		{720E76E7-71E2-4570-BD4A-A38B2858BD56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{720E76E7-71E2-4570-BD4A-A38B2858BD56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{720E76E7-71E2-4570-BD4A-A38B2858BD56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{720E76E7-71E2-4570-BD4A-A38B2858BD56}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -495,6 +519,9 @@ Global
 		{2AE99E38-4B45-4D8B-B9D5-840B21F82A43} = {2B7D0649-6899-491F-B4E7-70D163B1F72D}
 		{12C5304D-AE3E-4FF0-8E09-D7B3D3EA90DC} = {2B7D0649-6899-491F-B4E7-70D163B1F72D}
 		{34DA3755-975D-4194-8B02-7FA0476B23F0} = {5BCA1BB1-86EB-420F-9AA5-465635002627}
+		{1301F6A5-274D-410C-A633-C1316D5BA8E5} = {7D99E047-40B6-4BE8-98C5-CB58CBA61596}
+		{805FA369-C681-4204-B16B-CFE3AE2FA813} = {7D99E047-40B6-4BE8-98C5-CB58CBA61596}
+		{720E76E7-71E2-4570-BD4A-A38B2858BD56} = {2B7D0649-6899-491F-B4E7-70D163B1F72D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35

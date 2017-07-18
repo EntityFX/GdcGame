@@ -1,4 +1,5 @@
-﻿using EntityFX.Gdcame.DataAccess.Contract.Server;
+﻿using System.Linq;
+using EntityFX.Gdcame.DataAccess.Contract.Server;
 using EntityFX.Gdcame.Manager.Contract.Common.ServerManager;
 
 namespace EntityFX.Gdcame.Manager.Common
@@ -14,7 +15,7 @@ namespace EntityFX.Gdcame.Manager.Common
 
         public string[] GetServers()
         {
-            return _serverDataAccessService.GetServers();
+            return _serverDataAccessService.GetServers().Select(s => s.Address).ToArray();
         }
     }
 }

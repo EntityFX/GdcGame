@@ -70,6 +70,7 @@
     <Compile Include="Rating\ILocalNodeRatingDataAccess.cs" />
     <Compile Include="Rating\IRatingDataAccess.cs" />
     <Compile Include="Server\IServerDataAccess.cs" />
+    <Compile Include="Server\Server.cs" />
     <Compile Include="User\IUserDataAccessService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User\User.cs" />

@@ -24,6 +24,10 @@ namespace EntityFX.Gdcame.Application.Contract.Controller.MainServer
 
         void WipeUser(string username);
 
+        void AddServer(string address);
+
+        void RemoveServer(string address);
+
         void ReloadGame(string username);
 
         void StopGame(string username);

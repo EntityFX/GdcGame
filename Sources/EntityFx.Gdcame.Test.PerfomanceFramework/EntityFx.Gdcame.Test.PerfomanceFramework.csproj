@@ -93,6 +93,10 @@
       <Project>{12C5304D-AE3E-4FF0-8E09-D7B3D3EA90DC}</Project>
       <Name>EntityFX.Gdcame.Utils.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Utils.Hashing\EntityFX.Gdcame.Utils.Hashing.csproj">
+      <Project>{720E76E7-71E2-4570-BD4A-A38B2858BD56}</Project>
+      <Name>EntityFX.Gdcame.Utils.Hashing</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Utils.WebApiClient\EntityFX.Gdcame.Utils.WebApiClient.csproj">
       <Project>{9B4E7B86-5F2F-4F84-9786-3D7CCB2024F8}</Project>
       <Name>EntityFX.Gdcame.Utils.WebApiClient</Name>

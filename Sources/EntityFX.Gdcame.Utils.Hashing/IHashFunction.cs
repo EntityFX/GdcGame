@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EntityFX.Gdcame.Utils.Common.Hashing
+namespace EntityFX.Gdcame.Utils.Hashing
 {
     interface IHashFunction
     {

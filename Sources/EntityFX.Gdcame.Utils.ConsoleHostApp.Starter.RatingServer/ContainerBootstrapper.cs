@@ -12,7 +12,7 @@ using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager;
 using EntityFX.Gdcame.Manager.Contract.Common;
 using EntityFX.Gdcame.Utils.Common;
-using EntityFX.Gdcame.Utils.Common.Hashing;
+using EntityFX.Gdcame.Utils.Hashing;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
 using PortableLog.NLog;
