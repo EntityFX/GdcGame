@@ -1,25 +1,23 @@
-using System;
-using EntityFX.Gdcame.Application.Api.Common;
-using EntityFX.Gdcame.Application.Api.Common.Mappers;
-using EntityFX.Gdcame.Application.Api.Controller.RatingServer;
-using EntityFX.Gdcame.Application.Contract.Controller;
-using EntityFX.Gdcame.Application.Contract.Controller.Common;
-using EntityFX.Gdcame.Common.Application.Model;
-using EntityFX.Gdcame.Common.Contract;
-using EntityFX.Gdcame.Common.Contract.Counters;
-using EntityFX.Gdcame.Common.Contract.UserRating;
-using EntityFX.Gdcame.Infrastructure.Common;
-using EntityFX.Gdcame.Manager;
-using EntityFX.Gdcame.Manager.Contract.Common;
-using EntityFX.Gdcame.Utils.Common;
-using EntityFX.Gdcame.Utils.Hashing;
-using Microsoft.Practices.Unity;
-using Microsoft.Practices.Unity.InterceptionExtension;
-using PortableLog.NLog;
-using CounterBase = EntityFX.Gdcame.Common.Contract.Counters.CounterBase;
-
-namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
+namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer
 {
+    using System;
+
+    using EntityFX.Gdcame.Application.Api.Common;
+    using EntityFX.Gdcame.Application.Api.Common.Mappers;
+    using EntityFX.Gdcame.Application.Api.Controller.RatingServer;
+    using EntityFX.Gdcame.Application.Contract.Controller.Common;
+    using EntityFX.Gdcame.Common.Application.Model;
+    using EntityFX.Gdcame.Common.Contract.UserRating;
+    using EntityFX.Gdcame.Infrastructure.Common;
+    using EntityFX.Gdcame.Manager.Contract.Common;
+    using EntityFX.Gdcame.Utils.Common;
+    using EntityFX.Gdcame.Utils.Hashing;
+
+    using Microsoft.Practices.Unity;
+    using Microsoft.Practices.Unity.InterceptionExtension;
+
+    using PortableLog.NLog;
+
     public class ContainerBootstrapper : IContainerBootstrapper
     {
 
@@ -27,7 +25,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
 
         public ContainerBootstrapper(AppConfiguration appConfiguration)
         {
-            _appConfiguration = appConfiguration;
+            this._appConfiguration = appConfiguration;
         }
 
 
@@ -43,7 +41,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
 
             var childBootstrappers = new IContainerBootstrapper[]
                         {
-                GetRepositoryProvider(_appConfiguration.RepositoryProvider),
+                this.GetRepositoryProvider(this._appConfiguration.RepositoryProvider),
                 new DataAccess.Service.ContainerBootstrapper(),
                 new Manager.Common.ContainerBootstrapper()
                         };
@@ -92,7 +90,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
                 case "EntityFramework":
                     return new DataAccess.Repository.Ef.ContainerBootstrapper();
                 case "Mongo":
-                    return new DataAccess.Repository.Mongo.ContainerBootstrapper(_appConfiguration.MongoConnectionString);
+                    return new DataAccess.Repository.Mongo.ContainerBootstrapper(this._appConfiguration.MongoConnectionString);
                 case "LocalStorage":
                 default:
                     return new DataAccess.Repository.LocalStorage.ContainerBootstrapper();

@@ -32,7 +32,10 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
 
         public void Create(string server)
         {
-            Database.GetCollection<Server>("Server").InsertOne(new Server() { Address = server, CreateDateTime = DateTime.Now});
+            IMongoCollection<Server> collection = Database.GetCollection<Server>("Server");
+            if (collection.Find(_ => _.Address == server).Any()) return;
+
+            collection.InsertOne(new Server() { Address = server, CreateDateTime = DateTime.Now });
         }
 
         public void Delete(string server)

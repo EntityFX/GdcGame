@@ -66,9 +66,9 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
             await ExecuteRequestAsync<string, object>("/api/admin/wipe-user", Method.POST, username);
         }
 
-        public async void AddServer(string address)
+        public async void UpdateServersList(string[] serversList)
         {
-            await ExecuteRequestAsync<object, object>("/api/admin/servers", Method.POST, address);
+            await ExecuteRequestAsync<string[], object>("/api/admin/servers", Method.POST, serversList);
         }
 
         public async void RemoveServer(string address)

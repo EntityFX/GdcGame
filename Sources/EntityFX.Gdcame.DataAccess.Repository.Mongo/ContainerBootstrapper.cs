@@ -18,6 +18,8 @@ using MongoDB.Bson.Serialization.IdGenerators;
 
 namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
 {
+    using EntityFX.Gdcame.DataAccess.Contract.Server;
+
     public class ContainerBootstrapper : IContainerBootstrapper
     {
         private readonly string _mongoConnectionString;
@@ -78,6 +80,14 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
             BsonClassMap.RegisterClassMap<StoredGenericCounter>();
             BsonClassMap.RegisterClassMap<StoredSingleCounter>();
             BsonClassMap.RegisterClassMap<StoredDelayedCounter>();
+
+            BsonClassMap.RegisterClassMap<Server>(
+                cm =>
+                    {
+                        cm.AutoMap();
+                        cm.SetIdMember(
+                            cm.GetMemberMap(x => x.Address).SetIdGenerator(StringObjectIdGenerator.Instance));
+                    });  
 
             container.RegisterType<IMapper<TopRatingStatistics, List<TopRatingStatisticsDocument>>, TopRatingStatisticsDocumentMapper>();
 

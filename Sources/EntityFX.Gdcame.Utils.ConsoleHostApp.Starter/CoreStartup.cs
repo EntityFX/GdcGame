@@ -1,25 +1,22 @@
-﻿using EntityFX.Gdcame.Utils.Common;
-using EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer;
-using Microsoft.AspNetCore.Builder;
-
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Practices.Unity;
-using Owin;
-
-namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter
+﻿namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
 {
-    public class CoreStartup
+    using EntityFX.Gdcame.Utils.Common;
+
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.Extensions.DependencyInjection;
+
+    using Owin;
+
+    public class CoreStartup : CoreStartupBase
     {
-        public static AppConfiguration AppConfiguration { get; set; }
 
-        public static IUnityContainer Container { get; set; } 
 
-        public void ConfigureServices(IServiceCollection services)
+        public override void ConfigureServices(IServiceCollection services)
         {
             services.AddDataProtection();
         }
 
-        public void Configure(IApplicationBuilder app)
+        public override void Configure(IApplicationBuilder app)
         {
             app.UseAppBuilder(appBuilder =>
             {

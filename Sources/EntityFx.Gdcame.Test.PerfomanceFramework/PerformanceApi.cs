@@ -495,6 +495,15 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
         {
             var hasher = new HashHelper();
             var serverNumber = hasher.GetServerNumberByUserId(serversUriList.Select(u => u.ToString()).ToArray(), hasher.GetHashedString(login));
+            //TODO: Use Rendezvous Hashing algorithm.
+            //            var serverNumber = hasher.GetModuloOfUserIdHash(hasher.GetHashedString(login), serversUriList.Length);
+            //todo remove hashed string
+            string[]servers = new string[serversUriList.Length];
+            for (int i=0; i<serversUriList.Length;i++)
+            {
+                servers[i] = serversUriList[i].Host;
+            }
+
             return serversUriList[serverNumber];
         }
     }

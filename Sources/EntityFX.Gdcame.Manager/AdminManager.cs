@@ -7,7 +7,6 @@ using EntityFX.Gdcame.Manager.Contract.Common;
 using EntityFX.Gdcame.Manager.Contract.MainServer.AdminManager;
 using EntityFX.Gdcame.Manager.Contract.MainServer.UserManager;
 
-//using Newtonsoft.Json;
 
 namespace EntityFX.Gdcame.Manager.MainServer
 {
@@ -78,15 +77,11 @@ namespace EntityFX.Gdcame.Manager.MainServer
             throw new NotImplementedException();
         }
 
-        public void AddServer(string address)
+        public void  UpdateServersList(string[] newServersList)
         {
-            _serverDataAccessService.AddServer(address);
+            _serverDataAccessService.UpdateServers(newServersList);
         }
 
-        public void RemoveServer(string address)
-        {
-            _serverDataAccessService.RemoveServer(address);
-        }
 
         public StatisticsInfo GetStatisticsInfo()
         {
@@ -117,13 +112,7 @@ namespace EntityFX.Gdcame.Manager.MainServer
         {
             _gameSessions.RemoveAllGames();
         }
-
-        public bool UpdateNodeData()
-        {
-            //for all users, check new node
-            //move user into deffirent node if needed
-            return false;
-        }
+        
     }
 
 }

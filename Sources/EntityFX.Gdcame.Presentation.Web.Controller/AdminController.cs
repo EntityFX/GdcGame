@@ -61,25 +61,13 @@ namespace EntityFX.Gdcame.Application.Api.Controller.MainServer
             return statistics;
         }
 
-        [HttpGet]
-        [Route("update_nodes_list")]
-        public string UpdateNodesList([FromUri] string[] newServersList)
+        [HttpPost]
+        [Route("servers")]
+        public async void UpdateServersList(string[] serversList)
         {
-            Console.WriteLine("---AdminController going to update Nodes List---");
-            string jsonServerList = UpdateNodesListInFile(newServersList);
-            _adminManager.UpdateNodeData();
-            return "Nodes List updated: " + jsonServerList;
+            await Task.Run(() => _adminManager.UpdateServersList(serversList));
         }
 
-        private string UpdateNodesListInFile(string[] newServersList)
-        {
-            //todo: move to adminManager
-            System.IO.StreamWriter file = new System.IO.StreamWriter("servers.json");
-            var jsonList = JsonConvert.SerializeObject(newServersList);
-            file.WriteLine(jsonList);
-            file.Close();
-            return jsonList;
-        }
 
         [HttpDelete]
         [Route("sessions/guid")]
@@ -114,20 +102,6 @@ namespace EntityFX.Gdcame.Application.Api.Controller.MainServer
         public async void WipeUser([FromBody] string username)
         {
             await Task.Run(() => _adminManager.WipeUser(username));
-        }
-
-        [HttpPost]
-        [Route("servers")]
-        public async void AddServer(string address)
-        {
-            await Task.Run(() => _adminManager.AddServer(address));
-        }
-
-        [HttpDelete]
-        [Route("servers")]
-        public async void RemoveServer(string address)
-        {
-            await Task.Run(() => _adminManager.RemoveServer(address));
         }
 
         [HttpDelete]

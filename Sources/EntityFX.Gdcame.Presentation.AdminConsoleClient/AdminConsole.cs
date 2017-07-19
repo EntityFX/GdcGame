@@ -37,6 +37,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
         private bool _isMainMenu;
 
         public AdminConsole(string user, string password, Uri mainServer, int port)
+
         {
             _user = user;
             _password = password;
@@ -238,32 +239,6 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             }
         }
 
-        private void UpdateNodesList()
-        {
-            string[] newServersList = new string[1];
-
-            var serversList = ApiHelper.GetServers(_mainServer).ToArray();
-            var results = Task.WhenAll(
-                DoAuthServers(serversList).Where(_ => _ != null).Select(_ => Task.Factory.StartNew(
-                    () =>
-                    {
-                        try
-                        {
-                            var result = new Tuple<Uri, string>(_.BaseUri,
-                                ApiHelper.GetAdminClient(_).UpdateNodesList(newServersList));
-                            return result;
-                        }
-                        catch (Exception)
-                        {
-                            return new Tuple<Uri, string>(_.BaseUri, null);
-                        }
-                    }))
-            ).Result;
-            foreach (var echo in results)
-            {
-                Console.WriteLine("{0}:{1}", echo.Item1, echo.Item2);
-            }
-        }
 
         private void AddServer()
         {
@@ -294,7 +269,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                                 try
                                 {
 
-                                    ApiHelper.GetAdminClient(_).AddServer(server);
+                                    ApiHelper.GetAdminClient(_).UpdateServersList(new[] { server });
                                 }
                                 catch (Exception)
                                 {

@@ -24,9 +24,13 @@ namespace EntityFX.Gdcame.DataAccess.Service
             return _serverRepository.FindServers();
         }
 
-        public void AddServer(string server)
+        public void UpdateServers(string[] servers)
         {
-            _serverRepository.Create(server);
+            foreach (var server in servers)
+            {
+                _serverRepository.Create(server);
+            }
+
         }
 
         public void RemoveServer(string server)

@@ -77,10 +77,11 @@
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Manager.Contract\EntityFX.Gdcame.Manager.Contract.MainServer.csproj">
       <Project>{41696F24-E345-4599-A0C7-0715F64946D8}</Project>
-      <Name>EntityFX.Gdcame.Manager.Contract</Name>
+      <Name>EntityFX.Gdcame.Manager.Contract.MainServer</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

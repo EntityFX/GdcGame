@@ -37,11 +37,17 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
             users.DeleteOne(filter);
         }
 
+        //TODO: delete finalAllCriterion, it is not used
         public DataAccess.Contract.User.User[] FindAll(GetAllUsersCriterion finalAllCriterion)
         {
             IMongoCollection<User> users = Database.GetCollection<User>("User");
             var filter = new BsonDocument();
             return users.Find<User>(filter).ToList().ToArray();
+        }
+
+        public DataAccess.Contract.User.User[] FindAll()
+        {
+            return FindAll(null);
         }
 
         public DataAccess.Contract.User.User[] FindByFilter(GetUsersBySearchStringCriterion findByIdCriterion)

@@ -12,7 +12,7 @@ namespace EntityFX.Gdcame.Application.Contract.Controller.MainServer
 
         ServerStatisticsInfoModel GetStatistics();
 
-        string UpdateNodesList(string[] newServersList);
+        void UpdateServersList(string[] newServersList);
 
         void CloseSessionByGuid(Guid guid);
 
@@ -24,9 +24,6 @@ namespace EntityFX.Gdcame.Application.Contract.Controller.MainServer
 
         void WipeUser(string username);
 
-        void AddServer(string address);
-
-        void RemoveServer(string address);
 
         void ReloadGame(string username);
 

@@ -53,13 +53,7 @@ namespace EntityFX.Gdcame.Manager.Contract.MainServer.AdminManager
         [FaultContract(typeof(InvalidSessionFault))]
         [FaultContract(typeof(InsufficientPermissionsFault))]
         [CustomPrincipalPermission(AllowedRoles = new[] { UserRole.Admin })]
-        void AddServer(string address);
-
-        [OperationContract]
-        [FaultContract(typeof(InvalidSessionFault))]
-        [FaultContract(typeof(InsufficientPermissionsFault))]
-        [CustomPrincipalPermission(AllowedRoles = new[] { UserRole.Admin })]
-        void RemoveServer(string address);
+        void UpdateServersList(string[] newServersList);
 
         [OperationContract]
         StatisticsInfo GetStatisticsInfo();
@@ -67,8 +61,6 @@ namespace EntityFX.Gdcame.Manager.Contract.MainServer.AdminManager
         void StopGame(string login);
         [OperationContract]
         void StopAllGames();
-
-        [OperationContract]
-        bool UpdateNodeData();
+        
     }
 }

@@ -19,7 +19,6 @@ using EntityFX.Gdcame.Application.Contract.Model.MainServer;
 using EntityFX.Gdcame.Infrastructure.Api.Auth;
 using EntityFX.Gdcame.Infrastructure.Api.Exceptions;
 using EntityFX.Gdcame.Presentation.ConsoleClient.Common;
-using Newtonsoft.Json;
 
 namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 {

@@ -10,8 +10,7 @@ namespace EntityFX.Gdcame.DataAccess.Contract.Server
     {
         Server[] GetServers();
 
-        void AddServer(string server);
+        void UpdateServers(string[] servers);
 
-        void RemoveServer(string server);
     }
 }
