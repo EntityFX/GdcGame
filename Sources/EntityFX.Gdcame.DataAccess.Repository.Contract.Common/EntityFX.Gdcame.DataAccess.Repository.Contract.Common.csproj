@@ -35,9 +35,9 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
-    <ProjectReference Include="..\EntityFX.Gdcame.Common.Contract\EntityFX.Gdcame.Common.Contract.csproj">
+    <ProjectReference Include="..\EntityFX.Gdcame.Common.Contract\EntityFX.Gdcame.Contract.Common.csproj">
       <Project>{89F89C37-F564-47EB-839D-C45ACD9D012A}</Project>
-      <Name>EntityFX.Gdcame.Common.Contract</Name>
+      <Name>EntityFX.Gdcame.Contract.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Contract.Common\EntityFX.Gdcame.DataAccess.Contract.Common.csproj">
       <Project>{5FE7A90C-9319-4A62-955B-8F6F22169679}</Project>
@@ -55,6 +55,7 @@
     <Compile Include="Criterions\User\GetUsersByOffsetCriterion.cs" />
     <Compile Include="Criterions\User\GetUsersBySearchStringCriterion.cs" />
     <Compile Include="IRatingStatisticsRepository.cs" />
+    <Compile Include="IServerRepository.cs" />
     <Compile Include="IUserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

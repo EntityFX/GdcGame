@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using EntityFX.Gdcame.Common.Contract.UserRating;
+    using EntityFX.Gdcame.Contract.Common.UserRating;
     using EntityFX.Gdcame.DataAccess.Repository.Contract.Common;
 
     using MongoDB.Bson;

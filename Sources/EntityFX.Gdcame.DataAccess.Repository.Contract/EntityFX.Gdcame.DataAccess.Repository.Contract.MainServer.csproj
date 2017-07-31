@@ -44,9 +44,13 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
-    <ProjectReference Include="..\EntityFX.Gdcame.Common.Contract\EntityFX.Gdcame.Common.Contract.csproj">
+    <ProjectReference Include="..\EntityFX.Gdcame.Common.Contract\EntityFX.Gdcame.Contract.Common.csproj">
       <Project>{89F89C37-F564-47EB-839D-C45ACD9D012A}</Project>
-      <Name>EntityFX.Gdcame.Common.Contract</Name>
+      <Name>EntityFX.Gdcame.Contract.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Contract.MainServer\EntityFX.Gdcame.Contract.MainServer.csproj">
+      <Project>{05B804CB-DA17-4449-88FB-C2DEF96486A7}</Project>
+      <Name>EntityFX.Gdcame.Contract.MainServer</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Contract.Common\EntityFX.Gdcame.DataAccess.Contract.Common.csproj">
       <Project>{5FE7A90C-9319-4A62-955B-8F6F22169679}</Project>
@@ -76,7 +80,6 @@
     <Compile Include="ICustomRuleRepository.cs" />
     <Compile Include="IItemRepository.cs" />
     <Compile Include="IRatingHistoryRepository.cs" />
-    <Compile Include="IServerRepository.cs" />
     <Compile Include="IUserGameSnapshotRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GameRepositoryFacade.cs" />

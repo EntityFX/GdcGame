@@ -33,6 +33,54 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.3.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.1.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.1.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -50,18 +98,24 @@
   <ItemGroup>
     <Compile Include="Mappers\TopRatingStatisticsModelMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\ApplicationUserManager.cs" />
+    <Compile Include="Providers\CustomOAuthProvider.cs" />
+    <Compile Include="Providers\GameUserStore.cs" />
+    <Compile Include="Providers\SessionExceptionHandlerFilterAttribute.cs" />
+    <Compile Include="Providers\UserManagerFacotory.cs" />
     <Compile Include="Providers\ValidateModelAttribute.cs" />
     <Compile Include="RatingControllerBase.cs" />
     <Compile Include="ServerController.cs" />
+    <Compile Include="UserIdentity.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EntityFX.Gdcame.Application.Contract.Controller.Common\EntityFX.Gdcame.Application.Contract.Controller.Common.csproj">
       <Project>{34DA3755-975D-4194-8B02-7FA0476B23F0}</Project>
       <Name>EntityFX.Gdcame.Application.Contract.Controller.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.Common.Contract\EntityFX.Gdcame.Common.Contract.csproj">
+    <ProjectReference Include="..\EntityFX.Gdcame.Common.Contract\EntityFX.Gdcame.Contract.Common.csproj">
       <Project>{89F89C37-F564-47EB-839D-C45ACD9D012A}</Project>
-      <Name>EntityFX.Gdcame.Common.Contract</Name>
+      <Name>EntityFX.Gdcame.Contract.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Common.Presentation.Model\EntityFX.Gdcame.Common.Application.Model.csproj">
       <Project>{3B44AFC0-F207-44E4-9F91-7F24E1F4D342}</Project>
@@ -75,9 +129,9 @@
       <Project>{0E91EB31-4F0A-41A0-A785-006EA68BDA87}</Project>
       <Name>EntityFX.Gdcame.Manager.Contract.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.Manager.Contract\EntityFX.Gdcame.Manager.Contract.MainServer.csproj">
-      <Project>{41696F24-E345-4599-A0C7-0715F64946D8}</Project>
-      <Name>EntityFX.Gdcame.Manager.Contract.MainServer</Name>
+    <ProjectReference Include="..\EntityFX.Gdcame.Utils.Common\EntityFX.Gdcame.Utils.Common.csproj">
+      <Project>{12C5304D-AE3E-4FF0-8E09-D7B3D3EA90DC}</Project>
+      <Name>EntityFX.Gdcame.Utils.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

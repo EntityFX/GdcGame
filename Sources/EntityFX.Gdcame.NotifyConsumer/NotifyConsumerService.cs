@@ -1,5 +1,5 @@
 ﻿using System;
-using EntityFX.Gdcame.Common.Contract;
+
 using EntityFX.Gdcame.Common.Application.Model;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.NotifyConsumer.Contract;
@@ -7,6 +7,8 @@ using Microsoft.AspNet.SignalR;
 
 namespace EntityFX.Gdcame.NotifyConsumer
 {
+    using EntityFX.Gdcame.Contract.MainServer;
+
     public class NotifyConsumerService : INotifyConsumerService, IDisposable
     {
         private readonly IConnections _connections;

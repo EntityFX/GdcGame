@@ -1,8 +1,8 @@
-﻿using EntityFX.Gdcame.GameEngine.Contract;
-using EntityFX.Gdcame.GameEngine.Contract.Items;
-
-namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
+﻿namespace EntityFX.Gdcame.Engine.GameEngine.NetworkGameEngine
 {
+    using EntityFX.Gdcame.Engine.Contract.GameEngine;
+    using EntityFX.Gdcame.Kernel.Contract;
+
     public interface IGameDataChangesNotifier
     {
         ///////void GameDataChanged(IGame game);

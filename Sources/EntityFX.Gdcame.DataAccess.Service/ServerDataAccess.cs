@@ -1,6 +1,7 @@
 ﻿namespace EntityFX.Gdcame.DataAccess.Service.MainServer
 {
-    using EntityFX.Gdcame.DataAccess.Contract.MainServer.Server;
+    using EntityFX.Gdcame.DataAccess.Contract.Common.Server;
+    using EntityFX.Gdcame.DataAccess.Repository.Contract.Common;
     using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer;
 
     public class ServerDataAccessService : IServerDataAccessService

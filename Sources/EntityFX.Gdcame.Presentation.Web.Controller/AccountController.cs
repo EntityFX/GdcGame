@@ -7,10 +7,11 @@ using EntityFX.Gdcame.Application.Contract.Controller;
 using EntityFX.Gdcame.Application.Contract.Controller.MainServer;
 using EntityFX.Gdcame.Application.Contract.Model;
 using EntityFX.Gdcame.Application.Contract.Model.MainServer;
-using EntityFX.Gdcame.Manager.Contract.MainServer.UserManager;
 
 namespace EntityFX.Gdcame.Application.Api.Controller.MainServer
 {
+    using EntityFX.Gdcame.Manager.Contract.Common.UserManager;
+
     [Authorize(Roles = "Admin")]
     [RoutePrefix("api/admin/accounts")]
     public class AccountController : ApiController, IAccountController

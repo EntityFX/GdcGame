@@ -1,9 +1,9 @@
-﻿using EntityFX.Gdcame.GameEngine.Contract.Counters;
-using EntityFX.Gdcame.Infrastructure.Common;
+﻿using EntityFX.Gdcame.Infrastructure.Common;
 
 namespace EntityFX.Gdcame.Manager.MainServer.Mappers.Store
 {
     using EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData.Store;
+    using EntityFX.Gdcame.Kernel.Contract.Counters;
 
     public class StoreCounterContractMapper : IMapper<CounterBase, StoredCounterBase>
     {

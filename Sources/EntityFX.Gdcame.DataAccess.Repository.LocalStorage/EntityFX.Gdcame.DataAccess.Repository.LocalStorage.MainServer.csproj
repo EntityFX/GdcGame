@@ -67,9 +67,13 @@
     <Compile Include="UserGameSnapshotRepository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EntityFX.Gdcame.Common.Contract\EntityFX.Gdcame.Common.Contract.csproj">
+    <ProjectReference Include="..\EntityFX.Gdcame.Common.Contract\EntityFX.Gdcame.Contract.Common.csproj">
       <Project>{89f89c37-f564-47eb-839d-c45acd9d012a}</Project>
-      <Name>EntityFX.Gdcame.Common.Contract</Name>
+      <Name>EntityFX.Gdcame.Contract.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Contract.MainServer\EntityFX.Gdcame.Contract.MainServer.csproj">
+      <Project>{05B804CB-DA17-4449-88FB-C2DEF96486A7}</Project>
+      <Name>EntityFX.Gdcame.Contract.MainServer</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Contract.Common\EntityFX.Gdcame.DataAccess.Contract.Common.csproj">
       <Project>{5FE7A90C-9319-4A62-955B-8F6F22169679}</Project>

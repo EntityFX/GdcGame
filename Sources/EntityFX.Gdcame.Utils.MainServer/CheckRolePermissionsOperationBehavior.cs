@@ -8,18 +8,20 @@ using System.ServiceModel.Dispatcher;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager.Contract.MainServer;
 using EntityFX.Gdcame.Manager.Contract.MainServer.AdminManager;
-using EntityFX.Gdcame.Manager.Contract.MainServer.SessionManager;
 using EntityFX.Gdcame.Manager.MainServer;
 
 namespace EntityFX.Gdcame.Utils.MainServer
 {
+    using EntityFX.Gdcame.Contract.Common;
+    using EntityFX.Gdcame.Engine.Contract.GameEngine;
+
     public class CheckRolePermissionsOperationBehavior : IOperationBehavior
     {
-        private readonly GameSessions _gameSessions;
+        private readonly IGameSessions _gameSessions;
         private readonly IOperationContextHelper _operationContextHelper;
 
         public CheckRolePermissionsOperationBehavior(IOperationContextHelper operationContextHelper,
-            GameSessions gameSessions)
+            IGameSessions gameSessions)
         {
             _operationContextHelper = operationContextHelper;
             _gameSessions = gameSessions;
@@ -47,12 +49,12 @@ namespace EntityFX.Gdcame.Utils.MainServer
 
     internal class CheckRolePermissionsInvoker : IOperationInvoker
     {
-        private readonly GameSessions _gameSessions;
+        private readonly IGameSessions _gameSessions;
         private readonly IOperationInvoker _invoker;
         private readonly MethodInfo _methodInfo;
         private readonly IOperationContextHelper _operationContextHelper;
 
-        public CheckRolePermissionsInvoker(GameSessions gameSessions, IOperationContextHelper operationContextHelper,
+        public CheckRolePermissionsInvoker(IGameSessions gameSessions, IOperationContextHelper operationContextHelper,
             IOperationInvoker invoker, MethodInfo methodInfo)
         {
             _gameSessions = gameSessions;

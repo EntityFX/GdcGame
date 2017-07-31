@@ -1,6 +1,6 @@
 ﻿namespace EntityFX.Gdcame.DataAccess.Repository.Contract.RatingServer
 {
-    using EntityFX.Gdcame.Common.Contract.UserRating;
+    using EntityFX.Gdcame.Contract.Common.UserRating;
 
     public interface IGlobalRatingRepository
     {

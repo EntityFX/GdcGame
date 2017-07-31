@@ -1,7 +1,4 @@
 ﻿using EntityFX.Gdcame.Application.Api.MainServer.Mappers;
-using EntityFX.Gdcame.Common.Contract;
-using EntityFX.Gdcame.Common.Contract.Counters;
-using EntityFX.Gdcame.Common.Contract.Items;
 using EntityFX.Gdcame.Common.Application.Model;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.NotifyConsumer.Contract;
@@ -10,6 +7,10 @@ using Microsoft.Practices.Unity;
 
 namespace EntityFX.Gdcame.NotifyConsumer
 {
+    using EntityFX.Gdcame.Contract.MainServer;
+    using EntityFX.Gdcame.Contract.MainServer.Counters;
+    using EntityFX.Gdcame.Contract.MainServer.Items;
+
     public class ContainerBootstrapper : IContainerBootstrapper
     {
         public IUnityContainer Configure(IUnityContainer container)

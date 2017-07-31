@@ -2,8 +2,8 @@
 {
     using System;
 
-    using EntityFX.Gdcame.Common.Contract.Counters;
-    using EntityFX.Gdcame.Common.Contract.Items;
+    using EntityFX.Gdcame.Contract.MainServer.Counters;
+    using EntityFX.Gdcame.Contract.MainServer.Items;
     using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer;
     using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer.Criterions.Counters;
     using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer.Criterions.CustomRule;

@@ -11,7 +11,7 @@ using System.Web.Http;
 using EntityFX.Gdcame.Application.Api.MainServer.Models;
 using EntityFX.Gdcame.Application.Api.MainServer.Providers;
 using EntityFX.Gdcame.Infrastructure.Api.ApiResult;
-using EntityFX.Gdcame.Manager.Contract.MainServer.SessionManager;
+
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -20,14 +20,18 @@ using RegisterAccountModel = EntityFX.Gdcame.Application.Api.MainServer.Models.R
 
 namespace EntityFX.Gdcame.Application.Api.MainServer.Controllers
 {
+    using EntityFX.Gdcame.Application.Api.Common;
+    using EntityFX.Gdcame.Application.Api.Common.Providers;
+    using EntityFX.Gdcame.Manager.Contract.Common.SessionManager;
+
     [RoutePrefix("api/Auth")]
     public class AuthController : ApiController
     {
         private readonly ISessionManager _sessionManager;
         private const string LocalLoginProvider = "Local";
-        private UserManager<GameUser> _userManager;
+        private UserManager<UserIdentity> _userManager;
 
-        public UserManager<GameUser> UserManager
+        public UserManager<UserIdentity> UserManager
         {
             get { return _userManager ?? Request.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
             private set { _userManager = value; }
@@ -68,7 +72,7 @@ namespace EntityFX.Gdcame.Application.Api.MainServer.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
             }
 
-            var user = new GameUser { UserName = model.Login };
+            var user = new UserIdentity { UserName = model.Login };
 
             var result = await UserManager.CreateAsync(user, model.Password);
 

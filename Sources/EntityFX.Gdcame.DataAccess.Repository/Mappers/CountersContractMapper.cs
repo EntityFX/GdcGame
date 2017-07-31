@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
 
-    using EntityFX.Gdcame.Common.Contract.Counters;
+    using EntityFX.Gdcame.Contract.MainServer.Counters;
     using EntityFX.Gdcame.DataAccess.Repository.Ef.MainServer.Entities;
     using EntityFX.Gdcame.Infrastructure.Common;
 

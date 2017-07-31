@@ -1,5 +1,4 @@
-﻿using EntityFX.Gdcame.Common.Contract.Items;
-using EntityFX.Gdcame.DataAccess.Repository.LocalStorage;
+﻿using EntityFX.Gdcame.DataAccess.Repository.LocalStorage;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Conventions;
@@ -13,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace EntityFX.Gdcame.Test.Entity
 {
+    using EntityFX.Gdcame.Contract.MainServer.Items;
     using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer.Criterions.FundsDriver;
     using EntityFX.Gdcame.DataAccess.Repository.Mongo.MainServer;
 

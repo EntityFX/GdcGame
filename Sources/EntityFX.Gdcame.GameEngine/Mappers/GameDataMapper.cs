@@ -1,13 +1,15 @@
-﻿using EntityFX.Gdcame.Common.Contract;
-using EntityFX.Gdcame.Common.Contract.Counters;
-using EntityFX.Gdcame.GameEngine.Contract;
-using EntityFX.Gdcame.Infrastructure.Common;
-using DelayedCounter = EntityFX.Gdcame.GameEngine.Contract.Counters.DelayedCounter;
-using GenericCounter = EntityFX.Gdcame.GameEngine.Contract.Counters.GenericCounter;
-using SingleCounter = EntityFX.Gdcame.GameEngine.Contract.Counters.SingleCounter;
-
-namespace EntityFX.Gdcame.GameEngine.Mappers
+﻿namespace EntityFX.Gdcame.Engine.GameEngine.Mappers
 {
+    using EntityFX.Gdcame.Contract.MainServer;
+    using EntityFX.Gdcame.Contract.MainServer.Counters;
+    using EntityFX.Gdcame.Engine.Contract.GameEngine;
+    using EntityFX.Gdcame.Infrastructure.Common;
+    using EntityFX.Gdcame.Kernel.Contract;
+
+    using DelayedCounter = EntityFX.Gdcame.Kernel.Contract.Counters.DelayedCounter;
+    using GenericCounter = EntityFX.Gdcame.Kernel.Contract.Counters.GenericCounter;
+    using SingleCounter = EntityFX.Gdcame.Kernel.Contract.Counters.SingleCounter;
+
     public class GameDataMapper : IMapper<IGame, GameData>
     {
         public GameData Map(IGame source, GameData destination = null)
@@ -18,7 +20,7 @@ namespace EntityFX.Gdcame.GameEngine.Mappers
                 {
                     OnHand = source.GameCash.CashOnHand,
                     Total = source.GameCash.TotalEarned,
-                    Counters = PrepareCountersToPersist(source)
+                    Counters = this.PrepareCountersToPersist(source)
                 },
                 AutomatedStepsCount = source.AutomaticStepNumber,
                 ManualStepsCount = source.ManualStepNumber
@@ -35,7 +37,7 @@ namespace EntityFX.Gdcame.GameEngine.Mappers
                 var sourcenGenericCounter = sourceCounter as GenericCounter;
                 if (sourcenGenericCounter != null)
                 {
-                    var destinationGenericCounter = new Common.Contract.Counters.GenericCounter
+                    var destinationGenericCounter = new Gdcame.Contract.MainServer.Counters.GenericCounter
                     {
                         BonusPercentage = sourcenGenericCounter.BonusPercentage,
                         Bonus = sourcenGenericCounter.Bonus,
@@ -49,13 +51,13 @@ namespace EntityFX.Gdcame.GameEngine.Mappers
                 var sourceSingleCounter = sourceCounter as SingleCounter;
                 if (sourceSingleCounter != null)
                 {
-                    destinationCouner = new Common.Contract.Counters.SingleCounter();
+                    destinationCouner = new Gdcame.Contract.MainServer.Counters.SingleCounter();
                     destinationCouner.Type = 0;
                 }
                 var sourceDelayedCounter = sourceCounter as DelayedCounter;
                 if (sourceDelayedCounter != null)
                 {
-                    var destinationDelayedCounter = new Common.Contract.Counters.DelayedCounter
+                    var destinationDelayedCounter = new Gdcame.Contract.MainServer.Counters.DelayedCounter
                     {
                         SecondsRemaining = sourceDelayedCounter.SecondsRemaining,
                         MiningTimeSeconds = sourceDelayedCounter.SecondsToAchieve,

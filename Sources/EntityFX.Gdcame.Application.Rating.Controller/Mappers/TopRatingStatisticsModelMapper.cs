@@ -1,10 +1,11 @@
 ﻿using System.Linq;
 using EntityFX.Gdcame.Common.Application.Model;
-using EntityFX.Gdcame.Common.Contract.UserRating;
 using EntityFX.Gdcame.Infrastructure.Common;
 
 namespace EntityFX.Gdcame.Application.Api.Common.Mappers
 {
+    using EntityFX.Gdcame.Contract.Common.UserRating;
+
     public class TopRatingStatisticsModelMapper : IMapper<TopRatingStatistics, TopRatingStatisticsModel>
     {
         public TopRatingStatisticsModel Map(TopRatingStatistics source, TopRatingStatisticsModel destination = null)

@@ -25,9 +25,9 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
             return response != null ? response.Data : new UserSessionsModel[] { };
         }
 
-        public ServerStatisticsInfoModel GetStatistics()
+        public MainServerStatisticsInfoModel GetStatistics()
         {
-            return ExecuteRequestAsync<ServerStatisticsInfoModel>("/api/admin/statistics").Result.Data;
+            return ExecuteRequestAsync<MainServerStatisticsInfoModel>("/api/admin/statistics").Result.Data;
         }
 
         public string UpdateNodesList(string[] newServersList)

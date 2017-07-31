@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using EntityFX.Gdcame.GameEngine;
-using EntityFX.Gdcame.GameEngine.Contract;
-using EntityFX.Gdcame.GameEngine.Contract.Counters;
-using EntityFX.Gdcame.GameEngine.Contract.Incrementors;
-using EntityFX.Gdcame.GameEngine.Contract.Items;
-using EntityFX.Gdcame.GameEngine.CustomRules;
 
 namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
 {
+    using EntityFX.Gdcame.Kernel;
+    using EntityFX.Gdcame.Kernel.Contract;
+    using EntityFX.Gdcame.Kernel.Contract.Counters;
+    using EntityFX.Gdcame.Kernel.Contract.Incrementors;
+    using EntityFX.Gdcame.Kernel.Contract.Items;
+    using EntityFX.Gdcame.Kernel.CustomRules;
+
     public class UssrSimulatorGame : GameBase
     {
         private readonly object _lockObject = new { };

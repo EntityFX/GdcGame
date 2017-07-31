@@ -1,10 +1,10 @@
 ﻿namespace EntityFX.Gdcame.DataAccess.Service.MainServer
 {
     using EntityFX.Gdcame.DataAccess.Contract.Common.Rating;
+    using EntityFX.Gdcame.DataAccess.Contract.Common.Server;
     using EntityFX.Gdcame.DataAccess.Contract.Common.User;
     using EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData;
     using EntityFX.Gdcame.DataAccess.Contract.MainServer.Rating;
-    using EntityFX.Gdcame.DataAccess.Contract.MainServer.Server;
     using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer;
     using EntityFX.Gdcame.DataAccess.Service.Common;
     using EntityFX.Gdcame.Infrastructure.Common;

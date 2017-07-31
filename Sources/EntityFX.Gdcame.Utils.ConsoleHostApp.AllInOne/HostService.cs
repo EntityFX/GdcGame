@@ -7,6 +7,7 @@ using Microsoft.Practices.Unity;
 
 namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.MainServer
 {
+    using EntityFX.Gdcame.Engine.Worker.MainServer;
     using EntityFX.Gdcame.Infrastructure.Common;
     using EntityFX.Gdcame.Utils.Common;
     using EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer;

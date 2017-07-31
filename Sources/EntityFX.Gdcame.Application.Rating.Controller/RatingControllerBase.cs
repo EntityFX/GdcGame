@@ -2,13 +2,14 @@
 using System.Web.Http;
 using EntityFX.Gdcame.Application.Contract.Controller.Common;
 using EntityFX.Gdcame.Common.Application.Model;
-using EntityFX.Gdcame.Common.Contract.UserRating;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager.Contract.Common.RatingManager;
 
 
 namespace EntityFX.Gdcame.Application.Api.Common
 {
+    using EntityFX.Gdcame.Contract.Common.UserRating;
+
     public abstract class RatingControllerBase : ApiController, IRatingController
     {
         private readonly IRatingManager _raitingManager;

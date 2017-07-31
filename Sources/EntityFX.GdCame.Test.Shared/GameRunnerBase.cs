@@ -1,11 +1,12 @@
 ﻿using System;
-using EntityFX.Gdcame.Common.Contract;
-using EntityFX.Gdcame.Common.Contract.Counters;
-using EntityFX.Gdcame.Common.Contract.Incrementors;
-using EntityFX.Gdcame.Common.Contract.Items;
 
 namespace EntityFx.GdCame.Test.Shared
 {
+    using EntityFX.Gdcame.Contract.MainServer;
+    using EntityFX.Gdcame.Contract.MainServer.Counters;
+    using EntityFX.Gdcame.Contract.MainServer.Incrementors;
+    using EntityFX.Gdcame.Contract.MainServer.Items;
+
     public abstract class GameRunnerBase
     {
         protected static readonly object _stdLock = new {};

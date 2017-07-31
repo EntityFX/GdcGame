@@ -4,7 +4,7 @@ using EntityFX.Gdcame.Manager.Contract.Common.ServerManager;
 
 namespace EntityFX.Gdcame.Manager.Common
 {
-    using EntityFX.Gdcame.DataAccess.Contract.MainServer.Server;
+    using EntityFX.Gdcame.DataAccess.Contract.Common.Server;
 
     public class ServerManager : IServerManager
     {

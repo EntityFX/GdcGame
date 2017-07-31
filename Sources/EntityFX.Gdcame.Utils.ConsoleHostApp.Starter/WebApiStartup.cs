@@ -75,10 +75,9 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
             var aumf =
                 (ApplicationUserManagerFacotory)
                     config.DependencyResolver.GetService(typeof(ApplicationUserManagerFacotory));
-            // Configure the db context and user manager to use a single instance per request
-            // app.CreatePerOwinContext(ApplicationDbContext.Create);
+
             appBuilder.CreatePerOwinContext<ApplicationUserManager>(
-                (options, context) => { return (ApplicationUserManager)aumf.Create(options, context); });
+                (options, context) => (ApplicationUserManager)aumf.Create(options, context));
 
             var OAuthServerOptions = new OAuthAuthorizationServerOptions
             {

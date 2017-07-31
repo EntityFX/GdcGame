@@ -2,8 +2,8 @@
 {
     using System.ServiceModel;
 
-    using EntityFX.Gdcame.Common.Contract;
-    using EntityFX.Gdcame.Common.Contract.UserRating;
+    using EntityFX.Gdcame.Contract.Common.UserRating;
+    using EntityFX.Gdcame.Contract.MainServer;
 
     [ServiceContract]
     public interface IGameDataRetrieveDataAccessService

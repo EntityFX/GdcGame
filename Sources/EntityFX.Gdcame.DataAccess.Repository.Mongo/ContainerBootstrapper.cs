@@ -1,9 +1,9 @@
 ﻿namespace EntityFX.Gdcame.DataAccess.Repository.Mongo.MainServer
 {
-    using EntityFX.Gdcame.Common.Contract.Counters;
-    using EntityFX.Gdcame.Common.Contract.UserRating;
+    using EntityFX.Gdcame.Contract.Common.UserRating;
+    using EntityFX.Gdcame.Contract.MainServer.Counters;
+    using EntityFX.Gdcame.DataAccess.Contract.Common.Server;
     using EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData.Store;
-    using EntityFX.Gdcame.DataAccess.Contract.MainServer.Server;
     using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer;
     using EntityFX.Gdcame.Infrastructure.Common;
 
@@ -89,8 +89,6 @@
             container.RegisterType<ICustomRuleRepository, CustomRuleRepository>();
             container.RegisterType<IUserGameSnapshotRepository, UserGameSnapshotRepository>();
             container.RegisterType<IRatingHistoryRepository, RatingHistoryRepository>();
-
-            container.RegisterType<IServerRepository, ServerRepository>();
             container.RegisterInstance<IMongoDatabase>(this.MongoDatabase);
             return container;
         }

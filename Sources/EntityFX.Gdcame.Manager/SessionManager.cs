@@ -1,77 +1,23 @@
 ﻿using System;
 using System.ServiceModel;
 using EntityFX.Gdcame.Infrastructure.Common;
-using EntityFX.Gdcame.Manager.Contract.MainServer.SessionManager;
 
 namespace EntityFX.Gdcame.Manager.MainServer
 {
+    using EntityFX.Gdcame.Contract.Common;
     using EntityFX.Gdcame.DataAccess.Contract.Common.User;
+    using EntityFX.Gdcame.Engine.Contract.GameEngine;
 
-    public class SessionManager : ISessionManager
+    using User = EntityFX.Gdcame.DataAccess.Contract.Common.User.User;
+
+    public class SessionManager : EntityFX.Gdcame.Manager.Common.SessionManager
     {
-        private readonly GameSessions _gameSessions;
-        private readonly ILogger _logger;
-        private readonly IOperationContextHelper _operationContextHelper;
-        private readonly IUserDataAccessService _userDataAccessService;
 
-        public SessionManager(ILogger logger, IOperationContextHelper operationContextHelper, GameSessions gameSessions,
+        public SessionManager(ILogger logger, IOperationContextHelper operationContextHelper, IGameSessions gameSessions,
             IUserDataAccessService userDataAccessService)
+            : base(logger,operationContextHelper,gameSessions,userDataAccessService)
         {
-            _logger = logger;
-            _operationContextHelper = operationContextHelper;
-            _gameSessions = gameSessions;
-            _userDataAccessService = userDataAccessService;
-        }
 
-
-        public Guid OpenSession(string login)
-        {
-            User user;
-            try
-            {
-                user = _userDataAccessService.FindByName(login);
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(ex);
-                throw;
-            }
-
-            if (user != null)
-            {
-                var result = _gameSessions.AddSession(user);
-                _logger.Info(
-                    "EntityFX.EconomicsArcade.Manager.SessionManager.OpenSession: Session {0} added for login: {1}",
-                    result, login);
-                return result;
-            }
-            var message = string.Format("User with login {0} not found", login);
-            _logger.Warning(message);
-            throw new FaultException(new FaultReason(message), new FaultCode("OpenSession"), "OpenSession");
-        }
-
-        public bool CloseSession()
-        {
-            var sessionId = _operationContextHelper.Instance.SessionId ?? default(Guid);
-            var session = _gameSessions.GetSession(sessionId);
-            if (session == null)
-            {
-                return false;
-            }
-            _gameSessions.RemoveSession(sessionId);
-            _logger.Info("EntityFX.EconomicsArcade.Manager.SessionManager.CloseSession: Session {0} closed", sessionId);
-            return true;
-        }
-
-        public Session GetSession()
-        {
-            var sessionId = _operationContextHelper.Instance.SessionId ?? default(Guid);
-            var session = _gameSessions.GetSession(sessionId);
-            if (session == null)
-            {
-                throw new InvalidOperationException("No user session");
-            }
-            return session;
         }
     }
 }

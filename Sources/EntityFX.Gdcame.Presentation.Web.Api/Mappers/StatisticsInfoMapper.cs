@@ -6,11 +6,13 @@ using ServerStatisticsInfoModel = EntityFX.Gdcame.Common.Application.Model.Serve
 
 namespace EntityFX.Gdcame.Application.Api.MainServer.Mappers
 {
-    public class StatisticsInfoMapper : IMapper<MainServerStatisticsInfo, ServerStatisticsInfoModel>
+    using EntityFX.Gdcame.Application.Contract.Model.MainServer;
+
+    public class StatisticsInfoMapper : IMapper<MainServerStatisticsInfo, MainServerStatisticsInfoModel>
     {
-        public ServerStatisticsInfoModel Map(MainServerStatisticsInfo source, ServerStatisticsInfoModel destination = null)
+        public MainServerStatisticsInfoModel Map(MainServerStatisticsInfo source, MainServerStatisticsInfoModel destination = null)
         {
-            return new ServerStatisticsInfoModel
+            return new MainServerStatisticsInfoModel
             {
                 ActiveGamesCount = source.ActiveGamesCount,
                 ActiveSessionsCount = source.ActiveSessionsCount,

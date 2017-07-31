@@ -8,7 +8,6 @@ using EntityFX.Gdcame.Application.Contract.Model;
 using EntityFX.Gdcame.Application.Contract.Model.MainServer;
 using EntityFX.Gdcame.Common.Application.Model;
 using EntityFX.Gdcame.Infrastructure.Common;
-using EntityFX.Gdcame.Manager.Contract.Common.Statistics;
 using EntityFX.Gdcame.Manager.Contract.Common.WorkerManager;
 using EntityFX.Gdcame.Manager.Contract.MainServer.AdminManager;
 using Newtonsoft.Json;
@@ -16,6 +15,8 @@ using SessionInfoModel = EntityFX.Gdcame.Application.Contract.Model.MainServer.S
 
 namespace EntityFX.Gdcame.Application.Api.Controller.MainServer
 {
+    using EntityFX.Gdcame.Contract.Common.Statistics;
+
     [Authorize(Roles = "Admin")]
     [RoutePrefix("api/admin")]
     public class AdminController : ApiController, IAdminController
@@ -52,9 +53,9 @@ namespace EntityFX.Gdcame.Application.Api.Controller.MainServer
 
         [HttpGet]
         [Route("statistics")]
-        public ServerStatisticsInfoModel GetStatistics()
+        public MainServerStatisticsInfoModel GetStatistics()
         {
-            var statistics = _mapperFactory.Build<StatisticsInfo, ServerStatisticsInfoModel>().Map(_adminManager.GetStatisticsInfo());
+            var statistics = _mapperFactory.Build<MainServerStatisticsInfo, MainServerStatisticsInfoModel>().Map(_adminManager.GetStatisticsInfo());
             statistics.ActiveWorkers =
                 _workerManager.GetWorkersStatus().Where(_ => _.IsRunning).Select(
 

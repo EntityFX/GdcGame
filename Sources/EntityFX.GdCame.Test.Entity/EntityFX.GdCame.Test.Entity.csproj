@@ -112,9 +112,13 @@
     <Content Include="Readme.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EntityFX.Gdcame.Common.Contract\EntityFX.Gdcame.Common.Contract.csproj">
+    <ProjectReference Include="..\EntityFX.Gdcame.Common.Contract\EntityFX.Gdcame.Contract.Common.csproj">
       <Project>{89f89c37-f564-47eb-839d-c45acd9d012a}</Project>
-      <Name>EntityFX.Gdcame.Common.Contract</Name>
+      <Name>EntityFX.Gdcame.Contract.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Contract.MainServer\EntityFX.Gdcame.Contract.MainServer.csproj">
+      <Project>{05B804CB-DA17-4449-88FB-C2DEF96486A7}</Project>
+      <Name>EntityFX.Gdcame.Contract.MainServer</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Repository.Contract\EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer.csproj">
       <Project>{c1b1f481-6e3e-464c-a983-cb56ad430c1d}</Project>
@@ -136,9 +140,9 @@
       <Project>{d5a72a34-5de5-41e1-b52e-8f70d19cb7bf}</Project>
       <Name>EntityFX.Gdcame.DataAccess.Repository.Ef.MainServer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.GameEngine.Contract\EntityFX.Gdcame.GameEngine.Contract.csproj">
+    <ProjectReference Include="..\EntityFX.Gdcame.GameEngine.Contract\EntityFX.Gdcame.Engine.Contract.GameEngine.csproj">
       <Project>{BEEA0656-542B-4C48-A480-CEFF662DD29F}</Project>
-      <Name>EntityFX.Gdcame.GameEngine.Contract</Name>
+      <Name>EntityFX.Gdcame.Engine.Contract.GameEngine</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Repository\EntityFX.Gdcame.Infrastructure.Repository.csproj">
       <Project>{95745c95-a356-4e4a-9ac5-25abd9659831}</Project>

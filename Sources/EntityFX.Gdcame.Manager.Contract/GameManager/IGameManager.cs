@@ -1,9 +1,10 @@
 ﻿using System.ServiceModel;
-using EntityFX.Gdcame.Common.Contract;
-using EntityFX.Gdcame.Common.Contract.Counters;
 
 namespace EntityFX.Gdcame.Manager.Contract.MainServer.GameManager
 {
+    using EntityFX.Gdcame.Contract.MainServer;
+    using EntityFX.Gdcame.Contract.MainServer.Counters;
+
     [ServiceContract]
     public interface IGameManager
     {

@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using EntityFX.Gdcame.Common.Contract.Counters;
+    using EntityFX.Gdcame.Contract.MainServer.Counters;
     using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer;
     using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer.Criterions.Counters;
     using EntityFX.Gdcame.DataAccess.Repository.Ef.MainServer.Entities;

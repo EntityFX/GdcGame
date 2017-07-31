@@ -1,5 +1,4 @@
 ﻿using System;
-using EntityFX.Gdcame.GameEngine.Mappers;
 
 namespace EntityFX.Gdcame.EngineTestApplication
 {

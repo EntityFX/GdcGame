@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using EntityFX.Gdcame.Common.Application.Model;
-using EntityFX.Gdcame.Common.Contract.Counters;
 using EntityFX.Gdcame.Infrastructure.Common;
 
 namespace EntityFX.Gdcame.Application.Api.MainServer.Mappers
 {
+    using EntityFX.Gdcame.Contract.MainServer.Counters;
+
     public class FundsCounterModelMapper : IMapper<Cash, CashModel>
     {
         private readonly IMapper<CounterBase, CounterModelBase> _counterModelBaseMapper;

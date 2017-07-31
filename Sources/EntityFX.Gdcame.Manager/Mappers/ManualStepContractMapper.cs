@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using EntityFX.Gdcame.Common.Contract.Counters;
-using EntityFX.Gdcame.GameEngine.Contract;
-using EntityFX.Gdcame.GameEngine.Contract.Counters;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager.Contract.MainServer.GameManager;
-using ManualStepResult = EntityFX.Gdcame.GameEngine.Contract.ManualStepResult;
+using ManualStepResult = EntityFX.Gdcame.Kernel.Contract.ManualStepResult;
 
 namespace EntityFX.Gdcame.Manager.MainServer.Mappers
 {
+    using EntityFX.Gdcame.Contract.MainServer.Counters;
+    using EntityFX.Gdcame.Kernel.Contract.Counters;
+
+    using ManualStepNoVerficationRequiredResult = EntityFX.Gdcame.Kernel.Contract.ManualStepNoVerficationRequiredResult;
+    using ManualStepVerificationRequiredResult = EntityFX.Gdcame.Kernel.Contract.ManualStepVerificationRequiredResult;
+    using ManualStepVerifiedResult = EntityFX.Gdcame.Kernel.Contract.ManualStepVerifiedResult;
+
     public class ManualStepContractMapper : IMapper<ManualStepResult, Contract.MainServer.GameManager.ManualStepResult>
     {
         private static readonly IDictionary<Type, Func<ManualStepResult, Contract.MainServer.GameManager.ManualStepResult>>

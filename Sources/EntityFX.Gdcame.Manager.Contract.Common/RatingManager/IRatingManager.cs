@@ -1,8 +1,9 @@
 ﻿using System.ServiceModel;
-using EntityFX.Gdcame.Common.Contract.UserRating;
 
 namespace EntityFX.Gdcame.Manager.Contract.Common.RatingManager
 {
+    using EntityFX.Gdcame.Contract.Common.UserRating;
+
     [ServiceContract]
     public interface IRatingManager
     {

@@ -4,18 +4,21 @@ using System.Linq;
 using System.Threading;
 using System.Timers;
 using EntityFx.GdCame.Test.Shared;
-using EntityFX.Gdcame.Common.Contract;
+
 using EntityFX.Gdcame.EngineTestApplication.UssrSimulator;
-using EntityFX.Gdcame.GameEngine.Contract;
-using EntityFX.Gdcame.GameEngine.Contract.Items;
 using EntityFX.Gdcame.Infrastructure.Common;
 using Timer = System.Timers.Timer;
 
 namespace EntityFX.Gdcame.EngineTestApplication
 {
+    using EntityFX.Gdcame.Contract.MainServer;
+
+    using EntityFX.Gdcame.Kernel.Contract;
+    using EntityFX.Gdcame.Kernel.Contract.Items;
+
     internal class GameRunner : GameRunnerBase, IDisposable
     {
-        private readonly IMapper<Item, EntityFX.Gdcame.Common.Contract.Items.Item> _fundsDriverMapper;
+        private readonly IMapper<Item, Gdcame.Contract.MainServer.Items.Item> _fundsDriverMapper;
         private readonly IGame _game = new UssrSimulatorGame();
         private readonly IMapper<IGame, GameData> _gameDataMapper;
 
@@ -26,7 +29,7 @@ namespace EntityFX.Gdcame.EngineTestApplication
         private int? _verificationResult;
 
         public GameRunner(IMapper<IGame, GameData> gameDataMapper,
-            IMapper<Item, EntityFX.Gdcame.Common.Contract.Items.Item> fundsDriverMapper)
+            IMapper<Item, Gdcame.Contract.MainServer.Items.Item> fundsDriverMapper)
         {
             _gameDataMapper = gameDataMapper;
             _fundsDriverMapper = fundsDriverMapper;

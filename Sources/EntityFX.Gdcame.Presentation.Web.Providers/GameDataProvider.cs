@@ -3,15 +3,18 @@ using System.Web;
 using EntityFX.Gdcame.Application.Contract.Model;
 using EntityFX.Gdcame.Application.Contract.Model.MainServer;
 using EntityFX.Gdcame.Common.Application.Model;
-using EntityFX.Gdcame.Common.Contract;
-using EntityFX.Gdcame.Common.Contract.Counters;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager.Contract.MainServer.GameManager;
-using EntityFX.Gdcame.Manager.Contract.MainServer.UserManager;
 using EntityFX.Gdcame.Utils.MainServer;
 
 namespace EntityFX.Gdcame.Application.Providers.MainServer
 {
+    using EntityFX.Gdcame.Contract.Common;
+    using EntityFX.Gdcame.Contract.MainServer;
+    using EntityFX.Gdcame.Contract.MainServer.Counters;
+    using EntityFX.Gdcame.Manager.Contract.Common.UserManager;
+    using EntityFX.Gdcame.Utils.Common;
+
     public class GameDataProvider : IGameDataProvider
     {
         private readonly IMapper<Cash, CashModel> _fundsCounterModelMapper;

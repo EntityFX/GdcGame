@@ -1,29 +1,35 @@
 ﻿using System;
-using EntityFX.Gdcame.Common.Contract;
-using EntityFX.Gdcame.Common.Contract.Counters;
-using EntityFX.Gdcame.GameEngine.Contract;
-using EntityFX.Gdcame.GameEngine.Contract.Counters;
-using EntityFX.Gdcame.GameEngine.Contract.Items;
+
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager.Contract.MainServer.GameManager;
-using EntityFX.Gdcame.Manager.Contract.MainServer.SessionManager;
-using ManualStepResult = EntityFX.Gdcame.GameEngine.Contract.ManualStepResult;
+
+using ManualStepResult = EntityFX.Gdcame.Kernel.Contract.ManualStepResult;
 
 namespace EntityFX.Gdcame.Manager.MainServer
 {
+    using EntityFX.Gdcame.Contract.Common;
+    using EntityFX.Gdcame.Contract.MainServer;
+    using EntityFX.Gdcame.Contract.MainServer.Counters;
+    using EntityFX.Gdcame.Engine.Contract.GameEngine;
+    using EntityFX.Gdcame.Kernel.Contract.Counters;
+    using EntityFX.Gdcame.Kernel.Contract.Items;
+
+    using IGame = EntityFX.Gdcame.Kernel.Contract.IGame;
+    using VerificationManualStepData = EntityFX.Gdcame.Kernel.Contract.VerificationManualStepData;
+
     public class GameManager : IGameManager
     {
         private readonly IMapper<GameCash, Cash> _countersContractMapper;
-        private readonly IMapper<Item, Gdcame.Common.Contract.Items.Item> _fundsDriverContractMapper;
+        private readonly IMapper<Item, Gdcame.Contract.MainServer.Items.Item> _fundsDriverContractMapper;
         private readonly IMapper<IGame, GameData> _gameDataContractMapper;
-        private readonly GameSessions _gameSessions;
+        private readonly IGameSessions _gameSessions;
         private readonly IMapper<ManualStepResult, Contract.MainServer.GameManager.ManualStepResult> _manualStepResultMapper;
 
         private readonly IMapperFactory _mapperFactory;
         private readonly IOperationContextHelper _operationContextHelper;
         private readonly ILogger _logger;
 
-        public GameManager(ILogger logger, IOperationContextHelper operationContextHelper, GameSessions gameSessions
+        public GameManager(ILogger logger, IOperationContextHelper operationContextHelper, IGameSessions gameSessions
             , IMapperFactory mapperFactory
             )
         {
@@ -35,7 +41,7 @@ namespace EntityFX.Gdcame.Manager.MainServer
 
             _gameDataContractMapper = _mapperFactory.Build<IGame, GameData>();
             _countersContractMapper = _mapperFactory.Build<GameCash, Cash>();
-            _fundsDriverContractMapper = _mapperFactory.Build<Item, Gdcame.Common.Contract.Items.Item>();
+            _fundsDriverContractMapper = _mapperFactory.Build<Item, Gdcame.Contract.MainServer.Items.Item>();
             _manualStepResultMapper = _mapperFactory.Build<ManualStepResult, Contract.MainServer.GameManager.ManualStepResult>();
         }
 

@@ -1,9 +1,10 @@
 ﻿using EntityFX.Gdcame.Common.Application.Model;
-using EntityFX.Gdcame.Common.Contract.Counters;
 using EntityFX.Gdcame.Infrastructure.Common;
 
 namespace EntityFX.Gdcame.Application.Api.MainServer.Mappers
 {
+    using EntityFX.Gdcame.Contract.MainServer.Counters;
+
     public class CounterModelMapper : IMapper<CounterBase, CounterModelBase>
     {
         public CounterModelBase Map(CounterBase source, CounterModelBase destination = null)

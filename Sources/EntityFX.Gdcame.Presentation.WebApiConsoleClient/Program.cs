@@ -34,15 +34,15 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
         {
             {
                 ConsoleKey.F1,
-                new MenuItem {MenuText = "Войти и играть", MenuAction = TryLogin}
+                new MenuItem {MenuText = "Sign In & Play", MenuAction = TryLogin}
             },
             {
                 ConsoleKey.F2,
-                new MenuItem {MenuText = "Зарегать аккаунт", MenuAction = RegisterAccount}
+                new MenuItem {MenuText = "Sign up", MenuAction = RegisterAccount}
             },
             {
                 ConsoleKey.Escape,
-                new MenuItem {MenuText = "Выход", MenuAction = ExitMainMenu}
+                new MenuItem {MenuText = "Exit", MenuAction = ExitMainMenu}
             }
         };
 
@@ -85,14 +85,14 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
         private static void RegisterAccount()
         {
             Console.Clear();
-            Console.WriteLine("-=Регистрация аккаунта=-");
-            Console.Write("Введите логин: ");
+            Console.WriteLine("-=Sign Up=-");
+            Console.Write("Enter login: ");
             var userName = Console.ReadLine();
 
-            Console.Write("Введите пароль: ");
+            Console.Write("Enter password: ");
             var password = Console.ReadLine();
 
-            Console.Write("Подтвердите пароль: ");
+            Console.Write("Reenter password: ");
             var confirmPassword = Console.ReadLine();
 
             var serverInfoUrl = ApiHelper.GetApiServerUri(ApiHelper.GetServers(new Uri(string.Format("{0}:{1}",_mainServer, _serverPort))), userName, _serverPort);
@@ -121,16 +121,16 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             Tuple<PasswordOAuthContext, string> loginResultTuple;
             if (string.IsNullOrEmpty(_userName))
             {
-                Console.Write("Введите логин: ");
+                Console.Write("Enter login: ");
                 _userName = Console.ReadLine();
 
-                Console.Write("Введите пароль: ");
+                Console.Write("Enter password: ");
                 _userPassword = Console.ReadLine();
             }
             try
             {
                 Console.Clear();
-                Console.WriteLine("-=Вход=-");
+                Console.WriteLine("-=Sign In=-");
                 loginResultTuple = ApiHelper.UserLogin(ApiHelper.GetServers(new Uri(string.Format("{0}:{1}", _mainServer, _serverPort))), _serverPort, _userName, _userPassword).Result;
             }
             catch (AggregateException loginException)
@@ -152,7 +152,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             _exitFlag = false;
             while (!_exitFlag)
             {
-                Console.WriteLine("-=Главное меню=-");
+                Console.WriteLine("-=Main menu=-");
                 foreach (var item in _mainMenu)
                 {
                     Console.WriteLine(item.Key + " - " + item.Value.MenuText);
@@ -298,7 +298,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             {
                 lock (_stdLock)
                 {
-                    Console.WriteLine("Баланс: {0:C}; Всего заработано: {1:C}", gameData.Cash.OnHand,
+                    Console.WriteLine("Balance: {0:C}; Total earned: {1:C}", gameData.Cash.OnHand,
                         gameData.Cash.TotalEarned);
                     /*Console.WriteLine("Manual Steps: {0}, Automatic Steps: {1}",
                         gameData.ManualStepsCount, gameData.AutomatedStepsCount);*/
@@ -307,21 +307,21 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                     PrettyConsole.WriteLineColor(ConsoleColor.Cyan, "{1,15}: {0,12:C} ",
                         ((GenericCounterModel)gameData.Cash.Counters[1]).SubValue, gameData.Cash.Counters[1].Name);
                     PrettyConsole.WriteLineColor(ConsoleColor.Cyan, "{1,15}: {0,12:C} ({2}%)"
-                        , ((GenericCounterModel)gameData.Cash.Counters[1]).Bonus, "Бонус"
+                        , ((GenericCounterModel)gameData.Cash.Counters[1]).Bonus, "Bonus"
                         , ((GenericCounterModel)gameData.Cash.Counters[1]).BonusPercentage);
                     PrettyConsole.WriteColor(ConsoleColor.Cyan, "{1,15}: {0,12}%"
-                        , ((GenericCounterModel)gameData.Cash.Counters[1]).Inflation, "Батхёрт");
+                        , ((GenericCounterModel)gameData.Cash.Counters[1]).Inflation, "Buthurt");
                     PrettyConsole.WriteLineColor(ConsoleColor.Cyan, "{1,15}: {0,12:C}"
                         , ((GenericCounterModel)gameData.Cash.Counters[1]).Value, "Total");
                     PrettyConsole.WriteLineColor(ConsoleColor.Green, "{1,15}: {0,12:C}",
                         ((GenericCounterModel)gameData.Cash.Counters[2]).SubValue, gameData.Cash.Counters[2].Name);
                     PrettyConsole.WriteLineColor(ConsoleColor.Green, "{1,15}: {0,12:C} ({2}%)"
-                        , ((GenericCounterModel)gameData.Cash.Counters[2]).Bonus, "Бонус"
+                        , ((GenericCounterModel)gameData.Cash.Counters[2]).Bonus, "Bonus"
                         , ((GenericCounterModel)gameData.Cash.Counters[2]).BonusPercentage);
                     PrettyConsole.WriteColor(ConsoleColor.Green, "{1,15}: {0,12}%"
-                        , ((GenericCounterModel)gameData.Cash.Counters[2]).Inflation, "Усталость");
+                        , ((GenericCounterModel)gameData.Cash.Counters[2]).Inflation, "Fatigue");
                     PrettyConsole.WriteLineColor(ConsoleColor.Green, "{1,15}: {0,12:C}"
-                        , ((GenericCounterModel)gameData.Cash.Counters[2]).Value, "Всего");
+                        , ((GenericCounterModel)gameData.Cash.Counters[2]).Value, "Total");
                     PrettyConsole.WriteLineColor(ConsoleColor.Magenta, "{1,15}: +{0,12:C} {2}/{3}",
                         gameData.Cash.Counters[3].Value, gameData.Cash.Counters[3].Name
                         , TimeSpan.FromSeconds(((DelayedCounterModel)gameData.Cash.Counters[3]).SecondsRemaining)
@@ -332,19 +332,19 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                     PrettyConsole.WriteLineColor(
                         IsCounterWithInflation((GenericCounterModel)gameData.Cash.Counters[2])
                             ? ConsoleColor.Yellow
-                            : ConsoleColor.DarkYellow, "{0,2}:   Отдохнуть", "*");
+                            : ConsoleColor.DarkYellow, "{0,2}:   Do rest", "*");
                     if (IsCounterAvailableForActivate((DelayedCounterModel)gameData.Cash.Counters[3],
                         gameData.Cash.Counters[0].Value))
                     {
                         PrettyConsole.WriteLineColor(
                             IsCounterIsMining((DelayedCounterModel)gameData.Cash.Counters[3])
                                 ? ConsoleColor.DarkMagenta
-                                : ConsoleColor.Magenta, "{0,2}:         Делать кварталку", "+");
+                                : ConsoleColor.Magenta, "{0,2}:         Do quarter goal", "+");
                     }
                     else
                     {
                         PrettyConsole.WriteLineColor(ConsoleColor.DarkMagenta,
-                            "{0,2}:         Делать кварталку: надо {1} {2} чтоб разлочить", "+",
+                            "{0,2}:         To do quarter goal need {1} {2}", "+",
                             ((DelayedCounterModel)gameData.Cash.Counters[3]).UnlockValue, gameData.Cash.Counters[0].Name);
                     }
                     foreach (var fundsDriver in gameData.Items)

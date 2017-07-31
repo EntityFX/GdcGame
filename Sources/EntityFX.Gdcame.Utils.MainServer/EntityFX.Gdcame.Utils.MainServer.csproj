@@ -119,7 +119,6 @@
     <Compile Include="GameFactory.cs" />
     <Compile Include="IGameClientFactory.cs" />
     <Compile Include="InvalidSessionFaultHandler.cs" />
-    <Compile Include="ISessionManagerClientFactory.cs" />
     <Compile Include="NotifyConsumerClientFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SessionManagerClientFactory.cs" />
@@ -129,17 +128,29 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EntityFX.Gdcame.GameEngine.Contract\EntityFX.Gdcame.GameEngine.Contract.csproj">
-      <Project>{BEEA0656-542B-4C48-A480-CEFF662DD29F}</Project>
-      <Name>EntityFX.Gdcame.GameEngine.Contract</Name>
+    <ProjectReference Include="..\EntityFX.Gdcame.Common.Contract\EntityFX.Gdcame.Contract.Common.csproj">
+      <Project>{89F89C37-F564-47EB-839D-C45ACD9D012A}</Project>
+      <Name>EntityFX.Gdcame.Contract.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.GameEngine\EntityFX.Gdcame.GameEngine.csproj">
+    <ProjectReference Include="..\EntityFX.Gdcame.GameEngine.Contract\EntityFX.Gdcame.Engine.Contract.GameEngine.csproj">
+      <Project>{BEEA0656-542B-4C48-A480-CEFF662DD29F}</Project>
+      <Name>EntityFX.Gdcame.Engine.Contract.GameEngine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.GameEngine\EntityFX.Gdcame.Engine.GameEngine.csproj">
       <Project>{19D1BC2F-D0EB-4012-BCF2-CED6F3B926B2}</Project>
-      <Name>EntityFX.Gdcame.GameEngine</Name>
+      <Name>EntityFX.Gdcame.Engine.GameEngine</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Common\EntityFX.Gdcame.Infrastructure.Common.csproj">
       <Project>{924CC67D-9E2B-46BA-BE1D-6C6C780CCFBC}</Project>
       <Name>EntityFX.Gdcame.Infrastructure.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Kernel.Contract\EntityFX.Gdcame.Kernel.Contract.csproj">
+      <Project>{CA1A21AB-C915-4101-9FEF-24C76D5F74A9}</Project>
+      <Name>EntityFX.Gdcame.Kernel.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Manager.Contract.Common\EntityFX.Gdcame.Manager.Contract.Common.csproj">
+      <Project>{0E91EB31-4F0A-41A0-A785-006EA68BDA87}</Project>
+      <Name>EntityFX.Gdcame.Manager.Contract.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Manager.Contract\EntityFX.Gdcame.Manager.Contract.MainServer.csproj">
       <Project>{41696F24-E345-4599-A0C7-0715F64946D8}</Project>

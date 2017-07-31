@@ -1,9 +1,10 @@
 ﻿using System.Runtime.Serialization;
-using EntityFX.Gdcame.Common.Contract.Counters;
-using EntityFX.Gdcame.Common.Contract.Items;
 
 namespace EntityFX.Gdcame.Manager.Contract.MainServer.GameManager
 {
+    using EntityFX.Gdcame.Contract.MainServer.Counters;
+    using EntityFX.Gdcame.Contract.MainServer.Items;
+
     [DataContract]
     public class BuyFundDriverResult
     {

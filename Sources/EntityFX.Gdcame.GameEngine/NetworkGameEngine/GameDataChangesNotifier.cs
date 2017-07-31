@@ -1,19 +1,18 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using EntityFX.Gdcame.Common.Contract;
-using EntityFX.Gdcame.GameEngine.Contract;
-using EntityFX.Gdcame.GameEngine.Contract.Items;
-using EntityFX.Gdcame.Infrastructure.Common;
-using EntityFX.Gdcame.NotifyConsumer.Contract;
-
-namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
+﻿namespace EntityFX.Gdcame.Engine.GameEngine.NetworkGameEngine
 {
+    using System.Collections.Generic;
+
+    using EntityFX.Gdcame.Contract.MainServer;
     using EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData;
+    using EntityFX.Gdcame.Engine.Contract.GameEngine;
+    using EntityFX.Gdcame.Infrastructure.Common;
+    using EntityFX.Gdcame.Kernel.Contract;
+    using EntityFX.Gdcame.Kernel.Contract.Items;
 
     public class GameDataChangesNotifier : IGameDataChangesNotifier
     {
         private readonly IMapperFactory _mapperFactory;
-        private readonly IMapper<Item, Common.Contract.Items.Item> _fundsDriverRefreshMapper;
+        private readonly IMapper<Item, Gdcame.Contract.MainServer.Items.Item> _fundsDriverRefreshMapper;
         private readonly IMapper<IGame, GameData> _gameDataRefreshMapper;
         private readonly INotifyConsumerClientFactory _notifyConsumerService;
 
@@ -22,11 +21,11 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
             , IMapperFactory mapperFactory
             , INotifyConsumerClientFactory notifyConsumerService)
         {
-            _mapperFactory = mapperFactory;
-            _gameDataRefreshMapper = _mapperFactory.Build<IGame, GameData>("GameDataMapper");
-            _fundsDriverRefreshMapper = _mapperFactory.Build<Item, Common.Contract.Items.Item>();
+            this._mapperFactory = mapperFactory;
+            this._gameDataRefreshMapper = this._mapperFactory.Build<IGame, GameData>("GameDataMapper");
+            this._fundsDriverRefreshMapper = this._mapperFactory.Build<Item, Gdcame.Contract.MainServer.Items.Item>();
 
-            _notifyConsumerService = notifyConsumerService;
+            this._notifyConsumerService = notifyConsumerService;
         }
 
         public void AutomaticRefreshed(IGame game)
@@ -38,12 +37,12 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
 
         private GameData PrepareGameDataToRefresh(IGame game)
         {
-            var gameData = _gameDataRefreshMapper.Map(game);
+            var gameData = this._gameDataRefreshMapper.Map(game);
 
-            var fundsDrivers = new List<Common.Contract.Items.Item>();
+            var fundsDrivers = new List<Gdcame.Contract.MainServer.Items.Item>();
             foreach (var fundDriver in game.Items)
             {
-                var fundDriverMapped = _fundsDriverRefreshMapper.Map(fundDriver);
+                var fundDriverMapped = this._fundsDriverRefreshMapper.Map(fundDriver);
                 fundDriverMapped.IsUnlocked = gameData.Cash.Counters[0].Value >= fundDriverMapped.UnlockValue;
                 fundsDrivers.Add(fundDriverMapped);
             }

@@ -2,21 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using EntityFX.Gdcame.Infrastructure.Common;
-using EntityFX.Gdcame.Manager.Contract.MainServer.SessionManager;
-using EntityFX.Gdcame.Manager.Contract.MainServer.UserManager;
 
 namespace EntityFX.Gdcame.Manager.MainServer
 {
+    using EntityFX.Gdcame.Contract.Common;
     using EntityFX.Gdcame.DataAccess.Contract.Common.User;
+    using EntityFX.Gdcame.Engine.Contract.GameEngine;
+    using EntityFX.Gdcame.Manager.Contract.Common.UserManager;
 
-    public class SimpleUserManager : ISimpleUserManager
+    using User = EntityFX.Gdcame.DataAccess.Contract.Common.User.User;
+
+    public class SimpleUserManager : EntityFX.Gdcame.Manager.Common.SimpleUserManager
     {
         private readonly IHashHelper _hashHelper;
         private readonly ILogger _logger;
         private readonly IUserDataAccessService _userDataAccess;
-        private readonly GameSessions _gameSessions;
+        private readonly IGameSessions _gameSessions;
 
-        public SimpleUserManager(ILogger logger, IUserDataAccessService userDataAccess, IHashHelper hashHelper, GameSessions gameSessions)
+        public SimpleUserManager(ILogger logger, IUserDataAccessService userDataAccess, IHashHelper hashHelper, IGameSessions gameSessions) :
+            base(logger, userDataAccess, hashHelper)
         {
             _logger = logger;
             _userDataAccess = userDataAccess;
@@ -24,90 +28,7 @@ namespace EntityFX.Gdcame.Manager.MainServer
             _gameSessions = gameSessions;
         }
 
-        public bool Exists(string login)
-        {
-            var user = _userDataAccess.FindByName(login);
-            return user != null;
-        }
-
-        public UserData FindById(string id)
-        {
-            var user = _userDataAccess.FindById(id);
-
-            return user != null
-                ? new UserData
-                {
-                    Id = user.Id,
-                    Login = user.Login,
-                    PasswordHash = user.PasswordHash,
-                    UserRoles = GetUserRoles(user)
-                }
-                : null;
-        }
-
-        public UserData Find(string login)
-        {
-            var user = _userDataAccess.FindByName(login);
-            return user != null
-                ? new UserData
-                {
-                    Id = user.Id,
-                    Login = user.Login,
-                    PasswordHash = user.PasswordHash,
-                    UserRoles = GetUserRoles(user)
-                }
-                : null;
-        }
-
-        public UserData[] FindByFilter(string searchString)
-        {
-            return _userDataAccess.FindByFilter(searchString)
-                .Select(user =>
-                    new UserData
-                    {
-                        Id = user.Id,
-                        Login = user.Login,
-                        PasswordHash = user.PasswordHash,
-                        UserRoles = GetUserRoles(user)
-                    })
-                .ToArray();
-        }
-
-        public void Create(UserData login)
-        {
-            uint userRole;
-            if (login.UserRoles == null)
-            {
-                userRole = (uint)UserRole.GenericUser;
-            }
-            else if (login.UserRoles.Contains(UserRole.System))
-            {
-                userRole = (uint)UserRole.System;
-            } else if (login.UserRoles.Contains(UserRole.Admin))
-            {
-                userRole = (uint)UserRole.Admin;
-            } else
-            {
-                userRole = (uint)UserRole.GenericUser;
-            }
-            try
-            {
-                _userDataAccess.Create(new User
-                {
-                    Id = _hashHelper.GetHashedString(login.Login),
-                    Login = login.Login,
-                    Role = userRole,
-                    PasswordHash = login.PasswordHash
-                });
-            }
-            catch (Exception exp)
-            {
-                _logger.Error(exp);
-                throw;
-            }
-        }
-
-        public void Delete(string id)
+        public virtual void Delete(string id)
         {
             var user = FindById(id);
             if (user == null) return;
@@ -115,21 +36,5 @@ namespace EntityFX.Gdcame.Manager.MainServer
             _gameSessions.RemoveGame(user);
         }
 
-        private UserRole[] GetUserRoles(User user)
-        {
-            var roles = new List<UserRole> { UserRole.GenericUser };
-            switch ((UserRole)user.Role)
-            {
-                case UserRole.Admin:
-                    roles.Add(UserRole.Admin);
-                    break;
-                case UserRole.System:
-                    roles.Add(UserRole.System);
-                    break;
-            }
-
-
-            return roles.ToArray();
-        }
     }
 }

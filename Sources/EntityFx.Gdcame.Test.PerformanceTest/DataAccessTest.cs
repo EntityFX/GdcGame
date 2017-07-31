@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using EntityFX.Gdcame.Common.Contract.UserRating;
 using EntityFX.Gdcame.DataAccess.Repository.Mongo;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -15,6 +14,7 @@ using MongoDB.Driver.Linq;
 
 namespace EntityFx.Gdcame.Test.Unit
 {
+    using EntityFX.Gdcame.Contract.Common.UserRating;
     using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer.Criterions.RatingHistory;
     using EntityFX.Gdcame.DataAccess.Repository.Mongo.Common;
     using EntityFX.Gdcame.DataAccess.Repository.Mongo.MainServer;

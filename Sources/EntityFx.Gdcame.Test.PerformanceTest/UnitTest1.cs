@@ -2,16 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using EntityFX.Gdcame.Common.Contract;
+
 using EntityFX.Gdcame.DataAccess.Service;
-using EntityFX.Gdcame.GameEngine.NetworkGameEngine;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager;
-using EntityFX.Gdcame.Manager.Contract.Common.Statistics;
 using EntityFX.Gdcame.Manager.Contract.MainServer.AdminManager;
 using EntityFX.Gdcame.Manager.Contract.MainServer.GameManager;
-using EntityFX.Gdcame.Manager.Contract.MainServer.SessionManager;
-using EntityFX.Gdcame.Manager.Contract.MainServer.UserManager;
 using EntityFX.Gdcame.Manager.MainServer;
 using EntityFX.Gdcame.Manager.MainServer.Workers;
 using EntityFX.Gdcame.NotifyConsumer.Contract;
@@ -23,10 +19,20 @@ using PortableLog.NLog;
 
 namespace EntityFx.Gdcame.Test.Unit
 {
+    using EntityFX.Gdcame.Contract.Common;
+    using EntityFX.Gdcame.Contract.MainServer;
+    using EntityFX.Gdcame.Contract.MainServer.Statistics;
     using EntityFX.Gdcame.DataAccess.Contract.Common.User;
     using EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData;
     using EntityFX.Gdcame.DataAccess.Service.Common;
     using EntityFX.Gdcame.DataAccess.Service.MainServer;
+    using EntityFX.Gdcame.Engine.Contract.GameEngine;
+    using EntityFX.Gdcame.Engine.GameEngine;
+    using EntityFX.Gdcame.Engine.GameEngine.NetworkGameEngine;
+    using EntityFX.Gdcame.Engine.Worker.MainServer;
+    using EntityFX.Gdcame.Kernel.Contract;
+    using EntityFX.Gdcame.Manager.Contract.Common.SessionManager;
+    using EntityFX.Gdcame.Manager.Contract.Common.UserManager;
 
     using ContainerBootstrapper = EntityFX.Gdcame.Manager.MainServer.ContainerBootstrapper;
 
@@ -66,10 +72,10 @@ namespace EntityFx.Gdcame.Test.Unit
 
             this.container.RegisterType<IHashHelper, HashHelper>();
 
-            this.container.RegisterInstance(new PerformanceInfo());
+            this.container.RegisterInstance(new GamePerformanceInfo());
 
             this.container.RegisterInstance(
-                new GameSessions(this.container.Resolve<ILogger>(), this.container.Resolve<IGameFactory>(), this.container.Resolve<PerformanceInfo>()));
+                new GameSessions(this.container.Resolve<ILogger>(), this.container.Resolve<IGameFactory>(), this.container.Resolve<GamePerformanceInfo>()));
 
             var workers = new List<IWorker>();
             workers.Add(this.container.Resolve<CalculationWorker>());

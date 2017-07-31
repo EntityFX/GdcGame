@@ -2,7 +2,7 @@
 {
     using System.ServiceModel;
 
-    using EntityFX.Gdcame.Common.Contract.UserRating;
+    using EntityFX.Gdcame.Contract.Common.UserRating;
 
     [ServiceContract]
     public interface IRatingDataAccess

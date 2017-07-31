@@ -2,8 +2,9 @@ namespace EntityFX.Gdcame.DataAccess.Service.MainServer
 {
     using System.Linq;
 
-    using EntityFX.Gdcame.Common.Contract.Counters;
-    using EntityFX.Gdcame.Common.Contract.UserRating;
+    using EntityFX.Gdcame.Contract.Common.UserRating;
+    using EntityFX.Gdcame.Contract.MainServer;
+    using EntityFX.Gdcame.Contract.MainServer.Counters;
     using EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData;
     using EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData.Store;
     using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer;
@@ -22,7 +23,7 @@ namespace EntityFX.Gdcame.DataAccess.Service.MainServer
             this._userGameSnapshotRepository = userGameSnapshotRepository;
         }
 
-        public Gdcame.Common.Contract.GameData GetGameData(string userId)
+        public GameData GetGameData(string userId)
         {
             var userGameData = this._userGameSnapshotRepository.FindByUserId(new GetUserGameSnapshotByIdCriterion(userId));
             var originalItems = this.GetFundDrivers();
@@ -76,7 +77,7 @@ namespace EntityFX.Gdcame.DataAccess.Service.MainServer
                 cash.OnHand = userGameData.Cash.Balance;
                 cash.Total = userGameData.Cash.TotalEarned;
             }
-            return new Gdcame.Common.Contract.GameData
+            return new GameData
                        {
                            Items = originalItems,
                            Cash = cash,

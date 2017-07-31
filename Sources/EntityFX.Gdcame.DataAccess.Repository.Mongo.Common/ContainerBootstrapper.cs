@@ -32,6 +32,7 @@
 
             container.RegisterType<IUserRepository, UserRepository>();
             container.RegisterType<IRatingStatisticsRepository, RatingStatisticsRepository>();
+            container.RegisterType<IServerRepository, ServerRepository>();
             container.RegisterInstance<IMongoDatabase>(this.MongoDatabase);
             return container;
         }

@@ -10,17 +10,8 @@ using EntityFX.Gdcame.Application.Contract.Controller.MainServer;
 using EntityFX.Gdcame.Application.Contract.Model.MainServer;
 using EntityFX.Gdcame.Application.Providers.MainServer;
 using EntityFX.Gdcame.Common.Application.Model;
-using EntityFX.Gdcame.Common.Contract;
-using EntityFX.Gdcame.Common.Contract.Counters;
-using EntityFX.Gdcame.Common.Contract.UserRating;
-using EntityFX.Gdcame.GameEngine.Contract;
-using EntityFX.Gdcame.GameEngine.Contract.Counters;
-using EntityFX.Gdcame.GameEngine.Contract.Incrementors;
-using EntityFX.Gdcame.GameEngine.Contract.Items;
-using EntityFX.Gdcame.GameEngine.NetworkGameEngine;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager.Contract.Common;
-using EntityFX.Gdcame.Manager.Contract.Common.Statistics;
 using EntityFX.Gdcame.Manager.Contract.MainServer.AdminManager;
 using EntityFX.Gdcame.Manager.Contract.MainServer.GameManager;
 using EntityFX.Gdcame.Manager.MainServer;
@@ -36,15 +27,28 @@ using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
 using PortableLog.NLog;
 
-using CounterBase = EntityFX.Gdcame.Common.Contract.Counters.CounterBase;
-
 namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
 {
     using System.Linq;
 
+    using EntityFX.Gdcame.Application.Api.Common.Providers;
+    using EntityFX.Gdcame.Contract.Common.Statistics;
+    using EntityFX.Gdcame.Contract.Common.UserRating;
+    using EntityFX.Gdcame.Contract.MainServer;
+    using EntityFX.Gdcame.Contract.MainServer.Counters;
+    using EntityFX.Gdcame.Contract.MainServer.Statistics;
     using EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData;
     using EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData.Store;
     using EntityFX.Gdcame.DataAccess.Service.MainServer;
+    using EntityFX.Gdcame.Engine.Contract.GameEngine;
+    using EntityFX.Gdcame.Engine.GameEngine;
+    using EntityFX.Gdcame.Engine.GameEngine.NetworkGameEngine;
+    using EntityFX.Gdcame.Kernel.Contract;
+    using EntityFX.Gdcame.Kernel.Contract.Counters;
+    using EntityFX.Gdcame.Kernel.Contract.Incrementors;
+    using EntityFX.Gdcame.Kernel.Contract.Items;
+
+    using CounterBase = EntityFX.Gdcame.Kernel.Contract.Counters.CounterBase;
 
     public class ContainerBootstrapper : IContainerBootstrapper
     {
@@ -92,7 +96,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
 
             //Store
             container.RegisterType<IMapper<IncrementorBase, StoredIncrementor>, StoreIncrementorContractMapper>();
-            container.RegisterType<IMapper<GameEngine.Contract.Counters.CounterBase, StoredCounterBase>, StoreCounterContractMapper>();
+            container.RegisterType<IMapper<CounterBase, StoredCounterBase>, StoreCounterContractMapper>();
             container
                 .RegisterType
                 <IMapper<GameCash, StoredCash>, StoreFundsCountersContractMapper>();
@@ -119,15 +123,15 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
             container.RegisterType<IHashHelper, HashHelper>();
             container.RegisterInstance<IPerformanceHelper>(new PerformanceHelper());
 
-            container.RegisterInstance(new PerformanceInfo());
+            container.RegisterInstance(new GamePerformanceInfo());
             container.RegisterInstance(new SystemInfo()
             {
                 CpusCount = Environment.ProcessorCount, Os = Environment.OSVersion.ToString(), Runtime = RuntimeHelper.GetRuntimeName(), MemoryTotal = RuntimeHelper.GetTotalMemoryInMb()
             });
 
-            container.RegisterInstance(
+            container.RegisterInstance<IGameSessions>(
                 new GameSessions(container.Resolve<ILogger>(), 
-                container.Resolve<IGameFactory>(), container.Resolve<PerformanceInfo>()));
+                container.Resolve<IGameFactory>(), container.Resolve<GamePerformanceInfo>()));
 
             container.RegisterType<INotifyConsumerService, NotifyConsumerService>(new InjectionConstructor(
                 new ResolvedParameter<ILogger>(),
@@ -154,11 +158,11 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
              }*/
 
             container.RegisterType<IMapper<Cash, CashModel>, FundsCounterModelMapper>();
-            container.RegisterType<IMapper<CounterBase, CounterModelBase>, CounterModelMapper>();
-            container.RegisterType<IMapper<Gdcame.Common.Contract.Items.Item, ItemModel>, FundsDriverModelMapper>();
+            container.RegisterType<IMapper<Gdcame.Contract.MainServer.Counters.CounterBase, CounterModelBase>, CounterModelMapper>();
+            container.RegisterType<IMapper<Gdcame.Contract.MainServer.Items.Item, ItemModel>, FundsDriverModelMapper>();
             container.RegisterType<IMapper<GameData, GameDataModel>, GameDataModelMapper>();
             container.RegisterType<IMapper<BuyFundDriverResult, BuyItemModel>, FundsDriverBuyInfoMapper>();
-            container.RegisterType<IMapper<MainServerStatisticsInfo, ServerStatisticsInfoModel>, StatisticsInfoMapper>();
+            container.RegisterType<IMapper<MainServerStatisticsInfo, MainServerStatisticsInfoModel>, StatisticsInfoMapper>();
             container.RegisterType<IMapper<TopRatingStatistics, TopRatingStatisticsModel>, TopRatingStatisticsModelMapper>();
             container.RegisterType<IGameClientFactory, NoWcfGameManagerFactory>();
             container.RegisterType<ISessionManagerClientFactory, SessionManagerClientFactory>();
@@ -166,7 +170,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
 
 
             container.RegisterType<ApplicationUserManagerFacotory>();
-            container.RegisterType<IUserStore<GameUser>, GameUserStore>();          
+            container.RegisterType<IUserStore<UserIdentity>, GameUserStore>();          
             container.RegisterType<IGameDataProvider, GameDataProvider>();
 
             container.RegisterType<IGameApiController, GameApiController>();
@@ -176,7 +180,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
 
             container.RegisterType<IOperationContextHelper, NoWcfOperationContextHelper>();
 
-            container.RegisterType<UserManager<GameUser>, ApplicationUserManager>();
+            container.RegisterType<UserManager<UserIdentity>, ApplicationUserManager>();
             
             return container;
         }

@@ -2,8 +2,8 @@
 {
     using System.Collections.Generic;
 
-    using EntityFX.Gdcame.Common.Contract.Incrementors;
-    using EntityFX.Gdcame.Common.Contract.Items;
+    using EntityFX.Gdcame.Contract.MainServer.Incrementors;
+    using EntityFX.Gdcame.Contract.MainServer.Items;
     using EntityFX.Gdcame.DataAccess.Repository.Ef.MainServer.Entities;
     using EntityFX.Gdcame.Infrastructure.Common;
 

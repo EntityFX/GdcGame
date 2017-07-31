@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using EntityFX.Gdcame.Common.Contract.UserRating;
+    using EntityFX.Gdcame.Contract.Common.UserRating;
     using EntityFX.Gdcame.DataAccess.Repository.Mongo.RatingServer;
     using EntityFX.Gdcame.Infrastructure.Common;
 

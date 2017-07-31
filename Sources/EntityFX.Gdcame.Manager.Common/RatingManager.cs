@@ -1,8 +1,8 @@
-﻿using EntityFX.Gdcame.Common.Contract.UserRating;
-using EntityFX.Gdcame.Manager.Contract.Common.RatingManager;
+﻿using EntityFX.Gdcame.Manager.Contract.Common.RatingManager;
 
 namespace EntityFX.Gdcame.Manager.Common
 {
+    using EntityFX.Gdcame.Contract.Common.UserRating;
     using EntityFX.Gdcame.DataAccess.Contract.Common.Rating;
 
     public class RatingManager : IRatingManager

@@ -7,7 +7,7 @@ using EntityFX.Gdcame.Manager.Contract.Common.WorkerManager;
 
 namespace EntityFX.Gdcame.Manager.MainServer.Workers
 {
-    using EntityFX.Gdcame.DataAccess.Contract.MainServer.Server;
+    using EntityFX.Gdcame.DataAccess.Contract.Common.Server;
 
     public class RatingAggregationWorker: WorkerBase, IWorker
     {

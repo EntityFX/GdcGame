@@ -2,7 +2,7 @@
 {
     using System.IO;
 
-    using EntityFX.Gdcame.Common.Contract.Items;
+    using EntityFX.Gdcame.Contract.MainServer.Items;
     using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer;
     using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer.Criterions.FundsDriver;
 

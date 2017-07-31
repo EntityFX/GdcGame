@@ -1,9 +1,11 @@
 ﻿using System;
-using EntityFX.Gdcame.Manager.Contract.MainServer.SessionManager;
 using Microsoft.Practices.Unity;
 
 namespace EntityFX.Gdcame.Utils.MainServer
 {
+    using EntityFX.Gdcame.Manager.Contract.Common.SessionManager;
+    using EntityFX.Gdcame.Utils.Common;
+
     public class SessionManagerClientFactory : ISessionManagerClientFactory
     {
         private readonly IUnityContainer _unityContainer;

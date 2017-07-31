@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using EntityFX.Gdcame.Common.Application.Model;
-using EntityFX.Gdcame.Common.Contract.Items;
 using EntityFX.Gdcame.Infrastructure.Common;
 
 namespace EntityFX.Gdcame.Application.Api.MainServer.Mappers
 {
+    using EntityFX.Gdcame.Contract.MainServer.Items;
+
     public class FundsDriverModelMapper : IMapper<Item, ItemModel>
     {
         public ItemModel Map(Item source, ItemModel destination = null)

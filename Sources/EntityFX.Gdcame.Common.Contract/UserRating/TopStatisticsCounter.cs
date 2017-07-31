@@ -1,8 +1,7 @@
-﻿using System;
-using System.Runtime.Serialization;
-
-namespace EntityFX.Gdcame.Common.Contract.UserRating
+﻿namespace EntityFX.Gdcame.Contract.Common.UserRating
 {
+    using System.Runtime.Serialization;
+
     public class TopStatisticsCounter
     {
         [DataMember]

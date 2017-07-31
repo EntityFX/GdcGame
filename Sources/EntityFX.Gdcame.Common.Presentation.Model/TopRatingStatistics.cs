@@ -1,5 +1,4 @@
 ﻿using System.Runtime.Serialization;
-using EntityFX.Gdcame.Common.Contract.UserRating;
 
 namespace EntityFX.Gdcame.Common.Application.Model
 {

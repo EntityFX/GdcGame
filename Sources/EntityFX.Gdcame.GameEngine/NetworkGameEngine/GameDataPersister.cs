@@ -1,15 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Item = EntityFX.Gdcame.Kernel.Contract.Items.Item;
 
-using EntityFX.Gdcame.GameEngine.Contract;
-using EntityFX.Gdcame.Infrastructure.Common;
-using Item = EntityFX.Gdcame.GameEngine.Contract.Items.Item;
-
-namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
+namespace EntityFX.Gdcame.Engine.GameEngine.NetworkGameEngine
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     using EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData;
     using EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData.Store;
+    using EntityFX.Gdcame.Engine.Contract.GameEngine;
+    using EntityFX.Gdcame.Infrastructure.Common;
+    using EntityFX.Gdcame.Kernel.Contract;
 
     public class GameDataPersister : IGameDataPersister
     {
@@ -21,11 +22,11 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
         public GameDataPersister(IGameDataStoreDataAccessService gameDataStoreDataAccessService
             , IMapperFactory mapperFactory)
         {
-            _gameDataStoreDataAccessService = gameDataStoreDataAccessService;
+            this._gameDataStoreDataAccessService = gameDataStoreDataAccessService;
 
-            _mapperFactory = mapperFactory;
-            _gameDataPersistMapper = _mapperFactory.Build<IGame, StoredGameData>("StoreGameDataMapper");
-            _fundsDriverPersistMapper = _mapperFactory.Build<Item, StoredItem>();
+            this._mapperFactory = mapperFactory;
+            this._gameDataPersistMapper = this._mapperFactory.Build<IGame, StoredGameData>("StoreGameDataMapper");
+            this._fundsDriverPersistMapper = this._mapperFactory.Build<Item, StoredItem>();
         }
 
         public void PersistGamesData(IList<GameWithUserId> gamesWithUserIds)
@@ -34,7 +35,7 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
             for (int i=0; i<gamesWithUserIds.Count; i++)
             {
                 var gameWithUserId = gamesWithUserIds[i];
-                var gameData = PrepareGameDataToPersist(gameWithUserId.Game);
+                var gameData = this.PrepareGameDataToPersist(gameWithUserId.Game);
                 listOfGameDataWithUserId[i] = new StoredGameDataWithUserId()
                 {
                     StoredGameData = gameData,
@@ -43,13 +44,13 @@ namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
                     UpdateDateTime = DateTime.Now
                 };
             }
-            _gameDataStoreDataAccessService.StoreGameDataForUsers(listOfGameDataWithUserId);
+            this._gameDataStoreDataAccessService.StoreGameDataForUsers(listOfGameDataWithUserId);
         }
 
         private StoredGameData PrepareGameDataToPersist(IGame game)
         {
-            StoredGameData gameData = _gameDataPersistMapper.Map(game);
-            gameData.Items = game.Items.Select(_ => _fundsDriverPersistMapper.Map(_)).ToArray();
+            StoredGameData gameData = this._gameDataPersistMapper.Map(game);
+            gameData.Items = game.Items.Select(_ => this._fundsDriverPersistMapper.Map(_)).ToArray();
             game.ModifiedFundsDrivers.Clear();
             return gameData;
         }

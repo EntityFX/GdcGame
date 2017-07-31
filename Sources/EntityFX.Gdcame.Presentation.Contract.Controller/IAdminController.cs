@@ -11,7 +11,7 @@ namespace EntityFX.Gdcame.Application.Contract.Controller.MainServer
 
         Task<UserSessionsModel[]> GetActiveSessions();
 
-        ServerStatisticsInfoModel GetStatistics();
+        MainServerStatisticsInfoModel GetStatistics();
 
         void UpdateServersList(string[] newServersList);
 

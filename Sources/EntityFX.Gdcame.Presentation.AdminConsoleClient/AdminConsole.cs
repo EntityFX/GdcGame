@@ -8,6 +8,7 @@
 
     using EntityFx.GdCame.Test.Shared;
 
+    using EntityFX.Gdcame.Application.Contract.Model.MainServer;
     using EntityFX.Gdcame.Common.Application.Model;
     using EntityFX.Gdcame.Infrastructure.Api.Auth;
     using EntityFX.Gdcame.Infrastructure.Api.Exceptions;
@@ -57,37 +58,37 @@
             {
                 {
                     ConsoleKey.F1,
-                    new MenuItem {MenuText = "Все активные сессии", MenuAction = this.GetActiveSessions}
+                    new MenuItem {MenuText = "List all active sessions", MenuAction = this.GetActiveSessions}
                 },
-                {ConsoleKey.F2, new MenuItem {MenuText = "Закрыть сессию по GUID", MenuAction = this.CloseSessionByGuid}},
+                {ConsoleKey.F2, new MenuItem {MenuText = "Close by session GUID", MenuAction = this.CloseSessionByGuid}},
                 {
                     ConsoleKey.F3,
                     new MenuItem
                     {
-                        MenuText = "Закрыть сессию по имени пользователя и номеру в списке GUID",
+                        MenuText = "Close by index in list",
                         MenuAction = this.CloseSessionByUserNameAndPositionOfGuid
                     }
                 },
                 {
                     ConsoleKey.F4,
-                    new MenuItem {MenuText = "Закрыть все сессии пользователя", MenuAction = this.CloseAllUserSessions}
+                    new MenuItem {MenuText = "Class all user's sessions", MenuAction = this.CloseAllUserSessions}
                 },
-                {ConsoleKey.F5, new MenuItem {MenuText = "Закрыть все сессии", MenuAction = this.CloseAllSessions}},
+                {ConsoleKey.F5, new MenuItem {MenuText = "Close all sessions", MenuAction = this.CloseAllSessions}},
                 {
                     ConsoleKey.F6,
                     new MenuItem
                     {
-                        MenuText = "Закрыть все сессии кроме текущей",
+                        MenuText = "Close all sessions except current",
                         MenuAction = this.CloseAllSessionsExludeThis
                     }
                 },
-                {ConsoleKey.F7, new MenuItem {MenuText = "Обнулить пользователя", MenuAction = this.WipeUser}},
-                {ConsoleKey.F8, new MenuItem {MenuText = "Статистика", MenuAction = this.GetStatistics}},
+                {ConsoleKey.F7, new MenuItem {MenuText = "Wipe user game", MenuAction = this.WipeUser}},
+                {ConsoleKey.F8, new MenuItem {MenuText = "Get statistics", MenuAction = this.GetStatistics}},
                 {ConsoleKey.F9, new MenuItem {MenuText = "Echo", MenuAction = this.Echo}},
-                {ConsoleKey.F10, new MenuItem {MenuText = "Обновить список серверов", MenuAction = this.GetNodesList}},
-                {ConsoleKey.F11, new MenuItem {MenuText = "Добавить сервер", MenuAction = this.AddServer}},
-                {ConsoleKey.Backspace, new MenuItem {MenuText = "Закрыть все игры", MenuAction = this.StopAllGames}},
-                {ConsoleKey.Escape, new MenuItem {MenuText = "Выход", MenuAction = this.Exit}}
+                {ConsoleKey.F10, new MenuItem {MenuText = "Update servers list", MenuAction = this.GetNodesList}},
+                {ConsoleKey.F11, new MenuItem {MenuText = "Merge server", MenuAction = this.AddServer}},
+                {ConsoleKey.Backspace, new MenuItem {MenuText = "Stop all games", MenuAction = this.StopAllGames}},
+                {ConsoleKey.Escape, new MenuItem {MenuText = "Exit", MenuAction = this.Exit}}
             };
         }
 
@@ -221,13 +222,13 @@
                     {
                         try
                         {
-                            var result = new Tuple<Uri, ServerStatisticsInfoModel>(_.BaseUri,
+                            var result = new Tuple<Uri, MainServerStatisticsInfoModel>(_.BaseUri,
                                 ApiHelper.GetAdminClient(_).GetStatistics());
                             return result;
                         }
                         catch (Exception)
                         {
-                            return new Tuple<Uri, ServerStatisticsInfoModel>(_.BaseUri, null);
+                            return new Tuple<Uri, MainServerStatisticsInfoModel>(_.BaseUri, null);
                         }
                     }))
             ).Result;
@@ -291,68 +292,68 @@
             }
         }
 
-        private void PrintStatistics(Tuple<Uri, ServerStatisticsInfoModel>[] statistics)
+        private void PrintStatistics(Tuple<Uri, MainServerStatisticsInfoModel>[] statistics)
         {
             Console.Clear();
             foreach (var serverStatisticsInfoModel in statistics)
             {
                 Console.WriteLine(serverStatisticsInfoModel.Item1);
-                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-15}", "Games:");
+                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-10}", "Games:");
                 PrettyConsole.WriteColor(ConsoleColor.Cyan, "{0,-9}", serverStatisticsInfoModel.Item2.ActiveGamesCount);
-                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-15}", "Sessions:");
+                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-10}", "Sessions:");
                 PrettyConsole.WriteColor(ConsoleColor.Cyan, "{0,-9} ",
                     serverStatisticsInfoModel.Item2.ActiveSessionsCount);
                 PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-10}", "Uptime:");
                 PrettyConsole.WriteLineColor(ConsoleColor.Cyan, "{0:dd\\.hh\\:mm\\:ss}",
                     serverStatisticsInfoModel.Item2.ServerUptime);
 
-                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-15}", "Users:");
+                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-10}", "Users:");
                 PrettyConsole.WriteColor(ConsoleColor.Cyan, "{0,-9}",
                     serverStatisticsInfoModel.Item2.RegistredUsersCount);
 
-                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-15}", "Calc / tick:");
+                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-10}", "Calc/tck:");
                 PrettyConsole.WriteColor(ConsoleColor.Cyan, "{0,-9} ms",
                     serverStatisticsInfoModel.Item2.PerformanceInfo != null
                         ? serverStatisticsInfoModel.Item2.PerformanceInfo.CalculationsPerCycle.TotalMilliseconds
                         : 0);
-                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-15}", "Save / tick:");
+                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-10}", "Save/tck:");
                 PrettyConsole.WriteLineColor(ConsoleColor.Cyan, "{0,-9} ",
                     serverStatisticsInfoModel.Item2.PerformanceInfo != null
                         ? serverStatisticsInfoModel.Item2.PerformanceInfo.PersistencePerCycle.TotalMilliseconds
                         : 0);
 
-                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-15}", "OS:");
+                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-10}", "OS:");
                 PrettyConsole.WriteLineColor(ConsoleColor.Cyan, serverStatisticsInfoModel.Item2.SystemInfo.Os);
 
-                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-15}", "Runtime: ");
+                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-10}", "Runtime: ");
                 PrettyConsole.WriteLineColor(ConsoleColor.Cyan, serverStatisticsInfoModel.Item2.SystemInfo.Runtime);
 
-                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-15}", "CPUs:");
+                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-10}", "CPUs:");
                 PrettyConsole.WriteColor(ConsoleColor.Cyan, "{0,-9}",
                     serverStatisticsInfoModel.Item2.SystemInfo.CpusCount);
-                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-15}", "RAM:");
+                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-10}", "RAM:");
                 PrettyConsole.WriteLineColor(ConsoleColor.Cyan, "{0,-9} Mb",
                     serverStatisticsInfoModel.Item2.SystemInfo.MemoryTotal);
 
-                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-15}", "CPU:");
+                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-10}", "CPU:");
                 PrettyConsole.WriteColor(ConsoleColor.Cyan, "{0,-5:N1} %",
                     serverStatisticsInfoModel.Item2.ResourcesUsageInfo.CpuUsed);
-                this.PrintMarker(serverStatisticsInfoModel.Item2.ResourcesUsageInfo.CpuUsed, 50);
+                this.PrintMarker(serverStatisticsInfoModel.Item2.ResourcesUsageInfo.CpuUsed, 40);
 
                 var memoryPercent = (serverStatisticsInfoModel.Item2.SystemInfo.MemoryTotal -
                                      serverStatisticsInfoModel.Item2.ResourcesUsageInfo.MemoryAvailable)
                                     / serverStatisticsInfoModel.Item2.SystemInfo.MemoryTotal * 100;
-                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-15}", "RAM Available: ");
+                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-10}", "RAM Avail.: ");
                 PrettyConsole.WriteColor(ConsoleColor.Cyan, "{0,-9} Mb",
                     serverStatisticsInfoModel.Item2.ResourcesUsageInfo.MemoryAvailable);
-                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-15}", "Process: ");
+                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-10}", "Process: ");
                 PrettyConsole.WriteLineColor(ConsoleColor.Cyan, "{0,-9:N1} Mb",
                     serverStatisticsInfoModel.Item2.ResourcesUsageInfo.MemoryUsedByProcess);
 
-                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-15}", "RAM:");
+                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-10}", "RAM:");
                 PrettyConsole.WriteColor(ConsoleColor.Cyan, "{0,-5:N1} % ", memoryPercent);
-                this.PrintMarker(memoryPercent, 50);
-                PrettyConsole.WriteLineColor(ConsoleColor.DarkYellow, "\tWorkers");
+                this.PrintMarker(memoryPercent, 40);
+                PrettyConsole.WriteLineColor(ConsoleColor.DarkCyan, "\tWorkers");
                 Array.ForEach(serverStatisticsInfoModel.Item2.ActiveWorkers, 
                     w => PrettyConsole.WriteLineColor(ConsoleColor.DarkYellow, "\t\t{0}", w));
                 Console.WriteLine();

@@ -218,6 +218,7 @@
     <Compile Include="GenericTaskTimer.cs" />
     <Compile Include="HostServiceBase.cs" />
     <Compile Include="CommonDatabasesProvider.cs" />
+    <Compile Include="ISessionManagerClientFactory.cs" />
     <Compile Include="NoWcfOperationContextHelper.cs" />
     <Compile Include="PerformanceHelper.cs" />
     <Compile Include="PortableTaskTimer.cs" />

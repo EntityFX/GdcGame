@@ -3,9 +3,9 @@
     using System.Collections.Generic;
     using System.Data.Entity;
 
-    using EntityFX.Gdcame.Common.Contract.Counters;
-    using EntityFX.Gdcame.Common.Contract.Incrementors;
-    using EntityFX.Gdcame.Common.Contract.Items;
+    using EntityFX.Gdcame.Contract.MainServer.Counters;
+    using EntityFX.Gdcame.Contract.MainServer.Incrementors;
+    using EntityFX.Gdcame.Contract.MainServer.Items;
     using EntityFX.Gdcame.DataAccess.Contract.Common.User;
     using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer;
     using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer.Criterions.Counters;

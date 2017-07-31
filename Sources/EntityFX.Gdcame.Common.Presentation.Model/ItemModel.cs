@@ -2,7 +2,6 @@
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Xml.Serialization;
-using EntityFX.Gdcame.Common.Contract.Incrementors;
 
 namespace EntityFX.Gdcame.Common.Application.Model
 {

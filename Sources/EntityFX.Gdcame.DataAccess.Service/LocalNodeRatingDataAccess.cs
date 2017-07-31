@@ -2,7 +2,7 @@
 {
     using System;
 
-    using EntityFX.Gdcame.Common.Contract.UserRating;
+    using EntityFX.Gdcame.Contract.Common.UserRating;
     using EntityFX.Gdcame.DataAccess.Contract.MainServer.Rating;
     using EntityFX.Gdcame.DataAccess.Repository.Contract.Common;
     using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer;

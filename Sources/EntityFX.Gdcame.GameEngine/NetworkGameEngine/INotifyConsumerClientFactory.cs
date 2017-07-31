@@ -1,7 +1,7 @@
-﻿using EntityFX.Gdcame.NotifyConsumer.Contract;
-
-namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
+﻿namespace EntityFX.Gdcame.Engine.GameEngine.NetworkGameEngine
 {
+    using EntityFX.Gdcame.NotifyConsumer.Contract;
+
     public interface INotifyConsumerClientFactory
     {
         INotifyConsumerService BuildNotifyConsumerClient();

@@ -1,9 +1,10 @@
-﻿using EntityFX.Gdcame.GameEngine.NetworkGameEngine;
-using EntityFX.Gdcame.NotifyConsumer.Contract;
+﻿using EntityFX.Gdcame.NotifyConsumer.Contract;
 using Microsoft.Practices.Unity;
 
 namespace EntityFX.Gdcame.Utils.MainServer
 {
+    using EntityFX.Gdcame.Engine.GameEngine.NetworkGameEngine;
+
     public class NotifyConsumerClientFactory : INotifyConsumerClientFactory
     {
         private readonly string _name;

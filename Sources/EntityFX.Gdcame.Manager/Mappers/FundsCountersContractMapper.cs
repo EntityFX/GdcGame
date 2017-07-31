@@ -1,17 +1,19 @@
 ﻿using System.Linq;
-using EntityFX.Gdcame.Common.Contract.Counters;
-using EntityFX.Gdcame.GameEngine.Contract.Counters;
 using EntityFX.Gdcame.Infrastructure.Common;
-using CounterBase = EntityFX.Gdcame.GameEngine.Contract.Counters.CounterBase;
 
 namespace EntityFX.Gdcame.Manager.MainServer.Mappers
 {
+    using EntityFX.Gdcame.Contract.MainServer.Counters;
+    using EntityFX.Gdcame.Kernel.Contract.Counters;
+
+    using CounterBase = EntityFX.Gdcame.Kernel.Contract.Counters.CounterBase;
+
     public class FundsCountersContractMapper : IMapper<GameCash, Cash>
     {
-        private readonly IMapper<CounterBase, Gdcame.Common.Contract.Counters.CounterBase> _counterContractMapper;
+        private readonly IMapper<CounterBase, Gdcame.Contract.MainServer.Counters.CounterBase> _counterContractMapper;
 
         public FundsCountersContractMapper(
-            IMapper<CounterBase, Gdcame.Common.Contract.Counters.CounterBase> counterContractMapper)
+            IMapper<CounterBase, Gdcame.Contract.MainServer.Counters.CounterBase> counterContractMapper)
         {
             _counterContractMapper = counterContractMapper;
         }

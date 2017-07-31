@@ -3,7 +3,7 @@
     using System;
     using System.ServiceModel;
 
-    using EntityFX.Gdcame.Common.Contract.UserRating;
+    using EntityFX.Gdcame.Contract.Common.UserRating;
     using EntityFX.Gdcame.DataAccess.Contract.Common.Rating;
 
     [ServiceContract]

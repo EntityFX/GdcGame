@@ -8,7 +8,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer
     using EntityFX.Gdcame.Application.Api.Controller.RatingServer;
     using EntityFX.Gdcame.Application.Contract.Controller.Common;
     using EntityFX.Gdcame.Common.Application.Model;
-    using EntityFX.Gdcame.Common.Contract.UserRating;
+    using EntityFX.Gdcame.Contract.Common.UserRating;
     using EntityFX.Gdcame.Infrastructure.Common;
     using EntityFX.Gdcame.Manager.Contract.Common;
     using EntityFX.Gdcame.Utils.Common;

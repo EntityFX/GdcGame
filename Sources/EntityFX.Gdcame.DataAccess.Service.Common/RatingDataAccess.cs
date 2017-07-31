@@ -1,6 +1,6 @@
 ﻿namespace EntityFX.Gdcame.DataAccess.Service.Common
 {
-    using EntityFX.Gdcame.Common.Contract.UserRating;
+    using EntityFX.Gdcame.Contract.Common.UserRating;
     using EntityFX.Gdcame.DataAccess.Contract.Common.Rating;
     using EntityFX.Gdcame.DataAccess.Repository.Contract.Common;
 

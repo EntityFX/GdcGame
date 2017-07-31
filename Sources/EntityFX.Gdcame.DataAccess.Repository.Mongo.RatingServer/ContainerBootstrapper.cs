@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    using EntityFX.Gdcame.Common.Contract.UserRating;
+    using EntityFX.Gdcame.Contract.Common.UserRating;
     using EntityFX.Gdcame.DataAccess.Repository.Contract.RatingServer;
     using EntityFX.Gdcame.DataAccess.Repository.Mongo.RatingServer.Mappers;
     using EntityFX.Gdcame.Infrastructure.Common;
