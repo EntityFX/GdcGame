@@ -9,6 +9,10 @@ namespace EntityFX.Gdcame.Manager.Contract.Common.WorkerManager
 
         void StartAll();
 
+        bool Start<TData>(string workerName, TData workerData) where TData : class;
+
         WorkerStatus[] GetWorkersStatus();
+
+        WorkerStatus GetWorkerStatus(string workerName);
     }
 }

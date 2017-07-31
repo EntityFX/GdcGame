@@ -1,12 +1,11 @@
 ﻿using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.Common.Contract.Counters;
 using EntityFX.Gdcame.Common.Contract.Incrementors;
-using EntityFX.Gdcame.DataAccess.Contract.GameData.Store;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager.Contract.Common.RatingManager;
 using EntityFX.Gdcame.Manager.Contract.Common.ServerManager;
 using EntityFX.Gdcame.Manager.Contract.Common.WorkerManager;
-using EntityFX.Gdcame.Manager.MainServer;
+
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
 

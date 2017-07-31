@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using EntityFX.Gdcame.DataAccess.Contract.Server;
+
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager.Contract.Common.WorkerManager;
 
 namespace EntityFX.Gdcame.Manager.MainServer.Workers
 {
+    using EntityFX.Gdcame.DataAccess.Contract.MainServer.Server;
+
     public class RatingAggregationWorker: WorkerBase, IWorker
     {
         private const int TimeSaveInSeconds = 30;
@@ -25,7 +27,7 @@ namespace EntityFX.Gdcame.Manager.MainServer.Workers
             Name = "Rating Aggregation Worker";
         }
 
-        public override void Run()
+        public override void Run<TData>(TData data = default(TData))
         {
             _backgroundSaveHistoryCheckerTask = _backgroundSaveHistoryCheckerTimer.Start();
         }

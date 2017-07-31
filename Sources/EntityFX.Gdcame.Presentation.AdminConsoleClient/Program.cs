@@ -4,7 +4,6 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using EntityFX.Gdcame.Presentation.WebApiConsoleClient;
 
 namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
 {

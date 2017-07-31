@@ -1,45 +1,44 @@
-﻿using System.Collections.Generic;
-using System.Data.Entity;
-using EntityFX.Gdcame.Common.Contract.Counters;
-using EntityFX.Gdcame.Common.Contract.Incrementors;
-using EntityFX.Gdcame.Common.Contract.Items;
-using EntityFX.Gdcame.Common.Contract.UserRating;
-using EntityFX.Gdcame.DataAccess.Contract.User;
-using EntityFX.Gdcame.DataAccess.Model.Ef;
-using EntityFX.Gdcame.DataAccess.Repository.Contract;
-using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.Counters;
-using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.CustomRule;
-using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.FundsDriver;
-using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.User;
-using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.UserGameSnapshot;
-using EntityFX.Gdcame.DataAccess.Repository.Ef.Mappers;
-using EntityFX.Gdcame.DataAccess.Repository.Ef.Queries.Counetrs;
-using EntityFX.Gdcame.DataAccess.Repository.Ef.Queries.CustomRule;
-using EntityFX.Gdcame.DataAccess.Repository.Ef.Queries.FundsDriver;
-using EntityFX.Gdcame.DataAccess.Repository.Ef.Queries.User;
-using EntityFX.Gdcame.DataAccess.Repository.Ef.Queries.UserGameSnapshot;
-using EntityFX.Gdcame.Infrastructure.Common;
-using EntityFX.Gdcame.Infrastructure.Repository.EF;
-using EntityFX.Gdcame.Infrastructure.Repository.Query;
-using EntityFX.Gdcame.Infrastructure.Repository.UnitOfWork;
-using Microsoft.Practices.Unity;
-
-namespace EntityFX.Gdcame.DataAccess.Repository.Ef
+﻿namespace EntityFX.Gdcame.DataAccess.Repository.Ef.MainServer
 {
+    using System.Collections.Generic;
+    using System.Data.Entity;
+
+    using EntityFX.Gdcame.Common.Contract.Counters;
+    using EntityFX.Gdcame.Common.Contract.Incrementors;
+    using EntityFX.Gdcame.Common.Contract.Items;
+    using EntityFX.Gdcame.DataAccess.Contract.Common.User;
+    using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer;
+    using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer.Criterions.Counters;
+    using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer.Criterions.CustomRule;
+    using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer.Criterions.FundsDriver;
+    using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer.Criterions.UserGameSnapshot;
+    using EntityFX.Gdcame.DataAccess.Repository.Ef.Common;
+    using EntityFX.Gdcame.DataAccess.Repository.Ef.Common.Entities;
+    using EntityFX.Gdcame.DataAccess.Repository.Ef.Common.Mappers;
+    using EntityFX.Gdcame.DataAccess.Repository.Ef.MainServer.Entities;
+    using EntityFX.Gdcame.DataAccess.Repository.Ef.MainServer.Mappers;
+    using EntityFX.Gdcame.DataAccess.Repository.Ef.MainServer.Queries.Counetrs;
+    using EntityFX.Gdcame.DataAccess.Repository.Ef.MainServer.Queries.CustomRule;
+    using EntityFX.Gdcame.DataAccess.Repository.Ef.MainServer.Queries.FundsDriver;
+    using EntityFX.Gdcame.DataAccess.Repository.Ef.MainServer.Queries.UserGameSnapshot;
+    using EntityFX.Gdcame.Infrastructure.Common;
+    using EntityFX.Gdcame.Infrastructure.Repository.EF;
+    using EntityFX.Gdcame.Infrastructure.Repository.Query;
+    using EntityFX.Gdcame.Infrastructure.Repository.UnitOfWork;
+
+    using Microsoft.Practices.Unity;
+
     public class ContainerBootstrapper : IContainerBootstrapper
     {
         public IUnityContainer Configure(IUnityContainer container)
         {
-            container.RegisterType<DbContext, EconomicsArcadeDbContext>(
+            container.RegisterType<System.Data.Entity.DbContext, DbContext>(
                 new InjectionConstructor("name=EconomicsArcadeDbContext"));
             container.RegisterType<IQueryBuilder, QueryBuilder>();
             container.RegisterType<IUnitOfWork, EfUnitOfWork>();
             container.RegisterType<IUnitOfWorkFactory, UnitOfWorkFactory>();
 
-            container.RegisterType<IQuery<GetUserByIdCriterion, UserEntity>, GetUserByIdQuery>();
-            container.RegisterType<IQuery<GetUserByNameCriterion, UserEntity>, GetUserByNameQuery>();
-            container.RegisterType<IQuery<GetAllUsersCriterion, IEnumerable<UserEntity>>, GetAllUsersQuery>();
-            container.RegisterType<IQuery<GetUsersBySearchStringCriterion, IEnumerable<UserEntity>>, GetUsersBySearchStringQuery>();
+
             container
                 .RegisterType
                 <IQuery<GetAllFundsDriversCriterion, IEnumerable<FundsDriverEntity>>, GetAllFundsDriversQuery>();
@@ -58,7 +57,6 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef
             container.RegisterType<IMapper<CounterEntity, CounterBase>, CountersContractMapper>();
             container.RegisterType<IMapper<CustomRuleEntity, CustomRule>, CustomRuleContractMapper>();
 
-            container.RegisterType<IUserRepository, UserRepository>();
             container.RegisterType<IItemRepository, ItemRepository>();
             container.RegisterType<ICountersRepository, CountersRepository>();
             container.RegisterType<ICustomRuleRepository, CustomRuleRepository>();

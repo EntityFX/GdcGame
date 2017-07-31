@@ -1,9 +1,11 @@
 ﻿using System.Linq;
-using EntityFX.Gdcame.DataAccess.Contract.Server;
+
 using EntityFX.Gdcame.Manager.Contract.Common.ServerManager;
 
 namespace EntityFX.Gdcame.Manager.Common
 {
+    using EntityFX.Gdcame.DataAccess.Contract.MainServer.Server;
+
     public class ServerManager : IServerManager
     {
         private readonly IServerDataAccessService _serverDataAccessService;

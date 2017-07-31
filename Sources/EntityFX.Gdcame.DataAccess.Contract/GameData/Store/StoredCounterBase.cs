@@ -1,7 +1,7 @@
-﻿using System.Runtime.Serialization;
-
-namespace EntityFX.Gdcame.DataAccess.Contract.GameData.Store
+﻿namespace EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData.Store
 {
+    using System.Runtime.Serialization;
+
     [DataContract]
     [KnownType(typeof (StoredGenericCounter))]
     [KnownType(typeof (StoredSingleCounter))]

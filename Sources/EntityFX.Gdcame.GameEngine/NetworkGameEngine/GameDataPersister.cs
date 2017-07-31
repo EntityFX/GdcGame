@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using EntityFX.Gdcame.DataAccess.Contract.GameData;
-using EntityFX.Gdcame.DataAccess.Contract.GameData.Store;
+
 using EntityFX.Gdcame.GameEngine.Contract;
 using EntityFX.Gdcame.Infrastructure.Common;
 using Item = EntityFX.Gdcame.GameEngine.Contract.Items.Item;
 
 namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
 {
+    using EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData;
+    using EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData.Store;
+
     public class GameDataPersister : IGameDataPersister
     {
         private readonly IGameDataStoreDataAccessService _gameDataStoreDataAccessService;

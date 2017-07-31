@@ -39,15 +39,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{A76DA6
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "EntityFX.Gdcame.Database.MsSql", "EntityFX.Gdcame.Database.MsSql\EntityFX.Gdcame.Database.MsSql.sqlproj", "{4FF756A4-148E-4E5D-8AAF-7558660F621E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.DataAccess.Contract", "EntityFX.Gdcame.DataAccess.Contract\EntityFX.Gdcame.DataAccess.Contract.csproj", "{0932D8B3-29EB-4546-987A-B246421A9B87}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.DataAccess.Contract.MainServer", "EntityFX.Gdcame.DataAccess.Contract\EntityFX.Gdcame.DataAccess.Contract.MainServer.csproj", "{0932D8B3-29EB-4546-987A-B246421A9B87}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Common.Contract", "EntityFX.Gdcame.Common.Contract\EntityFX.Gdcame.Common.Contract.csproj", "{89F89C37-F564-47EB-839D-C45ACD9D012A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Common.Application.Model", "EntityFX.Gdcame.Common.Presentation.Model\EntityFX.Gdcame.Common.Application.Model.csproj", "{3B44AFC0-F207-44E4-9F91-7F24E1F4D342}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.DataAccess.Repository.Ef", "EntityFX.Gdcame.DataAccess.Repository\EntityFX.Gdcame.DataAccess.Repository.Ef.csproj", "{D5A72A34-5DE5-41E1-B52E-8F70D19CB7BF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.DataAccess.Repository.Ef.MainServer", "EntityFX.Gdcame.DataAccess.Repository\EntityFX.Gdcame.DataAccess.Repository.Ef.MainServer.csproj", "{D5A72A34-5DE5-41E1-B52E-8F70D19CB7BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.DataAccess.Service", "EntityFX.Gdcame.DataAccess.Service\EntityFX.Gdcame.DataAccess.Service.csproj", "{2008F2C2-C1FA-4CB9-8A99-A9406AC4967D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.DataAccess.Service.MainServer", "EntityFX.Gdcame.DataAccess.Service\EntityFX.Gdcame.DataAccess.Service.MainServer.csproj", "{2008F2C2-C1FA-4CB9-8A99-A9406AC4967D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Infrastructure.Common", "EntityFX.Gdcame.Infrastructure.Common\EntityFX.Gdcame.Infrastructure.Common.csproj", "{924CC67D-9E2B-46BA-BE1D-6C6C780CCFBC}"
 EndProject
@@ -81,9 +81,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFx.Gdcame.Test.Unit",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Infrastructure.Repository.EF", "EntityFX.Gdcame.Infrastructure.Repository.EF\EntityFX.Gdcame.Infrastructure.Repository.EF.csproj", "{E92BA217-1681-453A-AEF8-888028A12070}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.DataAccess.Repository.Contract", "EntityFX.Gdcame.DataAccess.Repository.Contract\EntityFX.Gdcame.DataAccess.Repository.Contract.csproj", "{C1B1F481-6E3E-464C-A983-CB56AD430C1D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.DataAccess.Model.Ef", "EntityFX.Gdcame.DataAccess.Model.Ef\EntityFX.Gdcame.DataAccess.Model.Ef.csproj", "{DE1D1C25-F30A-461C-B572-00BFA1C7161E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer", "EntityFX.Gdcame.DataAccess.Repository.Contract\EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer.csproj", "{C1B1F481-6E3E-464C-A983-CB56AD430C1D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.MainServer", "EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne\EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.MainServer.csproj", "{41B70B30-590D-476D-B58C-6CD05262DDA1}"
 EndProject
@@ -99,9 +97,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Presentatio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Application.Contract.Controller.MainServer", "EntityFX.Gdcame.Presentation.Contract.Controller\EntityFX.Gdcame.Application.Contract.Controller.MainServer.csproj", "{B9608A11-F0F0-47AA-BD55-D6E25A310DAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.DataAccess.Repository.Mongo", "EntityFX.Gdcame.DataAccess.Repository.Mongo\EntityFX.Gdcame.DataAccess.Repository.Mongo.csproj", "{0F77947A-9E4C-4663-A7EE-C43A4D357217}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.DataAccess.Repository.Mongo.MainServer", "EntityFX.Gdcame.DataAccess.Repository.Mongo\EntityFX.Gdcame.DataAccess.Repository.Mongo.MainServer.csproj", "{0F77947A-9E4C-4663-A7EE-C43A4D357217}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.DataAccess.Repository.LocalStorage", "EntityFX.Gdcame.DataAccess.Repository.LocalStorage\EntityFX.Gdcame.DataAccess.Repository.LocalStorage.csproj", "{B21F9BDF-E28D-4C42-91D5-008B0833A3FA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.DataAccess.Repository.LocalStorage.MainServer", "EntityFX.Gdcame.DataAccess.Repository.LocalStorage\EntityFX.Gdcame.DataAccess.Repository.LocalStorage.MainServer.csproj", "{B21F9BDF-E28D-4C42-91D5-008B0833A3FA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFx.Gdcame.Test.Perfomance", "EntityFx.Gdcame.Test.Perfomance\EntityFx.Gdcame.Test.Perfomance.csproj", "{A06209E7-56B8-4C02-B47B-776E6E597A56}"
 EndProject
@@ -156,6 +154,32 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Presentation.ConsoleClient.Common", "EntityFX.Gdcame.Presentation.ConsoleClient.Common\EntityFX.Gdcame.Presentation.ConsoleClient.Common.csproj", "{805FA369-C681-4204-B16B-CFE3AE2FA813}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Utils.Hashing", "EntityFX.Gdcame.Utils.Hashing\EntityFX.Gdcame.Utils.Hashing.csproj", "{720E76E7-71E2-4570-BD4A-A38B2858BD56}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.DataAccess.Contract.Common", "EntityFX.Gdcame.DataAccess.Contract.Common\EntityFX.Gdcame.DataAccess.Contract.Common.csproj", "{5FE7A90C-9319-4A62-955B-8F6F22169679}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.DataAccess.Contract.RatingServer", "EntityFX.Gdcame.DataAccess.Contract.RatingServer\EntityFX.Gdcame.DataAccess.Contract.RatingServer.csproj", "{18454832-DEE4-484F-9750-F67D46B790E7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MainServer", "MainServer", "{3E7676A6-28AA-420B-8C43-B9DAEB457A43}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RatingServer", "RatingServer", "{30257D0A-ECD1-4D5F-8384-DDF2CF4F1CC6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.DataAccess.Service.RatingServer", "EntityFX.Gdcame.DataAccess.Service.RatingServer\EntityFX.Gdcame.DataAccess.Service.RatingServer.csproj", "{6D064DA4-FE6F-44C1-AC3F-4A6D0C710B81}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.DataAccess.Service.Common", "EntityFX.Gdcame.DataAccess.Service.Common\EntityFX.Gdcame.DataAccess.Service.Common.csproj", "{2EB4D42C-33CD-48DF-BD28-3E51934851EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.DataAccess.Repository.Contract.Common", "EntityFX.Gdcame.DataAccess.Repository.Contract.Common\EntityFX.Gdcame.DataAccess.Repository.Contract.Common.csproj", "{501D71D8-AE40-46D8-87F8-DF6C60371ADD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.DataAccess.Repository.Contract.RatingServer", "EntityFX.Gdcame.DataAccess.Repository.Contract.RatingServer\EntityFX.Gdcame.DataAccess.Repository.Contract.RatingServer.csproj", "{357A1FB3-FFEC-4378-B688-85C4A020A98C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.DataAccess.Repository.Mongo.Common", "EntityFX.Gdcame.DataAccess.Repository.Mongo.Common\EntityFX.Gdcame.DataAccess.Repository.Mongo.Common.csproj", "{37453F0B-4612-4DF5-807B-E446D170385F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.DataAccess.Repository.Mongo.RatingServer", "EntityFX.Gdcame.DataAccess.Repository.Mongo.RatingServer\EntityFX.Gdcame.DataAccess.Repository.Mongo.RatingServer.csproj", "{9BE9B0D1-CD15-4308-A8ED-186603F776B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.DataAccess.Repository.Ef.RatingServer", "EntityFX.Gdcame.DataAccess.Repository.Ef.RatingServer\EntityFX.Gdcame.DataAccess.Repository.Ef.RatingServer.csproj", "{77C83180-ADC7-4D6C-8DF0-25B0B15D381C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.DataAccess.Repository.Ef.Common", "EntityFX.Gdcame.DataAccess.Repository.Ef.Common\EntityFX.Gdcame.DataAccess.Repository.Ef.Common.csproj", "{B755E1B8-2479-4E64-A039-88BA36263BBD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.DataAccess.Repository.LocalStorage.Common", "EntityFX.Gdcame.DataAccess.Repository.LocalStorage.Common\EntityFX.Gdcame.DataAccess.Repository.LocalStorage.Common.csproj", "{36BD02F8-CDCF-4B59-B9F4-68D71302F3C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -296,12 +320,6 @@ Global
 		{C1B1F481-6E3E-464C-A983-CB56AD430C1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1B1F481-6E3E-464C-A983-CB56AD430C1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1B1F481-6E3E-464C-A983-CB56AD430C1D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DE1D1C25-F30A-461C-B572-00BFA1C7161E}.BuildServer|Any CPU.ActiveCfg = BuildServer|Any CPU
-		{DE1D1C25-F30A-461C-B572-00BFA1C7161E}.BuildServer|Any CPU.Build.0 = BuildServer|Any CPU
-		{DE1D1C25-F30A-461C-B572-00BFA1C7161E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DE1D1C25-F30A-461C-B572-00BFA1C7161E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DE1D1C25-F30A-461C-B572-00BFA1C7161E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DE1D1C25-F30A-461C-B572-00BFA1C7161E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{41B70B30-590D-476D-B58C-6CD05262DDA1}.BuildServer|Any CPU.ActiveCfg = BuildServer|Any CPU
 		{41B70B30-590D-476D-B58C-6CD05262DDA1}.BuildServer|Any CPU.Build.0 = BuildServer|Any CPU
 		{41B70B30-590D-476D-B58C-6CD05262DDA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -458,6 +476,72 @@ Global
 		{720E76E7-71E2-4570-BD4A-A38B2858BD56}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{720E76E7-71E2-4570-BD4A-A38B2858BD56}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{720E76E7-71E2-4570-BD4A-A38B2858BD56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FE7A90C-9319-4A62-955B-8F6F22169679}.BuildServer|Any CPU.ActiveCfg = Release|Any CPU
+		{5FE7A90C-9319-4A62-955B-8F6F22169679}.BuildServer|Any CPU.Build.0 = Release|Any CPU
+		{5FE7A90C-9319-4A62-955B-8F6F22169679}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FE7A90C-9319-4A62-955B-8F6F22169679}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FE7A90C-9319-4A62-955B-8F6F22169679}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FE7A90C-9319-4A62-955B-8F6F22169679}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18454832-DEE4-484F-9750-F67D46B790E7}.BuildServer|Any CPU.ActiveCfg = Release|Any CPU
+		{18454832-DEE4-484F-9750-F67D46B790E7}.BuildServer|Any CPU.Build.0 = Release|Any CPU
+		{18454832-DEE4-484F-9750-F67D46B790E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18454832-DEE4-484F-9750-F67D46B790E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18454832-DEE4-484F-9750-F67D46B790E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18454832-DEE4-484F-9750-F67D46B790E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D064DA4-FE6F-44C1-AC3F-4A6D0C710B81}.BuildServer|Any CPU.ActiveCfg = Release|Any CPU
+		{6D064DA4-FE6F-44C1-AC3F-4A6D0C710B81}.BuildServer|Any CPU.Build.0 = Release|Any CPU
+		{6D064DA4-FE6F-44C1-AC3F-4A6D0C710B81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D064DA4-FE6F-44C1-AC3F-4A6D0C710B81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D064DA4-FE6F-44C1-AC3F-4A6D0C710B81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D064DA4-FE6F-44C1-AC3F-4A6D0C710B81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EB4D42C-33CD-48DF-BD28-3E51934851EB}.BuildServer|Any CPU.ActiveCfg = Release|Any CPU
+		{2EB4D42C-33CD-48DF-BD28-3E51934851EB}.BuildServer|Any CPU.Build.0 = Release|Any CPU
+		{2EB4D42C-33CD-48DF-BD28-3E51934851EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EB4D42C-33CD-48DF-BD28-3E51934851EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EB4D42C-33CD-48DF-BD28-3E51934851EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EB4D42C-33CD-48DF-BD28-3E51934851EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{501D71D8-AE40-46D8-87F8-DF6C60371ADD}.BuildServer|Any CPU.ActiveCfg = Release|Any CPU
+		{501D71D8-AE40-46D8-87F8-DF6C60371ADD}.BuildServer|Any CPU.Build.0 = Release|Any CPU
+		{501D71D8-AE40-46D8-87F8-DF6C60371ADD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{501D71D8-AE40-46D8-87F8-DF6C60371ADD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{501D71D8-AE40-46D8-87F8-DF6C60371ADD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{501D71D8-AE40-46D8-87F8-DF6C60371ADD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{357A1FB3-FFEC-4378-B688-85C4A020A98C}.BuildServer|Any CPU.ActiveCfg = Release|Any CPU
+		{357A1FB3-FFEC-4378-B688-85C4A020A98C}.BuildServer|Any CPU.Build.0 = Release|Any CPU
+		{357A1FB3-FFEC-4378-B688-85C4A020A98C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{357A1FB3-FFEC-4378-B688-85C4A020A98C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{357A1FB3-FFEC-4378-B688-85C4A020A98C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{357A1FB3-FFEC-4378-B688-85C4A020A98C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37453F0B-4612-4DF5-807B-E446D170385F}.BuildServer|Any CPU.ActiveCfg = Release|Any CPU
+		{37453F0B-4612-4DF5-807B-E446D170385F}.BuildServer|Any CPU.Build.0 = Release|Any CPU
+		{37453F0B-4612-4DF5-807B-E446D170385F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37453F0B-4612-4DF5-807B-E446D170385F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37453F0B-4612-4DF5-807B-E446D170385F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37453F0B-4612-4DF5-807B-E446D170385F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BE9B0D1-CD15-4308-A8ED-186603F776B3}.BuildServer|Any CPU.ActiveCfg = Release|Any CPU
+		{9BE9B0D1-CD15-4308-A8ED-186603F776B3}.BuildServer|Any CPU.Build.0 = Release|Any CPU
+		{9BE9B0D1-CD15-4308-A8ED-186603F776B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BE9B0D1-CD15-4308-A8ED-186603F776B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BE9B0D1-CD15-4308-A8ED-186603F776B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BE9B0D1-CD15-4308-A8ED-186603F776B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77C83180-ADC7-4D6C-8DF0-25B0B15D381C}.BuildServer|Any CPU.ActiveCfg = Release|Any CPU
+		{77C83180-ADC7-4D6C-8DF0-25B0B15D381C}.BuildServer|Any CPU.Build.0 = Release|Any CPU
+		{77C83180-ADC7-4D6C-8DF0-25B0B15D381C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77C83180-ADC7-4D6C-8DF0-25B0B15D381C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77C83180-ADC7-4D6C-8DF0-25B0B15D381C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77C83180-ADC7-4D6C-8DF0-25B0B15D381C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B755E1B8-2479-4E64-A039-88BA36263BBD}.BuildServer|Any CPU.ActiveCfg = Release|Any CPU
+		{B755E1B8-2479-4E64-A039-88BA36263BBD}.BuildServer|Any CPU.Build.0 = Release|Any CPU
+		{B755E1B8-2479-4E64-A039-88BA36263BBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B755E1B8-2479-4E64-A039-88BA36263BBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B755E1B8-2479-4E64-A039-88BA36263BBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B755E1B8-2479-4E64-A039-88BA36263BBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36BD02F8-CDCF-4B59-B9F4-68D71302F3C7}.BuildServer|Any CPU.ActiveCfg = Release|Any CPU
+		{36BD02F8-CDCF-4B59-B9F4-68D71302F3C7}.BuildServer|Any CPU.Build.0 = Release|Any CPU
+		{36BD02F8-CDCF-4B59-B9F4-68D71302F3C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36BD02F8-CDCF-4B59-B9F4-68D71302F3C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36BD02F8-CDCF-4B59-B9F4-68D71302F3C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36BD02F8-CDCF-4B59-B9F4-68D71302F3C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -467,11 +551,11 @@ Global
 		{6A8CFFC2-2467-4C6E-93DC-6C76B43E0180} = {29D7DF00-E047-4DA1-8AB8-66EE234B0444}
 		{A76DA6B5-F5DC-4E1F-8B1B-E89BA8216229} = {D150B452-1254-4C2D-90DA-27765E2C7C0B}
 		{4FF756A4-148E-4E5D-8AAF-7558660F621E} = {71152D90-9B19-442E-AD44-F385A35B4DD2}
-		{0932D8B3-29EB-4546-987A-B246421A9B87} = {71152D90-9B19-442E-AD44-F385A35B4DD2}
+		{0932D8B3-29EB-4546-987A-B246421A9B87} = {3E7676A6-28AA-420B-8C43-B9DAEB457A43}
 		{89F89C37-F564-47EB-839D-C45ACD9D012A} = {2ECE9623-BD00-47BF-A617-3104D0E03486}
 		{3B44AFC0-F207-44E4-9F91-7F24E1F4D342} = {5BCA1BB1-86EB-420F-9AA5-465635002627}
-		{D5A72A34-5DE5-41E1-B52E-8F70D19CB7BF} = {71152D90-9B19-442E-AD44-F385A35B4DD2}
-		{2008F2C2-C1FA-4CB9-8A99-A9406AC4967D} = {71152D90-9B19-442E-AD44-F385A35B4DD2}
+		{D5A72A34-5DE5-41E1-B52E-8F70D19CB7BF} = {3E7676A6-28AA-420B-8C43-B9DAEB457A43}
+		{2008F2C2-C1FA-4CB9-8A99-A9406AC4967D} = {3E7676A6-28AA-420B-8C43-B9DAEB457A43}
 		{924CC67D-9E2B-46BA-BE1D-6C6C780CCFBC} = {F8FED8D2-E9CC-484B-9794-C60B0191CF7C}
 		{95745C95-A356-4E4A-9AC5-25ABD9659831} = {F8FED8D2-E9CC-484B-9794-C60B0191CF7C}
 		{41696F24-E345-4599-A0C7-0715F64946D8} = {90E75EF0-F385-4AA2-BEC2-706D75A4E363}
@@ -488,8 +572,7 @@ Global
 		{7D99E047-40B6-4BE8-98C5-CB58CBA61596} = {AFA994D0-4315-495A-A14A-74BC79DA9A51}
 		{9F0FABF3-4DEB-4389-B659-092A2BA29E7C} = {29D7DF00-E047-4DA1-8AB8-66EE234B0444}
 		{E92BA217-1681-453A-AEF8-888028A12070} = {F8FED8D2-E9CC-484B-9794-C60B0191CF7C}
-		{C1B1F481-6E3E-464C-A983-CB56AD430C1D} = {71152D90-9B19-442E-AD44-F385A35B4DD2}
-		{DE1D1C25-F30A-461C-B572-00BFA1C7161E} = {71152D90-9B19-442E-AD44-F385A35B4DD2}
+		{C1B1F481-6E3E-464C-A983-CB56AD430C1D} = {3E7676A6-28AA-420B-8C43-B9DAEB457A43}
 		{41B70B30-590D-476D-B58C-6CD05262DDA1} = {2B3C3D7D-D36A-47E8-9395-DB1AA2D271EA}
 		{C6C4637E-F0B7-43DF-A692-D8B82245311A} = {EE20B93E-797F-4E5C-9513-9F6B2B066042}
 		{24C8E95E-66EA-4E35-8584-C50171B68984} = {D150B452-1254-4C2D-90DA-27765E2C7C0B}
@@ -497,8 +580,8 @@ Global
 		{9B4E7B86-5F2F-4F84-9786-3D7CCB2024F8} = {8B1C755A-7401-43A6-B9EA-FE3625E2AF74}
 		{C0FA7295-375B-4CBE-9790-64BDBCF12A77} = {7D99E047-40B6-4BE8-98C5-CB58CBA61596}
 		{B9608A11-F0F0-47AA-BD55-D6E25A310DAA} = {EE20B93E-797F-4E5C-9513-9F6B2B066042}
-		{0F77947A-9E4C-4663-A7EE-C43A4D357217} = {71152D90-9B19-442E-AD44-F385A35B4DD2}
-		{B21F9BDF-E28D-4C42-91D5-008B0833A3FA} = {71152D90-9B19-442E-AD44-F385A35B4DD2}
+		{0F77947A-9E4C-4663-A7EE-C43A4D357217} = {3E7676A6-28AA-420B-8C43-B9DAEB457A43}
+		{B21F9BDF-E28D-4C42-91D5-008B0833A3FA} = {3E7676A6-28AA-420B-8C43-B9DAEB457A43}
 		{A06209E7-56B8-4C02-B47B-776E6E597A56} = {0A594D30-EDF8-4CAC-B99C-E779A6567205}
 		{B711D25A-7B1F-4CEA-9090-AA00523B2DB8} = {931A9A36-12BE-414F-81F3-D8E8741E78DC}
 		{6D20F8F3-D439-4577-B08D-6268737E6C3F} = {0A594D30-EDF8-4CAC-B99C-E779A6567205}
@@ -522,6 +605,19 @@ Global
 		{1301F6A5-274D-410C-A633-C1316D5BA8E5} = {7D99E047-40B6-4BE8-98C5-CB58CBA61596}
 		{805FA369-C681-4204-B16B-CFE3AE2FA813} = {7D99E047-40B6-4BE8-98C5-CB58CBA61596}
 		{720E76E7-71E2-4570-BD4A-A38B2858BD56} = {2B7D0649-6899-491F-B4E7-70D163B1F72D}
+		{5FE7A90C-9319-4A62-955B-8F6F22169679} = {71152D90-9B19-442E-AD44-F385A35B4DD2}
+		{18454832-DEE4-484F-9750-F67D46B790E7} = {30257D0A-ECD1-4D5F-8384-DDF2CF4F1CC6}
+		{3E7676A6-28AA-420B-8C43-B9DAEB457A43} = {71152D90-9B19-442E-AD44-F385A35B4DD2}
+		{30257D0A-ECD1-4D5F-8384-DDF2CF4F1CC6} = {71152D90-9B19-442E-AD44-F385A35B4DD2}
+		{6D064DA4-FE6F-44C1-AC3F-4A6D0C710B81} = {30257D0A-ECD1-4D5F-8384-DDF2CF4F1CC6}
+		{2EB4D42C-33CD-48DF-BD28-3E51934851EB} = {71152D90-9B19-442E-AD44-F385A35B4DD2}
+		{501D71D8-AE40-46D8-87F8-DF6C60371ADD} = {71152D90-9B19-442E-AD44-F385A35B4DD2}
+		{357A1FB3-FFEC-4378-B688-85C4A020A98C} = {30257D0A-ECD1-4D5F-8384-DDF2CF4F1CC6}
+		{37453F0B-4612-4DF5-807B-E446D170385F} = {71152D90-9B19-442E-AD44-F385A35B4DD2}
+		{9BE9B0D1-CD15-4308-A8ED-186603F776B3} = {30257D0A-ECD1-4D5F-8384-DDF2CF4F1CC6}
+		{77C83180-ADC7-4D6C-8DF0-25B0B15D381C} = {30257D0A-ECD1-4D5F-8384-DDF2CF4F1CC6}
+		{B755E1B8-2479-4E64-A039-88BA36263BBD} = {71152D90-9B19-442E-AD44-F385A35B4DD2}
+		{36BD02F8-CDCF-4B59-B9F4-68D71302F3C7} = {71152D90-9B19-442E-AD44-F385A35B4DD2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35

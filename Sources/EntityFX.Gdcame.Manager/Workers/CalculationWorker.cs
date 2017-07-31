@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using EntityFX.Gdcame.GameEngine.Contract;
 using EntityFX.Gdcame.Infrastructure.Common;
+using EntityFX.Gdcame.Manager.Contract.Common.Statistics;
 using EntityFX.Gdcame.Manager.Contract.Common.WorkerManager;
 using EntityFX.Gdcame.Manager.Contract.MainServer.AdminManager;
 
@@ -28,7 +29,7 @@ namespace EntityFX.Gdcame.Manager.MainServer.Workers
             Name = "Games Calculation worker";
         }
 
-        public override void Run()
+        public override void Run<TData>(TData data = default(TData))
         {
             _backgroundPerformAutomaticStepsTask = _backgroundPerformAutomaticStepsTimer.Start();
         }
@@ -47,6 +48,7 @@ namespace EntityFX.Gdcame.Manager.MainServer.Workers
 
         private void PerformAutomaticSteps()
         {
+            IncrementTick();
             var sw = new Stopwatch();
             sw.Start();
             lock (_stdLock)

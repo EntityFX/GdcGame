@@ -326,14 +326,12 @@
   <ItemGroup>
     <Compile Include="ContainerBootstrapper.cs" />
     <Compile Include="CoreStartup.cs" />
+    <Compile Include="RatingServerDatabasesProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebApiStartup.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <Content Include="NLog.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -360,25 +358,17 @@
       <Project>{3B44AFC0-F207-44E4-9F91-7F24E1F4D342}</Project>
       <Name>EntityFX.Gdcame.Common.Application.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Contract\EntityFX.Gdcame.DataAccess.Contract.csproj">
-      <Project>{0932d8b3-29eb-4546-987a-b246421a9b87}</Project>
-      <Name>EntityFX.Gdcame.DataAccess.Contract</Name>
+    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Repository.Ef.RatingServer\EntityFX.Gdcame.DataAccess.Repository.Ef.RatingServer.csproj">
+      <Project>{77c83180-adc7-4d6c-8df0-25b0b15d381c}</Project>
+      <Name>EntityFX.Gdcame.DataAccess.Repository.Ef.RatingServer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Repository.LocalStorage\EntityFX.Gdcame.DataAccess.Repository.LocalStorage.csproj">
-      <Project>{b21f9bdf-e28d-4c42-91d5-008b0833a3fa}</Project>
-      <Name>EntityFX.Gdcame.DataAccess.Repository.LocalStorage</Name>
+    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Repository.Mongo.RatingServer\EntityFX.Gdcame.DataAccess.Repository.Mongo.RatingServer.csproj">
+      <Project>{9be9b0d1-cd15-4308-a8ed-186603f776b3}</Project>
+      <Name>EntityFX.Gdcame.DataAccess.Repository.Mongo.RatingServer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Repository.Mongo\EntityFX.Gdcame.DataAccess.Repository.Mongo.csproj">
-      <Project>{0f77947a-9e4c-4663-a7ee-c43a4d357217}</Project>
-      <Name>EntityFX.Gdcame.DataAccess.Repository.Mongo</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Repository\EntityFX.Gdcame.DataAccess.Repository.Ef.csproj">
-      <Project>{d5a72a34-5de5-41e1-b52e-8f70d19cb7bf}</Project>
-      <Name>EntityFX.Gdcame.DataAccess.Repository.Ef</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Service\EntityFX.Gdcame.DataAccess.Service.csproj">
-      <Project>{2008f2c2-c1fa-4cb9-8a99-a9406ac4967d}</Project>
-      <Name>EntityFX.Gdcame.DataAccess.Service</Name>
+    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Service.RatingServer\EntityFX.Gdcame.DataAccess.Service.RatingServer.csproj">
+      <Project>{6d064da4-fe6f-44c1-ac3f-4a6d0c710b81}</Project>
+      <Name>EntityFX.Gdcame.DataAccess.Service.RatingServer</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Common\EntityFX.Gdcame.Infrastructure.Common.csproj">
       <Project>{924CC67D-9E2B-46BA-BE1D-6C6C780CCFBC}</Project>

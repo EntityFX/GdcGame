@@ -1,9 +1,9 @@
-﻿using EntityFX.Gdcame.Common.Contract.Items;
-using EntityFX.Gdcame.DataAccess.Model.Ef;
-using EntityFX.Gdcame.Infrastructure.Common;
-
-namespace EntityFX.Gdcame.DataAccess.Repository.Ef.Mappers
+﻿namespace EntityFX.Gdcame.DataAccess.Repository.Ef.MainServer.Mappers
 {
+    using EntityFX.Gdcame.Common.Contract.Items;
+    using EntityFX.Gdcame.DataAccess.Repository.Ef.MainServer.Entities;
+    using EntityFX.Gdcame.Infrastructure.Common;
+
     public class CustomRuleContractMapper : IMapper<CustomRuleEntity, CustomRule>
     {
         public CustomRule Map(CustomRuleEntity source, CustomRule destination = null)

@@ -6,10 +6,13 @@ using EntityFX.Gdcame.Application.Contract.Controller;
 using EntityFX.Gdcame.Application.Contract.Controller.MainServer;
 using EntityFX.Gdcame.Application.Contract.Model;
 using EntityFX.Gdcame.Application.Contract.Model.MainServer;
+using EntityFX.Gdcame.Common.Application.Model;
 using EntityFX.Gdcame.Infrastructure.Common;
+using EntityFX.Gdcame.Manager.Contract.Common.Statistics;
 using EntityFX.Gdcame.Manager.Contract.Common.WorkerManager;
 using EntityFX.Gdcame.Manager.Contract.MainServer.AdminManager;
 using Newtonsoft.Json;
+using SessionInfoModel = EntityFX.Gdcame.Application.Contract.Model.MainServer.SessionInfoModel;
 
 namespace EntityFX.Gdcame.Application.Api.Controller.MainServer
 {
@@ -63,9 +66,9 @@ namespace EntityFX.Gdcame.Application.Api.Controller.MainServer
 
         [HttpPost]
         [Route("servers")]
-        public async void UpdateServersList(string[] serversList)
+        public  void UpdateServersList(string[] serversList)
         {
-            await Task.Run(() => _adminManager.UpdateServersList(serversList));
+            this._workerManager.Start("NodeDataTransferWorker", serversList);
         }
 
 

@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace EntityFX.Gdcame.DataAccess.Contract.GameData.Store
+﻿namespace EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData.Store
 {
+    using System.Collections.Generic;
+
     public class StoredItem
     {
         public int Id { get; set; }

@@ -49,10 +49,7 @@
   <ItemGroup>
     <Compile Include="AdminManager\IAdminManager.cs" />
     <Compile Include="AdminManager\InsufficientPermissionsFault.cs" />
-    <Compile Include="AdminManager\PerformanceInfo.cs" />
-    <Compile Include="AdminManager\ResourcesUsageInfo.cs" />
-    <Compile Include="AdminManager\StatisticsInfo.cs" />
-    <Compile Include="AdminManager\SystemInfo.cs" />
+    <Compile Include="AdminManager\MainServerStatisticsInfo.cs" />
     <Compile Include="AdminManager\UserSessionsInfo.cs" />
     <Compile Include="CustomPrincipalPermissionAttribute.cs" />
     <Compile Include="GameManager\BuyFundDriverResult.cs" />
@@ -91,6 +88,10 @@
     <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Common\EntityFX.Gdcame.Infrastructure.Common.csproj">
       <Project>{924CC67D-9E2B-46BA-BE1D-6C6C780CCFBC}</Project>
       <Name>EntityFX.Gdcame.Infrastructure.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Manager.Contract.Common\EntityFX.Gdcame.Manager.Contract.Common.csproj">
+      <Project>{0E91EB31-4F0A-41A0-A785-006EA68BDA87}</Project>
+      <Name>EntityFX.Gdcame.Manager.Contract.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

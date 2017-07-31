@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using EntityFX.Gdcame.DataAccess.Contract.GameData.Store;
+
 using EntityFX.Gdcame.GameEngine.Contract;
 using EntityFX.Gdcame.GameEngine.Contract.Counters;
 using EntityFX.Gdcame.GameEngine.Contract.Items;
@@ -7,6 +7,8 @@ using EntityFX.Gdcame.Infrastructure.Common;
 
 namespace EntityFX.Gdcame.Manager.MainServer.Mappers.Store
 {
+    using EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData.Store;
+
     public class StoreGameDataContractMapper : IMapper<IGame, StoredGameData>
     {
         private readonly IMapper<GameCash, StoredCash> _fundsCountersContractMapper;

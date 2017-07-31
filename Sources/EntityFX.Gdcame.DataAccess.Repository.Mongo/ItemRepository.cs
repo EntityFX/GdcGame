@@ -1,14 +1,13 @@
-﻿using EntityFX.Gdcame.Common.Contract.Incrementors;
-using EntityFX.Gdcame.Common.Contract.Items;
-using EntityFX.Gdcame.DataAccess.Repository.Contract;
-using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.FundsDriver;
-using MongoDB.Bson;
-using MongoDB.Driver;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
+﻿namespace EntityFX.Gdcame.DataAccess.Repository.Mongo.MainServer
 {
+    using EntityFX.Gdcame.Common.Contract.Incrementors;
+    using EntityFX.Gdcame.Common.Contract.Items;
+    using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer;
+    using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer.Criterions.FundsDriver;
+
+    using MongoDB.Bson;
+    using MongoDB.Driver;
+
     public class ItemRepository : IItemRepository
     {
         private IMongoDatabase Database
@@ -18,12 +17,12 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
 
         public ItemRepository(IMongoDatabase database)
         {
-            Database = database;
+            this.Database = database;
         }
 
         public Item[] FindAll(GetAllFundsDriversCriterion criterion)
         {
-            IMongoCollection<Item> itemCollection = Database.GetCollection<Item>("Item");
+            IMongoCollection<Item> itemCollection = this.Database.GetCollection<Item>("Item");
 
             var filter = new BsonDocument();
             if (itemCollection.Find<Item>(filter).Count() == 0)

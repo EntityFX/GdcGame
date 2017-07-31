@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ServiceModel;
-using EntityFX.Gdcame.Common.Contract.UserRating;
-
-namespace EntityFX.Gdcame.DataAccess.Contract.Rating
+﻿namespace EntityFX.Gdcame.DataAccess.Contract.MainServer.Rating
 {
+    using System;
+    using System.ServiceModel;
+
+    using EntityFX.Gdcame.Common.Contract.UserRating;
+    using EntityFX.Gdcame.DataAccess.Contract.Common.Rating;
+
     [ServiceContract]
     public interface ILocalNodeRatingDataAccess : IRatingDataAccess
     {

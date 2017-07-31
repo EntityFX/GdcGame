@@ -1,9 +1,11 @@
 ﻿using System;
-using EntityFX.Gdcame.DataAccess.Model.Ef;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace EntityFX.Gdcame.Test.Entity
 {
+    using EntityFX.Gdcame.DataAccess.Repository.Ef.Common;
+    using EntityFX.Gdcame.DataAccess.Repository.Ef.Common.Entities;
+
     [TestClass]
     public class UserEntityTest
     {
@@ -19,7 +21,7 @@ namespace EntityFX.Gdcame.Test.Entity
                 Email = "email@mail.com",
                 CreateDateTime = DateTime.Now
             };
-            var ctx = new EconomicsArcadeDbContext(ConnString);
+            var ctx = new DbContext(ConnString);
             ctx.Users.Add(entity);
             ctx.SaveChanges();
             //ctx.UserEntitySet.
@@ -28,7 +30,7 @@ namespace EntityFX.Gdcame.Test.Entity
         [TestMethod]
         public void UpdateUserEntity()
         {
-            var ctx = new EconomicsArcadeDbContext(ConnString);
+            var ctx = new DbContext(ConnString);
             var userEntity = ctx.Users.Find(1);
             userEntity.UpdateDateTime = DateTime.Now;
             ctx.SaveChanges();

@@ -52,9 +52,9 @@
       <Project>{89F89C37-F564-47EB-839D-C45ACD9D012A}</Project>
       <Name>EntityFX.Gdcame.Common.Contract</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Contract\EntityFX.Gdcame.DataAccess.Contract.csproj">
+    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Contract\EntityFX.Gdcame.DataAccess.Contract.MainServer.csproj">
       <Project>{0932D8B3-29EB-4546-987A-B246421A9B87}</Project>
-      <Name>EntityFX.Gdcame.DataAccess.Contract</Name>
+      <Name>EntityFX.Gdcame.DataAccess.Contract.MainServer</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.GameEngine.Contract\EntityFX.Gdcame.GameEngine.Contract.csproj">
       <Project>{BEEA0656-542B-4C48-A480-CEFF662DD29F}</Project>

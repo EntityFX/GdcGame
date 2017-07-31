@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EntityFX.Gdcame.DataAccess.Contract.Server;
-
-namespace EntityFX.Gdcame.DataAccess.Repository.Contract
+﻿namespace EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer
 {
+    using EntityFX.Gdcame.DataAccess.Contract.MainServer.Server;
+
     public interface IServerRepository
     {
         Server[] FindServers();

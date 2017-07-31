@@ -5,28 +5,22 @@ using EntityFX.Gdcame.Application.Api.Controller.MainServer;
 using EntityFX.Gdcame.Application.Api.MainServer.Mappers;
 using EntityFX.Gdcame.Application.Api.MainServer.Models;
 using EntityFX.Gdcame.Application.Api.MainServer.Providers;
-using EntityFX.Gdcame.Application.Contract.Controller;
 using EntityFX.Gdcame.Application.Contract.Controller.Common;
 using EntityFX.Gdcame.Application.Contract.Controller.MainServer;
-using EntityFX.Gdcame.Application.Contract.Model;
 using EntityFX.Gdcame.Application.Contract.Model.MainServer;
 using EntityFX.Gdcame.Application.Providers.MainServer;
 using EntityFX.Gdcame.Common.Application.Model;
 using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.Common.Contract.Counters;
 using EntityFX.Gdcame.Common.Contract.UserRating;
-using EntityFX.Gdcame.DataAccess.Contract.GameData;
-using EntityFX.Gdcame.DataAccess.Contract.GameData.Store;
-using EntityFX.Gdcame.DataAccess.Contract.User;
-using EntityFX.Gdcame.DataAccess.Service;
 using EntityFX.Gdcame.GameEngine.Contract;
 using EntityFX.Gdcame.GameEngine.Contract.Counters;
 using EntityFX.Gdcame.GameEngine.Contract.Incrementors;
 using EntityFX.Gdcame.GameEngine.Contract.Items;
 using EntityFX.Gdcame.GameEngine.NetworkGameEngine;
 using EntityFX.Gdcame.Infrastructure.Common;
-using EntityFX.Gdcame.Manager;
 using EntityFX.Gdcame.Manager.Contract.Common;
+using EntityFX.Gdcame.Manager.Contract.Common.Statistics;
 using EntityFX.Gdcame.Manager.Contract.MainServer.AdminManager;
 using EntityFX.Gdcame.Manager.Contract.MainServer.GameManager;
 using EntityFX.Gdcame.Manager.MainServer;
@@ -41,10 +35,17 @@ using Microsoft.AspNet.SignalR;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
 using PortableLog.NLog;
+
 using CounterBase = EntityFX.Gdcame.Common.Contract.Counters.CounterBase;
 
 namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
 {
+    using System.Linq;
+
+    using EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData;
+    using EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData.Store;
+    using EntityFX.Gdcame.DataAccess.Service.MainServer;
+
     public class ContainerBootstrapper : IContainerBootstrapper
     {
         private readonly AppConfiguration _appConfiguration;
@@ -64,14 +65,16 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
             container.RegisterType<ILogger>(new InjectionFactory(
                 _ => new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger")))));
 
-            var childBootstrappers = new IContainerBootstrapper[]
+            var childBootstrappers = GetRepositoryProviders(_appConfiguration.RepositoryProvider).Concat(
+                new IContainerBootstrapper[]
                         {
-                GetRepositoryProvider(_appConfiguration.RepositoryProvider),
-                new DataAccess.Service.ContainerBootstrapper(),
+                new EntityFX.Gdcame.DataAccess.Service.Common.ContainerBootstrapper(),
+                new EntityFX.Gdcame.DataAccess.Service.MainServer.ContainerBootstrapper(),
                 new Manager.Common.ContainerBootstrapper(),
                 new Manager.MainServer.ContainerBootstrapper(),
                 new NotifyConsumer.ContainerBootstrapper()
-                        };
+                        }
+                ).ToArray();
             Array.ForEach(childBootstrappers, _ => _.Configure(container));
             container.AddNewExtension<Interception>();
             GlobalHost.DependencyResolver = new SignalRDependencyResolver(container);
@@ -79,10 +82,6 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
             container.RegisterType<IMapperFactory, MapperFactory>();
 
             container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessDocumentService>(
-                new InterceptionBehavior<PolicyInjectionBehavior>()
-                , new Interceptor<InterfaceInterceptor>()
-                );
-            container.RegisterType<IUserDataAccessService, UserDataAccessService>(
                 new InterceptionBehavior<PolicyInjectionBehavior>()
                 , new Interceptor<InterfaceInterceptor>()
                 );
@@ -114,6 +113,8 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
                 );
 
             container.RegisterType<IGameDataPersisterFactory, GameDataPersisterFactory>();
+
+            container.RegisterInstance<ICache>(container.Resolve<Cache>());
 
             container.RegisterType<IHashHelper, HashHelper>();
             container.RegisterInstance<IPerformanceHelper>(new PerformanceHelper());
@@ -157,7 +158,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
             container.RegisterType<IMapper<Gdcame.Common.Contract.Items.Item, ItemModel>, FundsDriverModelMapper>();
             container.RegisterType<IMapper<GameData, GameDataModel>, GameDataModelMapper>();
             container.RegisterType<IMapper<BuyFundDriverResult, BuyItemModel>, FundsDriverBuyInfoMapper>();
-            container.RegisterType<IMapper<StatisticsInfo, ServerStatisticsInfoModel>, StatisticsInfoMapper>();
+            container.RegisterType<IMapper<MainServerStatisticsInfo, ServerStatisticsInfoModel>, StatisticsInfoMapper>();
             container.RegisterType<IMapper<TopRatingStatistics, TopRatingStatisticsModel>, TopRatingStatisticsModelMapper>();
             container.RegisterType<IGameClientFactory, NoWcfGameManagerFactory>();
             container.RegisterType<ISessionManagerClientFactory, SessionManagerClientFactory>();
@@ -180,9 +181,14 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
             return container;
         }
 
-        private IContainerBootstrapper GetRepositoryProvider(string providerName)
+        private IContainerBootstrapper[] GetRepositoryProviders(string providerName)
         {
-            return new DatabasesProvider(providerName).GetRepositoryProvider(_appConfiguration.MongoConnectionString);
+            return new[]
+                       {  new CommonDatabasesProvider(providerName)
+                               .GetRepositoryProvider(_appConfiguration.MongoConnectionString),
+                          new MainServerDatabasesProvider(providerName)
+                               .GetRepositoryProvider(_appConfiguration.MongoConnectionString)
+                       };
         }
         
     }

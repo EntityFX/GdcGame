@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using EntityFX.Gdcame.Common.Contract;
-using EntityFX.Gdcame.DataAccess.Contract.GameData;
 using EntityFX.Gdcame.GameEngine.Contract;
 using EntityFX.Gdcame.GameEngine.Contract.Counters;
 using EntityFX.Gdcame.GameEngine.Contract.Incrementors;
@@ -18,6 +17,8 @@ using System.Linq;
 
 namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
 {
+    using EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData;
+
     public class NetworkGame : GameBase
     {
         private static readonly IDictionary<Type, Func<CounterBase, Contract.Counters.CounterBase>> MappingDictionary

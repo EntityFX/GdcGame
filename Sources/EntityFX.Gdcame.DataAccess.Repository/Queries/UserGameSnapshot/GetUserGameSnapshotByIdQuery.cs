@@ -1,12 +1,13 @@
-﻿using System.Data.Entity;
-using System.Linq;
-using EntityFX.Gdcame.DataAccess.Model.Ef;
-using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.UserGameSnapshot;
-using EntityFX.Gdcame.Infrastructure.Repository.EF;
-using EntityFX.Gdcame.Infrastructure.Repository.Query;
-
-namespace EntityFX.Gdcame.DataAccess.Repository.Ef.Queries.UserGameSnapshot
+﻿namespace EntityFX.Gdcame.DataAccess.Repository.Ef.MainServer.Queries.UserGameSnapshot
 {
+    using System.Data.Entity;
+    using System.Linq;
+
+    using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer.Criterions.UserGameSnapshot;
+    using EntityFX.Gdcame.DataAccess.Repository.Ef.MainServer.Entities;
+    using EntityFX.Gdcame.Infrastructure.Repository.EF;
+    using EntityFX.Gdcame.Infrastructure.Repository.Query;
+
     public class GetUserGameSnapshotByIdQuery : QueryBase,
         IQuery<GetUserGameSnapshotByIdCriterion, UserGameDataSnapshotEntity>
     {
@@ -17,7 +18,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef.Queries.UserGameSnapshot
 
         public UserGameDataSnapshotEntity Execute(GetUserGameSnapshotByIdCriterion criterion)
         {
-            return DbContext.Set<UserGameDataSnapshotEntity>().SingleOrDefault(_ => _.UserId == criterion.UserId);
+            return this.DbContext.Set<UserGameDataSnapshotEntity>().SingleOrDefault(_ => _.UserId == criterion.UserId);
         }
     }
 }

@@ -1,19 +1,14 @@
-﻿using EntityFX.Gdcame.Infrastructure.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Practices.Unity;
-using EntityFX.Gdcame.DataAccess.Repository.Contract;
-
-namespace EntityFX.Gdcame.DataAccess.Repository.LocalStorage
+﻿namespace EntityFX.Gdcame.DataAccess.Repository.LocalStorage.MainServer
 {
+    using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer;
+    using EntityFX.Gdcame.Infrastructure.Common;
+
+    using Microsoft.Practices.Unity;
+
     public class ContainerBootstrapper : IContainerBootstrapper
     {
         public IUnityContainer Configure(IUnityContainer container)
         {
-            container.RegisterType<IUserRepository, UserRepository>();
             container.RegisterType<IItemRepository, ItemRepository>();
             container.RegisterType<ICountersRepository, CountersRepository>();
             container.RegisterType<ICustomRuleRepository, CustomRuleRepository>();

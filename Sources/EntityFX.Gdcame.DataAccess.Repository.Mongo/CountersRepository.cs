@@ -1,16 +1,12 @@
-﻿using EntityFX.Gdcame.DataAccess.Repository.Contract;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EntityFX.Gdcame.Common.Contract.Counters;
-using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.Counters;
-using MongoDB.Driver;
-using MongoDB.Bson;
-
-namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
+﻿namespace EntityFX.Gdcame.DataAccess.Repository.Mongo.MainServer
 {
+    using EntityFX.Gdcame.Common.Contract.Counters;
+    using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer;
+    using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer.Criterions.Counters;
+
+    using MongoDB.Bson;
+    using MongoDB.Driver;
+
     public class CountersRepository : ICountersRepository
     {
 
@@ -21,12 +17,12 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
 
         public CountersRepository(IMongoDatabase database)
         {
-            Database = database;
+            this.Database = database;
         }
 
         public CounterBase[] FindAll(GetAllCountersCriterion criterion)
         {
-            IMongoCollection<CounterBase> counterCollection = Database.GetCollection<CounterBase>("Counter");
+            IMongoCollection<CounterBase> counterCollection = this.Database.GetCollection<CounterBase>("Counter");
 
             var filter = new BsonDocument();
             if (counterCollection.Find<CounterBase>(filter).Count() == 0)

@@ -1,12 +1,12 @@
-﻿using EntityFX.Gdcame.Infrastructure.Repository.Criterion;
-
-namespace EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.UserCounter
+﻿namespace EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer.Criterions.UserCounter
 {
+    using EntityFX.Gdcame.Infrastructure.Repository.Criterion;
+
     public class GetUserCountersByUserIdCriterion : ICriterion
     {
         public GetUserCountersByUserIdCriterion(int userId)
         {
-            UserId = userId;
+            this.UserId = userId;
         }
 
         public int UserId { get; private set; }

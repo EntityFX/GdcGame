@@ -1,7 +1,6 @@
 ﻿using EntityFX.Gdcame.Common.Contract;
 using EntityFX.Gdcame.Common.Contract.Counters;
 using EntityFX.Gdcame.Common.Contract.Incrementors;
-using EntityFX.Gdcame.DataAccess.Contract.GameData.Store;
 using EntityFX.Gdcame.GameEngine.Contract;
 using EntityFX.Gdcame.GameEngine.Contract.Counters;
 using EntityFX.Gdcame.GameEngine.Contract.Incrementors;
@@ -27,6 +26,8 @@ using ManualStepResult = EntityFX.Gdcame.GameEngine.Contract.ManualStepResult;
 
 namespace EntityFX.Gdcame.Manager.MainServer
 {
+    using EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData.Store;
+
     public class ContainerBootstrapper : IContainerBootstrapper
     {
         public IUnityContainer Configure(IUnityContainer container)

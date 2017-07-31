@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using EntityFX.Gdcame.Common.Contract;
-using EntityFX.Gdcame.DataAccess.Contract.GameData;
-using EntityFX.Gdcame.DataAccess.Contract.GameData.Store;
 using EntityFX.Gdcame.GameEngine.Contract;
 using EntityFX.Gdcame.GameEngine.Contract.Items;
 using EntityFX.Gdcame.Infrastructure.Common;
@@ -10,6 +8,8 @@ using EntityFX.Gdcame.NotifyConsumer.Contract;
 
 namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
 {
+    using EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData;
+
     public class GameDataChangesNotifier : IGameDataChangesNotifier
     {
         private readonly IMapperFactory _mapperFactory;

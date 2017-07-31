@@ -19,6 +19,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.MainServer
             workerManager.Add(container.Resolve<PersistenceWorker>());
             workerManager.Add(container.Resolve<SessionValidationWorker>());
             workerManager.Add(container.Resolve<RatingCalculationWorker>());
+            workerManager.Add(container.Resolve<NodeDataTransferWorker>());
         }
 
         protected override IContainerBootstrapper GetContainerBootstrapper(AppConfiguration appConfiguration)

@@ -74,13 +74,13 @@
       <Project>{E1C99406-19E6-4D12-A7FB-ED5818DAE973}</Project>
       <Name>EntityFX.Gdcame.Application.Api.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Contract\EntityFX.Gdcame.DataAccess.Contract.csproj">
+    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Contract\EntityFX.Gdcame.DataAccess.Contract.MainServer.csproj">
       <Project>{0932d8b3-29eb-4546-987a-b246421a9b87}</Project>
-      <Name>EntityFX.Gdcame.DataAccess.Contract</Name>
+      <Name>EntityFX.Gdcame.DataAccess.Contract.MainServer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Service\EntityFX.Gdcame.DataAccess.Service.csproj">
+    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Service\EntityFX.Gdcame.DataAccess.Service.MainServer.csproj">
       <Project>{2008F2C2-C1FA-4CB9-8A99-A9406AC4967D}</Project>
-      <Name>EntityFX.Gdcame.DataAccess.Service</Name>
+      <Name>EntityFX.Gdcame.DataAccess.Service.MainServer</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Common\EntityFX.Gdcame.Infrastructure.Common.csproj">
       <Project>{924CC67D-9E2B-46BA-BE1D-6C6C780CCFBC}</Project>

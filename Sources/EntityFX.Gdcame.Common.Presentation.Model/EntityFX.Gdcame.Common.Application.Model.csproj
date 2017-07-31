@@ -66,6 +66,7 @@
     <Compile Include="PerformanceInfoModel.cs" />
     <Compile Include="ResourcesUsageInfoModel.cs" />
     <Compile Include="ServerInfoModel.cs" />
+    <Compile Include="ServerStatisticsInfoModel.cs" />
     <Compile Include="SessionInfoModel.cs" />
     <Compile Include="SingleCounterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="TopRatingStatistics.cs" />
     <Compile Include="TopStatisticsAggregate.cs" />
     <Compile Include="TopStatisticsCounter.cs" />
+    <Compile Include="WorkerStatusModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Mappers\" />

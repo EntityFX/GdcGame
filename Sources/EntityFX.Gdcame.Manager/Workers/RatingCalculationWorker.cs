@@ -4,12 +4,13 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using EntityFX.Gdcame.Common.Contract.UserRating;
-using EntityFX.Gdcame.DataAccess.Contract.Rating;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager.Contract.Common.WorkerManager;
 
 namespace EntityFX.Gdcame.Manager.MainServer.Workers
 {
+    using EntityFX.Gdcame.DataAccess.Contract.MainServer.Rating;
+
     public class RatingCalculationWorker : WorkerBase, IWorker
     {
         private const int TimeSaveInSeconds = 5;       
@@ -30,7 +31,7 @@ namespace EntityFX.Gdcame.Manager.MainServer.Workers
             Name = "Rating Calculation Worker";
         }
 
-        public override void Run()
+        public override void Run<TData>(TData data = default(TData))
         {
             _backgroundSaveHistoryCheckerTask = _backgroundSaveHistoryCheckerTimer.Start();
         }
@@ -47,6 +48,7 @@ namespace EntityFX.Gdcame.Manager.MainServer.Workers
 
         private void PerformRatingCalculation()
         {
+            IncrementTick();
             var sw = new Stopwatch();
             sw.Start();
             lock (_stdLock)

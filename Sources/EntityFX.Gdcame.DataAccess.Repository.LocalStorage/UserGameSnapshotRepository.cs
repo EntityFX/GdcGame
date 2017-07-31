@@ -1,16 +1,13 @@
-﻿using EntityFX.Gdcame.DataAccess.Repository.Contract;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EntityFX.Gdcame.DataAccess.Contract.GameData.Store;
-using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.UserGameSnapshot;
-using System.IO;
-using Newtonsoft.Json;
-
-namespace EntityFX.Gdcame.DataAccess.Repository.LocalStorage
+﻿namespace EntityFX.Gdcame.DataAccess.Repository.LocalStorage.MainServer
 {
+    using System.IO;
+
+    using EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData.Store;
+    using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer;
+    using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer.Criterions.UserGameSnapshot;
+
+    using Newtonsoft.Json;
+
     public class UserGameSnapshotRepository : IUserGameSnapshotRepository
     {
         public UserGameSnapshotRepository()
@@ -51,7 +48,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository.LocalStorage
 
         public void CreateOrUpdateUserGames(StoredGameDataWithUserId[] listOfGameDataWithUserId)
         {
-            CreateUserGames(listOfGameDataWithUserId);
+            this.CreateUserGames(listOfGameDataWithUserId);
         }
     }
 }

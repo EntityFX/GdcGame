@@ -1,21 +1,23 @@
 ﻿using System;
 using System.Linq;
-using EntityFX.Gdcame.DataAccess.Contract.Server;
-using EntityFX.Gdcame.DataAccess.Contract.User;
+
+
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager.Contract.Common;
+using EntityFX.Gdcame.Manager.Contract.Common.Statistics;
 using EntityFX.Gdcame.Manager.Contract.MainServer.AdminManager;
 using EntityFX.Gdcame.Manager.Contract.MainServer.UserManager;
 
 
 namespace EntityFX.Gdcame.Manager.MainServer
 {
+    using EntityFX.Gdcame.DataAccess.Contract.Common.User;
+
     public class AdminManager : IAdminManager
     {
         private readonly GameSessions _gameSessions;
         private readonly IPerformanceHelper _performanceHelper;
         private readonly IUserDataAccessService _userDataAccessService;
-        private readonly IServerDataAccessService _serverDataAccessService;
         private readonly SystemInfo _systemInfo;
         private readonly IOperationContextHelper _operationContextHelper;
         private static readonly DateTime ServerStartTime = DateTime.Now;
@@ -24,13 +26,11 @@ namespace EntityFX.Gdcame.Manager.MainServer
             , GameSessions gameSessions
             , IPerformanceHelper performanceHelper
             , IUserDataAccessService userDataAccessService
-            , IServerDataAccessService serverDataAccessService
             , SystemInfo systemInfo)
         {
             _gameSessions = gameSessions;
             _performanceHelper = performanceHelper;
             _userDataAccessService = userDataAccessService;
-            _serverDataAccessService = serverDataAccessService;
             _systemInfo = systemInfo;
             _operationContextHelper = operationContextHelper;
         }
@@ -77,15 +77,10 @@ namespace EntityFX.Gdcame.Manager.MainServer
             throw new NotImplementedException();
         }
 
-        public void  UpdateServersList(string[] newServersList)
-        {
-            _serverDataAccessService.UpdateServers(newServersList);
-        }
 
-
-        public StatisticsInfo GetStatisticsInfo()
+        public MainServerStatisticsInfo GetStatisticsInfo()
         {
-            return new StatisticsInfo()
+            return new MainServerStatisticsInfo()
             {
                 ActiveSessionsCount = _gameSessions.Sessions.Count,
                 ActiveGamesCount = _gameSessions.Games.Count,

@@ -1,11 +1,12 @@
 ﻿using System;
 using System.ServiceModel;
-using EntityFX.Gdcame.DataAccess.Contract.User;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager.Contract.MainServer.SessionManager;
 
 namespace EntityFX.Gdcame.Manager.MainServer
 {
+    using EntityFX.Gdcame.DataAccess.Contract.Common.User;
+
     public class SessionManager : ISessionManager
     {
         private readonly GameSessions _gameSessions;

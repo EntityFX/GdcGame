@@ -1,22 +1,21 @@
-﻿using EntityFX.Gdcame.DataAccess.Contract.GameData;
-using EntityFX.Gdcame.DataAccess.Contract.GameData.Store;
-using EntityFX.Gdcame.DataAccess.Repository.Contract;
-using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.UserGameSnapshot;
-
-namespace EntityFX.Gdcame.DataAccess.Service
+﻿namespace EntityFX.Gdcame.DataAccess.Service.MainServer
 {
+    using EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData;
+    using EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData.Store;
+    using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer;
+
     public class GameDataStoreDataAccessDocumentService : IGameDataStoreDataAccessService
     {
         private readonly IUserGameSnapshotRepository _userGameSnapshotRepository;
 
         public GameDataStoreDataAccessDocumentService(IUserGameSnapshotRepository userGameSnapshotRepository)
         {
-            _userGameSnapshotRepository = userGameSnapshotRepository;
+            this._userGameSnapshotRepository = userGameSnapshotRepository;
         }
 
         public void StoreGameDataForUsers(StoredGameDataWithUserId[] listOfGameDataWithUserId)
         {
-            _userGameSnapshotRepository.CreateOrUpdateUserGames(listOfGameDataWithUserId);
+            this._userGameSnapshotRepository.CreateOrUpdateUserGames(listOfGameDataWithUserId);
             
             ///////var userGame = _userGameSnapshotRepository.FindByUserId(new GetUserGameSnapshotByIdCriterion(userId));
 

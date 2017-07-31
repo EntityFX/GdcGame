@@ -1,10 +1,11 @@
-﻿using System;
-using EntityFX.Gdcame.Common.Contract.Incrementors;
-using EntityFX.Gdcame.DataAccess.Model.Ef;
-using EntityFX.Gdcame.Infrastructure.Common;
-
-namespace EntityFX.Gdcame.DataAccess.Repository.Ef.Mappers
+﻿namespace EntityFX.Gdcame.DataAccess.Repository.Ef.MainServer.Mappers
 {
+    using System;
+
+    using EntityFX.Gdcame.Common.Contract.Incrementors;
+    using EntityFX.Gdcame.DataAccess.Repository.Ef.MainServer.Entities;
+    using EntityFX.Gdcame.Infrastructure.Common;
+
     public class IncrementorContractMapper : IMapper<IncrementorEntity, Incrementor>
     {
         public Incrementor Map(IncrementorEntity source, Incrementor destination = null)

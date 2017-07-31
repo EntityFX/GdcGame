@@ -1,19 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-
-using System.Threading.Tasks;
-using System.Timers;
-using EntityFx.GdCame.Test.Shared;
-using EntityFX.Gdcame.Application.Contract.Controller.MainServer;
-using EntityFX.Gdcame.Application.Contract.Model.MainServer;
-using EntityFX.Gdcame.Infrastructure.Api.Auth;
-using EntityFX.Gdcame.Infrastructure.Api.Exceptions;
-using EntityFX.Gdcame.Presentation.ConsoleClient.Common;
-
-namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
+﻿namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Timers;
+
+    using EntityFx.GdCame.Test.Shared;
+
+    using EntityFX.Gdcame.Common.Application.Model;
+    using EntityFX.Gdcame.Infrastructure.Api.Auth;
+    using EntityFX.Gdcame.Infrastructure.Api.Exceptions;
+    using EntityFX.Gdcame.Presentation.ConsoleClient.Common;
+
     internal class AdminConsole
     {
         private readonly string _password;
@@ -39,14 +38,14 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
         public AdminConsole(string user, string password, Uri mainServer, int port)
 
         {
-            _user = user;
-            _password = password;
-            _mainServer = mainServer;
-            _servicePort = port;
-            _statisticsUpdateTimer = new Timer(5000);
-            _statisticsUpdateTimer.Elapsed += GetStatisticsCallback;
+            this._user = user;
+            this._password = password;
+            this._mainServer = mainServer;
+            this._servicePort = port;
+            this._statisticsUpdateTimer = new Timer(5000);
+            this._statisticsUpdateTimer.Elapsed += this.GetStatisticsCallback;
 
-            InitMenu();
+            this.InitMenu();
         }
 
 
@@ -54,41 +53,41 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 
         private void InitMenu()
         {
-            _menu = new Dictionary<ConsoleKey, MenuItem>
+            this._menu = new Dictionary<ConsoleKey, MenuItem>
             {
                 {
                     ConsoleKey.F1,
-                    new MenuItem {MenuText = "Все активные сессии", MenuAction = GetActiveSessions}
+                    new MenuItem {MenuText = "Все активные сессии", MenuAction = this.GetActiveSessions}
                 },
-                {ConsoleKey.F2, new MenuItem {MenuText = "Закрыть сессию по GUID", MenuAction = CloseSessionByGuid}},
+                {ConsoleKey.F2, new MenuItem {MenuText = "Закрыть сессию по GUID", MenuAction = this.CloseSessionByGuid}},
                 {
                     ConsoleKey.F3,
                     new MenuItem
                     {
                         MenuText = "Закрыть сессию по имени пользователя и номеру в списке GUID",
-                        MenuAction = CloseSessionByUserNameAndPositionOfGuid
+                        MenuAction = this.CloseSessionByUserNameAndPositionOfGuid
                     }
                 },
                 {
                     ConsoleKey.F4,
-                    new MenuItem {MenuText = "Закрыть все сессии пользователя", MenuAction = CloseAllUserSessions}
+                    new MenuItem {MenuText = "Закрыть все сессии пользователя", MenuAction = this.CloseAllUserSessions}
                 },
-                {ConsoleKey.F5, new MenuItem {MenuText = "Закрыть все сессии", MenuAction = CloseAllSessions}},
+                {ConsoleKey.F5, new MenuItem {MenuText = "Закрыть все сессии", MenuAction = this.CloseAllSessions}},
                 {
                     ConsoleKey.F6,
                     new MenuItem
                     {
                         MenuText = "Закрыть все сессии кроме текущей",
-                        MenuAction = CloseAllSessionsExludeThis
+                        MenuAction = this.CloseAllSessionsExludeThis
                     }
                 },
-                {ConsoleKey.F7, new MenuItem {MenuText = "Обнулить пользователя", MenuAction = WipeUser}},
-                {ConsoleKey.F8, new MenuItem {MenuText = "Статистика", MenuAction = GetStatistics}},
-                {ConsoleKey.F9, new MenuItem {MenuText = "Echo", MenuAction = Echo}},
-                {ConsoleKey.F10, new MenuItem {MenuText = "Обновить список серверов", MenuAction = GetNodesList}},
-                {ConsoleKey.F11, new MenuItem {MenuText = "Добавить сервер", MenuAction = AddServer}},
-                {ConsoleKey.Backspace, new MenuItem {MenuText = "Закрыть все игры", MenuAction = StopAllGames}},
-                {ConsoleKey.Escape, new MenuItem {MenuText = "Выход", MenuAction = Exit}}
+                {ConsoleKey.F7, new MenuItem {MenuText = "Обнулить пользователя", MenuAction = this.WipeUser}},
+                {ConsoleKey.F8, new MenuItem {MenuText = "Статистика", MenuAction = this.GetStatistics}},
+                {ConsoleKey.F9, new MenuItem {MenuText = "Echo", MenuAction = this.Echo}},
+                {ConsoleKey.F10, new MenuItem {MenuText = "Обновить список серверов", MenuAction = this.GetNodesList}},
+                {ConsoleKey.F11, new MenuItem {MenuText = "Добавить сервер", MenuAction = this.AddServer}},
+                {ConsoleKey.Backspace, new MenuItem {MenuText = "Закрыть все игры", MenuAction = this.StopAllGames}},
+                {ConsoleKey.Escape, new MenuItem {MenuText = "Выход", MenuAction = this.Exit}}
             };
         }
 
@@ -99,9 +98,9 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 
         private void StopAllGames()
         {
-            var serversList = ApiHelper.GetServers(_mainServer).ToArray();
+            var serversList = ApiHelper.GetServers(this._mainServer).ToArray();
 
-            Task.WhenAll(DoAuthServers(serversList).Where(_ => _ != null).Select(_ => Task.Factory.StartNew(
+            Task.WhenAll(this.DoAuthServers(serversList).Where(_ => _ != null).Select(_ => Task.Factory.StartNew(
                 () =>
                 {
                     try
@@ -119,10 +118,10 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 
         private void Echo()
         {
-            var serversList = ApiHelper.GetServers(_mainServer).ToArray();
+            var serversList = ApiHelper.GetServers(this._mainServer).ToArray();
 
             var echoResults = Task.WhenAll(
-                DoAuthServers(serversList).Where(_ => _ != null).Select(_ => Task.Factory.StartNew(
+                this.DoAuthServers(serversList).Where(_ => _ != null).Select(_ => Task.Factory.StartNew(
                     () =>
                     {
                         try
@@ -145,10 +144,10 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 
         private void GetStatistics()
         {
-            var serversList = ApiHelper.GetServers(_mainServer).ToArray();
+            var serversList = ApiHelper.GetServers(this._mainServer).ToArray();
 
-            _serversAuthContextList = DoAuthServers(serversList);
-            _statisticsUpdateTimer.Start();
+            this._serversAuthContextList = this.DoAuthServers(serversList);
+            this._statisticsUpdateTimer.Start();
         }
 
         private PasswordOAuthContext[] DoAuthServers(string[] serversList)
@@ -158,10 +157,10 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                 serversList.Select(
                         server =>
                             new PasswordAuthProvider(
-                                new Uri(string.Format("http://{0}:{1}/", server, _servicePort))))
+                                new Uri(string.Format("http://{0}:{1}/", server, this._servicePort))))
                     .Select(async passwordProvider => await passwordProvider.Login(new PasswordAuthRequest<PasswordAuthData>
                     {
-                        RequestData = new PasswordAuthData { Password = _password, Usename = _user }
+                        RequestData = new PasswordAuthData { Password = this._password, Usename = this._user }
                     }))).Result;
         }
 
@@ -176,7 +175,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 
             public MultiServerOperationErrorResult()
             {
-                IsSuccess = false;
+                this.IsSuccess = false;
             }
         }
 
@@ -186,7 +185,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 
             serversList.Select(server => new AnonimousAuthContext()
             {
-                BaseUri = new Uri(string.Format("http://{0}:{1}/", server, _servicePort))
+                BaseUri = new Uri(string.Format("http://{0}:{1}/", server, this._servicePort))
             }).Select(
                 context =>
                 {
@@ -217,7 +216,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
         public void GetStatisticsCallback(object sender, ElapsedEventArgs e)
         {
             var statistics = Task.WhenAll(
-                _serversAuthContextList.Where(_ => _ != null).Select(_ => Task.Factory.StartNew(
+                this._serversAuthContextList.Where(_ => _ != null).Select(_ => Task.Factory.StartNew(
                     () =>
                     {
                         try
@@ -233,23 +232,23 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                     }))
             ).Result;
 
-            lock (_stdLock)
+            lock (this._stdLock)
             {
-                PrintStatistics(statistics);
+                this.PrintStatistics(statistics);
             }
         }
 
 
         private void AddServer()
         {
-            var serversList = ApiHelper.GetServers(_mainServer).ToArray();
+            var serversList = ApiHelper.GetServers(this._mainServer).ToArray();
             Console.Clear();
             Console.WriteLine("Please enter server address:");
             var server = Console.ReadLine();
 
             serversList = serversList.Concat(new[] { server }).ToArray();
 
-            var checkResult = CheckServersAvailability(serversList, _servicePort);
+            var checkResult = this.CheckServersAvailability(serversList, this._servicePort);
             if (!checkResult.IsSuccess)
             {
                 PrettyConsole.WriteLineColor(ConsoleColor.Red, "Servers unavailable: {0}",
@@ -260,7 +259,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             {
                 var results = Task.WhenAll(
 
-                DoAuthServers(serversList)
+                this.DoAuthServers(serversList)
                     .Where(_ => _ != null)
                     .Select(
                         _ => Task.Factory.StartNew(
@@ -338,7 +337,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                 PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-15}", "CPU:");
                 PrettyConsole.WriteColor(ConsoleColor.Cyan, "{0,-5:N1} %",
                     serverStatisticsInfoModel.Item2.ResourcesUsageInfo.CpuUsed);
-                PrintMarker(serverStatisticsInfoModel.Item2.ResourcesUsageInfo.CpuUsed, 50);
+                this.PrintMarker(serverStatisticsInfoModel.Item2.ResourcesUsageInfo.CpuUsed, 50);
 
                 var memoryPercent = (serverStatisticsInfoModel.Item2.SystemInfo.MemoryTotal -
                                      serverStatisticsInfoModel.Item2.ResourcesUsageInfo.MemoryAvailable)
@@ -352,8 +351,12 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 
                 PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-15}", "RAM:");
                 PrettyConsole.WriteColor(ConsoleColor.Cyan, "{0,-5:N1} % ", memoryPercent);
-                PrintMarker(memoryPercent, 50);
+                this.PrintMarker(memoryPercent, 50);
+                PrettyConsole.WriteLineColor(ConsoleColor.DarkYellow, "\tWorkers");
+                Array.ForEach(serverStatisticsInfoModel.Item2.ActiveWorkers, 
+                    w => PrettyConsole.WriteLineColor(ConsoleColor.DarkYellow, "\t\t{0}", w));
                 Console.WriteLine();
+
             }
         }
 
@@ -392,18 +395,18 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
         {
             Console.Clear();
 
-            _exitFlag = false;
-            while (!_exitFlag)
+            this._exitFlag = false;
+            while (!this._exitFlag)
             {
-                _isMainMenu = true;
-                ShowMenu();
+                this._isMainMenu = true;
+                this.ShowMenu();
                 var key = Console.ReadKey();
-                _isMainMenu = false;
+                this._isMainMenu = false;
                 Console.Clear();
 
                 try
                 {
-                    _menu[key.Key].MenuAction.Invoke();
+                    this._menu[key.Key].MenuAction.Invoke();
                 }
                 catch (Exception exp)
                 {
@@ -412,9 +415,9 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                     //GetAssociatedDelegate(-1).Invoke();
                 }
 
-                if (!_exitFlag)
+                if (!this._exitFlag)
                 {
-                    Pause();
+                    this.Pause();
                     Console.Clear();
                 }
             }
@@ -423,7 +426,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
         private void ShowMenu()
         {
             Console.WriteLine("-=Admin=-");
-            foreach (var item in _menu)
+            foreach (var item in this._menu)
                 Console.WriteLine(item.Key + " - " + item.Value.MenuText);
         }
 
@@ -431,7 +434,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
         {
             Console.WriteLine("Paused. Press any key...");
             Console.ReadKey();
-            _statisticsUpdateTimer.Stop();
+            this._statisticsUpdateTimer.Stop();
         }
 
 
@@ -439,11 +442,11 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
         {
             Console.Clear();
 
-            var server = GetServer();
+            var server = this.GetServer();
             if (string.IsNullOrEmpty(server)) return;
 
             var auth =
-                ApiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, _servicePort)), _user, _password)
+                ApiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, this._servicePort)), this._user, this._password)
                     .Result;
 
             var client = ApiHelper.GetAdminClient(auth);
@@ -472,11 +475,11 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
         private void CloseSessionByGuid()
         {
             Console.Clear();
-            var server = GetServer();
+            var server = this.GetServer();
             if (string.IsNullOrEmpty(server)) return;
 
             var auth =
-                ApiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, _servicePort)), _user, _password)
+                ApiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, this._servicePort)), this._user, this._password)
                     .Result;
 
             var client = ApiHelper.GetAdminClient(auth);
@@ -501,11 +504,11 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
         {
             Console.Clear();
 
-            var server = GetServer();
+            var server = this.GetServer();
             if (string.IsNullOrEmpty(server)) return;
 
             var auth =
-                ApiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, _servicePort)), _user, _password)
+                ApiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, this._servicePort)), this._user, this._password)
                     .Result;
 
             var client = ApiHelper.GetAdminClient(auth);
@@ -537,11 +540,11 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
         {
             Console.Clear();
 
-            var server = GetServer();
+            var server = this.GetServer();
             if (string.IsNullOrEmpty(server)) return;
 
             var auth =
-                ApiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, _servicePort)), _user, _password)
+                ApiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, this._servicePort)), this._user, this._password)
                     .Result;
 
             var client = ApiHelper.GetAdminClient(auth);
@@ -565,10 +568,10 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             Console.Clear();
             Console.WriteLine("Close sessions...");
 
-            var server = GetServer();
+            var server = this.GetServer();
 
             var auth =
-                ApiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, _servicePort)), _user, _password)
+                ApiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, this._servicePort)), this._user, this._password)
                     .Result;
 
             var client = ApiHelper.GetAdminClient(auth);
@@ -586,18 +589,18 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 
         private void CloseAllSessionsExludeThis()
         {
-            var server = GetServer();
+            var server = this.GetServer();
             if (string.IsNullOrEmpty(server)) return;
 
             var auth =
-                ApiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, _servicePort)), _user, _password)
+                ApiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, this._servicePort)), this._user, this._password)
                     .Result;
 
             var client = ApiHelper.GetAdminClient(auth);
 
             try
             {
-                client.CloseAllSessionsExcludeThis(SessionGuid);
+                client.CloseAllSessionsExcludeThis(this.SessionGuid);
                 Console.WriteLine("Круто!");
             }
             catch (Exception exp)
@@ -609,11 +612,11 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
         private void WipeUser()
         {
             Console.Clear();
-            var server = GetServer();
+            var server = this.GetServer();
             if (string.IsNullOrEmpty(server)) return;
 
             var auth =
-                ApiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, _servicePort)), _user, _password)
+                ApiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, this._servicePort)), this._user, this._password)
                     .Result;
 
             var client = ApiHelper.GetAdminClient(auth);
@@ -644,7 +647,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 
         private void Exit()
         {
-            _exitFlag = true;
+            this._exitFlag = true;
         }
 
         private string GetServer()
@@ -652,11 +655,11 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             string[] serversList = null;
             try
             {
-                serversList = ApiHelper.GetServers(_mainServer).ToArray();
+                serversList = ApiHelper.GetServers(this._mainServer).ToArray();
             }
             catch (AggregateException e)
             {
-                PrettyConsole.WriteLineColor(ConsoleColor.Red, "Main server: {0}", _mainServer);
+                PrettyConsole.WriteLineColor(ConsoleColor.Red, "Main server: {0}", this._mainServer);
                 foreach (var innerException in e.InnerExceptions)
                 {
                     var clientException = innerException as IClientException<ErrorData>;

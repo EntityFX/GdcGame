@@ -1,4 +1,4 @@
-﻿namespace EntityFX.Gdcame.DataAccess.Repository.Contract
+﻿namespace EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer
 {
     public class GameRepositoryFacade
     {

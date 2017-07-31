@@ -1,17 +1,13 @@
-﻿using EntityFX.Gdcame.DataAccess.Repository.Contract;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EntityFX.Gdcame.DataAccess.Contract.GameData.Store;
-using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.UserGameSnapshot;
-using MongoDB.Driver;
-using EntityFX.Gdcame.DataAccess.Contract.User;
-using MongoDB.Bson;
-
-namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
+﻿namespace EntityFX.Gdcame.DataAccess.Repository.Mongo.MainServer
 {
+    using System.Linq;
+
+    using EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData.Store;
+    using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer;
+    using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer.Criterions.UserGameSnapshot;
+
+    using MongoDB.Driver;
+
     public class UserGameSnapshotRepository : IUserGameSnapshotRepository
     {
         private IMongoDatabase Database
@@ -21,12 +17,12 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
 
         public UserGameSnapshotRepository(IMongoDatabase database)
         {
-            Database = database;
+            this.Database = database;
         }
 
         public StoredGameData FindByUserId(GetUserGameSnapshotByIdCriterion criterion)
         {
-            IMongoCollection<StoredGameDataWithUserId> storedGameDataWithUserId = Database.GetCollection<StoredGameDataWithUserId>("StoredGameDataWithUserId");
+            IMongoCollection<StoredGameDataWithUserId> storedGameDataWithUserId = this.Database.GetCollection<StoredGameDataWithUserId>("StoredGameDataWithUserId");
             var filter = Builders<StoredGameDataWithUserId>.Filter.Eq("UserId", criterion.UserId);
             var result = storedGameDataWithUserId.Find(filter).ToList().FirstOrDefault();
             return result  == null ? null : result.StoredGameData;
@@ -34,13 +30,13 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
 
         public void CreateUserGames(StoredGameDataWithUserId[] gameDataWithUserId)
         {
-            IMongoCollection<StoredGameDataWithUserId> users = Database.GetCollection<StoredGameDataWithUserId>("StoredGameDataWithUserId");
+            IMongoCollection<StoredGameDataWithUserId> users = this.Database.GetCollection<StoredGameDataWithUserId>("StoredGameDataWithUserId");
             users.InsertMany(gameDataWithUserId);
         }
     
         public void CreateOrUpdateUserGames(StoredGameDataWithUserId[] gameDataWithUserId)
         {
-            IMongoCollection<StoredGameDataWithUserId> users = Database.GetCollection<StoredGameDataWithUserId>("StoredGameDataWithUserId");
+            IMongoCollection<StoredGameDataWithUserId> users = this.Database.GetCollection<StoredGameDataWithUserId>("StoredGameDataWithUserId");
 
             var groupedByUserId = gameDataWithUserId.GroupBy(_ => _.UserId).Select(_ => _.First()).ToArray();
             var usersFilter = Builders<StoredGameDataWithUserId>.Filter.In("UserId", groupedByUserId.Select(_ => _.UserId));

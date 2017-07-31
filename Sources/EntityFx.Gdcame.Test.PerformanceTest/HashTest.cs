@@ -14,9 +14,9 @@ namespace EntityFx.Gdcame.Test.Unit
             IHashHelper hh = new HashHelper();
             Debug.WriteLine(hh.GetHashedString("admin"));
 
-            //TODO: Use Rendezvous Hashing algorithm.
-            //            Debug.WriteLine(hh.GetModuloOfUserIdHash(hh.GetHashedString("admin"), 4));
-            //todo:remove GetHashedString
+            // TODO: Use Rendezvous Hashing algorithm.
+            // Debug.WriteLine(hh.GetModuloOfUserIdHash(hh.GetHashedString("admin"), 4));
+            // todo:remove GetHashedString
             Debug.WriteLine(hh.GetServerNumberByUserId(
             new[]{
                 "127.0.0.1",

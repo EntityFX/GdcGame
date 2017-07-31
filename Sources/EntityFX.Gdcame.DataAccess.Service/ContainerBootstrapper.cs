@@ -1,14 +1,17 @@
-﻿using EntityFX.Gdcame.DataAccess.Contract.GameData;
-using EntityFX.Gdcame.DataAccess.Contract.Rating;
-using EntityFX.Gdcame.DataAccess.Contract.Server;
-using EntityFX.Gdcame.DataAccess.Contract.User;
-using EntityFX.Gdcame.DataAccess.Repository.Contract;
-using EntityFX.Gdcame.Infrastructure.Common;
-using Microsoft.Practices.Unity;
-using Microsoft.Practices.Unity.InterceptionExtension;
-
-namespace EntityFX.Gdcame.DataAccess.Service
+﻿namespace EntityFX.Gdcame.DataAccess.Service.MainServer
 {
+    using EntityFX.Gdcame.DataAccess.Contract.Common.Rating;
+    using EntityFX.Gdcame.DataAccess.Contract.Common.User;
+    using EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData;
+    using EntityFX.Gdcame.DataAccess.Contract.MainServer.Rating;
+    using EntityFX.Gdcame.DataAccess.Contract.MainServer.Server;
+    using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer;
+    using EntityFX.Gdcame.DataAccess.Service.Common;
+    using EntityFX.Gdcame.Infrastructure.Common;
+
+    using Microsoft.Practices.Unity;
+    using Microsoft.Practices.Unity.InterceptionExtension;
+
     public class ContainerBootstrapper : IContainerBootstrapper
     {
         public IUnityContainer Configure(IUnityContainer container)

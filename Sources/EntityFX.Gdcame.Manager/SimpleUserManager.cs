@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using EntityFX.Gdcame.DataAccess.Contract.User;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager.Contract.MainServer.SessionManager;
 using EntityFX.Gdcame.Manager.Contract.MainServer.UserManager;
 
 namespace EntityFX.Gdcame.Manager.MainServer
 {
+    using EntityFX.Gdcame.DataAccess.Contract.Common.User;
+
     public class SimpleUserManager : ISimpleUserManager
     {
         private readonly IHashHelper _hashHelper;

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.ServiceModel;
+using EntityFX.Gdcame.Manager.Contract.Common.AdminManager;
+using EntityFX.Gdcame.Manager.Contract.Common.Statistics;
 using EntityFX.Gdcame.Manager.Contract.MainServer.SessionManager;
 
 namespace EntityFX.Gdcame.Manager.Contract.MainServer.AdminManager
 {
     [ServiceContract]
-    public interface IAdminManager
+    public interface IAdminManager : IAdminManager<MainServerStatisticsInfo>
     {
         [OperationContract]
         [FaultContract(typeof (InvalidSessionFault))]
@@ -49,14 +51,6 @@ namespace EntityFX.Gdcame.Manager.Contract.MainServer.AdminManager
         [CustomPrincipalPermission(AllowedRoles = new[] {UserRole.Admin})]
         void ReloadGame(string username);
 
-        [OperationContract]
-        [FaultContract(typeof(InvalidSessionFault))]
-        [FaultContract(typeof(InsufficientPermissionsFault))]
-        [CustomPrincipalPermission(AllowedRoles = new[] { UserRole.Admin })]
-        void UpdateServersList(string[] newServersList);
-
-        [OperationContract]
-        StatisticsInfo GetStatisticsInfo();
         [OperationContract]
         void StopGame(string login);
         [OperationContract]

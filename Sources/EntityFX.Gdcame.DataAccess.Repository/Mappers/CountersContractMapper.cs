@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using EntityFX.Gdcame.Common.Contract.Counters;
-using EntityFX.Gdcame.DataAccess.Model.Ef;
-using EntityFX.Gdcame.Infrastructure.Common;
-
-namespace EntityFX.Gdcame.DataAccess.Repository.Ef.Mappers
+﻿namespace EntityFX.Gdcame.DataAccess.Repository.Ef.MainServer.Mappers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+
+    using EntityFX.Gdcame.Common.Contract.Counters;
+    using EntityFX.Gdcame.DataAccess.Repository.Ef.MainServer.Entities;
+    using EntityFX.Gdcame.Infrastructure.Common;
+
     public class CountersContractMapper : IMapper<CounterEntity, CounterBase>
     {
         private static readonly Func<CounterEntity, GenericCounter> GenericFunc = source => new GenericCounter

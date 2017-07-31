@@ -1,8 +1,8 @@
-﻿using System;
-using System.Runtime.Serialization;
-
-namespace EntityFX.Gdcame.DataAccess.Contract.GameData.Store
+﻿namespace EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData.Store
 {
+    using System;
+    using System.Runtime.Serialization;
+
     [DataContract]
     public class StoredGameDataWithUserId
     {

@@ -25,7 +25,7 @@ namespace EntityFX.Gdcame.Manager.MainServer.Workers
             Name = "Session Validation Worker";
         }
 
-        public override void Run()
+        public override void Run<TData>(TData data = default(TData))
         {
             _backgroundSessionsCheckerTask = _backgroundSessionsCheckerTimer.Start();
         }
@@ -43,6 +43,7 @@ namespace EntityFX.Gdcame.Manager.MainServer.Workers
 
         private void PerformSessionsCheckTask()
         {
+            IncrementTick();
             var sw = new Stopwatch();
             sw.Start();
             lock (_stdLock)

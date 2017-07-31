@@ -1,38 +1,39 @@
-﻿using System.Collections.Generic;
-using EntityFX.Gdcame.Infrastructure.Common;
-using EntityFX.Gdcame.Manager.Contract.Common.WorkerManager;
-
-
-namespace EntityFX.Gdcame.Manager.MainServer
+﻿namespace EntityFX.Gdcame.Manager.Common
 {
+    using System.Collections.Generic;
+
+    using EntityFX.Gdcame.Infrastructure.Common;
+    using EntityFX.Gdcame.Manager.Contract.Common.WorkerManager;
+
     public class WorkerManager : IWorkerManager
     {
         private readonly ILogger _logger;
-        private readonly IList<IWorker> _workers = new List<IWorker>();
+        private readonly IDictionary<string, IWorker> _workers = new Dictionary<string, IWorker>();
 
         public WorkerManager(ILogger logger)
         {
-            _logger = logger;
+            this._logger = logger;
         }
 
         public void Add(IWorker worker)
         {
-            _workers.Add(worker);
+            this._workers.Add(worker.Name, worker);
         }
 
         public void StartAll()
         {
-            foreach (var worker in _workers)
+            foreach (var worker in this._workers)
             {
-                worker.Run();
-                _logger.Info("Worker {0} started", worker.Name);
+                if (!worker.Value.IsRunOnStart) continue;
+                worker.Value.Run<object>();
+                this._logger.Info("Worker {0} started", worker.Key);
             }
         }
 
         public WorkerStatus[] GetWorkersStatus()
         {
             var workersStatusList = new List<WorkerStatus>();
-            foreach (var worker in _workers)
+            foreach (var worker in this._workers.Values)
             {
                 workersStatusList.Add(new WorkerStatus()
                 {
@@ -42,6 +43,34 @@ namespace EntityFX.Gdcame.Manager.MainServer
                 });
             }
             return workersStatusList.ToArray();
+        }
+
+        public bool Start<TData>(string workerName, TData workerData) where TData : class
+        {
+            if (!this._workers.ContainsKey(workerName))
+            {
+                return false;
+            }
+
+            var worker = this._workers[workerName];
+            if (worker.IsRunning)
+            {
+                return false;
+            }
+
+            worker.Run(workerData);
+            return true;
+        }
+
+        public WorkerStatus GetWorkerStatus(string workerName)
+        {
+            if (!this._workers.ContainsKey(workerName))
+            {
+                return null;
+            }
+
+            var worker = this._workers[workerName];
+            return new WorkerStatus() { IsRunning = worker.IsRunning, Name = worker.Name, Ticks = worker.Ticks };
         }
     }
 }

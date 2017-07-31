@@ -1,24 +1,19 @@
-﻿using EntityFX.Gdcame.Infrastructure.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Practices.Unity;
-using EntityFX.Gdcame.DataAccess.Repository.Contract;
-using MongoDB.Driver;
-using MongoDB.Bson.Serialization.Conventions;
-using MongoDB.Bson.Serialization.Options;
-using MongoDB.Bson.Serialization;
-using EntityFX.Gdcame.Common.Contract.Counters;
-using EntityFX.Gdcame.Common.Contract.UserRating;
-using EntityFX.Gdcame.DataAccess.Contract.GameData.Store;
-using EntityFX.Gdcame.DataAccess.Repository.Mongo.Mappers;
-using MongoDB.Bson.Serialization.IdGenerators;
-
-namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
+﻿namespace EntityFX.Gdcame.DataAccess.Repository.Mongo.MainServer
 {
-    using EntityFX.Gdcame.DataAccess.Contract.Server;
+    using EntityFX.Gdcame.Common.Contract.Counters;
+    using EntityFX.Gdcame.Common.Contract.UserRating;
+    using EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData.Store;
+    using EntityFX.Gdcame.DataAccess.Contract.MainServer.Server;
+    using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer;
+    using EntityFX.Gdcame.Infrastructure.Common;
+
+    using Microsoft.Practices.Unity;
+
+    using MongoDB.Bson.Serialization;
+    using MongoDB.Bson.Serialization.Conventions;
+    using MongoDB.Bson.Serialization.IdGenerators;
+    using MongoDB.Bson.Serialization.Options;
+    using MongoDB.Driver;
 
     public class ContainerBootstrapper : IContainerBootstrapper
     {
@@ -29,15 +24,15 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
         {
             get
             {
-                if (_mongoClient == null)
-                    _mongoClient = new MongoClient(_mongoConnectionString);
-                    return _mongoClient.GetDatabase(MongoUrl.Create(_mongoConnectionString).DatabaseName);
+                if (this._mongoClient == null)
+                    this._mongoClient = new MongoClient(this._mongoConnectionString);
+                    return this._mongoClient.GetDatabase(MongoUrl.Create(this._mongoConnectionString).DatabaseName);
             }
         }
 
         public ContainerBootstrapper(string mongoConnectionString)
         {
-            _mongoConnectionString = mongoConnectionString;
+            this._mongoConnectionString = mongoConnectionString;
         }
 
         public IUnityContainer Configure(IUnityContainer container)
@@ -89,17 +84,14 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
                             cm.GetMemberMap(x => x.Address).SetIdGenerator(StringObjectIdGenerator.Instance));
                     });  
 
-            container.RegisterType<IMapper<TopRatingStatistics, List<TopRatingStatisticsDocument>>, TopRatingStatisticsDocumentMapper>();
-
-            container.RegisterType<IUserRepository, UserRepository>();
             container.RegisterType<IItemRepository, ItemRepository>();
             container.RegisterType<ICountersRepository, CountersRepository>();         
             container.RegisterType<ICustomRuleRepository, CustomRuleRepository>();
             container.RegisterType<IUserGameSnapshotRepository, UserGameSnapshotRepository>();
             container.RegisterType<IRatingHistoryRepository, RatingHistoryRepository>();
-            container.RegisterType<IRatingStatisticsRepository, RatingStatisticsRepository>();
+
             container.RegisterType<IServerRepository, ServerRepository>();
-            container.RegisterInstance<IMongoDatabase>(MongoDatabase);
+            container.RegisterInstance<IMongoDatabase>(this.MongoDatabase);
             return container;
         }
     }

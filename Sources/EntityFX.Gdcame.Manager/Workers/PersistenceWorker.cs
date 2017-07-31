@@ -5,14 +5,17 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using EntityFX.Gdcame.DataAccess.Contract.Server;
+
 using EntityFX.Gdcame.GameEngine.NetworkGameEngine;
 using EntityFX.Gdcame.Infrastructure.Common;
+using EntityFX.Gdcame.Manager.Contract.Common.Statistics;
 using EntityFX.Gdcame.Manager.Contract.Common.WorkerManager;
 using EntityFX.Gdcame.Manager.Contract.MainServer.AdminManager;
 
 namespace EntityFX.Gdcame.Manager.MainServer.Workers
 {
+    using EntityFX.Gdcame.DataAccess.Contract.MainServer.Server;
+
     public class PersistenceWorker : WorkerBase, IWorker
     {
         private const int PersistTimeSlotsCount = 60;
@@ -88,9 +91,9 @@ namespace EntityFX.Gdcame.Manager.MainServer.Workers
                        || _backgroundPersisterTask.Status == TaskStatus.WaitingForActivation
                        || _backgroundPersisterTask.Status == TaskStatus.RanToCompletion;
             }
-        }
+        }                                                                             
 
-        public override void Run()
+        public override void Run<TData>(TData data = default(TData))
         {
             _backgroundPersisterTask = Task.Factory.StartNew(a => PerformBackgroundPersisting(),
                 TaskCreationOptions.LongRunning, _backgroundPersisterTaskToken.Token).ContinueWith(c =>
@@ -110,7 +113,7 @@ namespace EntityFX.Gdcame.Manager.MainServer.Workers
             // Infinite loop that is persisting User Games that are spread among TimeSlots
             while (true)
             {
-
+                IncrementTick();
                 try
                 {
                     if (_logger != null)

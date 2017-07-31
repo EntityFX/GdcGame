@@ -1,6 +1,7 @@
 namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer
 {
     using System;
+    using System.Linq;
 
     using EntityFX.Gdcame.Application.Api.Common;
     using EntityFX.Gdcame.Application.Api.Common.Mappers;
@@ -11,6 +12,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer
     using EntityFX.Gdcame.Infrastructure.Common;
     using EntityFX.Gdcame.Manager.Contract.Common;
     using EntityFX.Gdcame.Utils.Common;
+    using EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer;
     using EntityFX.Gdcame.Utils.Hashing;
 
     using Microsoft.Practices.Unity;
@@ -39,12 +41,12 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer
             container.RegisterType<ILogger>(new InjectionFactory(
                 _ => new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger")))));
 
-            var childBootstrappers = new IContainerBootstrapper[]
+            var childBootstrappers = this.GetRepositoryProviders(this._appConfiguration.RepositoryProvider).Concat(new IContainerBootstrapper[]
                         {
-                this.GetRepositoryProvider(this._appConfiguration.RepositoryProvider),
-                new DataAccess.Service.ContainerBootstrapper(),
+ 
+                new EntityFX.Gdcame.DataAccess.Service.RatingServer.ContainerBootstrapper(),
                 new Manager.Common.ContainerBootstrapper()
-                        };
+                        }).ToArray();
             Array.ForEach(childBootstrappers, _ => _.Configure(container));
             container.AddNewExtension<Interception>();
 
@@ -83,18 +85,14 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer
             return container;
         }
 
-        private IContainerBootstrapper GetRepositoryProvider(string providerName)
+        private IContainerBootstrapper[] GetRepositoryProviders(string providerName)
         {
-            switch (providerName)
-            {
-                case "EntityFramework":
-                    return new DataAccess.Repository.Ef.ContainerBootstrapper();
-                case "Mongo":
-                    return new DataAccess.Repository.Mongo.ContainerBootstrapper(this._appConfiguration.MongoConnectionString);
-                case "LocalStorage":
-                default:
-                    return new DataAccess.Repository.LocalStorage.ContainerBootstrapper();
-            }
+            return new[]
+                       {  new CommonDatabasesProvider(providerName)
+                               .GetRepositoryProvider(_appConfiguration.MongoConnectionString),
+                          new RatingServerDatabasesProvider(providerName)
+                               .GetRepositoryProvider(_appConfiguration.MongoConnectionString)
+                       };
         }
     }
 }

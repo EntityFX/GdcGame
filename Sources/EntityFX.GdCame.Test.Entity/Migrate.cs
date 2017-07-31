@@ -13,6 +13,9 @@ using System.Threading.Tasks;
 
 namespace EntityFX.Gdcame.Test.Entity
 {
+    using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer.Criterions.FundsDriver;
+    using EntityFX.Gdcame.DataAccess.Repository.Mongo.MainServer;
+
     [TestClass]
     public class MigrateTest
     {
@@ -63,12 +66,12 @@ namespace EntityFX.Gdcame.Test.Entity
 new ConventionPack { new DictionaryRepresentationConvention(DictionaryRepresentation.ArrayOfArrays) },
 _ => true);
 
-            var itemsRepo = new EntityFX.Gdcame.DataAccess.Repository.LocalStorage.ItemRepository();
-            var items = itemsRepo.FindAll(new DataAccess.Repository.Contract.Criterions.FundsDriver.GetAllFundsDriversCriterion());
+            var itemsRepo = new DataAccess.Repository.LocalStorage.MainServer.ItemRepository();
+            var items = itemsRepo.FindAll(new GetAllFundsDriversCriterion());
 
             IMongoCollection<Item> itemCollection = MongoDatabase.GetCollection<Item>("Item");
             itemCollection.InsertMany(items);
-            var mongoRepo = new EntityFX.Gdcame.DataAccess.Repository.Mongo.ItemRepository(MongoDatabase);
+            var mongoRepo = new ItemRepository(MongoDatabase);
         }
     }
 }

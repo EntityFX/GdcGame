@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EntityFX.Gdcame.Infrastructure.Repository.Criterion;
-
-namespace EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.RatingHistory
+﻿namespace EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer.Criterions.RatingHistory
 {
+    using System;
+
+    using EntityFX.Gdcame.Infrastructure.Repository.Criterion;
+
     public class GetUsersRatingHistoryCriterion : ICriterion
     {
         public string[] UsersIds { get; set; }

@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using EntityFX.Gdcame.Common.Contract;
-using EntityFX.Gdcame.DataAccess.Contract.GameData;
-using EntityFX.Gdcame.DataAccess.Contract.User;
 using EntityFX.Gdcame.DataAccess.Service;
 using EntityFX.Gdcame.GameEngine.NetworkGameEngine;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager;
+using EntityFX.Gdcame.Manager.Contract.Common.Statistics;
 using EntityFX.Gdcame.Manager.Contract.MainServer.AdminManager;
 using EntityFX.Gdcame.Manager.Contract.MainServer.GameManager;
 using EntityFX.Gdcame.Manager.Contract.MainServer.SessionManager;
@@ -21,10 +20,16 @@ using EntityFX.Gdcame.Utils.MainServer;
 using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PortableLog.NLog;
-using ContainerBootstrapper = EntityFX.Gdcame.Manager.MainServer.ContainerBootstrapper;
 
 namespace EntityFx.Gdcame.Test.Unit
 {
+    using EntityFX.Gdcame.DataAccess.Contract.Common.User;
+    using EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData;
+    using EntityFX.Gdcame.DataAccess.Service.Common;
+    using EntityFX.Gdcame.DataAccess.Service.MainServer;
+
+    using ContainerBootstrapper = EntityFX.Gdcame.Manager.MainServer.ContainerBootstrapper;
+
     [TestClass]
     public class UnitTest1 : IDisposable
     {
@@ -33,56 +38,55 @@ namespace EntityFx.Gdcame.Test.Unit
         [TestInitialize]
         public void TestInitialize()
         {
-            container.RegisterType<ILogger>(new InjectionFactory(
+            this.container.RegisterType<ILogger>(new InjectionFactory(
                 _ => new Logger(new NLoggerAdapter(new NLogLogExFactory().GetLogger("logger")))));
 
-            container.RegisterInstance<IOperationContextHelper>(new FakeOperationContextHelper());
+            this.container.RegisterInstance<IOperationContextHelper>(new FakeOperationContextHelper());
             var managerBootstrapper = new ContainerBootstrapper();
-            managerBootstrapper.Configure(container);
+            managerBootstrapper.Configure(this.container);
 
             var childBootstrappers = new IContainerBootstrapper[]
             {
-                new EntityFX.Gdcame.DataAccess.Repository.Ef.ContainerBootstrapper(),
-                new EntityFX.Gdcame.DataAccess.Service.ContainerBootstrapper(),
+                new EntityFX.Gdcame.DataAccess.Repository.Ef.MainServer.ContainerBootstrapper(),
+                new EntityFX.Gdcame.DataAccess.Service.MainServer.ContainerBootstrapper(),
                 new EntityFX.Gdcame.NotifyConsumer.ContainerBootstrapper()
             };
-            Array.ForEach(childBootstrappers, _ => _.Configure(container));
+            Array.ForEach(childBootstrappers, _ => _.Configure(this.container));
 
-            container.RegisterType<IGameFactory, GameFactory>();
+            this.container.RegisterType<IGameFactory, GameFactory>();
 
-            container.RegisterType<IGameDataPersister, GameDataPersister>(
+            this.container.RegisterType<IGameDataPersister, GameDataPersister>(
                 new InjectionConstructor(
                     new ResolvedParameter<IGameDataStoreDataAccessService>(),
                     new ResolvedParameter<IMapperFactory>()
                     )
                 );
 
-            container.RegisterType<IGameDataPersisterFactory, GameDataPersisterFactory>();
+            this.container.RegisterType<IGameDataPersisterFactory, GameDataPersisterFactory>();
 
-            container.RegisterType<IHashHelper, HashHelper>();
+            this.container.RegisterType<IHashHelper, HashHelper>();
 
-            container.RegisterInstance(new PerformanceInfo());
+            this.container.RegisterInstance(new PerformanceInfo());
 
-            container.RegisterInstance(
-                new GameSessions(container.Resolve<ILogger>(),
-                container.Resolve<IGameFactory>(), container.Resolve<PerformanceInfo>()));
+            this.container.RegisterInstance(
+                new GameSessions(this.container.Resolve<ILogger>(), this.container.Resolve<IGameFactory>(), this.container.Resolve<PerformanceInfo>()));
 
             var workers = new List<IWorker>();
-            workers.Add(container.Resolve<CalculationWorker>());
-            workers.Add(container.Resolve<PersistenceWorker>());
-            workers.Add(container.Resolve<SessionValidationWorker>());
-            workers.ForEach(_ => _.Run());
+            workers.Add(this.container.Resolve<CalculationWorker>());
+            workers.Add(this.container.Resolve<PersistenceWorker>());
+            workers.Add(this.container.Resolve<SessionValidationWorker>());
+            workers.ForEach(_ => _.Run<object>());
 
-            container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessDocumentService>(
+            this.container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessDocumentService>(
                 );
-            container.RegisterType<IUserDataAccessService, UserDataAccessService>(
+            this.container.RegisterType<IUserDataAccessService, UserDataAccessService>(
                 );
-            container.RegisterType<IGameDataStoreDataAccessService, GameDataStoreDataAccessDocumentService>(
+            this.container.RegisterType<IGameDataStoreDataAccessService, GameDataStoreDataAccessDocumentService>(
                 );
 
-            container.RegisterType<INotifyConsumerService, FakeNotifyConsumerService>();
+            this.container.RegisterType<INotifyConsumerService, FakeNotifyConsumerService>();
 
-            container.RegisterType<IGameDataChangesNotifier, GameDataChangesNotifier>(
+            this.container.RegisterType<IGameDataChangesNotifier, GameDataChangesNotifier>(
                 new InjectionConstructor(
                     new ResolvedParameter<int>(),
                     new ResolvedParameter<string>(),
@@ -92,7 +96,7 @@ namespace EntityFx.Gdcame.Test.Unit
                     )
                 );
 
-            container.RegisterType<INotifyConsumerClientFactory, NotifyConsumerClientFactory>(new InjectionConstructor(
+            this.container.RegisterType<INotifyConsumerClientFactory, NotifyConsumerClientFactory>(new InjectionConstructor(
                 new ResolvedParameter<IUnityContainer>(),
                 string.Empty));
         }
@@ -101,16 +105,17 @@ namespace EntityFx.Gdcame.Test.Unit
         public void TestIntegrity()
         {
             var userName = "test-user-1";
-            var su = container.Resolve<ISimpleUserManager>();
+            var su = this.container.Resolve<ISimpleUserManager>();
             if (!su.Exists(userName))
             {
                 su.Create(new UserData {Login = userName});
             }
-            var sm = container.Resolve<ISessionManager>();
+
+            var sm = this.container.Resolve<ISessionManager>();
             var sessionGuid = sm.OpenSession(userName);
-            var och = container.Resolve<IOperationContextHelper>();
+            var och = this.container.Resolve<IOperationContextHelper>();
             och.Instance.SessionId = sessionGuid;
-            var gm = container.Resolve<IGameManager>();
+            var gm = this.container.Resolve<IGameManager>();
             gm.Ping();
         }
 
@@ -118,7 +123,7 @@ namespace EntityFx.Gdcame.Test.Unit
         [TestMethod]
         public void TestEngine()
         {
-            var gf = container.Resolve<IGameFactory>();
+            var gf = this.container.Resolve<IGameFactory>();
             var game = gf.BuildGame("1", "test-user-1");
             game.Initialize();
             game.PerformManualStep(null);
@@ -133,6 +138,7 @@ namespace EntityFx.Gdcame.Test.Unit
                     game.PerformAutoStep();
                     swList[iteration].Stop();
                 }
+
                 Debug.Print("Ellapsed for {0} iterrations: {1}", iterNumber, csw.Elapsed);
             }
         }
@@ -142,28 +148,31 @@ namespace EntityFx.Gdcame.Test.Unit
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if (!this.disposedValue)
             {
                 if (disposing)
                 {
-                    container.Dispose();
+                    this.container.Dispose();
                 }
-                disposedValue = true;
+
+                this.disposedValue = true;
             }
         }
 
         // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
         // ~UnitTest1() {
-        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-        //   Dispose(false);
+        // // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+        // Dispose(false);
         // }
 
         // This code added to correctly implement the disposable pattern.
         public void Dispose()
         {
-            Dispose(true);
+            this.Dispose(true);
+
             // GC.SuppressFinalize(this);
         }
+
         #endregion
     }
 

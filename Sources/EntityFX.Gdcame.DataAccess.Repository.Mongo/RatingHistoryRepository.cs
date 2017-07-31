@@ -1,17 +1,15 @@
-﻿using EntityFX.Gdcame.Common.Contract.UserRating;
-using EntityFX.Gdcame.DataAccess.Contract.Rating;
-using EntityFX.Gdcame.DataAccess.Repository.Contract;
-using MongoDB.Bson;
-using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.RatingHistory;
-
-namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
+﻿namespace EntityFX.Gdcame.DataAccess.Repository.Mongo.MainServer
 {
+    using System;
+    using System.Collections.Generic;
+
+    using EntityFX.Gdcame.Common.Contract.UserRating;
+    using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer;
+    using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer.Criterions.RatingHistory;
+
+    using MongoDB.Bson;
+    using MongoDB.Driver;
+
     public class RatingHistoryRepository : IRatingHistoryRepository
     {
         private IMongoDatabase Database
@@ -20,7 +18,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
         }
         public RatingHistoryRepository(IMongoDatabase database)
         {
-            Database = database;
+            this.Database = database;
         }
 
         /// <summary>
@@ -29,7 +27,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
         /// <param name="period"></param>
         public void CleanOldHistory(TimeSpan period)
         {
-            IMongoCollection<RatingHistory> collection = Database.GetCollection<RatingHistory>("RatingHistory");
+            IMongoCollection<RatingHistory> collection = this.Database.GetCollection<RatingHistory>("RatingHistory");
             var dataFilter = DateTime.Now.Subtract(period);
             var filter = Builders<RatingHistory>.Filter.Lt("Data", dataFilter);
             var result = collection.DeleteMany(filter);
@@ -39,13 +37,13 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
 
         public RatingHistory[] ReadHistoryWithUsersIds(GetUsersRatingHistoryCriterion usersRatingHistoryCriterion)
         {
-            IMongoCollection<RatingHistoryItem> collection = Database.GetCollection<RatingHistoryItem>("RatingHistory");
+            IMongoCollection<RatingHistoryItem> collection = this.Database.GetCollection<RatingHistoryItem>("RatingHistory");
             var filter1 = Builders<RatingHistoryItem>.Filter.In("UserId", usersRatingHistoryCriterion.UsersIds);
             var dataFilter = DateTime.Now.Subtract(usersRatingHistoryCriterion.Period);
             var filter2 = Builders<RatingHistoryItem>.Filter.Gte("Data", dataFilter);
             var filterAnd = Builders<RatingHistoryItem>.Filter.And(new List<FilterDefinition<RatingHistoryItem>> { filter1, filter2 });
             var usersRating = collection.Find(filterAnd).ToList();
-            return ConverterRatingHistoryBaseAsRatingHistory(usersRating).ToArray();
+            return this.ConverterRatingHistoryBaseAsRatingHistory(usersRating).ToArray();
         }
 
         private List<RatingHistory> ConverterRatingHistoryBaseAsRatingHistory(List<RatingHistoryItem> ratingHistoryBase)
@@ -75,7 +73,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Mongo
                     pushUsersHistory.Add(userRatingHistory);
                 }
             }
-            IMongoCollection<RatingHistory> collection = Database.GetCollection<RatingHistory>("RatingHistory");
+            IMongoCollection<RatingHistory> collection = this.Database.GetCollection<RatingHistory>("RatingHistory");
             collection.InsertMany(pushUsersHistory);
         }
 

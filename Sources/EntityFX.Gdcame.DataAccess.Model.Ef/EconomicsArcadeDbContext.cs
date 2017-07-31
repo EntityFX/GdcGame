@@ -18,25 +18,12 @@ namespace EntityFX.Gdcame.DataAccess.Model.Ef
         public virtual DbSet<CounterEntity> Counters { get; set; }
         public virtual DbSet<FundsDriverEntity> FundsDrivers { get; set; }
         public virtual DbSet<IncrementorEntity> Incrementors { get; set; }
-        public virtual DbSet<UserEntity> Users { get; set; }
+
 
         public virtual DbSet<UserGameDataSnapshotEntity> UserGameDataSnapshot { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<UserEntity>()
-                .ToTable("User")
-                .HasKey(_ => _.Id);
-
-            modelBuilder.Entity<UserEntity>()
-                .Property(_ => _.Email)
-                .IsRequired();
-
-            modelBuilder.Entity<UserEntity>()
-                .HasKey(e => e.Id)
-                .Property(e => e.Id)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-
             modelBuilder.Entity<CounterEntity>()
                 .ToTable("Counter")
                 .HasKey(_ => _.Id);

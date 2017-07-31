@@ -1,18 +1,19 @@
-﻿using System.Collections.Generic;
-using EntityFX.Gdcame.Common.Contract.Incrementors;
-using EntityFX.Gdcame.Common.Contract.Items;
-using EntityFX.Gdcame.DataAccess.Model.Ef;
-using EntityFX.Gdcame.Infrastructure.Common;
-
-namespace EntityFX.Gdcame.DataAccess.Repository.Ef.Mappers
+﻿namespace EntityFX.Gdcame.DataAccess.Repository.Ef.MainServer.Mappers
 {
+    using System.Collections.Generic;
+
+    using EntityFX.Gdcame.Common.Contract.Incrementors;
+    using EntityFX.Gdcame.Common.Contract.Items;
+    using EntityFX.Gdcame.DataAccess.Repository.Ef.MainServer.Entities;
+    using EntityFX.Gdcame.Infrastructure.Common;
+
     public class FundsDriverEntityMapper : IMapper<Item, FundsDriverEntity>
     {
         private readonly IMapper<Incrementor, IncrementorEntity> _incrementorContractMapper;
 
         public FundsDriverEntityMapper(IMapper<Incrementor, IncrementorEntity> incrementorContractMapper)
         {
-            _incrementorContractMapper = incrementorContractMapper;
+            this._incrementorContractMapper = incrementorContractMapper;
         }
 
         public FundsDriverEntity Map(Item source, FundsDriverEntity destination = null)
@@ -27,7 +28,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef.Mappers
             destination.Picture = source.Picture;
             foreach (var incrementor in source.Incrementors)
             {
-                destination.Incrementors.Add(_incrementorContractMapper.Map(incrementor));
+                destination.Incrementors.Add(this._incrementorContractMapper.Map(incrementor));
             }
             return destination;
         }

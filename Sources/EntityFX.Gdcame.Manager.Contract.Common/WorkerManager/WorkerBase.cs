@@ -10,9 +10,17 @@ namespace EntityFX.Gdcame.Manager.Contract.Common.WorkerManager
 {
     public abstract class WorkerBase : IWorker
     {
-        public abstract void Run();
+        public abstract void Run<TData>(TData data = null) where TData : class;
         public string Name { get; protected set; }
         public abstract bool IsRunning { get; }
+
+        public virtual bool IsRunOnStart
+        {
+            get
+            {
+                return true;
+            }
+        }
 
         public long Ticks
         {

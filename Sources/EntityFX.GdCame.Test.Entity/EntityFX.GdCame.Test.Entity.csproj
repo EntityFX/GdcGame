@@ -116,25 +116,25 @@
       <Project>{89f89c37-f564-47eb-839d-c45acd9d012a}</Project>
       <Name>EntityFX.Gdcame.Common.Contract</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Model.Ef\EntityFX.Gdcame.DataAccess.Model.Ef.csproj">
-      <Project>{DE1D1C25-F30A-461C-B572-00BFA1C7161E}</Project>
-      <Name>EntityFX.Gdcame.DataAccess.Model.Ef</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Repository.Contract\EntityFX.Gdcame.DataAccess.Repository.Contract.csproj">
+    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Repository.Contract\EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer.csproj">
       <Project>{c1b1f481-6e3e-464c-a983-cb56ad430c1d}</Project>
-      <Name>EntityFX.Gdcame.DataAccess.Repository.Contract</Name>
+      <Name>EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Repository.LocalStorage\EntityFX.Gdcame.DataAccess.Repository.LocalStorage.csproj">
+    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Repository.Ef.Common\EntityFX.Gdcame.DataAccess.Repository.Ef.Common.csproj">
+      <Project>{B755E1B8-2479-4E64-A039-88BA36263BBD}</Project>
+      <Name>EntityFX.Gdcame.DataAccess.Repository.Ef.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Repository.LocalStorage\EntityFX.Gdcame.DataAccess.Repository.LocalStorage.MainServer.csproj">
       <Project>{b21f9bdf-e28d-4c42-91d5-008b0833a3fa}</Project>
-      <Name>EntityFX.Gdcame.DataAccess.Repository.LocalStorage</Name>
+      <Name>EntityFX.Gdcame.DataAccess.Repository.LocalStorage.MainServer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Repository.Mongo\EntityFX.Gdcame.DataAccess.Repository.Mongo.csproj">
+    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Repository.Mongo\EntityFX.Gdcame.DataAccess.Repository.Mongo.MainServer.csproj">
       <Project>{0f77947a-9e4c-4663-a7ee-c43a4d357217}</Project>
-      <Name>EntityFX.Gdcame.DataAccess.Repository.Mongo</Name>
+      <Name>EntityFX.Gdcame.DataAccess.Repository.Mongo.MainServer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Repository\EntityFX.Gdcame.DataAccess.Repository.Ef.csproj">
+    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Repository\EntityFX.Gdcame.DataAccess.Repository.Ef.MainServer.csproj">
       <Project>{d5a72a34-5de5-41e1-b52e-8f70d19cb7bf}</Project>
-      <Name>EntityFX.Gdcame.DataAccess.Repository.Ef</Name>
+      <Name>EntityFX.Gdcame.DataAccess.Repository.Ef.MainServer</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.GameEngine.Contract\EntityFX.Gdcame.GameEngine.Contract.csproj">
       <Project>{BEEA0656-542B-4C48-A480-CEFF662DD29F}</Project>

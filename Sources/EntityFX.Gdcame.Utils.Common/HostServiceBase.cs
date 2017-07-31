@@ -1,11 +1,10 @@
-namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.MainServer
+namespace EntityFX.Gdcame.Utils.Common
 {
     using System;
     using System.Linq;
 
     using EntityFX.Gdcame.Infrastructure.Common;
     using EntityFX.Gdcame.Manager.Contract.Common.WorkerManager;
-    using EntityFX.Gdcame.Utils.Common;
 
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Owin.Hosting;
@@ -29,8 +28,8 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.MainServer
         public HostServiceBase()
         {
             this.AppConfiguration = new AppConfiguration();
-            CoreStartupBase.AppConfiguration = AppConfiguration;
-            this._container = (this.GetContainerBootstrapper(AppConfiguration)).Configure(new UnityContainer());
+            CoreStartupBase.AppConfiguration = this.AppConfiguration;
+            this._container = (this.GetContainerBootstrapper(this.AppConfiguration)).Configure(new UnityContainer());
 
             CoreStartupBase.Container = this._container;
             this.AppConfiguration = CoreStartupBase.AppConfiguration;
@@ -38,10 +37,10 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.MainServer
             this.Logger = this._container.Resolve<ILogger>();
             this._webApiStartOptions = new StartOptions
                                       {
-                                          Port = AppConfiguration.WebApiPort,
+                                          Port = this.AppConfiguration.WebApiPort,
                                       };
 
-            this.ConfigureWorkers(_container.Resolve<IWorkerManager>(), _container);
+            this.ConfigureWorkers(this._container.Resolve<IWorkerManager>(), this._container);
             this.ConfigureWebServer(this._webApiStartOptions);
         }
 
@@ -49,12 +48,12 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.MainServer
         {
             this.WebHost.Start();
 
-            this.StartWorkers(_container.Resolve<IWorkerManager>());
-
+            this.StartWorkers(this._container.Resolve<IWorkerManager>());
+            this.Logger.Info(string.Join(", ", this.WebHost.ServerFeatures.Select(f => f.ToString())));
             this.Logger.Info(RuntimeHelper.GetRuntimeInfo());
-            this.Logger.Info("SignalR server running on {0}", AppConfiguration.WebApiPort);
+            this.Logger.Info("SignalR server running on {0}", this.AppConfiguration.WebApiPort);
             this.Logger.Info("Web server running on {0}", this.AppConfiguration.WebApiPort);
-            this.Logger.Info("Repository provider: {0}", AppConfiguration.RepositoryProvider);
+            this.Logger.Info("Repository provider: {0}", this.AppConfiguration.RepositoryProvider);
             return true;
         }
 
@@ -106,7 +105,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.MainServer
                         });
             }
 
-            WebHost = webHost.UseStartup<TCoreStartup>().UseUrls(this._webApiStartOptions.Urls.ToArray()).Build();
+            this.WebHost = webHost.UseStartup<TCoreStartup>().UseUrls(this._webApiStartOptions.Urls.ToArray()).Build();
         }
 
         protected abstract IContainerBootstrapper GetContainerBootstrapper(AppConfiguration appConfiguration);

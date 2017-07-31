@@ -1,14 +1,15 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using EntityFX.Gdcame.Common.Contract.Items;
-using EntityFX.Gdcame.DataAccess.Model.Ef;
-using EntityFX.Gdcame.DataAccess.Repository.Contract;
-using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.FundsDriver;
-using EntityFX.Gdcame.Infrastructure.Common;
-using EntityFX.Gdcame.Infrastructure.Repository.UnitOfWork;
-
-namespace EntityFX.Gdcame.DataAccess.Repository.Ef
+﻿namespace EntityFX.Gdcame.DataAccess.Repository.Ef.MainServer
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using EntityFX.Gdcame.Common.Contract.Items;
+    using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer;
+    using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer.Criterions.FundsDriver;
+    using EntityFX.Gdcame.DataAccess.Repository.Ef.MainServer.Entities;
+    using EntityFX.Gdcame.Infrastructure.Common;
+    using EntityFX.Gdcame.Infrastructure.Repository.UnitOfWork;
+
     public class ItemRepository : IItemRepository
     {
         private readonly IMapper<FundsDriverEntity, Item> _fundsDriverContractMapper;
@@ -19,20 +20,20 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef
             , IMapperFactory mapperFactory
             )
         {
-            _unitOfWorkFactory = unitOfWorkFactory;
-            _mapperFactory = mapperFactory;
-            _fundsDriverContractMapper = _mapperFactory.Build<FundsDriverEntity, Item>();
+            this._unitOfWorkFactory = unitOfWorkFactory;
+            this._mapperFactory = mapperFactory;
+            this._fundsDriverContractMapper = this._mapperFactory.Build<FundsDriverEntity, Item>();
         }
 
 
         public Item[] FindAll(GetAllFundsDriversCriterion criterion)
         {
-            using (var uow = _unitOfWorkFactory.Create())
+            using (var uow = this._unitOfWorkFactory.Create())
             {
                 var findQuery = uow.BuildQuery();
                 return findQuery.For<IEnumerable<FundsDriverEntity>>()
                     .With(criterion)
-                    .Select(_ => _fundsDriverContractMapper.Map(_))
+                    .Select(_ => this._fundsDriverContractMapper.Map(_))
                     .ToArray();
             }
         }

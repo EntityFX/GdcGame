@@ -1,17 +1,13 @@
-﻿using EntityFX.Gdcame.DataAccess.Repository.Contract;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EntityFX.Gdcame.Common.Contract.Items;
-using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.FundsDriver;
-using EntityFX.Gdcame.Common.Contract.Incrementors;
-using System.IO;
-using Newtonsoft.Json;
-
-namespace EntityFX.Gdcame.DataAccess.Repository.LocalStorage
+﻿namespace EntityFX.Gdcame.DataAccess.Repository.LocalStorage.MainServer
 {
+    using System.IO;
+
+    using EntityFX.Gdcame.Common.Contract.Items;
+    using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer;
+    using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer.Criterions.FundsDriver;
+
+    using Newtonsoft.Json;
+
     public class ItemRepository : IItemRepository
     {
         public Item[] FindAll(GetAllFundsDriversCriterion criterion)

@@ -2,16 +2,19 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
+using System.Threading.Tasks;
+
 using EntityFX.Gdcame.Application.Api.MainServer.Models;
-using EntityFX.Gdcame.Utils.WebApiClient;
 using EntityFX.Gdcame.Common.Application.Model;
 using EntityFX.Gdcame.Infrastructure.Api.Auth;
+using EntityFX.Gdcame.Utils.WebApiClient;
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+using Newtonsoft.Json;
 
 namespace EntityFx.Gdcame.Test.Unit
 {
@@ -42,6 +45,7 @@ namespace EntityFx.Gdcame.Test.Unit
 
                 connectionsList[conn] = PostAuth(conn).Result;
             }
+
             Array.ForEach(new[] { 1, 10, 100, 1000, 10000 }, connectionsNumber =>
              {
                  Debug.WriteLine("Connections number: {0}", connectionsNumber);
@@ -51,8 +55,9 @@ namespace EntityFx.Gdcame.Test.Unit
                  {
                      var x = GetData(connectionsList[i]).Result;
                  }
+
                  Debug.WriteLine("Single: {0}", sw.Elapsed);
-                 Debug.WriteLine("");
+                 Debug.WriteLine(string.Empty);
              });
 
             Array.ForEach(new[] { 1, 10, 100, 1000, 10000 }, connectionsNumber =>
@@ -64,9 +69,10 @@ namespace EntityFx.Gdcame.Test.Unit
                 {
                     taskList.Add(GetData(connectionsList[i]));
                 }
+
                 Task.WhenAll(taskList);
                 Debug.WriteLine("Parallel: {0}", sw.Elapsed);
-                Debug.WriteLine("");
+                Debug.WriteLine(string.Empty);
             });
 
         }

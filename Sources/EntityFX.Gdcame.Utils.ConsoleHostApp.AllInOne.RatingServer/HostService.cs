@@ -16,8 +16,6 @@ using Topshelf;
 
 namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.RatingServer
 {
-    using EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.MainServer;
-
     internal class HostService : HostServiceBase<CoreStartup>
     {
         protected override IContainerBootstrapper GetContainerBootstrapper(AppConfiguration appConfiguration)

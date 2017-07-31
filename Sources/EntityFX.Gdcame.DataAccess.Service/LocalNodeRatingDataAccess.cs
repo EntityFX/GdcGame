@@ -1,15 +1,13 @@
-﻿using EntityFX.Gdcame.DataAccess.Contract.Rating;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EntityFX.Gdcame.Common.Contract.UserRating;
-using EntityFX.Gdcame.DataAccess.Repository.Contract;
-using EntityFX.Gdcame.DataAccess.Repository.Contract.Criterions.RatingHistory;
-
-namespace EntityFX.Gdcame.DataAccess.Service
+﻿namespace EntityFX.Gdcame.DataAccess.Service.MainServer
 {
+    using System;
+
+    using EntityFX.Gdcame.Common.Contract.UserRating;
+    using EntityFX.Gdcame.DataAccess.Contract.MainServer.Rating;
+    using EntityFX.Gdcame.DataAccess.Repository.Contract.Common;
+    using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer;
+    using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer.Criterions.RatingHistory;
+
     class LocalNodeRatingDataAccess : ILocalNodeRatingDataAccess
     {
         private readonly IRatingStatisticsRepository _ratingStatisticsRepository;
@@ -17,33 +15,33 @@ namespace EntityFX.Gdcame.DataAccess.Service
 
         public LocalNodeRatingDataAccess(IRatingStatisticsRepository ratingStatisticsRepository, IRatingHistoryRepository ratingHistoryRepository)
         {
-            _ratingStatisticsRepository = ratingStatisticsRepository;
-            _ratingHistoryRepository = ratingHistoryRepository;
+            this._ratingStatisticsRepository = ratingStatisticsRepository;
+            this._ratingHistoryRepository = ratingHistoryRepository;
         }
 
         public void PersistUsersRatingHistory(RatingHistory[] ratingHistory)
         {
-            _ratingHistoryRepository.PersistUsersRatingHistory(ratingHistory);
+            this._ratingHistoryRepository.PersistUsersRatingHistory(ratingHistory);
         }
 
         public RatingHistory[] ReadHistoryWithUsersIds(string[] userslds, TimeSpan period)
         {
-            return _ratingHistoryRepository.ReadHistoryWithUsersIds(new GetUsersRatingHistoryCriterion(){ UsersIds =  userslds, Period = period});
+            return this._ratingHistoryRepository.ReadHistoryWithUsersIds(new GetUsersRatingHistoryCriterion(){ UsersIds =  userslds, Period = period});
         }
 
         public void CleanOldHistory(TimeSpan period)
         {
-            _ratingHistoryRepository.CleanOldHistory(period);
+            this._ratingHistoryRepository.CleanOldHistory(period);
         }
 
         public void CreateOrUpdateUsersRatingStatistics(RatingStatistics[] ratingStatistics)
         {
-            _ratingStatisticsRepository.CreateOrUpdateUsersRatingStatistics(ratingStatistics);
+            this._ratingStatisticsRepository.CreateOrUpdateUsersRatingStatistics(ratingStatistics);
         }
 
         public TopRatingStatistics GetRaiting(int top = 500)
         {
-           return _ratingStatisticsRepository.GetRaiting(top);
+           return this._ratingStatisticsRepository.GetRaiting(top);
         }
 
     }

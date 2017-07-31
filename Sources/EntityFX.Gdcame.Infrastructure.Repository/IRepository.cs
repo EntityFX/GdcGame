@@ -2,6 +2,9 @@
 
 namespace EntityFX.Gdcame.Infrastructure.Repository
 {
+    using System.Collections;
+    using System.Collections.Generic;
+
     public interface IRepository<TDomain, in TFindByIdCriterion, in TFindAllCriterion>
         where TDomain : class
         where TFindByIdCriterion : ICriterion
@@ -15,6 +18,6 @@ namespace EntityFX.Gdcame.Infrastructure.Repository
 
         TDomain FindById(TFindByIdCriterion findByIdCriterion);
 
-        TDomain[] FindAll(TFindAllCriterion finalAllCriterion);
+        IEnumerable<TDomain> FindAll(TFindAllCriterion finalAllCriterion);
     }
 }

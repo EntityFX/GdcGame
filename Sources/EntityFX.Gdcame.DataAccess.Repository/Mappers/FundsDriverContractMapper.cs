@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using EntityFX.Gdcame.Common.Contract.Incrementors;
-using EntityFX.Gdcame.Common.Contract.Items;
-using EntityFX.Gdcame.DataAccess.Model.Ef;
-using EntityFX.Gdcame.Infrastructure.Common;
-
-namespace EntityFX.Gdcame.DataAccess.Repository.Ef.Mappers
+﻿namespace EntityFX.Gdcame.DataAccess.Repository.Ef.MainServer.Mappers
 {
+    using EntityFX.Gdcame.Common.Contract.Incrementors;
+    using EntityFX.Gdcame.Common.Contract.Items;
+    using EntityFX.Gdcame.DataAccess.Repository.Ef.MainServer.Entities;
+    using EntityFX.Gdcame.Infrastructure.Common;
+
     public class FundsDriverContractMapper : IMapper<FundsDriverEntity, Item>
     {
         private readonly IMapper<CustomRuleEntity, CustomRule> _customRuleContractMapper;
@@ -14,8 +13,8 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef.Mappers
         public FundsDriverContractMapper(IMapper<IncrementorEntity, Incrementor> incrementorContractMapper,
             IMapper<CustomRuleEntity, CustomRule> customRuleContractMapper)
         {
-            _incrementorContractMapper = incrementorContractMapper;
-            _customRuleContractMapper = customRuleContractMapper;
+            this._incrementorContractMapper = incrementorContractMapper;
+            this._customRuleContractMapper = customRuleContractMapper;
         }
 
         public Item Map(FundsDriverEntity source, Item destination = null)
@@ -36,7 +35,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef.Mappers
             {
                 destination.Incrementors[incrementor.Id] = incrementor.CounterId == null 
                     ? new Incrementor { IncrementorType = IncrementorTypeEnum.ValueIncrementor, Value = 0 } 
-                : _incrementorContractMapper.Map(incrementor);
+                : this._incrementorContractMapper.Map(incrementor);
             }
             return destination;
         }

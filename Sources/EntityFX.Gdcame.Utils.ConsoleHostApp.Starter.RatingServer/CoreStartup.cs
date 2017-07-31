@@ -19,7 +19,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer
 
         public override void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddDataProtection();
         }
     }
 }
