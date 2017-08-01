@@ -337,9 +337,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="NLog.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -371,9 +368,21 @@
       <Project>{9be9b0d1-cd15-4308-a8ed-186603f776b3}</Project>
       <Name>EntityFX.Gdcame.DataAccess.Repository.Mongo.RatingServer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Service.Common\EntityFX.Gdcame.DataAccess.Service.Common.csproj">
+      <Project>{2eb4d42c-33cd-48df-bd28-3e51934851eb}</Project>
+      <Name>EntityFX.Gdcame.DataAccess.Service.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Service.RatingServer\EntityFX.Gdcame.DataAccess.Service.RatingServer.csproj">
       <Project>{6d064da4-fe6f-44c1-ac3f-4a6d0c710b81}</Project>
       <Name>EntityFX.Gdcame.DataAccess.Service.RatingServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Engine.Contract.Common\EntityFX.Gdcame.Engine.Contract.Common.csproj">
+      <Project>{5E4D635E-5E84-47B1-B638-EF60A1176796}</Project>
+      <Name>EntityFX.Gdcame.Engine.Contract.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Engine.RatingServer\EntityFX.Gdcame.Engine.Common.csproj">
+      <Project>{397FFB04-CD07-4DEA-8B2C-14C97ADD9379}</Project>
+      <Name>EntityFX.Gdcame.Engine.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Common\EntityFX.Gdcame.Infrastructure.Common.csproj">
       <Project>{924CC67D-9E2B-46BA-BE1D-6C6C780CCFBC}</Project>

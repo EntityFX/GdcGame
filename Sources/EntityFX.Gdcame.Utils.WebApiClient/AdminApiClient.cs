@@ -5,15 +5,13 @@ using EntityFX.Gdcame.Application.Contract.Controller;
 using EntityFX.Gdcame.Application.Contract.Controller.MainServer;
 using EntityFX.Gdcame.Application.Contract.Model;
 using EntityFX.Gdcame.Application.Contract.Model.MainServer;
-using EntityFX.Gdcame.Common.Application.Model;
-using EntityFX.Gdcame.Infrastructure.Api;
 using EntityFX.Gdcame.Infrastructure.Api.Auth;
 using RestSharp;
 using RestSharp.Authenticators;
 
 namespace EntityFX.Gdcame.Utils.WebApiClient
 {
-    public class AdminApiClient : ApiClientBase, IAdminController
+    public class AdminApiClient : StatisticsApiClient<MainServerStatisticsInfoModel>, IAdminController
     {
         public AdminApiClient(IAuthContext<IAuthenticator> authContext, int? timeout = null) : base(authContext, timeout)
         {
@@ -23,11 +21,6 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
         {
             var response = await ExecuteRequestAsync<UserSessionsModel[]>("/api/admin/sessions");
             return response != null ? response.Data : new UserSessionsModel[] { };
-        }
-
-        public MainServerStatisticsInfoModel GetStatistics()
-        {
-            return ExecuteRequestAsync<MainServerStatisticsInfoModel>("/api/admin/statistics").Result.Data;
         }
 
         public string UpdateNodesList(string[] newServersList)

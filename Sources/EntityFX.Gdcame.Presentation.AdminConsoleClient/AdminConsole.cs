@@ -19,9 +19,12 @@
         private readonly string _password;
         private readonly Uri _mainServer;
 
-
+        private readonly Uri ratingServer;
 
         private readonly int _servicePort;
+
+        private readonly int ratingServerPort;
+
         private readonly string _user;
 
 
@@ -33,17 +36,20 @@
         private Timer _statisticsUpdateTimer;
 
         private PasswordOAuthContext[] _serversAuthContextList;
+        private ServerAuthContext[] _serversAuthWithTypeContextList;
         private object _stdLock = new { };
         private bool _isMainMenu;
 
-        public AdminConsole(string user, string password, Uri mainServer, int port)
+        public AdminConsole(string user, string password, Uri mainServer, Uri ratingServer, int port, int ratingServerPort)
 
         {
             this._user = user;
             this._password = password;
             this._mainServer = mainServer;
+            this.ratingServer = ratingServer;
             this._servicePort = port;
-            this._statisticsUpdateTimer = new Timer(5000);
+            this.ratingServerPort = ratingServerPort;
+            this._statisticsUpdateTimer = new Timer(2500);
             this._statisticsUpdateTimer.Elapsed += this.GetStatisticsCallback;
 
             this.InitMenu();
@@ -99,7 +105,7 @@
 
         private void StopAllGames()
         {
-            var serversList = ApiHelper.GetServers(this._mainServer).ToArray();
+            var serversList = ApiHelper.GetServersUri(ApiHelper.GetServers(this._mainServer), this._servicePort);
 
             Task.WhenAll(this.DoAuthServers(serversList).Where(_ => _ != null).Select(_ => Task.Factory.StartNew(
                 () =>
@@ -119,7 +125,7 @@
 
         private void Echo()
         {
-            var serversList = ApiHelper.GetServers(this._mainServer).ToArray();
+            var serversList = ApiHelper.GetServersUri(ApiHelper.GetServers(this._mainServer), this._servicePort);
 
             var echoResults = Task.WhenAll(
                 this.DoAuthServers(serversList).Where(_ => _ != null).Select(_ => Task.Factory.StartNew(
@@ -143,26 +149,77 @@
             }
         }
 
+        private class ServerLoginContext
+        {
+            public Uri Uri { get; set; }
+            public string ServerType { get; set; }
+        }
+
+        private class ServerAuthContext
+        {
+            public PasswordOAuthContext AuthContext { get; set; }
+            public string ServerType { get; set; }
+        }
+
         private void GetStatistics()
         {
-            var serversList = ApiHelper.GetServers(this._mainServer).ToArray();
+            var serversList =
+                ApiHelper.GetServersUri(ApiHelper.GetServers(this._mainServer), this._servicePort).Select(s => new ServerLoginContext()
+                {
+                    ServerType = "MainServer",
+                    Uri = s
+                })
+                    .Concat(new[] { new ServerLoginContext()
+                        {
+                            ServerType = "RatingServer" ,
+                            Uri = this.ratingServer
+                        } })
+                    .ToArray();
 
-            this._serversAuthContextList = this.DoAuthServers(serversList);
+            this._serversAuthWithTypeContextList = this.DoAuthServers(serversList);
             this._statisticsUpdateTimer.Start();
         }
 
-        private PasswordOAuthContext[] DoAuthServers(string[] serversList)
+        private PasswordOAuthContext[] DoAuthServers(Uri[] serversList)
         {
             return Task.WhenAll(
 
                 serversList.Select(
                         server =>
-                            new PasswordAuthProvider(
-                                new Uri(string.Format("http://{0}:{1}/", server, this._servicePort))))
+                            new PasswordAuthProvider(server))
                     .Select(async passwordProvider => await passwordProvider.Login(new PasswordAuthRequest<PasswordAuthData>
                     {
                         RequestData = new PasswordAuthData { Password = this._password, Usename = this._user }
                     }))).Result;
+        }
+
+        private ServerAuthContext[] DoAuthServers(ServerLoginContext[] contexts)
+        {
+            return Task.WhenAll(
+
+                contexts.Select(
+                        server =>
+                            new Tuple<string, PasswordAuthProvider>(server.ServerType, new PasswordAuthProvider(server.Uri)))
+                    .Select(async passwordProvider => new ServerAuthContext
+                    {
+                        AuthContext = await passwordProvider.Item2.Login(
+                                                                                new PasswordAuthRequest<PasswordAuthData>
+                                                                                {
+                                                                                    RequestData =
+                                                                                            new PasswordAuthData
+                                                                                            {
+                                                                                                Password
+                                                                                                        =
+                                                                                                        this
+                                                                                                            ._password,
+                                                                                                Usename
+                                                                                                        =
+                                                                                                        this
+                                                                                                            ._user
+                                                                                            }
+                                                                                }),
+                        ServerType = passwordProvider.Item1
+                    })).Result;
         }
 
         class MultiServerOperationResult
@@ -217,18 +274,23 @@
         public void GetStatisticsCallback(object sender, ElapsedEventArgs e)
         {
             var statistics = Task.WhenAll(
-                this._serversAuthContextList.Where(_ => _ != null).Select(_ => Task.Factory.StartNew(
+                this._serversAuthWithTypeContextList.Where(_ => _ != null).Select(_ => Task.Factory.StartNew(
                     () =>
                     {
                         try
                         {
-                            var result = new Tuple<Uri, MainServerStatisticsInfoModel>(_.BaseUri,
-                                ApiHelper.GetAdminClient(_).GetStatistics());
+                            var result = new Tuple<Uri, ServerStatisticsInfoModel, string>(
+                                _.AuthContext.BaseUri,
+                                (
+                                    _.ServerType == "MainServer" ? 
+                                    ApiHelper.GetStatisticsClient<MainServerStatisticsInfoModel>(_.AuthContext) :
+                                    ApiHelper.GetStatisticsClient<ServerStatisticsInfoModel>(_.AuthContext)
+                                ).GetStatistics(), _.ServerType);
                             return result;
                         }
                         catch (Exception)
                         {
-                            return new Tuple<Uri, MainServerStatisticsInfoModel>(_.BaseUri, null);
+                            return new Tuple<Uri, ServerStatisticsInfoModel, string>(_.AuthContext.BaseUri, null, _.ServerType);
                         }
                     }))
             ).Result;
@@ -249,6 +311,8 @@
 
             serversList = serversList.Concat(new[] { server }).ToArray();
 
+            var uriServersList = ApiHelper.GetServersUri(serversList, this._servicePort);
+
             var checkResult = this.CheckServersAvailability(serversList, this._servicePort);
             if (!checkResult.IsSuccess)
             {
@@ -260,7 +324,7 @@
             {
                 var results = Task.WhenAll(
 
-                this.DoAuthServers(serversList)
+                this.DoAuthServers(uriServersList)
                     .Where(_ => _ != null)
                     .Select(
                         _ => Task.Factory.StartNew(
@@ -292,36 +356,45 @@
             }
         }
 
-        private void PrintStatistics(Tuple<Uri, MainServerStatisticsInfoModel>[] statistics)
+        private void PrintStatistics(Tuple<Uri, ServerStatisticsInfoModel, string>[] statistics)
         {
             Console.Clear();
             foreach (var serverStatisticsInfoModel in statistics)
             {
+                var mainServerInfoModel = serverStatisticsInfoModel.Item3 == "MainServer"
+                              ? (MainServerStatisticsInfoModel)serverStatisticsInfoModel.Item2
+                              : null;
+
                 Console.WriteLine(serverStatisticsInfoModel.Item1);
-                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-10}", "Games:");
-                PrettyConsole.WriteColor(ConsoleColor.Cyan, "{0,-9}", serverStatisticsInfoModel.Item2.ActiveGamesCount);
+                if (mainServerInfoModel != null)
+                {
+                    PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-10}", "Games:");
+                    PrettyConsole.WriteColor(ConsoleColor.Cyan, "{0,-9}", mainServerInfoModel.ActiveGamesCount);
+                }
+
                 PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-10}", "Sessions:");
                 PrettyConsole.WriteColor(ConsoleColor.Cyan, "{0,-9} ",
                     serverStatisticsInfoModel.Item2.ActiveSessionsCount);
                 PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-10}", "Uptime:");
                 PrettyConsole.WriteLineColor(ConsoleColor.Cyan, "{0:dd\\.hh\\:mm\\:ss}",
                     serverStatisticsInfoModel.Item2.ServerUptime);
+                if (mainServerInfoModel != null)
+                {
+                    PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-10}", "Users:");
+                    PrettyConsole.WriteColor(ConsoleColor.Cyan, "{0,-9}",
+                       mainServerInfoModel.RegistredUsersCount);
 
-                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-10}", "Users:");
-                PrettyConsole.WriteColor(ConsoleColor.Cyan, "{0,-9}",
-                    serverStatisticsInfoModel.Item2.RegistredUsersCount);
-
-                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-10}", "Calc/tck:");
-                PrettyConsole.WriteColor(ConsoleColor.Cyan, "{0,-9} ms",
-                    serverStatisticsInfoModel.Item2.PerformanceInfo != null
-                        ? serverStatisticsInfoModel.Item2.PerformanceInfo.CalculationsPerCycle.TotalMilliseconds
-                        : 0);
-                PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-10}", "Save/tck:");
-                PrettyConsole.WriteLineColor(ConsoleColor.Cyan, "{0,-9} ",
-                    serverStatisticsInfoModel.Item2.PerformanceInfo != null
-                        ? serverStatisticsInfoModel.Item2.PerformanceInfo.PersistencePerCycle.TotalMilliseconds
-                        : 0);
-
+                    PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-10}", "Calc/tck:");
+                    PrettyConsole.WriteColor(ConsoleColor.Cyan, "{0,-9} ms",
+                        mainServerInfoModel.PerformanceInfo != null
+                            ? mainServerInfoModel.PerformanceInfo.CalculationsPerCycle.TotalMilliseconds
+                            : 0);
+                    PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-10}", "Save/tck:");
+                    PrettyConsole.WriteLineColor(ConsoleColor.Cyan, "{0,-9} ",
+                       mainServerInfoModel.PerformanceInfo != null
+                            ? mainServerInfoModel.PerformanceInfo.PersistencePerCycle.TotalMilliseconds
+                            : 0);
+                }
                 PrettyConsole.WriteColor(ConsoleColor.DarkCyan, "\t{0,-10}", "OS:");
                 PrettyConsole.WriteLineColor(ConsoleColor.Cyan, serverStatisticsInfoModel.Item2.SystemInfo.Os);
 
@@ -354,7 +427,7 @@
                 PrettyConsole.WriteColor(ConsoleColor.Cyan, "{0,-5:N1} % ", memoryPercent);
                 this.PrintMarker(memoryPercent, 40);
                 PrettyConsole.WriteLineColor(ConsoleColor.DarkCyan, "\tWorkers");
-                Array.ForEach(serverStatisticsInfoModel.Item2.ActiveWorkers, 
+                Array.ForEach(serverStatisticsInfoModel.Item2.ActiveWorkers,
                     w => PrettyConsole.WriteLineColor(ConsoleColor.DarkYellow, "\t\t{0}", w));
                 Console.WriteLine();
 

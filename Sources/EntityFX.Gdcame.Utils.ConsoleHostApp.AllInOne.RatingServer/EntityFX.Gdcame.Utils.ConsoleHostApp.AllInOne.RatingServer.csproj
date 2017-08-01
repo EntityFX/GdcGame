@@ -295,9 +295,6 @@
     <None Include="EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.RatingServer.exe.nlog">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="NLog.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

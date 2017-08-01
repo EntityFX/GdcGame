@@ -6,38 +6,24 @@ using ServerStatisticsInfoModel = EntityFX.Gdcame.Common.Application.Model.Serve
 
 namespace EntityFX.Gdcame.Application.Api.MainServer.Mappers
 {
+    using EntityFX.Gdcame.Application.Api.Common.Mappers;
     using EntityFX.Gdcame.Application.Contract.Model.MainServer;
 
-    public class StatisticsInfoMapper : IMapper<MainServerStatisticsInfo, MainServerStatisticsInfoModel>
+    public class StatisticsInfoMapper : StatisticsInfoMapper<MainServerStatisticsInfo, MainServerStatisticsInfoModel>
     {
-        public MainServerStatisticsInfoModel Map(MainServerStatisticsInfo source, MainServerStatisticsInfoModel destination = null)
+        public override MainServerStatisticsInfoModel Map(MainServerStatisticsInfo source, MainServerStatisticsInfoModel destination = null)
         {
-            return new MainServerStatisticsInfoModel
-            {
-                ActiveGamesCount = source.ActiveGamesCount,
-                ActiveSessionsCount = source.ActiveSessionsCount,
-                RegistredUsersCount = source.RegistredUsersCount,
-                ServerStartDateTime = source.ServerStartDateTime,
-                ServerUptime = source.ServerUptime,
-                PerformanceInfo = new PerformanceInfoModel()
-                {
-                    CalculationsPerCycle = source.PerformanceInfo.CalculationsPerCycle,
-                    PersistencePerCycle = source.PerformanceInfo.PersistencePerCycle
-                },
-                ResourcesUsageInfo = new ResourcesUsageInfoModel()
-                {
-                    CpuUsed = source.ResourcesUsageInfo.CpuUsed,
-                    MemoryAvailable = source.ResourcesUsageInfo.MemoryAvailable,
-                    MemoryUsedByProcess = source.ResourcesUsageInfo.MemoryUsedByProcess
-                },
-                SystemInfo = new SystemInfoModel()
-                {
-                    CpusCount = source.SystemInfo.CpusCount,
-                    Os = source.SystemInfo.Os,
-                    Runtime = source.SystemInfo.Runtime,
-                    MemoryTotal = source.SystemInfo.MemoryTotal,
-                }
-            };
+            var model = base.Map(source, destination);
+            model.RegistredUsersCount = source.RegistredUsersCount;
+            model.ActiveGamesCount = source.ActiveGamesCount;
+            model.PerformanceInfo = new PerformanceInfoModel()
+                                        {
+                                            CalculationsPerCycle =
+                                                source.PerformanceInfo.CalculationsPerCycle,
+                                            PersistencePerCycle =
+                                                source.PerformanceInfo.PersistencePerCycle
+                                        };
+            return model;
         }
     }
 }

@@ -78,7 +78,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             foreach (var data in ratingData.ManualStepsCount.Day)
             {
                 Console.Clear();
-                Console.Write("Имя: {0}\r\nКоличество шагов:\r\n \tЗа день: {1}", data.Login, data.Value);
+                Console.Write("Login: {0}\r\nSteps count:\r\n \tDaily count steps: {1}", data.Login, data.Value);
             }
         }
 
@@ -212,15 +212,11 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                     }
                     else if (keyInfo.Key == ConsoleKey.F2)
                     {
-                        gr.Invalidate();
-                    }
-                    else if (keyInfo.Key == ConsoleKey.F3)
-                    {
                         ErrorCode = ApiHelper.UserLogout(gr.ServerContext);
                         _userName = null;
                         break;
                     }
-                    else if (keyInfo.Key == ConsoleKey.F4)
+                    else if (keyInfo.Key == ConsoleKey.F3)
                     {
                         RatingMenu(rc);
                     }
@@ -352,12 +348,12 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                         if (!IsFundsDriverAvailableForBuy(gameData.Cash.Counters[0], fundsDriver))
                         {
                             PrettyConsole.WriteColor(ConsoleColor.Gray,
-                                "{0,2}:           Надо для покупки:     {1,6} x{2,-4} ", ((char)charIndex).ToString(),
-                                fundsDriver.UnlockBalance, fundsDriver.Bought);
+                                "{3,2}: {0,26} {1,-30}", fundsDriver.Name, "Need to buy: " + fundsDriver.UnlockBalance,
+                                 fundsDriver.Bought, ((char)charIndex).ToString());
                         }
                         else
                         {
-                            PrettyConsole.WriteColor(ConsoleColor.White, "{3,2}: {0,26} {1,14} x{2,-4} ", fundsDriver.Name,
+                            PrettyConsole.WriteColor(ConsoleColor.White, "{3,2}: {0,26} {1,24} x{2,-4} ", fundsDriver.Name,
                                 FormatMoney(fundsDriver.Price), fundsDriver.Bought, ((char)charIndex).ToString());
                         }
                         PrettyConsole.WriteColor(ConsoleColor.Red, "+{0, -4} ", GetIncrementorValueById(fundsDriver, 0));
@@ -473,10 +469,9 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                 lock (_stdLock)
                 {
                     Console.SetCursorPosition(0, 0);
-                    PrettyConsole.WriteLineColor(ConsoleColor.DarkRed, "Логин: {0}, Сервер API: {1}", User, ServerContext.BaseUri);
-                    PrettyConsole.WriteLineColor(ConsoleColor.DarkGreen, "F2 - Администрирование");
-                    PrettyConsole.WriteLineColor(ConsoleColor.DarkGreen, "F3 - Разлогиниться");
-                    PrettyConsole.WriteLineColor(ConsoleColor.DarkGreen, "F4 - Меню рейтинга");
+                    PrettyConsole.WriteLineColor(ConsoleColor.DarkRed, "Login: {0}, Server API: {1}", User, ServerContext.BaseUri);
+                    PrettyConsole.WriteLineColor(ConsoleColor.DarkGreen, "F2 - Sign out");
+                    PrettyConsole.WriteLineColor(ConsoleColor.DarkGreen, "F3 - Rating");
                     Console.SetCursorPosition(0, 3);
                     base.DisplayGameData(gameData);
                 }
@@ -510,7 +505,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                 }
                 catch (Exception exp)
                 {
-                    PrettyConsole.WriteLineColor(ConsoleColor.Red, "Ошибка: {0}", exp);
+                    PrettyConsole.WriteLineColor(ConsoleColor.Red, "Error: {0}", exp);
                 }
 
             }

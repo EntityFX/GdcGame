@@ -68,7 +68,7 @@ namespace EntityFX.Gdcame.Infrastructure.Api
                 if (
                     new HttpStatusCode[]
                     {
-                        HttpStatusCode.BadRequest, HttpStatusCode.Forbidden, HttpStatusCode.Unauthorized, HttpStatusCode.BadGateway, HttpStatusCode.InternalServerError
+                        HttpStatusCode.BadRequest, HttpStatusCode.Forbidden, HttpStatusCode.Unauthorized, HttpStatusCode.BadGateway, HttpStatusCode.InternalServerError, HttpStatusCode.NotFound, 
 
                     }.Contains(res.StatusCode) || res.ResponseStatus == ResponseStatus.Error)
                 {

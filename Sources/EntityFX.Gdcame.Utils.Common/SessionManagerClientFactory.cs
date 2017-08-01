@@ -1,10 +1,10 @@
-﻿using System;
-using Microsoft.Practices.Unity;
-
-namespace EntityFX.Gdcame.Utils.MainServer
+﻿namespace EntityFX.Gdcame.Utils.Common
 {
+    using System;
+
     using EntityFX.Gdcame.Manager.Contract.Common.SessionManager;
-    using EntityFX.Gdcame.Utils.Common;
+
+    using Microsoft.Practices.Unity;
 
     public class SessionManagerClientFactory : ISessionManagerClientFactory
     {
@@ -12,12 +12,12 @@ namespace EntityFX.Gdcame.Utils.MainServer
 
         public SessionManagerClientFactory(IUnityContainer unityContainer)
         {
-            _unityContainer = unityContainer;
+            this._unityContainer = unityContainer;
         }
 
         public ISessionManager BuildSessionManagerClient(Guid sessionGuid)
         {
-            var game = _unityContainer.Resolve<ISessionManager>(new ParameterOverride("sessionGuid", sessionGuid));
+            var game = this._unityContainer.Resolve<ISessionManager>(new ParameterOverride("sessionGuid", sessionGuid));
             return game;
         }
     }

@@ -15,6 +15,7 @@
                 new InterceptionBehavior<PolicyInjectionBehavior>()
                 , new Interceptor<InterfaceInterceptor>()
                 );
+
             container.RegisterType<IRatingDataAccess, RatingDataAccess>();
             return container;
         }

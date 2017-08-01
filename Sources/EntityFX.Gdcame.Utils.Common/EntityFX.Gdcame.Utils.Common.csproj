@@ -224,6 +224,7 @@
     <Compile Include="PortableTaskTimer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RuntimeHelper.cs" />
+    <Compile Include="SessionManagerClientFactory.cs" />
     <Compile Include="TaskTimerBase.cs" />
   </ItemGroup>
   <ItemGroup>

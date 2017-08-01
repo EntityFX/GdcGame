@@ -189,6 +189,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Kernel.Cont
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Kernel", "EntityFX.Gdcame.Kernel\EntityFX.Gdcame.Kernel.csproj", "{C70F8F1A-9FDA-41FF-BFB3-4EAB64907D87}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Engine.Common", "EntityFX.Gdcame.Engine.RatingServer\EntityFX.Gdcame.Engine.Common.csproj", "{397FFB04-CD07-4DEA-8B2C-14C97ADD9379}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Engine.Contract.Common", "EntityFX.Gdcame.Engine.Contract.Common\EntityFX.Gdcame.Engine.Contract.Common.csproj", "{5E4D635E-5E84-47B1-B638-EF60A1176796}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		BuildServer|Any CPU = BuildServer|Any CPU
@@ -574,6 +578,18 @@ Global
 		{C70F8F1A-9FDA-41FF-BFB3-4EAB64907D87}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C70F8F1A-9FDA-41FF-BFB3-4EAB64907D87}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C70F8F1A-9FDA-41FF-BFB3-4EAB64907D87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{397FFB04-CD07-4DEA-8B2C-14C97ADD9379}.BuildServer|Any CPU.ActiveCfg = Release|Any CPU
+		{397FFB04-CD07-4DEA-8B2C-14C97ADD9379}.BuildServer|Any CPU.Build.0 = Release|Any CPU
+		{397FFB04-CD07-4DEA-8B2C-14C97ADD9379}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{397FFB04-CD07-4DEA-8B2C-14C97ADD9379}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{397FFB04-CD07-4DEA-8B2C-14C97ADD9379}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{397FFB04-CD07-4DEA-8B2C-14C97ADD9379}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E4D635E-5E84-47B1-B638-EF60A1176796}.BuildServer|Any CPU.ActiveCfg = Release|Any CPU
+		{5E4D635E-5E84-47B1-B638-EF60A1176796}.BuildServer|Any CPU.Build.0 = Release|Any CPU
+		{5E4D635E-5E84-47B1-B638-EF60A1176796}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E4D635E-5E84-47B1-B638-EF60A1176796}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E4D635E-5E84-47B1-B638-EF60A1176796}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E4D635E-5E84-47B1-B638-EF60A1176796}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -654,6 +670,8 @@ Global
 		{05B804CB-DA17-4449-88FB-C2DEF96486A7} = {2ECE9623-BD00-47BF-A617-3104D0E03486}
 		{CA1A21AB-C915-4101-9FEF-24C76D5F74A9} = {970EB44D-38AF-479F-AFC1-CDDB9C17113A}
 		{C70F8F1A-9FDA-41FF-BFB3-4EAB64907D87} = {970EB44D-38AF-479F-AFC1-CDDB9C17113A}
+		{397FFB04-CD07-4DEA-8B2C-14C97ADD9379} = {970EB44D-38AF-479F-AFC1-CDDB9C17113A}
+		{5E4D635E-5E84-47B1-B638-EF60A1176796} = {970EB44D-38AF-479F-AFC1-CDDB9C17113A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35

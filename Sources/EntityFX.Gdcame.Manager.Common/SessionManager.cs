@@ -45,8 +45,8 @@
             {
                 var result = this.GameSessions.AddSession(new Engine.Contract.GameEngine.User() { Id = user.Id, Login = user.Login, Role = user.Role});
                 this._logger.Info(
-                    "EntityFX.EconomicsArcade.Manager.SessionManager.OpenSession: Session {0} added for login: {1}",
-                    result, login);
+                    "{2}: Session {0} added for login: {1}",
+                    result, login, this.GetType());
                 return result;
             }
             var message = string.Format("User with login {0} not found", login);

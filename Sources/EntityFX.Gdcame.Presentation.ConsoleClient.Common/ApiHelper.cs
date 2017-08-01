@@ -13,6 +13,10 @@ using RestSharp.Authenticators;
 
 namespace EntityFX.Gdcame.Presentation.ConsoleClient.Common
 {
+    using System.Linq;
+
+    using EntityFX.Gdcame.Common.Application.Model;
+
     public class ApiHelper
     {
         public static async Task<PasswordOAuthContext> LoginServer(Uri server, string userName, string password)
@@ -64,6 +68,11 @@ namespace EntityFX.Gdcame.Presentation.ConsoleClient.Common
                     .Result.ServerList;
         }
 
+        public static Uri[] GetServersUri(string[] servers, int port)
+        {
+            return servers.Select(server => new Uri(string.Format("http://{0}:{1}/", server, port))).ToArray();
+        }
+
         public static IGameApiController GetGameClient(PasswordOAuthContext session)
         {
             return new GameApiClient(session);
@@ -72,6 +81,12 @@ namespace EntityFX.Gdcame.Presentation.ConsoleClient.Common
         public static IAdminController GetAdminClient(PasswordOAuthContext session)
         {
             return new AdminApiClient(session);
+        }
+
+        public static IStatisticsInfo<TModel> GetStatisticsClient<TModel>(PasswordOAuthContext session)
+            where TModel : ServerStatisticsInfoModel
+        {
+            return new StatisticsApiClient<TModel>(session);
         }
 
         public static IRatingController GetRatingClient(IAuthContext<IAuthenticator> session)

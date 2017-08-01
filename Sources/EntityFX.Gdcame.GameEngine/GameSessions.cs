@@ -8,11 +8,12 @@
     using EntityFX.Gdcame.Contract.Common;
     using EntityFX.Gdcame.Contract.MainServer;
     using EntityFX.Gdcame.Contract.MainServer.Statistics;
+    using EntityFX.Gdcame.Engine.Common;
     using EntityFX.Gdcame.Engine.Contract.GameEngine;
     using EntityFX.Gdcame.Infrastructure.Common;
     using EntityFX.Gdcame.Kernel.Contract;
 
-    public class GameSessions : IDisposable, IGameSessions
+    public class GameSessions : SessionsProvider, IGameSessions
     {
         private readonly IGameFactory _gameFactory;
 
@@ -20,37 +21,29 @@
 
         private readonly ConcurrentDictionary<string, IGame> _userGamesStorage =
             new ConcurrentDictionary<string, IGame>();
-        private readonly ConcurrentDictionary<Guid, Session> _userSessionsStorage = new ConcurrentDictionary<Guid, Session>();
-        private readonly ConcurrentDictionary<string, string> _userIdentities =
-            new ConcurrentDictionary<string, string>();
+
 
         private readonly GamePerformanceInfo _performanceInfo;
 
         public GameSessions(ILogger logger, IGameFactory gameFactory, GamePerformanceInfo performanceInfo)
+            : base(logger)
         {
             this._logger = logger;
             this._gameFactory = gameFactory;
             this._performanceInfo = performanceInfo;
         }
 
-        public IDictionary<Guid, Session> Sessions
-        {
-            get { return this._userSessionsStorage; }
-        }
+
 
         public IDictionary<string, IGame> Games
         {
             get { return this._userGamesStorage; }
         }
 
-        public IDictionary<string, string> Identities
-        {
-            get { return this._userIdentities; }
-        }
+
 
         private static readonly object _stdLock = new { };
 
-        //TODO: make public
         public IGame StartGame(string userId, string login)
         {
             var game = this.BuildGame(userId, login);
@@ -93,36 +86,8 @@
             return UserGameSessionStatus.Offline;
         }
 
-        public Guid AddSession(User user)
+        public override Guid AddSession(User user)
         {
-            UserRole[] userRoles;
-            switch ((UserRole)user.Role)
-            {
-                case UserRole.Admin:
-                    userRoles = new[] { UserRole.GenericUser, UserRole.Admin };
-                    break;
-                case UserRole.GenericUser:
-                default:
-                    userRoles = new[] { UserRole.GenericUser};
-                    break;
-                case UserRole.System:
-                    userRoles = new[] { UserRole.System, UserRole.Admin };
-                    break;
-            }
-
-            var session = new Session
-            {
-                Login = user.Login,
-                UserId = user.Id,
-                SessionIdentifier = Guid.NewGuid(),
-                LastActivity = DateTime.Now,
-
-
-                UserRoles = userRoles,
-                Identity =
-                    new CustomGameIdentity { AuthenticationType = "Auto", IsAuthenticated = true, Name = user.Login }
-            };
-
             if (!this._userGamesStorage.ContainsKey(user.Login))
             {
                 var game = this.StartGame(user.Id, user.Login);
@@ -132,46 +97,9 @@
                 }
             }
 
-            if (!this._userSessionsStorage.TryAdd(session.SessionIdentifier, session))
-            {
-                this._logger.Warning("Cannot add session {0}", session.SessionIdentifier);
-            }
-
-            if (!this._userIdentities.TryAdd(session.Login, session.UserId))
-            {
-                this._logger.Warning("Cannot add user identifier {0}", session.SessionIdentifier);
-            }
-            return session.SessionIdentifier;
+            return base.AddSession(user);
         }
 
-        public Session GetSession(Guid sessionId)
-        {
-            Session session;
-            if (!this._userSessionsStorage.TryGetValue(sessionId, out session))
-            {
-                if (session == null)
-                {
-                    this._logger.Warning("Session {0} not found", sessionId);
-                    throw new InvalidSessionException(string.Format("Session {0} doesn't exists", sessionId), sessionId);
-                }
-            }
-            session.LastActivity = DateTime.Now;
-            return session;
-        }
-
-        public void RemoveSession(Guid sessionId)
-        {
-            Session session;
-            if (!this._userSessionsStorage.TryRemove(sessionId, out session))
-            {
-                this._logger.Warning("Cannot remove session {0}", sessionId);
-            }
-            string userId;
-            if (!this._userIdentities.TryRemove(session.UserId, out userId))
-            {
-                this._logger.Warning("Cannot remove user identifier {0}", session.UserId);
-            }
-        }
 
         public void RemoveGame(UserData user)
         {
@@ -203,11 +131,7 @@
             }
         }
 
-        public void RemoveAllSessions()
-        {
-            this._userSessionsStorage.Clear();
-            this._userIdentities.Clear();
-        }
+
 
         public GamePerformanceInfo PerformanceInfo
         {
@@ -225,27 +149,5 @@
             return this._gameFactory.BuildGame(userId, userName);
         }
 
-        #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!this.disposedValue)
-            {
-                if (disposing)
-                {
-                }
-                this.disposedValue = true;
-            }
-        }
-
-        // This code added to correctly implement the disposable pattern.
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            this.Dispose(true);
-            // GC.SuppressFinalize(this);
-        }
-        #endregion
     }
 }

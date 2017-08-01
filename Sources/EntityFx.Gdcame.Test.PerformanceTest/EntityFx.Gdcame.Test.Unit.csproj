@@ -176,6 +176,14 @@
       <Project>{2008f2c2-c1fa-4cb9-8a99-a9406ac4967d}</Project>
       <Name>EntityFX.Gdcame.DataAccess.Service.MainServer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Engine.Contract.Common\EntityFX.Gdcame.Engine.Contract.Common.csproj">
+      <Project>{5e4d635e-5e84-47b1-b638-ef60a1176796}</Project>
+      <Name>EntityFX.Gdcame.Engine.Contract.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Engine.RatingServer\EntityFX.Gdcame.Engine.Common.csproj">
+      <Project>{397ffb04-cd07-4dea-8b2c-14c97add9379}</Project>
+      <Name>EntityFX.Gdcame.Engine.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.GameEngine.Contract\EntityFX.Gdcame.Engine.Contract.GameEngine.csproj">
       <Project>{BEEA0656-542B-4C48-A480-CEFF662DD29F}</Project>
       <Name>EntityFX.Gdcame.Engine.Contract.GameEngine</Name>

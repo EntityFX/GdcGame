@@ -20,18 +20,11 @@
         IGame GetGame(string username);
         IGame GetGame(Guid sessionId);
         UserGameSessionStatus GetGameSessionStatus(string username);
-        IDictionary<Guid, Session> Sessions { get; }
-        IDictionary<string, string> Identities { get; }
-    }
 
-    public interface ISessions
-    {
-        Guid AddSession(User user);
-        Session GetSession(Guid sessionId);
         void RemoveAllGames();
-        void RemoveAllSessions();
+
         void RemoveGame(UserData user);
-        void RemoveSession(Guid sessionId);
+
         IDictionary<string, IGame> Games { get; }
     }
 }

@@ -13,21 +13,22 @@ namespace EntityFX.Gdcame.Manager.MainServer
     using EntityFX.Gdcame.Contract.MainServer.Statistics;
     using EntityFX.Gdcame.DataAccess.Contract.Common.User;
     using EntityFX.Gdcame.Engine.Contract.GameEngine;
+    using EntityFX.Gdcame.Manager.Common;
 
-    public class AdminManager : IAdminManager
+    public class AdminManager : AdminManagerBase<MainServerStatisticsInfo>, IAdminManager
     {
         private readonly IGameSessions _gameSessions;
         private readonly IPerformanceHelper _performanceHelper;
         private readonly IUserDataAccessService _userDataAccessService;
         private readonly SystemInfo _systemInfo;
         private readonly IOperationContextHelper _operationContextHelper;
-        private static readonly DateTime ServerStartTime = DateTime.Now;
 
         public AdminManager(IOperationContextHelper operationContextHelper
             , IGameSessions gameSessions
             , IPerformanceHelper performanceHelper
             , IUserDataAccessService userDataAccessService
             , SystemInfo systemInfo)
+            : base(gameSessions, performanceHelper, systemInfo)
         {
             _gameSessions = gameSessions;
             _performanceHelper = performanceHelper;
@@ -79,24 +80,13 @@ namespace EntityFX.Gdcame.Manager.MainServer
         }
 
 
-        public MainServerStatisticsInfo GetStatisticsInfo()
+        public override MainServerStatisticsInfo GetStatisticsInfo()
         {
-            return new MainServerStatisticsInfo()
-            {
-                ActiveSessionsCount = _gameSessions.Sessions.Count,
-                ActiveGamesCount = _gameSessions.Games.Count,
-                RegistredUsersCount = _userDataAccessService.Count(),
-                ServerStartDateTime = ServerStartTime,
-                ServerUptime = DateTime.Now - ServerStartTime,
-                PerformanceInfo = _gameSessions.PerformanceInfo,
-                ResourcesUsageInfo = new ResourcesUsageInfo()
-                {
-                    CpuUsed = _performanceHelper.CpuUsage,
-                    MemoryAvailable = _performanceHelper.MemoryUsage,
-                    MemoryUsedByProcess = _performanceHelper.MemoryUsageByProcess
-                },
-                SystemInfo = _systemInfo
-            };
+            var statistics = base.GetStatisticsInfo();
+            statistics.ActiveGamesCount = _gameSessions.Games.Count;
+            statistics.RegistredUsersCount = _userDataAccessService.Count();
+            statistics.PerformanceInfo = _gameSessions.PerformanceInfo;
+            return statistics;
         }
 
         public void StopGame(string login)

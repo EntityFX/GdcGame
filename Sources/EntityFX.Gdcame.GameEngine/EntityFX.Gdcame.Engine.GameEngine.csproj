@@ -60,6 +60,14 @@
       <Project>{0932D8B3-29EB-4546-987A-B246421A9B87}</Project>
       <Name>EntityFX.Gdcame.DataAccess.Contract.MainServer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Engine.Contract.Common\EntityFX.Gdcame.Engine.Contract.Common.csproj">
+      <Project>{5E4D635E-5E84-47B1-B638-EF60A1176796}</Project>
+      <Name>EntityFX.Gdcame.Engine.Contract.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Engine.RatingServer\EntityFX.Gdcame.Engine.Common.csproj">
+      <Project>{397FFB04-CD07-4DEA-8B2C-14C97ADD9379}</Project>
+      <Name>EntityFX.Gdcame.Engine.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.GameEngine.Contract\EntityFX.Gdcame.Engine.Contract.GameEngine.csproj">
       <Project>{BEEA0656-542B-4C48-A480-CEFF662DD29F}</Project>
       <Name>EntityFX.Gdcame.Engine.Contract.GameEngine</Name>

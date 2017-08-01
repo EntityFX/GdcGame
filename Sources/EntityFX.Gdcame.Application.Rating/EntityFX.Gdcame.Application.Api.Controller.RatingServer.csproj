@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminController.cs" />
     <Compile Include="RatingController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

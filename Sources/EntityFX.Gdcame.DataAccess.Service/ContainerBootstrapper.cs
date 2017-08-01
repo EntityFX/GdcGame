@@ -16,10 +16,7 @@
     {
         public IUnityContainer Configure(IUnityContainer container)
         {
-            container.RegisterType<IUserDataAccessService, UserDataAccessService>(
-                new InterceptionBehavior<PolicyInjectionBehavior>()
-                , new Interceptor<InterfaceInterceptor>()
-                );
+
             container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessDocumentService>(
                 new InterceptionBehavior<PolicyInjectionBehavior>()
                 , new Interceptor<InterfaceInterceptor>()
@@ -40,7 +37,6 @@
             container.RegisterType<IServerDataAccessService, ServerDataAccessService>();
 
             container.RegisterType<ILocalNodeRatingDataAccess, LocalNodeRatingDataAccess>();
-            container.RegisterType<IRatingDataAccess, RatingDataAccess>();
             return container;
         }
     }

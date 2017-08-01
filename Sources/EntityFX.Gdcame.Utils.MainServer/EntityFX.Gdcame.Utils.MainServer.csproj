@@ -121,7 +121,6 @@
     <Compile Include="InvalidSessionFaultHandler.cs" />
     <Compile Include="NotifyConsumerClientFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SessionManagerClientFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -131,6 +130,10 @@
     <ProjectReference Include="..\EntityFX.Gdcame.Common.Contract\EntityFX.Gdcame.Contract.Common.csproj">
       <Project>{89F89C37-F564-47EB-839D-C45ACD9D012A}</Project>
       <Name>EntityFX.Gdcame.Contract.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Engine.Contract.Common\EntityFX.Gdcame.Engine.Contract.Common.csproj">
+      <Project>{5e4d635e-5e84-47b1-b638-ef60a1176796}</Project>
+      <Name>EntityFX.Gdcame.Engine.Contract.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.GameEngine.Contract\EntityFX.Gdcame.Engine.Contract.GameEngine.csproj">
       <Project>{BEEA0656-542B-4C48-A480-CEFF662DD29F}</Project>
