@@ -13,6 +13,7 @@ namespace EntityFx.Gdcame.Test.Perfomance
         {
             {0, new EchoTest()},
             {1, new EchoAuthTest()},
+            {2, new StartManyGamesTest()},
         };
 
         static void Main(string[] args)

@@ -1,6 +1,8 @@
 ﻿namespace EntityFX.Gdcame.Infrastructure.Common
 {
     using System;
+    using System.Collections;
+    using System.Collections.Generic;
 
     public interface IWorker
     {
@@ -13,6 +15,8 @@
         bool IsRunning { get; }
 
         long Ticks { get; }
+
+        IDictionary<string, double> PerfomanceCounters { get; }
 
         void IncrementTick();
     }

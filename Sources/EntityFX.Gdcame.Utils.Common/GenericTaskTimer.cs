@@ -9,7 +9,7 @@ namespace EntityFX.Gdcame.Utils.Common
     {
         private Timer _timer;
 
-        public GenericTaskTimer(TimeSpan interval, Action tick, bool runOnce = false) : base(interval, tick, runOnce)
+        public GenericTaskTimer(ILogger logger,TimeSpan interval, Action tick, bool runOnce = false) : base(logger, interval, tick, runOnce)
         {
             _timer = new Timer(state => tick(), null, Timeout.Infinite, (int) interval.TotalMilliseconds);
         }
@@ -18,7 +18,18 @@ namespace EntityFX.Gdcame.Utils.Common
         {
             await Task.Run(() =>
             {
-                _timer = new Timer(state => tick(), null, TimeSpan.Zero, interval);
+                _timer = new Timer(
+                    state =>
+                        {
+                            try
+                            {
+                                tick();
+                            }
+                            catch (Exception e)
+                            {
+                                Logger.Error(e);
+                            }
+                        }, null, TimeSpan.Zero, interval);
                 IsRunning = true;
             });
         }

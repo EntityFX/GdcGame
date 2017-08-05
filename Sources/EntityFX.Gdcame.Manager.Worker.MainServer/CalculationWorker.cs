@@ -100,6 +100,10 @@
                     throw;
                 }
                 this._performanceInfo.CalculationsPerCycle = sw.Elapsed;
+
+                PerfomanceCounters["tick"] = sw.Elapsed.TotalMilliseconds;
+                PerfomanceCounters["perf"] = sw.Elapsed.TotalMilliseconds / this._gameSessions.Games.Count;
+                PerfomanceCounters["games"] = this._gameSessions.Games.Count;
             }
 
             if (this._logger != null)

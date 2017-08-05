@@ -65,6 +65,9 @@
                     this._logger.Error(e);
                     throw;
                 }
+
+                PerfomanceCounters["tick"] = sw.ElapsedMilliseconds;
+                PerfomanceCounters["games"] = this._gameSessions.Games.Count;
             }
             if (this._logger != null)
                 this._logger.Info("Perform sessions {0} check: {1}", this._gameSessions.Sessions.Count, sw.Elapsed);

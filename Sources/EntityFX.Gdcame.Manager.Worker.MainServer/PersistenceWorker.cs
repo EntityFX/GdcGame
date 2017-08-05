@@ -157,6 +157,10 @@
                         this._logger.Debug("PerformBackgroundPersisting: Delay {0} ms", millisecondsUntilTimeSlotEnd);
                     var res = Task.Delay(millisecondsUntilTimeSlotEnd).Wait(millisecondsUntilTimeSlotEnd * 2);
                     currentTimeSlotId = (currentTimeSlotId + 1) % PersistTimeSlotsCount;
+
+                    PerfomanceCounters["tick"] = stopwatch.ElapsedMilliseconds;
+                    PerfomanceCounters["perf.before-timeslot-end"] = millisecondsUntilTimeSlotEnd;
+                    PerfomanceCounters["games"] = this._gameSessions.Games.Count;
                 }
                 catch (Exception exception)
                 {

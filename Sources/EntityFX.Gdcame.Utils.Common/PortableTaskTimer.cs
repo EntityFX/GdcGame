@@ -6,7 +6,7 @@ namespace EntityFX.Gdcame.Utils.Common
 {
     public class PortableTaskTimer : TaskTimerBase, ITaskTimer
     {
-        public PortableTaskTimer(TimeSpan interval, Action tick, bool runOnce = false) : base(interval, tick, runOnce)
+        public PortableTaskTimer(ILogger logger, TimeSpan interval, Action tick, bool runOnce = false) : base(logger, interval, tick, runOnce)
         {
         }
 

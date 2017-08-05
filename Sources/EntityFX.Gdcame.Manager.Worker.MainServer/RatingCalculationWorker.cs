@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
+    using System.Threading;
     using System.Threading.Tasks;
 
     using EntityFX.Gdcame.Contract.Common.UserRating;
@@ -14,7 +15,7 @@
 
     public class RatingCalculationWorker : WorkerBase, IWorker
     {
-        private const int TimeSaveInSeconds = 5;       
+        private const int TimeSaveInSeconds = 30;
         private const int ChunkSize = 500;
         private readonly ILogger _logger;
         private readonly IGameSessions _gameSessions;
@@ -22,6 +23,8 @@
         private readonly ITaskTimer _backgroundSaveHistoryCheckerTimer;
         private Task _backgroundSaveHistoryCheckerTask;
         private object _stdLock = new { };
+
+        private bool isCalculating = false;
 
         public RatingCalculationWorker(ILogger logger, IGameSessions gameSessions, ILocalNodeRatingDataAccess localNodeRatingDataAccess, ITaskTimerFactory taskTimerFactory)
         {
@@ -50,28 +53,55 @@
         private void PerformRatingCalculation()
         {
             this.IncrementTick();
-            var sw = new Stopwatch();
-            sw.Start();
-            lock (this._stdLock)
+            lock (_stdLock)
             {
-                try
-                {
-                    this.SaveRatingHistory();
-                    this.RecalculateRatingStatisticsForActiveUsers();
-                    this.CleanOldHistory();
-                }
-                catch (Exception e)
-                {
-                    this._logger.Error(e);
-                    throw;
-                }
+                if (this.isCalculating) return;
+                this.isCalculating = true;
             }
+
+
+
+            var sw = new Stopwatch();
+            var swCalc = new Stopwatch();
+            var swSave = new Stopwatch();
+            sw.Start();
+            swCalc.Start();
+            swSave.Start();
+
+            try
+            {
+                this.SaveRatingHistory();
+                this._logger.Info("Perform rating calculation - save history for {0} games, ellapsed: {1}", this._gameSessions.Games.Count, swCalc.Elapsed);
+                this.RecalculateRatingStatisticsForActiveUsers();
+                this._logger.Info("Perform rating calculation - recalculate statistics {0} games, ellapsed: {1}", this._gameSessions.Games.Count, swSave.Elapsed);
+                this.CleanOldHistory();
+            }
+            catch (Exception e)
+            {
+                this._logger.Error(e);
+                throw;
+            }
+
+
+            lock (_stdLock)
+            {
+                this.isCalculating = false;
+            }
+
+            PerfomanceCounters["tick"] = sw.Elapsed.TotalMilliseconds;
+            PerfomanceCounters["perf"] = sw.Elapsed.TotalMilliseconds / this._gameSessions.Games.Count;
+            PerfomanceCounters["tick.calc"] = swCalc.Elapsed.TotalMilliseconds;
+            PerfomanceCounters["tick.save"] = swSave.Elapsed.TotalMilliseconds;
+            PerfomanceCounters["perf.calc"] = swCalc.Elapsed.TotalMilliseconds / this._gameSessions.Games.Count;
+            PerfomanceCounters["tick.save"] = swSave.Elapsed.TotalMilliseconds / this._gameSessions.Games.Count;
+            PerfomanceCounters["games"] = this._gameSessions.Games.Count;
+
             if (this._logger != null)
                 this._logger.Info("Perform rating calculation for {0} games, ellapsed: {1}", this._gameSessions.Games.Count, sw.Elapsed);
         }
 
         private void SaveRatingHistory()
-        {           
+        {
             var ratingHistoryChunk = new RatingHistory[ChunkSize];
             var count = 0;
             var userIdentities = this._gameSessions.Identities;
@@ -209,7 +239,7 @@
                 userRatingNew.TotalEarned.Total = lastDataUser.TotalEarned - firstDataUserWeek.TotalEarned;
             }
             return userRatingNew;
-            
+
         }
 
         //private void RecalculationRatingStatistics()

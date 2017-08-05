@@ -1,5 +1,6 @@
 ﻿namespace EntityFX.Gdcame.Manager.Common
 {
+    using System;
     using System.Collections.Generic;
 
     using EntityFX.Gdcame.Infrastructure.Common;
@@ -25,7 +26,15 @@
             foreach (var worker in this._workers)
             {
                 if (!worker.Value.IsRunOnStart) continue;
-                worker.Value.Run<object>();
+                try
+                {
+                    worker.Value.Run<object>();
+                }
+                catch (Exception e)
+                {
+                    this._logger.Error(e);
+                }
+
                 this._logger.Info("Worker {0} started", worker.Key);
             }
         }
@@ -39,7 +48,8 @@
                 {
                     IsRunning = worker.IsRunning,
                     Name = worker.Name,
-                    Ticks = worker.Ticks
+                    Ticks = worker.Ticks,
+                    PerfomanceCounters = worker.PerfomanceCounters
                 });
             }
             return workersStatusList.ToArray();

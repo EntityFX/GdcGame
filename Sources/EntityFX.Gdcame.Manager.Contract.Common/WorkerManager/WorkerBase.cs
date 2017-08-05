@@ -29,6 +29,16 @@ namespace EntityFX.Gdcame.Manager.Contract.Common.WorkerManager
 
         private long _ticks;
 
+        private readonly IDictionary<string, double> perfomanceCounters = new Dictionary<string, double>();
+
+        public IDictionary<string, double> PerfomanceCounters
+        {
+            get
+            {
+                return this.perfomanceCounters;
+            }
+        }
+
         public void IncrementTick()
         {
             Interlocked.Add(ref _ticks, 1);

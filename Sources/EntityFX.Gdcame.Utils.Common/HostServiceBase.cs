@@ -2,6 +2,7 @@ namespace EntityFX.Gdcame.Utils.Common
 {
     using System;
     using System.Linq;
+    using System.Threading;
 
     using EntityFX.Gdcame.Infrastructure.Common;
     using EntityFX.Gdcame.Manager.Contract.Common.WorkerManager;

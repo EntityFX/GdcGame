@@ -1,4 +1,13 @@
-﻿namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="AdminConsole.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   Defines the AdminConsole type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
 {
     using System;
     using System.Collections.Generic;
@@ -16,41 +25,41 @@
 
     internal class AdminConsole
     {
-        private readonly string _password;
-        private readonly Uri _mainServer;
+        private readonly string password;
+        private readonly Uri mainServer;
 
         private readonly Uri ratingServer;
 
-        private readonly int _servicePort;
+        private readonly int servicePort;
 
         private readonly int ratingServerPort;
 
-        private readonly string _user;
+        private readonly string user;
 
 
         //Dictionary<string, Delegate> _menu;
-        private bool _exitFlag;
+        private bool exitFlag;
 
-        private Dictionary<ConsoleKey, MenuItem> _menu;
+        private Dictionary<ConsoleKey, MenuItem> menu;
 
-        private Timer _statisticsUpdateTimer;
+        private Timer statisticsUpdateTimer;
 
-        private PasswordOAuthContext[] _serversAuthContextList;
-        private ServerAuthContext[] _serversAuthWithTypeContextList;
-        private object _stdLock = new { };
-        private bool _isMainMenu;
+        private PasswordOAuthContext[] serversAuthContextList;
+        private ServerAuthContext[] serversAuthWithTypeContextList;
+        private object stdLock = new { };
+        private bool isMainMenu;
 
         public AdminConsole(string user, string password, Uri mainServer, Uri ratingServer, int port, int ratingServerPort)
 
         {
-            this._user = user;
-            this._password = password;
-            this._mainServer = mainServer;
+            this.user = user;
+            this.password = password;
+            this.mainServer = mainServer;
             this.ratingServer = ratingServer;
-            this._servicePort = port;
+            this.servicePort = port;
             this.ratingServerPort = ratingServerPort;
-            this._statisticsUpdateTimer = new Timer(2500);
-            this._statisticsUpdateTimer.Elapsed += this.GetStatisticsCallback;
+            this.statisticsUpdateTimer = new Timer(2500);
+            this.statisticsUpdateTimer.Elapsed += this.GetStatisticsCallback;
 
             this.InitMenu();
         }
@@ -60,7 +69,7 @@
 
         private void InitMenu()
         {
-            this._menu = new Dictionary<ConsoleKey, MenuItem>
+            this.menu = new Dictionary<ConsoleKey, MenuItem>
             {
                 {
                     ConsoleKey.F1,
@@ -105,7 +114,7 @@
 
         private void StopAllGames()
         {
-            var serversList = ApiHelper.GetServersUri(ApiHelper.GetServers(this._mainServer), this._servicePort);
+            var serversList = ApiHelper.GetServersUri(ApiHelper.GetServers(this.mainServer), this.servicePort);
 
             Task.WhenAll(this.DoAuthServers(serversList).Where(_ => _ != null).Select(_ => Task.Factory.StartNew(
                 () =>
@@ -125,7 +134,7 @@
 
         private void Echo()
         {
-            var serversList = ApiHelper.GetServersUri(ApiHelper.GetServers(this._mainServer), this._servicePort);
+            var serversList = ApiHelper.GetServersUri(ApiHelper.GetServers(this.mainServer), this.servicePort);
 
             var echoResults = Task.WhenAll(
                 this.DoAuthServers(serversList).Where(_ => _ != null).Select(_ => Task.Factory.StartNew(
@@ -164,7 +173,7 @@
         private void GetStatistics()
         {
             var serversList =
-                ApiHelper.GetServersUri(ApiHelper.GetServers(this._mainServer), this._servicePort).Select(s => new ServerLoginContext()
+                ApiHelper.GetServersUri(ApiHelper.GetServers(this.mainServer), this.servicePort).Select(s => new ServerLoginContext()
                 {
                     ServerType = "MainServer",
                     Uri = s
@@ -176,21 +185,43 @@
                         } })
                     .ToArray();
 
-            this._serversAuthWithTypeContextList = this.DoAuthServers(serversList);
-            this._statisticsUpdateTimer.Start();
+            this.serversAuthWithTypeContextList = this.DoAuthServers(serversList);
+            this.statisticsUpdateTimer.Start();
         }
 
         private PasswordOAuthContext[] DoAuthServers(Uri[] serversList)
         {
             return Task.WhenAll(
-
-                serversList.Select(
-                        server =>
-                            new PasswordAuthProvider(server))
-                    .Select(async passwordProvider => await passwordProvider.Login(new PasswordAuthRequest<PasswordAuthData>
-                    {
-                        RequestData = new PasswordAuthData { Password = this._password, Usename = this._user }
-                    }))).Result;
+                serversList.Select(server => new PasswordAuthProvider(server))
+                    .Select(
+                        async passwordProvider =>
+                            {
+                                try
+                                {
+                                    return
+                                        await passwordProvider.Login(
+                                            new PasswordAuthRequest<PasswordAuthData>
+                                            {
+                                                RequestData =
+                                                        new PasswordAuthData
+                                                        {
+                                                            Password
+                                                                    =
+                                                                    this
+                                                                        .password,
+                                                            Usename
+                                                                    =
+                                                                    this
+                                                                        .user
+                                                        }
+                                            });
+                                }
+                                catch (Exception e)
+                                {
+                                    Console.WriteLine(e);
+                                    return null;
+                                }
+                            }).Where(pctx => pctx != null)).Result;
         }
 
         private ServerAuthContext[] DoAuthServers(ServerLoginContext[] contexts)
@@ -200,26 +231,40 @@
                 contexts.Select(
                         server =>
                             new Tuple<string, PasswordAuthProvider>(server.ServerType, new PasswordAuthProvider(server.Uri)))
-                    .Select(async passwordProvider => new ServerAuthContext
-                    {
-                        AuthContext = await passwordProvider.Item2.Login(
-                                                                                new PasswordAuthRequest<PasswordAuthData>
-                                                                                {
-                                                                                    RequestData =
-                                                                                            new PasswordAuthData
-                                                                                            {
-                                                                                                Password
-                                                                                                        =
-                                                                                                        this
-                                                                                                            ._password,
-                                                                                                Usename
-                                                                                                        =
-                                                                                                        this
-                                                                                                            ._user
-                                                                                            }
-                                                                                }),
-                        ServerType = passwordProvider.Item1
-                    })).Result;
+                    .Select(
+                        async passwordProvider =>
+                            {
+                                try
+                                {
+                                    return new ServerAuthContext
+                                    {
+                                        AuthContext =
+                                                       await passwordProvider.Item2.Login(
+                                                           new PasswordAuthRequest<PasswordAuthData>
+                                                           {
+                                                               RequestData
+                                                                       =
+                                                                       new PasswordAuthData
+                                                                       {
+                                                                           Password
+                                                                                   =
+                                                                                   this
+                                                                                       .password,
+                                                                           Usename
+                                                                                   =
+                                                                                   this
+                                                                                       .user
+                                                                       }
+                                                           }),
+                                        ServerType = passwordProvider.Item1
+                                    };
+                                }
+                                catch (Exception e)
+                                {
+                                    Console.WriteLine(e);
+                                    return null;
+                                }
+                            }).Where(pctx => pctx != null)).Result;
         }
 
         class MultiServerOperationResult
@@ -243,7 +288,7 @@
 
             serversList.Select(server => new AnonimousAuthContext()
             {
-                BaseUri = new Uri(string.Format("http://{0}:{1}/", server, this._servicePort))
+                BaseUri = new Uri(string.Format("http://{0}:{1}/", server, this.servicePort))
             }).Select(
                 context =>
                 {
@@ -274,7 +319,7 @@
         public void GetStatisticsCallback(object sender, ElapsedEventArgs e)
         {
             var statistics = Task.WhenAll(
-                this._serversAuthWithTypeContextList.Where(_ => _ != null).Select(_ => Task.Factory.StartNew(
+                this.serversAuthWithTypeContextList.Where(_ => _ != null).Select(_ => Task.Factory.StartNew(
                     () =>
                     {
                         try
@@ -282,7 +327,7 @@
                             var result = new Tuple<Uri, ServerStatisticsInfoModel, string>(
                                 _.AuthContext.BaseUri,
                                 (
-                                    _.ServerType == "MainServer" ? 
+                                    _.ServerType == "MainServer" ?
                                     ApiHelper.GetStatisticsClient<MainServerStatisticsInfoModel>(_.AuthContext) :
                                     ApiHelper.GetStatisticsClient<ServerStatisticsInfoModel>(_.AuthContext)
                                 ).GetStatistics(), _.ServerType);
@@ -295,7 +340,7 @@
                     }))
             ).Result;
 
-            lock (this._stdLock)
+            lock (this.stdLock)
             {
                 this.PrintStatistics(statistics);
             }
@@ -304,16 +349,16 @@
 
         private void AddServer()
         {
-            var serversList = ApiHelper.GetServers(this._mainServer).ToArray();
+            var serversList = ApiHelper.GetServers(this.mainServer).ToArray();
             Console.Clear();
             Console.WriteLine("Please enter server address:");
             var server = Console.ReadLine();
 
             serversList = serversList.Concat(new[] { server }).ToArray();
 
-            var uriServersList = ApiHelper.GetServersUri(serversList, this._servicePort);
+            var uriServersList = ApiHelper.GetServersUri(serversList, this.servicePort);
 
-            var checkResult = this.CheckServersAvailability(serversList, this._servicePort);
+            var checkResult = this.CheckServersAvailability(serversList, this.servicePort);
             if (!checkResult.IsSuccess)
             {
                 PrettyConsole.WriteLineColor(ConsoleColor.Red, "Servers unavailable: {0}",
@@ -428,9 +473,18 @@
                 this.PrintMarker(memoryPercent, 40);
                 PrettyConsole.WriteLineColor(ConsoleColor.DarkCyan, "\tWorkers");
                 Array.ForEach(serverStatisticsInfoModel.Item2.ActiveWorkers,
-                    w => PrettyConsole.WriteLineColor(ConsoleColor.DarkYellow, "\t\t{0}", w));
+                    w =>
+                        {
+                            PrettyConsole.WriteColor(ConsoleColor.DarkYellow, "\t  {0,-7}", "Name:");
+                            PrettyConsole.WriteColor(ConsoleColor.Yellow, "{0,-25}", w.Name);
+                            PrettyConsole.WriteColor(ConsoleColor.DarkYellow, "\t{0,-7}", "Is Run:");
+                            PrettyConsole.WriteColor(w.IsRunning ? ConsoleColor.Green: ConsoleColor.Red, "{0,1}", w.IsRunning ? "Y" : "N");
+                            PrettyConsole.WriteColor(ConsoleColor.DarkYellow, "\t{0,-7}", "Ticks:");
+                            PrettyConsole.WriteLineColor(ConsoleColor.Yellow, "{0,-6}", w.Ticks);
+                            PrettyConsole.WriteLineColor(ConsoleColor.Yellow,"\t\t{0}", 
+                                string.Join(", ", w.PerfomanceCounters.Select((kvp) => string.Format("{0}: {1:N1}", kvp.Key, kvp.Value))));
+                        });
                 Console.WriteLine();
-
             }
         }
 
@@ -469,18 +523,18 @@
         {
             Console.Clear();
 
-            this._exitFlag = false;
-            while (!this._exitFlag)
+            this.exitFlag = false;
+            while (!this.exitFlag)
             {
-                this._isMainMenu = true;
+                this.isMainMenu = true;
                 this.ShowMenu();
                 var key = Console.ReadKey();
-                this._isMainMenu = false;
+                this.isMainMenu = false;
                 Console.Clear();
 
                 try
                 {
-                    this._menu[key.Key].MenuAction.Invoke();
+                    this.menu[key.Key].MenuAction.Invoke();
                 }
                 catch (Exception exp)
                 {
@@ -489,7 +543,7 @@
                     //GetAssociatedDelegate(-1).Invoke();
                 }
 
-                if (!this._exitFlag)
+                if (!this.exitFlag)
                 {
                     this.Pause();
                     Console.Clear();
@@ -500,7 +554,7 @@
         private void ShowMenu()
         {
             Console.WriteLine("-=Admin=-");
-            foreach (var item in this._menu)
+            foreach (var item in this.menu)
                 Console.WriteLine(item.Key + " - " + item.Value.MenuText);
         }
 
@@ -508,7 +562,7 @@
         {
             Console.WriteLine("Paused. Press any key...");
             Console.ReadKey();
-            this._statisticsUpdateTimer.Stop();
+            this.statisticsUpdateTimer.Stop();
         }
 
 
@@ -520,7 +574,7 @@
             if (string.IsNullOrEmpty(server)) return;
 
             var auth =
-                ApiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, this._servicePort)), this._user, this._password)
+                ApiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, this.servicePort)), this.user, this.password)
                     .Result;
 
             var client = ApiHelper.GetAdminClient(auth);
@@ -553,7 +607,7 @@
             if (string.IsNullOrEmpty(server)) return;
 
             var auth =
-                ApiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, this._servicePort)), this._user, this._password)
+                ApiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, this.servicePort)), this.user, this.password)
                     .Result;
 
             var client = ApiHelper.GetAdminClient(auth);
@@ -582,7 +636,7 @@
             if (string.IsNullOrEmpty(server)) return;
 
             var auth =
-                ApiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, this._servicePort)), this._user, this._password)
+                ApiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, this.servicePort)), this.user, this.password)
                     .Result;
 
             var client = ApiHelper.GetAdminClient(auth);
@@ -618,7 +672,7 @@
             if (string.IsNullOrEmpty(server)) return;
 
             var auth =
-                ApiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, this._servicePort)), this._user, this._password)
+                ApiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, this.servicePort)), this.user, this.password)
                     .Result;
 
             var client = ApiHelper.GetAdminClient(auth);
@@ -645,7 +699,7 @@
             var server = this.GetServer();
 
             var auth =
-                ApiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, this._servicePort)), this._user, this._password)
+                ApiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, this.servicePort)), this.user, this.password)
                     .Result;
 
             var client = ApiHelper.GetAdminClient(auth);
@@ -667,7 +721,7 @@
             if (string.IsNullOrEmpty(server)) return;
 
             var auth =
-                ApiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, this._servicePort)), this._user, this._password)
+                ApiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, this.servicePort)), this.user, this.password)
                     .Result;
 
             var client = ApiHelper.GetAdminClient(auth);
@@ -690,7 +744,7 @@
             if (string.IsNullOrEmpty(server)) return;
 
             var auth =
-                ApiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, this._servicePort)), this._user, this._password)
+                ApiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, this.servicePort)), this.user, this.password)
                     .Result;
 
             var client = ApiHelper.GetAdminClient(auth);
@@ -721,7 +775,7 @@
 
         private void Exit()
         {
-            this._exitFlag = true;
+            this.exitFlag = true;
         }
 
         private string GetServer()
@@ -729,11 +783,11 @@
             string[] serversList = null;
             try
             {
-                serversList = ApiHelper.GetServers(this._mainServer).ToArray();
+                serversList = ApiHelper.GetServers(this.mainServer).ToArray();
             }
             catch (AggregateException e)
             {
-                PrettyConsole.WriteLineColor(ConsoleColor.Red, "Main server: {0}", this._mainServer);
+                PrettyConsole.WriteLineColor(ConsoleColor.Red, "Main server: {0}", this.mainServer);
                 foreach (var innerException in e.InnerExceptions)
                 {
                     var clientException = innerException as IClientException<ErrorData>;

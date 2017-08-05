@@ -31,13 +31,14 @@
         public ServerStatisticsInfoModel GetStatistics()
         {
             var statistics = _mapperFactory.Build<StatisticsInfo, ServerStatisticsInfoModel>().Map(_adminManager.GetStatisticsInfo());
-            statistics.ActiveWorkers =
-                _workerManager.GetWorkersStatus().Where(_ => _.IsRunning).Select(
-
-                _ => string.Format("Name: {0}, IsRunning: {1}, Ticks: {2}", _.Name, _.IsRunning, _.Ticks)
-
-            ).ToArray();
+            statistics.ActiveWorkers = this._workerManager.GetWorkersStatus().Where(_ => _.IsRunning).Select(
+                    _ => new WorkerStatusModel()
+                             {
+                                 Name = _.Name,
+                    IsRunning = _.IsRunning,
+                    Ticks = _.Ticks
+                }).ToArray();
             return statistics;
         }
-    }
+}
 }

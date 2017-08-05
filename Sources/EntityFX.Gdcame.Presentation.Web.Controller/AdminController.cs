@@ -57,10 +57,13 @@ namespace EntityFX.Gdcame.Application.Api.Controller.MainServer
         {
             var statistics = _mapperFactory.Build<MainServerStatisticsInfo, MainServerStatisticsInfoModel>().Map(_adminManager.GetStatisticsInfo());
             statistics.ActiveWorkers =
-                _workerManager.GetWorkersStatus().Where(_ => _.IsRunning).Select(
-
-                _ => string.Format("Name: {0}, IsRunning: {1}, Ticks: {2}", _.Name, _.IsRunning, _.Ticks)
-
+                _workerManager.GetWorkersStatus().Select(_ => new WorkerStatusModel()
+                {
+                    Name = _.Name,
+                    IsRunning = _.IsRunning,
+                    Ticks = _.Ticks,
+                    PerfomanceCounters = _.PerfomanceCounters
+                }
             ).ToArray();
             return statistics;
         }

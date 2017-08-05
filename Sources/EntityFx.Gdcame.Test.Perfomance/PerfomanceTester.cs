@@ -164,7 +164,7 @@ namespace EntityFx.Gdcame.Test.Perfomance
             return getGameDataResult;
         }
 
-        public void TestStartManyGames(int countAccounts, string accounLoginPrefix)
+        public Tuple<PerformanceAggregate, GameDataModel[]> TestStartManyGames(int countAccounts, string accounLoginPrefix)
         {
             var testResult = new List<TestActionResultItem>();
             var sw = new Stopwatch();
@@ -204,6 +204,7 @@ namespace EntityFx.Gdcame.Test.Perfomance
             }
             if (getGameDataResult != null) PrintPerfomanceAggregateResults(getGameDataResult.Item1);
             _logger.Info("\tDone get game data for {0} accounts, elapsed: {1}, {2} milliseconds per one", countAccounts, sw.Elapsed, sw.Elapsed.TotalMilliseconds / countAccounts);
+            return getGameDataResult;
         }
 
         private void PrintPerfomanceAggregateResults(PerformanceAggregate performanceAggregate)

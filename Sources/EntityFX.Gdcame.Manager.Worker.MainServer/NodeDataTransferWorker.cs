@@ -1,5 +1,6 @@
 ﻿namespace EntityFX.Gdcame.Engine.Worker.MainServer
 {
+    using System;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -37,7 +38,7 @@
                         {
                             if (c.IsFaulted)
                             {
-                                // Logger.Error(c.Exception.InnerException);
+                                //Log.Error(c.Exception.InnerException);
                             }
                         });
         }
@@ -45,6 +46,7 @@
         private void PerformBackgroundPersisting(string[] servers)
         {
             this.IncrementTick();
+
             //_serverDataAccessService.UpdateServers(newServersList);
         }
 
@@ -60,9 +62,7 @@
         {
             get
             {
-                return this._dataTransferTask != null && (this._dataTransferTask.Status == TaskStatus.Running
-                                                          || this._dataTransferTask.Status == TaskStatus.WaitingForActivation
-                                                          || this._dataTransferTask.Status == TaskStatus.RanToCompletion);
+                return this._dataTransferTask != null && (this._dataTransferTask.Status == TaskStatus.Running);
             }
         }
     }

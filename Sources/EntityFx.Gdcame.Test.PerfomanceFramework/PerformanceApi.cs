@@ -262,7 +262,7 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
         {
             if (useParallel)
             {
-                return DoParallelTasks(0, countAccounts, ParallelismFactor, async i1 => await RegisterAccount(string.Format("{0}{1}", accounLoginPrefix, i1)), counter =>
+                return DoParallelTasks(0, countAccounts, ParallelismFactor, async i1 => await RegisterAccount(string.Format("{0}{1}@gdcame.com", accounLoginPrefix, i1)), counter =>
                {
                    if (counter % ParallelismFactor == 0)
                    {
@@ -273,7 +273,7 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
             else
             {
                 return DoSequenceTask(0, countAccounts,
-                    i1 => RegisterAccount(string.Format("{0}{1}", accounLoginPrefix, i1)), i => {
+                    i1 => RegisterAccount(string.Format("{0}{1}@gdcame.com", accounLoginPrefix, i1)), i => {
                         if (i % ParallelismFactor == 0)
                         {
                             Console.WriteLine("Registered {0} accounts", i);
@@ -284,7 +284,7 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
 
         public PerformanceAggregate DeleteManyAccounts(ClientConnectionInfo adminConnectionInfo, int countAccounts, string accounLoginPrefix, bool useParallel)
         {
-            return DoParallelTasks(0, countAccounts, ParallelismFactor, async i1 => await FindAndDeleteAccount(adminConnectionInfo, string.Format("{0}{1}", accounLoginPrefix, i1)), counter =>
+            return DoParallelTasks(0, countAccounts, ParallelismFactor, async i1 => await FindAndDeleteAccount(adminConnectionInfo, string.Format("{0}{1}@gdcame.com", accounLoginPrefix, i1)), counter =>
             {
                 if (counter % ParallelismFactor == 0)
                 {
@@ -340,7 +340,7 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
         {
             return DoParallelTasks<ClientConnectionInfo>(0, countAccounts, ParallelismFactor, i1 =>
             {
-                var loginResult = Login(string.Format("{0}{1}", accounLoginPrefix, i1), DefaultPassword);
+                var loginResult = Login(string.Format("{0}{1}@gdcame.com", accounLoginPrefix, i1), DefaultPassword);
                 return loginResult;
             }, counter =>
             {

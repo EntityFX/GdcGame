@@ -9,31 +9,31 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
 {
     class Program
     {
-        private static int _serverPort;
-        private static string _mainServer;
-        private static int _ratingServerPort;
-        private static string _ratingServer;
-        private static string _userName;
-        private static string _userPassword;
+        private static int serverPort;
+        private static string mainServer;
+        private static int ratingServerPort;
+        private static string ratingServer;
+        private static string userName;
+        private static string userPassword;
 
         static void Main(string[] args)
         {
-            _serverPort = Convert.ToInt32(ConfigurationManager.AppSettings["ServicePort"]);
-            _mainServer = ConfigurationManager.AppSettings["Server"];
-            _ratingServerPort = Convert.ToInt32(ConfigurationManager.AppSettings["RatingServerPort"]);
-            _ratingServer = ConfigurationManager.AppSettings["RatingServer"];
+            serverPort = Convert.ToInt32(ConfigurationManager.AppSettings["ServicePort"]);
+            mainServer = ConfigurationManager.AppSettings["Server"];
+            ratingServerPort = Convert.ToInt32(ConfigurationManager.AppSettings["RatingServerPort"]);
+            ratingServer = ConfigurationManager.AppSettings["RatingServer"];
 
             Console.Write("Enter login: ");
-            _userName = Console.ReadLine();
+            userName = Console.ReadLine();
 
             Console.Write("Enter password: ");
-            _userPassword = Console.ReadLine();
+            userPassword = Console.ReadLine();
 
             var ac = new AdminConsole(
-                _userName, _userPassword, 
-                new Uri(string.Format("{0}:{1}", _mainServer, _serverPort)),
-                new Uri(string.Format("{0}:{1}", _ratingServer, _ratingServerPort)),
-                _serverPort, _ratingServerPort);
+                userName, userPassword, 
+                new Uri(string.Format("{0}:{1}", mainServer, serverPort)),
+                new Uri(string.Format("{0}:{1}", ratingServer, ratingServerPort)),
+                serverPort, ratingServerPort);
             ac.StartMenu();
         }
     }

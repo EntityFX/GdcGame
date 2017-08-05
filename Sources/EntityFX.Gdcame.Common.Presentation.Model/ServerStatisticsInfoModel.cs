@@ -15,6 +15,6 @@ namespace EntityFX.Gdcame.Common.Application.Model
 
         public SystemInfoModel SystemInfo { get; set; }
 
-        public string[] ActiveWorkers { get; set; }
+        public WorkerStatusModel[] ActiveWorkers { get; set; }
     }
 }
