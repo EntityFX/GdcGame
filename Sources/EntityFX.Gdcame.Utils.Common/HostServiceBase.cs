@@ -28,6 +28,7 @@ namespace EntityFX.Gdcame.Utils.Common
 
         public HostServiceBase()
         {
+
             this.AppConfiguration = new AppConfiguration();
             CoreStartupBase.AppConfiguration = this.AppConfiguration;
             this._container = (this.GetContainerBootstrapper(this.AppConfiguration)).Configure(new UnityContainer());

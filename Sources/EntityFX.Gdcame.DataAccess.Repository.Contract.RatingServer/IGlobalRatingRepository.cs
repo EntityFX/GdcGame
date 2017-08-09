@@ -7,5 +7,7 @@
         TopRatingStatistics GetRaiting(int top = 500);
 
         void CreateOrUpdateTopRatingStatistics(TopRatingStatistics topRatingStatistics);
+
+        void DropStatistics();
     }
 }

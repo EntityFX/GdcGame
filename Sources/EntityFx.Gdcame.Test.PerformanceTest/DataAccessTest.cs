@@ -18,6 +18,7 @@ namespace EntityFx.Gdcame.Test.Unit
     using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer.Criterions.RatingHistory;
     using EntityFX.Gdcame.DataAccess.Repository.Mongo.Common;
     using EntityFX.Gdcame.DataAccess.Repository.Mongo.MainServer;
+    using EntityFX.Gdcame.Infrastructure.Common;
 
     [TestClass]
     public class DataAccessTest
@@ -27,7 +28,7 @@ namespace EntityFx.Gdcame.Test.Unit
         {
             var client = new MongoClient("mongodb://admin:P%40ssw0rd@10.10.139.148:27017/gdcame?authSource=gdcame");
             var database = client.GetDatabase("gdcame");
-            RatingStatisticsRepository testRating = new RatingStatisticsRepository(database);
+            LocalRatingStatisticsRepository testRating = new LocalRatingStatisticsRepository(database);
             RatingStatistics userTemp = new RatingStatistics
             {
                 // Id = 45,
@@ -62,8 +63,8 @@ namespace EntityFx.Gdcame.Test.Unit
         {
             var client = new MongoClient("mongodb://admin:P%40ssw0rd@10.10.139.148:27017/gdcame?authSource=gdcame");
             var database = client.GetDatabase("gdcame");
-            RatingStatisticsRepository _testStatisticsRating = new RatingStatisticsRepository(database);
-            RatingHistoryRepository _testHistoryRating = new RatingHistoryRepository(database);
+            LocalRatingStatisticsRepository _testStatisticsRating = new LocalRatingStatisticsRepository(database);
+            RatingHistoryRepository _testHistoryRating = new RatingHistoryRepository(database, new Logger(null));
             var receivedData= _testStatisticsRating.GetRaiting(500);
         }
 
@@ -72,8 +73,8 @@ namespace EntityFx.Gdcame.Test.Unit
         {
             var client = new MongoClient("mongodb://admin:P%40ssw0rd@10.10.139.148:27017/gdcame?authSource=gdcame");
             var database = client.GetDatabase("gdcame");
-            RatingStatisticsRepository _testStatisticsRating = new RatingStatisticsRepository(database);
-            RatingHistoryRepository _testHistoryRating = new RatingHistoryRepository(database);
+            LocalRatingStatisticsRepository _testStatisticsRating = new LocalRatingStatisticsRepository(database);
+            RatingHistoryRepository _testHistoryRating = new RatingHistoryRepository(database, new Logger(null));
             RatingHistory ratingHistory = new RatingHistory
                                               {
                                                   Data = new DateTime(2016, 11, 28, 12, 25, 25),
@@ -91,7 +92,7 @@ namespace EntityFx.Gdcame.Test.Unit
         {
             var client = new MongoClient("mongodb://admin:P%40ssw0rd@10.10.139.148:27017/gdcame?authSource=gdcame");
             var database = client.GetDatabase("gdcame");
-            RatingHistoryRepository _testHistoryRating = new RatingHistoryRepository(database);
+            RatingHistoryRepository _testHistoryRating = new RatingHistoryRepository(database, new Logger(null));
             string[] userslds = new[] { "accepted" };
             TimeSpan period = new TimeSpan(24, 0, 0);
             var history= _testHistoryRating.ReadHistoryWithUsersIds(new GetUsersRatingHistoryCriterion() { UsersIds = userslds, Period = period});
@@ -103,7 +104,7 @@ namespace EntityFx.Gdcame.Test.Unit
         {
             var client = new MongoClient("mongodb://admin:P%40ssw0rd@10.10.139.148:27017/gdcame?authSource=gdcame");
             var database = client.GetDatabase("gdcame");
-            RatingHistoryRepository _testHistoryRating = new RatingHistoryRepository(database);
+            RatingHistoryRepository _testHistoryRating = new RatingHistoryRepository(database, new Logger(null));
             TimeSpan period = new TimeSpan(1, 0, 0);
             _testHistoryRating.CleanOldHistory(period);
         }

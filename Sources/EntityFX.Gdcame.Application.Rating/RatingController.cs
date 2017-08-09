@@ -8,9 +8,11 @@ using EntityFX.Gdcame.Manager.Contract.Common.RatingManager;
 
 namespace EntityFX.Gdcame.Application.Api.Controller.RatingServer
 {
+    using EntityFX.Gdcame.Contract.Common.UserRating;
+
     [RoutePrefix("api/rating")]
     [AllowAnonymous()]
-    public class RatingController : RatingControllerBase, IRatingController
+    public class RatingController :  RatingControllerBase,IRatingController
     {
         public RatingController(IRatingManager raitingManager, IMapperFactory mapperFactory) : base(raitingManager, mapperFactory)
         {
@@ -18,7 +20,7 @@ namespace EntityFX.Gdcame.Application.Api.Controller.RatingServer
 
         [HttpGet]
         [Route("")]
-        public override Task<TopRatingStatisticsModel> GetRaiting(int top = 500)
+        public  override Task<TopRatingStatistics> GetRaiting(int top = 500)
         {
             return base.GetRaiting(top);
         }

@@ -16,7 +16,7 @@ namespace EntityFX.Gdcame.Manager.Common
 
         public TopRatingStatistics GetRaiting(int top = 500)
         {
-            return _ratingManager.GetRaiting(top);
+            return _ratingManager.GetRaiting(top).Result;
         }
        
     }

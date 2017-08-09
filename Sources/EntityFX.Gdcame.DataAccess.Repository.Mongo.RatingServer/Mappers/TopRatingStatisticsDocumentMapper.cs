@@ -33,8 +33,8 @@
             {
                 UserId = _.UserId,
                 Login = _.Login,
-                CounterType = 0,
-                PeriodType = 1,
+                CounterType = counterType,
+                PeriodType = periodType,
                 Value = _.Value,
                 CreateDateTime = DateTime.Now
             });

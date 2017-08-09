@@ -56,6 +56,7 @@
     <Compile Include="Statistics\SystemInfo.cs" />
     <Compile Include="UserData.cs" />
     <Compile Include="UserRating\CountValues.cs" />
+    <Compile Include="UserRating\IRatingDataRetrieve.cs" />
     <Compile Include="UserRating\RatingHistory.cs" />
     <Compile Include="UserRating\TopStatisticsCounter.cs" />
     <Compile Include="UserRating\RatingStatistics.cs" />

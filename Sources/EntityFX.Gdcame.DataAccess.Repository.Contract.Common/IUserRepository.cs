@@ -13,6 +13,7 @@
         IEnumerable<User> FindByFilter(GetUsersBySearchStringCriterion findByIdCriterion);
 
         IEnumerable<User> FindChunked(GetUsersByOffsetCriterion offsetCriterion);
+        IEnumerable<User> FindWithIds(GetUsersWithIdsCriterion usersWithIdsCriterion);
 
         int Count();
     }

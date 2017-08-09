@@ -36,6 +36,24 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
             _appConfiguration = appConfiguration;
         }
 
+        class GlobalExceptionMiddleware : OwinMiddleware
+        {
+            public GlobalExceptionMiddleware(OwinMiddleware next) : base(next)
+            { }
+
+            public override async Task Invoke(IOwinContext context)
+            {
+                try
+                {
+                    await Next.Invoke(context);
+                }
+                catch (Exception ex)
+                {
+                    // your handling logic
+                }
+            }
+        }
+
 
         // This code configures Web API. The Startup class is specified as a type
         // parameter in the WebApp.Start method.
@@ -49,7 +67,6 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
             config.DependencyResolver = new UnityDependencyResolver(_unityContainer);
             config.Filters.Add(_unityContainer.Resolve<SessionExceptionHandlerFilterAttribute>());
             config.Filters.Add(new ValidateModelAttribute());
-
 
 
 
@@ -84,7 +101,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/token"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(60),
-               
+
                 Provider =
                     new CustomOAuthProvider("GameApi",
                         (ISessionManagerClientFactory)
@@ -98,7 +115,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
 
 
             config.MapHttpAttributeRoutes();
-            config.Routes.MapHttpRoute("DefaultApi", "api/{controller}/{id}", new {id = RouteParameter.Optional}
+            config.Routes.MapHttpRoute("DefaultApi", "api/{controller}/{id}", new { id = RouteParameter.Optional }
                 );
 
 

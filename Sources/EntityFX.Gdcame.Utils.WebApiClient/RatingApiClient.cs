@@ -11,15 +11,17 @@ using RestSharp.Authenticators;
 
 namespace EntityFX.Gdcame.Utils.WebApiClient
 {
+    using EntityFX.Gdcame.Contract.Common.UserRating;
+
     public class RatingApiClient : ApiClientBase, IRatingController
     {
         public RatingApiClient(IAuthContext<IAuthenticator> authContext, int? timeout = null) : base(authContext, timeout)
         {
         }
 
-        public async Task<TopRatingStatisticsModel> GetRaiting(int top = 500)
+        public async Task<TopRatingStatistics> GetRaiting(int top = 500)
         {
-            var response = await ExecuteRequestAsync<TopRatingStatisticsModel>("/api/rating");
+            var response = await ExecuteRequestAsync<TopRatingStatistics>("/api/rating");
             return response.Data;
         }
     }

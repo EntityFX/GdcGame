@@ -126,5 +126,10 @@
                     .Select(
                         _ => this.FindById(new GetUserByIdCriterion(Path.GetFileNameWithoutExtension(_.Name))));
         }
+
+        public IEnumerable<User> FindWithIds(GetUsersWithIdsCriterion usersWithIdsCriterion)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

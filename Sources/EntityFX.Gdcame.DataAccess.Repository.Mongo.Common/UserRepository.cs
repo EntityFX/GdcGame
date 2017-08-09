@@ -87,5 +87,12 @@
             var filter = new BsonDocument();
             return users.Find(filter).Skip(offsetCriterion.Offset).Limit(offsetCriterion.Size).ToList();
         }
+
+        public IEnumerable<User> FindWithIds(GetUsersWithIdsCriterion usersWithIdsCriterion)
+        {
+            IMongoCollection<User> collection = this.Database.GetCollection<User>("User");
+            var filter1 = Builders<User>.Filter.In("_id", usersWithIdsCriterion.UsersIds);
+            return collection.Find(filter1).ToList();
+        }
     }
 }

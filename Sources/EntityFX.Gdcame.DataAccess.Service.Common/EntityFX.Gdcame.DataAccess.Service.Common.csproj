@@ -59,7 +59,7 @@
   <ItemGroup>
     <Compile Include="ContainerBootstrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RatingDataAccess.cs" />
+    <Compile Include="ServerDataAccess.cs" />
     <Compile Include="UserDataAccessService.cs" />
   </ItemGroup>
   <ItemGroup>

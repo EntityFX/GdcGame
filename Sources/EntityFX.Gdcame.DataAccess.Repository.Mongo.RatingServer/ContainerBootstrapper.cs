@@ -9,6 +9,8 @@
 
     using Microsoft.Practices.Unity;
 
+    using MongoDB.Bson.Serialization;
+    using MongoDB.Bson.Serialization.IdGenerators;
     using MongoDB.Driver;
 
     public class ContainerBootstrapper : IContainerBootstrapper

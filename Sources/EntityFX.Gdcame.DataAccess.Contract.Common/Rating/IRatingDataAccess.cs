@@ -5,9 +5,7 @@
     using EntityFX.Gdcame.Contract.Common.UserRating;
 
     [ServiceContract]
-    public interface IRatingDataAccess
+    public interface IRatingDataAccess : IRatingDataRetrieve
     {
-        [OperationContract]
-        TopRatingStatistics GetRaiting(int top = 500);
     }
 }

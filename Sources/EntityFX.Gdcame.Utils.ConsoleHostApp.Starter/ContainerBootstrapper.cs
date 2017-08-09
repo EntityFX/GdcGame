@@ -66,6 +66,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
             // NOTE: To load from web.config uncomment the line below. Make sure to add a Microsoft.Practices.Unity.Configuration to the using statements.
             // container.LoadConfiguration();
 
+
             container.RegisterType<ILogger>(new InjectionFactory(
                 _ => new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger")))));
 
@@ -163,7 +164,6 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
             container.RegisterType<IMapper<GameData, GameDataModel>, GameDataModelMapper>();
             container.RegisterType<IMapper<BuyFundDriverResult, BuyItemModel>, FundsDriverBuyInfoMapper>();
             container.RegisterType<IMapper<MainServerStatisticsInfo, MainServerStatisticsInfoModel>, StatisticsInfoMapper>();
-            container.RegisterType<IMapper<TopRatingStatistics, TopRatingStatisticsModel>, TopRatingStatisticsModelMapper>();
             container.RegisterType<IGameClientFactory, NoWcfGameManagerFactory>();
             container.RegisterType<ISessionManagerClientFactory, SessionManagerClientFactory>();
 
@@ -174,7 +174,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
             container.RegisterType<IGameDataProvider, GameDataProvider>();
 
             container.RegisterType<IGameApiController, GameApiController>();
-          //  container.RegisterType<IRatingController, RatingController>();
+
             container.RegisterType<IRatingController, LocalRatingController>();
             container.RegisterType<IServerController, ServerController>();
 

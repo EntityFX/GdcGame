@@ -2,22 +2,27 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
 
     using EntityFX.Gdcame.Contract.Common.UserRating;
     using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer;
     using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer.Criterions.RatingHistory;
+    using EntityFX.Gdcame.Infrastructure.Common;
 
     using MongoDB.Bson;
     using MongoDB.Driver;
 
     public class RatingHistoryRepository : IRatingHistoryRepository
     {
+        private readonly ILogger logger;
+
         private IMongoDatabase Database
         {
             get; set;
         }
-        public RatingHistoryRepository(IMongoDatabase database)
+        public RatingHistoryRepository(IMongoDatabase database, ILogger logger)
         {
+            this.logger = logger;
             this.Database = database;
         }
 

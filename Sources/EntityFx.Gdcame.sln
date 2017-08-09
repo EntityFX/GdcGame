@@ -193,6 +193,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Engine.Comm
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Engine.Contract.Common", "EntityFX.Gdcame.Engine.Contract.Common\EntityFX.Gdcame.Engine.Contract.Common.csproj", "{5E4D635E-5E84-47B1-B638-EF60A1176796}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Engine.Worker.RatingServer", "EntityFX.Gdcame.Engine.Worker.RatingServer\EntityFX.Gdcame.Engine.Worker.RatingServer.csproj", "{DD26762C-4F49-4D48-8446-0B66B041D4A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Utils.WebApiClient.RatingServer", "EntityFX.Gdcame.Utils.WebApiClient.RatingServer\EntityFX.Gdcame.Utils.WebApiClient.RatingServer.csproj", "{8DD9172B-A711-4C8C-B26F-9C5F5C7A1608}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Utils.RatingServer", "EntityFX.Gdcame.Utils.RatingServer\EntityFX.Gdcame.Utils.RatingServer.csproj", "{82CC4CB7-E4AF-4FD1-B5BF-8F7802D0842C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Engine.Contract.RatingServer", "EntityFX.Gdcame.Engine.Contract.RatingServer\EntityFX.Gdcame.Engine.Contract.RatingServer.csproj", "{FC66CF81-A030-4A43-B446-7B92B5D8708E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		BuildServer|Any CPU = BuildServer|Any CPU
@@ -590,6 +598,30 @@ Global
 		{5E4D635E-5E84-47B1-B638-EF60A1176796}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E4D635E-5E84-47B1-B638-EF60A1176796}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E4D635E-5E84-47B1-B638-EF60A1176796}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD26762C-4F49-4D48-8446-0B66B041D4A0}.BuildServer|Any CPU.ActiveCfg = Release|Any CPU
+		{DD26762C-4F49-4D48-8446-0B66B041D4A0}.BuildServer|Any CPU.Build.0 = Release|Any CPU
+		{DD26762C-4F49-4D48-8446-0B66B041D4A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD26762C-4F49-4D48-8446-0B66B041D4A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD26762C-4F49-4D48-8446-0B66B041D4A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD26762C-4F49-4D48-8446-0B66B041D4A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DD9172B-A711-4C8C-B26F-9C5F5C7A1608}.BuildServer|Any CPU.ActiveCfg = Release|Any CPU
+		{8DD9172B-A711-4C8C-B26F-9C5F5C7A1608}.BuildServer|Any CPU.Build.0 = Release|Any CPU
+		{8DD9172B-A711-4C8C-B26F-9C5F5C7A1608}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DD9172B-A711-4C8C-B26F-9C5F5C7A1608}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DD9172B-A711-4C8C-B26F-9C5F5C7A1608}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DD9172B-A711-4C8C-B26F-9C5F5C7A1608}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82CC4CB7-E4AF-4FD1-B5BF-8F7802D0842C}.BuildServer|Any CPU.ActiveCfg = Release|Any CPU
+		{82CC4CB7-E4AF-4FD1-B5BF-8F7802D0842C}.BuildServer|Any CPU.Build.0 = Release|Any CPU
+		{82CC4CB7-E4AF-4FD1-B5BF-8F7802D0842C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82CC4CB7-E4AF-4FD1-B5BF-8F7802D0842C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82CC4CB7-E4AF-4FD1-B5BF-8F7802D0842C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82CC4CB7-E4AF-4FD1-B5BF-8F7802D0842C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC66CF81-A030-4A43-B446-7B92B5D8708E}.BuildServer|Any CPU.ActiveCfg = Release|Any CPU
+		{FC66CF81-A030-4A43-B446-7B92B5D8708E}.BuildServer|Any CPU.Build.0 = Release|Any CPU
+		{FC66CF81-A030-4A43-B446-7B92B5D8708E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC66CF81-A030-4A43-B446-7B92B5D8708E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC66CF81-A030-4A43-B446-7B92B5D8708E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC66CF81-A030-4A43-B446-7B92B5D8708E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -672,6 +704,10 @@ Global
 		{C70F8F1A-9FDA-41FF-BFB3-4EAB64907D87} = {970EB44D-38AF-479F-AFC1-CDDB9C17113A}
 		{397FFB04-CD07-4DEA-8B2C-14C97ADD9379} = {970EB44D-38AF-479F-AFC1-CDDB9C17113A}
 		{5E4D635E-5E84-47B1-B638-EF60A1176796} = {970EB44D-38AF-479F-AFC1-CDDB9C17113A}
+		{DD26762C-4F49-4D48-8446-0B66B041D4A0} = {970EB44D-38AF-479F-AFC1-CDDB9C17113A}
+		{8DD9172B-A711-4C8C-B26F-9C5F5C7A1608} = {8B1C755A-7401-43A6-B9EA-FE3625E2AF74}
+		{82CC4CB7-E4AF-4FD1-B5BF-8F7802D0842C} = {2B7D0649-6899-491F-B4E7-70D163B1F72D}
+		{FC66CF81-A030-4A43-B446-7B92B5D8708E} = {970EB44D-38AF-479F-AFC1-CDDB9C17113A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35

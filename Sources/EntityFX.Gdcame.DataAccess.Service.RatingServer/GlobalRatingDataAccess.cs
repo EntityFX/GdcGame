@@ -1,25 +1,39 @@
 ﻿namespace EntityFX.Gdcame.DataAccess.Service.RatingServer
 {
+    using System.Threading.Tasks;
+
     using EntityFX.Gdcame.Contract.Common.UserRating;
+    using EntityFX.Gdcame.DataAccess.Contract.Common.Rating;
     using EntityFX.Gdcame.DataAccess.Contract.RatingServer.Rating;
+    using EntityFX.Gdcame.DataAccess.Repository.Contract.RatingServer;
+
+    using Repository.Contract.Common;
 
     public class GlobalRatingDataAccess : IGlobalRatingDataAccess
     {
-        private readonly IGlobalRatingDataAccess _globalRatingDataAccess;
+        private readonly IGlobalRatingRepository globalRatingRepository;
 
-        public GlobalRatingDataAccess(IGlobalRatingDataAccess globalRatingDataAccess)
+
+
+        public GlobalRatingDataAccess(IGlobalRatingRepository globalRatingRepository)
         {
-            this._globalRatingDataAccess = globalRatingDataAccess;
+            this.globalRatingRepository = globalRatingRepository;
         }
 
-        public TopRatingStatistics GetRaiting(int top = 500)
+        public async Task<TopRatingStatistics> GetRaiting(int top = 500)
         {
-            return this._globalRatingDataAccess.GetRaiting(top);
+
+            return this.globalRatingRepository.GetRaiting(top);
         }
 
-        public void PeristTopRatingStatisticsFromNode(TopRatingStatistics topRatingStatistics)
+        public void CreateOrUpdateUsersRatingStatistics(TopRatingStatistics topRatingStatistics)
         {
-            this._globalRatingDataAccess.PeristTopRatingStatisticsFromNode(topRatingStatistics);
+            this.globalRatingRepository.CreateOrUpdateTopRatingStatistics(topRatingStatistics);
+        }
+
+        public void DropStatistics()
+        {
+            this.globalRatingRepository.DropStatistics();
         }
     }
 }

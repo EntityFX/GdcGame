@@ -1,10 +1,11 @@
-﻿using System.Threading.Tasks;
-using EntityFX.Gdcame.Common.Application.Model;
+﻿using EntityFX.Gdcame.Common.Application.Model;
 
 namespace EntityFX.Gdcame.Application.Contract.Controller.Common
 {
-    public interface IRatingController
+    using EntityFX.Gdcame.Contract.Common.UserRating;
+
+    public interface IRatingController : IRatingDataRetrieve
     {
-        Task<TopRatingStatisticsModel> GetRaiting(int top = 500);
+
     }
 }

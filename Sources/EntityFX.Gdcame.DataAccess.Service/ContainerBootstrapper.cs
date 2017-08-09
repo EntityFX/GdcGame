@@ -34,8 +34,8 @@
                 }
                 )
                 );
-            container.RegisterType<IServerDataAccessService, ServerDataAccessService>();
 
+            container.RegisterType<IRatingDataAccess, LocalNodeRatingDataAccess>();
             container.RegisterType<ILocalNodeRatingDataAccess, LocalNodeRatingDataAccess>();
             return container;
         }

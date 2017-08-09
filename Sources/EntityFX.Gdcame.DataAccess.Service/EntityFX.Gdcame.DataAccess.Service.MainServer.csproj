@@ -101,8 +101,6 @@
     <Compile Include="GameDataRetrieveDataAccessService.cs" />
     <Compile Include="GameDataStoreDataAccessService.cs" />
     <Compile Include="LocalNodeRatingDataAccess.cs" />
-    <Compile Include="RemoteNodeDataAccessService.cs" />
-    <Compile Include="ServerDataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

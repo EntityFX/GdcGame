@@ -20,6 +20,5 @@
 
         [OperationContract]
         void CreateOrUpdateUsersRatingStatistics(RatingStatistics[] ratingStatistics);
-
     }
 }

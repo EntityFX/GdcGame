@@ -47,6 +47,14 @@
       <Project>{18454832-DEE4-484F-9750-F67D46B790E7}</Project>
       <Name>EntityFX.Gdcame.DataAccess.Contract.RatingServer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Repository.Contract.Common\EntityFX.Gdcame.DataAccess.Repository.Contract.Common.csproj">
+      <Project>{501D71D8-AE40-46D8-87F8-DF6C60371ADD}</Project>
+      <Name>EntityFX.Gdcame.DataAccess.Repository.Contract.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Repository.Contract.RatingServer\EntityFX.Gdcame.DataAccess.Repository.Contract.RatingServer.csproj">
+      <Project>{357A1FB3-FFEC-4378-B688-85C4A020A98C}</Project>
+      <Name>EntityFX.Gdcame.DataAccess.Repository.Contract.RatingServer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Common\EntityFX.Gdcame.Infrastructure.Common.csproj">
       <Project>{924CC67D-9E2B-46BA-BE1D-6C6C780CCFBC}</Project>
       <Name>EntityFX.Gdcame.Infrastructure.Common</Name>

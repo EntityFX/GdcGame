@@ -62,18 +62,23 @@
 
 
             var sw = new Stopwatch();
+            sw.Start();
             var swCalc = new Stopwatch();
             var swSave = new Stopwatch();
-            sw.Start();
-            swCalc.Start();
-            swSave.Start();
 
+            swCalc.Start();
+            CalculateStatisticsPerformanceCounter[] calculateStatisticsPerformanceCounters;
             try
             {
+
+                swSave.Start();
                 this.SaveRatingHistory();
-                this._logger.Info("Perform rating calculation - save history for {0} games, ellapsed: {1}", this._gameSessions.Games.Count, swCalc.Elapsed);
-                this.RecalculateRatingStatisticsForActiveUsers();
-                this._logger.Info("Perform rating calculation - recalculate statistics {0} games, ellapsed: {1}", this._gameSessions.Games.Count, swSave.Elapsed);
+                this._logger.Info("Perform rating calculation - save history for {0} games, ellapsed: {1}", this._gameSessions.Games.Count, swSave.Elapsed);
+                swSave.Stop();
+                swCalc.Start();
+                calculateStatisticsPerformanceCounters = this.RecalculateRatingStatisticsForActiveUsers();
+                this._logger.Info("Perform rating calculation - recalculate statistics {0} games, ellapsed: {1}", this._gameSessions.Games.Count, swCalc.Elapsed);
+                swCalc.Stop();
                 this.CleanOldHistory();
             }
             catch (Exception e)
@@ -90,9 +95,11 @@
 
             PerfomanceCounters["tick"] = sw.Elapsed.TotalMilliseconds;
             PerfomanceCounters["perf"] = sw.Elapsed.TotalMilliseconds / this._gameSessions.Games.Count;
+            PerfomanceCounters["chunk"] = ChunkSize;
             PerfomanceCounters["tick.calc"] = swCalc.Elapsed.TotalMilliseconds;
             PerfomanceCounters["tick.save"] = swSave.Elapsed.TotalMilliseconds;
             PerfomanceCounters["perf.calc"] = swCalc.Elapsed.TotalMilliseconds / this._gameSessions.Games.Count;
+            PerfomanceCounters["perf.calc.read-avg"] = calculateStatisticsPerformanceCounters.Length > 0 ? calculateStatisticsPerformanceCounters.Average(c => c.ReadHistoryForUsersMillisecs) : 0;
             PerfomanceCounters["tick.save"] = swSave.Elapsed.TotalMilliseconds / this._gameSessions.Games.Count;
             PerfomanceCounters["games"] = this._gameSessions.Games.Count;
 
@@ -140,28 +147,14 @@
                 }
             }
 
-
-            //RatingHistory userRatingHistory;
-            //foreach (var game in _gameSessions.Games)
-            //{
-
-            //    userRatingHistory = new RatingHistory
-            //    {
-            //        UserId = game.Key,
-            //        ManualStepsCount = game.Value.ManualStepNumber,
-            //        RootCounter = (Int32)game.Value.GameCash.RootCounter.Value,
-            //        Data = DateTime.Now,
-            //        TotalEarned = game.Value.GameCash.TotalEarned,
-            //    };
-            //    _localRatingDataAccess.PersistUsersRatingHistory(ratingHistoryChunk);
-            //};
         }
-        private void RecalculateRatingStatisticsForActiveUsers()
+        private CalculateStatisticsPerformanceCounter[] RecalculateRatingStatisticsForActiveUsers()
         {
-            int ChunkSizeUsers = 100;
+            int ChunkSizeUsers = ChunkSize;
             var users = new string[ChunkSizeUsers];
             var count = 0;
             var userIdentities = this._gameSessions.Identities;
+            var tasksList = new List<Task<CalculateStatisticsPerformanceCounter>>();
             foreach (var game in this._gameSessions.Games)
             {
                 if (count < ChunkSizeUsers)
@@ -173,7 +166,10 @@
                 {
                     if (users.FirstOrDefault() != null)
                     {
-                        this.RecalculationRatingStatisticsChunkUsers(users);
+                        string[] chunk = new string[ChunkSizeUsers];
+                        Array.Copy(users, chunk, ChunkSizeUsers);
+                        var task = new Task<CalculateStatisticsPerformanceCounter>(() => this.RecalculationRatingStatisticsChunkUsers(chunk));
+                        tasksList.Add(task);
                         users = new string[ChunkSizeUsers];
                         count = 0;
                     }
@@ -183,19 +179,38 @@
             {
                 if (users.FirstOrDefault() != null)
                 {
-                    this.RecalculationRatingStatisticsChunkUsers(users);
+                    string[] chunk = new string[count];
+                    Array.Copy(users, chunk, count);
+                    var task = new Task<CalculateStatisticsPerformanceCounter>(() => this.RecalculationRatingStatisticsChunkUsers(chunk));
+                    tasksList.Add(task);
                     users = new string[ChunkSizeUsers];
                     count = 0;
                 }
             }
+            foreach (var task in tasksList)
+            {
+                task.Start();
+            }
+            Task.WaitAll(tasksList.ToArray());
+            return Task.WhenAll(tasksList).Result;
         }
 
-        private void RecalculationRatingStatisticsChunkUsers(string[] users)
+        private class CalculateStatisticsPerformanceCounter
+        {
+            public double ReadHistoryForUsersMillisecs { get; set; }
+        }
+
+        private CalculateStatisticsPerformanceCounter RecalculationRatingStatisticsChunkUsers(string[] users)
         {
             TimeSpan periodWeek = new TimeSpan(7, 0, 0, 0);
+            var sw = new Stopwatch();
+            sw.Start();
+            var result = new CalculateStatisticsPerformanceCounter();
             //TimeSpan periodTotal = new TimeSpan(7, 0, 0, 0);
             List<RatingStatistics> usersNewRating = new List<RatingStatistics>();
             var readHistoryWithUsersIdsForWeek = this._localNodeRatingDataAccess.ReadHistoryWithUsersIds(users, periodWeek);
+            result.ReadHistoryForUsersMillisecs = sw.Elapsed.TotalMilliseconds;
+            sw.Stop();
             //var usersId=
 
             var ratingHistoryGroupedByUser = readHistoryWithUsersIdsForWeek.GroupBy(g => g.UserId);
@@ -204,7 +219,7 @@
                 usersNewRating.Add(this.RecalculationRatingStatisticsOneUser(ratingHistoryOfUser.ToList()));
             }
             this._localNodeRatingDataAccess.CreateOrUpdateUsersRatingStatistics(usersNewRating.ToArray());
-
+            return result;
         }
 
         private RatingStatistics RecalculationRatingStatisticsOneUser(List<RatingHistory> userHistoreTotal)
@@ -233,102 +248,15 @@
                 //add the values for the 7 day
                 TimeSpan periodWeek = new TimeSpan(7, 0, 0, 0);
                 var userHistoryWeek = userHistoreTotal.FindAll(t => t.Data >= lastDataUser.Data.Subtract(periodWeek)).OrderBy(t => t.Data);
-                var firstDataUserWeek = userHistoryDay.FirstOrDefault();
-                userRatingNew.ManualStepsCount.Week = lastDataUser.ManualStepsCount - firstDataUserDay.ManualStepsCount;
-                userRatingNew.RootCounter.Week = lastDataUser.RootCounter - firstDataUserWeek.ManualStepsCount;
+                var firstDataUserWeek = userHistoryWeek.FirstOrDefault();
+                userRatingNew.ManualStepsCount.Week = lastDataUser.ManualStepsCount - firstDataUserWeek.ManualStepsCount;
+                userRatingNew.RootCounter.Week = lastDataUser.RootCounter - firstDataUserWeek.RootCounter;
                 userRatingNew.TotalEarned.Total = lastDataUser.TotalEarned - firstDataUserWeek.TotalEarned;
             }
             return userRatingNew;
 
         }
 
-        //private void RecalculationRatingStatistics()
-        //{
-        //    TimeSpan periodDay = new TimeSpan(1, 0, 0, 0);
-        //    TimeSpan periodWeek = new TimeSpan(7, 0, 0, 0);
-        //    //TimeSpan periodTotal = new TimeSpan(7, 0, 0, 0);
-        //    List<string> userIds = new List<string>();
-        //    List<RatingStatistics> usersNewRating = new List<RatingStatistics>();
-        //    foreach (var game in _gameSessions.Games)
-        //    {
-        //        userIds.Add(game.Key);
-        //    }
-        //    var ratingHistoryDay = _localRatingDataAccess.ReadHistoryWithUsersIds(userIds.ToArray(), periodWeek);
-        //    //var usersId=
-        //    ratingHistoryDay.OrderBy(t => t.Data);
-
-        //    //one   user
-        //    foreach (var oneUserHistory in ratingHistoryDay)
-        //    //    var userHistory=ratingHistoryDay.Select(t=>t.UserId==oneUserHistory.UserId)
-        //    //
-        //    foreach (var userHistory in ratingHistoryDay)
-        //    {
-        //        var existingRating = usersNewRating.FirstOrDefault(t => t.UserId == userHistory.UserId);
-        //        if (existingRating == null)
-        //        {
-        //            existingRating = new RatingStatistics
-        //            {
-        //                UserId = "0",
-        //                MunualStepsCount = new CountValues { Day = 0, Week = 0, Total = 0 },
-        //                RootCounter = new CountValues { Day = 0, Week = 0, Total = 0 },
-        //                TotalEarned = new CountValues { Day = 0, Week = 0, Total = 0 },
-        //            };
-        //        }
-        //        else
-        //        {
-        //            usersNewRating.Remove(existingRating);
-        //        }
-        //        RatingStatistics userRatingNew = new RatingStatistics
-        //        {
-        //            UserId = userHistory.UserId,
-        //            MunualStepsCount = new CountValues { Day = existingRating.MunualStepsCount.Day + userHistory.ManualStepsCount, Week = existingRating.MunualStepsCount.Week + userHistory.ManualStepsCount, Total = userHistory.ManualStepsCount },
-        //            RootCounter = new CountValues { Day = existingRating.RootCounter.Day + userHistory.RootCounter, Week = existingRating.RootCounter.Week + userHistory.RootCounter, Total = userHistory.RootCounter },
-        //            TotalEarned = new CountValues { Day = existingRating.TotalEarned.Day + userHistory.TotalEarned, Week = existingRating.TotalEarned.Week + userHistory.TotalEarned, Total = userHistory.TotalEarned },
-        //        };
-        //        // usersNewRating.Remove(existingRating)
-        //        if (userRatingNew.UserId != "0")
-        //        {
-        //            usersNewRating.Add(userRatingNew);
-        //            PersistRatingStatistics(usersNewRating.ToArray());
-        //        }
-
-        //    }
-        //    // _localRatingDataAccess.CreateOrUpdateUsersRatingStatistics(usersNewRating.ToArray());
-        //    // PersistRatingStatistics(usersNewRating.ToArray());
-        //}
-        //private void PersistRatingStatistics(RatingStatistics[] ratingStatistics)
-        //{
-        //    var ratingStatisticsChunk = new RatingStatistics[ChunkSize];
-        //    var count = 0;
-        //    foreach (var userRating in ratingStatistics)
-        //    {
-        //        if (count < ChunkSize)
-        //        {
-        //            ratingStatisticsChunk[count] = userRating;
-        //            count++;
-        //        }
-        //        else
-        //        {
-        //            if (ratingStatisticsChunk.FirstOrDefault() != null)
-        //            {
-        //                _localRatingDataAccess.CreateOrUpdateUsersRatingStatistics(ratingStatisticsChunk);
-        //                ratingStatisticsChunk = new RatingStatistics[ChunkSize];
-        //                count = 0;
-        //            }
-        //        }
-        //    }
-        //    if (count < ChunkSize)
-        //    {
-        //        if (ratingStatisticsChunk.FirstOrDefault() != null)
-        //        {
-        //            _localRatingDataAccess.CreateOrUpdateUsersRatingStatistics(ratingStatisticsChunk);
-        //            ratingStatisticsChunk = new RatingStatistics[ChunkSize];
-        //            count = 0;
-        //        }
-        //    }
-
-
-        //}
         private void CleanOldHistory()
         {
             TimeSpan periodWeek = new TimeSpan(7, 0, 0, 0);

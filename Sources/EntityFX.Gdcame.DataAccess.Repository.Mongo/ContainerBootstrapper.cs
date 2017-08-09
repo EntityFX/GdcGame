@@ -4,7 +4,9 @@
     using EntityFX.Gdcame.Contract.MainServer.Counters;
     using EntityFX.Gdcame.DataAccess.Contract.Common.Server;
     using EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData.Store;
+    using EntityFX.Gdcame.DataAccess.Repository.Contract.Common;
     using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer;
+    using EntityFX.Gdcame.DataAccess.Repository.Mongo.Common;
     using EntityFX.Gdcame.Infrastructure.Common;
 
     using Microsoft.Practices.Unity;
@@ -76,19 +78,12 @@
             BsonClassMap.RegisterClassMap<StoredSingleCounter>();
             BsonClassMap.RegisterClassMap<StoredDelayedCounter>();
 
-            BsonClassMap.RegisterClassMap<Server>(
-                cm =>
-                    {
-                        cm.AutoMap();
-                        cm.SetIdMember(
-                            cm.GetMemberMap(x => x.Address).SetIdGenerator(StringObjectIdGenerator.Instance));
-                    });  
-
             container.RegisterType<IItemRepository, ItemRepository>();
             container.RegisterType<ICountersRepository, CountersRepository>();         
             container.RegisterType<ICustomRuleRepository, CustomRuleRepository>();
             container.RegisterType<IUserGameSnapshotRepository, UserGameSnapshotRepository>();
             container.RegisterType<IRatingHistoryRepository, RatingHistoryRepository>();
+            container.RegisterType<ILocalRatingStatisticsRepository, LocalRatingStatisticsRepository>();
             container.RegisterInstance<IMongoDatabase>(this.MongoDatabase);
             return container;
         }

@@ -404,6 +404,10 @@
       <Project>{720E76E7-71E2-4570-BD4A-A38B2858BD56}</Project>
       <Name>EntityFX.Gdcame.Utils.Hashing</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Utils.RatingServer\EntityFX.Gdcame.Utils.RatingServer.csproj">
+      <Project>{82cc4cb7-e4af-4fd1-b5bf-8f7802d0842c}</Project>
+      <Name>EntityFX.Gdcame.Utils.RatingServer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />

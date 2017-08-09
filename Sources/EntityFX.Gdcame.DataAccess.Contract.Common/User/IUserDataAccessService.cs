@@ -24,6 +24,9 @@
         User[] FindByFilter(string searchString);
 
         [OperationContract]
+        User[] FindWithUsersIds(string[] userslds);
+
+        [OperationContract]
         User[] FindAll();
 
         User[] FindChunked(int offset, int count);

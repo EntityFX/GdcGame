@@ -2,7 +2,7 @@
 {
     using EntityFX.Gdcame.Contract.Common.UserRating;
 
-    public interface IRatingStatisticsRepository
+    public interface ILocalRatingStatisticsRepository
     {
         void CreateOrUpdateUsersRatingStatistics(RatingStatistics[] ratingStatistics);
         TopRatingStatistics GetRaiting(int top = 500);

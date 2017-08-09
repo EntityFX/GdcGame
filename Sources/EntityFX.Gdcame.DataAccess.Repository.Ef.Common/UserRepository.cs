@@ -128,5 +128,10 @@
                     .ToList();
             }
         }
+
+        public IEnumerable<User> FindWithIds(GetUsersWithIdsCriterion usersWithIdsCriterion)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

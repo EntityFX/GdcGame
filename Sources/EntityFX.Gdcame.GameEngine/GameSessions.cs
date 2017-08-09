@@ -88,6 +88,7 @@
 
         public override Guid AddSession(User user)
         {
+            if (user.Role == (uint)UserRole.System) return base.AddSession(user);
             if (!this._userGamesStorage.ContainsKey(user.Login))
             {
                 var game = this.StartGame(user.Id, user.Login);
@@ -96,7 +97,6 @@
                     this._logger.Warning("Cannot add game for user {0}", user.Login);
                 }
             }
-
             return base.AddSession(user);
         }
 

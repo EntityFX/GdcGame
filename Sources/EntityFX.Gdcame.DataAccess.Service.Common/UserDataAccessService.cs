@@ -59,5 +59,10 @@
         {
             return this._userRepository.FindChunked(new GetUsersByOffsetCriterion(offset, count)).ToArray();
         }
+
+        public User[] FindWithUsersIds(string[] userslds)
+        {
+            return this._userRepository.FindWithIds(new GetUsersWithIdsCriterion() { UsersIds = userslds }).ToArray();
+        }
     }
 }

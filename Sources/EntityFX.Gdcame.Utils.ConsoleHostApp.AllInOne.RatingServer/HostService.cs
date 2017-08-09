@@ -16,11 +16,18 @@ using Topshelf;
 
 namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.RatingServer
 {
+    using EntityFX.Gdcame.Engine.Worker.RatingServer;
+
     internal class HostService : HostServiceBase<CoreStartup>
     {
         protected override IContainerBootstrapper GetContainerBootstrapper(AppConfiguration appConfiguration)
         {
             return new ContainerBootstrapper(appConfiguration);
+        }
+
+        protected override void ConfigureWorkers(IWorkerManager workerManager, IUnityContainer container)
+        {
+            workerManager.Add(container.Resolve<RatingSyncWorker>());
         }
     }
 }

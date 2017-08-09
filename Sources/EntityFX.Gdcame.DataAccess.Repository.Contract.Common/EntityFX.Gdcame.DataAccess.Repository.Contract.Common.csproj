@@ -54,7 +54,7 @@
     <Compile Include="Criterions\User\GetUserByNameCriterion.cs" />
     <Compile Include="Criterions\User\GetUsersByOffsetCriterion.cs" />
     <Compile Include="Criterions\User\GetUsersBySearchStringCriterion.cs" />
-    <Compile Include="IRatingStatisticsRepository.cs" />
+    <Compile Include="Criterions\User\GetUsersWithIdsCriterion.cs" />
     <Compile Include="IServerRepository.cs" />
     <Compile Include="IUserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

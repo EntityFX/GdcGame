@@ -80,6 +80,7 @@
     <Compile Include="ICustomRuleRepository.cs" />
     <Compile Include="IItemRepository.cs" />
     <Compile Include="IRatingHistoryRepository.cs" />
+    <Compile Include="ILocalRatingStatisticsRepository.cs" />
     <Compile Include="IUserGameSnapshotRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GameRepositoryFacade.cs" />

@@ -13,6 +13,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer
     using EntityFX.Gdcame.Contract.Common.UserRating;
     using EntityFX.Gdcame.Engine.Common;
     using EntityFX.Gdcame.Engine.Contract.GameEngine;
+    using EntityFX.Gdcame.Engine.Contract.RatingServer;
     using EntityFX.Gdcame.Infrastructure.Common;
     using EntityFX.Gdcame.Manager.Common;
     using EntityFX.Gdcame.Manager.Contract.Common;
@@ -22,6 +23,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer
     using EntityFX.Gdcame.Utils.Common;
     using EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer;
     using EntityFX.Gdcame.Utils.Hashing;
+    using EntityFX.Gdcame.Utils.RatingServer;
 
     using Microsoft.AspNet.Identity;
     using Microsoft.Practices.Unity;
@@ -94,6 +96,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer
     new InterceptionBehavior<PolicyInjectionBehavior>(),
     new Interceptor<InterfaceInterceptor>());
             container.RegisterType<ISessionManagerClientFactory, SessionManagerClientFactory>();
+            container.RegisterType<INodeRatingClientFactory, NodeRatingClientFactory>();
 
 
             /* if (ConfigurationManager.AppSettings["UseLoggerInterceptor"] == "True")
@@ -104,8 +107,6 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer
                      .AddMatchingRule<NamespaceMatchingRule>(new InjectionConstructor("EntityFX.Gdcame.*", true));
              }*/
 
-
-            container.RegisterType<IMapper<TopRatingStatistics, TopRatingStatisticsModel>, TopRatingStatisticsModelMapper>();
 
           //  container.RegisterType<IRatingController, RatingController>();
             container.RegisterType<IRatingController, RatingController>();
