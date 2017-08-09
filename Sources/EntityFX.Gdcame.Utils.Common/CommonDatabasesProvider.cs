@@ -1,4 +1,4 @@
-﻿namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
+﻿namespace EntityFX.Gdcame.Utils.Common
 {
     using EntityFX.Gdcame.Infrastructure.Common;
 

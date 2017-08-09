@@ -1,12 +1,11 @@
-﻿namespace EntityFX.Gdcame.DataAccess.Repository.Mongo.Common
+﻿namespace EntityFX.Gdcame.DataAccess.Repository.Mongo.MainServer
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Linq.Expressions;
 
     using EntityFX.Gdcame.Contract.Common.UserRating;
-    using EntityFX.Gdcame.DataAccess.Repository.Contract.Common;
+    using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer;
 
     using MongoDB.Bson;
     using MongoDB.Driver;

@@ -5,6 +5,7 @@
 
     using EntityFX.Gdcame.Contract.Common;
     using EntityFX.Gdcame.DataAccess.Contract.Common.User;
+    using EntityFX.Gdcame.Engine.Contract.Common;
     using EntityFX.Gdcame.Engine.Contract.GameEngine;
     using EntityFX.Gdcame.Infrastructure.Common;
     using EntityFX.Gdcame.Manager.Contract.Common.SessionManager;
@@ -43,7 +44,7 @@
 
             if (user != null)
             {
-                var result = this.GameSessions.AddSession(new Engine.Contract.GameEngine.User() { Id = user.Id, Login = user.Login, Role = user.Role});
+                var result = this.GameSessions.AddSession(new Engine.Contract.Common.User() { Id = user.Id, Login = user.Login, Role = user.Role});
                 this._logger.Info(
                     "{2}: Session {0} added for login: {1}",
                     result, login, this.GetType());

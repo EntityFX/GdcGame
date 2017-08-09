@@ -2,6 +2,7 @@
 {
     using System;
     using EntityFX.Gdcame.Contract.Common.Statistics;
+    using EntityFX.Gdcame.Engine.Contract.Common;
     using EntityFX.Gdcame.Engine.Contract.GameEngine;
     using EntityFX.Gdcame.Manager.Contract.Common;
     using EntityFX.Gdcame.Manager.Contract.Common.AdminManager;

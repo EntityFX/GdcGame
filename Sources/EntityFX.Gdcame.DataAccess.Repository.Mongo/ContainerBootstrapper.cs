@@ -4,9 +4,7 @@
     using EntityFX.Gdcame.Contract.MainServer.Counters;
     using EntityFX.Gdcame.DataAccess.Contract.Common.Server;
     using EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData.Store;
-    using EntityFX.Gdcame.DataAccess.Repository.Contract.Common;
     using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer;
-    using EntityFX.Gdcame.DataAccess.Repository.Mongo.Common;
     using EntityFX.Gdcame.Infrastructure.Common;
 
     using Microsoft.Practices.Unity;

@@ -1,4 +1,4 @@
-﻿namespace EntityFX.Gdcame.Engine.Contract.GameEngine
+﻿namespace EntityFX.Gdcame.Engine.Contract.Common
 {
     using System;
     using System.Collections.Generic;

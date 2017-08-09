@@ -6,6 +6,7 @@
     using EntityFX.Gdcame.Contract.Common;
     using EntityFX.Gdcame.Contract.MainServer;
     using EntityFX.Gdcame.Contract.MainServer.Statistics;
+    using EntityFX.Gdcame.Engine.Contract.Common;
     using EntityFX.Gdcame.Kernel.Contract;
 
     public interface IGameSessions : ISessions

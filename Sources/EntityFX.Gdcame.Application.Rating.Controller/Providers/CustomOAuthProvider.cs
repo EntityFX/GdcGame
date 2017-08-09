@@ -1,13 +1,13 @@
-﻿using System;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security.OAuth;
-
-namespace EntityFX.Gdcame.Application.Api.MainServer.Providers
+﻿namespace EntityFX.Gdcame.Application.Api.Common.Providers
 {
-    using EntityFX.Gdcame.Application.Api.Common.Providers;
+    using System;
+    using System.Security.Claims;
+    using System.Threading.Tasks;
+
     using EntityFX.Gdcame.Utils.Common;
+
+    using Microsoft.AspNet.Identity.Owin;
+    using Microsoft.Owin.Security.OAuth;
 
     public class CustomOAuthProvider : OAuthAuthorizationServerProvider
     {
@@ -21,8 +21,8 @@ namespace EntityFX.Gdcame.Application.Api.MainServer.Providers
                 throw new ArgumentNullException("publicClientId");
             }
 
-            _publicClientId = publicClientId;
-            _sessionManager = sessionManager;
+            this._publicClientId = publicClientId;
+            this._sessionManager = sessionManager;
         }
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
@@ -48,7 +48,7 @@ namespace EntityFX.Gdcame.Application.Api.MainServer.Providers
                 identity.AddClaim(new Claim(ClaimTypes.Role, role));
             }
 
-            var sessionGuid = _sessionManager.BuildSessionManagerClient(Guid.Empty).OpenSession(context.UserName);
+            var sessionGuid = this._sessionManager.BuildSessionManagerClient(Guid.Empty).OpenSession(context.UserName);
             identity.AddClaim(new Claim("gameSession", sessionGuid.ToString()));
 
             context.Validated(identity);

@@ -5,7 +5,7 @@
     using System.Collections.Generic;
 
     using EntityFX.Gdcame.Contract.Common;
-    using EntityFX.Gdcame.Engine.Contract.GameEngine;
+    using EntityFX.Gdcame.Engine.Contract.Common;
     using EntityFX.Gdcame.Infrastructure.Common;
 
     public class SessionsProvider : IDisposable, ISessions

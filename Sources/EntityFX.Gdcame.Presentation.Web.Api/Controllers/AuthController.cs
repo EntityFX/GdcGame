@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using EntityFX.Gdcame.Application.Api.MainServer.Models;
-using EntityFX.Gdcame.Application.Api.MainServer.Providers;
 using EntityFX.Gdcame.Infrastructure.Api.ApiResult;
 
 using Microsoft.AspNet.Identity;

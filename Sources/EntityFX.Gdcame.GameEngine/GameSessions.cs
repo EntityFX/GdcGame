@@ -9,6 +9,7 @@
     using EntityFX.Gdcame.Contract.MainServer;
     using EntityFX.Gdcame.Contract.MainServer.Statistics;
     using EntityFX.Gdcame.Engine.Common;
+    using EntityFX.Gdcame.Engine.Contract.Common;
     using EntityFX.Gdcame.Engine.Contract.GameEngine;
     using EntityFX.Gdcame.Infrastructure.Common;
     using EntityFX.Gdcame.Kernel.Contract;

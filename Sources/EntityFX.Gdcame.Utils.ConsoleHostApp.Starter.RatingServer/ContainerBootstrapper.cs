@@ -12,7 +12,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer
     using EntityFX.Gdcame.Contract.Common.Statistics;
     using EntityFX.Gdcame.Contract.Common.UserRating;
     using EntityFX.Gdcame.Engine.Common;
-    using EntityFX.Gdcame.Engine.Contract.GameEngine;
+    using EntityFX.Gdcame.Engine.Contract.Common;
     using EntityFX.Gdcame.Engine.Contract.RatingServer;
     using EntityFX.Gdcame.Infrastructure.Common;
     using EntityFX.Gdcame.Manager.Common;
@@ -21,7 +21,6 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer
     using EntityFX.Gdcame.Manager.Contract.Common.SessionManager;
     using EntityFX.Gdcame.Manager.Contract.Common.UserManager;
     using EntityFX.Gdcame.Utils.Common;
-    using EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer;
     using EntityFX.Gdcame.Utils.Hashing;
     using EntityFX.Gdcame.Utils.RatingServer;
 

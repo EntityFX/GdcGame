@@ -4,7 +4,6 @@ using EntityFX.Gdcame.Application.Api.Common.Mappers;
 using EntityFX.Gdcame.Application.Api.Controller.MainServer;
 using EntityFX.Gdcame.Application.Api.MainServer.Mappers;
 using EntityFX.Gdcame.Application.Api.MainServer.Models;
-using EntityFX.Gdcame.Application.Api.MainServer.Providers;
 using EntityFX.Gdcame.Application.Contract.Controller.Common;
 using EntityFX.Gdcame.Application.Contract.Controller.MainServer;
 using EntityFX.Gdcame.Application.Contract.Model.MainServer;

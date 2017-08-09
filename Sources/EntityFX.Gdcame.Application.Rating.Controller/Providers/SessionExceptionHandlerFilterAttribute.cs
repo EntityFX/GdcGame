@@ -1,12 +1,12 @@
-﻿using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using System.Web.Http.Filters;
-using EntityFX.Gdcame.Infrastructure.Common;
-
-namespace EntityFX.Gdcame.Application.Api.MainServer.Providers
+﻿namespace EntityFX.Gdcame.Application.Api.Common.Providers
 {
+    using System.Net;
+    using System.Net.Http;
+    using System.Web.Http;
+    using System.Web.Http.Filters;
+
     using EntityFX.Gdcame.Contract.Common;
+    using EntityFX.Gdcame.Infrastructure.Common;
 
     public class SessionExceptionHandlerFilterAttribute : ExceptionFilterAttribute
     {
@@ -15,7 +15,7 @@ namespace EntityFX.Gdcame.Application.Api.MainServer.Providers
 
         public SessionExceptionHandlerFilterAttribute(ILogger logger)
         {
-            _logger = logger;
+            this._logger = logger;
         }
 
         public override void OnException(HttpActionExecutedContext context)
@@ -34,7 +34,7 @@ namespace EntityFX.Gdcame.Application.Api.MainServer.Providers
 
             if (context.Exception != null)
             {
-                _logger.Error(context.Exception);
+                this._logger.Error(context.Exception);
                 context.Response = context.Request.CreateErrorResponse(HttpStatusCode.InternalServerError,
                     new HttpError(context.Exception.Message)
                     {

@@ -22,8 +22,6 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer
 {
     using System;
 
-    using EntityFX.Gdcame.Application.Api.MainServer.Providers;
-
     using Microsoft.Owin;
     using Microsoft.Owin.Security.OAuth;
 

@@ -1,4 +1,4 @@
-﻿namespace EntityFX.Gdcame.DataAccess.Repository.Contract.Common
+﻿namespace EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer
 {
     using EntityFX.Gdcame.Contract.Common.UserRating;
 

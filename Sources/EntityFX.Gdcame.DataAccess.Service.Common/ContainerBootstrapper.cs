@@ -3,7 +3,6 @@
     using EntityFX.Gdcame.DataAccess.Contract.Common.Rating;
     using EntityFX.Gdcame.DataAccess.Contract.Common.Server;
     using EntityFX.Gdcame.DataAccess.Contract.Common.User;
-    using EntityFX.Gdcame.DataAccess.Service.MainServer;
     using EntityFX.Gdcame.Infrastructure.Common;
 
     using Microsoft.Practices.Unity;

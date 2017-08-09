@@ -1,9 +1,5 @@
-﻿namespace EntityFX.Gdcame.Engine.Contract.GameEngine
+﻿namespace EntityFX.Gdcame.Engine.Contract.Common
 {
-    using System;
-    using System.Runtime.Serialization;
-
-
     public class User
     { 
         public string Id { get; set; }

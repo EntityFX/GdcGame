@@ -7,7 +7,6 @@ using System.Web.Cors;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using EntityFX.Gdcame.Application.Api.Common.Providers;
-using EntityFX.Gdcame.Application.Api.MainServer.Providers;
 using EntityFX.Gdcame.Utils.Common;
 using EntityFX.Gdcame.Utils.MainServer;
 using Microsoft.Owin;
