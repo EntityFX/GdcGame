@@ -32,7 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
@@ -379,6 +381,10 @@
     <ProjectReference Include="..\EntityFX.Gdcame.Engine.Contract.Common\EntityFX.Gdcame.Engine.Contract.Common.csproj">
       <Project>{5E4D635E-5E84-47B1-B638-EF60A1176796}</Project>
       <Name>EntityFX.Gdcame.Engine.Contract.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Engine.Contract.RatingServer\EntityFX.Gdcame.Engine.Contract.RatingServer.csproj">
+      <Project>{FC66CF81-A030-4A43-B446-7B92B5D8708E}</Project>
+      <Name>EntityFX.Gdcame.Engine.Contract.RatingServer</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Engine.RatingServer\EntityFX.Gdcame.Engine.Common.csproj">
       <Project>{397FFB04-CD07-4DEA-8B2C-14C97ADD9379}</Project>

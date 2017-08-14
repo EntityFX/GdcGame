@@ -20,7 +20,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\bin\RatingServer\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -28,7 +28,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\bin\RatingServer\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -46,6 +46,10 @@
     <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Contract.RatingServer\EntityFX.Gdcame.DataAccess.Contract.RatingServer.csproj">
       <Project>{18454832-DEE4-484F-9750-F67D46B790E7}</Project>
       <Name>EntityFX.Gdcame.DataAccess.Contract.RatingServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Engine.Contract.RatingServer\EntityFX.Gdcame.Engine.Contract.RatingServer.csproj">
+      <Project>{FC66CF81-A030-4A43-B446-7B92B5D8708E}</Project>
+      <Name>EntityFX.Gdcame.Engine.Contract.RatingServer</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Common\EntityFX.Gdcame.Infrastructure.Common.csproj">
       <Project>{924CC67D-9E2B-46BA-BE1D-6C6C780CCFBC}</Project>

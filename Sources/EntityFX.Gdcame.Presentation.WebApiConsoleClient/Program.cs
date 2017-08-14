@@ -19,6 +19,7 @@ using EntityFX.Gdcame.Application.Contract.Model.MainServer;
 using EntityFX.Gdcame.Infrastructure.Api.Auth;
 using EntityFX.Gdcame.Infrastructure.Api.Exceptions;
 using EntityFX.Gdcame.Presentation.ConsoleClient.Common;
+using EntityFX.Gdcame.Contract.Common.UserRating;
 
 namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 {
@@ -48,6 +49,8 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 
         private static int _serverPort;
         private static string _mainServer;
+        private static int ratingServerPort;
+        private static string ratingServer;
 
         private static void ExitMainMenu()
         {
@@ -68,6 +71,8 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             _container = new UnityContainer();
             _serverPort = Convert.ToInt32(ConfigurationManager.AppSettings["ServicePort"]);
             _mainServer = ConfigurationManager.AppSettings["Server"];
+            ratingServerPort = Convert.ToInt32(ConfigurationManager.AppSettings["RatingServerPort"]);
+            ratingServer = ConfigurationManager.AppSettings["RatingServer"];
             MainLoop(listArgs);
 
         }
@@ -75,10 +80,96 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
         private static void RatingMenu(IRatingController ratingClient)
         {
             var ratingData = ratingClient.GetRaiting(500).Result;
-            foreach (var data in ratingData.ManualStepsCount.Day)
+            ConsoleKeyInfo keyInfo;
+
+            WriteRatingHeader();
+
+            while ((keyInfo = Console.ReadKey(true)).Key != ConsoleKey.Escape)
             {
-                Console.Clear();
-                Console.Write("Login: {0}\r\nSteps count:\r\n \tDaily count steps: {1}", data.Login, data.Value);
+                WriteRatingHeader();
+                try
+                {
+                    if (keyInfo.Key == ConsoleKey.A)
+                    {
+                        WriteRatings(ratingData.ManualStepsCount);
+                    }
+                    if (keyInfo.Key == ConsoleKey.S)
+                    {
+                        WriteRatings(ratingData.RootCounter);
+                    }
+                    if (keyInfo.Key == ConsoleKey.D)
+                    {
+                        WriteRatings(ratingData.TotalEarned);
+                    }
+                }
+                catch { }
+            }
+        }
+
+        private static void WriteRatings(TopStatisticsAggregate statisticsAggregate)
+        {
+            WriteRatingHeader(true);
+            ConsoleKeyInfo keyInfo;
+            while ((keyInfo = Console.ReadKey(true)).Key != ConsoleKey.Escape)
+            {
+                try
+                {
+                    if (keyInfo.Key == ConsoleKey.A)
+                    {
+                        WriteRatingHeader(true, "Day");
+                        foreach (var data in statisticsAggregate.Day)
+                        {
+                            Console.WriteLine(string.Format("{0,20} {1,20}", data.Login, data.Value));
+                        }
+                    }
+                    if (keyInfo.Key == ConsoleKey.S)
+                    {
+                        WriteRatingHeader(true, "Week");
+                        foreach (var data in statisticsAggregate.Week)
+                        {
+                            Console.WriteLine(string.Format("{0,20} {1,20}", data.Login, data.Value));
+                        }
+                    }
+                    if (keyInfo.Key == ConsoleKey.D)
+                    {
+                        WriteRatingHeader(true, "Total");
+                        foreach (var data in statisticsAggregate.Total)
+                        {
+                            Console.WriteLine(string.Format("{0,20} {1,20}", data.Login, data.Value));
+                        }
+                    }
+                }
+                catch { }
+            }
+            WriteRatingHeader();
+
+            //foreach (var data in statisticsAggregate.Total)
+            //{
+            //    var dataDayResult = Math.Round(statisticsAggregate.Day.Where((el) => el.UserId == data.UserId).First().Value,2);
+            //    var dataWeekResult = Math.Round(statisticsAggregate.Week.Where((el) => el.UserId == data.UserId).First().Value,2);
+            //    var dataTotalResult = Math.Round(data.Value, 2);
+            //    Console.WriteLine(string.Format("{0,20} {1,20} {2,20} {3,20}", data.Login, dataDayResult, dataWeekResult, dataTotalResult));
+            //}
+        }
+
+        private static void WriteRatingHeader(bool usePeriodHeaderd = false, string period = "")
+        {
+            Console.Clear();
+            Console.WriteLine("-=Rating=-\n");
+
+            if (!usePeriodHeaderd)
+            {
+                Console.WriteLine("Select rating type");
+                Console.WriteLine("A - ManualSteps\tS - RootCounter\tD - TotalEarned");
+            }
+            else
+            {
+                Console.WriteLine("Select period");
+                Console.WriteLine("A - Day\tS - Week\tD - Total");
+            }
+            if (period != "")
+            {
+                Console.WriteLine(string.Format("{0}:\t {1}", "Selected period", period));
             }
         }
 
@@ -95,7 +186,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             Console.Write("Reenter password: ");
             var confirmPassword = Console.ReadLine();
 
-            var serverInfoUrl = ApiHelper.GetApiServerUri(ApiHelper.GetServers(new Uri(string.Format("{0}:{1}",_mainServer, _serverPort))), userName, _serverPort);
+            var serverInfoUrl = ApiHelper.GetApiServerUri(ApiHelper.GetServers(new Uri(string.Format("{0}:{1}", _mainServer, _serverPort))), userName, _serverPort);
 
             var authApi = new AuthApiClient(new PasswordOAuthContext() { BaseUri = serverInfoUrl });
 
@@ -183,7 +274,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             var adminManagerClient = ApiHelper.GetAdminClient(loginContext.Item1);
 
             var gameData = gr.GetGameData();
-            var rc = ApiHelper.GetRatingClient(loginContext.Item1);
+            var rc = ApiHelper.GetRatingClient(new PasswordOAuthContext() { BaseUri = new Uri(string.Format("{0}:{1}", ratingServer, ratingServerPort)) });
             gr.DisplayGameData(gameData);
             ConsoleKeyInfo keyInfo;
             while ((keyInfo = Console.ReadKey(true)).Key != ConsoleKey.Escape)
@@ -231,9 +322,9 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                     }
                 }
 
-                catch (Exception)
+                catch (Exception ex)
                 {
-
+                    var exception = ex.Message;
                 }
             }
         }
