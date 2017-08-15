@@ -29,8 +29,8 @@
         private Task _backgroundPersisterTask;
         private readonly CancellationTokenSource _backgroundPersisterTaskToken = new CancellationTokenSource();
 
-        private readonly ConcurrentBag<Tuple<string, string, DateTime>>[] PersistTimeSlotsUsers =
-            new ConcurrentBag<Tuple<string, string, DateTime>>[PersistTimeSlotsCount];
+        private readonly ConcurrentDictionary<string,GameSessionInfo>[] PersistTimeSlotsUsers =
+            new ConcurrentDictionary<string, GameSessionInfo>[PersistTimeSlotsCount];
 
         public PersistenceWorker(ILogger logger, IGameSessions gameSessions,
             IGameDataPersisterFactory gameDataPersisterFactory, IHashHelper hashHelper, GamePerformanceInfo performanceInfo, IServerDataAccessService serverDataAccessService)
@@ -47,7 +47,7 @@
             this._gameDataPersisterFactory = gameDataPersisterFactory;
             for (int i = 0; i < this.PersistTimeSlotsUsers.Length; i++)
             {
-                this.PersistTimeSlotsUsers[i] = new ConcurrentBag<Tuple<string, string, DateTime>>();
+                this.PersistTimeSlotsUsers[i] = new ConcurrentDictionary<string, GameSessionInfo>();
             }
             gameSessions.GameStarted += this.GameSessions_GameStarted;
             gameSessions.GameRemoved += this.GameSessions_GameRemoved;
@@ -58,7 +58,7 @@
         {
             for (int i = 0; i < this.PersistTimeSlotsUsers.Length; i++)
             {
-                this.PersistTimeSlotsUsers[i] = new ConcurrentBag<Tuple<string, string, DateTime>>();
+                this.PersistTimeSlotsUsers[i] = new ConcurrentDictionary<string, GameSessionInfo>();
             }
             GC.Collect();
         }
@@ -66,10 +66,10 @@
         private void GameSessions_GameRemoved(object sender, Tuple<string, string> e)
         {
             int timeSlotId = this._hashHelper.GetModuloOfUserIdHash(e.Item1, PersistTimeSlotsCount);
-            var userTimeSlot = this.PersistTimeSlotsUsers[timeSlotId].FirstOrDefault(_ => _.Item2 == e.Item2);
+            var userTimeSlot = this.PersistTimeSlotsUsers[timeSlotId].FirstOrDefault(_ => _.Key == e.Item2).Value;
             if (userTimeSlot != null)
             {
-                this.PersistTimeSlotsUsers[timeSlotId].TryTake(out userTimeSlot);
+                this.PersistTimeSlotsUsers[timeSlotId].TryRemove(e.Item2, out userTimeSlot);
             }
         }
 
@@ -78,7 +78,7 @@
         {
             int timeSlotId = this._hashHelper.GetModuloOfUserIdHash(e.Item1, PersistTimeSlotsCount);
 
-            this.PersistTimeSlotsUsers[timeSlotId].Add(new Tuple<string, string, DateTime>(e.Item1, e.Item2, DateTime.Now));
+            this.PersistTimeSlotsUsers[timeSlotId].TryAdd(e.Item2,new GameSessionInfo(e.Item1,DateTime.Now));
         }
 
         public override bool IsRunning
@@ -121,16 +121,17 @@
                     stopwatch.Restart();
 
                     var gamesWithUserIdsChunk = new List<GameWithUserId>();
-                    ConcurrentBag<Tuple<string, string, DateTime>> timeSlot = this.PersistTimeSlotsUsers[currentTimeSlotId];
-                    foreach (Tuple<string, string, DateTime> timeSlotUser in timeSlot)
+                    ConcurrentDictionary<string, GameSessionInfo> timeSlot = this.PersistTimeSlotsUsers[currentTimeSlotId];
+                    foreach (var timeSlotUser in timeSlot)
                     {
-                        if (this._gameSessions.Games.ContainsKey(timeSlotUser.Item1))
+                        var gameSessionInfo = timeSlotUser.Value as GameSessionInfo;
+                        if (this._gameSessions.Games.ContainsKey(gameSessionInfo.Login))
                         {
                             gamesWithUserIdsChunk.Add(new GameWithUserId()
                             {
-                                Game = this._gameSessions.Games[timeSlotUser.Item1],
-                                UserId = timeSlotUser.Item2,
-                                CreateDateTime = timeSlotUser.Item3,
+                                Game = this._gameSessions.Games[gameSessionInfo.Login],
+                                UserId = timeSlotUser.Key,
+                                CreateDateTime = gameSessionInfo.Date,
                                 UpdateDateTime = DateTime.Now
                             });
                         }
@@ -169,6 +170,17 @@
                 }
 
 
+            }
+        }
+
+        private class GameSessionInfo
+        {
+            public string Login { get; set; }
+            public DateTime Date { get; set; }
+            public GameSessionInfo(string login, DateTime date)
+            {
+                this.Login = login;
+                this.Date = date;
             }
         }
     }

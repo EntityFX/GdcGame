@@ -170,6 +170,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             if (period != "")
             {
                 Console.WriteLine(string.Format("{0}:\t {1}", "Selected period", period));
+                Console.WriteLine(string.Format("{0,20} {1,20}", "Login", "Value"));
             }
         }
 
