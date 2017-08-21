@@ -121,11 +121,15 @@ namespace EntityFX.Gdcame.Manager.MainServer
             try
             {
                 game = _gameSessions.GetGame(sessionId);
-                //TODO: if Game IsFreezed then throw GameFreezedException() that will be caught by wrapping service and return NeedToChangeNode response to Client.
             }
             catch (InvalidSessionException invalidSessionException)
             {
                 _logger.Error(invalidSessionException);
+                throw;
+            }
+            catch (GameFrozenException frozenException)
+            {
+                _logger.Error(frozenException);
                 throw;
             }
             catch (Exception exp)

@@ -29,42 +29,4 @@ namespace EntityFX.Gdcame.Infrastructure.Api.Exceptions
 
         public T ErrorData { get; private set; }
     }
-
-    public interface IClientException<out T>
-        where T : ErrorData
-    {
-        T ErrorData { get; }
-    }
-
-    public class ErrorData
-    {
-        public  string Message { get; set; }
-    }
-
-    public class InvalidSessionErrorData : ErrorData
-    {
-        public Guid SessionGuid { get; set; }
-    }
-
-    public class ServerErrorData : ErrorData
-    {
-        public string ExceptionType { get; set; }
-
-        public string StackTrace { get; set; }
-    }
-
-    public class ValidationErrorData : ErrorData
-    {
-        public dynamic ModelState { get; set; }
-    }
-
-    public class NoServerConnectionData : ErrorData
-    {
-        public Uri Uri { get; set; }
-    }
-
-    public class WrongAuthData<TAuthRequestData> : ErrorData
-    {
-        public TAuthRequestData RequestData { get; set; }
-    }
 }

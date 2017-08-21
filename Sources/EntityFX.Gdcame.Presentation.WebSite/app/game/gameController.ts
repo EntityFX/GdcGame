@@ -101,6 +101,10 @@ namespace Gdcame.Controllers {
         constructor() {
             super();
         }
+
+        $onInit(): void {
+            
+        }
     }
 
     angular.module("gdCameApp").controller('GameController', GameController);

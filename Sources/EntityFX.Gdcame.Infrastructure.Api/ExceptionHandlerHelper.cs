@@ -28,6 +28,7 @@ namespace EntityFX.Gdcame.Infrastructure.Api
 
         public static void HandleNotSuccessRequest(IRestResponse response)
         {
+            JToken token = null;
             if (response.ResponseStatus == ResponseStatus.Error)
             {
                 throw new NoConnectionException(new NoServerConnectionData() {Message = response.ErrorMessage, Uri = response.ResponseUri}, response.ErrorMessage,
@@ -35,7 +36,7 @@ namespace EntityFX.Gdcame.Infrastructure.Api
             }
 
 
-            JToken token = null;
+
             try
             {
                 token = JObject.Parse(response.Content);
@@ -43,6 +44,12 @@ namespace EntityFX.Gdcame.Infrastructure.Api
             catch (System.Exception)
             {
                 throw new ClientException<ErrorData>(null, response.StatusDescription);
+            }
+
+            var serverToken = token.SelectToken("server", false).Value<string>();
+            if (serverToken != null && response.StatusCode == HttpStatusCode.MovedPermanently)
+            {
+                throw new ClientException<GameFrozenErrorData>(new GameFrozenErrorData() { Server = serverToken });
             }
 
             var messageToken = (string)token.SelectToken("message", false);

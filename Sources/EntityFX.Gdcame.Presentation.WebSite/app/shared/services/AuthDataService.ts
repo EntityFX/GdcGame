@@ -1,5 +1,5 @@
 ﻿module Gdcame.Services {
-    export class AuthDataService extends ApiServiceBase implements IAuthenticateService, ISessionService {
+    export class AuthDataService extends ApiServiceBase implements IAuthenticateDataService, ISessionService {
         private userService: Gdcame.Services.IUserApiService;
         private apiServiceUri: Services.IUriService;
         private localStorage: angular.storage.IStorageService;
@@ -34,7 +34,7 @@
             this.http.defaults.headers.common.Authorization = 'Basic';
         }
 
-        login(authData: Services.AuthData): angular.IHttpPromise<Services.AuthToken> {
+        login(authData: Services.AuthData): angular.IPromise<Services.AuthToken> {
             var defer = this.q.defer<Services.AuthToken>();
             this.userService.login(authData)
                 .then(result => {
@@ -47,7 +47,7 @@
             return defer.promise;
         }
 
-        logout(): angular.IHttpPromise<any> {
+        logout(): angular.IPromise<any> {
             var defer = this.q.defer<Services.AuthToken>();
             this.userService.logout()
                 .then(result => {

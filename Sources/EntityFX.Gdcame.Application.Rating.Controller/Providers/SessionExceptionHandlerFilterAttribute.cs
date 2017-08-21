@@ -12,6 +12,11 @@
     {
         private readonly ILogger _logger;
 
+        private class FrozenGameNewServer
+        {
+            public string Server { get; set; }
+        }
+
 
         public SessionExceptionHandlerFilterAttribute(ILogger logger)
         {
@@ -29,6 +34,14 @@
                         ExceptionType = context.Exception.GetType().ToString(),
                         MessageDetail = invalidSessionException.SessionGuid.ToString()
                     });
+                return;
+            }
+
+            var gameFrozenException = context.Exception as GameFrozenException;
+            if (gameFrozenException != null)
+            {
+                context.Response = context.Request.CreateResponse(HttpStatusCode.MovedPermanently
+                    , new FrozenGameNewServer { Server = gameFrozenException.Server});
                 return;
             }
 

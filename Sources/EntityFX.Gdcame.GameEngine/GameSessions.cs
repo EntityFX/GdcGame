@@ -23,6 +23,8 @@
         private readonly ConcurrentDictionary<string, IGame> _userGamesStorage =
             new ConcurrentDictionary<string, IGame>();
 
+        private readonly ConcurrentDictionary<string, string> _frozenGames =
+    new ConcurrentDictionary<string, string>();
 
         private readonly GamePerformanceInfo _performanceInfo;
 
@@ -55,7 +57,7 @@
             }
             return game;
         }
-        //TODO: add FreezeUserGame(userId, login) that will set IsFreezed property of Game that will be checked by Game methods.
+
         public IGame GetGame(Guid sessionId)
         {
             Session session;
@@ -70,6 +72,11 @@
             if (!this._userGamesStorage.TryGetValue(username, out game))
             {
                 this._logger.Warning("Cannot get game for user {0}", username);
+            }
+            string frozenServer = null;
+            if (this._frozenGames.TryGetValue(username, out frozenServer))
+            {
+                throw new GameFrozenException(string.Format("Game frozen for user {0}", username), frozenServer);
             }
             return game;
         }
@@ -116,6 +123,8 @@
             {
                 this._logger.Warning("Cannot remove game for user {0}", user.Login);
             }
+
+            RemoveFreeze(user.Login);
             if (this.GameStarted != null)
             {
                 this.GameRemoved(this, new Tuple<string, string>(user.Login, user.Id));
@@ -150,5 +159,26 @@
             return this._gameFactory.BuildGame(userId, userName);
         }
 
+        public void FreezeUserGame(string userName, string server)
+        {
+            this._frozenGames.TryAdd(userName, server);
+            if (!this._frozenGames.TryAdd(userName, server))
+            {
+                this._logger.Warning("Cannot add freeze for user {0}", userName);
+            }
+        }
+
+        public void RemoveFreeze(string userName)
+        {
+            string server;
+            if (!this._frozenGames.ContainsKey(userName))
+            {
+                return;
+            }
+            if (!this._frozenGames.TryRemove(userName, out server))
+            {
+                this._logger.Warning("Cannot remove freeze for user {0}", userName);
+            }
+        }
     }
 }

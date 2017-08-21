@@ -13,7 +13,7 @@
             this.timeout = timeout;
         }
 
-        register(user: Services.RegisterData): angular.IHttpPromise<any> {
+        register(user: Services.RegisterData): angular.IPromise<any> {
             var defer = this.q.defer<Services.AuthToken>();
 
             this.userService.register(user)

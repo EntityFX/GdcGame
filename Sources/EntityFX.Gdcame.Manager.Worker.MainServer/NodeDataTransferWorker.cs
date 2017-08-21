@@ -6,6 +6,7 @@
 
     using EntityFX.Gdcame.DataAccess.Contract.Common.Server;
     using EntityFX.Gdcame.DataAccess.Contract.Common.User;
+    using EntityFX.Gdcame.Engine.Contract.GameEngine;
     using EntityFX.Gdcame.Manager.Contract.Common.WorkerManager;
     using DataAccess.Contract.MainServer.GameData;
 
@@ -15,7 +16,7 @@
 
         private readonly IUserDataAccessService userDataAccessService;
 
-        private readonly IGameDataRetrieveDataAccessService gameDataRetrieveDataAccessService;
+        private readonly IGameSessions gameSessions;
 
         /// <summary>
         /// The _data transfer task.
@@ -23,10 +24,11 @@
         private Task _dataTransferTask;
         private readonly CancellationTokenSource cancellationTaskToken = new CancellationTokenSource();
 
-        public NodeDataTransferWorker(IServerDataAccessService serverDataAccessService, IUserDataAccessService userDataAccessService, IGameDataRetrieveDataAccessService gameDataRetrieveDataAccessService)
+        public NodeDataTransferWorker(IServerDataAccessService serverDataAccessService, IUserDataAccessService userDataAccessService, IGameSessions gameSessions, IGameDataRetrieveDataAccessService gameDataRetrieveDataAccessService)
         {
             this.serverDataAccessService = serverDataAccessService;
             this.userDataAccessService = userDataAccessService;
+            this.gameSessions = gameSessions;
             this.gameDataRetrieveDataAccessService = gameDataRetrieveDataAccessService;
             this.Name = "NodeDataTransferWorker";
         }
@@ -55,7 +57,10 @@
         private void PerformBackgroundPersisting(string[] servers)
         {
             this.IncrementTick();
-
+            foreach (var gamesKey in this.gameSessions.Games.Keys)
+            {
+                this.gameSessions.FreezeUserGame(gamesKey, "127.0.0.1");
+            }
             //_serverDataAccessService.UpdateServers(newServersList);
         }
 

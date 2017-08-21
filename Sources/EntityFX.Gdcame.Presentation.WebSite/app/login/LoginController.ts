@@ -3,7 +3,7 @@
 namespace Gdcame.Controllers {
     import AuthData = Services.AuthData;
     import LocationService = angular.ILocationService;
-    import AuthenticateService = Services.IAuthenticateService;
+    import AuthenticateService = Services.IAuthenticateDataService;
     import AuthToken = Services.AuthToken;
 
     class LoginController extends Controllers.ControllerBase {

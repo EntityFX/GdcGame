@@ -15,3 +15,4 @@
 EntityFx.EconomicsArcade.TestApplication.v12.suo
 *.userprefs
 *.dbmdl
+/Sources/.idea
