@@ -7,6 +7,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef.MainServer
     using EntityFX.Gdcame.Infrastructure.Repository.UnitOfWork;
 
     using Newtonsoft.Json;
+    using System;
 
     public class UserGameSnapshotRepository : IUserGameSnapshotRepository
     {
@@ -28,6 +29,11 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef.MainServer
                 if (entity == null) return null;
                 return Deserialize(entity.Data);
             }
+        }
+
+        public StoredGameDataWithUserId[] FindChunked(GetGameSnapshotsByOffsetCriterion criterion)
+        {
+            throw new NotImplementedException();
         }
 
         public void CreateUserGames(StoredGameDataWithUserId[] listOfGameDataWithUserId)

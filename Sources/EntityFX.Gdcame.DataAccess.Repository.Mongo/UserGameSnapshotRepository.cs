@@ -7,6 +7,9 @@
     using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer.Criterions.UserGameSnapshot;
 
     using MongoDB.Driver;
+    using System.Collections.Generic;
+    using System;
+    using MongoDB.Bson;
 
     public class UserGameSnapshotRepository : IUserGameSnapshotRepository
     {
@@ -26,6 +29,15 @@
             var filter = Builders<StoredGameDataWithUserId>.Filter.Eq("UserId", criterion.UserId);
             var result = storedGameDataWithUserId.Find(filter).ToList().FirstOrDefault();
             return result  == null ? null : result.StoredGameData;
+        }
+
+        public StoredGameDataWithUserId[] FindChunked(GetGameSnapshotsByOffsetCriterion offsetCriterion)
+        {
+            IMongoCollection<StoredGameDataWithUserId> storedGamesData = this.Database.GetCollection<StoredGameDataWithUserId>("StoredGameDataWithUserId");
+            var filter = Builders<StoredGameDataWithUserId>.Filter
+                .Nin(x => x.UserId, offsetCriterion.UserIds.Select(l => l));
+            var result = storedGamesData.Find(filter).Skip(offsetCriterion.Offset).Limit(offsetCriterion.Size).ToList().ToArray();
+            return result == null ? null : result;
         }
 
         public void CreateUserGames(StoredGameDataWithUserId[] gameDataWithUserId)

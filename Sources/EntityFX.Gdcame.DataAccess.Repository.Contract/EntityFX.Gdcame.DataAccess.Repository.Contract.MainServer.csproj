@@ -60,6 +60,10 @@
       <Project>{0932D8B3-29EB-4546-987A-B246421A9B87}</Project>
       <Name>EntityFX.Gdcame.DataAccess.Contract.MainServer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Repository.Contract.Common\EntityFX.Gdcame.DataAccess.Repository.Contract.Common.csproj">
+      <Project>{501D71D8-AE40-46D8-87F8-DF6C60371ADD}</Project>
+      <Name>EntityFX.Gdcame.DataAccess.Repository.Contract.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Repository\EntityFX.Gdcame.Infrastructure.Repository.csproj">
       <Project>{95745C95-A356-4E4A-9AC5-25ABD9659831}</Project>
       <Name>EntityFX.Gdcame.Infrastructure.Repository</Name>
@@ -75,6 +79,7 @@
     <Compile Include="Criterions\UserCustomRuleInfo\GetUserCustomRuleInfoByUserIdCriterion.cs" />
     <Compile Include="Criterions\UserFundsDriver\GetUserFundsDriverByUserIdCriterion.cs" />
     <Compile Include="Criterions\UserGameCounter\GetUserGameCounterByIdCriterion.cs" />
+    <Compile Include="Criterions\UserGameSnapshot\GetGameSnapshotsByOffsetCriterion.cs" />
     <Compile Include="Criterions\UserGameSnapshot\GetUserGameSnapshotByIdCriterion.cs" />
     <Compile Include="ICountersRepository.cs" />
     <Compile Include="ICustomRuleRepository.cs" />

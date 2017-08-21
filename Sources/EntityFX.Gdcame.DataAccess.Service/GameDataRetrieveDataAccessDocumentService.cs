@@ -87,6 +87,23 @@ namespace EntityFX.Gdcame.DataAccess.Service.MainServer
                        };
         }
 
+        public StoredGameDataWithUserId[] GetStoredGameData(string[] userIds)
+        {
+            StoredGameDataWithUserId[] result = new StoredGameDataWithUserId[] { };
+            int offset=0;
+            int size = 100;
+            while (true)
+            {
+                GetGameSnapshotsByOffsetCriterion criterion = new GetGameSnapshotsByOffsetCriterion(offset, size, userIds);
+                var userGameData = this._userGameSnapshotRepository.FindChunked(criterion);
+                offset += size;
+                if (userGameData.Length == 0) break;
+
+                result = result.Concat(userGameData).ToArray();
+            }
+            return result;
+        }
+
         public RatingStatistics[] GetUserRatings()
         {
             return new RatingStatistics[0];

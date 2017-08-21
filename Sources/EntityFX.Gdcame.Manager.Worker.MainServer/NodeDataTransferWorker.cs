@@ -7,6 +7,7 @@
     using EntityFX.Gdcame.DataAccess.Contract.Common.Server;
     using EntityFX.Gdcame.DataAccess.Contract.Common.User;
     using EntityFX.Gdcame.Manager.Contract.Common.WorkerManager;
+    using DataAccess.Contract.MainServer.GameData;
 
     public class NodeDataTransferWorker : WorkerBase
     {
@@ -14,17 +15,25 @@
 
         private readonly IUserDataAccessService userDataAccessService;
 
+        private readonly IGameDataRetrieveDataAccessService gameDataRetrieveDataAccessService;
+
         /// <summary>
         /// The _data transfer task.
         /// </summary>
         private Task _dataTransferTask;
         private readonly CancellationTokenSource cancellationTaskToken = new CancellationTokenSource();
 
-        public NodeDataTransferWorker(IServerDataAccessService serverDataAccessService, IUserDataAccessService userDataAccessService)
+        public NodeDataTransferWorker(IServerDataAccessService serverDataAccessService, IUserDataAccessService userDataAccessService, IGameDataRetrieveDataAccessService gameDataRetrieveDataAccessService)
         {
             this.serverDataAccessService = serverDataAccessService;
             this.userDataAccessService = userDataAccessService;
+            this.gameDataRetrieveDataAccessService = gameDataRetrieveDataAccessService;
             this.Name = "NodeDataTransferWorker";
+        }
+
+        public void TransferDataOnServer(string[] servers, string[] userIds)
+        {
+            var userSavedData = this.gameDataRetrieveDataAccessService.GetStoredGameData(userIds);
         }
 
         public override void Run<TData>(TData data = default(TData))

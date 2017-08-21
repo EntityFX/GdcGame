@@ -7,5 +7,6 @@
     {
         StoredGameData FindByUserId(GetUserGameSnapshotByIdCriterion criterion);
         void CreateOrUpdateUserGames(StoredGameDataWithUserId[] gameDataWithUserId);
+        StoredGameDataWithUserId[] FindChunked(GetGameSnapshotsByOffsetCriterion criterion);
     }
 }

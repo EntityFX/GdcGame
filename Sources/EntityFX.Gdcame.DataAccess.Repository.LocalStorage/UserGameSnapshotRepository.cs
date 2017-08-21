@@ -7,6 +7,7 @@
     using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer.Criterions.UserGameSnapshot;
 
     using Newtonsoft.Json;
+    using System;
 
     public class UserGameSnapshotRepository : IUserGameSnapshotRepository
     {
@@ -31,6 +32,11 @@
                 serializer.TypeNameHandling = TypeNameHandling.Auto;
                 return (StoredGameData)serializer.Deserialize(file, typeof(StoredGameData));
             }
+        }
+
+        public StoredGameDataWithUserId[] FindChunked(GetGameSnapshotsByOffsetCriterion criterion)
+        {
+            throw new NotImplementedException();
         }
 
         public void CreateUserGames(StoredGameDataWithUserId[] listOfGameDataWithUserId)
