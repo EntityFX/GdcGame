@@ -274,9 +274,8 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             var gr = new GameRunner(loginContext.Item2, loginContext.Item1, gameClient);
             var adminManagerClient = ApiHelper.GetAdminClient(loginContext.Item1);
 
-            var gameData = gr.GetGameData();
             var rc = ApiHelper.GetRatingClient(new PasswordOAuthContext() { BaseUri = new Uri(string.Format("{0}:{1}", ratingServer, ratingServerPort)) });
-            gr.DisplayGameData(gameData);
+            gr.Invalidate();
             ConsoleKeyInfo keyInfo;
             while ((keyInfo = Console.ReadKey(true)).Key != ConsoleKey.Escape)
             {
@@ -300,7 +299,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                     }
                     else if (keyInfo.Key == ConsoleKey.F5)
                     {
-                        gr.DisplayGameData(gr.GetGameData());
+                        gr.Invalidate();
                     }
                     else if (keyInfo.Key == ConsoleKey.F2)
                     {
@@ -581,7 +580,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 
             public void Invalidate()
             {
-                DoActionAndDisplayGameData(() => DisplayGameData(GetGameData()));
+                DoActionAndDisplayGameData(() => {});
             }
 
             private void DoActionAndDisplayGameData(Action gameAction)

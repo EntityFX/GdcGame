@@ -2,7 +2,7 @@
 }
 
 declare namespace Gdcame.Services {
-    import HttpPromise = angular.IHttpPromise;
+    import Promise = angular.IPromise;
 
     export class AuthData {
         login: string;
@@ -18,20 +18,29 @@ declare namespace Gdcame.Services {
         access_token: string;
     }
 
-    export interface IAuthenticateService {
-        login(authData: AuthData): HttpPromise<AuthToken>;
-        logout(): HttpPromise<any>;
+    export interface IAuthenticateApiService {
+        login(authData: AuthData): angular.IHttpPromise<AuthToken>;
+        logout(): angular.IHttpPromise<any>;
+    }
+
+    export interface IAuthenticateDataService {
+        login(authData: AuthData): angular.IPromise<AuthToken>;
+        logout(): angular.IPromise<any>;
     }
 
     export interface ISessionService {
         getLogin(): string;
     }
 
-    export interface IRegisterDataService {
-        register(user: RegisterData): HttpPromise<any>;
+    export interface IRegisterApiService {
+        register(user: RegisterData): angular.IHttpPromise<any>;
     }
 
-    export interface IUserApiService extends IAuthenticateService, IRegisterDataService {
+    export interface IRegisterDataService {
+        register(user: RegisterData): angular.IPromise<any>;
+    }
+
+    export interface IUserApiService extends IAuthenticateApiService, IRegisterApiService {
     }
 
     export class AuthRequestTokenData {
@@ -46,12 +55,12 @@ declare namespace Gdcame.Services {
     }
 
     export interface IGameApiService {
-        getGameData(): HttpPromise<GameData>;
-        getCounters(): HttpPromise<Cash>;
-        performManualStep(verificationNumber: number): HttpPromise<ManualStepResult>;
-        buyFundDriver(fundDriverId: number): HttpPromise<BuyItem>;
-        fightAgainstInflation(): HttpPromise<Cash>;
-        activateDelayedCounter(counterId: number): HttpPromise<Cash>;
+        getGameData(): angular.IHttpPromise<GameData>;
+        getCounters(): angular.IHttpPromise<Cash>;
+        performManualStep(verificationNumber: number): angular.IHttpPromise<ManualStepResult>;
+        buyFundDriver(fundDriverId: number): angular.IHttpPromise<BuyItem>;
+        fightAgainstInflation(): angular.IHttpPromise<Cash>;
+        activateDelayedCounter(counterId: number): angular.IHttpPromise<Cash>;
     }
 
     export class CounterBase {
@@ -112,8 +121,8 @@ declare namespace Gdcame.Services {
     }
 
     export interface IAdminApiService {
-        getStatistics(serverAddress: string): HttpPromise<ServerStatisticsInfo>;
-        getActiveSessions(serverAddress: string): HttpPromise<Array<UserSessions>>;
+        getStatistics(serverAddress: string): angular.IHttpPromise<ServerStatisticsInfo>;
+        getActiveSessions(serverAddress: string): angular.IHttpPromise<Array<UserSessions>>;
     }
 
     export class ServerStatisticsInfo {

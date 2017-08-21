@@ -10,6 +10,8 @@ using RestSharp.Authenticators;
 
 namespace EntityFX.Gdcame.Infrastructure.Api
 {
+    using EntityFX.Gdcame.Infrastructure.Api.Exceptions;
+
     public abstract class ApiClientBase
     {
         private readonly IAuthContext<IAuthenticator> _authContext;
@@ -62,25 +64,29 @@ namespace EntityFX.Gdcame.Infrastructure.Api
             client.AddHandler("text/javascript", CustomJsonDeserializer.Default);
             client.Authenticator = AuthContext.Context;
             //client.IgnoreResponseStatusCode = true;
+            IRestResponse<TModel> res = null;
             try
             {
-                var res = await client.ExecuteTaskAsync<TModel>(request);
-                if (
-                    new HttpStatusCode[]
-                    {
-                        HttpStatusCode.BadRequest, HttpStatusCode.Forbidden, HttpStatusCode.Unauthorized, HttpStatusCode.BadGateway, HttpStatusCode.InternalServerError, HttpStatusCode.NotFound, 
-
-                    }.Contains(res.StatusCode) || res.ResponseStatus == ResponseStatus.Error)
-                {
-                    ExceptionHandlerHelper.HandleNotSuccessRequest(res);
-                }
-                return res;
+                res = await client.ExecuteTaskAsync<TModel>(request);
             }
             catch (Exception exception)
             {
                 ExceptionHandlerHelper.HandleHttpRequestException(exception);
             }
-            return null;
+
+            if (
+                new HttpStatusCode[]
+                {
+                        HttpStatusCode.BadRequest, HttpStatusCode.Forbidden, HttpStatusCode.Unauthorized, HttpStatusCode.BadGateway, HttpStatusCode.InternalServerError, HttpStatusCode.NotFound,   HttpStatusCode.MovedPermanently
+
+                }.Contains(res.StatusCode) || res.ResponseStatus == ResponseStatus.Error)
+            {
+                ExceptionHandlerHelper.HandleNotSuccessRequest(res);
+            }
+
+
+
+            return res;
 
         }
 

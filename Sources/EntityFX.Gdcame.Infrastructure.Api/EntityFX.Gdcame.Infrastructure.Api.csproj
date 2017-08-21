@@ -63,8 +63,16 @@
     <Compile Include="CustomJsonDeserializer.cs" />
     <Compile Include="ExceptionHandlerHelper.cs" />
     <Compile Include="Exceptions\ClientException.cs" />
+    <Compile Include="Exceptions\ErrorData.cs" />
+    <Compile Include="Exceptions\GameFrozenErrorData.cs" />
+    <Compile Include="Exceptions\IClientException.cs" />
+    <Compile Include="Exceptions\InvalidSessionErrorData.cs" />
     <Compile Include="Exceptions\InvalidSessionException.cs" />
     <Compile Include="Exceptions\NoConnectionException.cs" />
+    <Compile Include="Exceptions\NoServerConnectionData.cs" />
+    <Compile Include="Exceptions\ServerErrorData.cs" />
+    <Compile Include="Exceptions\ValidationErrorData.cs" />
+    <Compile Include="Exceptions\WrongAuthData.cs" />
     <Compile Include="Exceptions\WrongAuthException.cs" />
     <Compile Include="GameClientFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

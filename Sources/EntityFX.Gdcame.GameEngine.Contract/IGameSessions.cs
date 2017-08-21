@@ -26,6 +26,8 @@
 
         void RemoveGame(UserData user);
 
+        void FreezeUserGame(string username, string server);
+
         IDictionary<string, IGame> Games { get; }
     }
 }

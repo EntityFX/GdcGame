@@ -1,5 +1,9 @@
 ﻿namespace Gdcame.Controllers {
-    export abstract class ControllerBase {
+    import Controller = angular.IController;
+
+    export abstract class ControllerBase implements Controller {
+        public $onInit(): void { }
+
         public showMessage(type: any, message: String): void {
             alert(message);
         }

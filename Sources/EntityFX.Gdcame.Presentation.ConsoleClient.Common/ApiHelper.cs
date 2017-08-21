@@ -148,8 +148,16 @@ namespace EntityFX.Gdcame.Presentation.ConsoleClient.Common
                 if (noConnectionException != null)
                 {
                     errorCodes = ErrorCodes.ConnectionError;
-                    errorData += string.Format("Uri: {0}", noConnectionException.Uri);
+                    errorData += string.Format(" Uri: {0}", noConnectionException.Uri);
                     errorData += noConnectionException.Message;
+                }
+
+                var gameFrozenException = exception.ErrorData as GameFrozenErrorData;
+                if (gameFrozenException != null)
+                {
+                    errorCodes = ErrorCodes.OtherError;
+                    errorData += string.Format(" Frozen. Try from server: {0}", gameFrozenException.Server);
+                    errorData += gameFrozenException.Message;
                 }
             }
             return Tuple.Create(errorCodes, errorData);

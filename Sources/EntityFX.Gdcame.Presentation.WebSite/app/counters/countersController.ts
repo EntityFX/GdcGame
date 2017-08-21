@@ -5,7 +5,7 @@ namespace Gdcame.Controllers {
     import Cash = Services.Cash;
 
     export class CountersController extends Controllers.ControllerBase {
-        public cash: Cash; 
+        public cash: Cash;
     }
 
     angular.module("gdCameApp").controller("CountersController", CountersController);
