@@ -56,6 +56,10 @@
       <Project>{3b44afc0-f207-44e4-9f91-7f24e1f4d342}</Project>
       <Name>EntityFX.Gdcame.Common.Application.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Contract.MainServer\EntityFX.Gdcame.Contract.MainServer.csproj">
+      <Project>{05B804CB-DA17-4449-88FB-C2DEF96486A7}</Project>
+      <Name>EntityFX.Gdcame.Contract.MainServer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Presentation.Web.Model\EntityFX.Gdcame.Application.Contract.Model.MainServer.csproj">
       <Project>{0f9c056a-db5d-48ed-a688-bfd04ed4dfd7}</Project>
       <Name>EntityFX.Gdcame.Application.Contract.Model.MainServer</Name>
@@ -64,6 +68,7 @@
   <ItemGroup>
     <Compile Include="IAccountController.cs" />
     <Compile Include="IAdminController.cs" />
+    <Compile Include="IDataTransferController.cs" />
     <Compile Include="IGameApiController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -2,8 +2,8 @@
 {
     using System.Linq;
 
-    using EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData.Store;
     using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer;
+    using EntityFX.Gdcame.Contract.MainServer.Store;
     using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer.Criterions.UserGameSnapshot;
 
     using MongoDB.Driver;

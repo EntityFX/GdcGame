@@ -64,16 +64,6 @@
   <ItemGroup>
     <Compile Include="GameData\IGameDataRetrieveDataAccessService.cs" />
     <Compile Include="GameData\IGameDataStoreDataAccessService.cs" />
-    <Compile Include="GameData\Store\StoredCounterBase.cs" />
-    <Compile Include="GameData\Store\StoredCustomRuleInfo.cs" />
-    <Compile Include="GameData\Store\StoredDelayedCounter.cs" />
-    <Compile Include="GameData\Store\StoredCash.cs" />
-    <Compile Include="GameData\Store\StoredGameDataWithUserId.cs" />
-    <Compile Include="GameData\Store\StoredItem.cs" />
-    <Compile Include="GameData\Store\StoredGameData.cs" />
-    <Compile Include="GameData\Store\StoredGenericCounter.cs" />
-    <Compile Include="GameData\Store\StoredIncrementor.cs" />
-    <Compile Include="GameData\Store\StoredSingleCounter.cs" />
     <Compile Include="Rating\ILocalNodeRatingDataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

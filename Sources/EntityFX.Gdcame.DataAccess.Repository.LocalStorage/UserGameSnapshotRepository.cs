@@ -2,9 +2,9 @@
 {
     using System.IO;
 
-    using EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData.Store;
     using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer;
     using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer.Criterions.UserGameSnapshot;
+    using EntityFX.Gdcame.Contract.MainServer.Store;
 
     using Newtonsoft.Json;
     using System;

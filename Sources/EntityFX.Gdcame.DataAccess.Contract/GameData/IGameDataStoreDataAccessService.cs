@@ -1,8 +1,8 @@
 ﻿namespace EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData
 {
     using System.ServiceModel;
+    using EntityFX.Gdcame.Contract.MainServer.Store;
 
-    using EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData.Store;
 
     [ServiceContract]
     public interface IGameDataStoreDataAccessService

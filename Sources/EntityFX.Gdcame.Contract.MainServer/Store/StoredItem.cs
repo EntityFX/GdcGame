@@ -1,4 +1,4 @@
-﻿namespace EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData.Store
+﻿namespace EntityFX.Gdcame.Contract.MainServer.Store
 {
     using System.Collections.Generic;
 

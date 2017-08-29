@@ -7,10 +7,10 @@ namespace EntityFX.Gdcame.Engine.GameEngine.NetworkGameEngine
     using System.Linq;
 
     using EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData;
-    using EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData.Store;
     using EntityFX.Gdcame.Engine.Contract.GameEngine;
     using EntityFX.Gdcame.Infrastructure.Common;
     using EntityFX.Gdcame.Kernel.Contract;
+    using EntityFX.Gdcame.Contract.MainServer.Store;
 
     public class GameDataPersister : IGameDataPersister
     {

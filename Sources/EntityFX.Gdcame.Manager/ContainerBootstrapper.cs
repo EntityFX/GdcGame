@@ -1,4 +1,5 @@
-﻿using EntityFX.Gdcame.Infrastructure.Common;
+﻿using EntityFX.Gdcame.Contract.MainServer.Store;
+using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager.Common;
 using EntityFX.Gdcame.Manager.Contract.Common.RatingManager;
 using EntityFX.Gdcame.Manager.Contract.Common.ServerManager;
@@ -17,7 +18,6 @@ namespace EntityFX.Gdcame.Manager.MainServer
     using EntityFX.Gdcame.Contract.MainServer;
     using EntityFX.Gdcame.Contract.MainServer.Counters;
     using EntityFX.Gdcame.Contract.MainServer.Incrementors;
-    using EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData.Store;
     using EntityFX.Gdcame.Engine.Contract.GameEngine;
     using EntityFX.Gdcame.Engine.GameEngine;
     using EntityFX.Gdcame.Engine.GameEngine.Mappers;

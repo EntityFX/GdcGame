@@ -6,10 +6,10 @@ namespace EntityFX.Gdcame.DataAccess.Service.MainServer
     using EntityFX.Gdcame.Contract.MainServer;
     using EntityFX.Gdcame.Contract.MainServer.Counters;
     using EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData;
-    using EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData.Store;
     using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer;
     using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer.Criterions.UserGameSnapshot;
     using EntityFX.Gdcame.Infrastructure.Common;
+    using EntityFX.Gdcame.Contract.MainServer.Store;
 
     public class GameDataRetrieveDataAccessDocumentService : GameDataRetrieveDataAccessBase,
                                                              IGameDataRetrieveDataAccessService

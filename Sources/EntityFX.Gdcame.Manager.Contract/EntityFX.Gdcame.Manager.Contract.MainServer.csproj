@@ -52,6 +52,7 @@
     <Compile Include="AdminManager\MainServerStatisticsInfo.cs" />
     <Compile Include="AdminManager\UserSessionsInfo.cs" />
     <Compile Include="CustomPrincipalPermissionAttribute.cs" />
+    <Compile Include="DataTransferManager\IDataTransferManager.cs" />
     <Compile Include="GameManager\BuyFundDriverResult.cs" />
     <Compile Include="GameManager\IGameManager.cs" />
     <Compile Include="GameManager\VerificationManualStepData.cs" />

@@ -4,7 +4,7 @@
 
     using EntityFX.Gdcame.Contract.Common.UserRating;
     using EntityFX.Gdcame.Contract.MainServer;
-    using Store;
+    using EntityFX.Gdcame.Contract.MainServer.Store;
 
     [ServiceContract]
     public interface IGameDataRetrieveDataAccessService

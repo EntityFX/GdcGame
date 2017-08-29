@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="AccountController.cs" />
     <Compile Include="AdminController.cs" />
+    <Compile Include="DataTransferController.cs" />
     <Compile Include="GameApiController.cs" />
     <Compile Include="LocalRatingController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -73,6 +74,10 @@
     <ProjectReference Include="..\EntityFX.Gdcame.Application.Rating.Controller\EntityFX.Gdcame.Application.Api.Common.csproj">
       <Project>{E1C99406-19E6-4D12-A7FB-ED5818DAE973}</Project>
       <Name>EntityFX.Gdcame.Application.Api.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Contract.MainServer\EntityFX.Gdcame.Contract.MainServer.csproj">
+      <Project>{05B804CB-DA17-4449-88FB-C2DEF96486A7}</Project>
+      <Name>EntityFX.Gdcame.Contract.MainServer</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Common\EntityFX.Gdcame.Infrastructure.Common.csproj">
       <Project>{924CC67D-9E2B-46BA-BE1D-6C6C780CCFBC}</Project>

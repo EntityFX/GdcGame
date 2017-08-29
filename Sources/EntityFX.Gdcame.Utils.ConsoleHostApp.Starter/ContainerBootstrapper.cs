@@ -9,6 +9,7 @@ using EntityFX.Gdcame.Application.Contract.Controller.MainServer;
 using EntityFX.Gdcame.Application.Contract.Model.MainServer;
 using EntityFX.Gdcame.Application.Providers.MainServer;
 using EntityFX.Gdcame.Common.Application.Model;
+using EntityFX.Gdcame.Contract.MainServer.Store;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager.Contract.Common;
 using EntityFX.Gdcame.Manager.Contract.MainServer.AdminManager;
@@ -37,7 +38,6 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
     using EntityFX.Gdcame.Contract.MainServer.Counters;
     using EntityFX.Gdcame.Contract.MainServer.Statistics;
     using EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData;
-    using EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData.Store;
     using EntityFX.Gdcame.DataAccess.Service.MainServer;
     using EntityFX.Gdcame.Engine.Contract.GameEngine;
     using EntityFX.Gdcame.Engine.GameEngine;

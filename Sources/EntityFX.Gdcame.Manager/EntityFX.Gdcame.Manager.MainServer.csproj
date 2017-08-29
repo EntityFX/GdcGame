@@ -106,9 +106,11 @@
   <ItemGroup>
     <Compile Include="AdminManager.cs" />
     <Compile Include="ContainerBootstrapper.cs" />
+    <Compile Include="DataTransferManager.cs" />
     <Compile Include="GameManager.cs" />
     <Compile Include="Mappers\CounterContractMapper.cs" />
     <Compile Include="Mappers\CustomRuleInfoContractMapper.cs" />
+    <Compile Include="Mappers\DataTransferContractMapper.cs" />
     <Compile Include="Mappers\FundsCountersContractMapper.cs" />
     <Compile Include="Mappers\FundsDriverContractMapper.cs" />
     <Compile Include="Mappers\GameDataContractMapper.cs" />

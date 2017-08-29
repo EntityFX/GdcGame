@@ -47,6 +47,8 @@
     <Compile Include="Counters\GenericCounter.cs" />
     <Compile Include="Counters\SingleCounter.cs" />
     <Compile Include="GameData.cs" />
+    <Compile Include="GameDataTransfer\DataTransfer.cs" />
+    <Compile Include="GameDataTransfer\UserDataTransfer.cs" />
     <Compile Include="Incrementors\Incrementor.cs" />
     <Compile Include="Incrementors\IncrementorTypeEnum.cs" />
     <Compile Include="Items\CustomRule.cs" />
@@ -54,6 +56,16 @@
     <Compile Include="Items\Item.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Statistics\GamePerformanceInfo.cs" />
+    <Compile Include="Store\StoredCash.cs" />
+    <Compile Include="Store\StoredCounterBase.cs" />
+    <Compile Include="Store\StoredCustomRuleInfo.cs" />
+    <Compile Include="Store\StoredDelayedCounter.cs" />
+    <Compile Include="Store\StoredGameData.cs" />
+    <Compile Include="Store\StoredGameDataWithUserId.cs" />
+    <Compile Include="Store\StoredGenericCounter.cs" />
+    <Compile Include="Store\StoredIncrementor.cs" />
+    <Compile Include="Store\StoredItem.cs" />
+    <Compile Include="Store\StoredSingleCounter.cs" />
     <Compile Include="UserGameSessionStatus.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

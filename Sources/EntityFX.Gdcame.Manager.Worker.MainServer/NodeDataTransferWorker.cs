@@ -8,12 +8,12 @@
     using EntityFX.Gdcame.DataAccess.Contract.Common.User;
     using EntityFX.Gdcame.Engine.Contract.GameEngine;
     using EntityFX.Gdcame.Manager.Contract.Common.WorkerManager;
+    using EntityFX.Gdcame.Contract.MainServer.Store;
     using DataAccess.Contract.MainServer.GameData;
     using System.Linq;
     using Infrastructure.Common;
     using System.Collections.Generic;
     using Kernel.Contract;
-    using DataAccess.Contract.MainServer.GameData.Store;
 
     public class NodeDataTransferWorker : WorkerBase
     {

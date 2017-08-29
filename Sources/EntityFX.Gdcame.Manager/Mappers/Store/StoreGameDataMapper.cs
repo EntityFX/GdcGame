@@ -1,8 +1,8 @@
-﻿using EntityFX.Gdcame.Infrastructure.Common;
+﻿using EntityFX.Gdcame.Contract.MainServer.Store;
+using EntityFX.Gdcame.Infrastructure.Common;
 
 namespace EntityFX.Gdcame.Manager.MainServer.Mappers.Store
 {
-    using EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData.Store;
     using EntityFX.Gdcame.Engine.Contract.GameEngine;
 
     using EntityFX.Gdcame.Kernel.Contract;
