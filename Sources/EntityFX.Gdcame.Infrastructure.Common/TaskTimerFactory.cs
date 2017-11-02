@@ -1,23 +1,22 @@
 ﻿using System;
-using Microsoft.Practices.Unity;
 
 namespace EntityFX.Gdcame.Infrastructure.Common
 {
     public class TaskTimerFactory : ITaskTimerFactory
     {
-        private readonly IUnityContainer _unityContainer;
+        private readonly IIocContainer _unityContainer;
 
-        public TaskTimerFactory(IUnityContainer unityContainer)
+        public TaskTimerFactory(IIocContainer unityContainer)
         {
             _unityContainer = unityContainer;
         }
 
         public ITaskTimer Build(TimeSpan interval, Action tick, bool runOnce = false)
         {
-            return _unityContainer.Resolve<ITaskTimer>(
-                new ParameterOverride("interval", interval), 
-                new ParameterOverride("tick", tick), 
-                new ParameterOverride("runOnce", runOnce));
+            return _unityContainer.Resolve<ITaskTimer>(null,
+                new Tuple<string, object>("interval", interval), 
+                new Tuple<string, object>("tick", tick), 
+                new Tuple<string, object>("runOnce", runOnce));
         }
     }
 }

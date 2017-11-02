@@ -9,30 +9,20 @@
     using EntityFX.Gdcame.DataAccess.Service.Common;
     using EntityFX.Gdcame.Infrastructure.Common;
 
-    using Microsoft.Practices.Unity;
-    using Microsoft.Practices.Unity.InterceptionExtension;
-
     public class ContainerBootstrapper : IContainerBootstrapper
     {
-        public IUnityContainer Configure(IUnityContainer container)
+        public IIocContainer Configure(IIocContainer container)
         {
 
-            container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessDocumentService>(
-                new InterceptionBehavior<PolicyInjectionBehavior>()
-                , new Interceptor<InterfaceInterceptor>()
-                );
-            container.RegisterType<IGameDataStoreDataAccessService, GameDataStoreDataAccessDocumentService>(
-                new InterceptionBehavior<PolicyInjectionBehavior>()
-                , new Interceptor<InterfaceInterceptor>()
-                );
-            container.RegisterType<GameRepositoryFacade>(new InjectionFactory(
-                _ => new GameRepositoryFacade
+            container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessDocumentService>();
+            container.RegisterType<IGameDataStoreDataAccessService, GameDataStoreDataAccessDocumentService>();
+            container.RegisterType<GameRepositoryFacade>(
+                () => new GameRepositoryFacade
                 {
                     CountersRepository = container.Resolve<ICountersRepository>(),
                     CustomRuleRepository = container.Resolve<ICustomRuleRepository>(),
                     FundsDriverRepository = container.Resolve<IItemRepository>()
                 }
-                )
                 );
 
             container.RegisterType<IRatingDataAccess, LocalNodeRatingDataAccess>();

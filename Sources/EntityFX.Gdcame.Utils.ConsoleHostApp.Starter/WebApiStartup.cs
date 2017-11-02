@@ -7,6 +7,7 @@ using System.Web.Cors;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using EntityFX.Gdcame.Application.Api.Common.Providers;
+using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Utils.Common;
 using EntityFX.Gdcame.Utils.MainServer;
 using Microsoft.Owin;
@@ -23,13 +24,13 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
 {
     public class WebApiStartup
     {
-        private readonly IUnityContainer _unityContainer;
+        private readonly IIocContainer _unityContainer;
         private readonly AppConfiguration _appConfiguration;
         public static OAuthAuthorizationServerOptions OAuthOptions { get; private set; }
 
         public static string PublicClientId { get; private set; }
 
-        public WebApiStartup(IUnityContainer unityContainer, AppConfiguration appConfiguration)
+        public WebApiStartup(IIocContainer unityContainer, AppConfiguration appConfiguration)
         {
             _unityContainer = unityContainer;
             _appConfiguration = appConfiguration;
@@ -63,7 +64,8 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
                 appBuilder.UseAesDataProtectorProvider();
             }
             var config = new HttpConfiguration();
-            config.DependencyResolver = new UnityDependencyResolver(_unityContainer);
+            config.DependencyResolver = new Common.UnityDependencyResolver((_unityContainer as IIocContainer<IUnityContainer>).Container);
+            //config.DependencyResolver = new Unity.WebApi.UnityDependencyResolver((_unityContainer as IIocContainer<IUnityContainer>).Container);
             config.Filters.Add(_unityContainer.Resolve<SessionExceptionHandlerFilterAttribute>());
             config.Filters.Add(new ValidateModelAttribute());
 

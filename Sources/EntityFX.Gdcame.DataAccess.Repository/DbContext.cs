@@ -12,6 +12,11 @@
 
         public virtual DbSet<UserGameDataSnapshotEntity> UserGameDataSnapshot { get; set; }
 
+        public DbContext(string connectionString)
+: base(connectionString)
+        {
+        }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

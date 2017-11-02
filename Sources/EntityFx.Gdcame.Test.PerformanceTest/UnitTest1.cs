@@ -5,6 +5,7 @@ using System.Linq;
 
 using EntityFX.Gdcame.DataAccess.Service;
 using EntityFX.Gdcame.Infrastructure.Common;
+using EntityFX.Gdcame.Infrastructure.Platform;
 using EntityFX.Gdcame.Manager;
 using EntityFX.Gdcame.Manager.Contract.MainServer.AdminManager;
 using EntityFX.Gdcame.Manager.Contract.MainServer.GameManager;
@@ -39,15 +40,14 @@ namespace EntityFx.Gdcame.Test.Unit
     [TestClass]
     public class UnitTest1 : IDisposable
     {
-        private readonly IUnityContainer container = new UnityContainer();
+        private readonly IIocContainer container = new UnityIocContainer(new UnityContainer());
 
         [TestInitialize]
         public void TestInitialize()
         {
-            this.container.RegisterType<ILogger>(new InjectionFactory(
-                _ => new Logger(new NLoggerAdapter(new NLogLogExFactory().GetLogger("logger")))));
+            this.container.RegisterType<ILogger>(() => new Logger(new NLoggerAdapter(new NLogLogExFactory().GetLogger("logger"))));
 
-            this.container.RegisterInstance<IOperationContextHelper>(new FakeOperationContextHelper());
+            this.container.RegisterType<IOperationContextHelper>(() => new FakeOperationContextHelper(), ContainerScope.Singleton);
             var managerBootstrapper = new ContainerBootstrapper();
             managerBootstrapper.Configure(this.container);
 
@@ -61,21 +61,16 @@ namespace EntityFx.Gdcame.Test.Unit
 
             this.container.RegisterType<IGameFactory, GameFactory>();
 
-            this.container.RegisterType<IGameDataPersister, GameDataPersister>(
-                new InjectionConstructor(
-                    new ResolvedParameter<IGameDataStoreDataAccessService>(),
-                    new ResolvedParameter<IMapperFactory>()
-                    )
-                );
+            this.container.RegisterType<IGameDataPersister, GameDataPersister>();
 
             this.container.RegisterType<IGameDataPersisterFactory, GameDataPersisterFactory>();
 
             this.container.RegisterType<IHashHelper, HashHelper>();
 
-            this.container.RegisterInstance(new GamePerformanceInfo());
+            this.container.RegisterType(() => new GamePerformanceInfo(), ContainerScope.Singleton);
 
-            this.container.RegisterInstance(
-                new GameSessions(this.container.Resolve<ILogger>(), this.container.Resolve<IGameFactory>(), this.container.Resolve<GamePerformanceInfo>()));
+            this.container.RegisterType( () => 
+                new GameSessions(this.container.Resolve<ILogger>(), this.container.Resolve<IGameFactory>(), this.container.Resolve<GamePerformanceInfo>()), ContainerScope.Singleton);
 
             var workers = new List<IWorker>();
             workers.Add(this.container.Resolve<CalculationWorker>());
@@ -92,19 +87,9 @@ namespace EntityFx.Gdcame.Test.Unit
 
             this.container.RegisterType<INotifyConsumerService, FakeNotifyConsumerService>();
 
-            this.container.RegisterType<IGameDataChangesNotifier, GameDataChangesNotifier>(
-                new InjectionConstructor(
-                    new ResolvedParameter<int>(),
-                    new ResolvedParameter<string>(),
-                    new ResolvedParameter<IGameDataStoreDataAccessService>(),
-                    new ResolvedParameter<IMapperFactory>(),
-                    new ResolvedParameter<INotifyConsumerClientFactory>()
-                    )
-                );
+            this.container.RegisterType<IGameDataChangesNotifier, GameDataChangesNotifier>();
 
-            this.container.RegisterType<INotifyConsumerClientFactory, NotifyConsumerClientFactory>(new InjectionConstructor(
-                new ResolvedParameter<IUnityContainer>(),
-                string.Empty));
+            this.container.RegisterType<INotifyConsumerClientFactory, NotifyConsumerClientFactory>(() => new NotifyConsumerClientFactory(container, string.Empty));
         }
 
         [TestMethod]

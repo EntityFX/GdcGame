@@ -3,11 +3,9 @@
     using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer;
     using EntityFX.Gdcame.Infrastructure.Common;
 
-    using Microsoft.Practices.Unity;
-
     public class ContainerBootstrapper : IContainerBootstrapper
     {
-        public IUnityContainer Configure(IUnityContainer container)
+        public IIocContainer Configure(IIocContainer container)
         {
             container.RegisterType<IItemRepository, ItemRepository>();
             container.RegisterType<ICountersRepository, CountersRepository>();

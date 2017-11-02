@@ -200,6 +200,10 @@
       <Project>{924CC67D-9E2B-46BA-BE1D-6C6C780CCFBC}</Project>
       <Name>EntityFX.Gdcame.Infrastructure.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Platform\EntityFX.Gdcame.Infrastructure.Platform.csproj">
+      <Project>{F83FB9B3-ADA1-436E-8DCA-CDEA2A2F3E4B}</Project>
+      <Name>EntityFX.Gdcame.Infrastructure.Platform</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Repository\EntityFX.Gdcame.Infrastructure.Repository.csproj">
       <Project>{95745c95-a356-4e4a-9ac5-25abd9659831}</Project>
       <Name>EntityFX.Gdcame.Infrastructure.Repository</Name>

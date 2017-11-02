@@ -1,3 +1,5 @@
+using EntityFX.Gdcame.Infrastructure.Platform;
+
 namespace EntityFX.Gdcame.Utils.Common
 {
     using System;
@@ -24,14 +26,14 @@ namespace EntityFX.Gdcame.Utils.Common
 
         protected IWebHost WebHost;
 
-        private IUnityContainer _container;
+        private IIocContainer _container;
 
         public HostServiceBase()
         {
 
             this.AppConfiguration = new AppConfiguration();
             CoreStartupBase.AppConfiguration = this.AppConfiguration;
-            this._container = (this.GetContainerBootstrapper(this.AppConfiguration)).Configure(new UnityContainer());
+            this._container = (this.GetContainerBootstrapper(this.AppConfiguration)).Configure(new UnityIocContainer(new UnityContainer()));
 
             CoreStartupBase.Container = this._container;
             this.AppConfiguration = CoreStartupBase.AppConfiguration;
@@ -69,7 +71,7 @@ namespace EntityFX.Gdcame.Utils.Common
             workerManager.StartAll();
         }
 
-        protected virtual void ConfigureWorkers(IWorkerManager workerManager, IUnityContainer container)
+        protected virtual void ConfigureWorkers(IWorkerManager workerManager, IIocContainer container)
         {
 
         }

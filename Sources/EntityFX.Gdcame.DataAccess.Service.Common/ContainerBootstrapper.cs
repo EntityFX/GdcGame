@@ -5,17 +5,11 @@
     using EntityFX.Gdcame.DataAccess.Contract.Common.User;
     using EntityFX.Gdcame.Infrastructure.Common;
 
-    using Microsoft.Practices.Unity;
-    using Microsoft.Practices.Unity.InterceptionExtension;
-
     public class ContainerBootstrapper : IContainerBootstrapper
     {
-        public IUnityContainer Configure(IUnityContainer container)
+        public IIocContainer Configure(IIocContainer container)
         {
-            container.RegisterType<IUserDataAccessService, UserDataAccessService>(
-                new InterceptionBehavior<PolicyInjectionBehavior>()
-                , new Interceptor<InterfaceInterceptor>()
-                );
+            container.RegisterType<IUserDataAccessService, UserDataAccessService>();
 
             container.RegisterType<IServerDataAccessService, ServerDataAccessService>();
 

@@ -7,8 +7,6 @@
     using EntityFX.Gdcame.DataAccess.Repository.Mongo.RatingServer.Mappers;
     using EntityFX.Gdcame.Infrastructure.Common;
 
-    using Microsoft.Practices.Unity;
-
     using MongoDB.Bson.Serialization;
     using MongoDB.Bson.Serialization.IdGenerators;
     using MongoDB.Driver;
@@ -33,14 +31,14 @@
             this._mongoConnectionString = mongoConnectionString;
         }
 
-        public IUnityContainer Configure(IUnityContainer container)
+        public IIocContainer Configure(IIocContainer container)
         {
            
 
             container.RegisterType<IMapper<TopRatingStatistics, List<TopRatingStatisticsDocument>>, TopRatingStatisticsDocumentMapper>();
 
             container.RegisterType<IGlobalRatingRepository, GlobalRatingRepository>();
-            container.RegisterInstance<IMongoDatabase>(this.MongoDatabase);
+            container.RegisterType<IMongoDatabase, IMongoDatabase>(() => this.MongoDatabase, ContainerScope.Singleton);
             return container;
         }
     }

@@ -10,4 +10,7 @@ namespace EntityFX.Gdcame.Infrastructure.Common
         void Warning(string message, params object[] args);
         void Error(Exception exception);
     }
+
+
+
 }

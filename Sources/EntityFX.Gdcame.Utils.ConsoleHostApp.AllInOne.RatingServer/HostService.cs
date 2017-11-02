@@ -25,7 +25,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.RatingServer
             return new ContainerBootstrapper(appConfiguration);
         }
 
-        protected override void ConfigureWorkers(IWorkerManager workerManager, IUnityContainer container)
+        protected override void ConfigureWorkers(IWorkerManager workerManager, IIocContainer container)
         {
             workerManager.Add(container.Resolve<RatingSyncWorker>());
         }

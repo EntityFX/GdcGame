@@ -8,8 +8,7 @@ using EntityFX.Gdcame.Manager.Contract.MainServer.AdminManager;
 using EntityFX.Gdcame.Manager.Contract.MainServer.GameManager;
 using EntityFX.Gdcame.Manager.MainServer.Mappers;
 using EntityFX.Gdcame.Manager.MainServer.Mappers.Store;
-using Microsoft.Practices.Unity;
-using Microsoft.Practices.Unity.InterceptionExtension;
+
 using CounterBase = EntityFX.Gdcame.Kernel.Contract.Counters.CounterBase;
 using ManualStepResult = EntityFX.Gdcame.Kernel.Contract.ManualStepResult;
 
@@ -33,7 +32,7 @@ namespace EntityFX.Gdcame.Manager.MainServer
 
     public class ContainerBootstrapper : IContainerBootstrapper
     {
-        public IUnityContainer Configure(IUnityContainer container)
+        public IIocContainer Configure(IIocContainer container)
         {
             container.RegisterType<IMapper<IncrementorBase, Incrementor>, IncrementorContractMapper>();
             container.RegisterType<IMapper<CounterBase, Gdcame.Contract.MainServer.Counters.CounterBase>, CounterContractMapper>();
@@ -45,7 +44,7 @@ namespace EntityFX.Gdcame.Manager.MainServer
                 .RegisterType
                 <IMapper<CustomRuleInfo, Gdcame.Contract.MainServer.Items.CustomRuleInfo>, CustomRuleInfoContractMapper>();
             container.RegisterType<IMapper<IGame, GameData>, GameDataContractMapper>();
-            container.RegisterType<IMapper<IGame, GameData>, GameDataMapper>("GameDataMapper");
+            container.RegisterType<IMapper<IGame, GameData>, GameDataMapper>(ContainerScope.Instance, "GameDataMapper");
             container
                 .RegisterType
                 <IMapper<ManualStepResult, Contract.MainServer.GameManager.ManualStepResult>, ManualStepContractMapper>();
@@ -60,27 +59,19 @@ namespace EntityFX.Gdcame.Manager.MainServer
                 <IMapper<GameCash, StoredCash>, StoreFundsCountersContractMapper>();
             container.RegisterType<IMapper<Item, StoredItem>, StoreFundsDriverContractMapper>();
             container.RegisterType<IMapper<CustomRuleInfo, StoredCustomRuleInfo>, StoreCustomRuleInfoContractMapper>();
-            container.RegisterType<IMapper<IGame, StoredGameData>, StoreGameDataMapper>("StoreGameDataMapper");
+            container.RegisterType<IMapper<IGame, StoredGameData>, StoreGameDataMapper>(ContainerScope.Instance, "StoreGameDataMapper");
             /////
 
             container.RegisterType<IMapperFactory, MapperFactory>();
 
 
-            container.RegisterType<ISessionManager, SessionManager>(
-                new InterceptionBehavior<PolicyInjectionBehavior>(),
-                new Interceptor<InterfaceInterceptor>());
+            container.RegisterType<ISessionManager, SessionManager>();
 
 
 
-            container.RegisterType<IGameManager, GameManager>(
-                new InterceptionBehavior<PolicyInjectionBehavior>()
-                , new Interceptor<InterfaceInterceptor>());
-            container.RegisterType<ISimpleUserManager, SimpleUserManager>(
-                new InterceptionBehavior<PolicyInjectionBehavior>()
-                , new Interceptor<InterfaceInterceptor>());
-            container.RegisterType<IAdminManager, AdminManager>(
-                new InterceptionBehavior<PolicyInjectionBehavior>()
-                , new Interceptor<InterfaceInterceptor>());
+            container.RegisterType<IGameManager, GameManager>();
+            container.RegisterType<ISimpleUserManager, SimpleUserManager>();
+            container.RegisterType<IAdminManager, AdminManager>();
 
             return container;
         }

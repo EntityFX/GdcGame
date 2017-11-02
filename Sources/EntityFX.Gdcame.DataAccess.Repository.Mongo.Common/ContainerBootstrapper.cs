@@ -30,7 +30,7 @@
             this._mongoConnectionString = mongoConnectionString;
         }
 
-        public IUnityContainer Configure(IUnityContainer container)
+        public IIocContainer Configure(IIocContainer container)
         {
             BsonClassMap.RegisterClassMap<Server>(
    cm =>
@@ -43,7 +43,7 @@
 
             container.RegisterType<IUserRepository, UserRepository>();
             container.RegisterType<IServerRepository, ServerRepository>();
-            container.RegisterInstance<IMongoDatabase>(this.MongoDatabase);
+            container.RegisterType<IMongoDatabase, IMongoDatabase>(() =>this.MongoDatabase, ContainerScope.Singleton);
             return container;
         }
     }

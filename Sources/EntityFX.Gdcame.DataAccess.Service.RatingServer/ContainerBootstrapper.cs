@@ -4,11 +4,9 @@
     using EntityFX.Gdcame.DataAccess.Contract.RatingServer.Rating;
     using EntityFX.Gdcame.Infrastructure.Common;
 
-    using Microsoft.Practices.Unity;
-
     public class ContainerBootstrapper : IContainerBootstrapper
     {
-        public IUnityContainer Configure(IUnityContainer container)
+        public IIocContainer Configure(IIocContainer container)
         {
 
             container.RegisterType<IRatingDataAccess, GlobalRatingDataAccess>();

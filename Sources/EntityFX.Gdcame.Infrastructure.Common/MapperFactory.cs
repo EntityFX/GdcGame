@@ -1,12 +1,11 @@
-﻿using Microsoft.Practices.Unity;
-
+﻿
 namespace EntityFX.Gdcame.Infrastructure.Common
 {
     public class MapperFactory : IMapperFactory
     {
-        private readonly IUnityContainer _unityContainer;
+        private readonly IIocContainer _unityContainer;
 
-        public MapperFactory(IUnityContainer unityContainer)
+        public MapperFactory(IIocContainer unityContainer)
         {
             _unityContainer = unityContainer;
         }

@@ -6,7 +6,6 @@
     using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer;
     using EntityFX.Gdcame.Infrastructure.Common;
     using EntityFX.Gdcame.Contract.MainServer.Store;
-    using Microsoft.Practices.Unity;
 
     using MongoDB.Bson.Serialization;
     using MongoDB.Bson.Serialization.Conventions;
@@ -34,7 +33,7 @@
             this._mongoConnectionString = mongoConnectionString;
         }
 
-        public IUnityContainer Configure(IUnityContainer container)
+        public IIocContainer Configure(IIocContainer container)
         {
             ConventionRegistry.Register(
             "DictionaryRepresentationConvention",
@@ -81,7 +80,7 @@
             container.RegisterType<IUserGameSnapshotRepository, UserGameSnapshotRepository>();
             container.RegisterType<IRatingHistoryRepository, RatingHistoryRepository>();
             container.RegisterType<ILocalRatingStatisticsRepository, LocalRatingStatisticsRepository>();
-            container.RegisterInstance<IMongoDatabase>(this.MongoDatabase);
+            container.RegisterType<IMongoDatabase, IMongoDatabase>(() => this.MongoDatabase, ContainerScope.Singleton);
             return container;
         }
     }

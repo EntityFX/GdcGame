@@ -13,11 +13,9 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef.Common
     using EntityFX.Gdcame.Infrastructure.Common;
     using EntityFX.Gdcame.Infrastructure.Repository.Query;
 
-    using Microsoft.Practices.Unity;
-
     public class ContainerBootstrapper : IContainerBootstrapper
     {
-        public IUnityContainer Configure(IUnityContainer container)
+        public IIocContainer Configure(IIocContainer container)
         {
             container.RegisterType<IQuery<GetUserByIdCriterion, UserEntity>, GetUserByIdQuery>();
             container.RegisterType<IQuery<GetUserByNameCriterion, UserEntity>, GetUserByNameQuery>();

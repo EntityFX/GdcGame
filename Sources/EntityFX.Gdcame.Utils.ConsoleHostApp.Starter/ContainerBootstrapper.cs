@@ -58,7 +58,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
             _appConfiguration = appConfiguration;
         }
 
-        public IUnityContainer Configure(IUnityContainer container)
+        public IIocContainer Configure(IIocContainer container)
         {
             //container.AddNewExtension<Interception>();
 
@@ -66,8 +66,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
             // container.LoadConfiguration();
 
 
-            container.RegisterType<ILogger>(new InjectionFactory(
-                _ => new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger")))));
+            container.RegisterType<ILogger>(() => new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger"))));
 
             var childBootstrappers = GetRepositoryProviders(_appConfiguration.RepositoryProvider).Concat(
                 new IContainerBootstrapper[]
@@ -80,19 +79,12 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
                         }
                 ).ToArray();
             Array.ForEach(childBootstrappers, _ => _.Configure(container));
-            container.AddNewExtension<Interception>();
-            GlobalHost.DependencyResolver = new SignalRDependencyResolver(container);
+
 
             container.RegisterType<IMapperFactory, MapperFactory>();
 
-            container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessDocumentService>(
-                new InterceptionBehavior<PolicyInjectionBehavior>()
-                , new Interceptor<InterfaceInterceptor>()
-                );
-            container.RegisterType<IGameDataStoreDataAccessService, GameDataStoreDataAccessDocumentService>(
-                new InterceptionBehavior<PolicyInjectionBehavior>()
-                , new Interceptor<InterfaceInterceptor>()
-                );
+            container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessDocumentService>();
+            container.RegisterType<IGameDataStoreDataAccessService, GameDataStoreDataAccessDocumentService>();
 
             //Store
             container.RegisterType<IMapper<IncrementorBase, StoredIncrementor>, StoreIncrementorContractMapper>();
@@ -102,52 +94,37 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
                 <IMapper<GameCash, StoredCash>, StoreFundsCountersContractMapper>();
             container.RegisterType<IMapper<Item, StoredItem>, StoreFundsDriverContractMapper>();
             container.RegisterType<IMapper<CustomRuleInfo, StoredCustomRuleInfo>, StoreCustomRuleInfoContractMapper>();
-            container.RegisterType<IMapper<IGame, StoredGameData>, StoreGameDataMapper>("StoreGameDataMapper");
+            container.RegisterType<IMapper<IGame, StoredGameData>, StoreGameDataMapper>(ContainerScope.Instance, "StoreGameDataMapper");
             /////
 
             container.RegisterType<IGameFactory, GameFactory>();
             container.RegisterType<ITaskTimerFactory, TaskTimerFactory>();
             container.RegisterType<ITaskTimer, GenericTaskTimer>();
 
-            container.RegisterType<IGameDataPersister, GameDataPersister>(
-                new InjectionConstructor(
-                    new ResolvedParameter<IGameDataStoreDataAccessService>(),
-                    new ResolvedParameter<IMapperFactory>()
-                    )
-                );
+            container.RegisterType<IGameDataPersister, GameDataPersister>();
 
             container.RegisterType<IGameDataPersisterFactory, GameDataPersisterFactory>();
 
-            container.RegisterInstance<ICache>(container.Resolve<Cache>());
+            container.RegisterType<ICache, Cache>(() => new Cache(), ContainerScope.Singleton );
 
             container.RegisterType<IHashHelper, HashHelper>();
-            container.RegisterInstance<IPerformanceHelper>(new PerformanceHelper());
+            container.RegisterType<IPerformanceHelper>(() => new PerformanceHelper(), ContainerScope.Singleton);
 
-            container.RegisterInstance(new GamePerformanceInfo());
-            container.RegisterInstance(new SystemInfo()
+            container.RegisterType(() => new GamePerformanceInfo(), ContainerScope.Singleton);
+            container.RegisterType(() => new SystemInfo()
             {
                 CpusCount = Environment.ProcessorCount, Os = Environment.OSVersion.ToString(), Runtime = RuntimeHelper.GetRuntimeName(), MemoryTotal = RuntimeHelper.GetTotalMemoryInMb()
-            });
+            }, ContainerScope.Singleton);
 
-            container.RegisterInstance<IGameSessions>(
-                new GameSessions(container.Resolve<ILogger>(), 
-                container.Resolve<IGameFactory>(), container.Resolve<GamePerformanceInfo>()));
+            container.RegisterType<IGameSessions, GameSessions>(
+                () => new GameSessions(container.Resolve<ILogger>(), 
+                container.Resolve<IGameFactory>(), container.Resolve<GamePerformanceInfo>()), ContainerScope.Singleton);
 
-            container.RegisterType<INotifyConsumerService, NotifyConsumerService>(new InjectionConstructor(
-                new ResolvedParameter<ILogger>(),
-                new ResolvedParameter<IMapper<GameData, GameDataModel>>(),
-                new ResolvedParameter<IHubContextAccessor>(),
-                new ResolvedParameter<IConnections>()
-                )
-                , new InterceptionBehavior<PolicyInjectionBehavior>()
-                , new Interceptor<InterfaceInterceptor>()
-                );
+            container.RegisterType<INotifyConsumerService, NotifyConsumerService>();
 
             container.RegisterType<IGameDataChangesNotifier, GameDataChangesNotifier>();
 
-            container.RegisterType<INotifyConsumerClientFactory, NotifyConsumerClientFactory>(new InjectionConstructor(
-                new ResolvedParameter<IUnityContainer>(),
-                string.Empty));
+            container.RegisterType<INotifyConsumerClientFactory, NotifyConsumerClientFactory>(() => new NotifyConsumerClientFactory(container ,string.Empty));
 
             /* if (ConfigurationManager.AppSettings["UseLoggerInterceptor"] == "True")
              {

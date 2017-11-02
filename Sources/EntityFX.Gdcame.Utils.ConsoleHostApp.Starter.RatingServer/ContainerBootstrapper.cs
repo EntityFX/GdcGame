@@ -41,15 +41,14 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer
         }
 
 
-        public IUnityContainer Configure(IUnityContainer container)
+        public IIocContainer Configure(IIocContainer container)
         {
             //container.AddNewExtension<Interception>();
 
             // NOTE: To load from web.config uncomment the line below. Make sure to add a Microsoft.Practices.Unity.Configuration to the using statements.
             // container.LoadConfiguration();
 
-            container.RegisterType<ILogger>(new InjectionFactory(
-                _ => new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger")))));
+            container.RegisterType<ILogger>(() => new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger"))));
 
             var childBootstrappers = this.GetRepositoryProviders(this._appConfiguration.RepositoryProvider).Concat(new IContainerBootstrapper[]
                         {
@@ -58,42 +57,34 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer
                 new Manager.Common.ContainerBootstrapper()
                         }).ToArray();
             Array.ForEach(childBootstrappers, _ => _.Configure(container));
-            container.AddNewExtension<Interception>();
 
             container.RegisterType<IMapperFactory, MapperFactory>();
 
             container.RegisterType<IMapper<StatisticsInfo, ServerStatisticsInfoModel>, StatisticsInfoMapper<StatisticsInfo, ServerStatisticsInfoModel>>();
 
-            container.RegisterInstance<IPerformanceHelper>(new PerformanceHelper());
+            container.RegisterType<IPerformanceHelper>(() => new PerformanceHelper(), ContainerScope.Singleton);
 
-            container.RegisterInstance(new SystemInfo()
+            container.RegisterType(() => new SystemInfo()
             {
                 CpusCount = Environment.ProcessorCount,
                 Os = Environment.OSVersion.ToString(),
                 Runtime = RuntimeHelper.GetRuntimeName(),
                 MemoryTotal = RuntimeHelper.GetTotalMemoryInMb()
-            });
+            }, ContainerScope.Singleton);
 
             container.RegisterType<ITaskTimerFactory, TaskTimerFactory>();
             container.RegisterType<ITaskTimer, GenericTaskTimer>();
 
             container.RegisterType<IHashHelper, HashHelper>();
-            container.RegisterInstance<IPerformanceHelper>(new PerformanceHelper());
 
-            container.RegisterType<IAdminManager<StatisticsInfo>, AdminManagerBase<StatisticsInfo>>(
-  new InterceptionBehavior<PolicyInjectionBehavior>()
-  , new Interceptor<InterfaceInterceptor>());
+            container.RegisterType<IAdminManager<StatisticsInfo>, AdminManagerBase<StatisticsInfo>>();
 
 
-            container.RegisterType<ISimpleUserManager, SimpleUserManager>(
-    new InterceptionBehavior<PolicyInjectionBehavior>()
-    , new Interceptor<InterfaceInterceptor>());
+            container.RegisterType<ISimpleUserManager, SimpleUserManager>();
 
-            container.RegisterInstance<ISessions>(new SessionsProvider(container.Resolve<ILogger>()));
+            container.RegisterType<ISessions>(() => new SessionsProvider(container.Resolve<ILogger>()), ContainerScope.Singleton);
 
-            container.RegisterType<ISessionManager, SessionManager>(
-    new InterceptionBehavior<PolicyInjectionBehavior>(),
-    new Interceptor<InterfaceInterceptor>());
+            container.RegisterType<ISessionManager, SessionManager>();
             container.RegisterType<ISessionManagerClientFactory, SessionManagerClientFactory>();
             container.RegisterType<INodeRatingClientFactory, NodeRatingClientFactory>();
 

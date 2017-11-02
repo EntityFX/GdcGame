@@ -1,4 +1,6 @@
-﻿namespace EntityFX.Gdcame.DataAccess.Repository.Ef.MainServer
+﻿using System;
+
+namespace EntityFX.Gdcame.DataAccess.Repository.Ef.MainServer
 {
     using System.Collections.Generic;
     using System.Data.Entity;
@@ -26,14 +28,12 @@
     using EntityFX.Gdcame.Infrastructure.Repository.Query;
     using EntityFX.Gdcame.Infrastructure.Repository.UnitOfWork;
 
-    using Microsoft.Practices.Unity;
 
     public class ContainerBootstrapper : IContainerBootstrapper
     {
-        public IUnityContainer Configure(IUnityContainer container)
+        public IIocContainer Configure(IIocContainer container)
         {
-            container.RegisterType<System.Data.Entity.DbContext, DbContext>(
-                new InjectionConstructor("name=EconomicsArcadeDbContext"));
+            container.RegisterType<System.Data.Entity.DbContext, DbContext>(() => new DbContext("name=EconomicsArcadeDbContext"));
             container.RegisterType<IQueryBuilder, QueryBuilder>();
             container.RegisterType<IUnitOfWork, EfUnitOfWork>();
             container.RegisterType<IUnitOfWorkFactory, UnitOfWorkFactory>();

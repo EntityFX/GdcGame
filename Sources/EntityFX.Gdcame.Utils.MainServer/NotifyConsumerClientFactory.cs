@@ -1,4 +1,5 @@
-﻿using EntityFX.Gdcame.NotifyConsumer.Contract;
+﻿using EntityFX.Gdcame.Infrastructure.Common;
+using EntityFX.Gdcame.NotifyConsumer.Contract;
 using Microsoft.Practices.Unity;
 
 namespace EntityFX.Gdcame.Utils.MainServer
@@ -8,9 +9,9 @@ namespace EntityFX.Gdcame.Utils.MainServer
     public class NotifyConsumerClientFactory : INotifyConsumerClientFactory
     {
         private readonly string _name;
-        private readonly IUnityContainer _unityContainer;
+        private readonly IIocContainer _unityContainer;
 
-        public NotifyConsumerClientFactory(IUnityContainer unityContainer, string name)
+        public NotifyConsumerClientFactory(IIocContainer unityContainer, string name)
         {
             _unityContainer = unityContainer;
             _name = name;

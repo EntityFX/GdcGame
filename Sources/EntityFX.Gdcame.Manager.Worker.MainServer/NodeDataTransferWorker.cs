@@ -35,14 +35,16 @@
         private Task _dataTransferTask;
         private readonly CancellationTokenSource cancellationTaskToken = new CancellationTokenSource();
 
-        public NodeDataTransferWorker(IServerDataAccessService serverDataAccessService, IUserDataAccessService userDataAccessService, IGameSessions gameSessions, IGameDataRetrieveDataAccessService gameDataRetrieveDataAccessService, IHashHelper hashHelper, IMapper<IGame, StoredGameData> gameMapper)
+        public NodeDataTransferWorker(IServerDataAccessService serverDataAccessService,
+            IUserDataAccessService userDataAccessService, IGameSessions gameSessions, IGameDataRetrieveDataAccessService gameDataRetrieveDataAccessService, IHashHelper hashHelper, IMapperFactory mapperFactory
+           )
         {
             this.serverDataAccessService = serverDataAccessService;
             this.userDataAccessService = userDataAccessService;
             this.gameSessions = gameSessions;
             this.gameDataRetrieveDataAccessService = gameDataRetrieveDataAccessService;
             this.hashHelper = hashHelper;
-            this.gameMapper = gameMapper;
+            this.gameMapper = mapperFactory.Build<IGame, StoredGameData>("StoreGameDataMapper"); ;
             this.Name = "NodeDataTransferWorker";
         }
 
@@ -59,12 +61,12 @@
                     TaskCreationOptions.LongRunning,
                     this.cancellationTaskToken.Token).ContinueWith(
                     c =>
+                    {
+                        if (c.IsFaulted)
                         {
-                            if (c.IsFaulted)
-                            {
-                                //Log.Error(c.Exception.InnerException);
-                            }
-                        });
+                            //Log.Error(c.Exception.InnerException);
+                        }
+                    });
         }
 
         private void PerformBackgroundPersisting(string[] servers)
@@ -105,7 +107,7 @@
                     foreach (var user in server.Value)
                     {
                         this.gameSessions.FreezeUserGame(user.Login, server.Key);
-                        
+
                     }
                     usersForSend.AddRange(server.Value);        //users that should be sent to new servers
                 }
@@ -115,7 +117,7 @@
                 foreach (var game in gameSessions.Games)        //update saved games data with active games
                 {
                     var activeUser = usersForSend.Where(user => user.Login == game.Key).SingleOrDefault();
-                    if(activeUser!=null)
+                    if (activeUser != null)
                     {
                         var newStoredDataForUser = gameMapper.Map(game.Value);      // IGame - > StoredGameData
                         usersSavedData.Where(data => data.UserId == activeUser.Id).SingleOrDefault().StoredGameData = newStoredDataForUser;     //replace old saved data to new data
@@ -123,7 +125,7 @@
                 }
                 //send data to servers
             }
-            
+
         }
 
         public override bool IsRunOnStart

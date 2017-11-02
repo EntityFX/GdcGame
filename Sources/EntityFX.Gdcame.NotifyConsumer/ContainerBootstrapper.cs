@@ -13,7 +13,7 @@ namespace EntityFX.Gdcame.NotifyConsumer
 
     public class ContainerBootstrapper : IContainerBootstrapper
     {
-        public IUnityContainer Configure(IUnityContainer container)
+        public IIocContainer Configure(IIocContainer container)
         {
             container.RegisterType<IMapper<Cash, CashModel>, FundsCounterModelMapper>();
             container.RegisterType<IMapper<CounterBase, CounterModelBase>, CounterModelMapper>();
@@ -22,7 +22,7 @@ namespace EntityFX.Gdcame.NotifyConsumer
 
             container.RegisterType<GameDataHub>();
             container.RegisterType<IHubContextAccessor, HubContextAccessor>();
-            container.RegisterInstance<IConnections>(new Connections());
+            container.RegisterType<IConnections>(() => new Connections(), ContainerScope.Singleton);
 
             return container;
         }

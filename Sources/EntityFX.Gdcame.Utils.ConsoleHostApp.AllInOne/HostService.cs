@@ -14,7 +14,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.MainServer
     internal class HostService : HostServiceBase<CoreStartup>
     {
 
-        protected override void ConfigureWorkers(IWorkerManager workerManager, IUnityContainer container)
+        protected override void ConfigureWorkers(IWorkerManager workerManager, IIocContainer container)
         {
             workerManager.Add(container.Resolve<CalculationWorker>());
             workerManager.Add(container.Resolve<PersistenceWorker>());

@@ -1,8 +1,9 @@
-﻿namespace EntityFX.Gdcame.Utils.Common
+﻿using EntityFX.Gdcame.Infrastructure.Common;
+
+namespace EntityFX.Gdcame.Utils.Common
 {
     using Microsoft.AspNetCore.Builder;
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Practices.Unity;
 
     /// <summary>
     /// The core startup base.
@@ -14,7 +15,7 @@
         /// </summary>
         public static AppConfiguration AppConfiguration { get; set; }
 
-        public static IUnityContainer Container { get; set; }
+        public static IIocContainer Container { get; set; }
 
         public abstract void ConfigureServices(IServiceCollection services);
         public abstract void Configure(IApplicationBuilder app);
