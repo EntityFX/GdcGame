@@ -5,7 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EntityFX.Gdcame.Infrastructure.Common;
-using Microsoft.Practices.Unity;
+using Unity;
+using Unity.Resolution;
+using Unity.Injection;
 
 namespace EntityFX.Gdcame.Infrastructure.Platform
 {

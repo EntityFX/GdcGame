@@ -5,6 +5,8 @@
     using EntityFX.Gdcame.Manager.Contract.Common.SessionManager;
 
     using Microsoft.Practices.Unity;
+    using Unity;
+    using Unity.Resolution;
 
     public class SessionManagerClientFactory : ISessionManagerClientFactory
     {

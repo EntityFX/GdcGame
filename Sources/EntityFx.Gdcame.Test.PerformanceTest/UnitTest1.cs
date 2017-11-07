@@ -14,7 +14,7 @@ using EntityFX.Gdcame.Manager.MainServer.Workers;
 using EntityFX.Gdcame.NotifyConsumer.Contract;
 using EntityFX.Gdcame.Utils.Hashing;
 using EntityFX.Gdcame.Utils.MainServer;
-using Microsoft.Practices.Unity;
+using Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PortableLog.NLog;
 

@@ -4,7 +4,7 @@ using System.Web.Http.Controllers;
 using System.Web.Http.Dependencies;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Infrastructure.Platform;
-using Microsoft.Practices.Unity;
+using Unity;
 
 namespace EntityFX.Gdcame.Utils.Common
 {

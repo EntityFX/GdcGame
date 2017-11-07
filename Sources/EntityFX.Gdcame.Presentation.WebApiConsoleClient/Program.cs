@@ -22,6 +22,7 @@ using EntityFX.Gdcame.Contract.Common.UserRating;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Infrastructure.Platform;
 using Microsoft.Practices.Unity;
+using Unity;
 
 namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 {

@@ -11,7 +11,7 @@ namespace EntityFX.Gdcame.Utils.Common
 
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Owin.Hosting;
-    using Microsoft.Practices.Unity;
+    using Unity;
 
     using Topshelf;
 

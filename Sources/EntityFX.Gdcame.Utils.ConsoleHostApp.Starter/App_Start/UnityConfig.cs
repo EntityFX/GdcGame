@@ -1,4 +1,4 @@
-using Microsoft.Practices.Unity;
+using Unity;
 
 namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
 {

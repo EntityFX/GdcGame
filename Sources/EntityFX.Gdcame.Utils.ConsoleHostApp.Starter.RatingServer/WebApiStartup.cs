@@ -27,6 +27,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer
     using Microsoft.Owin.Security.OAuth;
 
     using Unity.WebApi;
+    using Unity;
 
     public class WebApiStartup
     {
