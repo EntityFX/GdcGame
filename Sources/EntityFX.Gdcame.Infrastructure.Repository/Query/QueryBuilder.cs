@@ -1,12 +1,12 @@
-﻿using Microsoft.Practices.Unity;
+﻿using EntityFX.Gdcame.Infrastructure.Common;
 
 namespace EntityFX.Gdcame.Infrastructure.Repository.Query
 {
     public class QueryBuilder : IQueryBuilder
     {
-        private readonly IUnityContainer _scope;
+        private readonly IIocContainer _scope;
 
-        public QueryBuilder(IUnityContainer scope)
+        public QueryBuilder(IIocContainer scope)
         {
             _scope = scope;
         }

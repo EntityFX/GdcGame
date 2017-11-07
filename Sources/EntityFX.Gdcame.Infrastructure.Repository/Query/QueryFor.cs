@@ -1,13 +1,13 @@
-﻿using EntityFX.Gdcame.Infrastructure.Repository.Criterion;
-using Microsoft.Practices.Unity;
+﻿using EntityFX.Gdcame.Infrastructure.Common;
+using EntityFX.Gdcame.Infrastructure.Repository.Criterion;
 
 namespace EntityFX.Gdcame.Infrastructure.Repository.Query
 {
     public class QueryFor<TResult> : IQueryFor<TResult>
     {
-        private readonly IUnityContainer _scope;
+        private readonly IIocContainer _scope;
 
-        public QueryFor(IUnityContainer scope)
+        public QueryFor(IIocContainer scope)
         {
             _scope = scope;
         }

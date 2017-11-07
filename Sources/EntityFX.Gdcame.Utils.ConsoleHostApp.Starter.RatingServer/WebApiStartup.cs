@@ -48,7 +48,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer
                 appBuilder.UseAesDataProtectorProvider();
             }
             var config = new HttpConfiguration();
-            config.DependencyResolver = new Common.UnityDependencyResolver(_unityContainer as IIocContainer<IUnityContainer>);
+            config.DependencyResolver = new Common.UnityDependencyResolver((_unityContainer as IIocContainer<IUnityContainer>).Container);
             config.Filters.Add(_unityContainer.Resolve<SessionExceptionHandlerFilterAttribute>());
             config.Filters.Add(new ValidateModelAttribute());
 
