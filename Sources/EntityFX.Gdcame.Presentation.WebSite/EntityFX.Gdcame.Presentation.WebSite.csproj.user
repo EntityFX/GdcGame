@@ -3,6 +3,12 @@
   <PropertyGroup>
     <UseIISExpress>true</UseIISExpress>
     <ToolsVersionPromptShown>2.1</ToolsVersionPromptShown>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
