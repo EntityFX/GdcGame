@@ -4,8 +4,6 @@
     using EntityFX.Gdcame.DataAccess.Repository.Contract.Common;
     using EntityFX.Gdcame.Infrastructure.Common;
 
-    using Microsoft.Practices.Unity;
-
     using MongoDB.Bson.Serialization;
     using MongoDB.Bson.Serialization.IdGenerators;
     using MongoDB.Driver;

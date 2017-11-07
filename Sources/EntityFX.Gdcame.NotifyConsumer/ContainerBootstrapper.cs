@@ -3,7 +3,6 @@ using EntityFX.Gdcame.Common.Application.Model;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.NotifyConsumer.Contract;
 using EntityFX.Gdcame.NotifyConsumer.Signalr;
-using Microsoft.Practices.Unity;
 
 namespace EntityFX.Gdcame.NotifyConsumer
 {

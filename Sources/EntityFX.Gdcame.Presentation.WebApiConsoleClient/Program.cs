@@ -9,7 +9,6 @@ using EntityFX.Gdcame.Utils.WebApiClient;
 using EntityFX.Gdcame.Common.Application.Model;
 using EntityFX.Gdcame.Application.Contract.Controller;
 using EntityFX.Gdcame.Application.Contract.Model;
-using Microsoft.Practices.Unity;
 using System.Configuration;
 using System.IO;
 using System.Web.Hosting;
@@ -20,6 +19,9 @@ using EntityFX.Gdcame.Infrastructure.Api.Auth;
 using EntityFX.Gdcame.Infrastructure.Api.Exceptions;
 using EntityFX.Gdcame.Presentation.ConsoleClient.Common;
 using EntityFX.Gdcame.Contract.Common.UserRating;
+using EntityFX.Gdcame.Infrastructure.Common;
+using EntityFX.Gdcame.Infrastructure.Platform;
+using Microsoft.Practices.Unity;
 
 namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 {
@@ -27,7 +29,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
     {
         private static string _userName;
         private static string _userPassword;
-        private static UnityContainer _container;
+        private static IIocContainer _container;
         public static ErrorCodes? ErrorCode { get; private set; }
         private static bool _exitFlag;
 
@@ -68,7 +70,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                     listArgs.Remove(arg);
                 }
             }
-            _container = new UnityContainer();
+            _container = new UnityIocContainer(new UnityContainer());
             _serverPort = Convert.ToInt32(ConfigurationManager.AppSettings["ServicePort"]);
             _mainServer = ConfigurationManager.AppSettings["Server"];
             ratingServerPort = Convert.ToInt32(ConfigurationManager.AppSettings["RatingServerPort"]);
