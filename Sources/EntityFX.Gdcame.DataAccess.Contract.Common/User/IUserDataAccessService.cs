@@ -1,37 +1,37 @@
 ﻿namespace EntityFX.Gdcame.DataAccess.Contract.Common.User
 {
-    using System.ServiceModel;
+    //using System.ServiceModel;
 
-    [ServiceContract]
+    //[ServiceContract]
     public interface IUserDataAccessService
     {
-        [OperationContract]
+        //[OperationContract]
         int Create(User user);
 
-        [OperationContract]
+        //[OperationContract]
         void Update(User user);
 
-        [OperationContract]
+        //[OperationContract]
         void Delete(string userId);
 
-        [OperationContract]
+        //[OperationContract]
         User FindById(string userId);
 
-        [OperationContract]
+        //[OperationContract]
         User FindByName(string name);
 
-        [OperationContract]
+        //[OperationContract]
         User[] FindByFilter(string searchString);
 
-        [OperationContract]
+        //[OperationContract]
         User[] FindWithUsersIds(string[] userslds);
 
-        [OperationContract]
+        //[OperationContract]
         User[] FindAll();
 
         User[] FindChunked(int offset, int count);
 
-        [OperationContract]
+        //[OperationContract]
         int Count();
     }
 }

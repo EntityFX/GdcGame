@@ -3,12 +3,12 @@ using System.Runtime.Serialization;
 
 namespace EntityFX.Gdcame.Common.Application.Model
 {
-    [DataContract]
+    //[DataContract]
     public class PerformanceInfoModel
     {
-        [DataMember]
+        //[DataMember]
         public TimeSpan CalculationsPerCycle { get; set; }
-        [DataMember]
+        //[DataMember]
         public TimeSpan PersistencePerCycle { get; set; }
     }
 }

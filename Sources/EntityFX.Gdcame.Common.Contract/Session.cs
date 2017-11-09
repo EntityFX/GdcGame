@@ -21,6 +21,6 @@
 
         public DateTime LastActivity { get; set; }
 
-        public IIdentity Identity { get; set; }
+        //public IIdentity Identity { get; set; }
     }
 }

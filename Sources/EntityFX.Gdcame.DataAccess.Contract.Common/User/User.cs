@@ -1,21 +1,21 @@
 ﻿namespace EntityFX.Gdcame.DataAccess.Contract.Common.User
 {
     using System;
-    using System.Runtime.Serialization;
+    //using System.Runtime.Serialization;
 
-    [DataContract]
+    //[DataContract]
     public class User
     {
-        [DataMember]
+        //[DataMember]
         public string Id { get; set; }
 
-        [DataMember]
+        //[DataMember]
         public string Login { get; set; }
 
-        [DataMember]
+        //[DataMember]
         public uint Role { get; set; }
 
-        [DataMember]
+        //[DataMember]
         public string PasswordHash { get; set; }
 
         public override string ToString()

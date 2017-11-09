@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-
+using System.Threading.Tasks;
 
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager.Contract.Common;
@@ -53,8 +53,7 @@ namespace EntityFX.Gdcame.Manager.MainServer
 
         public void CloseAllUserSessions(string username)
         {
-            _gameSessions.Sessions.Values.Where(_ => _.Login == username).AsParallel()
-                .ForAll(_ => _gameSessions.RemoveSession(_.SessionIdentifier));
+            Parallel.ForEach(_gameSessions.Sessions.Values.Where(_ => _.Login == username), _ => _gameSessions.RemoveSession(_.SessionIdentifier));
         }
 
         public void CloseAllSessions()
@@ -65,8 +64,8 @@ namespace EntityFX.Gdcame.Manager.MainServer
 
         public void CloseAllSessionsExcludeThis(Guid guid)
         {
-            _gameSessions.Sessions.Values.Where(_ => _.SessionIdentifier != guid).AsParallel()
-                .ForAll(_ => _gameSessions.RemoveSession(_.SessionIdentifier));
+            Parallel.ForEach(_gameSessions.Sessions.Values.Where(_ => _.SessionIdentifier != guid),
+                _ => _gameSessions.RemoveSession(_.SessionIdentifier));
         }
 
         public void WipeUser(string username)
@@ -98,7 +97,7 @@ namespace EntityFX.Gdcame.Manager.MainServer
         {
             _gameSessions.RemoveAllGames();
         }
-        
+
     }
 
 }

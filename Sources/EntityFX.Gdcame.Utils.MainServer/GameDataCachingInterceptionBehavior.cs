@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.Caching;
-using Microsoft.Practices.Unity.InterceptionExtension;
+using Unity.Interception.InterceptionBehaviors;
+using Unity.Interception.PolicyInjection.Pipeline;
 
 namespace EntityFX.Gdcame.Utils.MainServer
 {

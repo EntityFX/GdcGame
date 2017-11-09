@@ -1,17 +1,17 @@
-﻿using System.Runtime.Serialization;
+﻿//using System.Runtime.Serialization;
 
 namespace EntityFX.Gdcame.Manager.Contract.MainServer.GameManager
 {
     using EntityFX.Gdcame.Contract.MainServer.Counters;
     using EntityFX.Gdcame.Contract.MainServer.Items;
 
-    [DataContract]
+    //[DataContract]
     public class BuyFundDriverResult
     {
-        [DataMember]
+        //[DataMember]
         public Cash ModifiedCash { get; set; }
 
-        [DataMember]
+        //[DataMember]
         public Item ModifiedItem { get; set; }
     }
 }

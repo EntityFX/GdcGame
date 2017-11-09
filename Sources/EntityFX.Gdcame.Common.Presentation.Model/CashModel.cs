@@ -2,14 +2,14 @@
 
 namespace EntityFX.Gdcame.Common.Application.Model
 {
-    [DataContract]
+    //[DataContract]
     public class CashModel
     {
-        [DataMember]
+        //[DataMember]
         public decimal OnHand { get; set; }
-        [DataMember]
+        //[DataMember]
         public decimal TotalEarned { get; set; }
-        [DataMember]
+        //[DataMember]
         public CounterModelBase[] Counters { get; set; }
     }
 }

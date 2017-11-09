@@ -2,16 +2,16 @@
 
 namespace EntityFX.Gdcame.Common.Application.Model
 {
-    [DataContract]
+    //[DataContract]
     public class GenericCounterModel : CounterModelBase
     {
-        [DataMember]
+        //[DataMember]
         public decimal Bonus { get; set; }
-        [DataMember]
+        //[DataMember]
         public int BonusPercentage { get; set; }
-        [DataMember]
+        //[DataMember]
         public int Inflation { get; set; }
-        [DataMember]
+        //[DataMember]
         public decimal SubValue { get; set; }
     }
 }

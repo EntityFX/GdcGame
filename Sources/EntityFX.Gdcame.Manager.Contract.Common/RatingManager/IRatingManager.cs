@@ -1,13 +1,13 @@
-﻿using System.ServiceModel;
+﻿//using System.ServiceModel;
 
 namespace EntityFX.Gdcame.Manager.Contract.Common.RatingManager
 {
     using EntityFX.Gdcame.Contract.Common.UserRating;
 
-    [ServiceContract]
+    //[ServiceContract]
     public interface IRatingManager
     {
-        [OperationContract]
+        //[OperationContract]
         TopRatingStatistics GetRaiting(int top = 500);
     }
 }

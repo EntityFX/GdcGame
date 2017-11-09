@@ -1,7 +1,7 @@
 ﻿namespace EntityFX.Gdcame.Manager.Common
 {
     using System;
-    using System.ServiceModel;
+    //using System.ServiceModel;
 
     using EntityFX.Gdcame.Contract.Common;
     using EntityFX.Gdcame.DataAccess.Contract.Common.User;
@@ -52,7 +52,7 @@
             }
             var message = string.Format("User with login {0} not found", login);
             this._logger.Warning(message);
-            throw new FaultException(new FaultReason(message), new FaultCode("OpenSession"), "OpenSession");
+            throw new Exception(message);
         }
 
         public bool CloseSession()

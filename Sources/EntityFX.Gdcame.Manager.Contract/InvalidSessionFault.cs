@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Runtime.Serialization;
+//using System.Runtime.Serialization;
 
 namespace EntityFX.Gdcame.Manager.Contract.MainServer
 {
-    [DataContract]
+    //[DataContract]
     public class InvalidSessionFault
     {
-        [DataMember]
+        //[DataMember]
         public Guid SessionGuid { get; set; }
     }
 }

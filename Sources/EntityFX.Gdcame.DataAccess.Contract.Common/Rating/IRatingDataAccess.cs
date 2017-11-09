@@ -1,10 +1,10 @@
 ﻿namespace EntityFX.Gdcame.DataAccess.Contract.Common.Rating
 {
-    using System.ServiceModel;
+
 
     using EntityFX.Gdcame.Contract.Common.UserRating;
 
-    [ServiceContract]
+    //[ServiceContract]
     public interface IRatingDataAccess : IRatingDataRetrieve
     {
     }

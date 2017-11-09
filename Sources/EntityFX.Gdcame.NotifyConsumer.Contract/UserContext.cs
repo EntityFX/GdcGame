@@ -1,14 +1,14 @@
-﻿using System.Runtime.Serialization;
+﻿//using System.Runtime.Serialization;
 
 namespace EntityFX.Gdcame.NotifyConsumer.Contract
 {
-    [DataContract]
+    //[DataContract]
     public class UserContext
     {
-        [DataMember]
+        //[DataMember]
         public string UserId { get; set; }
 
-        [DataMember]
+        //[DataMember]
         public string UserName { get; set; }
     }
 }

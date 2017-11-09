@@ -3,19 +3,19 @@ using System.Runtime.Serialization;
 
 namespace EntityFX.Gdcame.Common.Application.Model
 {
-    [DataContract]
-    [KnownType(typeof(GenericCounterModel))]
-    [KnownType(typeof(SingleCounterModel))]
-    [KnownType(typeof(DelayedCounterModel))]
+    //[DataContract]
+    //[KnownType(typeof(GenericCounterModel))]
+    //[KnownType(typeof(SingleCounterModel))]
+    //[KnownType(typeof(DelayedCounterModel))]
     public class CounterModelBase
     {
-        [DataMember]
+        //[DataMember]
         public int Id { get; set; }
-        [DataMember]
+        //[DataMember]
         public string Name { get; set; }
-        [DataMember]
+        //[DataMember]
         public decimal Value { get; set; }
-        [DataMember]
+        //[DataMember]
         public int Type { get; set; }
     }
 

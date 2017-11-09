@@ -1,4 +1,4 @@
-﻿using System.Runtime.Serialization;
+﻿//using System.Runtime.Serialization;
 
 namespace EntityFX.Gdcame.Manager.Contract.MainServer.AdminManager
 {
@@ -7,12 +7,12 @@ namespace EntityFX.Gdcame.Manager.Contract.MainServer.AdminManager
 
     public class MainServerStatisticsInfo : StatisticsInfo
     {
-        [DataMember]
+        //[DataMember]
         public int ActiveGamesCount { get; set; }
-        [DataMember]
+        //[DataMember]
         public int RegistredUsersCount { get; set; }
 
-        [DataMember]
+        //[DataMember]
         public GamePerformanceInfo PerformanceInfo { get; set; }
     }
 }

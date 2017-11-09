@@ -1,17 +1,17 @@
-﻿using System.Runtime.Serialization;
+﻿//using System.Runtime.Serialization;
 
 namespace EntityFX.Gdcame.Manager.Contract.MainServer.AdminManager
 {
     using EntityFX.Gdcame.Contract.Common;
     using EntityFX.Gdcame.Engine.Contract.GameEngine;
 
-    [DataContract]
+    //[DataContract]
     public class UserSessionsInfo
     {
-        [DataMember]
+        //[DataMember]
         public string UserName { get; set; }
 
-        [DataMember]
+        //[DataMember]
         public Session[] UserSessions { get; set; }
     }
 }

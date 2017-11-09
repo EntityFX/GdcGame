@@ -1,13 +1,13 @@
 ﻿namespace EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData
 {
-    using System.ServiceModel;
+    //using System.ServiceModel;
     using EntityFX.Gdcame.Contract.MainServer.Store;
 
 
-    [ServiceContract]
+    //[ServiceContract]
     public interface IGameDataStoreDataAccessService
     {
-        [OperationContract(IsOneWay = true)]
+        //[OperationContract(IsOneWay = true)]
         void StoreGameDataForUsers(StoredGameDataWithUserId[] listOfGameDataWithUserId);
     }
 }

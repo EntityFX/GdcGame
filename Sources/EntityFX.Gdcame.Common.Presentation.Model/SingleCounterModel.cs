@@ -2,7 +2,7 @@
 
 namespace EntityFX.Gdcame.Common.Application.Model
 {
-    [DataContract]
+    //[DataContract]
     public class SingleCounterModel : CounterModelBase
     {
     }

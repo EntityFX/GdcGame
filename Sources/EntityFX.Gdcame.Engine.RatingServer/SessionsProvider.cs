@@ -76,8 +76,8 @@
 
 
                                   UserRoles = userRoles,
-                                  Identity =
-                                      new CustomGameIdentity { AuthenticationType = "Auto", IsAuthenticated = true, Name = user.Login }
+                                  /*Identity =
+                                      new CustomGameIdentity { AuthenticationType = "Auto", IsAuthenticated = true, Name = user.Login }*/
                               };
 
             if (!this._userSessionsStorage.TryAdd(session.SessionIdentifier, session))

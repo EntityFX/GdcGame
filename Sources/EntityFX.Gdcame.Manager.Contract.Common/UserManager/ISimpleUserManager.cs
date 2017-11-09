@@ -1,30 +1,30 @@
 ﻿namespace EntityFX.Gdcame.Manager.Contract.Common.UserManager
 {
-    using System.ServiceModel;
+    //using System.ServiceModel;
 
     using EntityFX.Gdcame.Contract.Common;
 
     /// <summary>
     /// </summary>
-    [ServiceContract]
+    //[ServiceContract]
     public interface ISimpleUserManager
     {
-        [OperationContract]
+        //[OperationContract]
         bool Exists(string login);
 
-        [OperationContract]
+        //[OperationContract]
         UserData FindById(string id);
 
-        [OperationContract]
+        //[OperationContract]
         UserData Find(string login);
 
-        [OperationContract]
+        //[OperationContract]
         UserData[] FindByFilter(string searchString);
 
-        [OperationContract]
+        //[OperationContract]
         void Create(UserData login);
 
-        [OperationContract]
+        //[OperationContract]
         void Delete(string id);
     }
 }

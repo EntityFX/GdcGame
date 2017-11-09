@@ -1,24 +1,24 @@
 ﻿namespace EntityFX.Gdcame.DataAccess.Contract.MainServer.Rating
 {
     using System;
-    using System.ServiceModel;
+    //using System.ServiceModel;
 
     using EntityFX.Gdcame.Contract.Common.UserRating;
     using EntityFX.Gdcame.DataAccess.Contract.Common.Rating;
 
-    [ServiceContract]
+    //[ServiceContract]
     public interface ILocalNodeRatingDataAccess : IRatingDataAccess
     {
-        [OperationContract]
+        //[OperationContract]
         void PersistUsersRatingHistory(RatingHistory[] ratingHistory);
 
-        [OperationContract]
+        //[OperationContract]
         RatingHistory[] ReadHistoryWithUsersIds(string[] userslds, TimeSpan period);
 
-        [OperationContract]
+        //[OperationContract]
         void CleanOldHistory(TimeSpan period);
 
-        [OperationContract]
+        //[OperationContract]
         void CreateOrUpdateUsersRatingStatistics(RatingStatistics[] ratingStatistics);
     }
 }

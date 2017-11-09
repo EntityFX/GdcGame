@@ -2,12 +2,12 @@
 
 namespace EntityFX.Gdcame.Common.Application.Model
 {
-    [DataContract]
+    //[DataContract]
     public class DelayedCounterModel : CounterModelBase
     {
-        [DataMember]
+        //[DataMember]
         public int SecondsRemaining { get; set; }
-        [DataMember]
+        //[DataMember]
         public decimal UnlockValue { get; set; }
     }
 }

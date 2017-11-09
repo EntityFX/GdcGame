@@ -1,32 +1,32 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
-using System.ServiceModel;
+//using System.ServiceModel;
 using System.Xml.Serialization;
 
 namespace EntityFX.Gdcame.Common.Application.Model
 {
-    [XmlType("Item")]
+    //[XmlType("Item")]
     public class ItemModel
     {
-        [XmlElement]
+        //[XmlElement]
         public int Id { get; set; }
-        [XmlElement]
+        //[XmlElement]
         public string Name { get; set; }
-        [XmlElement]
+        //[XmlElement]
         public decimal Price { get; set; }
-        [XmlElement]
+        //[XmlElement]
         public int InflationPercent { get; set; }
-        [XmlElement]
+        //[XmlElement]
         public decimal UnlockBalance { get; set; }
-        [XmlElement]
+        //[XmlElement]
         public bool IsUnlocked { get; set; }
-        [XmlElement]
+        //[XmlElement]
         public int Bought { get; set; }
-        [XmlElement(IsNullable = true)]
+        //[XmlElement(IsNullable = true)]
         public string Picture { get; set; }
-        [XmlElement]
-        [XmlArray("Incrementors")]
-        [XmlArrayItem("Pair")]
+        //[XmlElement]
+        //[XmlArray("Incrementors")]
+        //[XmlArrayItem("Pair")]
         public IDictionary<int, string> Incrementors { get; set; }
     }
 }

@@ -1,11 +1,11 @@
-﻿using System.Runtime.Serialization;
+﻿//using System.Runtime.Serialization;
 
 namespace EntityFX.Gdcame.Manager.Contract.MainServer.GameManager
 {
-    [DataContract]
+    //[DataContract]
     public class VerificationManualStepResult
     {
-        [DataMember]
+        //[DataMember]
         public int VerificationNumber { get; set; }
     }
 }

@@ -1,21 +1,21 @@
 ﻿namespace EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData
 {
-    using System.ServiceModel;
+    //using System.ServiceModel;
 
     using EntityFX.Gdcame.Contract.Common.UserRating;
     using EntityFX.Gdcame.Contract.MainServer;
     using EntityFX.Gdcame.Contract.MainServer.Store;
 
-    [ServiceContract]
+    //[ServiceContract]
     public interface IGameDataRetrieveDataAccessService
     {
-        [OperationContract]
+        //[OperationContract]
         GameData GetGameData(string userId);
 
-        [OperationContract]
+        //[OperationContract]
         StoredGameDataWithUserId[] GetStoredGameData(string[] userIds);
 
-        [OperationContract]
+        //[OperationContract]
         RatingStatistics[] GetUserRatings();
     }
 }
