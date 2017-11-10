@@ -1,4 +1,4 @@
-﻿using System.Data.Entity;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace EntityFX.Gdcame.Infrastructure.Repository.EF
 {

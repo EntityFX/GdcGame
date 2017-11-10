@@ -1,7 +1,7 @@
 ﻿namespace EntityFX.Gdcame.Manager.Common
 {
     using System;
-    //using System.ServiceModel;
+    //
 
     using EntityFX.Gdcame.Contract.Common;
     using EntityFX.Gdcame.DataAccess.Contract.Common.User;

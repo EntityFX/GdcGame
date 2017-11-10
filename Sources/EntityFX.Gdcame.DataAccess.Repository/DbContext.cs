@@ -1,6 +1,6 @@
 ﻿namespace EntityFX.Gdcame.DataAccess.Repository.Ef.MainServer
 {
-    using System.Data.Entity;
+    using Microsoft.EntityFrameworkCore;
 
     using EntityFX.Gdcame.DataAccess.Repository.Ef.MainServer.Entities;
 

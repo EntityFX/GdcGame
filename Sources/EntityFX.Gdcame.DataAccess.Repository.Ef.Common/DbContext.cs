@@ -7,25 +7,25 @@ using System.Threading.Tasks;
 namespace EntityFX.Gdcame.DataAccess.Repository.Ef.Common
 {
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity;
+    using Microsoft.EntityFrameworkCore;
 
     using EntityFX.Gdcame.DataAccess.Repository.Ef.Common.Entities;
 
-    public class DbContext : System.Data.Entity.DbContext
+    public class DbContext : Microsoft.EntityFrameworkCore.DbContext
     {
         public virtual DbSet<UserEntity> Users { get; set; }
 
         public DbContext()
-            : base("EconomicsArcadeDbContext")
+            : base()
         {
         }
 
         public DbContext(string connectionString)
-    : base(connectionString)
+    : base()
         {
         }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserEntity>().ToTable("User").HasKey(_ => _.Id);
 

@@ -1,6 +1,6 @@
 ﻿namespace EntityFX.Gdcame.DataAccess.Repository.Ef.MainServer.Queries.UserGameSnapshot
 {
-    using System.Data.Entity;
+    using Microsoft.EntityFrameworkCore;
     using System.Linq;
 
     using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer.Criterions.UserGameSnapshot;

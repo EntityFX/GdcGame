@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Data.Entity;
+
 using System.Linq.Expressions;
 using EntityFX.Gdcame.Infrastructure.Repository.Query;
 using EntityFX.Gdcame.Infrastructure.Repository.UnitOfWork;
+using Microsoft.EntityFrameworkCore;
 
 namespace EntityFX.Gdcame.Infrastructure.Repository.EF
 {

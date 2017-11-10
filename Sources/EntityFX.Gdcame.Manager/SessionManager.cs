@@ -1,5 +1,5 @@
 ﻿using System;
-using System.ServiceModel;
+
 using EntityFX.Gdcame.Infrastructure.Common;
 
 namespace EntityFX.Gdcame.Manager.MainServer

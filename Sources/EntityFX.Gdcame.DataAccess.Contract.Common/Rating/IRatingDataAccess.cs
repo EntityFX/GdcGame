@@ -4,7 +4,7 @@
 
     using EntityFX.Gdcame.Contract.Common.UserRating;
 
-    //[ServiceContract]
+    //
     public interface IRatingDataAccess : IRatingDataRetrieve
     {
     }

@@ -3,7 +3,7 @@
 namespace EntityFX.Gdcame.DataAccess.Repository.Ef.MainServer
 {
     using System.Collections.Generic;
-    using System.Data.Entity;
+    using Microsoft.EntityFrameworkCore;
 
     using EntityFX.Gdcame.Contract.MainServer.Counters;
     using EntityFX.Gdcame.Contract.MainServer.Incrementors;
