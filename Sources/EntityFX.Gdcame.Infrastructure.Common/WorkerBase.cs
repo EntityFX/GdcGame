@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using EntityFX.Gdcame.Infrastructure.Common;
 
-namespace EntityFX.Gdcame.Manager.Contract.Common.WorkerManager
+namespace EntityFX.Gdcame.Infrastructure.Common
 {
     public abstract class WorkerBase : IWorker
     {

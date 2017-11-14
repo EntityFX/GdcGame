@@ -2,7 +2,6 @@
 {
     using EntityFX.Gdcame.Contract.Common.UserRating;
     using EntityFX.Gdcame.Contract.MainServer.Counters;
-    using EntityFX.Gdcame.DataAccess.Contract.Common.Server;
     using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer;
     using EntityFX.Gdcame.Infrastructure.Common;
     using EntityFX.Gdcame.Contract.MainServer.Store;

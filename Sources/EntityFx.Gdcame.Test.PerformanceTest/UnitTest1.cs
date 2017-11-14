@@ -5,7 +5,6 @@ using System.Linq;
 
 using EntityFX.Gdcame.DataAccess.Service;
 using EntityFX.Gdcame.Infrastructure.Common;
-using EntityFX.Gdcame.Infrastructure.Platform;
 using EntityFX.Gdcame.Manager;
 using EntityFX.Gdcame.Manager.Contract.MainServer.AdminManager;
 using EntityFX.Gdcame.Manager.Contract.MainServer.GameManager;
@@ -16,7 +15,7 @@ using EntityFX.Gdcame.Utils.Hashing;
 using EntityFX.Gdcame.Utils.MainServer;
 using Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using PortableLog.NLog;
+using EntityFX.Gdcame.Infrastructure;
 
 namespace EntityFx.Gdcame.Test.Unit
 {
@@ -45,7 +44,7 @@ namespace EntityFx.Gdcame.Test.Unit
         [TestInitialize]
         public void TestInitialize()
         {
-            this.container.RegisterType<ILogger>(() => new Logger(new NLoggerAdapter(new NLogLogExFactory().GetLogger("logger"))));
+            this.container.RegisterType<ILogger>(() => new Logger(new NLoggerAdapter(NLog.LogManager.GetLogger("logger"))));
 
             this.container.RegisterType<IOperationContextHelper>(() => new FakeOperationContextHelper(), ContainerScope.Singleton);
             var managerBootstrapper = new ContainerBootstrapper();

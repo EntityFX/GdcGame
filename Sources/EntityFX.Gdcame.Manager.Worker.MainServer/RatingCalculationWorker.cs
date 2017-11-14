@@ -11,7 +11,6 @@
     using EntityFX.Gdcame.DataAccess.Contract.MainServer.Rating;
     using EntityFX.Gdcame.Engine.Contract.GameEngine;
     using EntityFX.Gdcame.Infrastructure.Common;
-    using EntityFX.Gdcame.Manager.Contract.Common.WorkerManager;
 
     public class RatingCalculationWorker : WorkerBase, IWorker
     {

@@ -9,7 +9,7 @@ using Unity;
 using Unity.Resolution;
 using Unity.Injection;
 
-namespace EntityFX.Gdcame.Infrastructure.Platform
+namespace EntityFX.Gdcame.Infrastructure
 {
     public class UnityIocContainer : IocContainerBase<IUnityContainer>, IIocContainer<IUnityContainer>
     {

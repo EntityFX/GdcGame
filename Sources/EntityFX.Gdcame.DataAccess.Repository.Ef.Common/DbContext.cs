@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace EntityFX.Gdcame.DataAccess.Repository.Ef.Common
 {
-    using System.ComponentModel.DataAnnotations.Schema;
     using Microsoft.EntityFrameworkCore;
 
     using EntityFX.Gdcame.DataAccess.Repository.Ef.Common.Entities;
@@ -32,9 +31,11 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef.Common
             modelBuilder.Entity<UserEntity>().Property(_ => _.Email).IsRequired();
 
             modelBuilder.Entity<UserEntity>()
-                .HasKey(e => e.Id)
+                .HasKey(e => e.Id);
+
+            modelBuilder.Entity<UserEntity>()
                 .Property(e => e.Id)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+                .ValueGeneratedOnAdd();
 
         }
     }

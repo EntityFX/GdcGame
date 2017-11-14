@@ -7,6 +7,7 @@
     using EntityFX.Gdcame.DataAccess.Repository.Ef.MainServer.Entities;
     using EntityFX.Gdcame.Infrastructure.Repository.EF;
     using EntityFX.Gdcame.Infrastructure.Repository.Query;
+    using Microsoft.EntityFrameworkCore;
 
     public class GetAllFundsDriversQuery : QueryBase,
         IQuery<GetAllFundsDriversCriterion, IEnumerable<FundsDriverEntity>>
@@ -19,8 +20,8 @@
         public IEnumerable<FundsDriverEntity> Execute(GetAllFundsDriversCriterion criterion)
         {
             return this.DbContext.Set<FundsDriverEntity>()
-                .Include("Incrementors")
-                .Include("CustomRule")
+                .Include(e => e.Incrementors)
+                .Include(e => e.CustomRule)
                 .ToArray();
         }
     }

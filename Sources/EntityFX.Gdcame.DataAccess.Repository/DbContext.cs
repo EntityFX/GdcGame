@@ -17,7 +17,7 @@
         {
         }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
@@ -36,8 +36,8 @@
 
             modelBuilder.Entity<FundsDriverEntity>()
                 .HasMany(e => e.Incrementors)
-                .WithRequired(e => e.FundsDriver)
-                .WillCascadeOnDelete(false);
+                .WithOne(e => e.FundsDriver)
+                .OnDelete(Microsoft.EntityFrameworkCore.Metadata.DeleteBehavior.SetNull);
 
             modelBuilder.Entity<FundsDriverEntity>()
                 .Property(e => e.InitialValue)
@@ -60,8 +60,7 @@
 
             modelBuilder.Entity<CustomRuleEntity>()
                 .HasMany(e => e.FundsDrivers)
-                .WithOptional(e => e.CustomRule)
-                .WillCascadeOnDelete(false);
+                .WithOne(e => e.CustomRule);
 
 
             modelBuilder.Entity<UserGameDataSnapshotEntity>()

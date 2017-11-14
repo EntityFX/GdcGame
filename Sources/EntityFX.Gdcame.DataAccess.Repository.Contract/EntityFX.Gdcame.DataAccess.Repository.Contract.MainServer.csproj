@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\EntityFX.Gdcame.Common.Contract\EntityFX.Gdcame.Contract.Common.csproj" />
     <ProjectReference Include="..\EntityFX.Gdcame.Contract.MainServer\EntityFX.Gdcame.Contract.MainServer.csproj" />
     <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Repository\EntityFX.Gdcame.Infrastructure.Repository.csproj" />
   </ItemGroup>

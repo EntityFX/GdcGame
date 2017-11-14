@@ -1,4 +1,6 @@
 using System;
+using EntityFX.Gdcame.Infrastructure;
+using EntityFX.Gdcame.Application.Api.Common;
 using EntityFX.Gdcame.Application.Api.Common;
 using EntityFX.Gdcame.Application.Api.Common.Mappers;
 using EntityFX.Gdcame.Application.Api.Controller.MainServer;
@@ -25,7 +27,6 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.SignalR;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
-using PortableLog.NLog;
 
 namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
 {
@@ -66,7 +67,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
             // container.LoadConfiguration();
 
 
-            container.RegisterType<ILogger>(() => new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger"))));
+            container.RegisterType<ILogger>(() => new Logger(new NLoggerAdapter(NLog.LogManager.GetLogger("logger"))));
 
             var childBootstrappers = GetRepositoryProviders(_appConfiguration.RepositoryProvider).Concat(
                 new IContainerBootstrapper[]

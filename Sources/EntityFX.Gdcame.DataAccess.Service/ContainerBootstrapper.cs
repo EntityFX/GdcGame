@@ -6,7 +6,6 @@
     using EntityFX.Gdcame.DataAccess.Contract.MainServer.GameData;
     using EntityFX.Gdcame.DataAccess.Contract.MainServer.Rating;
     using EntityFX.Gdcame.DataAccess.Repository.Contract.MainServer;
-    using EntityFX.Gdcame.DataAccess.Service.Common;
     using EntityFX.Gdcame.Infrastructure.Common;
 
     public class ContainerBootstrapper : IContainerBootstrapper

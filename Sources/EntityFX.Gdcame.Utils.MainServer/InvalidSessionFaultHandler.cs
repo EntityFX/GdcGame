@@ -8,6 +8,7 @@ namespace EntityFX.Gdcame.Utils.MainServer
 {
     using EntityFX.Gdcame.Contract.Common;
     using EntityFX.Gdcame.Engine.Contract.GameEngine;
+    using System.ServiceModel;
 
     public class InvalidSessionFaultHandler : IErrorHandler
     {

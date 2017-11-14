@@ -6,7 +6,6 @@
     using EntityFX.Gdcame.Contract.Common;
     using EntityFX.Gdcame.DataAccess.Contract.Common.User;
     using EntityFX.Gdcame.Engine.Contract.Common;
-    using EntityFX.Gdcame.Engine.Contract.GameEngine;
     using EntityFX.Gdcame.Infrastructure.Common;
     using EntityFX.Gdcame.Manager.Contract.Common.SessionManager;
 

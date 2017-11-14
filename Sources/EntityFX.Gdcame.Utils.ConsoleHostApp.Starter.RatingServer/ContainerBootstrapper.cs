@@ -14,6 +14,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer
     using EntityFX.Gdcame.Engine.Common;
     using EntityFX.Gdcame.Engine.Contract.Common;
     using EntityFX.Gdcame.Engine.Contract.RatingServer;
+    using EntityFX.Gdcame.Infrastructure;
     using EntityFX.Gdcame.Infrastructure.Common;
     using EntityFX.Gdcame.Manager.Common;
     using EntityFX.Gdcame.Manager.Contract.Common;
@@ -25,10 +26,8 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer
     using EntityFX.Gdcame.Utils.RatingServer;
 
     using Microsoft.AspNet.Identity;
-    using Microsoft.Practices.Unity;
-    using Microsoft.Practices.Unity.InterceptionExtension;
 
-    using PortableLog.NLog;
+
 
     public class ContainerBootstrapper : IContainerBootstrapper
     {
@@ -48,7 +47,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer
             // NOTE: To load from web.config uncomment the line below. Make sure to add a Microsoft.Practices.Unity.Configuration to the using statements.
             // container.LoadConfiguration();
 
-            container.RegisterType<ILogger>(() => new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger"))));
+            container.RegisterType<ILogger>(() => new Logger(new NLoggerAdapter(NLog.LogManager.GetLogger("logger"))));
 
             var childBootstrappers = this.GetRepositoryProviders(this._appConfiguration.RepositoryProvider).Concat(new IContainerBootstrapper[]
                         {

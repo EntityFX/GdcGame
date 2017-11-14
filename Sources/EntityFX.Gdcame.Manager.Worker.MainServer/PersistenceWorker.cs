@@ -12,7 +12,6 @@
     using EntityFX.Gdcame.DataAccess.Contract.Common.Server;
     using EntityFX.Gdcame.Engine.Contract.GameEngine;
     using EntityFX.Gdcame.Infrastructure.Common;
-    using EntityFX.Gdcame.Manager.Contract.Common.WorkerManager;
 
     public class PersistenceWorker : WorkerBase, IWorker
     {

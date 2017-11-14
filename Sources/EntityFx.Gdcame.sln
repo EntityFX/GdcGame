@@ -43,7 +43,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.DataAccess.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.Contract.Common", "EntityFX.Gdcame.Common.Contract\EntityFX.Gdcame.Contract.Common.csproj", "{89F89C37-F564-47EB-839D-C45ACD9D012A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Common.Application.Model", "EntityFX.Gdcame.Common.Presentation.Model\EntityFX.Gdcame.Common.Application.Model.csproj", "{3B44AFC0-F207-44E4-9F91-7F24E1F4D342}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.Common.Application.Model", "EntityFX.Gdcame.Common.Presentation.Model\EntityFX.Gdcame.Common.Application.Model.csproj", "{3B44AFC0-F207-44E4-9F91-7F24E1F4D342}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.DataAccess.Repository.Ef.MainServer", "EntityFX.Gdcame.DataAccess.Repository\EntityFX.Gdcame.DataAccess.Repository.Ef.MainServer.csproj", "{D5A72A34-5DE5-41E1-B52E-8F70D19CB7BF}"
 EndProject
@@ -53,23 +53,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.Infrastruct
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.Infrastructure.Repository", "EntityFX.Gdcame.Infrastructure.Repository\EntityFX.Gdcame.Infrastructure.Repository.csproj", "{95745C95-A356-4E4A-9AC5-25ABD9659831}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Manager.Contract.MainServer", "EntityFX.Gdcame.Manager.Contract\EntityFX.Gdcame.Manager.Contract.MainServer.csproj", "{41696F24-E345-4599-A0C7-0715F64946D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.Manager.Contract.MainServer", "EntityFX.Gdcame.Manager.Contract\EntityFX.Gdcame.Manager.Contract.MainServer.csproj", "{41696F24-E345-4599-A0C7-0715F64946D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Manager.MainServer", "EntityFX.Gdcame.Manager\EntityFX.Gdcame.Manager.MainServer.csproj", "{56A380DE-2370-4C2D-8C8E-EAF3163C92EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.Manager.MainServer", "EntityFX.Gdcame.Manager\EntityFX.Gdcame.Manager.MainServer.csproj", "{56A380DE-2370-4C2D-8C8E-EAF3163C92EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Engine.Contract.GameEngine", "EntityFX.Gdcame.GameEngine.Contract\EntityFX.Gdcame.Engine.Contract.GameEngine.csproj", "{BEEA0656-542B-4C48-A480-CEFF662DD29F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.Engine.Contract.GameEngine", "EntityFX.Gdcame.GameEngine.Contract\EntityFX.Gdcame.Engine.Contract.GameEngine.csproj", "{BEEA0656-542B-4C48-A480-CEFF662DD29F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Engine.GameEngine", "EntityFX.Gdcame.GameEngine\EntityFX.Gdcame.Engine.GameEngine.csproj", "{19D1BC2F-D0EB-4012-BCF2-CED6F3B926B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.Engine.GameEngine", "EntityFX.Gdcame.GameEngine\EntityFX.Gdcame.Engine.GameEngine.csproj", "{19D1BC2F-D0EB-4012-BCF2-CED6F3B926B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.NotifyConsumer.Contract", "EntityFX.Gdcame.NotifyConsumer.Contract\EntityFX.Gdcame.NotifyConsumer.Contract.csproj", "{AA98B2BE-929C-4BBA-B352-E3095DBEB96B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.NotifyConsumer.Contract", "EntityFX.Gdcame.NotifyConsumer.Contract\EntityFX.Gdcame.NotifyConsumer.Contract.csproj", "{AA98B2BE-929C-4BBA-B352-E3095DBEB96B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.NotifyConsumer", "EntityFX.Gdcame.NotifyConsumer\EntityFX.Gdcame.NotifyConsumer.csproj", "{560B4D9D-4F4C-4659-8860-1C628448D154}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.NotifyConsumer.Signalr", "EntityFX.Gdcame.NotifyConsumer.Signalr\EntityFX.Gdcame.NotifyConsumer.Signalr.csproj", "{6C13790D-5C7A-4D9F-9D8B-4CD28F3536F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Application.Contract.Model.MainServer", "EntityFX.Gdcame.Presentation.Web.Model\EntityFX.Gdcame.Application.Contract.Model.MainServer.csproj", "{0F9C056A-DB5D-48ED-A688-BFD04ED4DFD7}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Application.Api.Controller.MainServer", "EntityFX.Gdcame.Presentation.Web.Controller\EntityFX.Gdcame.Application.Api.Controller.MainServer.csproj", "{892D6D25-857F-4CA9-A518-526BBF05C011}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.Application.Contract.Model.MainServer", "EntityFX.Gdcame.Presentation.Web.Model\EntityFX.Gdcame.Application.Contract.Model.MainServer.csproj", "{0F9C056A-DB5D-48ED-A688-BFD04ED4DFD7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Application.Providers.MainServer", "EntityFX.Gdcame.Presentation.Web.Providers\EntityFX.Gdcame.Application.Providers.MainServer.csproj", "{A6F59753-3065-4BB3-85A8-1E0778205407}"
 EndProject
@@ -95,7 +93,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Utils.WebAp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Presentation.WebApiConsoleClient", "EntityFX.Gdcame.Presentation.WebApiConsoleClient\EntityFX.Gdcame.Presentation.WebApiConsoleClient.csproj", "{C0FA7295-375B-4CBE-9790-64BDBCF12A77}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Application.Contract.Controller.MainServer", "EntityFX.Gdcame.Presentation.Contract.Controller\EntityFX.Gdcame.Application.Contract.Controller.MainServer.csproj", "{B9608A11-F0F0-47AA-BD55-D6E25A310DAA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.Application.Contract.Controller.MainServer", "EntityFX.Gdcame.Presentation.Contract.Controller\EntityFX.Gdcame.Application.Contract.Controller.MainServer.csproj", "{B9608A11-F0F0-47AA-BD55-D6E25A310DAA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.DataAccess.Repository.Mongo.MainServer", "EntityFX.Gdcame.DataAccess.Repository.Mongo\EntityFX.Gdcame.DataAccess.Repository.Mongo.MainServer.csproj", "{0F77947A-9E4C-4663-A7EE-C43A4D357217}"
 EndProject
@@ -139,21 +137,21 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Utils.Conso
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer", "EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer\EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer.csproj", "{B8E3B80F-5E71-4785-BA18-62E77F74692A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Manager.Contract.Common", "EntityFX.Gdcame.Manager.Contract.Common\EntityFX.Gdcame.Manager.Contract.Common.csproj", "{0E91EB31-4F0A-41A0-A785-006EA68BDA87}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.Manager.Contract.Common", "EntityFX.Gdcame.Manager.Contract.Common\EntityFX.Gdcame.Manager.Contract.Common.csproj", "{0E91EB31-4F0A-41A0-A785-006EA68BDA87}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Manager.Common", "EntityFX.Gdcame.Manager.Common\EntityFX.Gdcame.Manager.Common.csproj", "{EBD3A77C-453E-4DC7-8616-C75C8580D3F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.Manager.Common", "EntityFX.Gdcame.Manager.Common\EntityFX.Gdcame.Manager.Common.csproj", "{EBD3A77C-453E-4DC7-8616-C75C8580D3F3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Utils.MainServer", "EntityFX.Gdcame.Utils.MainServer\EntityFX.Gdcame.Utils.MainServer.csproj", "{2AE99E38-4B45-4D8B-B9D5-840B21F82A43}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Utils.Common", "EntityFX.Gdcame.Utils.Common\EntityFX.Gdcame.Utils.Common.csproj", "{12C5304D-AE3E-4FF0-8E09-D7B3D3EA90DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Application.Contract.Controller.Common", "EntityFX.Gdcame.Application.Contract.Controller.Common\EntityFX.Gdcame.Application.Contract.Controller.Common.csproj", "{34DA3755-975D-4194-8B02-7FA0476B23F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.Application.Contract.Controller.Common", "EntityFX.Gdcame.Application.Contract.Controller.Common\EntityFX.Gdcame.Application.Contract.Controller.Common.csproj", "{34DA3755-975D-4194-8B02-7FA0476B23F0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Presentation.AdminConsoleClient", "EntityFX.Gdcame.Presentation.AdminConsoleClient\EntityFX.Gdcame.Presentation.AdminConsoleClient.csproj", "{1301F6A5-274D-410C-A633-C1316D5BA8E5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Presentation.ConsoleClient.Common", "EntityFX.Gdcame.Presentation.ConsoleClient.Common\EntityFX.Gdcame.Presentation.ConsoleClient.Common.csproj", "{805FA369-C681-4204-B16B-CFE3AE2FA813}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Utils.Hashing", "EntityFX.Gdcame.Utils.Hashing\EntityFX.Gdcame.Utils.Hashing.csproj", "{720E76E7-71E2-4570-BD4A-A38B2858BD56}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.Utils.Hashing", "EntityFX.Gdcame.Utils.Hashing\EntityFX.Gdcame.Utils.Hashing.csproj", "{720E76E7-71E2-4570-BD4A-A38B2858BD56}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.DataAccess.Contract.Common", "EntityFX.Gdcame.DataAccess.Contract.Common\EntityFX.Gdcame.DataAccess.Contract.Common.csproj", "{5FE7A90C-9319-4A62-955B-8F6F22169679}"
 EndProject
@@ -181,27 +179,29 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.DataAccess.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.DataAccess.Repository.LocalStorage.Common", "EntityFX.Gdcame.DataAccess.Repository.LocalStorage.Common\EntityFX.Gdcame.DataAccess.Repository.LocalStorage.Common.csproj", "{36BD02F8-CDCF-4B59-B9F4-68D71302F3C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Engine.Worker.MainServer", "EntityFX.Gdcame.Manager.Worker.MainServer\EntityFX.Gdcame.Engine.Worker.MainServer.csproj", "{F3CC13DE-3D05-4CD2-B895-41DA294E0585}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.Engine.Worker.MainServer", "EntityFX.Gdcame.Manager.Worker.MainServer\EntityFX.Gdcame.Engine.Worker.MainServer.csproj", "{F3CC13DE-3D05-4CD2-B895-41DA294E0585}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Contract.MainServer", "EntityFX.Gdcame.Contract.MainServer\EntityFX.Gdcame.Contract.MainServer.csproj", "{05B804CB-DA17-4449-88FB-C2DEF96486A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.Contract.MainServer", "EntityFX.Gdcame.Contract.MainServer\EntityFX.Gdcame.Contract.MainServer.csproj", "{05B804CB-DA17-4449-88FB-C2DEF96486A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Kernel.Contract", "EntityFX.Gdcame.Kernel.Contract\EntityFX.Gdcame.Kernel.Contract.csproj", "{CA1A21AB-C915-4101-9FEF-24C76D5F74A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.Kernel.Contract", "EntityFX.Gdcame.Kernel.Contract\EntityFX.Gdcame.Kernel.Contract.csproj", "{CA1A21AB-C915-4101-9FEF-24C76D5F74A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Kernel", "EntityFX.Gdcame.Kernel\EntityFX.Gdcame.Kernel.csproj", "{C70F8F1A-9FDA-41FF-BFB3-4EAB64907D87}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.Kernel", "EntityFX.Gdcame.Kernel\EntityFX.Gdcame.Kernel.csproj", "{C70F8F1A-9FDA-41FF-BFB3-4EAB64907D87}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Engine.Common", "EntityFX.Gdcame.Engine.RatingServer\EntityFX.Gdcame.Engine.Common.csproj", "{397FFB04-CD07-4DEA-8B2C-14C97ADD9379}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.Engine.Common", "EntityFX.Gdcame.Engine.RatingServer\EntityFX.Gdcame.Engine.Common.csproj", "{397FFB04-CD07-4DEA-8B2C-14C97ADD9379}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Engine.Contract.Common", "EntityFX.Gdcame.Engine.Contract.Common\EntityFX.Gdcame.Engine.Contract.Common.csproj", "{5E4D635E-5E84-47B1-B638-EF60A1176796}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.Engine.Contract.Common", "EntityFX.Gdcame.Engine.Contract.Common\EntityFX.Gdcame.Engine.Contract.Common.csproj", "{5E4D635E-5E84-47B1-B638-EF60A1176796}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Engine.Worker.RatingServer", "EntityFX.Gdcame.Engine.Worker.RatingServer\EntityFX.Gdcame.Engine.Worker.RatingServer.csproj", "{DD26762C-4F49-4D48-8446-0B66B041D4A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.Engine.Worker.RatingServer", "EntityFX.Gdcame.Engine.Worker.RatingServer\EntityFX.Gdcame.Engine.Worker.RatingServer.csproj", "{DD26762C-4F49-4D48-8446-0B66B041D4A0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Utils.WebApiClient.RatingServer", "EntityFX.Gdcame.Utils.WebApiClient.RatingServer\EntityFX.Gdcame.Utils.WebApiClient.RatingServer.csproj", "{8DD9172B-A711-4C8C-B26F-9C5F5C7A1608}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Utils.RatingServer", "EntityFX.Gdcame.Utils.RatingServer\EntityFX.Gdcame.Utils.RatingServer.csproj", "{82CC4CB7-E4AF-4FD1-B5BF-8F7802D0842C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Engine.Contract.RatingServer", "EntityFX.Gdcame.Engine.Contract.RatingServer\EntityFX.Gdcame.Engine.Contract.RatingServer.csproj", "{FC66CF81-A030-4A43-B446-7B92B5D8708E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.Engine.Contract.RatingServer", "EntityFX.Gdcame.Engine.Contract.RatingServer\EntityFX.Gdcame.Engine.Contract.RatingServer.csproj", "{FC66CF81-A030-4A43-B446-7B92B5D8708E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Infrastructure.Platform", "EntityFX.Gdcame.Infrastructure.Platform\EntityFX.Gdcame.Infrastructure.Platform.csproj", "{F83FB9B3-ADA1-436E-8DCA-CDEA2A2F3E4B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Application.Api.Controller.MainServer", "EntityFX.Gdcame.Application.Api.Controller.MainServer\EntityFX.Gdcame.Application.Api.Controller.MainServer.csproj", "{DCFFA2F8-442C-4960-8707-5BA0E5D92BC7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Infrastructure", "EntityFX.Gdcame.Infrastructure\EntityFX.Gdcame.Infrastructure.csproj", "{797DE92C-5253-45C5-95E4-92786EBF5266}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -235,8 +235,8 @@ Global
 		{89F89C37-F564-47EB-839D-C45ACD9D012A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89F89C37-F564-47EB-839D-C45ACD9D012A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89F89C37-F564-47EB-839D-C45ACD9D012A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3B44AFC0-F207-44E4-9F91-7F24E1F4D342}.BuildServer|Any CPU.ActiveCfg = BuildServer|Any CPU
-		{3B44AFC0-F207-44E4-9F91-7F24E1F4D342}.BuildServer|Any CPU.Build.0 = BuildServer|Any CPU
+		{3B44AFC0-F207-44E4-9F91-7F24E1F4D342}.BuildServer|Any CPU.ActiveCfg = Release|Any CPU
+		{3B44AFC0-F207-44E4-9F91-7F24E1F4D342}.BuildServer|Any CPU.Build.0 = Release|Any CPU
 		{3B44AFC0-F207-44E4-9F91-7F24E1F4D342}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3B44AFC0-F207-44E4-9F91-7F24E1F4D342}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B44AFC0-F207-44E4-9F91-7F24E1F4D342}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -265,32 +265,32 @@ Global
 		{95745C95-A356-4E4A-9AC5-25ABD9659831}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95745C95-A356-4E4A-9AC5-25ABD9659831}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95745C95-A356-4E4A-9AC5-25ABD9659831}.Release|Any CPU.Build.0 = Release|Any CPU
-		{41696F24-E345-4599-A0C7-0715F64946D8}.BuildServer|Any CPU.ActiveCfg = BuildServer|Any CPU
-		{41696F24-E345-4599-A0C7-0715F64946D8}.BuildServer|Any CPU.Build.0 = BuildServer|Any CPU
+		{41696F24-E345-4599-A0C7-0715F64946D8}.BuildServer|Any CPU.ActiveCfg = Release|Any CPU
+		{41696F24-E345-4599-A0C7-0715F64946D8}.BuildServer|Any CPU.Build.0 = Release|Any CPU
 		{41696F24-E345-4599-A0C7-0715F64946D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{41696F24-E345-4599-A0C7-0715F64946D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{41696F24-E345-4599-A0C7-0715F64946D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{41696F24-E345-4599-A0C7-0715F64946D8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{56A380DE-2370-4C2D-8C8E-EAF3163C92EC}.BuildServer|Any CPU.ActiveCfg = BuildServer|Any CPU
-		{56A380DE-2370-4C2D-8C8E-EAF3163C92EC}.BuildServer|Any CPU.Build.0 = BuildServer|Any CPU
+		{56A380DE-2370-4C2D-8C8E-EAF3163C92EC}.BuildServer|Any CPU.ActiveCfg = Release|Any CPU
+		{56A380DE-2370-4C2D-8C8E-EAF3163C92EC}.BuildServer|Any CPU.Build.0 = Release|Any CPU
 		{56A380DE-2370-4C2D-8C8E-EAF3163C92EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{56A380DE-2370-4C2D-8C8E-EAF3163C92EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56A380DE-2370-4C2D-8C8E-EAF3163C92EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56A380DE-2370-4C2D-8C8E-EAF3163C92EC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BEEA0656-542B-4C48-A480-CEFF662DD29F}.BuildServer|Any CPU.ActiveCfg = BuildServer|Any CPU
-		{BEEA0656-542B-4C48-A480-CEFF662DD29F}.BuildServer|Any CPU.Build.0 = BuildServer|Any CPU
+		{BEEA0656-542B-4C48-A480-CEFF662DD29F}.BuildServer|Any CPU.ActiveCfg = Release|Any CPU
+		{BEEA0656-542B-4C48-A480-CEFF662DD29F}.BuildServer|Any CPU.Build.0 = Release|Any CPU
 		{BEEA0656-542B-4C48-A480-CEFF662DD29F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BEEA0656-542B-4C48-A480-CEFF662DD29F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BEEA0656-542B-4C48-A480-CEFF662DD29F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BEEA0656-542B-4C48-A480-CEFF662DD29F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{19D1BC2F-D0EB-4012-BCF2-CED6F3B926B2}.BuildServer|Any CPU.ActiveCfg = BuildServer|Any CPU
-		{19D1BC2F-D0EB-4012-BCF2-CED6F3B926B2}.BuildServer|Any CPU.Build.0 = BuildServer|Any CPU
+		{19D1BC2F-D0EB-4012-BCF2-CED6F3B926B2}.BuildServer|Any CPU.ActiveCfg = Release|Any CPU
+		{19D1BC2F-D0EB-4012-BCF2-CED6F3B926B2}.BuildServer|Any CPU.Build.0 = Release|Any CPU
 		{19D1BC2F-D0EB-4012-BCF2-CED6F3B926B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{19D1BC2F-D0EB-4012-BCF2-CED6F3B926B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19D1BC2F-D0EB-4012-BCF2-CED6F3B926B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19D1BC2F-D0EB-4012-BCF2-CED6F3B926B2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AA98B2BE-929C-4BBA-B352-E3095DBEB96B}.BuildServer|Any CPU.ActiveCfg = BuildServer|Any CPU
-		{AA98B2BE-929C-4BBA-B352-E3095DBEB96B}.BuildServer|Any CPU.Build.0 = BuildServer|Any CPU
+		{AA98B2BE-929C-4BBA-B352-E3095DBEB96B}.BuildServer|Any CPU.ActiveCfg = Release|Any CPU
+		{AA98B2BE-929C-4BBA-B352-E3095DBEB96B}.BuildServer|Any CPU.Build.0 = Release|Any CPU
 		{AA98B2BE-929C-4BBA-B352-E3095DBEB96B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AA98B2BE-929C-4BBA-B352-E3095DBEB96B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA98B2BE-929C-4BBA-B352-E3095DBEB96B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -307,18 +307,12 @@ Global
 		{6C13790D-5C7A-4D9F-9D8B-4CD28F3536F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C13790D-5C7A-4D9F-9D8B-4CD28F3536F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C13790D-5C7A-4D9F-9D8B-4CD28F3536F6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0F9C056A-DB5D-48ED-A688-BFD04ED4DFD7}.BuildServer|Any CPU.ActiveCfg = BuildServer|Any CPU
-		{0F9C056A-DB5D-48ED-A688-BFD04ED4DFD7}.BuildServer|Any CPU.Build.0 = BuildServer|Any CPU
+		{0F9C056A-DB5D-48ED-A688-BFD04ED4DFD7}.BuildServer|Any CPU.ActiveCfg = Release|Any CPU
+		{0F9C056A-DB5D-48ED-A688-BFD04ED4DFD7}.BuildServer|Any CPU.Build.0 = Release|Any CPU
 		{0F9C056A-DB5D-48ED-A688-BFD04ED4DFD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0F9C056A-DB5D-48ED-A688-BFD04ED4DFD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F9C056A-DB5D-48ED-A688-BFD04ED4DFD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F9C056A-DB5D-48ED-A688-BFD04ED4DFD7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{892D6D25-857F-4CA9-A518-526BBF05C011}.BuildServer|Any CPU.ActiveCfg = BuildServer|Any CPU
-		{892D6D25-857F-4CA9-A518-526BBF05C011}.BuildServer|Any CPU.Build.0 = BuildServer|Any CPU
-		{892D6D25-857F-4CA9-A518-526BBF05C011}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{892D6D25-857F-4CA9-A518-526BBF05C011}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{892D6D25-857F-4CA9-A518-526BBF05C011}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{892D6D25-857F-4CA9-A518-526BBF05C011}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A6F59753-3065-4BB3-85A8-1E0778205407}.BuildServer|Any CPU.ActiveCfg = BuildServer|Any CPU
 		{A6F59753-3065-4BB3-85A8-1E0778205407}.BuildServer|Any CPU.Build.0 = BuildServer|Any CPU
 		{A6F59753-3065-4BB3-85A8-1E0778205407}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -372,8 +366,8 @@ Global
 		{C0FA7295-375B-4CBE-9790-64BDBCF12A77}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0FA7295-375B-4CBE-9790-64BDBCF12A77}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0FA7295-375B-4CBE-9790-64BDBCF12A77}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B9608A11-F0F0-47AA-BD55-D6E25A310DAA}.BuildServer|Any CPU.ActiveCfg = BuildServer|Any CPU
-		{B9608A11-F0F0-47AA-BD55-D6E25A310DAA}.BuildServer|Any CPU.Build.0 = BuildServer|Any CPU
+		{B9608A11-F0F0-47AA-BD55-D6E25A310DAA}.BuildServer|Any CPU.ActiveCfg = Release|Any CPU
+		{B9608A11-F0F0-47AA-BD55-D6E25A310DAA}.BuildServer|Any CPU.Build.0 = Release|Any CPU
 		{B9608A11-F0F0-47AA-BD55-D6E25A310DAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B9608A11-F0F0-47AA-BD55-D6E25A310DAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9608A11-F0F0-47AA-BD55-D6E25A310DAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -624,12 +618,18 @@ Global
 		{FC66CF81-A030-4A43-B446-7B92B5D8708E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC66CF81-A030-4A43-B446-7B92B5D8708E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC66CF81-A030-4A43-B446-7B92B5D8708E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F83FB9B3-ADA1-436E-8DCA-CDEA2A2F3E4B}.BuildServer|Any CPU.ActiveCfg = Release|Any CPU
-		{F83FB9B3-ADA1-436E-8DCA-CDEA2A2F3E4B}.BuildServer|Any CPU.Build.0 = Release|Any CPU
-		{F83FB9B3-ADA1-436E-8DCA-CDEA2A2F3E4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F83FB9B3-ADA1-436E-8DCA-CDEA2A2F3E4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F83FB9B3-ADA1-436E-8DCA-CDEA2A2F3E4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F83FB9B3-ADA1-436E-8DCA-CDEA2A2F3E4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCFFA2F8-442C-4960-8707-5BA0E5D92BC7}.BuildServer|Any CPU.ActiveCfg = Release|Any CPU
+		{DCFFA2F8-442C-4960-8707-5BA0E5D92BC7}.BuildServer|Any CPU.Build.0 = Release|Any CPU
+		{DCFFA2F8-442C-4960-8707-5BA0E5D92BC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCFFA2F8-442C-4960-8707-5BA0E5D92BC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCFFA2F8-442C-4960-8707-5BA0E5D92BC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCFFA2F8-442C-4960-8707-5BA0E5D92BC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{797DE92C-5253-45C5-95E4-92786EBF5266}.BuildServer|Any CPU.ActiveCfg = Release|Any CPU
+		{797DE92C-5253-45C5-95E4-92786EBF5266}.BuildServer|Any CPU.Build.0 = Release|Any CPU
+		{797DE92C-5253-45C5-95E4-92786EBF5266}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{797DE92C-5253-45C5-95E4-92786EBF5266}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{797DE92C-5253-45C5-95E4-92786EBF5266}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{797DE92C-5253-45C5-95E4-92786EBF5266}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -654,7 +654,6 @@ Global
 		{560B4D9D-4F4C-4659-8860-1C628448D154} = {3D0BB23B-C814-429E-9B69-7BF1231C0F29}
 		{6C13790D-5C7A-4D9F-9D8B-4CD28F3536F6} = {3D0BB23B-C814-429E-9B69-7BF1231C0F29}
 		{0F9C056A-DB5D-48ED-A688-BFD04ED4DFD7} = {EE20B93E-797F-4E5C-9513-9F6B2B066042}
-		{892D6D25-857F-4CA9-A518-526BBF05C011} = {EE20B93E-797F-4E5C-9513-9F6B2B066042}
 		{A6F59753-3065-4BB3-85A8-1E0778205407} = {EE20B93E-797F-4E5C-9513-9F6B2B066042}
 		{931A9A36-12BE-414F-81F3-D8E8741E78DC} = {AFA994D0-4315-495A-A14A-74BC79DA9A51}
 		{7D99E047-40B6-4BE8-98C5-CB58CBA61596} = {AFA994D0-4315-495A-A14A-74BC79DA9A51}
@@ -716,7 +715,8 @@ Global
 		{8DD9172B-A711-4C8C-B26F-9C5F5C7A1608} = {8B1C755A-7401-43A6-B9EA-FE3625E2AF74}
 		{82CC4CB7-E4AF-4FD1-B5BF-8F7802D0842C} = {2B7D0649-6899-491F-B4E7-70D163B1F72D}
 		{FC66CF81-A030-4A43-B446-7B92B5D8708E} = {970EB44D-38AF-479F-AFC1-CDDB9C17113A}
-		{F83FB9B3-ADA1-436E-8DCA-CDEA2A2F3E4B} = {F8FED8D2-E9CC-484B-9794-C60B0191CF7C}
+		{DCFFA2F8-442C-4960-8707-5BA0E5D92BC7} = {EE20B93E-797F-4E5C-9513-9F6B2B066042}
+		{797DE92C-5253-45C5-95E4-92786EBF5266} = {F8FED8D2-E9CC-484B-9794-C60B0191CF7C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35

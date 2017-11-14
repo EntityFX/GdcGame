@@ -8,4 +8,11 @@
     <OutputPath>..\..\bin\</OutputPath>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Contract.Common\EntityFX.Gdcame.DataAccess.Contract.Common.csproj" />
+    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Contract.RatingServer\EntityFX.Gdcame.DataAccess.Contract.RatingServer.csproj" />
+    <ProjectReference Include="..\EntityFX.Gdcame.Engine.Contract.RatingServer\EntityFX.Gdcame.Engine.Contract.RatingServer.csproj" />
+    <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Common\EntityFX.Gdcame.Infrastructure.Common.csproj" />
+  </ItemGroup>
+
 </Project>

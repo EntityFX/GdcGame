@@ -33,7 +33,7 @@ namespace EntityFX.Gdcame.DataAccess.Repository.Ef.MainServer
     {
         public IIocContainer Configure(IIocContainer container)
         {
-            container.RegisterType<System.Data.Entity.DbContext, DbContext>(() => new DbContext("name=EconomicsArcadeDbContext"));
+            container.RegisterType<Microsoft.EntityFrameworkCore.DbContext, DbContext>(() => new DbContext("name=EconomicsArcadeDbContext"));
             container.RegisterType<IQueryBuilder, QueryBuilder>();
             container.RegisterType<IUnitOfWork, EfUnitOfWork>();
             container.RegisterType<IUnitOfWorkFactory, UnitOfWorkFactory>();

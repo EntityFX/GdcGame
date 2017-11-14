@@ -9,7 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MongoDB.Driver" Version="2.4.4" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\EntityFX.Gdcame.Common.Contract\EntityFX.Gdcame.Contract.Common.csproj" />
+    <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Repository.Contract.RatingServer\EntityFX.Gdcame.DataAccess.Repository.Contract.RatingServer.csproj" />
     <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Common\EntityFX.Gdcame.Infrastructure.Common.csproj" />
   </ItemGroup>
 

@@ -12,6 +12,7 @@
     <ProjectReference Include="..\EntityFX.Gdcame.Common.Contract\EntityFX.Gdcame.Contract.Common.csproj" />
     <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Contract.RatingServer\EntityFX.Gdcame.DataAccess.Contract.RatingServer.csproj" />
     <ProjectReference Include="..\EntityFX.Gdcame.DataAccess.Repository.Contract.RatingServer\EntityFX.Gdcame.DataAccess.Repository.Contract.RatingServer.csproj" />
+    <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Common\EntityFX.Gdcame.Infrastructure.Common.csproj" />
   </ItemGroup>
 
 </Project>

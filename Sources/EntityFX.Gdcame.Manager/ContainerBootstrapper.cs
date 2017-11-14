@@ -17,8 +17,6 @@ namespace EntityFX.Gdcame.Manager.MainServer
     using EntityFX.Gdcame.Contract.MainServer;
     using EntityFX.Gdcame.Contract.MainServer.Counters;
     using EntityFX.Gdcame.Contract.MainServer.Incrementors;
-    using EntityFX.Gdcame.Engine.Contract.GameEngine;
-    using EntityFX.Gdcame.Engine.GameEngine;
     using EntityFX.Gdcame.Engine.GameEngine.Mappers;
     using EntityFX.Gdcame.Engine.GameEngine.NetworkGameEngine;
     using EntityFX.Gdcame.Kernel.Contract.Counters;

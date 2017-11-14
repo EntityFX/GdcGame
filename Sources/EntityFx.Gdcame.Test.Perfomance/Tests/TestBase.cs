@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using EntityFx.Gdcame.Test.PerfomanceFramework;
+using EntityFX.Gdcame.Infrastructure;
 using EntityFX.Gdcame.Infrastructure.Common;
 using Newtonsoft.Json;
-using PortableLog.NLog;
 
 namespace EntityFx.Gdcame.Test.Perfomance.Tests
 {
@@ -13,7 +13,7 @@ namespace EntityFx.Gdcame.Test.Perfomance.Tests
     {
         private static Random random = new Random();
 
-        private static readonly Logger _logger = new Logger(new NLoggerAdapter((new NLogLogExFactory()).GetLogger("logger")));
+        private static readonly Logger _logger = new Logger(new NLoggerAdapter(NLog.LogManager.GetLogger("logger")));
 
         public static Logger Logger
         {

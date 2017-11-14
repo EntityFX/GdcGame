@@ -6,7 +6,6 @@
 
     using EntityFX.Gdcame.Engine.Contract.GameEngine;
     using EntityFX.Gdcame.Infrastructure.Common;
-    using EntityFX.Gdcame.Manager.Contract.Common.WorkerManager;
 
     public class SessionValidationWorker : WorkerBase, IWorker
     {

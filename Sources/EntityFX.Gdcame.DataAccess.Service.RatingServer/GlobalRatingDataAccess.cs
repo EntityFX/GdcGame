@@ -7,7 +7,6 @@
     using EntityFX.Gdcame.DataAccess.Contract.RatingServer.Rating;
     using EntityFX.Gdcame.DataAccess.Repository.Contract.RatingServer;
 
-    using Repository.Contract.Common;
 
     public class GlobalRatingDataAccess : IGlobalRatingDataAccess
     {

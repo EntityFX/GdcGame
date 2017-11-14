@@ -1,5 +1,5 @@
-﻿using EntityFX.Gdcame.GameEngine.Contract;
-using EntityFX.Gdcame.GameEngine.Contract.Items;
+﻿using EntityFX.Gdcame.Kernel.Contract;
+using EntityFX.Gdcame.Kernel.Contract.Items;
 
 namespace EntityFX.Gdcame.GameEngine.NetworkGameEngine
 {

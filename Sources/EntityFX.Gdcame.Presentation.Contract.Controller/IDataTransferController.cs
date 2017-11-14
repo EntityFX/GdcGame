@@ -1,4 +1,5 @@
-﻿using EntityFX.Gdcame.Contract.MainServer.GameDataTransfer;
+﻿//using EntityFX.Gdcame.Contract.MainServer.GameDataTransfer;
+using EntityFX.Gdcame.Contract.MainServer.GameDataTransfer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace EntityFX.Gdcame.Application.Contract.Controller.MainServer
 {
     public interface IDataTransferController
     {
-        Task SendDataAsync(DataTransfer [] sendedData);
+       Task SendDataAsync(DataTransfer[] sendedData);
     }
 }

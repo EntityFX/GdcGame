@@ -1,7 +1,6 @@
 ﻿using System;
 using EntityFx.Gdcame.Test.PerfomanceFramework;
 using EntityFX.Gdcame.Infrastructure.Common;
-using PortableLog.NLog;
 
 namespace EntityFx.Gdcame.Test.Perfomance.Tests
 {

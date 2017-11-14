@@ -13,7 +13,6 @@ namespace EntityFX.Gdcame.Engine.Worker.RatingServer
     using EntityFX.Gdcame.DataAccess.Contract.RatingServer.Rating;
     using EntityFX.Gdcame.Engine.Contract.RatingServer;
     using EntityFX.Gdcame.Infrastructure.Common;
-    using EntityFX.Gdcame.Manager.Contract.Common.WorkerManager;
 
     public class RatingSyncWorker : WorkerBase, IWorker
     {

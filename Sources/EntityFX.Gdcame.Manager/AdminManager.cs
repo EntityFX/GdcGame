@@ -10,10 +10,10 @@ namespace EntityFX.Gdcame.Manager.MainServer
 {
     using EntityFX.Gdcame.Contract.Common;
     using EntityFX.Gdcame.Contract.Common.Statistics;
-    using EntityFX.Gdcame.Contract.MainServer.Statistics;
     using EntityFX.Gdcame.DataAccess.Contract.Common.User;
     using EntityFX.Gdcame.Engine.Contract.GameEngine;
     using EntityFX.Gdcame.Manager.Common;
+    using EntityFX.Gdcame.Manager.Contract.Common.AdminManager;
 
     public class AdminManager : AdminManagerBase<MainServerStatisticsInfo>, IAdminManager
     {

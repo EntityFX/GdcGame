@@ -1,4 +1,4 @@
-using EntityFX.Gdcame.Infrastructure.Platform;
+using EntityFX.Gdcame.Infrastructure;
 
 namespace EntityFX.Gdcame.Utils.Common
 {
