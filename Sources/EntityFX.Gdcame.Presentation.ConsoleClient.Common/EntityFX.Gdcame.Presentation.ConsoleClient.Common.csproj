@@ -41,9 +41,6 @@
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="RestSharp, Version=106.0.1.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
-      <HintPath>..\packages\RestSharp.106.0.1\lib\net452\RestSharp.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -87,6 +84,10 @@
     <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Common\EntityFX.Gdcame.Infrastructure.Common.csproj">
       <Project>{924cc67d-9e2b-46ba-be1d-6c6c780ccfbc}</Project>
       <Name>EntityFX.Gdcame.Infrastructure.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure\EntityFX.Gdcame.Infrastructure.csproj">
+      <Project>{797DE92C-5253-45C5-95E4-92786EBF5266}</Project>
+      <Name>EntityFX.Gdcame.Infrastructure</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Presentation.Contract.Controller\EntityFX.Gdcame.Application.Contract.Controller.MainServer.csproj">
       <Project>{B9608A11-F0F0-47AA-BD55-D6E25A310DAA}</Project>

@@ -65,6 +65,10 @@
       <Project>{924cc67d-9e2b-46ba-be1d-6c6c780ccfbc}</Project>
       <Name>EntityFX.Gdcame.Infrastructure.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure\EntityFX.Gdcame.Infrastructure.csproj">
+      <Project>{797DE92C-5253-45C5-95E4-92786EBF5266}</Project>
+      <Name>EntityFX.Gdcame.Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Utils.WebApiClient.RatingServer\EntityFX.Gdcame.Utils.WebApiClient.RatingServer.csproj">
       <Project>{8DD9172B-A711-4C8C-B26F-9C5F5C7A1608}</Project>
       <Name>EntityFX.Gdcame.Utils.WebApiClient.RatingServer</Name>

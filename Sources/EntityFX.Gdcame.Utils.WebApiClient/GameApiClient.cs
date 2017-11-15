@@ -13,8 +13,6 @@ using EntityFX.Gdcame.Application.Contract.Controller.MainServer;
 using EntityFX.Gdcame.Application.Contract.Model.MainServer;
 using EntityFX.Gdcame.Infrastructure.Api;
 using EntityFX.Gdcame.Infrastructure.Api.Auth;
-using RestSharp;
-using RestSharp.Authenticators;
 
 namespace EntityFX.Gdcame.Utils.WebApiClient
 {
@@ -24,19 +22,19 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
 
         public async Task<ManualStepResultModel> PerformManualStepAsync(int? id = null)
         {
-            var response = await ExecuteRequestAsync<ManualStepResultModel>("/api/game/perform-step", Method.POST);
+            var response = await ExecuteRequestAsync<ManualStepResultModel>("/api/game/perform-step", ApiRequestMethod.POST);
             return response.Data;
         }
 
         public async Task<CashModel> FightAgainstInflationAsync()
         {
-            var response = await ExecuteRequestAsync<CashModel>("/api/game/fight-inflation", Method.POST);
+            var response = await ExecuteRequestAsync<CashModel>("/api/game/fight-inflation", ApiRequestMethod.POST);
             return response.Data;
         }
 
         public async Task<CashModel> ActivateDelayedCounterAsync(int counterId)
         {
-            var response = await ExecuteRequestAsync<CashModel>("/api/game/activate-delayed-counter", Method.POST);
+            var response = await ExecuteRequestAsync<CashModel>("/api/game/activate-delayed-counter", ApiRequestMethod.POST);
 
             return response.Data;
         }
@@ -55,12 +53,12 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
 
         public async Task<BuyItemModel> BuyFundDriverAsync(int id)
         {
-            var response = await ExecuteRequestAsync<BuyItemModel>("/api/game/buy-item", Method.POST
-                , new List<Parameter>() { new Parameter() {Type = ParameterType.RequestBody, Value = id, Name = "", ContentType = "application/json" }});
+            var response = await ExecuteRequestAsync<BuyItemModel>("/api/game/buy-item", ApiRequestMethod.POST
+                , new List<ApiParameter>() { new ApiParameter() { Type = ApiParameterType.Body, Value = id, Name = "", ContentType = "application/json" }});
             return response.Data;
         }
 
-        public GameApiClient(IAuthContext<IAuthenticator> authContext, int? timeout = null) : base(authContext, timeout)
+        public GameApiClient(IApiClient apiclient) : base(apiclient)
         {
         }
     }

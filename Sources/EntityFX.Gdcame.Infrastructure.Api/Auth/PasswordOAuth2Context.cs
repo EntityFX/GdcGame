@@ -1,11 +1,10 @@
 using System;
-using RestSharp.Authenticators;
 
 namespace EntityFX.Gdcame.Infrastructure.Api.Auth
 {
-    public class PasswordOAuthContext : IAuthContext<IAuthenticator>
+    public class PasswordOAuth2Context<TContext> : IAuthContext<TContext>
     {
-        public IAuthenticator Context { get; set; }
+        public IApiContext<TContext> Context { get; set; }
         public Uri BaseUri { get; set; }
 
         public string OAuthToken { get; set; }

@@ -5,8 +5,7 @@ using RestSharp;
 using RestSharp.Deserializers;
 using RestSharp.Serializers;
 
-
-namespace EntityFX.Gdcame.Infrastructure.Api
+namespace EntityFX.Gdcame.Infrastructure
 {
     public class CustomJsonDeserializer : IDeserializer
     {

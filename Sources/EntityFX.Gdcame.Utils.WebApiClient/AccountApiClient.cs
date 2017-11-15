@@ -9,21 +9,19 @@ using EntityFX.Gdcame.Application.Contract.Model;
 using EntityFX.Gdcame.Application.Contract.Model.MainServer;
 using EntityFX.Gdcame.Infrastructure.Api;
 using EntityFX.Gdcame.Infrastructure.Api.Auth;
-using RestSharp;
-using RestSharp.Authenticators;
 
 
 namespace EntityFX.Gdcame.Utils.WebApiClient
 {
     public class AccountApiClient : ApiClientBase, IAccountController
     {
-        public AccountApiClient(IAuthContext<IAuthenticator> authContext, int? timeout = null) : base(authContext, timeout)
+        public AccountApiClient(IApiClient authContext) : base(authContext)
         {
         }
 
         public async Task<bool> DeleteAsync(string id)
         {
-            var response = await ExecuteRequestAsync<string, bool>("/api/admin/accounts", Method.DELETE, id);
+            var response = await ExecuteRequestAsync<string, bool>("/api/admin/accounts", ApiRequestMethod.DELETE, id);
             return response != null ? response.Data : false;
         }
 

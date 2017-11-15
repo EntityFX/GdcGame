@@ -7,6 +7,7 @@ using EntityFx.Gdcame.Test.PerfomanceFramework;
 using EntityFX.Gdcame.Application.Contract.Model;
 using EntityFX.Gdcame.Application.Contract.Model.MainServer;
 using EntityFX.Gdcame.Common.Application.Model;
+using EntityFX.Gdcame.Infrastructure;
 using EntityFX.Gdcame.Infrastructure.Common;
 using PerformanceCounter = EntityFx.Gdcame.Test.PerfomanceFramework.PerformanceCounter;
 
@@ -39,7 +40,7 @@ namespace EntityFx.Gdcame.Test.Perfomance
             _serviceUri = serviceUriList;
             _logger = logger;
             _parallelism = parallelism;
-            _performanceApi = new PerformanceApi(serviceUriList, logger);
+            _performanceApi = new PerformanceApi(serviceUriList, logger, new RestsharpOAuth2ProviderFactory(logger));
         }
 
         public Tuple<PerformanceAggregate, string[]> TestEchoAuth(int countAccounts, string text, bool isParallel)

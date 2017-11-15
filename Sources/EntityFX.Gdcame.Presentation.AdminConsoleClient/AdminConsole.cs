@@ -7,6 +7,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using EntityFX.Gdcame.Infrastructure;
+using RestSharp.Authenticators;
+
 namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
 {
     using System;
@@ -34,6 +37,7 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
 
         private readonly int ratingServerPort;
 
+        private readonly ApiHelper<IAuthenticator> _apiHelper;
         private readonly string user;
 
 
@@ -44,14 +48,15 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
 
         private Timer statisticsUpdateTimer;
 
-        private PasswordOAuthContext[] serversAuthContextList;
+        private IAuthContext<IAuthenticator>[] serversAuthContextList;
         private ServerAuthContext[] serversAuthWithTypeContextList;
         private object stdLock = new { };
         private bool isMainMenu;
 
-        public AdminConsole(string user, string password, Uri mainServer, Uri ratingServer, int port, int ratingServerPort)
+        public AdminConsole(ApiHelper<IAuthenticator> apiHelper, string user, string password, Uri mainServer, Uri ratingServer, int port, int ratingServerPort)
 
         {
+            _apiHelper = apiHelper;
             this.user = user;
             this.password = password;
             this.mainServer = mainServer;
@@ -114,7 +119,7 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
 
         private void StopAllGames()
         {
-            var serversList = ApiHelper.GetServersUri(ApiHelper.GetServers(this.mainServer), this.servicePort);
+            var serversList = _apiHelper.GetServersUri(_apiHelper.GetServers(this.mainServer), this.servicePort);
 
             Task.WhenAll(this.DoAuthServers(serversList).Where(_ => _ != null).Select(_ => Task.Factory.StartNew(
                 () =>
@@ -122,7 +127,7 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
                     try
                     {
 
-                        ApiHelper.GetAdminClient(_).StopAllGames();
+                        _apiHelper.GetAdminClient(_).StopAllGames();
 
                     }
                     catch (Exception)
@@ -134,7 +139,7 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
 
         private void Echo()
         {
-            var serversList = ApiHelper.GetServersUri(ApiHelper.GetServers(this.mainServer), this.servicePort);
+            var serversList = _apiHelper.GetServersUri(_apiHelper.GetServers(this.mainServer), this.servicePort);
 
             var echoResults = Task.WhenAll(
                 this.DoAuthServers(serversList).Where(_ => _ != null).Select(_ => Task.Factory.StartNew(
@@ -143,7 +148,7 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
                         try
                         {
                             var result = new Tuple<Uri, string>(_.BaseUri,
-                                ApiHelper.GetServerInfoClient(_).Echo("text"));
+                                _apiHelper.GetServerInfoClient(_).Echo("text"));
                             return result;
                         }
                         catch (Exception)
@@ -166,14 +171,14 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
 
         private class ServerAuthContext
         {
-            public PasswordOAuthContext AuthContext { get; set; }
+            public IAuthContext<IAuthenticator> AuthContext { get; set; }
             public string ServerType { get; set; }
         }
 
         private void GetStatistics()
         {
             var serversList =
-                ApiHelper.GetServersUri(ApiHelper.GetServers(this.mainServer), this.servicePort).Select(s => new ServerLoginContext()
+                _apiHelper.GetServersUri(_apiHelper.GetServers(this.mainServer), this.servicePort).Select(s => new ServerLoginContext()
                 {
                     ServerType = "MainServer",
                     Uri = s
@@ -189,82 +194,32 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
             this.statisticsUpdateTimer.Start();
         }
 
-        private PasswordOAuthContext[] DoAuthServers(Uri[] serversList)
+        private IAuthContext<IAuthenticator>[] DoAuthServers(Uri[] serversList)
         {
-            return Task.WhenAll(
-                serversList.Select(server => new PasswordAuthProvider(server))
-                    .Select(
-                        async passwordProvider =>
-                            {
-                                try
-                                {
-                                    return
-                                        await passwordProvider.Login(
-                                            new PasswordAuthRequest<PasswordAuthData>
-                                            {
-                                                RequestData =
-                                                        new PasswordAuthData
-                                                        {
-                                                            Password
-                                                                    =
-                                                                    this
-                                                                        .password,
-                                                            Usename
-                                                                    =
-                                                                    this
-                                                                        .user
-                                                        }
-                                            });
-                                }
-                                catch (Exception e)
-                                {
-                                    Console.WriteLine(e);
-                                    return null;
-                                }
-                            }).Where(pctx => pctx != null)).Result;
+            return Task.WhenAll<IAuthContext<IAuthenticator>>(serversList.Select(async uri =>
+                await _apiHelper.LoginServer(uri, new PasswordOAuth2RequestData
+                {
+                    Password
+                        =
+                        this
+                            .password,
+                    Usename
+                        =
+                        this
+                            .user
+                }))).Result;
         }
 
         private ServerAuthContext[] DoAuthServers(ServerLoginContext[] contexts)
         {
-            return Task.WhenAll(
-
-                contexts.Select(
-                        server =>
-                            new Tuple<string, PasswordAuthProvider>(server.ServerType, new PasswordAuthProvider(server.Uri)))
-                    .Select(
-                        async passwordProvider =>
-                            {
-                                try
-                                {
-                                    return new ServerAuthContext
-                                    {
-                                        AuthContext =
-                                                       await passwordProvider.Item2.Login(
-                                                           new PasswordAuthRequest<PasswordAuthData>
-                                                           {
-                                                               RequestData
-                                                                       =
-                                                                       new PasswordAuthData
-                                                                       {
-                                                                           Password
-                                                                                   =
-                                                                                   this
-                                                                                       .password,
-                                                                           Usename
-                                                                                   =
-                                                                                   this
-                                                                                       .user
-                                                                       }
-                                                           }),
-                                        ServerType = passwordProvider.Item1
-                                    };
-                                }
-                                catch (Exception e)
-                                {
-                                    Console.WriteLine(e);
-                                    return null;
-                                }
-                            }).Where(pctx => pctx != null)).Result;
+            return Task.WhenAll(contexts.Select(async context =>
+                new Tuple<IAuthContext<IAuthenticator>, string>(await _apiHelper.LoginServer(context.Uri,
+                    new PasswordOAuth2RequestData
+                    {
+                        Password = this.password,
+                        Usename = this.user
+                    }), context.ServerType)
+            )).Result.Select(res => new ServerAuthContext() {AuthContext = res.Item1, ServerType = res.Item2}).ToArray();
         }
 
         class MultiServerOperationResult
@@ -286,13 +241,13 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
         {
             var errors = new Dictionary<string, string>();
 
-            serversList.Select(server => new AnonimousAuthContext()
+            serversList.Select(server => new AnonymousAuthContext<IAuthenticator>()
             {
                 BaseUri = new Uri(string.Format("http://{0}:{1}/", server, this.servicePort))
             }).Select(
                 context =>
                 {
-                    var client = ApiHelper.GetServerInfoClient(context);
+                    var client = _apiHelper.GetServerInfoClient(context);
                     try
                     {
                         return client.Echo(context.BaseUri.Host);
@@ -328,8 +283,8 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
                                 _.AuthContext.BaseUri,
                                 (
                                     _.ServerType == "MainServer" ?
-                                    ApiHelper.GetStatisticsClient<MainServerStatisticsInfoModel>(_.AuthContext) :
-                                    ApiHelper.GetStatisticsClient<ServerStatisticsInfoModel>(_.AuthContext)
+                                        _apiHelper.GetStatisticsClient<MainServerStatisticsInfoModel>(_.AuthContext) :
+                                        _apiHelper.GetStatisticsClient<ServerStatisticsInfoModel>(_.AuthContext)
                                 ).GetStatistics(), _.ServerType);
                             return result;
                         }
@@ -349,14 +304,14 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
 
         private void AddServer()
         {
-            var serversList = ApiHelper.GetServers(this.mainServer).ToArray();
+            var serversList = _apiHelper.GetServers(this.mainServer).ToArray();
             Console.Clear();
             Console.WriteLine("Please enter server address:");
             var server = Console.ReadLine();
 
             serversList = serversList.Concat(new[] { server }).ToArray();
 
-            var uriServersList = ApiHelper.GetServersUri(serversList, this.servicePort);
+            var uriServersList = _apiHelper.GetServersUri(serversList, this.servicePort);
 
             var checkResult = this.CheckServersAvailability(serversList, this.servicePort);
             if (!checkResult.IsSuccess)
@@ -378,7 +333,7 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
                                 try
                                 {
 
-                                    ApiHelper.GetAdminClient(_).UpdateServersList(new[] { server });
+                                    _apiHelper.GetAdminClient(_).UpdateServersList(new[] { server });
                                 }
                                 catch (Exception)
                                 {
@@ -395,7 +350,7 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
                     var clientException = innerException as IClientException<ErrorData>;
                     if (clientException != null)
                     {
-                        ApiHelper.HandleClientException(clientException);
+                        _apiHelper.HandleClientException(clientException);
                     }
                 }
             }
@@ -478,10 +433,10 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
                             PrettyConsole.WriteColor(ConsoleColor.DarkYellow, "\t  {0,-7}", "Name:");
                             PrettyConsole.WriteColor(ConsoleColor.Yellow, "{0,-25}", w.Name);
                             PrettyConsole.WriteColor(ConsoleColor.DarkYellow, "\t{0,-7}", "Is Run:");
-                            PrettyConsole.WriteColor(w.IsRunning ? ConsoleColor.Green: ConsoleColor.Red, "{0,1}", w.IsRunning ? "Y" : "N");
+                            PrettyConsole.WriteColor(w.IsRunning ? ConsoleColor.Green : ConsoleColor.Red, "{0,1}", w.IsRunning ? "Y" : "N");
                             PrettyConsole.WriteColor(ConsoleColor.DarkYellow, "\t{0,-7}", "Ticks:");
                             PrettyConsole.WriteLineColor(ConsoleColor.Yellow, "{0,-6}", w.Ticks);
-                            PrettyConsole.WriteLineColor(ConsoleColor.Yellow,"\t\t{0}", 
+                            PrettyConsole.WriteLineColor(ConsoleColor.Yellow, "\t\t{0}",
                                 string.Join(", ", w.PerfomanceCounters.Select((kvp) => string.Format("{0}: {1:N1}", kvp.Key, kvp.Value))));
                         });
                 Console.WriteLine();
@@ -574,10 +529,10 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
             if (string.IsNullOrEmpty(server)) return;
 
             var auth =
-                ApiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, this.servicePort)), this.user, this.password)
-                    .Result;
+                _apiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, this.servicePort)),
+                new PasswordOAuth2RequestData(){ Usename = this.user,Password = this.password}).Result;
 
-            var client = ApiHelper.GetAdminClient(auth);
+            var client = _apiHelper.GetAdminClient(auth);
 
             try
             {
@@ -607,10 +562,10 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
             if (string.IsNullOrEmpty(server)) return;
 
             var auth =
-                ApiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, this.servicePort)), this.user, this.password)
+                _apiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, this.servicePort)), new PasswordOAuth2RequestData() { Usename = this.user, Password = this.password })
                     .Result;
 
-            var client = ApiHelper.GetAdminClient(auth);
+            var client = _apiHelper.GetAdminClient(auth);
 
 
             Console.WriteLine("Enter GUID of session:");
@@ -636,10 +591,9 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
             if (string.IsNullOrEmpty(server)) return;
 
             var auth =
-                ApiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, this.servicePort)), this.user, this.password)
-                    .Result;
+                _apiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, this.servicePort)), new PasswordOAuth2RequestData() { Usename = this.user, Password = this.password }).Result;
 
-            var client = ApiHelper.GetAdminClient(auth);
+            var client = _apiHelper.GetAdminClient(auth);
 
             try
             {
@@ -672,10 +626,10 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
             if (string.IsNullOrEmpty(server)) return;
 
             var auth =
-                ApiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, this.servicePort)), this.user, this.password)
+                _apiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, this.servicePort)), new PasswordOAuth2RequestData() { Usename = this.user, Password = this.password })
                     .Result;
 
-            var client = ApiHelper.GetAdminClient(auth);
+            var client = _apiHelper.GetAdminClient(auth);
 
             Console.WriteLine("Enter login to close sessions:");
 
@@ -699,10 +653,10 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
             var server = this.GetServer();
 
             var auth =
-                ApiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, this.servicePort)), this.user, this.password)
+                _apiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, this.servicePort)), new PasswordOAuth2RequestData() { Usename = this.user, Password = this.password })
                     .Result;
 
-            var client = ApiHelper.GetAdminClient(auth);
+            var client = _apiHelper.GetAdminClient(auth);
 
             try
             {
@@ -721,10 +675,10 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
             if (string.IsNullOrEmpty(server)) return;
 
             var auth =
-                ApiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, this.servicePort)), this.user, this.password)
+                _apiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, this.servicePort)), new PasswordOAuth2RequestData() { Usename = this.user, Password = this.password })
                     .Result;
 
-            var client = ApiHelper.GetAdminClient(auth);
+            var client = _apiHelper.GetAdminClient(auth);
 
             try
             {
@@ -744,10 +698,10 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
             if (string.IsNullOrEmpty(server)) return;
 
             var auth =
-                ApiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, this.servicePort)), this.user, this.password)
+                _apiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, this.servicePort)), new PasswordOAuth2RequestData() { Usename = this.user, Password = this.password })
                     .Result;
 
-            var client = ApiHelper.GetAdminClient(auth);
+            var client = _apiHelper.GetAdminClient(auth);
 
             Console.WriteLine("Please enter username for wipe him:");
 
@@ -769,7 +723,7 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
             }
             finally
             {
-                ApiHelper.UserLogout(auth);
+                _apiHelper.UserLogout(auth);
             }
         }
 
@@ -783,7 +737,7 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
             string[] serversList = null;
             try
             {
-                serversList = ApiHelper.GetServers(this.mainServer).ToArray();
+                serversList = _apiHelper.GetServers(this.mainServer).ToArray();
             }
             catch (AggregateException e)
             {
@@ -793,7 +747,7 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
                     var clientException = innerException as IClientException<ErrorData>;
                     if (clientException != null)
                     {
-                        ApiHelper.HandleClientException(clientException);
+                        _apiHelper.HandleClientException(clientException);
                     }
                     else
                     {

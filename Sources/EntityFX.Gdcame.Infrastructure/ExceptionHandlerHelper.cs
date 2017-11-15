@@ -4,7 +4,7 @@ using EntityFX.Gdcame.Infrastructure.Api.Exceptions;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 
-namespace EntityFX.Gdcame.Infrastructure.Api
+namespace EntityFX.Gdcame.Infrastructure
 {
     internal static class ExceptionHandlerHelper
     {

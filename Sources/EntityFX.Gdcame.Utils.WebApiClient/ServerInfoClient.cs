@@ -9,38 +9,33 @@ using EntityFX.Gdcame.Application.Contract.Controller.Common;
 using EntityFX.Gdcame.Common.Application.Model;
 using EntityFX.Gdcame.Infrastructure.Api;
 using EntityFX.Gdcame.Infrastructure.Api.Auth;
-using RestSharp;
-using RestSharp.Authenticators;
+
 
 
 namespace EntityFX.Gdcame.Utils.WebApiClient
 {
     public class ServerInfoClient : ApiClientBase, IServerController
     {
-        public ServerInfoClient(int? timeout = null) : base(null, timeout)
-        {
-        }
-
-        public ServerInfoClient(IAuthContext<IAuthenticator> authContext, int? timeout = null) : base(authContext, timeout)
+        public ServerInfoClient(IApiClient authContext) : base(authContext)
         {
         }
 
         public async Task<ServerInfoModel> GetServersInfo()
         {
-            var response = await ExecuteRequestAsync<ServerInfoModel>("/api/server-info", Method.GET);
+            var response = await ExecuteRequestAsync<ServerInfoModel>("/api/server-info", ApiRequestMethod.GET);
             return response.Data;
         }
 
         public string Echo(string text)
         {
-            var response =  ExecuteRequestAsync<string>("/api/server-info/echo", Method.GET, new List<Parameter>() { new Parameter() { Type = ParameterType.QueryString, Name = "text",  Value = text } });
+            var response =  ExecuteRequestAsync<string>("/api/server-info/echo", ApiRequestMethod.GET, new List<ApiParameter>() { new ApiParameter() { Type = ApiParameterType.QueryString, Name = "text",  Value = text } });
             var data = response.Result;
             return data.Data;
         }
 
         public string EchoAuth(string text)
         {
-            var response = ExecuteRequestAsync<string>("/api/server-info/echo-async", Method.GET, new List<Parameter>() { new Parameter() { Type = ParameterType.GetOrPost, Name = "text", Value = text } });
+            var response = ExecuteRequestAsync<string>("/api/server-info/echo-async", ApiRequestMethod.GET, new List<ApiParameter>() { new ApiParameter() { Type = ApiParameterType.QueryString, Name = "text", Value = text } });
             return response.Result.Data;
         }
     }

@@ -33,11 +33,18 @@
     <Reference Include="CommonServiceLocator, Version=2.0.1.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\Unity.5.2.0\lib\net45\CommonServiceLocator.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.4.4.12\lib\net45\NLog.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp, Version=106.0.1.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.106.0.1\lib\net452\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -67,14 +74,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomJsonDeserializer.cs" />
+    <Compile Include="ExceptionHandlerHelper.cs" />
+    <Compile Include="GameClientFactory.cs" />
     <Compile Include="NLoggerAdapter.cs" />
+    <Compile Include="RestsharpOAuth2ProviderFactory.cs" />
+    <Compile Include="RestsharpPasswordOAuth2ApiContext.cs" />
+    <Compile Include="RestsharpPasswordOAuth2Provider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RestsharpApiAdapter.cs" />
+    <Compile Include="RestsharpApiClientFactory.cs" />
     <Compile Include="UnityIocContainer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Api\EntityFX.Gdcame.Infrastructure.Api.csproj">
+      <Project>{694C9D89-2BBE-46AE-9953-4A2AB09FF500}</Project>
+      <Name>EntityFX.Gdcame.Infrastructure.Api</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Common\EntityFX.Gdcame.Infrastructure.Common.csproj">
       <Project>{924CC67D-9E2B-46BA-BE1D-6C6C780CCFBC}</Project>
       <Name>EntityFX.Gdcame.Infrastructure.Common</Name>

@@ -4,6 +4,10 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EntityFX.Gdcame.Infrastructure;
+using EntityFX.Gdcame.Presentation.ConsoleClient.Common;
+using NLog;
+using RestSharp.Authenticators;
 
 namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
 {
@@ -29,7 +33,7 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
             Console.Write("Enter password: ");
             userPassword = Console.ReadLine();
 
-            var ac = new AdminConsole(
+            var ac = new AdminConsole(new ApiHelper<IAuthenticator>(new RestsharpOAuth2ProviderFactory(new NLoggerAdapter(LogManager.GetLogger("logger"))), new RestsharpApiClientFactory() ), 
                 userName, userPassword, 
                 new Uri(string.Format("{0}:{1}", mainServer, serverPort)),
                 new Uri(string.Format("{0}:{1}", ratingServer, ratingServerPort)),

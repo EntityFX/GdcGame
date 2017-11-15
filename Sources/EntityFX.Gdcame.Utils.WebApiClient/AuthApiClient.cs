@@ -5,8 +5,6 @@ using EntityFX.Gdcame.Application.Contract.Model;
 using EntityFX.Gdcame.Application.Contract.Model.MainServer;
 using EntityFX.Gdcame.Infrastructure.Api;
 using EntityFX.Gdcame.Infrastructure.Api.Auth;
-using RestSharp;
-using RestSharp.Authenticators;
 
 namespace EntityFX.Gdcame.Utils.WebApiClient
 {
@@ -15,17 +13,17 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
 
         public async Task<object> Register(RegisterAccountModel model)
         {
-            var response = await ExecuteRequestAsync<RegisterAccountModel, object>("/api/auth/register", Method.POST, model);
+            var response = await ExecuteRequestAsync<RegisterAccountModel, object>("/api/auth/register", ApiRequestMethod.POST, model);
             return response.Data;
         }
 
         public async Task<object> Logout()
         {
-            var response = await ExecuteRequestAsync<object>("/api/auth/logout", Method.POST);
+            var response = await ExecuteRequestAsync<object>("/api/auth/logout", ApiRequestMethod.POST);
             return response.Data;
         }
 
-        public AuthApiClient(IAuthContext<IAuthenticator> authContext, int? timeout = null) : base(authContext, timeout)
+        public AuthApiClient(IApiClient authContext) : base(authContext)
         {
         }
     }

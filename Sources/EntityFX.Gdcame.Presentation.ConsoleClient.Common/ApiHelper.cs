@@ -4,12 +4,13 @@ using System.Threading.Tasks;
 using EntityFx.GdCame.Test.Shared;
 using EntityFX.Gdcame.Application.Contract.Controller.Common;
 using EntityFX.Gdcame.Application.Contract.Controller.MainServer;
+using EntityFX.Gdcame.Infrastructure;
+using EntityFX.Gdcame.Infrastructure.Api;
 using EntityFX.Gdcame.Infrastructure.Api.Auth;
 using EntityFX.Gdcame.Infrastructure.Api.Exceptions;
 using EntityFX.Gdcame.Utils.Hashing;
 using EntityFX.Gdcame.Utils.WebApiClient;
 using Newtonsoft.Json;
-using RestSharp.Authenticators;
 
 namespace EntityFX.Gdcame.Presentation.ConsoleClient.Common
 {
@@ -17,32 +18,43 @@ namespace EntityFX.Gdcame.Presentation.ConsoleClient.Common
 
     using EntityFX.Gdcame.Common.Application.Model;
 
-    public class ApiHelper
+    public class ApiHelper<TAuthContext>
+        where TAuthContext : class
     {
-        public static async Task<PasswordOAuthContext> LoginServer(Uri server, string userName, string password)
+        private readonly IAuthProviderFactory<PasswordOAuth2RequestData, TAuthContext> _authProvider;
+        private readonly IApiClientFactory<TAuthContext> _apiClientFactory;
+
+        public ApiHelper(IAuthProviderFactory<PasswordOAuth2RequestData, TAuthContext> authProvider, IApiClientFactory<TAuthContext> apiClientFactory)
         {
-            var p = new PasswordAuthProvider(server);
-            return await p.Login(new PasswordAuthRequest<PasswordAuthData>()
+            _authProvider = authProvider;
+            _apiClientFactory = apiClientFactory;
+        }
+
+        public async Task<IAuthContext<TAuthContext>> LoginServer(Uri server, PasswordOAuth2RequestData authData)
+        {
+            //var p = new RestsharpPasswordOAuth2Provider(server);
+            var p = _authProvider.Build(server);
+            return await p.Login(new PasswordOAuth2Request()
             {
-                RequestData = new PasswordAuthData { Password = password, Usename = userName }
+                RequestData = authData
             });
         }
 
-        public static async Task<Tuple<PasswordOAuthContext, string>> UserLogin(string[] serversList, int port, string userName, string password)
+        public async Task<Tuple<IAuthContext<TAuthContext>, string>> UserLogin(string[] serversList, int port, PasswordOAuth2RequestData authData)
         {
-            var serverInfoUrl = GetApiServerUri(serversList, userName, port);
+            var serverInfoUrl = GetApiServerUri(serversList, authData.Usename, port);
 
-            var p = new PasswordAuthProvider(serverInfoUrl);
-            var res = await p.Login(new PasswordAuthRequest<PasswordAuthData>()
+            var p = _authProvider.Build(serverInfoUrl);
+            var res = await p.Login(new PasswordOAuth2Request()
             {
-                RequestData = new PasswordAuthData() { Password = password, Usename = userName }
+                RequestData = authData
             });
-            return new Tuple<PasswordOAuthContext, string>(res, userName);
+            return new Tuple<IAuthContext<TAuthContext>, string>(res, authData.Usename);
         }
 
-        public static ErrorCodes? UserLogout(PasswordOAuthContext session)
+        public ErrorCodes? UserLogout(IAuthContext<TAuthContext> session)
         {
-            var authApi = new AuthApiClient(session);
+            var authApi = new AuthApiClient(_apiClientFactory.Build(session));
             try
             {
                 var result = authApi.Logout().Result;
@@ -54,52 +66,54 @@ namespace EntityFX.Gdcame.Presentation.ConsoleClient.Common
             return null;
         }
 
-        public static Uri GetApiServerUri(string[] serversList, string login, int port)
+        public Uri GetApiServerUri(string[] serversList, string login, int port)
         {
             var hasher = new HashHelper();
             var serverNumber = hasher.GetServerNumberByUserId(serversList, hasher.GetHashedString(login));
             return new Uri(string.Format("http://{0}:{1}/", serversList[serverNumber], port));
         }
 
-        public static string[] GetServers(Uri mainServer)
+        public string[] GetServers(Uri mainServer)
         {
+            var auth = new AnonymousAuthContext<TAuthContext> {BaseUri = mainServer};
             return
-                (new ServerInfoClient(new PasswordOAuthContext() {BaseUri = mainServer})).GetServersInfo()
+                new ServerInfoClient(_apiClientFactory.Build(auth)).GetServersInfo()
                     .Result.ServerList;
         }
 
-        public static Uri[] GetServersUri(string[] servers, int port)
+        public Uri[] GetServersUri(string[] servers, int port)
         {
             return servers.Select(server => new Uri(string.Format("http://{0}:{1}/", server, port))).ToArray();
         }
 
-        public static IGameApiController GetGameClient(PasswordOAuthContext session)
+        public IGameApiController GetGameClient(IAuthContext<TAuthContext> session)
         {
-            return new GameApiClient(session);
+            return new GameApiClient(_apiClientFactory.Build(session));
         }
 
-        public static IAdminController GetAdminClient(PasswordOAuthContext session)
+        public IAdminController GetAdminClient(IAuthContext<TAuthContext> session)
         {
-            return new AdminApiClient(session);
+            return new AdminApiClient(_apiClientFactory.Build(session));
         }
 
-        public static IStatisticsInfo<TModel> GetStatisticsClient<TModel>(PasswordOAuthContext session)
+        public IStatisticsInfo<TModel> GetStatisticsClient<TModel>(IAuthContext<TAuthContext> session)
             where TModel : ServerStatisticsInfoModel
         {
-            return new StatisticsApiClient<TModel>(session);
+            return new StatisticsApiClient<TModel>(_apiClientFactory.Build(session));
         }
 
-        public static IRatingController GetRatingClient(IAuthContext<IAuthenticator> session)
+        public IRatingController GetRatingClient(IAuthContext<TAuthContext> session)
         {
-            return new RatingApiClient(session);
+            return new RatingApiClient(_apiClientFactory.Build(session));
         }
 
-        public static IServerController GetServerInfoClient(IAuthContext<IAuthenticator> session)
+        public IServerController GetServerInfoClient(IAuthContext<TAuthContext> session)
         {
-            return new ServerInfoClient(session);
+            var gameClient = new GameApiClient(_apiClientFactory.Build(session));
+            return new ServerInfoClient(gameClient);
         }
 
-        public static ErrorCodes HandleClientException(IClientException<ErrorData> exception)
+        public ErrorCodes HandleClientException(IClientException<ErrorData> exception)
         {
             Console.Clear();
             var res = HandleClientExceptionErrorData(exception);
@@ -115,7 +129,7 @@ namespace EntityFX.Gdcame.Presentation.ConsoleClient.Common
             if (exception.ErrorData != null)
             {
                 errorData = exception.ErrorData.Message;
-                var authException = exception as ClientException<WrongAuthData<PasswordAuthData>>;
+                var authException = exception as ClientException<WrongAuthData<PasswordOAuth2RequestData>>;
                 if (authException != null)
                 {
                     errorCodes = ErrorCodes.AuthError;

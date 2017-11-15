@@ -80,6 +80,10 @@
       <Project>{924cc67d-9e2b-46ba-be1d-6c6c780ccfbc}</Project>
       <Name>EntityFX.Gdcame.Infrastructure.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure\EntityFX.Gdcame.Infrastructure.csproj">
+      <Project>{797DE92C-5253-45C5-95E4-92786EBF5266}</Project>
+      <Name>EntityFX.Gdcame.Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Presentation.ConsoleClient.Common\EntityFX.Gdcame.Presentation.ConsoleClient.Common.csproj">
       <Project>{805FA369-C681-4204-B16B-CFE3AE2FA813}</Project>
       <Name>EntityFX.Gdcame.Presentation.ConsoleClient.Common</Name>

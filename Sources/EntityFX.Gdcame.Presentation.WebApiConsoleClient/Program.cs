@@ -21,6 +21,8 @@ using EntityFX.Gdcame.Presentation.ConsoleClient.Common;
 using EntityFX.Gdcame.Contract.Common.UserRating;
 using EntityFX.Gdcame.Infrastructure;
 using EntityFX.Gdcame.Infrastructure.Common;
+using NLog;
+using RestSharp.Authenticators;
 using Unity;
 
 namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
@@ -32,6 +34,9 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
         private static IIocContainer _container;
         public static ErrorCodes? ErrorCode { get; private set; }
         private static bool _exitFlag;
+
+        private static ApiHelper<IAuthenticator> apiHelper = new ApiHelper<IAuthenticator>(
+            new RestsharpOAuth2ProviderFactory(new NLoggerAdapter(LogManager.GetLogger("logger"))), new RestsharpApiClientFactory());
 
         private static Dictionary<ConsoleKey, MenuItem> _mainMenu = new Dictionary<ConsoleKey, MenuItem>
         {
@@ -189,9 +194,10 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             Console.Write("Reenter password: ");
             var confirmPassword = Console.ReadLine();
 
-            var serverInfoUrl = ApiHelper.GetApiServerUri(ApiHelper.GetServers(new Uri(string.Format("{0}:{1}", _mainServer, _serverPort))), userName, _serverPort);
+            var serverInfoUrl = apiHelper.GetApiServerUri(apiHelper.GetServers(new Uri(string.Format("{0}:{1}", _mainServer, _serverPort))), userName, _serverPort);
 
-            var authApi = new AuthApiClient(new PasswordOAuthContext() { BaseUri = serverInfoUrl });
+            var apiFactory = new RestsharpApiClientFactory();
+            var authApi = new AuthApiClient(apiFactory.Build(new AnonymousAuthContext<IAuthenticator>() { BaseUri = serverInfoUrl }));
 
             try
             {
@@ -204,7 +210,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             }
             catch (AggregateException loginException)
             {
-                ErrorCode = ApiHelper.HandleClientException(loginException.InnerException as IClientException<ErrorData>) as ErrorCodes?;
+                ErrorCode = apiHelper.HandleClientException(loginException.InnerException as IClientException<ErrorData>) as ErrorCodes?;
             }
 
 
@@ -212,7 +218,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
 
         private static void TryLogin()
         {
-            Tuple<PasswordOAuthContext, string> loginResultTuple;
+            Tuple<IAuthContext<IAuthenticator>, string> loginResultTuple;
             if (string.IsNullOrEmpty(_userName))
             {
                 Console.Write("Enter login: ");
@@ -225,11 +231,15 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             {
                 Console.Clear();
                 Console.WriteLine("-=Sign In=-");
-                loginResultTuple = ApiHelper.UserLogin(ApiHelper.GetServers(new Uri(string.Format("{0}:{1}", _mainServer, _serverPort))), _serverPort, _userName, _userPassword).Result;
+                loginResultTuple = apiHelper.UserLogin(apiHelper.GetServers(new Uri(string.Format("{0}:{1}", _mainServer, _serverPort))), _serverPort, new PasswordOAuth2RequestData()
+                {
+                    Usename = _userName,
+                    Password = _userPassword
+                }).Result;
             }
             catch (AggregateException loginException)
             {
-                ApiHelper.HandleClientException(loginException.InnerException as IClientException<ErrorData>);
+                apiHelper.HandleClientException(loginException.InnerException as IClientException<ErrorData>);
                 loginResultTuple = null;
                 _userName = null;
             }
@@ -268,15 +278,16 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             }
         }
 
-        private static void EnterGame(Tuple<PasswordOAuthContext, string> loginContext)
+        private static void EnterGame(Tuple<IAuthContext<IAuthenticator>, string> loginContext)
         {
             Console.Clear();
 
-            var gameClient = ApiHelper.GetGameClient(loginContext.Item1);
+            var gameClient = apiHelper.GetGameClient(loginContext.Item1);
             var gr = new GameRunner(loginContext.Item2, loginContext.Item1, gameClient);
-            var adminManagerClient = ApiHelper.GetAdminClient(loginContext.Item1);
+            var adminManagerClient = apiHelper.GetAdminClient(loginContext.Item1);
+            var apiFactory = new RestsharpApiClientFactory();
 
-            var rc = ApiHelper.GetRatingClient(new PasswordOAuthContext() { BaseUri = new Uri(string.Format("{0}:{1}", ratingServer, ratingServerPort)) });
+            var rc = apiHelper.GetRatingClient(new AnonymousAuthContext<IAuthenticator>() { BaseUri = new Uri(string.Format("{0}:{1}", ratingServer, ratingServerPort)) });
             gr.Invalidate();
             ConsoleKeyInfo keyInfo;
             while ((keyInfo = Console.ReadKey(true)).Key != ConsoleKey.Escape)
@@ -305,7 +316,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                     }
                     else if (keyInfo.Key == ConsoleKey.F2)
                     {
-                        ErrorCode = ApiHelper.UserLogout(gr.ServerContext);
+                        ErrorCode = apiHelper.UserLogout(gr.ServerContext);
                         _userName = null;
                         break;
                     }
@@ -500,14 +511,14 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
             private int? _verificationResult;
 
 
-            public GameRunner(string user, PasswordOAuthContext serverContext, IGameApiController game)
+            public GameRunner(string user, IAuthContext<IAuthenticator> serverContext, IGameApiController game)
             {
                 ServerContext = serverContext;
                 User = user;
                 _game = game;
             }
 
-            public PasswordOAuthContext ServerContext { get; set; }
+            public IAuthContext<IAuthenticator> ServerContext { get; set; }
 
             public string User { get; set; }
 
@@ -594,7 +605,7 @@ namespace EntityFX.Gdcame.Presentation.WebApiConsoleClient
                 }
                 catch (AggregateException exp)
                 {
-                    ErrorCode = ApiHelper.HandleClientException(exp.InnerException as IClientException<ErrorData>);
+                    ErrorCode = apiHelper.HandleClientException(exp.InnerException as IClientException<ErrorData>);
                 }
                 catch (Exception exp)
                 {

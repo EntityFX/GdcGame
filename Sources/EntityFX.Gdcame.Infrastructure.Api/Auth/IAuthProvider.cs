@@ -2,10 +2,10 @@ using System.Threading.Tasks;
 
 namespace EntityFX.Gdcame.Infrastructure.Api.Auth
 {
-    public interface IAuthProvider<TAuthRequest, TAuthContext>
-        where TAuthRequest : class
+    public interface IAuthProvider<TAuthRequestData, TAuthContext>
+        where TAuthRequestData : class
         where TAuthContext : class
     {
-        Task<PasswordOAuthContext> Login(IAuthRequestData<TAuthRequest> authContext);
+        Task<IAuthContext<TAuthContext>> Login(IAuthRequest<TAuthRequestData> authContext);
     }
 }

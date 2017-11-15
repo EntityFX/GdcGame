@@ -5,11 +5,9 @@
     using EntityFX.Gdcame.Infrastructure.Api;
     using EntityFX.Gdcame.Infrastructure.Api.Auth;
 
-    using RestSharp.Authenticators;
-
     public class NodeRatingApiClient : ApiClientBase, IRatingDataRetrieve
     {
-        public NodeRatingApiClient(IAuthContext<IAuthenticator> authContext, int? timeout = null) : base(authContext, timeout)
+        public NodeRatingApiClient(IApiClient authContext) : base(authContext)
         {
         }
 

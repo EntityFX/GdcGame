@@ -6,12 +6,15 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using EntityFX.Gdcame.Application.Contract.Model.MainServer;
+using EntityFX.Gdcame.Infrastructure;
 using EntityFX.Gdcame.Infrastructure.Api.Auth;
 using EntityFX.Gdcame.Utils.Hashing;
+using RestSharp.Authenticators;
 
 
 namespace EntityFx.Gdcame.Test.PerfomanceFramework
@@ -73,7 +76,7 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
     {
         public string Login { get; set; }
 
-        public PasswordOAuthContext Context { get; set; }
+        public IAuthContext<IAuthenticator> Context { get; set; }
     }
 
     public class TestActionResultItem
@@ -173,14 +176,16 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
         private readonly Uri[] _serviceUriList;
 
         private readonly ILogger _logger;
+        private readonly IAuthProviderFactory<PasswordOAuth2RequestData, IAuthenticator> _authProviderFactory;
 
         private readonly List<TestResultInfo> _testsInfo = new List<TestResultInfo>();
 
 
-        public PerformanceApi(Uri[] serviceUriList, ILogger logger)
+        public PerformanceApi(Uri[] serviceUriList, ILogger logger, IAuthProviderFactory<PasswordOAuth2RequestData, IAuthenticator> authProviderFactory)
         {
             _serviceUriList = serviceUriList;
             _logger = logger;
+            _authProviderFactory = authProviderFactory;
         }
 
         public Tuple<PerformanceAggregate, T[]> DoParallelTasks<T>(int from, int to, int parallelism, Func<int, Task<Tuple<PerformanceCounter, T>>> task, Action<int> iterrationAction)
@@ -189,7 +194,7 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
             var result = new PerformanceAggregate();
             var tasksResultList = new List<Tuple<PerformanceCounter, T>>();
             var sw = new Stopwatch();
-            ThreadPool.SetMaxThreads(parallelism*2, parallelism*2);
+            ThreadPool.SetMaxThreads(parallelism * 2, parallelism * 2);
             sw.Start();
             /*Parallel.For(from, to, (i) =>
             {
@@ -273,7 +278,8 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
             else
             {
                 return DoSequenceTask(0, countAccounts,
-                    i1 => RegisterAccount(string.Format("{0}{1}@gdcame.com", accounLoginPrefix, i1)), i => {
+                    i1 => RegisterAccount(string.Format("{0}{1}@gdcame.com", accounLoginPrefix, i1)), i =>
+                    {
                         if (i % ParallelismFactor == 0)
                         {
                             Console.WriteLine("Registered {0} accounts", i);
@@ -295,12 +301,13 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
 
         public void StopAllGames(ClientConnectionInfo adminConnectionInfo)
         {
+            var apiFactory = new RestsharpApiClientFactory();
             Task.WhenAll(DoAuthServersWithAdmin(_serviceUriList, "admin").Where(_ => _ != null).Select(_ => Task.Factory.StartNew(
                 () =>
                 {
                     try
                     {
-                        new AdminApiClient(_).StopAllGames();
+                        new AdminApiClient(apiFactory.Build(adminConnectionInfo.Context)).StopAllGames();
                     }
                     catch (Exception)
                     {
@@ -309,21 +316,19 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
                 }))).Wait();
         }
 
-        private PasswordOAuthContext[] DoAuthServersWithAdmin(Uri[] serversList, string adminLogin, string password = DefaultPassword)
+        private IAuthContext<IAuthenticator>[] DoAuthServersWithAdmin(Uri[] serversList, string adminLogin, string password = DefaultPassword)
         {
             return Task.WhenAll(
 
-                    serversList.Select(
-                            server =>
-                                new PasswordAuthProvider(
-                                    server))
+                    serversList
+                    .Select(server => _authProviderFactory.Build(server))
                         .Select(async passwordProvider =>
                         {
                             try
                             {
-                                return await passwordProvider.Login(new PasswordAuthRequest<PasswordAuthData>
+                                return await passwordProvider.Login(new PasswordOAuth2Request
                                 {
-                                    RequestData = new PasswordAuthData { Password = password, Usename = adminLogin }
+                                    RequestData = new PasswordOAuth2RequestData { Password = password, Usename = adminLogin }
                                 });
                             }
                             catch (Exception)
@@ -380,12 +385,12 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
         public Task<Tuple<PerformanceCounter, ClientConnectionInfo>> Login(string login, string password)
         {
             var serverUri = GetApiServerUri(_serviceUriList, login);
-            var p = new PasswordAuthProvider(serverUri, _logger);
+            var p = _authProviderFactory.Build(serverUri);
             return DoPerformanceMeasureAction(async () =>
             {
-                var token = await p.Login(new PasswordAuthRequest<PasswordAuthData>()
+                var token = await p.Login(new PasswordOAuth2Request()
                 {
-                    RequestData = new PasswordAuthData() { Password = password, Usename = login }
+                    RequestData = new PasswordOAuth2RequestData() { Password = password, Usename = login }
                 });
                 return new ClientConnectionInfo { Login = login, Context = token };
             }, serverUri.ToString());
@@ -405,19 +410,21 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
         public ClientConnectionInfo GetConnection(int serverNumber)
         {
             var serverUri = _serviceUriList[serverNumber];
-            return new ClientConnectionInfo { Context = new PasswordOAuthContext() { BaseUri = serverUri } };
+            return new ClientConnectionInfo { Context = new PasswordOAuth2Context<IAuthenticator>() { BaseUri = serverUri } };
         }
 
         public Task<Tuple<PerformanceCounter, object>> Logout(ClientConnectionInfo client)
         {
-            var authApi = new AuthApiClient(client.Context);
+            var apiFactory = new RestsharpApiClientFactory();
+            var authApi = new AuthApiClient(apiFactory.Build(client.Context));
             return DoPerformanceMeasureAction(async () => await authApi.Logout(), client.Context.BaseUri.ToString());
         }
 
         public Task<Tuple<PerformanceCounter, object>> RegisterAccount(string login)
         {
+            var apiFactory = new RestsharpApiClientFactory();
             var serverUri = GetApiServerUri(_serviceUriList, login);
-            var authApi = new AuthApiClient(new PasswordOAuthContext() { BaseUri = serverUri });
+            var authApi = new AuthApiClient(apiFactory.Build(new AnonymousAuthContext<IAuthenticator>() { BaseUri = serverUri }));
             return DoPerformanceMeasureAction(async () => await authApi.Register(new RegisterAccountModel()
             {
                 Login = login,
@@ -428,7 +435,8 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
 
         public Task<Tuple<PerformanceCounter, bool>> FindAndDeleteAccount(ClientConnectionInfo adminConnectionInfo, string login)
         {
-            var accountApi = new AccountApiClient(adminConnectionInfo.Context);
+            var apiFactory = new RestsharpApiClientFactory();
+            var accountApi = new AccountApiClient(apiFactory.Build(adminConnectionInfo.Context));
             return DoPerformanceMeasureAction(async () =>
             {
                 var acount = accountApi.GetByLoginAsync(login).Result;
@@ -439,22 +447,25 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
 
         public Task<Tuple<PerformanceCounter, GameDataModel>> GetGameData(ClientConnectionInfo client)
         {
-            var gameClient = new GameApiClient(client.Context);
+            var apiFactory = new RestsharpApiClientFactory();
+            var gameClient = new GameApiClient(apiFactory.Build(client.Context));
             return DoPerformanceMeasureAction(async () => await gameClient.GetGameDataAsync(), client.Context.BaseUri.ToString());
         }
 
         public Task<Tuple<PerformanceCounter, ManualStepResultModel>> PerformStep(ClientConnectionInfo client)
         {
-            var gameClient = new GameApiClient(client.Context);
+            var apiFactory = new RestsharpApiClientFactory();
+            var gameClient = new GameApiClient(apiFactory.Build(client.Context));
             return DoPerformanceMeasureAction(async () => await gameClient.PerformManualStepAsync(), client.Context.BaseUri.ToString());
         }
 
         public async Task<Tuple<PerformanceCounter, string>> Echo(ClientConnectionInfo client, string text)
         {
+            var apiFactory = new RestsharpApiClientFactory();
             Random r = new Random(54657);
             return await DoPerformanceMeasureAction(() =>
             {
-                var gameClient = new ServerInfoClient(client.Context);
+                var gameClient = new ServerInfoClient(apiFactory.Build(client.Context));
                 //return Task.Delay(r.Next(5,500)).ContinueWith<string>(_ =>  "ok");
                 return Task.Run(() =>
                 {
@@ -465,7 +476,8 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
 
         public string Echo2(ClientConnectionInfo client, string text)
         {
-            var gameClient = new ServerInfoClient(client.Context);
+            var apiFactory = new RestsharpApiClientFactory();
+            var gameClient = new ServerInfoClient(apiFactory.Build(client.Context));
             return gameClient.Echo(text);
         }
 
@@ -482,9 +494,10 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
                  //Thread.Sleep(500);
                  return new Tuple<PerformanceCounter, string>(performanceCounter, "dfgd");
              });*/
+            var apiFactory = new RestsharpApiClientFactory();
             return Task.Run(() =>
             {
-                var gameClient = new ServerInfoClient(client.Context);
+                var gameClient = new ServerInfoClient(apiFactory.Build(client.Context));
                 return gameClient.Echo(text);
             })
 
@@ -498,8 +511,8 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
             //TODO: Use Rendezvous Hashing algorithm.
             //            var serverNumber = hasher.GetModuloOfUserIdHash(hasher.GetHashedString(login), serversUriList.Length);
             //todo remove hashed string
-            string[]servers = new string[serversUriList.Length];
-            for (int i=0; i<serversUriList.Length;i++)
+            string[] servers = new string[serversUriList.Length];
+            for (int i = 0; i < serversUriList.Length; i++)
             {
                 servers[i] = serversUriList[i].Host;
             }

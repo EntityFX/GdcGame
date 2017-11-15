@@ -1,7 +1,7 @@
 using System;
 using RestSharp;
 
-namespace EntityFX.Gdcame.Infrastructure.Api
+namespace EntityFX.Gdcame.Infrastructure
 {
     public class GameClientFactory 
     {

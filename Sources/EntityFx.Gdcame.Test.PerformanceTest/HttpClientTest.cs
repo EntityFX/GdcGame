@@ -9,12 +9,14 @@ using System.Threading.Tasks;
 
 using EntityFX.Gdcame.Application.Api.MainServer.Models;
 using EntityFX.Gdcame.Common.Application.Model;
+using EntityFX.Gdcame.Infrastructure;
 using EntityFX.Gdcame.Infrastructure.Api.Auth;
 using EntityFX.Gdcame.Utils.WebApiClient;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Newtonsoft.Json;
+using RestSharp.Authenticators;
 
 namespace EntityFx.Gdcame.Test.Unit
 {
@@ -25,13 +27,13 @@ namespace EntityFx.Gdcame.Test.Unit
         [TestMethod]
         public void TestConnections()
         {
-            var p = new PasswordAuthProvider(new Uri("http://localhost:9001/"));
-            var adminToken = p.Login(new PasswordAuthRequest<PasswordAuthData>()
+            var p = new RestsharpPasswordOAuth2Provider(new Uri("http://localhost:9001/"));
+            var adminToken = p.Login(new PasswordOAuth2Request()
             {
-                RequestData = new PasswordAuthData() { Password = "P@ssw0rd", Usename = "admin" }
+                RequestData = new PasswordOAuth2RequestData() { Password = "P@ssw0rd", Usename = "admin" }
             }).Result;
 
-            var connectionsList = new PasswordOAuthContext[10000];
+            var connectionsList = new IAuthContext<IAuthenticator>[10000];
             for (int conn = 0; conn < 10000; conn++)
             {
                 try
@@ -78,26 +80,29 @@ namespace EntityFx.Gdcame.Test.Unit
         }
 
 
-        private async static Task<PasswordOAuthContext> PostAuth(int index)
+        private async static Task<IAuthContext<IAuthenticator>> PostAuth(int index)
         {
-            var p = new PasswordAuthProvider(new Uri("http://localhost:9001/"));
-            return await p.Login(new PasswordAuthRequest<PasswordAuthData>()
+            var p = new RestsharpPasswordOAuth2Provider(new Uri("http://localhost:9001/"));
+            return await p.Login(new PasswordOAuth2Request
             {
-                RequestData = new PasswordAuthData() { Password = "P@ssw0rd", Usename = "userok" + index }
+                RequestData = new PasswordOAuth2RequestData() { Password = "P@ssw0rd", Usename = "userok" + index }
             });
 
         }
 
-        private static async Task<GameDataModel> GetData(PasswordOAuthContext token)
+        private static async Task<GameDataModel> GetData(IAuthContext<IAuthenticator> token)
         {
-            var gameClient = new GameApiClient(token);
+            var apiFactory = new RestsharpApiClientFactory();
+            var gameClient = new GameApiClient(apiFactory.Build(token));
             return await gameClient.GetGameDataAsync();
         }
 
-        private async static Task<object> Register(PasswordOAuthContext token, int index)
+        private async static Task<object> Register(IAuthContext<IAuthenticator> token, int index)
         {
 
-            var authApi = new AuthApiClient(new PasswordOAuthContext() { BaseUri = new Uri("http://localhost:9001") });
+            var apiFactory = new RestsharpApiClientFactory();
+            token.BaseUri = new Uri("http://localhost:9001");
+            var authApi = new AuthApiClient(apiFactory.Build(token));
 
 
             return await authApi.Register(new RegisterAccountModel()
