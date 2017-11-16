@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using EntityFX.Gdcame.Infrastructure;
 using EntityFX.Gdcame.Utils.Common;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Owin.Hosting;

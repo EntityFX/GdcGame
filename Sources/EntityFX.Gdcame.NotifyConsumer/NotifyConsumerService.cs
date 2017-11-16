@@ -3,7 +3,8 @@
 using EntityFX.Gdcame.Common.Application.Model;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.NotifyConsumer.Contract;
-using Microsoft.AspNet.SignalR;
+//using Microsoft.AspNet.SignalR;
+
 
 namespace EntityFX.Gdcame.NotifyConsumer
 {
@@ -13,15 +14,15 @@ namespace EntityFX.Gdcame.NotifyConsumer
     {
         private readonly IConnections _connections;
         private readonly IMapper<GameData, GameDataModel> _gameDataModelMapper;
-        private readonly Lazy<IHubContext> _hubContext;
+       // private readonly Lazy<IHubContext> _hubContext;
         private readonly ILogger _logger;
 
         public NotifyConsumerService(ILogger logger, IMapper<GameData, GameDataModel> gameDataModelMapper,
-            IHubContextAccessor hubContext, IConnections connections)
+            /*IHubContextAccessor hubContext,*/ IConnections connections)
         {
             _logger = logger;
             _gameDataModelMapper = gameDataModelMapper;
-            _hubContext = new Lazy<IHubContext>(hubContext.GetHubContext);
+           // _hubContext = new Lazy<IHubContext>(hubContext.GetHubContext);
             _connections = connections;
         }
 
@@ -43,7 +44,7 @@ namespace EntityFX.Gdcame.NotifyConsumer
             if (_connections.ActiveConnections.ContainsKey(userContext.UserName))
             {
                 var gameDataModel = _gameDataModelMapper.Map(gameData);
-                _hubContext.Value.Clients.Group(userContext.UserName).GetGameData(gameDataModel);
+                //_hubContext.Value.Clients.Group(userContext.UserName).GetGameData(gameDataModel);
             }
         }
     }

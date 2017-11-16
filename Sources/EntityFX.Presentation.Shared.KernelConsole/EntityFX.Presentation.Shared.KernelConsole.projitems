@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>1a84610c-2df5-47a3-95a4-bf5954b5c7d5</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>EntityFX.Presentation.Shared.KernelConsole</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)FundsDriverContractMapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GameDataMapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GameRunner.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UssrSimulator\UssrCounterEnum.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UssrSimulator\UssrSimulatorGame.cs" />
+  </ItemGroup>
+</Project>

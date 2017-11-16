@@ -1,4 +1,5 @@
 ﻿using System;
+using EntityFX.Presentation.Shared.KernelConsole;
 
 namespace EntityFX.Gdcame.EngineTestApplication
 {
@@ -11,7 +12,7 @@ namespace EntityFX.Gdcame.EngineTestApplication
 
         private static void MainLoop()
         {
-            var gr = new GameRunner(new GameDataMapper(), new FundsDriverContractMapper(new IncrementorContractMapper()));
+            var gr = new GameRunner(new GameDataMapper(), new Presentation.Shared.KernelConsole.FundsDriverContractMapper());
             gr.Run();
             ConsoleKeyInfo keyInfo;
             while ((keyInfo = Console.ReadKey(true)).Key != ConsoleKey.Escape)

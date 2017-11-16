@@ -1,4 +1,4 @@
-﻿namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
+﻿namespace EntityFX.Presentation.Shared.KernelConsole
 {
     public enum UssrCounterEnum
     {

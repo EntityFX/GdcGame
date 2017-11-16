@@ -6,7 +6,7 @@ using Microsoft.AspNet.SignalR;
 
 namespace EntityFX.Gdcame.NotifyConsumer.Signalr
 {
-    [Authorize]
+   /* [Authorize]
     public class GameDataHub : Hub
     {
         private readonly IConnections _connections;
@@ -45,5 +45,5 @@ namespace EntityFX.Gdcame.NotifyConsumer.Signalr
             Groups.Remove(Context.ConnectionId, Context.User.Identity.Name);
             return (base.OnDisconnected(stopCalled));
         }
-    }
+    }*/
 }

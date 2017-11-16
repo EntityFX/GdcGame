@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Web.Cors;
 using System.Web.Http;
 using System.Web.Http.Cors;
-using EntityFX.Gdcame.Utils.Common;
+using EntityFX.Gdcame.Infrastructure;
 using Microsoft.Owin.Cors;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;

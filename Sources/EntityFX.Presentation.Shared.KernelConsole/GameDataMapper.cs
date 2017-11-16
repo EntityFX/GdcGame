@@ -1,7 +1,7 @@
-﻿namespace EntityFX.Gdcame.EngineTestApplication
+﻿using EntityFX.Gdcame.Common.Application.Model;
+
+namespace EntityFX.Presentation.Shared.KernelConsole
 {
-    using EntityFX.Gdcame.Contract.MainServer;
-    using EntityFX.Gdcame.Contract.MainServer.Counters;
     using EntityFX.Gdcame.Infrastructure.Common;
     using EntityFX.Gdcame.Kernel.Contract;
 
@@ -9,39 +9,36 @@
     using GenericCounter = EntityFX.Gdcame.Kernel.Contract.Counters.GenericCounter;
     using SingleCounter = EntityFX.Gdcame.Kernel.Contract.Counters.SingleCounter;
 
-    public class GameDataMapper : IMapper<IGame, GameData>
+    public class GameDataMapper : IMapper<IGame, GameDataModel>
     {
-        public GameData Map(IGame source, GameData destination = null)
+        public GameDataModel Map(IGame source, GameDataModel destination = null)
         {
-            var gameData = new GameData
+            var gameData = new GameDataModel
             {
-                Cash = new Cash
+                Cash = new CashModel
                 {
                     OnHand = source.GameCash.CashOnHand,
-                    Total = source.GameCash.TotalEarned,
+                    TotalEarned = source.GameCash.TotalEarned,
                     Counters = this.PrepareCountersToPersist(source)
-                },
-                AutomatedStepsCount = source.AutomaticStepNumber,
-                ManualStepsCount = source.ManualStepNumber
+                }
             };
             return gameData;
         }
 
-        private CounterBase[] PrepareCountersToPersist(IGame game)
+        private CounterModelBase[] PrepareCountersToPersist(IGame game)
         {
-            var counters = new CounterBase[game.GameCash.Counters.Length];
+            var counters = new CounterModelBase[game.GameCash.Counters.Length];
             foreach (var sourceCounter in game.GameCash.Counters)
             {
-                CounterBase destinationCouner = null;
+                CounterModelBase destinationCouner = null;
                 var sourcenGenericCounter = sourceCounter as GenericCounter;
                 if (sourcenGenericCounter != null)
                 {
-                    var destinationGenericCounter = new Gdcame.Contract.MainServer.Counters.GenericCounter
+                    var destinationGenericCounter = new GenericCounterModel
                     {
                         BonusPercentage = sourcenGenericCounter.BonusPercentage,
                         Bonus = sourcenGenericCounter.Bonus,
                         Inflation = sourcenGenericCounter.Inflation,
-                        CurrentSteps = sourcenGenericCounter.CurrentSteps,
                         SubValue = sourcenGenericCounter.SubValue
                     };
                     destinationCouner = destinationGenericCounter;
@@ -50,16 +47,15 @@
                 var sourceSingleCounter = sourceCounter as SingleCounter;
                 if (sourceSingleCounter != null)
                 {
-                    destinationCouner = new Gdcame.Contract.MainServer.Counters.SingleCounter();
+                    destinationCouner = new SingleCounterModel();
                     destinationCouner.Type = 0;
                 }
                 var sourceDelayedCounter = sourceCounter as DelayedCounter;
                 if (sourceDelayedCounter != null)
                 {
-                    var destinationDelayedCounter = new Gdcame.Contract.MainServer.Counters.DelayedCounter
+                    var destinationDelayedCounter = new DelayedCounterModel
                     {
                         SecondsRemaining = sourceDelayedCounter.SecondsRemaining,
-                        MiningTimeSeconds = sourceDelayedCounter.SecondsToAchieve,
                         UnlockValue = sourceDelayedCounter.UnlockValue
                     };
                     destinationCouner = destinationDelayedCounter;

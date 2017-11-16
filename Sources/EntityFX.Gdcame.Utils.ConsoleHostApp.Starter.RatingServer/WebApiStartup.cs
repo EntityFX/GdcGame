@@ -6,6 +6,7 @@ using System.Web.Cors;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using EntityFX.Gdcame.Application.Api.Common.Providers;
+using EntityFX.Gdcame.Infrastructure;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Utils.Common;
 using Newtonsoft.Json;

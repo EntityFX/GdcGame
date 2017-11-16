@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using EntityFX.Gdcame.Application.Api.Common;
 using EntityFX.Gdcame.Application.Contract.Controller;
 using EntityFX.Gdcame.Application.Contract.Controller.Common;
 using EntityFX.Gdcame.Application.Contract.Controller.MainServer;

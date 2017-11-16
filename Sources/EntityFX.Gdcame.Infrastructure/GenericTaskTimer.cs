@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using EntityFX.Gdcame.Infrastructure.Common;
 
-namespace EntityFX.Gdcame.Utils.Common
+namespace EntityFX.Gdcame.Infrastructure
 {
     public class GenericTaskTimer: TaskTimerBase, ITaskTimer
     {

@@ -1,0 +1,53 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>EntityFX.Gdcame.Presentation.NetCoreConsoleClient</AssemblyName>
+    <RootNamespace>EntityFX.Gdcame.Presentation.NetCoreConsoleClient</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>..\..\bin\console-client\game-net-core</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\..\bin\console-client\game-net-core</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.0.0" />
+    <PackageReference Include="NLog" Version="4.5.0-beta07" />
+    <PackageReference Include="RestSharp" Version="106.0.1" />
+    <PackageReference Include="Unity" Version="5.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EntityFX.Gdcame.Application.Contract.Controller.Common\EntityFX.Gdcame.Application.Contract.Controller.Common.csproj" />
+    <ProjectReference Include="..\EntityFX.Gdcame.Common.Presentation.Model\EntityFX.Gdcame.Common.Application.Model.csproj" />
+    <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Common\EntityFX.Gdcame.Infrastructure.Common.csproj" />
+    <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure\EntityFX.Gdcame.Infrastructure.csproj" />
+    <ProjectReference Include="..\EntityFX.Gdcame.Presentation.ConsoleClient.Common\EntityFX.Gdcame.Presentation.ConsoleClient.Common.csproj" />
+    <ProjectReference Include="..\EntityFX.Gdcame.Presentation.Web.Model\EntityFX.Gdcame.Application.Contract.Model.MainServer.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.Extensions.Configuration">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.1.1.2\lib\netstandard1.1\Microsoft.Extensions.Configuration.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <Import Project="..\EntityFX.Presentation.Shared\EntityFX.Presentation.Shared.projitems" Label="Shared" />
+
+  <Import Project="..\EntityFX.Presentation.Shared.GameConsole\EntityFX.Presentation.Shared.GameConsole.projitems" Label="Shared" />
+
+  <Import Project="..\EntityFX.Gdcame.Presentation.ClientShared\EntityFX.Gdcame.Presentation.ClientShared.projitems" Label="Shared" />
+
+</Project>

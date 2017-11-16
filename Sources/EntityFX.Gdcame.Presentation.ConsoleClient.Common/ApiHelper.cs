@@ -1,16 +1,14 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
-using EntityFx.GdCame.Test.Shared;
+using EntityFx.GdCame.Presentation.Shared;
 using EntityFX.Gdcame.Application.Contract.Controller.Common;
 using EntityFX.Gdcame.Application.Contract.Controller.MainServer;
-using EntityFX.Gdcame.Infrastructure;
 using EntityFX.Gdcame.Infrastructure.Api;
 using EntityFX.Gdcame.Infrastructure.Api.Auth;
 using EntityFX.Gdcame.Infrastructure.Api.Exceptions;
 using EntityFX.Gdcame.Utils.Hashing;
 using EntityFX.Gdcame.Utils.WebApiClient;
-using Newtonsoft.Json;
 
 namespace EntityFX.Gdcame.Presentation.ConsoleClient.Common
 {

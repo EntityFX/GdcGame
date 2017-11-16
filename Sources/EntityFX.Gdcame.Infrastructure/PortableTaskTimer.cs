@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using EntityFX.Gdcame.Infrastructure.Common;
 
-namespace EntityFX.Gdcame.Utils.Common
+namespace EntityFX.Gdcame.Infrastructure
 {
     public class PortableTaskTimer : TaskTimerBase, ITaskTimer
     {

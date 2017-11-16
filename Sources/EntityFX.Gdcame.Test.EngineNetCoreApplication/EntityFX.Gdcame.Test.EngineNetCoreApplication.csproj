@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\..\bin\Tests\kernel-net-core</OutputPath>
+  </PropertyGroup>
+
+  <Import Project="..\EntityFX.Presentation.Shared\EntityFX.Presentation.Shared.projitems" Label="Shared" />
+
+  <Import Project="..\EntityFX.Presentation.Shared.GameConsole\EntityFX.Presentation.Shared.GameConsole.projitems" Label="Shared" />
+
+  <Import Project="..\EntityFX.Presentation.Shared.KernelConsole\EntityFX.Presentation.Shared.KernelConsole.projitems" Label="Shared" />
+
+  <ItemGroup>
+    <ProjectReference Include="..\EntityFX.Gdcame.Common.Presentation.Model\EntityFX.Gdcame.Common.Application.Model.csproj" />
+    <ProjectReference Include="..\EntityFX.Gdcame.Kernel.Contract\EntityFX.Gdcame.Kernel.Contract.csproj" />
+    <ProjectReference Include="..\EntityFX.Gdcame.Kernel\EntityFX.Gdcame.Kernel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="EntityFX.Gdcame.Infrastructure.Common">
+      <HintPath>..\..\bin\EntityFX.Gdcame.Infrastructure.Common.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

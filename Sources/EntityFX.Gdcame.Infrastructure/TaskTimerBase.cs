@@ -1,9 +1,8 @@
 ﻿using System;
+using EntityFX.Gdcame.Infrastructure.Common;
 
-namespace EntityFX.Gdcame.Utils.Common
+namespace EntityFX.Gdcame.Infrastructure
 {
-    using EntityFX.Gdcame.Infrastructure.Common;
-
     public abstract class TaskTimerBase
     {
         protected readonly TimeSpan interval;

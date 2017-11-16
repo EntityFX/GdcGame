@@ -1,9 +1,9 @@
-﻿using EntityFX.Gdcame.NotifyConsumer.Signalr;
-using Microsoft.AspNet.SignalR;
+﻿//using EntityFX.Gdcame.NotifyConsumer.Signalr;
+//using Microsoft.AspNet.SignalR;
 
 namespace EntityFX.Gdcame.NotifyConsumer
 {
-    public interface IHubContextAccessor
+   /* public interface IHubContextAccessor
     {
         IHubContext GetHubContext();
     }
@@ -12,7 +12,8 @@ namespace EntityFX.Gdcame.NotifyConsumer
     {
         public IHubContext GetHubContext()
         {
-            return GlobalHost.ConnectionManager.GetHubContext<GameDataHub>();
+            //return GlobalHost.ConnectionManager.GetHubContext<GameDataHub>();
+            return null;
         }
-    }
+    }*/
 }

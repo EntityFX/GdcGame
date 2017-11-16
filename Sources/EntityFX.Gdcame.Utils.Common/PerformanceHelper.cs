@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using EntityFX.Gdcame.Infrastructure;
 using EntityFX.Gdcame.Manager;
 using EntityFX.Gdcame.Manager.Contract.Common;
 

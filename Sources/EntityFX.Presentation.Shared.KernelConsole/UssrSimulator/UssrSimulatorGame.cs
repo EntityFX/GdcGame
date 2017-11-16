@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace EntityFX.Gdcame.EngineTestApplication.UssrSimulator
+namespace EntityFX.Presentation.Shared.KernelConsole
 {
     using EntityFX.Gdcame.Kernel;
     using EntityFX.Gdcame.Kernel.Contract;
