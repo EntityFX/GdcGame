@@ -9,9 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="EntityFX.Gdcame.Infrastructure.Common">
-      <HintPath>..\..\bin\EntityFX.Gdcame.Infrastructure.Common.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Common\EntityFX.Gdcame.Infrastructure.Common.csproj" />
   </ItemGroup>
 
 </Project>

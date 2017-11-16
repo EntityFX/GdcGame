@@ -12,13 +12,4 @@
     <ProjectReference Include="..\EntityFX.Gdcame.NotifyConsumer.Contract\EntityFX.Gdcame.NotifyConsumer.Contract.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="EntityFX.Gdcame.Infrastructure.Common">
-      <HintPath>..\..\bin\EntityFX.Gdcame.Infrastructure.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AspNet.SignalR.Core">
-      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.2.2\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>

@@ -17,14 +17,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EntityFX.Gdcame.Common.Presentation.Model\EntityFX.Gdcame.Common.Application.Model.csproj" />
+    <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Common\EntityFX.Gdcame.Infrastructure.Common.csproj" />
     <ProjectReference Include="..\EntityFX.Gdcame.Kernel.Contract\EntityFX.Gdcame.Kernel.Contract.csproj" />
     <ProjectReference Include="..\EntityFX.Gdcame.Kernel\EntityFX.Gdcame.Kernel.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="EntityFX.Gdcame.Infrastructure.Common">
-      <HintPath>..\..\bin\EntityFX.Gdcame.Infrastructure.Common.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>

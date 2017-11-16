@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using EntityFX.Gdcame.Infrastructure.Common;
-using EntityFX.Gdcame.NotifyConsumer.Contract;
-using Microsoft.AspNet.SignalR;
+//using Microsoft.AspNet.SignalR;
 
 namespace EntityFX.Gdcame.NotifyConsumer.Signalr
 {
