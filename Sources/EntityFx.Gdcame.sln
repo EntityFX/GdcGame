@@ -210,6 +210,7 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "EntityFX.Gdcame.Presentatio
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		EntityFX.Presentation.Shared\EntityFX.Presentation.Shared.projitems*{1301f6a5-274d-410c-a633-c1316d5ba8e5}*SharedItemsImports = 4
 		EntityFX.Presentation.Shared.KernelConsole\EntityFX.Presentation.Shared.KernelConsole.projitems*{1a84610c-2df5-47a3-95a4-bf5954b5c7d5}*SharedItemsImports = 13
 		EntityFX.Presentation.Shared.GameConsole\EntityFX.Presentation.Shared.GameConsole.projitems*{24c8e95e-66ea-4e35-8584-c50171b68984}*SharedItemsImports = 4
 		EntityFX.Presentation.Shared.KernelConsole\EntityFX.Presentation.Shared.KernelConsole.projitems*{24c8e95e-66ea-4e35-8584-c50171b68984}*SharedItemsImports = 4

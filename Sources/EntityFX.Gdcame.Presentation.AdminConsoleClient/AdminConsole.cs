@@ -7,6 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using EntityFx.GdCame.Presentation.Shared;
 using EntityFX.Gdcame.Infrastructure;
 using RestSharp.Authenticators;
 
@@ -18,7 +19,6 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
     using System.Threading.Tasks;
     using System.Timers;
 
-    using EntityFx.GdCame.Test.Shared;
 
     using EntityFX.Gdcame.Application.Contract.Model.MainServer;
     using EntityFX.Gdcame.Common.Application.Model;
