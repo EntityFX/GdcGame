@@ -1,5 +1,4 @@
 ﻿using EntityFX.Gdcame.Manager.MainServer;
-using Microsoft.Practices.Unity;
 
 namespace EntityFX.Gdcame.Utils.MainServer
 {
