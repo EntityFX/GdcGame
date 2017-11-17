@@ -11,7 +11,7 @@ using EntityFx.GdCame.Presentation.Shared;
 using EntityFX.Gdcame.Infrastructure;
 using RestSharp.Authenticators;
 
-namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
+namespace EntityFX.Presentation.Shared.AdminConsole
 {
     using System;
     using System.Collections.Generic;
@@ -29,13 +29,7 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
     internal class AdminConsole
     {
         private readonly string password;
-        private readonly Uri mainServer;
-
-        private readonly Uri ratingServer;
-
-        private readonly int servicePort;
-
-        private readonly int ratingServerPort;
+        private readonly Settings _settings;
 
         private readonly ApiHelper<IAuthenticator> _apiHelper;
         private readonly string user;
@@ -53,16 +47,13 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
         private object stdLock = new { };
         private bool isMainMenu;
 
-        public AdminConsole(ApiHelper<IAuthenticator> apiHelper, string user, string password, Uri mainServer, Uri ratingServer, int port, int ratingServerPort)
+        public AdminConsole(ApiHelper<IAuthenticator> apiHelper, string user, string password, Settings settings)
 
         {
             _apiHelper = apiHelper;
             this.user = user;
             this.password = password;
-            this.mainServer = mainServer;
-            this.ratingServer = ratingServer;
-            this.servicePort = port;
-            this.ratingServerPort = ratingServerPort;
+            this._settings = settings;
             this.statisticsUpdateTimer = new Timer(2500);
             this.statisticsUpdateTimer.Elapsed += this.GetStatisticsCallback;
 
@@ -119,7 +110,8 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
 
         private void StopAllGames()
         {
-            var serversList = _apiHelper.GetServersUri(_apiHelper.GetServers(this.mainServer), this.servicePort);
+            var serversList = _apiHelper.GetServersUri(_apiHelper.GetServers(new Uri(
+                $"{this._settings.GameServer}:{this._settings.GameServicePort}")), this._settings.GameServicePort);
 
             Task.WhenAll(this.DoAuthServers(serversList).Where(_ => _ != null).Select(_ => Task.Factory.StartNew(
                 () =>
@@ -139,7 +131,8 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
 
         private void Echo()
         {
-            var serversList = _apiHelper.GetServersUri(_apiHelper.GetServers(this.mainServer), this.servicePort);
+            var serversList = _apiHelper.GetServersUri(_apiHelper.GetServers(new Uri(
+                $"{this._settings.GameServer}:{this._settings.GameServicePort}")), this._settings.GameServicePort);
 
             var echoResults = Task.WhenAll(
                 this.DoAuthServers(serversList).Where(_ => _ != null).Select(_ => Task.Factory.StartNew(
@@ -178,7 +171,8 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
         private void GetStatistics()
         {
             var serversList =
-                _apiHelper.GetServersUri(_apiHelper.GetServers(this.mainServer), this.servicePort).Select(s => new ServerLoginContext()
+                _apiHelper.GetServersUri(_apiHelper.GetServers(new Uri(
+                        $"{this._settings.GameServer}:{this._settings.GameServicePort}")), this._settings.GameServicePort).Select(s => new ServerLoginContext()
                 {
                     ServerType = "MainServer",
                     Uri = s
@@ -186,7 +180,8 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
                     .Concat(new[] { new ServerLoginContext()
                         {
                             ServerType = "RatingServer" ,
-                            Uri = this.ratingServer
+                            Uri = new Uri(
+                                $"{this._settings.RatingServer}:{this._settings.RatingServerPort}")
                         } })
                     .ToArray();
 
@@ -197,28 +192,48 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
         private IAuthContext<IAuthenticator>[] DoAuthServers(Uri[] serversList)
         {
             return Task.WhenAll<IAuthContext<IAuthenticator>>(serversList.Select(async uri =>
-                await _apiHelper.LoginServer(uri, new PasswordOAuth2RequestData
+            {
+                try
                 {
-                    Password
-                        =
-                        this
-                            .password,
-                    Usename
-                        =
-                        this
-                            .user
-                }))).Result;
+                    return await _apiHelper.LoginServer(uri, new PasswordOAuth2RequestData
+                    {
+                        Password
+                            =
+                            this
+                                .password,
+                        Usename
+                            =
+                            this
+                                .user
+                    });
+                }
+                catch (Exception e)
+                {
+                    _apiHelper.HandleException(e);
+                }
+                return null;
+            })).Result;
         }
 
         private ServerAuthContext[] DoAuthServers(ServerLoginContext[] contexts)
         {
             return Task.WhenAll(contexts.Select(async context =>
-                new Tuple<IAuthContext<IAuthenticator>, string>(await _apiHelper.LoginServer(context.Uri,
-                    new PasswordOAuth2RequestData
+                {
+                    try
                     {
-                        Password = this.password,
-                        Usename = this.user
-                    }), context.ServerType)
+                        return new Tuple<IAuthContext<IAuthenticator>, string>(await _apiHelper.LoginServer(context.Uri,
+                            new PasswordOAuth2RequestData
+                            {
+                                Password = this.password,
+                                Usename = this.user
+                            }), context.ServerType);
+                    }
+                    catch (Exception e)
+                    {
+                        _apiHelper.HandleException(e);
+                    }
+                    return null;
+                }
             )).Result.Select(res => new ServerAuthContext() {AuthContext = res.Item1, ServerType = res.Item2}).ToArray();
         }
 
@@ -243,7 +258,7 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
 
             serversList.Select(server => new AnonymousAuthContext<IAuthenticator>()
             {
-                BaseUri = new Uri(string.Format("http://{0}:{1}/", server, this.servicePort))
+                BaseUri = new Uri(string.Format("http://{0}:{1}/", server, this._settings.GameServicePort))
             }).Select(
                 context =>
                 {
@@ -304,16 +319,17 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
 
         private void AddServer()
         {
-            var serversList = _apiHelper.GetServers(this.mainServer).ToArray();
+            var serversList = _apiHelper.GetServers(new Uri(
+                $"{this._settings.GameServer}:{this._settings.GameServicePort}"));
             Console.Clear();
             Console.WriteLine("Please enter server address:");
             var server = Console.ReadLine();
 
             serversList = serversList.Concat(new[] { server }).ToArray();
 
-            var uriServersList = _apiHelper.GetServersUri(serversList, this.servicePort);
+            var uriServersList = _apiHelper.GetServersUri(serversList, this._settings.GameServicePort);
 
-            var checkResult = this.CheckServersAvailability(serversList, this.servicePort);
+            var checkResult = this.CheckServersAvailability(serversList, this._settings.GameServicePort);
             if (!checkResult.IsSuccess)
             {
                 PrettyConsole.WriteLineColor(ConsoleColor.Red, "Servers unavailable: {0}",
@@ -529,7 +545,7 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
             if (string.IsNullOrEmpty(server)) return;
 
             var auth =
-                _apiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, this.servicePort)),
+                _apiHelper.LoginServer(new Uri($"http://{server}:{this._settings.GameServicePort}/"),
                 new PasswordOAuth2RequestData(){ Usename = this.user,Password = this.password}).Result;
 
             var client = _apiHelper.GetAdminClient(auth);
@@ -562,7 +578,7 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
             if (string.IsNullOrEmpty(server)) return;
 
             var auth =
-                _apiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, this.servicePort)), new PasswordOAuth2RequestData() { Usename = this.user, Password = this.password })
+                _apiHelper.LoginServer(new Uri($"http://{server}:{this._settings.GameServicePort}/"), new PasswordOAuth2RequestData() { Usename = this.user, Password = this.password })
                     .Result;
 
             var client = _apiHelper.GetAdminClient(auth);
@@ -591,7 +607,7 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
             if (string.IsNullOrEmpty(server)) return;
 
             var auth =
-                _apiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, this.servicePort)), new PasswordOAuth2RequestData() { Usename = this.user, Password = this.password }).Result;
+                _apiHelper.LoginServer(new Uri($"http://{server}:{this._settings.GameServicePort}/"), new PasswordOAuth2RequestData() { Usename = this.user, Password = this.password }).Result;
 
             var client = _apiHelper.GetAdminClient(auth);
 
@@ -626,7 +642,7 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
             if (string.IsNullOrEmpty(server)) return;
 
             var auth =
-                _apiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, this.servicePort)), new PasswordOAuth2RequestData() { Usename = this.user, Password = this.password })
+                _apiHelper.LoginServer(new Uri($"http://{server}:{this._settings.GameServicePort}/"), new PasswordOAuth2RequestData() { Usename = this.user, Password = this.password })
                     .Result;
 
             var client = _apiHelper.GetAdminClient(auth);
@@ -653,7 +669,7 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
             var server = this.GetServer();
 
             var auth =
-                _apiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, this.servicePort)), new PasswordOAuth2RequestData() { Usename = this.user, Password = this.password })
+                _apiHelper.LoginServer(new Uri($"http://{server}:{this._settings.GameServicePort}/"), new PasswordOAuth2RequestData() { Usename = this.user, Password = this.password })
                     .Result;
 
             var client = _apiHelper.GetAdminClient(auth);
@@ -675,7 +691,7 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
             if (string.IsNullOrEmpty(server)) return;
 
             var auth =
-                _apiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, this.servicePort)), new PasswordOAuth2RequestData() { Usename = this.user, Password = this.password })
+                _apiHelper.LoginServer(new Uri($"http://{server}:{this._settings.GameServicePort}/"), new PasswordOAuth2RequestData() { Usename = this.user, Password = this.password })
                     .Result;
 
             var client = _apiHelper.GetAdminClient(auth);
@@ -698,7 +714,7 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
             if (string.IsNullOrEmpty(server)) return;
 
             var auth =
-                _apiHelper.LoginServer(new Uri(string.Format("http://{0}:{1}/", server, this.servicePort)), new PasswordOAuth2RequestData() { Usename = this.user, Password = this.password })
+                _apiHelper.LoginServer(new Uri($"http://{server}:{this._settings.GameServicePort}/"), new PasswordOAuth2RequestData() { Usename = this.user, Password = this.password })
                     .Result;
 
             var client = _apiHelper.GetAdminClient(auth);
@@ -737,11 +753,12 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
             string[] serversList = null;
             try
             {
-                serversList = _apiHelper.GetServers(this.mainServer).ToArray();
+                serversList = _apiHelper.GetServers(new Uri(
+                    $"{this._settings.GameServer}:{this._settings.GameServicePort}"));
             }
             catch (AggregateException e)
             {
-                PrettyConsole.WriteLineColor(ConsoleColor.Red, "Main server: {0}", this.mainServer);
+                PrettyConsole.WriteLineColor(ConsoleColor.Red, "Main server: {0}", this._settings.GameServer);
                 foreach (var innerException in e.InnerExceptions)
                 {
                     var clientException = innerException as IClientException<ErrorData>;

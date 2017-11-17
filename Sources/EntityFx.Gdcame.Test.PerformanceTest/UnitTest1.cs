@@ -88,7 +88,7 @@ namespace EntityFx.Gdcame.Test.Unit
 
             this.container.RegisterType<IGameDataChangesNotifier, GameDataChangesNotifier>();
 
-            this.container.RegisterType<INotifyConsumerClientFactory, NotifyConsumerClientFactory>(() => new NotifyConsumerClientFactory(container, ""));
+            this.container.RegisterType<INotifyConsumerClientFactory, NotifyConsumerClientFactory>(() => new NotifyConsumerClientFactory(container));
         }
 
         [TestMethod]

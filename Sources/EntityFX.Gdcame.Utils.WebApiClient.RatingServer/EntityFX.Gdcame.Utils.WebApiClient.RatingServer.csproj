@@ -12,11 +12,4 @@
     <ProjectReference Include="..\EntityFX.Gdcame.Common.Contract\EntityFX.Gdcame.Contract.Common.csproj" />
     <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Api\EntityFX.Gdcame.Infrastructure.Api.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="EntityFX.Gdcame.Infrastructure.Common">
-      <HintPath>..\..\bin\EntityFX.Gdcame.Infrastructure.Common.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>

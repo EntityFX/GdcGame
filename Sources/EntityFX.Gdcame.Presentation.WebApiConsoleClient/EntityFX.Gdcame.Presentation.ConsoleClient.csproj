@@ -116,6 +116,9 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="nlog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

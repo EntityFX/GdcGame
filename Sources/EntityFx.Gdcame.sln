@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2005
+VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{F8FED8D2-E9CC-484B-9794-C60B0191CF7C}"
 EndProject
@@ -128,7 +128,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.Application
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Presentation.AdminConsoleClient", "EntityFX.Gdcame.Presentation.AdminConsoleClient\EntityFX.Gdcame.Presentation.AdminConsoleClient.csproj", "{1301F6A5-274D-410C-A633-C1316D5BA8E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Presentation.ConsoleClient.Common", "EntityFX.Gdcame.Presentation.ConsoleClient.Common\EntityFX.Gdcame.Presentation.ConsoleClient.Common.csproj", "{805FA369-C681-4204-B16B-CFE3AE2FA813}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.Presentation.ConsoleClient.Common", "EntityFX.Gdcame.Presentation.ConsoleClient.Common\EntityFX.Gdcame.Presentation.ConsoleClient.Common.csproj", "{805FA369-C681-4204-B16B-CFE3AE2FA813}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.Utils.Hashing", "EntityFX.Gdcame.Utils.Hashing\EntityFX.Gdcame.Utils.Hashing.csproj", "{720E76E7-71E2-4570-BD4A-A38B2858BD56}"
 EndProject
@@ -232,8 +232,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utils Layer", "Utils Layer"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utils Layer", "Utils Layer", "{D9020279-B7E7-4D61-88F4-15F5F33D070A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Presentation.NetCoreAdminClient", "EntityFX.Gdcame.Presentation.NetCoreAdminClient\EntityFX.Gdcame.Presentation.NetCoreAdminClient.csproj", "{8CD16E4E-E525-4B8D-848D-437ADA040ECB}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "EntityFX.Presentation.Shared.AdminConsole", "EntityFX.Presentation.Shared.AdminConsole\EntityFX.Presentation.Shared.AdminConsole.shproj", "{E69D6DAE-C821-4EFD-A8D9-654D102022F1}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		EntityFX.Presentation.Shared.AdminConsole\EntityFX.Presentation.Shared.AdminConsole.projitems*{1301f6a5-274d-410c-a633-c1316d5ba8e5}*SharedItemsImports = 4
 		EntityFX.Presentation.Shared\EntityFX.Presentation.Shared.projitems*{1301f6a5-274d-410c-a633-c1316d5ba8e5}*SharedItemsImports = 4
 		EntityFX.Presentation.Shared.KernelConsole\EntityFX.Presentation.Shared.KernelConsole.projitems*{1a84610c-2df5-47a3-95a4-bf5954b5c7d5}*SharedItemsImports = 13
 		EntityFX.Presentation.Shared.GameConsole\EntityFX.Presentation.Shared.GameConsole.projitems*{24c8e95e-66ea-4e35-8584-c50171b68984}*SharedItemsImports = 4
@@ -245,6 +250,7 @@ Global
 		EntityFX.Gdcame.Presentation.ClientShared\EntityFX.Gdcame.Presentation.ClientShared.projitems*{c0fa7295-375b-4cbe-9790-64bdbcf12a77}*SharedItemsImports = 4
 		EntityFX.Presentation.Shared.GameConsole\EntityFX.Presentation.Shared.GameConsole.projitems*{c0fa7295-375b-4cbe-9790-64bdbcf12a77}*SharedItemsImports = 4
 		EntityFX.Presentation.Shared\EntityFX.Presentation.Shared.projitems*{c0fa7295-375b-4cbe-9790-64bdbcf12a77}*SharedItemsImports = 4
+		EntityFX.Presentation.Shared.AdminConsole\EntityFX.Presentation.Shared.AdminConsole.projitems*{e69d6dae-c821-4efd-a8d9-654d102022f1}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		BuildServer|Any CPU = BuildServer|Any CPU
@@ -684,6 +690,12 @@ Global
 		{699B76F1-9656-49AF-A039-DE597B039FB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{699B76F1-9656-49AF-A039-DE597B039FB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{699B76F1-9656-49AF-A039-DE597B039FB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CD16E4E-E525-4B8D-848D-437ADA040ECB}.BuildServer|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CD16E4E-E525-4B8D-848D-437ADA040ECB}.BuildServer|Any CPU.Build.0 = Debug|Any CPU
+		{8CD16E4E-E525-4B8D-848D-437ADA040ECB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CD16E4E-E525-4B8D-848D-437ADA040ECB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CD16E4E-E525-4B8D-848D-437ADA040ECB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CD16E4E-E525-4B8D-848D-437ADA040ECB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -773,7 +785,7 @@ Global
 		{8ED6281E-5A18-4C2D-B942-B06092E60D5D} = {92698A9A-2C33-4368-B109-2AE1EEC7DA33}
 		{699B76F1-9656-49AF-A039-DE597B039FB2} = {D150B452-1254-4C2D-90DA-27765E2C7C0B}
 		{1A84610C-2DF5-47A3-95A4-BF5954B5C7D5} = {92698A9A-2C33-4368-B109-2AE1EEC7DA33}
-		{475F14AD-FF41-454D-B2CA-04B15FDDB07F} = {92698A9A-2C33-4368-B109-2AE1EEC7DA33}
+		{475F14AD-FF41-454D-B2CA-04B15FDDB07F} = {3C4C6132-8621-4F1B-BFB8-C3F9C6A0E3DD}
 		{27A6D303-3538-4703-AEF4-A3D9BAD12F63} = {FC393CCF-56E4-4207-851B-8E68824C639A}
 		{B27A62D2-EC5B-4C0A-B235-87FFC38FCFDF} = {FC393CCF-56E4-4207-851B-8E68824C639A}
 		{CEDA36F0-B308-44B5-BAD3-5B87B0C8E27E} = {2ECE9623-BD00-47BF-A617-3104D0E03486}
@@ -793,9 +805,11 @@ Global
 		{95AD54F3-AF49-4AF4-B9EB-0F9A4D1DF3BF} = {B27A62D2-EC5B-4C0A-B235-87FFC38FCFDF}
 		{98B03C7B-E289-4E85-B54F-A490DAA0D74D} = {27A6D303-3538-4703-AEF4-A3D9BAD12F63}
 		{D9020279-B7E7-4D61-88F4-15F5F33D070A} = {B27A62D2-EC5B-4C0A-B235-87FFC38FCFDF}
+		{8CD16E4E-E525-4B8D-848D-437ADA040ECB} = {AEFD9CA5-4866-4ED7-A0D8-A93E3E5A0E43}
+		{E69D6DAE-C821-4EFD-A8D9-654D102022F1} = {AEFD9CA5-4866-4ED7-A0D8-A93E3E5A0E43}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {78357FC2-AE74-41EE-88BC-A3C6451723A9}
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35
+		SolutionGuid = {78357FC2-AE74-41EE-88BC-A3C6451723A9}
 	EndGlobalSection
 EndGlobal

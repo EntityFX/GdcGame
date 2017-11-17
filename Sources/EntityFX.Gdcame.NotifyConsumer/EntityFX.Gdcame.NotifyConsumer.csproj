@@ -11,14 +11,9 @@
   <ItemGroup>
     <ProjectReference Include="..\EntityFX.Gdcame.Common.Presentation.Model\EntityFX.Gdcame.Common.Application.Model.csproj" />
     <ProjectReference Include="..\EntityFX.Gdcame.Contract.MainServer\EntityFX.Gdcame.Contract.MainServer.csproj" />
+    <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Common\EntityFX.Gdcame.Infrastructure.Common.csproj" />
     <ProjectReference Include="..\EntityFX.Gdcame.NotifyConsumer.Contract\EntityFX.Gdcame.NotifyConsumer.Contract.csproj" />
     <ProjectReference Include="..\EntityFX.Gdcame.NotifyConsumer.Signalr\EntityFX.Gdcame.NotifyConsumer.Signalr.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="EntityFX.Gdcame.Infrastructure.Common">
-      <HintPath>..\..\bin\EntityFX.Gdcame.Infrastructure.Common.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>

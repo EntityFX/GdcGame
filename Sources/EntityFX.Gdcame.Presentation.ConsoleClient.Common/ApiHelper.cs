@@ -7,6 +7,7 @@ using EntityFX.Gdcame.Application.Contract.Controller.MainServer;
 using EntityFX.Gdcame.Infrastructure.Api;
 using EntityFX.Gdcame.Infrastructure.Api.Auth;
 using EntityFX.Gdcame.Infrastructure.Api.Exceptions;
+using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Utils.Hashing;
 using EntityFX.Gdcame.Utils.WebApiClient;
 
@@ -19,11 +20,13 @@ namespace EntityFX.Gdcame.Presentation.ConsoleClient.Common
     public class ApiHelper<TAuthContext>
         where TAuthContext : class
     {
+        private readonly ILogger _logger;
         private readonly IAuthProviderFactory<PasswordOAuth2RequestData, TAuthContext> _authProvider;
         private readonly IApiClientFactory<TAuthContext> _apiClientFactory;
 
-        public ApiHelper(IAuthProviderFactory<PasswordOAuth2RequestData, TAuthContext> authProvider, IApiClientFactory<TAuthContext> apiClientFactory)
+        public ApiHelper(ILogger logger, IAuthProviderFactory<PasswordOAuth2RequestData, TAuthContext> authProvider, IApiClientFactory<TAuthContext> apiClientFactory)
         {
+            _logger = logger;
             _authProvider = authProvider;
             _apiClientFactory = apiClientFactory;
         }
@@ -74,9 +77,17 @@ namespace EntityFX.Gdcame.Presentation.ConsoleClient.Common
         public string[] GetServers(Uri mainServer)
         {
             var auth = new AnonymousAuthContext<TAuthContext> {BaseUri = mainServer};
-            return
-                new ServerInfoClient(_apiClientFactory.Build(auth)).GetServersInfo()
-                    .Result.ServerList;
+            try
+            {
+                return
+                    new ServerInfoClient(_apiClientFactory.Build(auth)).GetServersInfo()
+                        .Result.ServerList;
+            }
+            catch (Exception e)
+            {
+                this.HandleException(e);
+                throw;
+            }
         }
 
         public Uri[] GetServersUri(string[] servers, int port)
@@ -111,15 +122,31 @@ namespace EntityFX.Gdcame.Presentation.ConsoleClient.Common
             return new ServerInfoClient(gameClient);
         }
 
+        public void HandleException(Exception exception)
+        {
+            Console.Clear();
+
+            if (exception is IClientException<ErrorData>)
+            {
+                HandleClientException(exception as IClientException<ErrorData>);
+            }
+            else
+            {
+                PrettyConsole.WriteLineColor(ConsoleColor.Red, "Error: {0}", exception.Message);
+            }
+            _logger.Error(exception);
+        }
+
         public ErrorCodes HandleClientException(IClientException<ErrorData> exception)
         {
             Console.Clear();
             var res = HandleClientExceptionErrorData(exception);
             PrettyConsole.WriteLineColor(ConsoleColor.Red, "Error: {0}", res.Item2);
+            _logger.Error(exception as Exception);
             return res.Item1;
         }
 
-        public static Tuple<ErrorCodes, string> HandleClientExceptionErrorData<T>(IClientException<T> exception)
+        public Tuple<ErrorCodes, string> HandleClientExceptionErrorData<T>(IClientException<T> exception)
             where T : ErrorData
         {
             ErrorCodes errorCodes = ErrorCodes.OtherError;
@@ -172,6 +199,7 @@ namespace EntityFX.Gdcame.Presentation.ConsoleClient.Common
                     errorData += gameFrozenException.Message;
                 }
             }
+            _logger.Error(exception as Exception);
             return Tuple.Create(errorCodes, errorData);
         }
     }

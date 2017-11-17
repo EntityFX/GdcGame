@@ -26,8 +26,10 @@ namespace EntityFX.Gdcame.Presentation.ClientShared
         private IIocContainer _container;
         private static bool _exitFlag;
 
-        private static readonly ApiHelper<IAuthenticator> apiHelper = new ApiHelper<IAuthenticator>(
-            new RestsharpOAuth2ProviderFactory(new NLoggerAdapter(LogManager.GetLogger("logger"))),
+        private static readonly Infrastructure.Common.ILogger logger = new NLoggerAdapter(LogManager.GetLogger("logger"));
+
+        private static readonly ApiHelper<IAuthenticator> apiHelper = new ApiHelper<IAuthenticator>(logger,
+            new RestsharpOAuth2ProviderFactory(logger),
             new RestsharpApiClientFactory());
 
         private static readonly Dictionary<ConsoleKey, MenuItem> _mainMenu = new Dictionary<ConsoleKey, MenuItem>
