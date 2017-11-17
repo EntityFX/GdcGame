@@ -8,21 +8,19 @@ namespace EntityFX.Gdcame.Utils.MainServer
 
     public class NotifyConsumerClientFactory : INotifyConsumerClientFactory
     {
-        private readonly string _name;
         private readonly IIocContainer _unityContainer;
 
-        public NotifyConsumerClientFactory(IIocContainer unityContainer, string name)
+        public NotifyConsumerClientFactory(IIocContainer unityContainer)
         {
             _unityContainer = unityContainer;
-            _name = name;
         }
 
 
-        public INotifyConsumerService BuildNotifyConsumerClient()
+        public INotifyConsumerService BuildNotifyConsumerClient(string name = null)
         {
-            var game = string.IsNullOrEmpty(_name)
+            var game = string.IsNullOrEmpty(name)
                 ? _unityContainer.Resolve<INotifyConsumerService>()
-                : _unityContainer.Resolve<INotifyConsumerService>(_name);
+                : _unityContainer.Resolve<INotifyConsumerService>(name);
             return game;
         }
     }

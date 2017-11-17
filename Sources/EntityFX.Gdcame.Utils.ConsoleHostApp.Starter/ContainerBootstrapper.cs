@@ -125,7 +125,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
 
             container.RegisterType<IGameDataChangesNotifier, GameDataChangesNotifier>();
 
-            container.RegisterType<INotifyConsumerClientFactory, NotifyConsumerClientFactory>(() => new NotifyConsumerClientFactory(container ,string.Empty));
+            container.RegisterType<INotifyConsumerClientFactory, NotifyConsumerClientFactory>(() => new NotifyConsumerClientFactory(container));
 
             /* if (ConfigurationManager.AppSettings["UseLoggerInterceptor"] == "True")
              {

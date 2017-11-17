@@ -1,5 +1,4 @@
-﻿using EntityFX.Gdcame.Application.Contract.Model;
-using EntityFX.Gdcame.Common.Application.Model;
+﻿using EntityFX.Gdcame.Common.Application.Model;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Utils.WebApiClient;
 using System;
