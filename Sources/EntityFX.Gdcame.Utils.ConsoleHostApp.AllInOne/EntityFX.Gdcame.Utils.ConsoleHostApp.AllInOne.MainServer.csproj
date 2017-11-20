@@ -477,6 +477,10 @@
       <Project>{924CC67D-9E2B-46BA-BE1D-6C6C780CCFBC}</Project>
       <Name>EntityFX.Gdcame.Infrastructure.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure\EntityFX.Gdcame.Infrastructure.csproj">
+      <Project>{797DE92C-5253-45C5-95E4-92786EBF5266}</Project>
+      <Name>EntityFX.Gdcame.Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EntityFX.Gdcame.Manager.Contract.Common\EntityFX.Gdcame.Manager.Contract.Common.csproj">
       <Project>{0E91EB31-4F0A-41A0-A785-006EA68BDA87}</Project>
       <Name>EntityFX.Gdcame.Manager.Contract.Common</Name>

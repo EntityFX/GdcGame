@@ -1,15 +1,13 @@
-﻿namespace EntityFX.Gdcame.Application.Api.Common.Providers
+﻿using Microsoft.AspNetCore.Authentication.OAuth;
+
+namespace EntityFX.Gdcame.Application.Api.Common.Providers
 {
     using System;
     using System.Security.Claims;
     using System.Threading.Tasks;
 
-    using EntityFX.Gdcame.Utils.Common;
-
-    using Microsoft.AspNet.Identity.Owin;
-    using Microsoft.Owin.Security.OAuth;
-
-    public class CustomOAuthProvider : OAuthAuthorizationServerProvider
+    /*
+    public class CustomOAuthProvider : OAuthMiddleware<>
     {
         private readonly string _publicClientId;
         private readonly ISessionManagerClientFactory _sessionManager;
@@ -59,5 +57,5 @@
         {
             await Task.Run(() => context.Validated());
         }
-    }
+    }*/
 }

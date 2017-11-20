@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RestSharp.Authenticators;
+using EntityFX.Gdcame.Infrastructure.Api;
+
 
 namespace EntityFX.Gdcame.Utils.RatingServer
 {
@@ -13,22 +14,26 @@ namespace EntityFX.Gdcame.Utils.RatingServer
     using EntityFX.Gdcame.Infrastructure.Api.Auth;
     using EntityFX.Gdcame.Utils.WebApiClient.RatingServer;
 
-    public class NodeRatingClientFactory  : INodeRatingClientFactory
+    public class NodeRatingClientFactory<TAuthContext> : INodeRatingClientFactory
+        where TAuthContext : class
     {
-        private readonly IAuthProviderFactory<PasswordOAuth2RequestData, IAuthenticator> _authProviderFactory;
+        private readonly IApiClientFactory<TAuthContext> _apiClientFactory;
+        private readonly IAuthProviderFactory<PasswordOAuth2RequestData, TAuthContext> _authProviderFactory;
 
-        public NodeRatingClientFactory(IAuthProviderFactory<PasswordOAuth2RequestData, IAuthenticator> authProviderFactory)
+        public NodeRatingClientFactory(IAuthProviderFactory<PasswordOAuth2RequestData, TAuthContext> authProvider, IApiClientFactory<TAuthContext> apiClientFactory)
         {
-            _authProviderFactory = authProviderFactory;
+            _apiClientFactory = apiClientFactory;
+            _authProviderFactory = authProvider;
         }
 
         public IRatingDataRetrieve BuildClient(Uri nodeUri)
         {
+
             var res = _authProviderFactory.Build(nodeUri).Login(new PasswordOAuth2Request()
             {
                 RequestData = new PasswordOAuth2RequestData() { Usename = "system", Password = "P@ssw0rd" }
             }).Result;
-            return new NodeRatingApiClient(new RestsharpApiAdapter(res));
+            return new NodeRatingApiClient(_apiClientFactory.Build(res));
         }
     }
 }

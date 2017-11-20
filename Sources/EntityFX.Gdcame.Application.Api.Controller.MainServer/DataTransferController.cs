@@ -4,15 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web.Http;
 using EntityFX.Gdcame.Application.Contract.Controller.MainServer;
 using EntityFX.Gdcame.Manager.Contract.MainServer.DataTransferManager;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace EntityFX.Gdcame.Application.Api.Controller.MainServer
 {
     [Authorize]
-    [RoutePrefix("api/transfer")]
-    public class DataTransferController : ApiController, IDataTransferController
+    [Route("api/transfer")]
+    public class DataTransferController : Microsoft.AspNetCore.Mvc.Controller, IDataTransferController
     {
         private readonly IDataTransferManager _dataTransferManager;
 

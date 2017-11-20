@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web.Http;
 using EntityFX.Gdcame.Application.Contract.Controller;
 using EntityFX.Gdcame.Application.Contract.Controller.MainServer;
 using EntityFX.Gdcame.Application.Contract.Model;
 using EntityFX.Gdcame.Application.Contract.Model.MainServer;
 using EntityFX.Gdcame.Common.Application.Model;
 using EntityFX.Gdcame.Infrastructure.Common;
+using EntityFX.Gdcame.Manager.Contract.Common.AdminManager;
 using EntityFX.Gdcame.Manager.Contract.Common.WorkerManager;
 using EntityFX.Gdcame.Manager.Contract.MainServer.AdminManager;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SessionInfoModel = EntityFX.Gdcame.Application.Contract.Model.MainServer.SessionInfoModel;
 
@@ -18,8 +20,8 @@ namespace EntityFX.Gdcame.Application.Api.Controller.MainServer
     using EntityFX.Gdcame.Contract.Common.Statistics;
 
     [Authorize(Roles = "Admin")]
-    [RoutePrefix("api/admin")]
-    public class AdminController : ApiController, IAdminController
+    [Route("api/admin")]
+    public class AdminController : Microsoft.AspNetCore.Mvc.Controller, IAdminController
     {
         private readonly IAdminManager _adminManager;
         private readonly IWorkerManager _workerManager;

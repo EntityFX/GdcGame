@@ -1,6 +1,7 @@
 using System;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager.Contract.MainServer.GameManager;
+using EntityFX.Gdcame.Application.Providers.MainServer;
 
 namespace EntityFX.Gdcame.Utils.MainServer
 {

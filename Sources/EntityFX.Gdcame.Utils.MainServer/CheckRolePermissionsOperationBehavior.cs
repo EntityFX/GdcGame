@@ -2,20 +2,20 @@
 using System.Linq;
 using System.Reflection;
 
-using System.ServiceModel.Channels;
-using System.ServiceModel.Description;
-using System.ServiceModel.Dispatcher;
-using EntityFX.Gdcame.Infrastructure.Common;
-using EntityFX.Gdcame.Manager.Contract.MainServer;
-using EntityFX.Gdcame.Manager.Contract.MainServer.AdminManager;
-using EntityFX.Gdcame.Manager.MainServer;
+//using System.ServiceModel.Channels;
+//using System.ServiceModel.Description;
+//using System.ServiceModel.Dispatcher;
+//using EntityFX.Gdcame.Infrastructure.Common;
+//using EntityFX.Gdcame.Manager.Contract.MainServer;
+//using EntityFX.Gdcame.Manager.Contract.MainServer.AdminManager;
+//using EntityFX.Gdcame.Manager.MainServer;
 
 namespace EntityFX.Gdcame.Utils.MainServer
 {
-    using EntityFX.Gdcame.Contract.Common;
-    using EntityFX.Gdcame.Engine.Contract.GameEngine;
-    using System.ServiceModel;
-
+    //using EntityFX.Gdcame.Contract.Common;
+    //using EntityFX.Gdcame.Engine.Contract.GameEngine;
+    //using System.ServiceModel;
+    /*
     public class CheckRolePermissionsOperationBehavior : IOperationBehavior
     {
         private readonly IGameSessions _gameSessions;
@@ -109,5 +109,5 @@ namespace EntityFX.Gdcame.Utils.MainServer
         {
             get { return _invoker.IsSynchronous; }
         }
-    }
+    }*/
 }

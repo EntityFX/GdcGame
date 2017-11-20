@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.ServiceModel.Security.Tokens;
 using System.Text;
 using System.Threading.Tasks;
 using EntityFX.Gdcame.Infrastructure.Common;
@@ -11,7 +12,7 @@ using EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Owin.Hosting;
 using Microsoft.Practices.Unity;
-
+using RestSharp.Authenticators;
 using Topshelf;
 
 namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.RatingServer
@@ -20,9 +21,13 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.RatingServer
 
     internal class HostService : HostServiceBase<CoreStartup>
     {
+        public HostService(IRuntimeHelper runtimeHelper, IIocContainer iocContainer, IServiceProvider serviceProvider, AppConfiguration appConfiguration) : base(runtimeHelper, iocContainer, serviceProvider, appConfiguration)
+        {
+        }
+
         protected override IContainerBootstrapper GetContainerBootstrapper(AppConfiguration appConfiguration)
         {
-            return new ContainerBootstrapper(appConfiguration);
+            return new ContainerBootstrapper<IAuthenticator>(appConfiguration, Container.Resolve<IRuntimeHelper>());
         }
 
         protected override void ConfigureWorkers(IWorkerManager workerManager, IIocContainer container)

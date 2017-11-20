@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 
 using EntityFX.Gdcame.Manager.Contract.Common.WorkerManager;
 using EntityFX.Gdcame.Manager.MainServer.Workers;
@@ -11,6 +12,8 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.MainServer
     using EntityFX.Gdcame.Infrastructure.Common;
     using EntityFX.Gdcame.Utils.Common;
     using EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer;
+
+
     internal class HostService : HostServiceBase<CoreStartup>
     {
 
@@ -25,7 +28,11 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.MainServer
 
         protected override IContainerBootstrapper GetContainerBootstrapper(AppConfiguration appConfiguration)
         {
-            return new ContainerBootstrapper(appConfiguration);
+            return new ContainerBootstrapper(appConfiguration, Container.Resolve<IRuntimeHelper>());
+        }
+
+        public HostService(IRuntimeHelper runtimeHelper, IIocContainer iocContainer, IServiceProvider serviceProvider, AppConfiguration appConfiguration) : base(runtimeHelper, iocContainer, serviceProvider, appConfiguration)
+        {
         }
     }
 }

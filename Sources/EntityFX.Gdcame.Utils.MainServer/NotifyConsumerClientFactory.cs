@@ -1,6 +1,5 @@
 ﻿using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.NotifyConsumer.Contract;
-using Microsoft.Practices.Unity;
 
 namespace EntityFX.Gdcame.Utils.MainServer
 {

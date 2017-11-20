@@ -1,9 +1,6 @@
-﻿using Nancy;
-using Nancy.Conventions;
-
-namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
+﻿namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
 {
-    public class IndexModule : NancyModule
+    /*public class IndexModule : NancyModule
     {
         public IndexModule()
         {
@@ -32,5 +29,5 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
                 StaticContentConventionBuilder.AddDirectory("fonts", "website/fonts", "eot", "ttf", "svg", "woff", "woff2")
             );
         }
-    }
+    }*/
 }

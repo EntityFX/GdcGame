@@ -21,7 +21,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Fast.MainServer
         // parameter in the WebApp.Start method.
         public void Configuration(IAppBuilder appBuilder)
         {
-            if (RuntimeHelper.IsRunningOnMono())
+            if ((new RuntimeHelper()).IsRunningOnMono())
             {
                 appBuilder.UseAesDataProtectorProvider();
             }

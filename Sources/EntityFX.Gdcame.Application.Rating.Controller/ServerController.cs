@@ -1,13 +1,14 @@
 ﻿using System.Threading.Tasks;
-using System.Web.Http;
 using EntityFX.Gdcame.Application.Contract.Controller.Common;
 using EntityFX.Gdcame.Common.Application.Model;
 using EntityFX.Gdcame.Manager.Contract.Common.ServerManager;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace EntityFX.Gdcame.Application.Api.Common
 {
-    [RoutePrefix("api/server-info")]
-    public class ServerController : ApiController, IServerController
+    [Route("api/server-info")]
+    public class ServerController : Controller, IServerController
     {
         private readonly IServerManager _serverManager;
 

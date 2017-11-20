@@ -1,36 +1,12 @@
-using System.Linq;
-using System.Net.Http.Formatting;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Web.Cors;
-using System.Web.Http;
-using System.Web.Http.Cors;
-using EntityFX.Gdcame.Application.Api.Common.Providers;
-using EntityFX.Gdcame.Infrastructure;
-using EntityFX.Gdcame.Infrastructure.Common;
-using EntityFX.Gdcame.Utils.Common;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using Microsoft.Owin;
-using Microsoft.Owin.Cors;
-using Microsoft.Owin.Security.OAuth;
-using Microsoft.Practices.Unity;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using Owin;
-using Owin.Security.AesDataProtectorProvider;
+
 
 namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer
 {
     using System;
 
-    using Microsoft.Owin;
-    using Microsoft.Owin.Security.OAuth;
 
-    using Unity.WebApi;
-    using Unity;
 
-    public class WebApiStartup
+    /*public class WebApiStartup
     {
         private readonly IIocContainer _unityContainer;
         private readonly AppConfiguration _appConfiguration;
@@ -109,5 +85,5 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer
 
             appBuilder.UseWebApi(config);
         }
-    }
+    }*/
 }

@@ -1,26 +1,23 @@
-﻿namespace EntityFX.Gdcame.Application.Api.Common.Providers
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+
+namespace EntityFX.Gdcame.Application.Api.Common.Providers
 {
     using System;
 
     using EntityFX.Gdcame.Application.Api.Common;
 
-    using Microsoft.AspNet.Identity;
-    using Microsoft.AspNet.Identity.Owin;
-    using Microsoft.Owin;
 
     public class ApplicationUserManager : UserManager<UserIdentity>, IDisposable
     {
 
-        private static readonly PasswordValidator _passwordValidator = new PasswordValidator
-            {
-                RequiredLength = 8,
-                RequireNonLetterOrDigit = true,
-                RequireDigit = true,
-                RequireLowercase = true,
-                RequireUppercase = false
-            };
+        private static readonly PasswordValidator<UserIdentity> _passwordValidator =
+            new PasswordValidator<UserIdentity>();
 
-    public ApplicationUserManager(IUserStore<UserIdentity> userStore,
+    /*public ApplicationUserManager(IUserStore<UserIdentity> userStore,
             IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
             : base(userStore)
         {
@@ -40,6 +37,10 @@
                 this.UserTokenProvider =
                     new DataProtectorTokenProvider<UserIdentity>(dataProtectionProvider.Create("ASP.NET Identity"));
             }
+        }*/
+        public ApplicationUserManager(IUserStore<UserIdentity> store, IOptions<IdentityOptions> optionsAccessor, IPasswordHasher<UserIdentity> passwordHasher, IEnumerable<IUserValidator<UserIdentity>> userValidators, IEnumerable<IPasswordValidator<UserIdentity>> passwordValidators, ILookupNormalizer keyNormalizer, IdentityErrorDescriber errors, IServiceProvider services, ILogger<UserManager<UserIdentity>> logger) : base(store, optionsAccessor, passwordHasher, userValidators, passwordValidators, keyNormalizer, errors, services, logger)
+        {
+
         }
     }
 }

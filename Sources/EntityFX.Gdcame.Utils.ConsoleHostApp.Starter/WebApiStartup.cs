@@ -1,29 +1,7 @@
-using System;
-using System.Linq;
-using System.Net.Http.Formatting;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Web.Cors;
-using System.Web.Http;
-using System.Web.Http.Cors;
-using EntityFX.Gdcame.Application.Api.Common.Providers;
-using EntityFX.Gdcame.Infrastructure;
-using EntityFX.Gdcame.Infrastructure.Common;
-using EntityFX.Gdcame.Utils.Common;
-using EntityFX.Gdcame.Utils.MainServer;
-using Microsoft.Owin;
-using Microsoft.Owin.Cors;
-using Microsoft.Owin.Security.OAuth;
-using Unity;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using Owin;
-using Owin.Security.AesDataProtectorProvider;
-using Unity.WebApi;
 
 namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
 {
-    public class WebApiStartup
+   /* public class WebApiStartup
     {
         private readonly IIocContainer _unityContainer;
         private readonly AppConfiguration _appConfiguration;
@@ -67,8 +45,8 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
             var config = new HttpConfiguration();
             config.DependencyResolver = new Common.UnityDependencyResolver((_unityContainer as IIocContainer<IUnityContainer>).Container);
             //config.DependencyResolver = new Unity.WebApi.UnityDependencyResolver((_unityContainer as IIocContainer<IUnityContainer>).Container);
-            config.Filters.Add(_unityContainer.Resolve<SessionExceptionHandlerFilterAttribute>());
-            config.Filters.Add(new ValidateModelAttribute());
+            //config.Filters.Add(_unityContainer.Resolve<SessionExceptionHandlerFilterAttribute>());
+            //config.Filters.Add(new ValidateModelAttribute());
 
 
 
@@ -95,25 +73,25 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
                 (ApplicationUserManagerFacotory)
                     config.DependencyResolver.GetService(typeof(ApplicationUserManagerFacotory));
 
-            appBuilder.CreatePerOwinContext<ApplicationUserManager>(
-                (options, context) => (ApplicationUserManager)aumf.Create(options, context));
+            //appBuilder.CreatePerOwinContext<ApplicationUserManager>(
+            //    (options, context) => (ApplicationUserManager)aumf.Create(options, context));
 
-            var OAuthServerOptions = new OAuthAuthorizationServerOptions
-            {
-                AllowInsecureHttp = true,
-                TokenEndpointPath = new PathString("/token"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(60),
+            //var OAuthServerOptions = new OAuthAuthorizationServerOptions
+            //{
+            //    AllowInsecureHttp = true,
+            //    TokenEndpointPath = new PathString("/token"),
+            //    AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(60),
 
-                Provider =
-                    new CustomOAuthProvider("GameApi",
-                        (ISessionManagerClientFactory)
-                            config.DependencyResolver.GetService(typeof(ISessionManagerClientFactory)))
-            };
+            //    Provider =
+            //        new CustomOAuthProvider("GameApi",
+            //            (ISessionManagerClientFactory)
+            //                config.DependencyResolver.GetService(typeof(ISessionManagerClientFactory)))
+            //};
 
 
             // Token Generation
-            appBuilder.UseOAuthAuthorizationServer(OAuthServerOptions)
-                .UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
+            //appBuilder.UseOAuthAuthorizationServer(OAuthServerOptions)
+            //    .UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
 
 
             config.MapHttpAttributeRoutes();
@@ -127,5 +105,5 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
 
             appBuilder.UseWebApi(config);
         }
-    }
+    }*/
 }

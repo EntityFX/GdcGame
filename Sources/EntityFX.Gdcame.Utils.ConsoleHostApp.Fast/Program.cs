@@ -12,12 +12,14 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Fast.MainServer
         static void Main(string[] args)
         {
 
+            var runtimeHelper = new RuntimeHelper();
+
             var _webApiStartOptions = new StartOptions
             {
                 Port = 80,
             };
 
-            if (RuntimeHelper.IsRunningOnMono())
+            if (runtimeHelper.IsRunningOnMono())
             {
                 //webApiStartOptions.ServerFactory = "Nowin";
                 _webApiStartOptions.Urls.Add(string.Format("http://+:{0}", _webApiStartOptions.Port));

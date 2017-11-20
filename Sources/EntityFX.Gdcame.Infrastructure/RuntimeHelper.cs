@@ -5,10 +5,11 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
+using EntityFX.Gdcame.Infrastructure.Common;
 
 namespace EntityFX.Gdcame.Infrastructure
 {
-    public class RuntimeHelper
+    public class RuntimeHelper : IRuntimeHelper
     {
         private static readonly PerformanceCounter _cpuCounter = new PerformanceCounter
         {
@@ -126,12 +127,7 @@ namespace EntityFX.Gdcame.Infrastructure
             }
         }
 
-        public static bool IsRunningOnMono()
-        {
-            return Type.GetType("Mono.Runtime") != null;
-        }
-
-        public static string GetRuntimeName()
+        public string GetRuntimeName()
         {
             var infoBuilder = new StringBuilder();
             if (IsRunningOnMono())
@@ -148,7 +144,7 @@ namespace EntityFX.Gdcame.Infrastructure
             return infoBuilder.ToString();
         }
 
-        public static string GetRuntimeInfo()
+        public string GetRuntimeInfo()
         {
             var infoBuilder = new StringBuilder();
             infoBuilder.AppendLine(string.Format("OS: {0}", Environment.OSVersion));
@@ -167,7 +163,7 @@ namespace EntityFX.Gdcame.Infrastructure
             return infoBuilder.ToString();
         }
 
-        public static long GetTotalMemoryInMb()
+        public long GetTotalMemoryInMb()
         {
             if (IsRunningOnMono())
             {
@@ -181,12 +177,12 @@ namespace EntityFX.Gdcame.Infrastructure
 
         }
 
-        public static float GetCpuUsage()
+        public float GetCpuUsage()
         {
             return _cpuCounter.NextValue();
         }
 
-        public static float GetAvailablememoryInMb()
+        public float GetAvailablememoryInMb()
         {
             if (Environment.OSVersion.Platform == PlatformID.Unix)
             {
@@ -206,6 +202,16 @@ namespace EntityFX.Gdcame.Infrastructure
                 return _ramCounter.NextValue();
             }
 
+        }
+
+        public float GetMemoryUsageInMb()
+        {
+            return Process.GetCurrentProcess().WorkingSet64 / 1024 / 1024;
+        }
+
+        public bool IsRunningOnMono()
+        {
+            return Type.GetType("Mono.Runtime") != null;
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using EntityFX.Gdcame.Manager.MainServer;
-
-namespace EntityFX.Gdcame.Utils.MainServer
+﻿namespace EntityFX.Gdcame.Utils.MainServer
 {
     using EntityFX.Gdcame.Engine.Contract.GameEngine;
     using EntityFX.Gdcame.Engine.GameEngine.NetworkGameEngine;

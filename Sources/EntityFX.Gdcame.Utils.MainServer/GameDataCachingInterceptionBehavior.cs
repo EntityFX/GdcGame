@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.Caching;
-using Unity.Interception.InterceptionBehaviors;
-using Unity.Interception.PolicyInjection.Pipeline;
 
 namespace EntityFX.Gdcame.Utils.MainServer
 {
-    public class GameDataCachingInterceptionBehavior : IInterceptionBehavior, IDisposable
+  /*  public class GameDataCachingInterceptionBehavior : IInterceptionBehavior, IDisposable
     {
         private readonly MemoryCache _memoryCache = new MemoryCache("GameDataCache");
 
@@ -82,5 +79,5 @@ namespace EntityFX.Gdcame.Utils.MainServer
             // GC.SuppressFinalize(this);
         }
         #endregion
-    }
+    }*/
 }

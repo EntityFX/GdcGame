@@ -1,12 +1,12 @@
 ﻿using System;
 
-using System.ServiceModel.Channels;
-using System.ServiceModel.Dispatcher;
+//using System.ServiceModel.Channels;
+//using System.ServiceModel.Dispatcher;
 using EntityFX.Gdcame.Manager.Contract.MainServer;
 
 namespace EntityFX.Gdcame.Utils.MainServer
 {
-    using EntityFX.Gdcame.Contract.Common;
+    /*using EntityFX.Gdcame.Contract.Common;
     using EntityFX.Gdcame.Engine.Contract.GameEngine;
     using System.ServiceModel;
 
@@ -56,5 +56,5 @@ namespace EntityFX.Gdcame.Utils.MainServer
         {
             return true;
         }
-    }
+    }*/
 }

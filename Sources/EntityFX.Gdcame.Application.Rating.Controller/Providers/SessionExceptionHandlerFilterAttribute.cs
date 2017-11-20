@@ -1,9 +1,11 @@
-﻿namespace EntityFX.Gdcame.Application.Api.Common.Providers
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Http.Authentication;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+
+namespace EntityFX.Gdcame.Application.Api.Common.Providers
 {
-    using System.Net;
-    using System.Net.Http;
-    using System.Web.Http;
-    using System.Web.Http.Filters;
 
     using EntityFX.Gdcame.Contract.Common;
     using EntityFX.Gdcame.Infrastructure.Common;
@@ -12,49 +14,47 @@
     {
         private readonly ILogger _logger;
 
-        private class FrozenGameNewServer
-        {
-            public string Server { get; set; }
-        }
-
 
         public SessionExceptionHandlerFilterAttribute(ILogger logger)
         {
             this._logger = logger;
         }
 
-        public override void OnException(HttpActionExecutedContext context)
+        public override void OnException(ExceptionContext context)
         {
             var invalidSessionException = context.Exception as InvalidSessionException;
             if (invalidSessionException != null)
             {
-                context.Response = context.Request.CreateErrorResponse(HttpStatusCode.Forbidden
-                    , new HttpError(context.Exception.Message)
+                context.Result = new ForbidResult(
+                    new AuthenticationProperties(new Dictionary<string, string>
                     {
-                        ExceptionType = context.Exception.GetType().ToString(),
-                        MessageDetail = invalidSessionException.SessionGuid.ToString()
-                    });
+                        {"message", context.Exception.Message}
+                    }));
                 return;
             }
 
             var gameFrozenException = context.Exception as GameFrozenException;
             if (gameFrozenException != null)
             {
-                context.Response = context.Request.CreateResponse(HttpStatusCode.MovedPermanently
-                    , new FrozenGameNewServer { Server = gameFrozenException.Server});
+                context.Result = new RedirectResult(gameFrozenException.Server, true);
                 return;
             }
 
             if (context.Exception != null)
             {
+                context.Result = new BadRequestObjectResult(context.Exception.GetType().ToString());
                 this._logger.Error(context.Exception);
-                context.Response = context.Request.CreateErrorResponse(HttpStatusCode.InternalServerError,
-                    new HttpError(context.Exception.Message)
-                    {
-                        ExceptionType = context.Exception.GetType().ToString(),
-                        MessageDetail = context.Exception.Message
-                    });
             }
+        }
+    }
+
+    public class CustomHttpException : Exception
+    {
+        public int Code { get; }
+
+        public CustomHttpException(int code)
+        {
+            Code = code;
         }
     }
 }

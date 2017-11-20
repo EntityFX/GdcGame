@@ -1,12 +1,10 @@
 using System;
 using System.Collections.Generic;
-using Microsoft.AspNet.SignalR;
-using Microsoft.Practices.Unity;
 using EntityFX.Gdcame.Infrastructure.Common;
 
 namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
 {
-    internal class SignalRDependencyResolver : DefaultDependencyResolver
+   /* internal class SignalRDependencyResolver : DefaultDependencyResolver
     {
         private readonly IIocContainer _container;
 
@@ -26,5 +24,5 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
             //return _container.ResolveAll(serviceType);
             return base.GetServices(serviceType);
         }
-    }
+    }*/
 }

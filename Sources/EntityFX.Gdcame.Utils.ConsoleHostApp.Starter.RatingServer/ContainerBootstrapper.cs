@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Identity;
+
 namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer
 {
     using System;
@@ -25,18 +27,20 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer
     using EntityFX.Gdcame.Utils.Hashing;
     using EntityFX.Gdcame.Utils.RatingServer;
 
-    using Microsoft.AspNet.Identity;
 
 
 
-    public class ContainerBootstrapper : IContainerBootstrapper
+    public class ContainerBootstrapper<TAuthContext> : IContainerBootstrapper
+        where TAuthContext : class
     {
 
         private readonly AppConfiguration _appConfiguration;
+        private readonly IRuntimeHelper _runtimeHelper;
 
-        public ContainerBootstrapper(AppConfiguration appConfiguration)
+        public ContainerBootstrapper(AppConfiguration appConfiguration, IRuntimeHelper runtimeHelper)
         {
             this._appConfiguration = appConfiguration;
+            _runtimeHelper = runtimeHelper;
         }
 
 
@@ -47,7 +51,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer
             // NOTE: To load from web.config uncomment the line below. Make sure to add a Microsoft.Practices.Unity.Configuration to the using statements.
             // container.LoadConfiguration();
 
-            container.RegisterType<ILogger>(() => new Logger(new NLoggerAdapter(NLog.LogManager.GetLogger("logger"))));
+           // container.RegisterType<ILogger>(() => new Logger(new NLoggerAdapter(NLog.LogManager.GetLogger("logger"))));
 
             var childBootstrappers = this.GetRepositoryProviders(this._appConfiguration.RepositoryProvider).Concat(new IContainerBootstrapper[]
                         {
@@ -55,24 +59,28 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer
                 new EntityFX.Gdcame.DataAccess.Service.RatingServer.ContainerBootstrapper(),
                 new Manager.Common.ContainerBootstrapper()
                         }).ToArray();
-            Array.ForEach(childBootstrappers, _ => _.Configure(container));
+
+            foreach (var containerBootstrapper in childBootstrappers)
+            {
+                containerBootstrapper.Configure(container);
+            }
 
             container.RegisterType<IMapperFactory, MapperFactory>();
 
             container.RegisterType<IMapper<StatisticsInfo, ServerStatisticsInfoModel>, StatisticsInfoMapper<StatisticsInfo, ServerStatisticsInfoModel>>();
 
-            container.RegisterType<IPerformanceHelper>(() => new PerformanceHelper(), ContainerScope.Singleton);
+            container.RegisterType<IPerformanceHelper>(() => new PerformanceHelper(_runtimeHelper), ContainerScope.Singleton);
 
             container.RegisterType(() => new SystemInfo()
             {
                 CpusCount = Environment.ProcessorCount,
-                Os = Environment.OSVersion.ToString(),
-                Runtime = RuntimeHelper.GetRuntimeName(),
-                MemoryTotal = RuntimeHelper.GetTotalMemoryInMb()
+                Os = string.Empty,
+                Runtime = _runtimeHelper.GetRuntimeName(),
+                MemoryTotal = _runtimeHelper.GetTotalMemoryInMb()
             }, ContainerScope.Singleton);
 
             container.RegisterType<ITaskTimerFactory, TaskTimerFactory>();
-            container.RegisterType<ITaskTimer, GenericTaskTimer>();
+            //container.RegisterType<ITaskTimer, GenericTaskTimer>();
 
             container.RegisterType<IHashHelper, HashHelper>();
 
@@ -85,7 +93,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer
 
             container.RegisterType<ISessionManager, SessionManager>();
             container.RegisterType<ISessionManagerClientFactory, SessionManagerClientFactory>();
-            container.RegisterType<INodeRatingClientFactory, NodeRatingClientFactory>();
+            container.RegisterType<INodeRatingClientFactory, NodeRatingClientFactory<TAuthContext>>();
 
 
             /* if (ConfigurationManager.AppSettings["UseLoggerInterceptor"] == "True")

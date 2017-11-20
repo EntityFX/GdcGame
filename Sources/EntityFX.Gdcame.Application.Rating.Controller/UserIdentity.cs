@@ -1,8 +1,14 @@
-﻿namespace EntityFX.Gdcame.Application.Api.Common
+﻿
+namespace EntityFX.Gdcame.Application.Api.Common
 {
-    using Microsoft.AspNet.Identity;
+    public interface IUserIdentity<TKey>
+    {
+        string Id { get; set; }
+        string UserName { get; set; }
+    }
 
-    public class UserIdentity : IUser<string>
+
+    public class UserIdentity : IUserIdentity<string>
     {
         public string PasswordHash { get; set; }
         public bool IsAdmin { get; set; }

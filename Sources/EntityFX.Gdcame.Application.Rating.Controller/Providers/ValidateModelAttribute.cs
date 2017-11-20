@@ -1,18 +1,17 @@
 ﻿using System.Net;
 using System.Net.Http;
-using System.Web.Http.Controllers;
-using System.Web.Http.Filters;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace EntityFX.Gdcame.Application.Api.Common.Providers
 {
     public class ValidateModelAttribute : ActionFilterAttribute
     {
-        public override void OnActionExecuting(HttpActionContext actionContext)
+        public override void OnActionExecuting(ActionExecutingContext context)
         {
-            if (!actionContext.ModelState.IsValid)
+            if (!context.ModelState.IsValid)
             {
-                actionContext.Response = actionContext.Request.CreateErrorResponse(
-                    HttpStatusCode.BadRequest, actionContext.ModelState);
+                context.Result = new BadRequestObjectResult(context.ModelState);
             }
         }
     }

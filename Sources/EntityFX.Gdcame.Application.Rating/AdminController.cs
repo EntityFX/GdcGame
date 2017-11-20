@@ -1,7 +1,9 @@
-﻿namespace EntityFX.Gdcame.Application.Api.Controller.RatingServer
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
+namespace EntityFX.Gdcame.Application.Api.Controller.RatingServer
 {
     using System.Linq;
-    using System.Web.Http;
 
     using EntityFX.Gdcame.Application.Contract.Controller.Common;
     using EntityFX.Gdcame.Common.Application.Model;
@@ -11,8 +13,8 @@
     using EntityFX.Gdcame.Manager.Contract.Common.WorkerManager;
 
     [Authorize(Roles = "Admin")]
-    [RoutePrefix("api/admin")]
-    public class AdminController : ApiController, IStatisticsInfo<ServerStatisticsInfoModel>
+    [Route("api/admin")]
+    public class AdminController : Microsoft.AspNetCore.Mvc.Controller, IStatisticsInfo<ServerStatisticsInfoModel>
     {
         private readonly IAdminManager<StatisticsInfo> _adminManager;
         private readonly IWorkerManager _workerManager;

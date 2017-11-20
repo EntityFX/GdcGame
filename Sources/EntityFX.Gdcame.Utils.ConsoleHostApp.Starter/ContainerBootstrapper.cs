@@ -23,10 +23,7 @@ using EntityFX.Gdcame.NotifyConsumer.Contract;
 using EntityFX.Gdcame.Utils.Common;
 using EntityFX.Gdcame.Utils.Hashing;
 using EntityFX.Gdcame.Utils.MainServer;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.SignalR;
-using Microsoft.Practices.Unity;
-using Microsoft.Practices.Unity.InterceptionExtension;
+using Microsoft.AspNetCore.Identity;
 
 namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
 {
@@ -53,10 +50,12 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
     public class ContainerBootstrapper : IContainerBootstrapper
     {
         private readonly AppConfiguration _appConfiguration;
+        private readonly IRuntimeHelper _runtimeHelper;
 
-        public ContainerBootstrapper(AppConfiguration appConfiguration)
+        public ContainerBootstrapper(AppConfiguration appConfiguration, IRuntimeHelper runtimeHelper)
         {
             _appConfiguration = appConfiguration;
+            _runtimeHelper = runtimeHelper;
         }
 
         public IIocContainer Configure(IIocContainer container)
@@ -67,7 +66,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
             // container.LoadConfiguration();
 
 
-            container.RegisterType<ILogger>(() => new Logger(new NLoggerAdapter(NLog.LogManager.GetLogger("logger"))));
+            //container.RegisterType<ILogger>(() => new Logger(new NLoggerAdapter(NLog.LogManager.GetLogger("logger"))));
 
             var childBootstrappers = GetRepositoryProviders(_appConfiguration.RepositoryProvider).Concat(
                 new IContainerBootstrapper[]
@@ -79,7 +78,11 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
                 new NotifyConsumer.ContainerBootstrapper()
                         }
                 ).ToArray();
-            Array.ForEach(childBootstrappers, _ => _.Configure(container));
+
+            foreach (var containerBootstrapper in childBootstrappers)
+            {
+                containerBootstrapper.Configure(container);
+            }
 
 
             container.RegisterType<IMapperFactory, MapperFactory>();
@@ -100,21 +103,30 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
 
             container.RegisterType<IGameFactory, GameFactory>();
             container.RegisterType<ITaskTimerFactory, TaskTimerFactory>();
-            container.RegisterType<ITaskTimer, GenericTaskTimer>();
+            //container.RegisterType<ITaskTimer, GenericTaskTimer>();
 
             container.RegisterType<IGameDataPersister, GameDataPersister>();
 
             container.RegisterType<IGameDataPersisterFactory, GameDataPersisterFactory>();
 
-            container.RegisterType<ICache, Cache>(() => new Cache(), ContainerScope.Singleton );
+            //container.RegisterType<ICache, Cache>(() => new Cache(), ContainerScope.Singleton );
+
+            container.RegisterType<IRuntimeHelper>(() => _runtimeHelper, ContainerScope.Singleton);
 
             container.RegisterType<IHashHelper, HashHelper>();
-            container.RegisterType<IPerformanceHelper>(() => new PerformanceHelper(), ContainerScope.Singleton);
+            container.RegisterType<IPerformanceHelper>(() => new PerformanceHelper(container.Resolve<IRuntimeHelper>()), ContainerScope.Singleton);
 
             container.RegisterType(() => new GamePerformanceInfo(), ContainerScope.Singleton);
-            container.RegisterType(() => new SystemInfo()
+            container.RegisterType(() =>
             {
-                CpusCount = Environment.ProcessorCount, Os = Environment.OSVersion.ToString(), Runtime = RuntimeHelper.GetRuntimeName(), MemoryTotal = RuntimeHelper.GetTotalMemoryInMb()
+                var runtimeHelper = container.Resolve<IRuntimeHelper>();
+                return new SystemInfo()
+                {
+                    CpusCount = Environment.ProcessorCount,
+                    Os = string.Empty,
+                    Runtime = runtimeHelper.GetRuntimeName(),
+                    MemoryTotal = runtimeHelper.GetTotalMemoryInMb()
+                };
             }, ContainerScope.Singleton);
 
             container.RegisterType<IGameSessions, GameSessions>(

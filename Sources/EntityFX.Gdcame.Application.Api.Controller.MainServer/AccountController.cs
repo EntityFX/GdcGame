@@ -2,19 +2,21 @@
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using System.Web.Http;
+using EntityFX.Gdcame.Application.Api.Common.Providers;
 using EntityFX.Gdcame.Application.Contract.Controller;
 using EntityFX.Gdcame.Application.Contract.Controller.MainServer;
 using EntityFX.Gdcame.Application.Contract.Model;
 using EntityFX.Gdcame.Application.Contract.Model.MainServer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace EntityFX.Gdcame.Application.Api.Controller.MainServer
 {
     using EntityFX.Gdcame.Manager.Contract.Common.UserManager;
 
     [Authorize(Roles = "Admin")]
-    [RoutePrefix("api/admin/accounts")]
-    public class AccountController : ApiController, IAccountController
+    [Route("api/admin/accounts")]
+    public class AccountController : Microsoft.AspNetCore.Mvc.Controller, IAccountController
     {
         private readonly ISimpleUserManager _simpleUserManager;
 
@@ -45,14 +47,14 @@ namespace EntityFX.Gdcame.Application.Api.Controller.MainServer
                         Login = userData.Login
                     };
                 }
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                throw new CustomHttpException((int)HttpStatusCode.NotFound);
             });
         }
 
         [HttpGet]
         [Route("filter/{filter?}")]
         [Route("")]
-        public async Task<IEnumerable<AccountInfoModel>> GetAsync([FromUri]string filter = null)
+        public async Task<IEnumerable<AccountInfoModel>> GetAsync([FromQuery]string filter = null)
         {
             return await Task.Factory.StartNew(() =>
 
@@ -80,7 +82,7 @@ namespace EntityFX.Gdcame.Application.Api.Controller.MainServer
                         Login = userData.Login
                     };
                 }
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                throw new CustomHttpException((int)HttpStatusCode.NotFound);
             });
         }
     }

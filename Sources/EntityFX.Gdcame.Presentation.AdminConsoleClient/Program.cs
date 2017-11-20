@@ -37,7 +37,7 @@ namespace EntityFX.Gdcame.Presentation.AdminConsoleClient
                 RatingServer = ConfigurationManager.AppSettings["RatingServer"],
                 RatingServerPort = Convert.ToInt32(ConfigurationManager.AppSettings["RatingServerPort"]),
             };
-
+            //ApiHelper<IAuthenticator> apiHelper, string user, string password, Uri mainServer, Uri ratingServer, int port, int ratingServerPort
             var logger = new NLoggerAdapter(LogManager.GetLogger("logger"));
             var ac = new AdminConsole(new ApiHelper<IAuthenticator>(logger, new RestsharpOAuth2ProviderFactory(logger), new RestsharpApiClientFactory() ), 
                 userName, userPassword, settings);

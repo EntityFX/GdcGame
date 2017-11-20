@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
-using System.Web.Http;
 using EntityFX.Gdcame.Application.Contract.Controller.Common;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 
 namespace EntityFX.Gdcame.Application.Api.Controller.MainServer
@@ -11,7 +12,7 @@ namespace EntityFX.Gdcame.Application.Api.Controller.MainServer
     using EntityFX.Gdcame.Manager.Contract.Common.RatingManager;
 
     [Authorize(Roles = "System")]
-    [RoutePrefix("api/rating")]
+    [Route("api/rating")]
     public class LocalRatingController : RatingControllerBase, IRatingController
     {
 
