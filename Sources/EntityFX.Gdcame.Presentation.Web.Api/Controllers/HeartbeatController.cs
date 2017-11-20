@@ -1,14 +1,10 @@
-﻿using System.Web.Http;
-using System.Web.Http.Controllers;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace EntityFX.Gdcame.Application.Api.MainServer.Controllers
 {
-    public class HeartbeatController : ApiController
+    [Route("api/[controller]")]
+    public class HeartbeatController : Controller
     {
-        protected override void Initialize(HttpControllerContext controllerContext)
-        {
-            base.Initialize(controllerContext);
-        }
 
         // Get api/Heartbeat
         public string Get()

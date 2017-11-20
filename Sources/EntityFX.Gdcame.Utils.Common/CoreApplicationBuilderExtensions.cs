@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Owin.Builder;
-using Owin;
 
 namespace EntityFX.Gdcame.Utils.Common
 {
     using AppFunc = Func<IDictionary<string, object>, Task>;
     using DataProtectionProviderDelegate = Func<string[], Tuple<Func<byte[], byte[]>, Func<byte[], byte[]>>>;
     using DataProtectionTuple = Tuple<Func<byte[], byte[]>, Func<byte[], byte[]>>;
-
+    /*
     public static class CoreApplicationBuilderExtensions
     {
         public static IApplicationBuilder UseAppBuilder(this IApplicationBuilder app, Action<IAppBuilder> configure)
@@ -41,5 +39,5 @@ namespace EntityFX.Gdcame.Utils.Common
             });
             return appBuilder;
         }
-    }
+    }*/
 }

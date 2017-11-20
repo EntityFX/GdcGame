@@ -1,105 +1,30 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A6F59753-3065-4BB3-85A8-1E0778205407}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EntityFX.Gdcame.Application.Providers.MainServer</RootNamespace>
-    <AssemblyName>EntityFX.Gdcame.Application.Providers.MainServer</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
+    <TargetFramework>netstandard1.6</TargetFramework>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath>..\..\bin\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>..\..\bin\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BuildServer|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\BuildServer\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <ProjectReference Include="..\EntityFX.Gdcame.Application.Rating.Controller\EntityFX.Gdcame.Application.Api.Common.csproj" />
+    <ProjectReference Include="..\EntityFX.Gdcame.Common.Presentation.Model\EntityFX.Gdcame.Common.Application.Model.csproj" />
+    <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Common\EntityFX.Gdcame.Infrastructure.Common.csproj" />
+    <ProjectReference Include="..\EntityFX.Gdcame.Manager.Contract.Common\EntityFX.Gdcame.Manager.Contract.Common.csproj" />
+    <ProjectReference Include="..\EntityFX.Gdcame.Manager.Contract\EntityFX.Gdcame.Manager.Contract.MainServer.csproj" />
+    <ProjectReference Include="..\EntityFX.Gdcame.Presentation.Web.Model\EntityFX.Gdcame.Application.Contract.Model.MainServer.csproj" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="GameDataProvider.cs" />
-    <Compile Include="IGameDataProvider.cs" />
+    <Reference Include="Microsoft.AspNetCore.Http.Abstractions">
+      <HintPath>C:\Users\SolopiyA\.nuget\packages\microsoft.aspnetcore.http.abstractions\1.0.0\lib\netstandard1.3\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
+    </Reference>
   </ItemGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\EntityFX.Gdcame.Common.Contract\EntityFX.Gdcame.Contract.Common.csproj">
-      <Project>{89F89C37-F564-47EB-839D-C45ACD9D012A}</Project>
-      <Name>EntityFX.Gdcame.Contract.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.Common.Presentation.Model\EntityFX.Gdcame.Common.Application.Model.csproj">
-      <Project>{3B44AFC0-F207-44E4-9F91-7F24E1F4D342}</Project>
-      <Name>EntityFX.Gdcame.Common.Application.Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.Contract.MainServer\EntityFX.Gdcame.Contract.MainServer.csproj">
-      <Project>{05B804CB-DA17-4449-88FB-C2DEF96486A7}</Project>
-      <Name>EntityFX.Gdcame.Contract.MainServer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Common\EntityFX.Gdcame.Infrastructure.Common.csproj">
-      <Project>{924CC67D-9E2B-46BA-BE1D-6C6C780CCFBC}</Project>
-      <Name>EntityFX.Gdcame.Infrastructure.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.Manager.Contract.Common\EntityFX.Gdcame.Manager.Contract.Common.csproj">
-      <Project>{0E91EB31-4F0A-41A0-A785-006EA68BDA87}</Project>
-      <Name>EntityFX.Gdcame.Manager.Contract.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.Manager.Contract\EntityFX.Gdcame.Manager.Contract.MainServer.csproj">
-      <Project>{41696F24-E345-4599-A0C7-0715F64946D8}</Project>
-      <Name>EntityFX.Gdcame.Manager.Contract.MainServer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.Presentation.Web.Model\EntityFX.Gdcame.Application.Contract.Model.MainServer.csproj">
-      <Project>{0F9C056A-DB5D-48ED-A688-BFD04ED4DFD7}</Project>
-      <Name>EntityFX.Gdcame.Application.Contract.Model.MainServer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.Utils.Common\EntityFX.Gdcame.Utils.Common.csproj">
-      <Project>{12C5304D-AE3E-4FF0-8E09-D7B3D3EA90DC}</Project>
-      <Name>EntityFX.Gdcame.Utils.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EntityFX.Gdcame.Utils.MainServer\EntityFX.Gdcame.Utils.MainServer.csproj">
-      <Project>{2AE99E38-4B45-4D8B-B9D5-840B21F82A43}</Project>
-      <Name>EntityFX.Gdcame.Utils.MainServer</Name>
-    </ProjectReference>
+    <Folder Include="Properties\" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

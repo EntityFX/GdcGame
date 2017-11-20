@@ -1,4 +1,5 @@
-﻿using EntityFX.Gdcame.Infrastructure.Common;
+﻿using System;
+using EntityFX.Gdcame.Infrastructure.Common;
 
 namespace EntityFX.Gdcame.Utils.Common
 {
@@ -15,9 +16,15 @@ namespace EntityFX.Gdcame.Utils.Common
         /// </summary>
         public static AppConfiguration AppConfiguration { get; set; }
 
-        public static IIocContainer Container { get; set; }
+        public static IServiceProvider ServiceProvider { get; set; }
 
-        public abstract void ConfigureServices(IServiceCollection services);
+        public virtual IServiceProvider ConfigureServices(IServiceCollection services)
+        {
+            services.AddMvc();
+
+            return ServiceProvider;
+        }
+
         public abstract void Configure(IApplicationBuilder app);
     }
 }

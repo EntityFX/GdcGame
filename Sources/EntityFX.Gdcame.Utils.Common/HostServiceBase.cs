@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using EntityFX.Gdcame.Infrastructure;
 
 namespace EntityFX.Gdcame.Utils.Common
@@ -10,17 +11,20 @@ namespace EntityFX.Gdcame.Utils.Common
     using EntityFX.Gdcame.Manager.Contract.Common.WorkerManager;
 
     using Microsoft.AspNetCore.Hosting;
-    using Microsoft.Owin.Hosting;
+    //using Microsoft.Owin.Hosting;
     using Unity;
 
-    using Topshelf;
+    //using Topshelf;
 
-    public abstract class HostServiceBase<TCoreStartup> : ServiceControl
+    public abstract class HostServiceBase<TCoreStartup>
         where TCoreStartup : CoreStartupBase
     {
-        protected AppConfiguration AppConfiguration { get; private set; }
+        private readonly IRuntimeHelper _runtimeHelper;
 
-        private readonly StartOptions _webApiStartOptions;
+        private readonly IServiceProvider _serviceProvider;
+        private readonly AppConfiguration _appConfiguration;
+
+        //private readonly StartOptions _webApiStartOptions;
 
         protected readonly ILogger Logger;
 
@@ -28,40 +32,42 @@ namespace EntityFX.Gdcame.Utils.Common
 
         private IIocContainer _container;
 
-        public HostServiceBase()
+        public HostServiceBase(IRuntimeHelper runtimeHelper, IIocContainer iocContainer, IServiceProvider serviceProvider, AppConfiguration appConfiguration)
         {
+            _runtimeHelper = runtimeHelper;
+            _serviceProvider = serviceProvider;
+            _appConfiguration = appConfiguration;
 
-            this.AppConfiguration = new AppConfiguration();
-            CoreStartupBase.AppConfiguration = this.AppConfiguration;
-            this._container = (this.GetContainerBootstrapper(this.AppConfiguration)).Configure(new UnityIocContainer(new UnityContainer()));
+            CoreStartupBase.AppConfiguration = this._appConfiguration;
+            this._container = (this.GetContainerBootstrapper(this._appConfiguration)).Configure(iocContainer);
 
-            CoreStartupBase.Container = this._container;
-            this.AppConfiguration = CoreStartupBase.AppConfiguration;
-
+            CoreStartupBase.ServiceProvider = _serviceProvider;
+ 
             this.Logger = this._container.Resolve<ILogger>();
-            this._webApiStartOptions = new StartOptions
-                                      {
-                                          Port = this.AppConfiguration.WebApiPort,
-                                      };
+
 
             this.ConfigureWorkers(this._container.Resolve<IWorkerManager>(), this._container);
-            this.ConfigureWebServer(this._webApiStartOptions);
+            //this.ConfigureWebServer(this._webApiStartOptions);
         }
 
-        public bool Start(HostControl hostControl)
+        public IIocContainer Container
+        {
+            get { return _container; }
+        }
+
+        public bool Start()
         {
             this.WebHost.Start();
 
             this.StartWorkers(this._container.Resolve<IWorkerManager>());
             this.Logger.Info(string.Join(", ", this.WebHost.ServerFeatures.Select(f => f.ToString())));
-            this.Logger.Info(RuntimeHelper.GetRuntimeInfo());
-            this.Logger.Info("SignalR server running on {0}", this.AppConfiguration.WebApiPort);
-            this.Logger.Info("Web server running on {0}", this.AppConfiguration.WebApiPort);
-            this.Logger.Info("Repository provider: {0}", this.AppConfiguration.RepositoryProvider);
+            this.Logger.Info(_runtimeHelper.GetRuntimeInfo());
+            this.Logger.Info("Web server running on {0}", this._appConfiguration.WebApiPort);
+            this.Logger.Info("Repository provider: {0}", this._appConfiguration.RepositoryProvider);
             return true;
         }
 
-        public bool Stop(HostControl hostControl)
+        public bool Stop()
         {
             return true;
         }
@@ -76,40 +82,42 @@ namespace EntityFX.Gdcame.Utils.Common
 
         }
 
-        protected virtual void ConfigureWebServer(StartOptions startOptions)
+        protected virtual void ConfigureWebServer()
         {
-            if (RuntimeHelper.IsRunningOnMono())
+            var urls = new List<string>();
+            if (_runtimeHelper.IsRunningOnMono())
             {
                 //webApiStartOptions.ServerFactory = "Nowin";
-                this._webApiStartOptions.Urls.Add(string.Format("http://+:{0}", this._webApiStartOptions.Port));
-                if (Environment.OSVersion.Platform != PlatformID.Unix)
+                urls.Add(string.Format("http://+:{0}", this._appConfiguration.WebApiPort));
+              /*  if (Environment.OSVersion.Platform != PlatformID.Unix)
                 {
                     this._webApiStartOptions.Urls.Add(string.Format("http://127.0.0.1:{0}", this._webApiStartOptions.Port));
-                }
+                }*/
             }
             else
             {
-                this._webApiStartOptions.Urls.Add(string.Format("http://+:{0}", this._webApiStartOptions.Port));
+                urls.Add(string.Format("http://+:{0}", this._appConfiguration.WebApiPort));
             }
 
             var webHost = new WebHostBuilder();
 
-            if (this.AppConfiguration.WebServer == "WebListener")
+            if (_appConfiguration.WebServer == "WebListener")
             {
                 webHost.UseWebListener(options => { });
             }
-            else if (this.AppConfiguration.WebServer == "Kestrel")
+            else if (_appConfiguration.WebServer == "Kestrel")
             {
                 webHost.UseKestrel(
                     options =>
                         {
-                            options.MaxRequestBufferSize = 4 * 1014 * 1024;
                             options.UseConnectionLogging();
-                            options.ThreadCount = this.AppConfiguration.KestrelThreads;
+                            options.ThreadCount = _appConfiguration.KestrelThreads;
+                            options.Limits.MaxRequestBufferSize = 4 * 1014 * 1024;
                         });
             }
 
-            this.WebHost = webHost.UseStartup<TCoreStartup>().UseUrls(this._webApiStartOptions.Urls.ToArray()).Build();
+            this.WebHost = webHost.UseStartup<TCoreStartup>().UseUrls(urls.ToArray()).Build();
+
         }
 
         protected abstract IContainerBootstrapper GetContainerBootstrapper(AppConfiguration appConfiguration);

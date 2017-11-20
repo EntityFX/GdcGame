@@ -6,39 +6,39 @@ using System.Net.Http;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
-using System.Web;
-using System.Web.Http;
 using EntityFX.Gdcame.Application.Api.MainServer.Models;
 using EntityFX.Gdcame.Infrastructure.Api.ApiResult;
-
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using Microsoft.Owin.Security.Cookies;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using RegisterAccountModel = EntityFX.Gdcame.Application.Api.MainServer.Models.RegisterAccountModel;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication;
 
 namespace EntityFX.Gdcame.Application.Api.MainServer.Controllers
 {
-    using EntityFX.Gdcame.Application.Api.Common;
-    using EntityFX.Gdcame.Application.Api.Common.Providers;
     using EntityFX.Gdcame.Manager.Contract.Common.SessionManager;
 
-    [RoutePrefix("api/Auth")]
-    public class AuthController : ApiController
+    public class IdentityUser
+    {
+        public string Id { get; set; }
+        public string UserName { get; set; }
+    }
+
+    [Route("api/[controller]")]
+    public class AuthController : Controller
     {
         private readonly ISessionManager _sessionManager;
         private const string LocalLoginProvider = "Local";
-        private UserManager<UserIdentity> _userManager;
+        private UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
 
-        public UserManager<UserIdentity> UserManager
-        {
-            get { return _userManager ?? Request.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
-            private set { _userManager = value; }
-        }
 
-        public AuthController(ISessionManager sessionManager)
+        public AuthController(ISessionManager sessionManager, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
             _sessionManager = sessionManager;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
 
@@ -47,16 +47,16 @@ namespace EntityFX.Gdcame.Application.Api.MainServer.Controllers
         {
             return new UserInfoViewModel
             {
-                Email = RequestContext.Principal.Identity.GetUserName()
+                Email = HttpContext.User.Identity.Name
             };
         }
 
         // POST api/Auth/Logout
         [Route("Logout")]
-        public bool Logout()
+        public async Task<bool> Logout()
         {
             _sessionManager.CloseSession();
-            Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
+            await _signInManager.SignOutAsync();
             return true;
         }
 
@@ -64,23 +64,22 @@ namespace EntityFX.Gdcame.Application.Api.MainServer.Controllers
         // POST api/Auth/Register
         [Route("Register")]
         [HttpPost]
-        public async Task<HttpResponseMessage> Register(RegisterAccountModel model)
+        public async Task<ActionResult> Register(RegisterAccountModel model)
         {
             if (!ModelState.IsValid)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+                return BadRequest(ModelState);
             }
 
-            var user = new UserIdentity { UserName = model.Login };
+            var user = new IdentityUser() { UserName = model.Login };
 
-            var result = await UserManager.CreateAsync(user, model.Password);
+            var result = await _userManager.CreateAsync(user, model.Password);
 
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
             }
-
-            return Request.CreateResponse(HttpStatusCode.OK);
+            return Ok();
         }
 
 
@@ -97,27 +96,23 @@ namespace EntityFX.Gdcame.Application.Api.MainServer.Controllers
 
         #region Helpers
 
-        private IAuthenticationManager Authentication
-        {
-            get { return Request.GetOwinContext().Authentication; }
-        }
 
-        private HttpResponseMessage GetErrorResult(IdentityResult result)
+        private ActionResult GetErrorResult(IdentityResult result)
         {
             if (result == null)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Cannot register");
+                return StatusCode(500, "Cannot register");
             }
 
             if (!result.Succeeded)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, new ApiErrorResult()
+                return BadRequest(new ApiErrorResult()
                 {
                     Message = "Cannot register",
                     ErrorDetails = result.Errors.Select(error => new ApiErrorData()
                     {
                         Code = 0,
-                        Message = error
+                        Message = error.Description
                     }).ToArray()
                 });
             }
@@ -168,29 +163,8 @@ namespace EntityFX.Gdcame.Application.Api.MainServer.Controllers
                 {
                     LoginProvider = providerKeyClaim.Issuer,
                     ProviderKey = providerKeyClaim.Value,
-                    UserName = identity.FindFirstValue(ClaimTypes.Name)
+                    UserName = identity.Name
                 };
-            }
-        }
-
-        private static class RandomOAuthStateGenerator
-        {
-            private static readonly RandomNumberGenerator _random = new RNGCryptoServiceProvider();
-
-            public static string Generate(int strengthInBits)
-            {
-                const int bitsPerByte = 8;
-
-                if (strengthInBits % bitsPerByte != 0)
-                {
-                    throw new ArgumentException("strengthInBits must be evenly divisible by 8.", "strengthInBits");
-                }
-
-                var strengthInBytes = strengthInBits / bitsPerByte;
-
-                var data = new byte[strengthInBytes];
-                _random.GetBytes(data);
-                return HttpServerUtility.UrlTokenEncode(data);
             }
         }
 

@@ -1,11 +1,13 @@
 ﻿using System;
-using System.Web;
+using System.Linq;
+using System.Security.Claims;
+using EntityFX.Gdcame.Application.Api.Common.Providers;
 using EntityFX.Gdcame.Application.Contract.Model;
 using EntityFX.Gdcame.Application.Contract.Model.MainServer;
 using EntityFX.Gdcame.Common.Application.Model;
 using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager.Contract.MainServer.GameManager;
-using EntityFX.Gdcame.Utils.MainServer;
+using Microsoft.AspNetCore.Http;
 
 namespace EntityFX.Gdcame.Application.Providers.MainServer
 {
@@ -13,7 +15,6 @@ namespace EntityFX.Gdcame.Application.Providers.MainServer
     using EntityFX.Gdcame.Contract.MainServer;
     using EntityFX.Gdcame.Contract.MainServer.Counters;
     using EntityFX.Gdcame.Manager.Contract.Common.UserManager;
-    using EntityFX.Gdcame.Utils.Common;
 
     public class GameDataProvider : IGameDataProvider
     {
@@ -49,21 +50,6 @@ namespace EntityFX.Gdcame.Application.Providers.MainServer
 
         private Guid GameGuid { get; set; }
 
-        public void InitializeSession(string userName)
-        {
-            if (HttpContext.Current.Session["SessionGuid"] == null)
-            {
-                if (!_simpleUserManager.Exists(userName))
-                {
-                    _simpleUserManager.Create(new UserData {Login = userName});
-                }
-
-                HttpContext.Current.Session["SessionGuid"] =
-                    _sessionManagerClient.BuildSessionManagerClient(Guid.Empty).OpenSession(userName);
-            }
-            InitializeGameContext((Guid) HttpContext.Current.Session["SessionGuid"]);
-        }
-
         public void InitializeGameContext(Guid gameGuid)
         {
             GameGuid = gameGuid;
@@ -72,8 +58,7 @@ namespace EntityFX.Gdcame.Application.Providers.MainServer
 
         public void ClearSession()
         {
-            HttpContext.Current.Session.Clear();
-            HttpContext.Current.Session.Abandon();
+
         }
 
         public GameDataModel GetGameData()

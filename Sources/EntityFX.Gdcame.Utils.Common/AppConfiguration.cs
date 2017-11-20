@@ -1,7 +1,5 @@
 ﻿namespace EntityFX.Gdcame.Utils.Common
 {
-    using System.Configuration;
-
     public class AppConfiguration
     {
         public string RepositoryProvider { get; set; }
@@ -17,12 +15,12 @@
 
         public AppConfiguration()
         {
-            MongoConnectionString = ConfigurationManager.AppSettings["MongoConnectionString"];
-            RepositoryProvider = ConfigurationManager.AppSettings["RepositoryProvider"] ?? "Mongo";
-            WebApiPort = int.Parse(ConfigurationManager.AppSettings["WebApiPort"] ?? "80");
-            SignalRPort = int.Parse(ConfigurationManager.AppSettings["WebApiPort"] ?? "80");
-            WebServer = ConfigurationManager.AppSettings["WebServer"] ?? "Kestrel";
-            KestrelThreads = int.Parse(ConfigurationManager.AppSettings["KestrelThreads"] ?? "32");
+            //MongoConnectionString = ConfigurationManager.AppSettings["MongoConnectionString"];
+            //RepositoryProvider = ConfigurationManager.AppSettings["RepositoryProvider"] ?? "Mongo";
+            //WebApiPort = int.Parse(ConfigurationManager.AppSettings["WebApiPort"] ?? "80");
+            //SignalRPort = int.Parse(ConfigurationManager.AppSettings["WebApiPort"] ?? "80");
+            //WebServer = ConfigurationManager.AppSettings["WebServer"] ?? "Kestrel";
+            //KestrelThreads = int.Parse(ConfigurationManager.AppSettings["KestrelThreads"] ?? "32");
         }
     }
 }
