@@ -41,7 +41,7 @@
 
             container.RegisterType<IUserRepository, UserRepository>();
             container.RegisterType<IServerRepository, ServerRepository>();
-            container.RegisterType<IMongoDatabase, IMongoDatabase>(() =>this.MongoDatabase, ContainerScope.Singleton);
+            container.RegisterType<IMongoDatabase, IMongoDatabase>((scope) =>this.MongoDatabase, ContainerScope.Singleton);
             return container;
         }
     }

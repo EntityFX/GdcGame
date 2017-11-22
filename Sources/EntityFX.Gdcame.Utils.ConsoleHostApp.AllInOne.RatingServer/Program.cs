@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Autofac;
 using EntityFX.Gdcame.Infrastructure;
 using EntityFX.Gdcame.Utils.Common;
 using EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer;
@@ -17,15 +18,12 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.RatingServer
     {
         static void Main(string[] args)
         {
-            var iocContainer = new UnityIocContainer(new UnityContainer());
 
             var runtimeHelper = new RuntimeHelper();
 
-            var serviceProvider = new UnityDependencyProvider(iocContainer.Container);
-
             var appConfiguration = new AppConfiguration();
 
-            var host = new HostService(runtimeHelper, iocContainer, serviceProvider, appConfiguration);
+            var host = new HostService(runtimeHelper, appConfiguration, new AutofacIocContainer(new ContainerBuilder()));
             host.Start();
 
             /*HostFactory.Run(configureCallback =>

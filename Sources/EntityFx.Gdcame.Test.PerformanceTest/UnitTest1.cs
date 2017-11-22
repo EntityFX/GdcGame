@@ -44,9 +44,9 @@ namespace EntityFx.Gdcame.Test.Unit
         [TestInitialize]
         public void TestInitialize()
         {
-            this.container.RegisterType<ILogger>(() => new Logger(new NLoggerAdapter(NLog.LogManager.GetLogger("logger"))));
+            this.container.RegisterType<ILogger>((scope) => new Logger(new NLoggerAdapter(NLog.LogManager.GetLogger("logger"))));
 
-            this.container.RegisterType<IOperationContextHelper>(() => new FakeOperationContextHelper(), ContainerScope.Singleton);
+            this.container.RegisterType<IOperationContextHelper>(scope => new FakeOperationContextHelper(), ContainerScope.Singleton);
             var managerBootstrapper = new ContainerBootstrapper();
             managerBootstrapper.Configure(this.container);
 
@@ -58,7 +58,7 @@ namespace EntityFx.Gdcame.Test.Unit
             };
             Array.ForEach(childBootstrappers, _ => _.Configure(this.container));
 
-            this.container.RegisterType<IGameFactory, GameFactory>();
+            this.container.RegisterType<IGameFactory, GameFactory>((scope) => new GameFactory(scope));
 
             this.container.RegisterType<IGameDataPersister, GameDataPersister>();
 
@@ -66,10 +66,10 @@ namespace EntityFx.Gdcame.Test.Unit
 
             this.container.RegisterType<IHashHelper, HashHelper>();
 
-            this.container.RegisterType(() => new GamePerformanceInfo(), ContainerScope.Singleton);
+            this.container.RegisterType((scope) => new GamePerformanceInfo(), ContainerScope.Singleton);
 
-            this.container.RegisterType( () => 
-                new GameSessions(this.container.Resolve<ILogger>(), this.container.Resolve<IGameFactory>(), this.container.Resolve<GamePerformanceInfo>()), ContainerScope.Singleton);
+            this.container.RegisterType( (scope) => 
+                new GameSessions(scope.Resolve<ILogger>(), scope.Resolve<IGameFactory>(), scope.Resolve<GamePerformanceInfo>()), ContainerScope.Singleton);
 
             var workers = new List<IWorker>();
             workers.Add(this.container.Resolve<CalculationWorker>());
@@ -88,7 +88,7 @@ namespace EntityFx.Gdcame.Test.Unit
 
             this.container.RegisterType<IGameDataChangesNotifier, GameDataChangesNotifier>();
 
-            this.container.RegisterType<INotifyConsumerClientFactory, NotifyConsumerClientFactory>(() => new NotifyConsumerClientFactory(container));
+            this.container.RegisterType<INotifyConsumerClientFactory, NotifyConsumerClientFactory>((scope) => new NotifyConsumerClientFactory(scope));
         }
 
         [TestMethod]

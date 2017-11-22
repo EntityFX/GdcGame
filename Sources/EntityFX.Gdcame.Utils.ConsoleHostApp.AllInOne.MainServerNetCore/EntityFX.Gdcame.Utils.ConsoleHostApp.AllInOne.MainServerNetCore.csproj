@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="1.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="1.1.3" />
+    <PackageReference Include="NLog" Version="4.5.0-beta08" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Api\EntityFX.Gdcame.Infrastructure.Api.csproj" />
+    <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Common\EntityFX.Gdcame.Infrastructure.Common.csproj" />
+    <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure\EntityFX.Gdcame.Infrastructure.csproj" />
+    <ProjectReference Include="..\EntityFX.Gdcame.Manager.Common\EntityFX.Gdcame.Manager.Common.csproj" />
+    <ProjectReference Include="..\EntityFX.Gdcame.Manager.Worker.MainServer\EntityFX.Gdcame.Engine.Worker.MainServer.csproj" />
+    <ProjectReference Include="..\EntityFX.Gdcame.Manager\EntityFX.Gdcame.Manager.MainServer.csproj" />
+    <ProjectReference Include="..\EntityFX.Gdcame.Utils.Common\EntityFX.Gdcame.Utils.Common.csproj" />
+    <ProjectReference Include="..\EntityFX.Gdcame.Utils.ConsoleHostApp.Starter\EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer.csproj" />
+    <ProjectReference Include="..\EntityFX.Gdcame.Utils.MainServer\EntityFX.Gdcame.Utils.MainServer.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

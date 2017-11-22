@@ -1,4 +1,6 @@
-﻿using EntityFX.Gdcame.Infrastructure;
+﻿using System.Configuration;
+using Autofac;
+using EntityFX.Gdcame.Infrastructure;
 using EntityFX.Gdcame.Utils.Common;
 using Topshelf;
 using Unity;
@@ -11,15 +13,21 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.MainServer
         {
             /*HostFactory.Run(configureCallback =>
             {*/
-                var iocContainer = new UnityIocContainer(new UnityContainer());
 
                 var runtimeHelper = new RuntimeHelper();
 
-                var serviceProvider = new UnityDependencyProvider(iocContainer.Container);
 
-                var appConfiguration = new AppConfiguration();
+            var appConfiguration = new AppConfiguration()
+            {
+                MongoConnectionString = ConfigurationManager.AppSettings["MongoConnectionString"],
+                RepositoryProvider = ConfigurationManager.AppSettings["RepositoryProvider"] ?? "Mongo",
+                WebApiPort = int.Parse(ConfigurationManager.AppSettings["WebApiPort"] ?? "80"),
+                SignalRPort = int.Parse(ConfigurationManager.AppSettings["WebApiPort"] ?? "80"),
+                WebServer = ConfigurationManager.AppSettings["WebServer"] ?? "Kestrel",
+                KestrelThreads = int.Parse(ConfigurationManager.AppSettings["KestrelThreads"] ?? "32")
+            };
 
-            var host = new HostService(runtimeHelper, iocContainer, serviceProvider, appConfiguration);
+            var host = new HostService(runtimeHelper, appConfiguration, new AutofacIocContainer(new ContainerBuilder()));
             host.Start();
 
             //configureCallback.RunAsNetworkService();

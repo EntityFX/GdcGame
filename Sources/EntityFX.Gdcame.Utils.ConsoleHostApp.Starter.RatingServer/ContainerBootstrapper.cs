@@ -69,9 +69,9 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer
 
             container.RegisterType<IMapper<StatisticsInfo, ServerStatisticsInfoModel>, StatisticsInfoMapper<StatisticsInfo, ServerStatisticsInfoModel>>();
 
-            container.RegisterType<IPerformanceHelper>(() => new PerformanceHelper(_runtimeHelper), ContainerScope.Singleton);
+            container.RegisterType<IPerformanceHelper>((scope) => new PerformanceHelper(_runtimeHelper), ContainerScope.Singleton);
 
-            container.RegisterType(() => new SystemInfo()
+            container.RegisterType((scope) => new SystemInfo()
             {
                 CpusCount = Environment.ProcessorCount,
                 Os = string.Empty,
@@ -89,7 +89,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer
 
             container.RegisterType<ISimpleUserManager, SimpleUserManager>();
 
-            container.RegisterType<ISessions>(() => new SessionsProvider(container.Resolve<ILogger>()), ContainerScope.Singleton);
+            container.RegisterType<ISessions>((scope) => new SessionsProvider(scope.Resolve<ILogger>()), ContainerScope.Singleton);
 
             container.RegisterType<ISessionManager, SessionManager>();
             container.RegisterType<ISessionManagerClientFactory, SessionManagerClientFactory>();

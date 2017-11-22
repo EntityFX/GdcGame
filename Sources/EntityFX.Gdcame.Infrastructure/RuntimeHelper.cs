@@ -1,16 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using EntityFX.Gdcame.Infrastructure.Common;
+using Microsoft.Extensions.DependencyModel;
 
 namespace EntityFX.Gdcame.Infrastructure
 {
     public class RuntimeHelper : IRuntimeHelper
     {
+#if NET461
         private static readonly PerformanceCounter _cpuCounter = new PerformanceCounter
         {
             CategoryName = "Processor",
@@ -23,6 +27,7 @@ namespace EntityFX.Gdcame.Infrastructure
                 , "Available MBytes"
                 , true
             );
+#endif
 
         public static class WindowsPerformanceInfo
         {
@@ -144,6 +149,31 @@ namespace EntityFX.Gdcame.Infrastructure
             return infoBuilder.ToString();
         }
 
+        public IEnumerable<Assembly> GetLoadedAssemblies()
+        {
+#if NET461
+            return AppDomain.CurrentDomain.GetAssemblies();
+#else
+            var assemblies = new List<Assembly>();
+            var dependencies = DependencyContext.Default.RuntimeLibraries;
+            foreach (var library in dependencies)
+            {
+                if (IsCandidateLibrary(library, "EntityFX"))
+                {
+                    var assembly = Assembly.Load(new AssemblyName(library.Name));
+                    assemblies.Add(assembly);
+                }
+            }
+            return assemblies;
+
+            bool IsCandidateLibrary(RuntimeLibrary library, string assemblyName)
+            {
+                return library.Name == (assemblyName)
+                       || library.Dependencies.Any(d => d.Name.StartsWith(assemblyName));
+            }
+#endif
+        }
+
         public string GetRuntimeInfo()
         {
             var infoBuilder = new StringBuilder();
@@ -167,8 +197,14 @@ namespace EntityFX.Gdcame.Infrastructure
         {
             if (IsRunningOnMono())
             {
+#if NET461
                 var pc = new PerformanceCounter("Mono Memory", "Total Physical Memory");
                 return pc.RawValue / 1024 / 1024;
+#else
+            return 0;
+#endif
+
+
             }
             else
             {
@@ -179,7 +215,11 @@ namespace EntityFX.Gdcame.Infrastructure
 
         public float GetCpuUsage()
         {
+#if NET461
             return _cpuCounter.NextValue();
+#else
+            return 0;
+#endif
         }
 
         public float GetAvailablememoryInMb()
@@ -192,6 +232,7 @@ namespace EntityFX.Gdcame.Infrastructure
             }
             else
             {
+#if NET461
                 PerformanceCounter _ramCounter = new PerformanceCounter();
 
                 _ramCounter = new PerformanceCounter(
@@ -200,6 +241,10 @@ namespace EntityFX.Gdcame.Infrastructure
                     , true
                 );
                 return _ramCounter.NextValue();
+#else
+                return 0;
+#endif
+
             }
 
         }

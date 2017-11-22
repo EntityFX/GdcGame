@@ -19,7 +19,7 @@ namespace EntityFX.Gdcame.Manager.Common
 
             container.RegisterType<IServerManager, ServerManager>();
 
-            container.RegisterType<IWorkerManager, WorkerManager>(() => new WorkerManager(container.Resolve<ILogger>()), ContainerScope.Singleton);
+            container.RegisterType<IWorkerManager, WorkerManager>((scope) => new WorkerManager(scope.Resolve<ILogger>()), ContainerScope.Singleton);
 
             return container;
         }

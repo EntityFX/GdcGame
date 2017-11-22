@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Security.Cryptography;
+using System.Security.Principal;
+using System.Text;
 using System.Threading.Tasks;
 using EntityFX.Gdcame.Application.Api.MainServer.Models;
 using EntityFX.Gdcame.Infrastructure.Api.ApiResult;
@@ -14,6 +17,7 @@ using Microsoft.AspNetCore.Mvc;
 using RegisterAccountModel = EntityFX.Gdcame.Application.Api.MainServer.Models.RegisterAccountModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.IdentityModel.Tokens;
 
 namespace EntityFX.Gdcame.Application.Api.MainServer.Controllers
 {
@@ -80,6 +84,24 @@ namespace EntityFX.Gdcame.Application.Api.MainServer.Controllers
                 return GetErrorResult(result);
             }
             return Ok();
+        }
+
+        [HttpGet("token")]
+        public dynamic GetToken()
+        {
+            var handler = new JwtSecurityTokenHandler();
+
+            var sec = "Gdcame";
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(sec));
+            var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
+
+            var identity = new ClaimsIdentity(new GenericIdentity("temp@jwt.ru"), new[] { new Claim("user_id", "57dc51a3389b30fed1b13f91") });
+            var token = handler.CreateJwtSecurityToken(subject: identity,
+                signingCredentials: signingCredentials,
+                audience: "ExampleAudience",
+                issuer: "ExampleIssuer",
+                expires: DateTime.UtcNow.AddSeconds(42));
+            return handler.WriteToken(token);
         }
 
 

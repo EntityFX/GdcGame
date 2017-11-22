@@ -4,9 +4,9 @@ namespace EntityFX.Gdcame.Infrastructure.Common
 {
     public class TaskTimerFactory : ITaskTimerFactory
     {
-        private readonly IIocContainer _unityContainer;
+        private readonly IResolver _unityContainer;
 
-        public TaskTimerFactory(IIocContainer unityContainer)
+        public TaskTimerFactory(IResolver unityContainer)
         {
             _unityContainer = unityContainer;
         }

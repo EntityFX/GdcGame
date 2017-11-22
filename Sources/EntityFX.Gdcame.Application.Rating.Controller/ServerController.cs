@@ -17,8 +17,7 @@ namespace EntityFX.Gdcame.Application.Api.Common
             _serverManager = serverManager;
         }
 
-        [HttpGet]
-        [Route("")]
+        [HttpGet("")]
         public async Task<ServerInfoModel> GetServersInfo()
         {
             return await Task.Run(() => new ServerInfoModel() { ServerList = _serverManager.GetServers() });

@@ -2,12 +2,11 @@
 
 namespace EntityFX.Gdcame.Infrastructure.Common
 {
-    public abstract class IocContainerBase<TContainer> : IIocContainerDisposable<TContainer>, IDisposable
-        where TContainer : IDisposable
+    public abstract class IocContainerBase<TContainer> : IIocContainerDisposable<TContainer>
     {
         private bool _disposed = false;
 
-        public void Dispose()
+        /*public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
@@ -23,8 +22,8 @@ namespace EntityFX.Gdcame.Infrastructure.Common
                 Container.Dispose();
             }
             _disposed = true;
-        }
+        }*/
 
-        public abstract TContainer Container { get; }
+        public abstract TContainer ContainerBuilder { get; }
     }
 }

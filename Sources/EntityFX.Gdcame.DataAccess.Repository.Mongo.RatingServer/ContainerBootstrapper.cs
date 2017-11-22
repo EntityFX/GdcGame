@@ -38,7 +38,7 @@
             container.RegisterType<IMapper<TopRatingStatistics, List<TopRatingStatisticsDocument>>, TopRatingStatisticsDocumentMapper>();
 
             container.RegisterType<IGlobalRatingRepository, GlobalRatingRepository>();
-            container.RegisterType<IMongoDatabase, IMongoDatabase>(() => this.MongoDatabase, ContainerScope.Singleton);
+            container.RegisterType<IMongoDatabase, IMongoDatabase>((scope) => this.MongoDatabase, ContainerScope.Singleton);
             return container;
         }
     }

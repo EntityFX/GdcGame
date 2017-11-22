@@ -19,7 +19,7 @@ namespace EntityFX.Gdcame.NotifyConsumer
 
             //container.RegisterType<GameDataHub>();
             //container.RegisterType<IHubContextAccessor, HubContextAccessor>();
-            container.RegisterType<IConnections>(() => new Connections(), ContainerScope.Singleton);
+            container.RegisterType<IConnections>((c) => new Connections(), ContainerScope.Singleton);
 
             return container;
         }

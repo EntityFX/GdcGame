@@ -96,7 +96,6 @@
       <Name>EntityFX.Gdcame.Application.Contract.Model.MainServer</Name>
     </ProjectReference>
   </ItemGroup>
-  <Import Project="..\EntityFX.Presentation.Shared\EntityFX.Presentation.Shared.projitems" Label="Shared" />
   <Import Project="..\EntityFX.Presentation.Shared.AdminConsole\EntityFX.Presentation.Shared.AdminConsole.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

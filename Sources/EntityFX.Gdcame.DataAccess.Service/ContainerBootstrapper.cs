@@ -15,14 +15,7 @@
 
             container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessDocumentService>();
             container.RegisterType<IGameDataStoreDataAccessService, GameDataStoreDataAccessDocumentService>();
-            container.RegisterType<GameRepositoryFacade>(
-                () => new GameRepositoryFacade
-                {
-                    CountersRepository = container.Resolve<ICountersRepository>(),
-                    CustomRuleRepository = container.Resolve<ICustomRuleRepository>(),
-                    FundsDriverRepository = container.Resolve<IItemRepository>()
-                }
-                );
+            container.RegisterType<GameRepositoryFacade>();
 
             container.RegisterType<IRatingDataAccess, LocalNodeRatingDataAccess>();
             container.RegisterType<ILocalNodeRatingDataAccess, LocalNodeRatingDataAccess>();

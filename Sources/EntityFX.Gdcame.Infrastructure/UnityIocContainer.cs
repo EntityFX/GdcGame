@@ -11,11 +11,11 @@ using Unity.Injection;
 
 namespace EntityFX.Gdcame.Infrastructure
 {
-    public class UnityIocContainer : IocContainerBase<IUnityContainer>, IIocContainer<IUnityContainer>
+    public class UnityIocContainer : IocContainerBase<IUnityContainer>, IIocContainer<IUnityContainer, IUnityContainer>
     {
         private readonly IUnityContainer _unityContainer;
 
-        public override IUnityContainer Container
+        public override IUnityContainer ContainerBuilder
         {
             get
             {
@@ -27,6 +27,11 @@ namespace EntityFX.Gdcame.Infrastructure
         {
             _unityContainer = unityContainer;
             _unityContainer.RegisterInstance<IIocContainer>(this);
+        }
+
+        public IUnityContainer Configure()
+        {
+            return ContainerBuilder;
         }
 
         public T Resolve<T>(string name = null)
@@ -77,28 +82,28 @@ namespace EntityFX.Gdcame.Infrastructure
             }
         }
 
-        public void RegisterType<T>(Func<T> factory, ContainerScope scope = ContainerScope.Instance, string name = null)
+        public void RegisterType<T>(Func<IResolver, T> factory, ContainerScope scope = ContainerScope.Instance, string name = null)
         {
             if (scope == ContainerScope.Instance)
             {
                 if (string.IsNullOrEmpty(name))
                 {
-                    _unityContainer.RegisterType<T>(new InjectionFactory(container => factory()));
+                    _unityContainer.RegisterType<T>(new InjectionFactory(container => factory(this)));
                 }
                 else
                 {
-                    _unityContainer.RegisterType<T>(name, new InjectionFactory(container => factory()));
+                    _unityContainer.RegisterType<T>(name, new InjectionFactory(container => factory(this)));
                 }
             }
             else
             {
                 if (string.IsNullOrEmpty(name))
                 {
-                    _unityContainer.RegisterInstance<T>(factory());
+                    _unityContainer.RegisterInstance<T>(factory(this));
                 }
                 else
                 {
-                    _unityContainer.RegisterInstance<T>(factory());
+                    _unityContainer.RegisterInstance<T>(factory(this));
                 }
             }
         }
@@ -120,39 +125,49 @@ namespace EntityFX.Gdcame.Infrastructure
             {
                 if (string.IsNullOrEmpty(name))
                 {
-                    _unityContainer.RegisterInstance(typeof(T), _unityContainer.Resolve(typeof(U)));
+                    _unityContainer.RegisterInstance(typeof(T),typeof(U));
                 }
                 else
                 {
-                    _unityContainer.RegisterInstance(typeof(T), name, _unityContainer.Resolve(typeof(U)));
+                    _unityContainer.RegisterInstance(typeof(T), name, typeof(U));
                 }
             }
         }
 
-        public void RegisterType<T, U>(Func<U> factory, ContainerScope scope = ContainerScope.Instance, string name = null) where U : T
+        public void RegisterType<T, U>(Func<IResolver, U> factory, ContainerScope scope = ContainerScope.Instance, string name = null) where U : T
         {
             if (scope == ContainerScope.Instance)
             {
                 if (string.IsNullOrEmpty(name))
                 {
-                    _unityContainer.RegisterType<T, U>(new InjectionFactory(container => factory()));
+                    _unityContainer.RegisterType<T, U>(new InjectionFactory(container => factory(this)));
                 }
                 else
                 {
-                    _unityContainer.RegisterType<T, U>(name, new InjectionFactory(container => factory()));
+                    _unityContainer.RegisterType<T, U>(name, new InjectionFactory(container => factory(this)));
                 }
             }
             else
             {
                 if (string.IsNullOrEmpty(name))
                 {
-                    _unityContainer.RegisterInstance(typeof(T), factory());
+                    _unityContainer.RegisterInstance(typeof(T), factory(this));
                 }
                 else
                 {
-                    _unityContainer.RegisterInstance(typeof(T), name, factory());
+                    _unityContainer.RegisterInstance(typeof(T), name, factory(this));
                 }
             }
+        }
+
+        public void RegisterType(Type source, Type destination)
+        {
+            _unityContainer.RegisterType(source, destination);
+        }
+
+        public void Dispose()
+        {
+            _unityContainer?.Dispose();
         }
     }
 }

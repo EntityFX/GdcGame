@@ -8,9 +8,9 @@
 
     public class GameFactory : IGameFactory
     {
-        private readonly IIocContainer _unityContainer;
+        private readonly IResolver _unityContainer;
 
-        public GameFactory(IIocContainer unityContainer)
+        public GameFactory(IResolver unityContainer)
         {
             _unityContainer = unityContainer;
         }

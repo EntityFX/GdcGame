@@ -7,9 +7,9 @@ namespace EntityFX.Gdcame.Utils.MainServer
 
     public class NotifyConsumerClientFactory : INotifyConsumerClientFactory
     {
-        private readonly IIocContainer _unityContainer;
+        private readonly IResolver _unityContainer;
 
-        public NotifyConsumerClientFactory(IIocContainer unityContainer)
+        public NotifyConsumerClientFactory(IResolver unityContainer)
         {
             _unityContainer = unityContainer;
         }

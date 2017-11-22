@@ -79,7 +79,7 @@
             container.RegisterType<IUserGameSnapshotRepository, UserGameSnapshotRepository>();
             container.RegisterType<IRatingHistoryRepository, RatingHistoryRepository>();
             container.RegisterType<ILocalRatingStatisticsRepository, LocalRatingStatisticsRepository>();
-            container.RegisterType<IMongoDatabase, IMongoDatabase>(() => this.MongoDatabase, ContainerScope.Singleton);
+            container.RegisterType<IMongoDatabase, IMongoDatabase>((scope) => this.MongoDatabase, ContainerScope.Singleton);
             return container;
         }
     }

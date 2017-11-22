@@ -3,9 +3,9 @@ namespace EntityFX.Gdcame.Infrastructure.Common
 {
     public class MapperFactory : IMapperFactory
     {
-        private readonly IIocContainer _unityContainer;
+        private readonly IResolver _unityContainer;
 
-        public MapperFactory(IIocContainer unityContainer)
+        public MapperFactory(IResolver unityContainer)
         {
             _unityContainer = unityContainer;
         }

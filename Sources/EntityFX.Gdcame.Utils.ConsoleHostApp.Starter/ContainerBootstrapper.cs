@@ -85,7 +85,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
             }
 
 
-            container.RegisterType<IMapperFactory, MapperFactory>();
+            container.RegisterType<IMapperFactory, MapperFactory>((scope) => new MapperFactory(scope));
 
             container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessDocumentService>();
             container.RegisterType<IGameDataStoreDataAccessService, GameDataStoreDataAccessDocumentService>();
@@ -101,43 +101,42 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
             container.RegisterType<IMapper<IGame, StoredGameData>, StoreGameDataMapper>(ContainerScope.Instance, "StoreGameDataMapper");
             /////
 
-            container.RegisterType<IGameFactory, GameFactory>();
-            container.RegisterType<ITaskTimerFactory, TaskTimerFactory>();
+            container.RegisterType<IGameFactory, GameFactory>((scope) => new GameFactory(scope));
+            container.RegisterType<ITaskTimerFactory, TaskTimerFactory>((scope) => new TaskTimerFactory(scope));
             //container.RegisterType<ITaskTimer, GenericTaskTimer>();
 
             container.RegisterType<IGameDataPersister, GameDataPersister>();
 
-            container.RegisterType<IGameDataPersisterFactory, GameDataPersisterFactory>();
+            container.RegisterType<IGameDataPersisterFactory, GameDataPersisterFactory>((scope) => new GameDataPersisterFactory(scope));
 
             //container.RegisterType<ICache, Cache>(() => new Cache(), ContainerScope.Singleton );
 
-            container.RegisterType<IRuntimeHelper>(() => _runtimeHelper, ContainerScope.Singleton);
+            container.RegisterType<IRuntimeHelper>((scope) => _runtimeHelper, ContainerScope.Singleton);
 
             container.RegisterType<IHashHelper, HashHelper>();
-            container.RegisterType<IPerformanceHelper>(() => new PerformanceHelper(container.Resolve<IRuntimeHelper>()), ContainerScope.Singleton);
+            container.RegisterType<IPerformanceHelper, PerformanceHelper>(ContainerScope.Singleton);
 
-            container.RegisterType(() => new GamePerformanceInfo(), ContainerScope.Singleton);
-            container.RegisterType(() =>
+            container.RegisterType((scope) => new GamePerformanceInfo(), ContainerScope.Singleton);
+            container.RegisterType((scope) =>
             {
-                var runtimeHelper = container.Resolve<IRuntimeHelper>();
                 return new SystemInfo()
                 {
                     CpusCount = Environment.ProcessorCount,
                     Os = string.Empty,
-                    Runtime = runtimeHelper.GetRuntimeName(),
-                    MemoryTotal = runtimeHelper.GetTotalMemoryInMb()
+                    Runtime = _runtimeHelper.GetRuntimeName(),
+                    MemoryTotal = _runtimeHelper.GetTotalMemoryInMb()
                 };
             }, ContainerScope.Singleton);
 
             container.RegisterType<IGameSessions, GameSessions>(
-                () => new GameSessions(container.Resolve<ILogger>(), 
-                container.Resolve<IGameFactory>(), container.Resolve<GamePerformanceInfo>()), ContainerScope.Singleton);
+                (scope) => new GameSessions(scope.Resolve<ILogger>(),
+                    scope.Resolve<IGameFactory>(), scope.Resolve<GamePerformanceInfo>()), ContainerScope.Singleton);
 
             container.RegisterType<INotifyConsumerService, NotifyConsumerService>();
 
             container.RegisterType<IGameDataChangesNotifier, GameDataChangesNotifier>();
 
-            container.RegisterType<INotifyConsumerClientFactory, NotifyConsumerClientFactory>(() => new NotifyConsumerClientFactory(container));
+            container.RegisterType<INotifyConsumerClientFactory, NotifyConsumerClientFactory>((scope) => new NotifyConsumerClientFactory(scope));
 
             /* if (ConfigurationManager.AppSettings["UseLoggerInterceptor"] == "True")
              {
@@ -165,7 +164,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
             container.RegisterType<IGameApiController, GameApiController>();
 
             container.RegisterType<IRatingController, LocalRatingController>();
-            container.RegisterType<IServerController, ServerController>();
+           // container.RegisterType<IServerController, ServerController>();
 
             container.RegisterType<IOperationContextHelper, NoWcfOperationContextHelper>();
 

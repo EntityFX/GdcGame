@@ -21,13 +21,13 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.RatingServer
 
     internal class HostService : HostServiceBase<CoreStartup>
     {
-        public HostService(IRuntimeHelper runtimeHelper, IIocContainer iocContainer, IServiceProvider serviceProvider, AppConfiguration appConfiguration) : base(runtimeHelper, iocContainer, serviceProvider, appConfiguration)
+        public HostService(IRuntimeHelper runtimeHelper, AppConfiguration appConfiguration, IIocContainer container) : base(runtimeHelper, appConfiguration, container)
         {
         }
 
-        protected override IContainerBootstrapper GetContainerBootstrapper(AppConfiguration appConfiguration)
+        protected override IContainerBootstrapper GetContainerBootstrapper(AppConfiguration appConfiguration, IIocContainer iocContainer)
         {
-            return new ContainerBootstrapper<IAuthenticator>(appConfiguration, Container.Resolve<IRuntimeHelper>());
+            return new ContainerBootstrapper<IAuthenticator>(appConfiguration, iocContainer.Resolve<IRuntimeHelper>());
         }
 
         protected override void ConfigureWorkers(IWorkerManager workerManager, IIocContainer container)

@@ -7,9 +7,9 @@ namespace EntityFX.Gdcame.Utils.MainServer
 
     public class GameDataPersisterFactory : IGameDataPersisterFactory
     {
-        private readonly IIocContainer _unityContainer;
+        private readonly IResolver _unityContainer;
 
-        public GameDataPersisterFactory(IIocContainer unityContainer)
+        public GameDataPersisterFactory(IResolver unityContainer)
         {
             _unityContainer = unityContainer;
         }
