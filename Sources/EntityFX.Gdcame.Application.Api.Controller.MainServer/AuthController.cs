@@ -90,7 +90,7 @@ namespace EntityFX.Gdcame.Application.Api.Controller.MainServer
             }
 
             var user = await _userManager.FindByNameAsync(loginAccount.Login);
-
+            var roles = await _userManager.GetRolesAsync(user);
             var options = new JwtIssuerOptions();
 
             var handler = new JwtSecurityTokenHandler();
@@ -98,17 +98,22 @@ namespace EntityFX.Gdcame.Application.Api.Controller.MainServer
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(options.SecretKey));
             var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
 
-            var identity = new ClaimsIdentity(
-                new GenericIdentity(user.UserName), new[]
-                {
-                    new Claim(JwtRegisteredClaimNames.Sub, user.Id)
-                });
+            var defaultClaims = new List<Claim>
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id),
+            };
+            defaultClaims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
+
+            var guid = _sessionManager.OpenSession(user.UserName);
+            defaultClaims.Add(new Claim("game-session", guid.ToString()));
+
+            var identity = new ClaimsIdentity(defaultClaims.ToArray());
             var token = handler.CreateJwtSecurityToken(subject: identity,
                 signingCredentials: signingCredentials,
                 audience: options.Audience,
                 issuer: options.Issuer,
-                expires: DateTime.UtcNow.AddSeconds(42));
-            return new JsonResult(token);
+                expires: options.Expiration);
+            return new JsonResult(new {access_token = new JwtSecurityTokenHandler().WriteToken(token)});
         }
 
 

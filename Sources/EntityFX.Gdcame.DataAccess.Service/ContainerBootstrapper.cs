@@ -1,4 +1,6 @@
-﻿namespace EntityFX.Gdcame.DataAccess.Service.MainServer
+﻿using System;
+
+namespace EntityFX.Gdcame.DataAccess.Service.MainServer
 {
     using EntityFX.Gdcame.DataAccess.Contract.Common.Rating;
     using EntityFX.Gdcame.DataAccess.Contract.Common.Server;
@@ -15,7 +17,12 @@
 
             container.RegisterType<IGameDataRetrieveDataAccessService, GameDataRetrieveDataAccessDocumentService>();
             container.RegisterType<IGameDataStoreDataAccessService, GameDataStoreDataAccessDocumentService>();
-            container.RegisterType<GameRepositoryFacade>();
+            container.RegisterType<GameRepositoryFacade>((resolver) => new GameRepositoryFacade
+            {
+                CountersRepository = resolver.Resolve<ICountersRepository>(),
+                CustomRuleRepository = resolver.Resolve<ICustomRuleRepository>(),
+                FundsDriverRepository = resolver.Resolve<IItemRepository>()
+            }, ContainerScope.Instance, String.Empty);
 
             container.RegisterType<IRatingDataAccess, LocalNodeRatingDataAccess>();
             container.RegisterType<ILocalNodeRatingDataAccess, LocalNodeRatingDataAccess>();

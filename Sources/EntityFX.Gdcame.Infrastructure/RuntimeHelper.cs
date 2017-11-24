@@ -29,6 +29,8 @@ namespace EntityFX.Gdcame.Infrastructure
             );
 #endif
 
+
+
         public static class WindowsPerformanceInfo
         {
             [DllImport("psapi.dll", SetLastError = true)]
@@ -144,9 +146,20 @@ namespace EntityFX.Gdcame.Infrastructure
             }
             else
             {
-                infoBuilder.Append(string.Format(".Net Framework {0}", Environment.Version));
+                var runtime = string.Empty;
+#if NET461
+                runtime = string.Format(".Net Framework {0}", Environment.Version);
+#else
+                runtime = System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription;
+#endif
+                infoBuilder.AppendLine(string.Format("Runtime: {0}", runtime));
             }
             return infoBuilder.ToString();
+        }
+
+        public string GetOsName()
+        {
+            return Environment.OSVersion.ToString();
         }
 
         public IEnumerable<Assembly> GetLoadedAssemblies()
@@ -176,6 +189,7 @@ namespace EntityFX.Gdcame.Infrastructure
 
         public string GetRuntimeInfo()
         {
+
             var infoBuilder = new StringBuilder();
             infoBuilder.AppendLine(string.Format("OS: {0}", Environment.OSVersion));
             infoBuilder.AppendLine(string.Format("CPUs: {0}", Environment.ProcessorCount));
@@ -188,7 +202,7 @@ namespace EntityFX.Gdcame.Infrastructure
             }
             else
             {
-                infoBuilder.AppendLine(string.Format("Runtime: .Net Framework {0}", Environment.Version));
+                infoBuilder.AppendLine(GetRuntimeName());
             }
             return infoBuilder.ToString();
         }

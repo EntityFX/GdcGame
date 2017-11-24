@@ -11,10 +11,10 @@ namespace EntityFX.Gdcame.Application.Api.Common.Providers
         public string Issuer { get; set; } = "Gdcame";
 
 
-        public string Subject { get; set; }
+        public string Subject { get; set; } = "GdcameMAinServer";
 
 
-        public string Audience { get; set; }
+        public string Audience { get; set; } = "GdcameUsers";
 
 
         public DateTime NotBefore => DateTime.UtcNow;
@@ -22,7 +22,7 @@ namespace EntityFX.Gdcame.Application.Api.Common.Providers
         public DateTime IssuedAt => DateTime.UtcNow;
 
 
-        public TimeSpan ValidFor { get; set; } = TimeSpan.FromHours(1);
+        public TimeSpan ValidFor { get; set; } = TimeSpan.FromHours(12);
 
 
         public DateTime Expiration => IssuedAt.Add(ValidFor);

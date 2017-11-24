@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Microsoft.AspNetCore.Identity;
 
 namespace EntityFX.Gdcame.Application.Api.Common.Providers
@@ -14,7 +15,7 @@ namespace EntityFX.Gdcame.Application.Api.Common.Providers
     using EntityFX.Gdcame.Manager.Contract.Common.UserManager;
 
 
-    public class GameUserStore : IUserStore<UserIdentity>, IUserPasswordStore<UserIdentity>, IDisposable, IUserEmailStore<UserIdentity>
+    public class GameUserStore : IUserPasswordStore<UserIdentity>, IUserEmailStore<UserIdentity>, IUserRoleStore<UserIdentity>
     {
         private readonly ISimpleUserManager _simpleUserManager;
 
@@ -23,51 +24,27 @@ namespace EntityFX.Gdcame.Application.Api.Common.Providers
             this._simpleUserManager = simpleUserManager;
         }
 
-        public void Dispose()
-        {
-            this.Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposeManaged)
-        {
-
-        }
-
-
-        public Task SetEmailAsync(UserIdentity userIdentity, string email)
+        Task IUserEmailStore<UserIdentity>.SetEmailAsync(UserIdentity user, string email, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
 
-
-        public Task SetEmailConfirmedAsync(UserIdentity userIdentity, bool confirmed)
-        {
-            throw new NotImplementedException();
-        }
-
-
-        public Task SetEmailAsync(UserIdentity user, string email, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<string> GetEmailAsync(UserIdentity user, CancellationToken cancellationToken)
+        async Task<string> IUserEmailStore<UserIdentity>.GetEmailAsync(UserIdentity user, CancellationToken cancellationToken)
         {
             return await Task.FromResult(user.UserName);
         }
 
-        public async Task<bool> GetEmailConfirmedAsync(UserIdentity user, CancellationToken cancellationToken)
+        async Task<bool> IUserEmailStore<UserIdentity>.GetEmailConfirmedAsync(UserIdentity user, CancellationToken cancellationToken)
         {
             return await Task.FromResult(true);
         }
 
-        public Task SetEmailConfirmedAsync(UserIdentity user, bool confirmed, CancellationToken cancellationToken)
+        Task IUserEmailStore<UserIdentity>.SetEmailConfirmedAsync(UserIdentity user, bool confirmed, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<UserIdentity> FindByEmailAsync(string normalizedEmail, CancellationToken cancellationToken)
+        async Task<UserIdentity> IUserEmailStore<UserIdentity>.FindByEmailAsync(string normalizedEmail, CancellationToken cancellationToken)
         {
             return await (Task.Run(() =>
             {
@@ -85,44 +62,44 @@ namespace EntityFX.Gdcame.Application.Api.Common.Providers
             }, cancellationToken));
         }
 
-        public Task<string> GetNormalizedEmailAsync(UserIdentity user, CancellationToken cancellationToken)
+        Task<string> IUserEmailStore<UserIdentity>.GetNormalizedEmailAsync(UserIdentity user, CancellationToken cancellationToken)
         {
             return Task.FromResult(user.UserName);
         }
 
-        public Task SetNormalizedEmailAsync(UserIdentity user, string normalizedEmail, CancellationToken cancellationToken)
+        Task IUserEmailStore<UserIdentity>.SetNormalizedEmailAsync(UserIdentity user, string normalizedEmail, CancellationToken cancellationToken)
         {
             user.UserName = normalizedEmail.ToLowerInvariant();
             return Task.FromResult(true);
         }
 
-        public Task<string> GetUserIdAsync(UserIdentity user, CancellationToken cancellationToken)
+        Task<string> IUserStore<UserIdentity>.GetUserIdAsync(UserIdentity user, CancellationToken cancellationToken)
         {
             return Task.FromResult(user.Id);
         }
 
-        public Task<string> GetUserNameAsync(UserIdentity user, CancellationToken cancellationToken)
+        Task<string> IUserStore<UserIdentity>.GetUserNameAsync(UserIdentity user, CancellationToken cancellationToken)
         {
             return Task.FromResult(user.UserName);
         }
 
-        public Task SetUserNameAsync(UserIdentity user, string userName, CancellationToken cancellationToken)
+        Task IUserStore<UserIdentity>.SetUserNameAsync(UserIdentity user, string userName, CancellationToken cancellationToken)
         {
             return Task.FromResult(user.UserName);
         }
 
-        public Task<string> GetNormalizedUserNameAsync(UserIdentity user, CancellationToken cancellationToken)
+        Task<string> IUserStore<UserIdentity>.GetNormalizedUserNameAsync(UserIdentity user, CancellationToken cancellationToken)
         {
             return Task.FromResult(user.UserName);
         }
 
-        public Task SetNormalizedUserNameAsync(UserIdentity user, string normalizedName, CancellationToken cancellationToken)
+        Task IUserStore<UserIdentity>.SetNormalizedUserNameAsync(UserIdentity user, string normalizedName, CancellationToken cancellationToken)
         {
             user.UserName = normalizedName.ToLowerInvariant();
             return Task.FromResult(normalizedName);
         }
 
-        public async Task<IdentityResult> CreateAsync(UserIdentity user, CancellationToken cancellationToken)
+        async Task<IdentityResult> IUserStore<UserIdentity>.CreateAsync(UserIdentity user, CancellationToken cancellationToken)
         {
             this._simpleUserManager.Create(
                 new UserData
@@ -135,18 +112,18 @@ namespace EntityFX.Gdcame.Application.Api.Common.Providers
             return await Task.FromResult(IdentityResult.Success);
         }
 
-        public Task<IdentityResult> UpdateAsync(UserIdentity user, CancellationToken cancellationToken)
+        Task<IdentityResult> IUserStore<UserIdentity>.UpdateAsync(UserIdentity user, CancellationToken cancellationToken)
         {
             return Task.FromResult(IdentityResult.Success);
         }
 
-        public async Task<IdentityResult> DeleteAsync(UserIdentity user, CancellationToken cancellationToken)
+        async Task<IdentityResult> IUserStore<UserIdentity>.DeleteAsync(UserIdentity user, CancellationToken cancellationToken)
         {
             this._simpleUserManager.Delete(user.Id);
             return await Task.FromResult(IdentityResult.Success);
         }
 
-        public async Task<UserIdentity> FindByIdAsync(string userId, CancellationToken cancellationToken)
+        async Task<UserIdentity> IUserStore<UserIdentity>.FindByIdAsync(string userId, CancellationToken cancellationToken)
         {
             return await Task.Run(() =>
             {
@@ -164,7 +141,7 @@ namespace EntityFX.Gdcame.Application.Api.Common.Providers
             }, cancellationToken);
         }
 
-        public async Task<UserIdentity> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
+        async Task<UserIdentity> IUserStore<UserIdentity>.FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
         {
             return await Task.Run(() =>
             {
@@ -183,7 +160,7 @@ namespace EntityFX.Gdcame.Application.Api.Common.Providers
             }, cancellationToken);
         }
 
-        public Task SetPasswordHashAsync(UserIdentity user, string passwordHash, CancellationToken cancellationToken)
+        Task IUserPasswordStore<UserIdentity>.SetPasswordHashAsync(UserIdentity user, string passwordHash, CancellationToken cancellationToken)
         {
             if (user == null)
                 throw new ArgumentNullException("userIdentity");
@@ -191,16 +168,63 @@ namespace EntityFX.Gdcame.Application.Api.Common.Providers
             return Task.FromResult(0);
         }
 
-        public async Task<string> GetPasswordHashAsync(UserIdentity user, CancellationToken cancellationToken)
+        async Task<string> IUserPasswordStore<UserIdentity>.GetPasswordHashAsync(UserIdentity user, CancellationToken cancellationToken)
         {
             if (user == null)
                 throw new ArgumentNullException("userIdentity");
             return await Task.FromResult(user.PasswordHash);
         }
 
-        public async Task<bool> HasPasswordAsync(UserIdentity user, CancellationToken cancellationToken)
+        async Task<bool> IUserPasswordStore<UserIdentity>.HasPasswordAsync(UserIdentity user, CancellationToken cancellationToken)
         {
             return await Task.FromResult(user.PasswordHash != null);
+        }
+
+
+
+
+
+
+
+        #region IDisposable
+        private void ThrowIfDisposed()
+        {
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(GetType().Name);
+            }
+        }
+
+        private bool _disposed;
+        public void Dispose()
+        {
+            _disposed = true;
+        }
+        #endregion
+
+        Task IUserRoleStore<UserIdentity>.AddToRoleAsync(UserIdentity user, string roleName, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task IUserRoleStore<UserIdentity>.RemoveFromRoleAsync(UserIdentity user, string roleName, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<IList<string>> IUserRoleStore<UserIdentity>.GetRolesAsync(UserIdentity user, CancellationToken cancellationToken)
+        {
+            return Task.FromResult((IList<string>)user.Roles.ToList());
+        }
+
+        Task<bool> IUserRoleStore<UserIdentity>.IsInRoleAsync(UserIdentity user, string roleName, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(user.Roles.Contains(roleName));
+        }
+
+        Task<IList<UserIdentity>> IUserRoleStore<UserIdentity>.GetUsersInRoleAsync(string roleName, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -74,7 +74,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer
             container.RegisterType((scope) => new SystemInfo()
             {
                 CpusCount = Environment.ProcessorCount,
-                Os = string.Empty,
+                Os = _runtimeHelper.GetOsName(),
                 Runtime = _runtimeHelper.GetRuntimeName(),
                 MemoryTotal = _runtimeHelper.GetTotalMemoryInMb()
             }, ContainerScope.Singleton);

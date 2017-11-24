@@ -7,6 +7,8 @@ namespace EntityFX.Gdcame.Infrastructure.Common
     {
         string GetRuntimeName();
 
+        string GetOsName();
+
         IEnumerable<Assembly> GetLoadedAssemblies();
 
         string GetRuntimeInfo();
