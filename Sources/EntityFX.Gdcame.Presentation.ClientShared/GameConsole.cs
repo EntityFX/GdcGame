@@ -5,6 +5,7 @@ using System.Linq;
 using EntityFx.GdCame.Presentation.Shared;
 using EntityFX.Gdcame.Application.Contract.Controller.Common;
 using EntityFX.Gdcame.Application.Contract.Model.MainServer;
+using EntityFX.Gdcame.Common.Application.Model;
 using EntityFX.Gdcame.Contract.Common.UserRating;
 using EntityFX.Gdcame.Infrastructure;
 using EntityFX.Gdcame.Infrastructure.Api.Auth;
@@ -173,7 +174,7 @@ namespace EntityFX.Gdcame.Presentation.ClientShared
 
             try
             {
-                var result = authApi.Register(new RegisterAccountModel
+                var result = authApi.Register(new Common.Application.Model.RegisterAccountModel
                 {
                     Login = userName,
                     Password = password,

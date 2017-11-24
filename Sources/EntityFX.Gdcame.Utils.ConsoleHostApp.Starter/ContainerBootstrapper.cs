@@ -156,7 +156,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
             container.RegisterType<ISessionManagerClientFactory, SessionManagerClientFactory>();
 
 
-
+            container.RegisterType<ILookupNormalizer,UpperInvariantLookupNormalizer>();
             container.RegisterType<ApplicationUserManagerFacotory>();
             container.RegisterType<IUserStore<UserIdentity>, GameUserStore>();          
             container.RegisterType<IGameDataProvider, GameDataProvider>();
@@ -167,8 +167,8 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
            // container.RegisterType<IServerController, ServerController>();
 
             container.RegisterType<IOperationContextHelper, NoWcfOperationContextHelper>();
-
-            container.RegisterType<UserManager<UserIdentity>, ApplicationUserManager>();
+            container.RegisterType<IPasswordHasher<UserIdentity>, PasswordHasher<UserIdentity>>();
+           // container.RegisterType<UserManager<UserIdentity>, ApplicationUserManager>();
             
             return container;
         }

@@ -424,7 +424,7 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
             var apiFactory = new RestsharpApiClientFactory();
             var serverUri = GetApiServerUri(_serviceUriList, login);
             var authApi = new AuthApiClient(apiFactory.Build(new AnonymousAuthContext<IAuthenticator>() { BaseUri = serverUri }));
-            return DoPerformanceMeasureAction(async () => await authApi.Register(new RegisterAccountModel()
+            return DoPerformanceMeasureAction(async () => await authApi.Register(new EntityFX.Gdcame.Common.Application.Model.RegisterAccountModel()
             {
                 Login = login,
                 Password = DefaultPassword,

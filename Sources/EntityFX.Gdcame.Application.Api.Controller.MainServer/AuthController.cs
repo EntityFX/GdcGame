@@ -2,43 +2,35 @@
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
+using EntityFX.Gdcame.Application.Api.Common;
+using EntityFX.Gdcame.Application.Api.Common.Providers;
 using EntityFX.Gdcame.Application.Api.MainServer.Models;
+using EntityFX.Gdcame.Application.Contract.Model.MainServer;
+using EntityFX.Gdcame.Common.Application.Model;
 using EntityFX.Gdcame.Infrastructure.Api.ApiResult;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using EntityFX.Gdcame.Manager.Contract.Common.SessionManager;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using RegisterAccountModel = EntityFX.Gdcame.Application.Api.MainServer.Models.RegisterAccountModel;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.IdentityModel.Tokens;
+using LoginAccountModel = EntityFX.Gdcame.Common.Application.Model.LoginAccountModel;
+using RegisterAccountModel = EntityFX.Gdcame.Application.Contract.Model.MainServer.RegisterAccountModel;
 
-namespace EntityFX.Gdcame.Application.Api.MainServer.Controllers
+namespace EntityFX.Gdcame.Application.Api.Controller.MainServer
 {
-    using EntityFX.Gdcame.Manager.Contract.Common.SessionManager;
-
-    public class IdentityUser
-    {
-        public string Id { get; set; }
-        public string UserName { get; set; }
-    }
-
     [Route("api/[controller]")]
-    public class AuthController : Controller
+    public class AuthController : Microsoft.AspNetCore.Mvc.Controller
     {
         private readonly ISessionManager _sessionManager;
         private const string LocalLoginProvider = "Local";
-        private UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private UserManager<UserIdentity> _userManager;
+        private readonly SignInManager<UserIdentity> _signInManager;
 
 
-        public AuthController(ISessionManager sessionManager, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public AuthController(ISessionManager sessionManager, UserManager<UserIdentity> userManager, SignInManager<UserIdentity> signInManager)
         {
             _sessionManager = sessionManager;
             _userManager = userManager;
@@ -75,7 +67,7 @@ namespace EntityFX.Gdcame.Application.Api.MainServer.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = new IdentityUser() { UserName = model.Login };
+            var user = new UserIdentity() { UserName = model.Login };
 
             var result = await _userManager.CreateAsync(user, model.Password);
 
@@ -86,22 +78,37 @@ namespace EntityFX.Gdcame.Application.Api.MainServer.Controllers
             return Ok();
         }
 
-        [HttpGet("token")]
-        public dynamic GetToken()
+        [HttpPost("token")]
+        public async Task<IActionResult> GetToken(LoginAccountModel loginAccount)
         {
+            var signIResult =
+                await _signInManager.PasswordSignInAsync(loginAccount.Login, loginAccount.Password, true, false);
+
+            if (signIResult == null || !signIResult.Succeeded)
+            {
+                return BadRequest("Invalid user name or password");
+            }
+
+            var user = await _userManager.FindByNameAsync(loginAccount.Login);
+
+            var options = new JwtIssuerOptions();
+
             var handler = new JwtSecurityTokenHandler();
 
-            var sec = "Gdcame";
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(sec));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(options.SecretKey));
             var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
 
-            var identity = new ClaimsIdentity(new GenericIdentity("temp@jwt.ru"), new[] { new Claim("user_id", "57dc51a3389b30fed1b13f91") });
+            var identity = new ClaimsIdentity(
+                new GenericIdentity(user.UserName), new[]
+                {
+                    new Claim(JwtRegisteredClaimNames.Sub, user.Id)
+                });
             var token = handler.CreateJwtSecurityToken(subject: identity,
                 signingCredentials: signingCredentials,
-                audience: "ExampleAudience",
-                issuer: "ExampleIssuer",
+                audience: options.Audience,
+                issuer: options.Issuer,
                 expires: DateTime.UtcNow.AddSeconds(42));
-            return handler.WriteToken(token);
+            return new JsonResult(token);
         }
 
 

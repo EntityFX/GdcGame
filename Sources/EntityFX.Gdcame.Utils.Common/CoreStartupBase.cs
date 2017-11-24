@@ -64,14 +64,6 @@ namespace EntityFX.Gdcame.Utils.Common
                 await next.Invoke();
                 // Do logging or other work that doesn't write to the Response.
             });
-
-            //app.UseExceptionHandler(new ExceptionHandlerOptions()
-            //{
-            //    ExceptionHandler = context =>
-            //    {
-            //        return Task.FromResult(0);
-            //    }
-            //});
         }
 
         public class ServiceBasedControllerActivator : IControllerActivator

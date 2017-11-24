@@ -195,22 +195,20 @@ namespace EntityFX.Gdcame.Infrastructure
 
         public long GetTotalMemoryInMb()
         {
+#if NET461
             if (IsRunningOnMono())
             {
-#if NET461
+
                 var pc = new PerformanceCounter("Mono Memory", "Total Physical Memory");
                 return pc.RawValue / 1024 / 1024;
-#else
-            return 0;
-#endif
-
-
             }
             else
             {
                 return WindowsPerformanceInfo.GetTotalMemoryInMiB();
             }
-
+#else
+            return 0;
+#endif
         }
 
         public float GetCpuUsage()
