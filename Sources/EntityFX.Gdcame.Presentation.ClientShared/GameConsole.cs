@@ -240,7 +240,7 @@ namespace EntityFX.Gdcame.Presentation.ClientShared
                 Console.WriteLine("-=Sign In=-");
                 loginResultTuple = apiHelper.UserLogin(
                     apiHelper.GetServers(new Uri($"{_settings.GameServer}:{_settings.GameServicePort}")), _settings.GameServicePort,
-                    new PasswordOAuth2RequestData
+                    new PasswordAuthRequestData
                     {
                         Usename = _userName,
                         Password = _userPassword

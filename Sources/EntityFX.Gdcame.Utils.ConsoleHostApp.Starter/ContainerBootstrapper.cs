@@ -5,7 +5,6 @@ using EntityFX.Gdcame.Application.Api.Common;
 using EntityFX.Gdcame.Application.Api.Common.Mappers;
 using EntityFX.Gdcame.Application.Api.Controller.MainServer;
 using EntityFX.Gdcame.Application.Api.MainServer.Mappers;
-using EntityFX.Gdcame.Application.Api.MainServer.Models;
 using EntityFX.Gdcame.Application.Contract.Controller.Common;
 using EntityFX.Gdcame.Application.Contract.Controller.MainServer;
 using EntityFX.Gdcame.Application.Contract.Model.MainServer;
@@ -67,6 +66,8 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
 
 
             //container.RegisterType<ILogger>(() => new Logger(new NLoggerAdapter(NLog.LogManager.GetLogger("logger"))));
+
+            container.RegisterType<IResolver>((scope) => scope);
 
             var childBootstrappers = GetRepositoryProviders(_appConfiguration.RepositoryProvider).Concat(
                 new IContainerBootstrapper[]
@@ -152,7 +153,6 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
             container.RegisterType<IMapper<GameData, GameDataModel>, GameDataModelMapper>();
             container.RegisterType<IMapper<BuyFundDriverResult, BuyItemModel>, FundsDriverBuyInfoMapper>();
             container.RegisterType<IMapper<MainServerStatisticsInfo, MainServerStatisticsInfoModel>, StatisticsInfoMapper>();
-            container.RegisterType<IGameClientFactory, NoWcfGameManagerFactory>();
             container.RegisterType<ISessionManagerClientFactory, SessionManagerClientFactory>();
 
 
@@ -167,6 +167,8 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
            // container.RegisterType<IServerController, ServerController>();
 
             container.RegisterType<IOperationContextHelper, NoWcfOperationContextHelper>();
+            container.RegisterType<IGameClientFactory, NoWcfGameManagerFactory>(
+                (scope) => new NoWcfGameManagerFactory(scope.Resolve<ILogger>(),scope.Resolve<IOperationContextHelper>(), scope));
             container.RegisterType<IPasswordHasher<UserIdentity>, PasswordHasher<UserIdentity>>();
            // container.RegisterType<UserManager<UserIdentity>, ApplicationUserManager>();
             

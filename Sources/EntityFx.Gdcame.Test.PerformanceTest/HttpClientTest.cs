@@ -6,8 +6,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-
-using EntityFX.Gdcame.Application.Api.MainServer.Models;
 using EntityFX.Gdcame.Common.Application.Model;
 using EntityFX.Gdcame.Infrastructure;
 using EntityFX.Gdcame.Infrastructure.Api.Auth;
@@ -27,10 +25,10 @@ namespace EntityFx.Gdcame.Test.Unit
         [TestMethod]
         public void TestConnections()
         {
-            var p = new RestsharpPasswordOAuth2Provider(new Uri("http://localhost:9001/"));
-            var adminToken = p.Login(new PasswordOAuth2Request()
+            var p = new RestsharpPasswordAuthProvider(new Uri("http://localhost:9001/"));
+            var adminToken = p.Login(new PasswordAuthRequest()
             {
-                RequestData = new PasswordOAuth2RequestData() { Password = "P@ssw0rd", Usename = "admin" }
+                RequestData = new PasswordAuthRequestData() { Password = "P@ssw0rd", Usename = "admin" }
             }).Result;
 
             var connectionsList = new IAuthContext<IAuthenticator>[10000];
@@ -82,10 +80,10 @@ namespace EntityFx.Gdcame.Test.Unit
 
         private async static Task<IAuthContext<IAuthenticator>> PostAuth(int index)
         {
-            var p = new RestsharpPasswordOAuth2Provider(new Uri("http://localhost:9001/"));
-            return await p.Login(new PasswordOAuth2Request
+            var p = new RestsharpPasswordAuthProvider(new Uri("http://localhost:9001/"));
+            return await p.Login(new PasswordAuthRequest
             {
-                RequestData = new PasswordOAuth2RequestData() { Password = "P@ssw0rd", Usename = "userok" + index }
+                RequestData = new PasswordAuthRequestData() { Password = "P@ssw0rd", Usename = "userok" + index }
             });
 
         }

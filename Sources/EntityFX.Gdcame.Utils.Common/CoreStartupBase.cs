@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Swagger;
 using Unity;
 using Unity.Injection;
@@ -45,7 +46,11 @@ namespace EntityFX.Gdcame.Utils.Common
         public virtual IServiceProvider ConfigureServices(IServiceCollection services)
         {
 
-            var builder = services.AddMvc();
+            var builder = services.AddMvc().AddJsonOptions((options =>
+            {
+                options.SerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
+            }));
+
             foreach (var assembly in LoadedAssemblies)
             {
                 builder.AddApplicationPart(assembly);

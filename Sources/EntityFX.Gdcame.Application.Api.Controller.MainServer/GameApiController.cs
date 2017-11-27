@@ -22,34 +22,28 @@ namespace EntityFX.Gdcame.Application.Api.Controller.MainServer
         public GameApiController(IGameDataProvider gameDataProvider)
         {
             _gameDataProvider = gameDataProvider;
-
-            var claimsIdentity = User.Identity as ClaimsIdentity;
-            if (claimsIdentity != null)
-            {
-                _gameDataProvider.InitializeGameContext(Guid.Parse(claimsIdentity.FindFirst("gameSession").Value));
-            }
         }
 
         [HttpPost]
         [Route("perform-step")]
-        public Task<ManualStepResultModel> PerformManualStepAsync([FromBody] int? verificationNumber)
+        public Task<ManualStepResultModel> PerformManualStepAsync([FromForm] int? verificationNumber)
         {
-            return Task.Factory.StartNew(() =>_gameDataProvider.PerformManualStep(verificationNumber));
+            return Task.Factory.StartNew(() => _gameDataProvider.InitializeGameContext(GameContext()).PerformManualStep(verificationNumber));
         }
 
         [HttpPost]
         [Route("fight-inflation")]
         public async Task<CashModel> FightAgainstInflationAsync()
         {
-            await Task.Factory.StartNew(() => _gameDataProvider.FightAgainstInflation());
+            await Task.Factory.StartNew(() => _gameDataProvider.InitializeGameContext(GameContext()).FightAgainstInflation());
             return _gameDataProvider.GetCounters();
         }
 
         [HttpPost]
         [Route("activate-delayed-counter")]
-        public async Task<CashModel> ActivateDelayedCounterAsync([FromBody] int counterId)
+        public async Task<CashModel> ActivateDelayedCounterAsync([FromForm] int counterId)
         {
-            await Task.Factory.StartNew(() => _gameDataProvider.ActivateDelayedCounter(counterId));
+            await Task.Factory.StartNew(() => _gameDataProvider.InitializeGameContext(GameContext()).ActivateDelayedCounter(counterId));
             return _gameDataProvider.GetCounters();
         }
 
@@ -58,21 +52,31 @@ namespace EntityFX.Gdcame.Application.Api.Controller.MainServer
         public async Task<GameDataModel> GetGameDataAsync()
         {
             return await Task.Factory.StartNew(() =>
-                _gameDataProvider.GetGameData());
+                _gameDataProvider.InitializeGameContext(GameContext()).GetGameData());
         }
 
         [HttpGet]
         [Route("game-counters")]
         public async Task<CashModel> GetCountersAsync()
         {
-            return await Task.Factory.StartNew(() => _gameDataProvider.GetCounters());
+            return await Task.Factory.StartNew(() => _gameDataProvider.InitializeGameContext(GameContext()).GetCounters());
         }
 
-        [HttpPost]
-        [Route("buy-item")]
-        public async Task<BuyItemModel> BuyFundDriverAsync([FromBody] int id)
+        [HttpPatch]
+        [Route("buy-item/{id}")]
+        public async Task<BuyItemModel> BuyFundDriverAsync(int id)
         {
-            return await Task.Factory.StartNew(() => _gameDataProvider.BuyFundDriver(id));
+            return await Task.Factory.StartNew(() => _gameDataProvider.InitializeGameContext(GameContext()).BuyFundDriver(id));
+        }
+
+        private Guid GameContext()
+        {
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            if (claimsIdentity != null)
+            {
+                return Guid.Parse(claimsIdentity.FindFirst("game-session").Value);
+            }
+            throw new Exception("No game context");
         }
     }
 }

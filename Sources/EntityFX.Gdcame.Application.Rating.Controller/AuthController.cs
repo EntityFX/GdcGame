@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
-using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
-using EntityFX.Gdcame.Application.Api.Common;
 using EntityFX.Gdcame.Application.Api.Common.Providers;
-using EntityFX.Gdcame.Application.Api.MainServer.Models;
-using EntityFX.Gdcame.Application.Contract.Model.MainServer;
 using EntityFX.Gdcame.Common.Application.Model;
 using EntityFX.Gdcame.Infrastructure.Api.ApiResult;
 using EntityFX.Gdcame.Manager.Contract.Common.SessionManager;
@@ -17,9 +12,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using LoginAccountModel = EntityFX.Gdcame.Common.Application.Model.LoginAccountModel;
-using RegisterAccountModel = EntityFX.Gdcame.Application.Contract.Model.MainServer.RegisterAccountModel;
 
-namespace EntityFX.Gdcame.Application.Api.Controller.MainServer
+namespace EntityFX.Gdcame.Application.Api.Common
 {
     [Route("api/[controller]")]
     public class AuthController : Microsoft.AspNetCore.Mvc.Controller

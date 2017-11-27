@@ -21,32 +21,32 @@ namespace EntityFX.Gdcame.Presentation.ConsoleClient.Common
         where TAuthContext : class
     {
         private readonly ILogger _logger;
-        private readonly IAuthProviderFactory<PasswordOAuth2RequestData, TAuthContext> _authProvider;
+        private readonly IAuthProviderFactory<PasswordAuthRequestData, TAuthContext> _authProvider;
         private readonly IApiClientFactory<TAuthContext> _apiClientFactory;
 
-        public ApiHelper(ILogger logger, IAuthProviderFactory<PasswordOAuth2RequestData, TAuthContext> authProvider, IApiClientFactory<TAuthContext> apiClientFactory)
+        public ApiHelper(ILogger logger, IAuthProviderFactory<PasswordAuthRequestData, TAuthContext> authProvider, IApiClientFactory<TAuthContext> apiClientFactory)
         {
             _logger = logger;
             _authProvider = authProvider;
             _apiClientFactory = apiClientFactory;
         }
 
-        public async Task<IAuthContext<TAuthContext>> LoginServer(Uri server, PasswordOAuth2RequestData authData)
+        public async Task<IAuthContext<TAuthContext>> LoginServer(Uri server, PasswordAuthRequestData authData)
         {
             //var p = new RestsharpPasswordOAuth2Provider(server);
             var p = _authProvider.Build(server);
-            return await p.Login(new PasswordOAuth2Request()
+            return await p.Login(new PasswordAuthRequest()
             {
                 RequestData = authData
             });
         }
 
-        public async Task<Tuple<IAuthContext<TAuthContext>, string>> UserLogin(string[] serversList, int port, PasswordOAuth2RequestData authData)
+        public async Task<Tuple<IAuthContext<TAuthContext>, string>> UserLogin(string[] serversList, int port, PasswordAuthRequestData authData)
         {
             var serverInfoUrl = GetApiServerUri(serversList, authData.Usename, port);
 
             var p = _authProvider.Build(serverInfoUrl);
-            var res = await p.Login(new PasswordOAuth2Request()
+            var res = await p.Login(new PasswordAuthRequest()
             {
                 RequestData = authData
             });
@@ -154,7 +154,7 @@ namespace EntityFX.Gdcame.Presentation.ConsoleClient.Common
             if (exception.ErrorData != null)
             {
                 errorData = exception.ErrorData.Message;
-                var authException = exception as ClientException<WrongAuthData<PasswordOAuth2RequestData>>;
+                var authException = exception as ClientException<WrongAuthData<PasswordAuthRequestData>>;
                 if (authException != null)
                 {
                     errorCodes = ErrorCodes.AuthError;

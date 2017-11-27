@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication.OAuth;
-
+﻿
 namespace EntityFX.Gdcame.Application.Api.Common.Providers
 {
     using System;

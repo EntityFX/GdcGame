@@ -50,10 +50,11 @@ namespace EntityFX.Gdcame.Application.Providers.MainServer
 
         private Guid GameGuid { get; set; }
 
-        public void InitializeGameContext(Guid gameGuid)
+        public IGameDataProvider InitializeGameContext(Guid gameGuid)
         {
             GameGuid = gameGuid;
             _gameManager = _gameClientFactory.BuildGameClient(GameGuid);
+            return this;
         }
 
         public void ClearSession()

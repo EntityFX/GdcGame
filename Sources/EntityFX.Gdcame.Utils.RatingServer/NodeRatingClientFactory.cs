@@ -18,9 +18,9 @@ namespace EntityFX.Gdcame.Utils.RatingServer
         where TAuthContext : class
     {
         private readonly IApiClientFactory<TAuthContext> _apiClientFactory;
-        private readonly IAuthProviderFactory<PasswordOAuth2RequestData, TAuthContext> _authProviderFactory;
+        private readonly IAuthProviderFactory<PasswordAuthRequestData, TAuthContext> _authProviderFactory;
 
-        public NodeRatingClientFactory(IAuthProviderFactory<PasswordOAuth2RequestData, TAuthContext> authProvider, IApiClientFactory<TAuthContext> apiClientFactory)
+        public NodeRatingClientFactory(IAuthProviderFactory<PasswordAuthRequestData, TAuthContext> authProvider, IApiClientFactory<TAuthContext> apiClientFactory)
         {
             _apiClientFactory = apiClientFactory;
             _authProviderFactory = authProvider;
@@ -29,9 +29,9 @@ namespace EntityFX.Gdcame.Utils.RatingServer
         public IRatingDataRetrieve BuildClient(Uri nodeUri)
         {
 
-            var res = _authProviderFactory.Build(nodeUri).Login(new PasswordOAuth2Request()
+            var res = _authProviderFactory.Build(nodeUri).Login(new PasswordAuthRequest()
             {
-                RequestData = new PasswordOAuth2RequestData() { Usename = "system", Password = "P@ssw0rd" }
+                RequestData = new PasswordAuthRequestData() { Usename = "system", Password = "P@ssw0rd" }
             }).Result;
             return new NodeRatingApiClient(_apiClientFactory.Build(res));
         }

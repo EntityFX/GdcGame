@@ -175,12 +175,12 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
         private readonly Uri[] _serviceUriList;
 
         private readonly ILogger _logger;
-        private readonly IAuthProviderFactory<PasswordOAuth2RequestData, IAuthenticator> _authProviderFactory;
+        private readonly IAuthProviderFactory<PasswordAuthRequestData, IAuthenticator> _authProviderFactory;
 
         private readonly List<TestResultInfo> _testsInfo = new List<TestResultInfo>();
 
 
-        public PerformanceApi(Uri[] serviceUriList, ILogger logger, IAuthProviderFactory<PasswordOAuth2RequestData, IAuthenticator> authProviderFactory)
+        public PerformanceApi(Uri[] serviceUriList, ILogger logger, IAuthProviderFactory<PasswordAuthRequestData, IAuthenticator> authProviderFactory)
         {
             _serviceUriList = serviceUriList;
             _logger = logger;
@@ -325,9 +325,9 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
                         {
                             try
                             {
-                                return await passwordProvider.Login(new PasswordOAuth2Request
+                                return await passwordProvider.Login(new PasswordAuthRequest
                                 {
-                                    RequestData = new PasswordOAuth2RequestData { Password = password, Usename = adminLogin }
+                                    RequestData = new PasswordAuthRequestData { Password = password, Usename = adminLogin }
                                 });
                             }
                             catch (Exception)
@@ -387,9 +387,9 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
             var p = _authProviderFactory.Build(serverUri);
             return DoPerformanceMeasureAction(async () =>
             {
-                var token = await p.Login(new PasswordOAuth2Request()
+                var token = await p.Login(new PasswordAuthRequest()
                 {
-                    RequestData = new PasswordOAuth2RequestData() { Password = password, Usename = login }
+                    RequestData = new PasswordAuthRequestData() { Password = password, Usename = login }
                 });
                 return new ClientConnectionInfo { Login = login, Context = token };
             }, serverUri.ToString());
@@ -409,7 +409,7 @@ namespace EntityFx.Gdcame.Test.PerfomanceFramework
         public ClientConnectionInfo GetConnection(int serverNumber)
         {
             var serverUri = _serviceUriList[serverNumber];
-            return new ClientConnectionInfo { Context = new PasswordOAuth2Context<IAuthenticator>() { BaseUri = serverUri } };
+            return new ClientConnectionInfo { Context = new TokenAuthContext<IAuthenticator>() { BaseUri = serverUri } };
         }
 
         public Task<Tuple<PerformanceCounter, object>> Logout(ClientConnectionInfo client)

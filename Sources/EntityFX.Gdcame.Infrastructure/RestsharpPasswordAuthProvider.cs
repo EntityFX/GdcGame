@@ -13,31 +13,16 @@ using EntityFX.Gdcame.Infrastructure.Api;
 
 namespace EntityFX.Gdcame.Infrastructure
 {
-    public class RestsharpPasswordOAuth2Provider : IAuthProvider<PasswordOAuth2RequestData, IAuthenticator>
+    public class RestsharpPasswordAuthProvider : IAuthProvider<PasswordAuthRequestData, IAuthenticator>
     {
         private readonly ILogger _logger;
         private readonly Uri _baseUri;
 
         public TimeSpan? Timeout { get; private set; }
 
-        private class OAuthPasswordRequestData
+
+        private class TokenResponseData
         {
-            [JsonProperty("grant_type")]
-            public string GrantType { get; private set; }
-            [JsonProperty("username")]
-            public string Username { get; set; }
-            [JsonProperty("password")]
-            public string Password { get; set; }
-
-            public OAuthPasswordRequestData()
-            {
-                GrantType = "password";
-            }
-        }
-
-        private class OAuthPasswordResponseData
-        {
-
             [JsonProperty("access_token")]
             public string AccessToken { get; set; }
             [JsonProperty("token_type")]
@@ -46,14 +31,14 @@ namespace EntityFX.Gdcame.Infrastructure
             public int ExpiresIn { get; set; }
         }
 
-        public RestsharpPasswordOAuth2Provider(Uri baseUri, ILogger logger = null, TimeSpan? timeout = null)
+        public RestsharpPasswordAuthProvider(Uri baseUri, ILogger logger = null, TimeSpan? timeout = null)
         {
             _baseUri = baseUri;
             _logger = logger;
             Timeout = timeout;
         }
 
-        public static void HandleNotSuccessRequest(PasswordOAuth2RequestData authRequest, IRestResponse response)
+        public static void HandleNotSuccessRequest(PasswordAuthRequestData authRequest, IRestResponse response)
         {
             JToken token = null;
             try
@@ -70,27 +55,26 @@ namespace EntityFX.Gdcame.Infrastructure
             if (exceptionType != null)
             {
                 var errorMessage = (string) token.SelectToken("error_description", false);
-                throw new WrongAuthException<PasswordOAuth2RequestData>(new WrongAuthData<PasswordOAuth2RequestData>() { Message = errorMessage, RequestData = authRequest}, errorMessage , null);
+                throw new WrongAuthException<PasswordAuthRequestData>(new WrongAuthData<PasswordAuthRequestData>() { Message = errorMessage, RequestData = authRequest}, errorMessage , null);
             }
         }
 
-        public async Task<IAuthContext<IAuthenticator>> Login(IAuthRequest<PasswordOAuth2RequestData> authRequest)
+        public async Task<IAuthContext<IAuthenticator>> Login(IAuthRequest<PasswordAuthRequestData> authRequest)
         {
             var factory = new GameClientFactory(_baseUri);
-            var request = factory.CreateRequest("/token");
+            var request = factory.CreateRequest("/api/auth/token");
             request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
-            request.AddParameter("grant_type", "password");
-            request.AddParameter("username", authRequest.RequestData.Usename);
+            request.AddParameter("login", authRequest.RequestData.Usename);
             request.AddParameter("password", authRequest.RequestData.Password);
 
             var client = new GameClientFactory(_baseUri).CreateClient();
             client.AddHandler("application/json", CustomJsonDeserializer.Default);
             client.AddHandler("text/javascript", CustomJsonDeserializer.Default);
-            IRestResponse<OAuthPasswordResponseData> stringToken = null;
+            IRestResponse<TokenResponseData> stringToken = null;
 
             try
             {
-                stringToken = await client.ExecutePostTaskAsync<OAuthPasswordResponseData>(request);
+                stringToken = await client.ExecutePostTaskAsync<TokenResponseData>(request);
 
             }
             catch (Exception exception)
@@ -112,10 +96,10 @@ new HttpStatusCode[]
                 HandleNotSuccessRequest(authRequest.RequestData, stringToken);
             }
 
-            return new PasswordOAuth2Context<IAuthenticator>()
+            return new TokenAuthContext<IAuthenticator>()
             {
-                Context = new RestsharpPasswordOAuth2ApiContext() { ApiContext = new OAuth2AuthorizationRequestHeaderAuthenticator(stringToken.Data.AccessToken, stringToken.Data.TokenType) },
-                OAuthToken = stringToken.Data.AccessToken,
+                Context = new RestsharpAuthenticatorContext() { ApiContext = new JwtAuthenticator(stringToken.Data.AccessToken) },
+                Token = stringToken.Data.AccessToken,
                 BaseUri = _baseUri
             };
         }

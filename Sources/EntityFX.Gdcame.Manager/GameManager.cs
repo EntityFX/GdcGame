@@ -39,7 +39,7 @@ namespace EntityFX.Gdcame.Manager.MainServer
 
             _mapperFactory = mapperFactory;
 
-            _gameDataContractMapper = _mapperFactory.Build<IGame, GameData>();
+            _gameDataContractMapper = _mapperFactory.Build<IGame, GameData>("GameDataContractMapper");
             _countersContractMapper = _mapperFactory.Build<GameCash, Cash>();
             _fundsDriverContractMapper = _mapperFactory.Build<Item, Gdcame.Contract.MainServer.Items.Item>();
             _manualStepResultMapper = _mapperFactory.Build<ManualStepResult, Contract.MainServer.GameManager.ManualStepResult>();

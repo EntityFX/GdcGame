@@ -52,8 +52,7 @@ namespace EntityFX.Gdcame.Utils.WebApiClient
 
         public async Task<BuyItemModel> BuyFundDriverAsync(int id)
         {
-            var response = await ExecuteRequestAsync<BuyItemModel>("/api/game/buy-item", ApiRequestMethod.POST
-                , new List<ApiParameter>() { new ApiParameter() { Type = ApiParameterType.Body, Value = id, Name = "", ContentType = "application/json" }});
+            var response = await ExecuteRequestAsync<BuyItemModel>($"/api/game/buy-item/{id}", ApiRequestMethod.PATCH);
             return response.Data;
         }
 

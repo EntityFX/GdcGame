@@ -149,7 +149,7 @@ namespace EntityFX.Gdcame.Infrastructure
                 return null;
             }
 
-            if (AuthContext is PasswordOAuth2Context<IAuthenticator>)
+            if (AuthContext is TokenAuthContext<IAuthenticator>)
             {
                 return AuthContext.Context.ApiContext;
             }

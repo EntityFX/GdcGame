@@ -41,7 +41,7 @@ namespace EntityFX.Gdcame.Manager.MainServer
             container
                 .RegisterType
                 <IMapper<CustomRuleInfo, Gdcame.Contract.MainServer.Items.CustomRuleInfo>, CustomRuleInfoContractMapper>();
-            container.RegisterType<IMapper<IGame, GameData>, GameDataContractMapper>();
+            container.RegisterType<IMapper<IGame, GameData>, GameDataContractMapper>(ContainerScope.Instance, "GameDataContractMapper");
             container.RegisterType<IMapper<IGame, GameData>, GameDataMapper>(ContainerScope.Instance, "GameDataMapper");
             container
                 .RegisterType

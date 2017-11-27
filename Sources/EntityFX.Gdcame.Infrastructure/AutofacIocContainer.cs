@@ -51,7 +51,7 @@ namespace EntityFX.Gdcame.Infrastructure
 
         public void RegisterType<T, U>(ContainerScope scope = ContainerScope.Instance, string name = null) where U : T
         {
-            var builder = _containerBuilder.RegisterType<U>().As<T>();
+            var builder = _containerBuilder.RegisterType<U>();
             if (scope == ContainerScope.Singleton)
             {
                 builder = builder.SingleInstance();
@@ -61,11 +61,13 @@ namespace EntityFX.Gdcame.Infrastructure
             {
                 builder.Named<T>(name);
             }
+
+            builder.As<T>();
         }
 
         public void RegisterType<T, U>(Func<IResolver, U> factory, ContainerScope scope = ContainerScope.Instance, string name = null) where U : T
         {
-            var builder = _containerBuilder.Register<U>((context, parameters) => factory(this)).As<T>();
+            var builder = _containerBuilder.Register<U>((context, parameters) => factory(this));
             if (scope == ContainerScope.Singleton)
             {
                 builder = builder.SingleInstance();
@@ -75,6 +77,8 @@ namespace EntityFX.Gdcame.Infrastructure
             {
                 builder.Named<T>(name);
             }
+
+            builder.As<T>();
         }
 
         public void RegisterType(Type source, Type destination)

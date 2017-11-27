@@ -7,7 +7,7 @@ namespace EntityFX.Gdcame.Application.Providers.MainServer
 {
     public interface IGameDataProvider
     {
-        void InitializeGameContext(Guid gameGuid);
+        IGameDataProvider InitializeGameContext(Guid gameGuid);
         void ClearSession();
         GameDataModel GetGameData();
         CashModel GetCounters();

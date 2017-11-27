@@ -177,12 +177,12 @@ namespace EntityFX.Presentation.Shared.AdminConsole
                     ServerType = "MainServer",
                     Uri = s
                 })
-                    .Concat(new[] { new ServerLoginContext()
+                    /*.Concat(new[] { new ServerLoginContext()
                         {
                             ServerType = "RatingServer" ,
                             Uri = new Uri(
                                 $"{this._settings.RatingServer}:{this._settings.RatingServerPort}")
-                        } })
+                        } })*/
                     .ToArray();
 
             this.serversAuthWithTypeContextList = this.DoAuthServers(serversList);
@@ -195,7 +195,7 @@ namespace EntityFX.Presentation.Shared.AdminConsole
             {
                 try
                 {
-                    return await _apiHelper.LoginServer(uri, new PasswordOAuth2RequestData
+                    return await _apiHelper.LoginServer(uri, new PasswordAuthRequestData
                     {
                         Password
                             =
@@ -222,7 +222,7 @@ namespace EntityFX.Presentation.Shared.AdminConsole
                     try
                     {
                         return new Tuple<IAuthContext<IAuthenticator>, string>(await _apiHelper.LoginServer(context.Uri,
-                            new PasswordOAuth2RequestData
+                            new PasswordAuthRequestData
                             {
                                 Password = this.password,
                                 Usename = this.user
@@ -546,7 +546,7 @@ namespace EntityFX.Presentation.Shared.AdminConsole
 
             var auth =
                 _apiHelper.LoginServer(new Uri($"http://{server}:{this._settings.GameServicePort}/"),
-                new PasswordOAuth2RequestData(){ Usename = this.user,Password = this.password}).Result;
+                new PasswordAuthRequestData(){ Usename = this.user,Password = this.password}).Result;
 
             var client = _apiHelper.GetAdminClient(auth);
 
@@ -578,7 +578,7 @@ namespace EntityFX.Presentation.Shared.AdminConsole
             if (string.IsNullOrEmpty(server)) return;
 
             var auth =
-                _apiHelper.LoginServer(new Uri($"http://{server}:{this._settings.GameServicePort}/"), new PasswordOAuth2RequestData() { Usename = this.user, Password = this.password })
+                _apiHelper.LoginServer(new Uri($"http://{server}:{this._settings.GameServicePort}/"), new PasswordAuthRequestData() { Usename = this.user, Password = this.password })
                     .Result;
 
             var client = _apiHelper.GetAdminClient(auth);
@@ -607,7 +607,7 @@ namespace EntityFX.Presentation.Shared.AdminConsole
             if (string.IsNullOrEmpty(server)) return;
 
             var auth =
-                _apiHelper.LoginServer(new Uri($"http://{server}:{this._settings.GameServicePort}/"), new PasswordOAuth2RequestData() { Usename = this.user, Password = this.password }).Result;
+                _apiHelper.LoginServer(new Uri($"http://{server}:{this._settings.GameServicePort}/"), new PasswordAuthRequestData() { Usename = this.user, Password = this.password }).Result;
 
             var client = _apiHelper.GetAdminClient(auth);
 
@@ -642,7 +642,7 @@ namespace EntityFX.Presentation.Shared.AdminConsole
             if (string.IsNullOrEmpty(server)) return;
 
             var auth =
-                _apiHelper.LoginServer(new Uri($"http://{server}:{this._settings.GameServicePort}/"), new PasswordOAuth2RequestData() { Usename = this.user, Password = this.password })
+                _apiHelper.LoginServer(new Uri($"http://{server}:{this._settings.GameServicePort}/"), new PasswordAuthRequestData() { Usename = this.user, Password = this.password })
                     .Result;
 
             var client = _apiHelper.GetAdminClient(auth);
@@ -669,7 +669,7 @@ namespace EntityFX.Presentation.Shared.AdminConsole
             var server = this.GetServer();
 
             var auth =
-                _apiHelper.LoginServer(new Uri($"http://{server}:{this._settings.GameServicePort}/"), new PasswordOAuth2RequestData() { Usename = this.user, Password = this.password })
+                _apiHelper.LoginServer(new Uri($"http://{server}:{this._settings.GameServicePort}/"), new PasswordAuthRequestData() { Usename = this.user, Password = this.password })
                     .Result;
 
             var client = _apiHelper.GetAdminClient(auth);
@@ -691,7 +691,7 @@ namespace EntityFX.Presentation.Shared.AdminConsole
             if (string.IsNullOrEmpty(server)) return;
 
             var auth =
-                _apiHelper.LoginServer(new Uri($"http://{server}:{this._settings.GameServicePort}/"), new PasswordOAuth2RequestData() { Usename = this.user, Password = this.password })
+                _apiHelper.LoginServer(new Uri($"http://{server}:{this._settings.GameServicePort}/"), new PasswordAuthRequestData() { Usename = this.user, Password = this.password })
                     .Result;
 
             var client = _apiHelper.GetAdminClient(auth);
@@ -714,7 +714,7 @@ namespace EntityFX.Presentation.Shared.AdminConsole
             if (string.IsNullOrEmpty(server)) return;
 
             var auth =
-                _apiHelper.LoginServer(new Uri($"http://{server}:{this._settings.GameServicePort}/"), new PasswordOAuth2RequestData() { Usename = this.user, Password = this.password })
+                _apiHelper.LoginServer(new Uri($"http://{server}:{this._settings.GameServicePort}/"), new PasswordAuthRequestData() { Usename = this.user, Password = this.password })
                     .Result;
 
             var client = _apiHelper.GetAdminClient(auth);

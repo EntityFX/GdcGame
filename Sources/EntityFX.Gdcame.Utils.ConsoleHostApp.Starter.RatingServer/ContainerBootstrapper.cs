@@ -92,7 +92,6 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer
             container.RegisterType<ISessions>((scope) => new SessionsProvider(scope.Resolve<ILogger>()), ContainerScope.Singleton);
 
             container.RegisterType<ISessionManager, SessionManager>();
-            container.RegisterType<ISessionManagerClientFactory, SessionManagerClientFactory>();
             container.RegisterType<INodeRatingClientFactory, NodeRatingClientFactory<TAuthContext>>();
 
 

@@ -1,6 +1,6 @@
 namespace EntityFX.Gdcame.Infrastructure.Api.Auth
 {
-    public class PasswordOAuth2RequestData
+    public class PasswordAuthRequestData
     {
         public string Usename { get; set; }
 

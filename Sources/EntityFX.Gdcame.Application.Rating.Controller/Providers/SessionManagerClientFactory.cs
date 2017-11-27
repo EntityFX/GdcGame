@@ -1,22 +1,21 @@
 ﻿using System;
+using EntityFX.Gdcame.Infrastructure.Common;
 using EntityFX.Gdcame.Manager.Contract.Common.SessionManager;
-using Unity;
-using Unity.Resolution;
 
 namespace EntityFX.Gdcame.Application.Api.Common.Providers
 {
     public class SessionManagerClientFactory : ISessionManagerClientFactory
     {
-        private readonly IUnityContainer _unityContainer;
+        private readonly IResolver _unityContainer;
 
-        public SessionManagerClientFactory(IUnityContainer unityContainer)
+        public SessionManagerClientFactory(IResolver unityContainer)
         {
             this._unityContainer = unityContainer;
         }
 
         public ISessionManager BuildSessionManagerClient(Guid sessionGuid)
         {
-            var game = this._unityContainer.Resolve<ISessionManager>(new ParameterOverride("sessionGuid", sessionGuid));
+            var game = this._unityContainer.Resolve<ISessionManager>(null, new Tuple<string, object>("sessionGuid", sessionGuid));
             return game;
         }
     }

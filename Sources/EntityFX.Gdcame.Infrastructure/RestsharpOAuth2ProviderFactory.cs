@@ -5,7 +5,7 @@ using RestSharp.Authenticators;
 
 namespace EntityFX.Gdcame.Infrastructure
 {
-    public class RestsharpOAuth2ProviderFactory : IAuthProviderFactory<PasswordOAuth2RequestData, IAuthenticator>
+    public class RestsharpOAuth2ProviderFactory : IAuthProviderFactory<PasswordAuthRequestData, IAuthenticator>
     {
         private readonly ILogger _logger;
 
@@ -14,9 +14,9 @@ namespace EntityFX.Gdcame.Infrastructure
             _logger = logger;
         }
 
-        public IAuthProvider<PasswordOAuth2RequestData, IAuthenticator> Build(Uri address)
+        public IAuthProvider<PasswordAuthRequestData, IAuthenticator> Build(Uri address)
         {
-            return new RestsharpPasswordOAuth2Provider(address, _logger);
+            return new RestsharpPasswordAuthProvider(address, _logger);
         }
     }
 }
