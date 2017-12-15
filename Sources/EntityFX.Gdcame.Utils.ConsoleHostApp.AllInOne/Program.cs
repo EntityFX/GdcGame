@@ -3,7 +3,6 @@ using Autofac;
 using EntityFX.Gdcame.Infrastructure;
 using EntityFX.Gdcame.Utils.Common;
 using Topshelf;
-using Unity;
 
 namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.MainServer
 {

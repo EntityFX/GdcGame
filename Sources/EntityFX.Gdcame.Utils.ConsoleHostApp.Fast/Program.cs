@@ -36,9 +36,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Fast.MainServer
             using (var _webHost = new WebHostBuilder()
                 .UseKestrel(options =>
                 {
-                    options.MaxRequestBufferSize = 4*1014*1024;
-                    options.UseConnectionLogging();
-                    options.ThreadCount = Environment.ProcessorCount;
+                    options.Limits.MaxRequestBufferSize = 4*1014*1024;
                 })
                 .UseStartup<CoreStartup>()
                 .UseUrls(_webApiStartOptions.Urls.ToArray())

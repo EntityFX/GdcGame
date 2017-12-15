@@ -37,7 +37,7 @@
             modelBuilder.Entity<FundsDriverEntity>()
                 .HasMany(e => e.Incrementors)
                 .WithOne(e => e.FundsDriver)
-                .OnDelete(Microsoft.EntityFrameworkCore.Metadata.DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder.Entity<FundsDriverEntity>()
                 .Property(e => e.InitialValue)

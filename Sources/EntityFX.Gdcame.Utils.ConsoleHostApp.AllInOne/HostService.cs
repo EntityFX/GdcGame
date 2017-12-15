@@ -4,8 +4,6 @@ using EntityFX.Gdcame.Infrastructure;
 using EntityFX.Gdcame.Manager.Contract.Common.WorkerManager;
 using EntityFX.Gdcame.Manager.MainServer.Workers;
 
-using Microsoft.Practices.Unity;
-
 namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.MainServer
 {
     using EntityFX.Gdcame.Engine.Worker.MainServer;

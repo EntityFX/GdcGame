@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
-using System.Runtime.Loader;
 using System.Text;
 using EntityFX.Gdcame.Application.Api.Common;
 using EntityFX.Gdcame.Application.Api.Common.Providers;
@@ -31,7 +30,23 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
                 .UseGameUserStoreAdaptor()
                 .AddDefaultTokenProviders();
 
-            services.AddAuthentication();
+            var issuuerOptions = new JwtIssuerOptions();
+
+            services.AddAuthentication().AddJwtBearer(bearerOptions =>
+            {
+                bearerOptions.Audience = issuuerOptions.Audience;
+                bearerOptions.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidIssuer = issuuerOptions.Issuer,
+                    ValidAudience = issuuerOptions.Audience,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(issuuerOptions.SecretKey)),
+                    ValidateIssuerSigningKey = true,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero
+                }
+                ;
+
+            });
             services.AddAuthorization();
 
             return base.ConfigureServices(services);
@@ -48,24 +63,8 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
                 appBuilder.UseNancy(new Nancy.Owin.NancyOptions() { Bootstrapper = new NancyWebAppBootstrapper() });
             });*/
 
-            var issuuerOptions = new JwtIssuerOptions();
 
-            var options = new JwtBearerOptions
-            {
-                AutomaticAuthenticate = true,
-                AutomaticChallenge = true,
-                TokenValidationParameters = {
-                    ValidIssuer = issuuerOptions.Issuer,
-                    ValidAudience = issuuerOptions.Audience,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(issuuerOptions.SecretKey)),
-                    ValidateIssuerSigningKey = true,
-                    ValidateLifetime = true,
-                    ClockSkew = TimeSpan.Zero
-                },
-                AuthenticationScheme = JwtBearerDefaults.AuthenticationScheme
-            };
-            app.UseIdentity();
-            app.UseJwtBearerAuthentication(options);
+            app.UseAuthentication();
             base.Configure(app);
         }
     }

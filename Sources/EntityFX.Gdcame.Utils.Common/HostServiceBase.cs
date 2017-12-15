@@ -139,8 +139,8 @@ namespace EntityFX.Gdcame.Utils.Common
                 webHost = webHost.UseKestrel(
                     options =>
                         {
-                            options.UseConnectionLogging();
-                            options.ThreadCount = _appConfiguration.KestrelThreads;
+                            //options.UseConnectionLogging();
+                            //options.ThreadCount = _appConfiguration.KestrelThreads;
                             options.Limits.MaxRequestBufferSize = 4 * 1014 * 1024;
                         });
             }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.Loader;
 using System.Threading.Tasks;
 using EntityFX.Gdcame.Infrastructure.Common;
 using Microsoft.AspNetCore.Hosting;
