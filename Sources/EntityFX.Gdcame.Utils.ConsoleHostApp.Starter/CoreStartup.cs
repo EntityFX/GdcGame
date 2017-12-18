@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
 using System.Text;
 using EntityFX.Gdcame.Application.Api.Common;
@@ -31,10 +32,18 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
                 .AddDefaultTokenProviders();
 
             var issuuerOptions = new JwtIssuerOptions();
-
-            services.AddAuthentication().AddJwtBearer(bearerOptions =>
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+            services.AddAuthentication(scheme =>
+            {
+                scheme.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                scheme.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                scheme.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, bearerOptions =>
             {
                 bearerOptions.Audience = issuuerOptions.Audience;
+                bearerOptions.RequireHttpsMetadata = false;
+                bearerOptions.SaveToken = true;
+                bearerOptions.IncludeErrorDetails = true;
                 bearerOptions.TokenValidationParameters = new TokenValidationParameters()
                 {
                     ValidIssuer = issuuerOptions.Issuer,
@@ -47,14 +56,13 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
                 ;
 
             });
-            services.AddAuthorization();
 
             return base.ConfigureServices(services);
 
 
         }
 
-        public override void Configure(IApplicationBuilder app)
+        public override void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             /*app.UseAppBuilder(appBuilder =>
             {
@@ -62,10 +70,8 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer
                 new WebApiStartup(Container, AppConfiguration).Configuration(appBuilder);
                 appBuilder.UseNancy(new Nancy.Owin.NancyOptions() { Bootstrapper = new NancyWebAppBootstrapper() });
             });*/
-
-
             app.UseAuthentication();
-            base.Configure(app);
+            base.Configure(app, env);
         }
     }
 }

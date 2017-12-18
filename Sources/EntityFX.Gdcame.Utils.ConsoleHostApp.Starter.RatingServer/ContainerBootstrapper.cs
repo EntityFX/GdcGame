@@ -1,4 +1,7 @@
+using EntityFX.Gdcame.Infrastructure.Api;
+using EntityFX.Gdcame.Infrastructure.Api.Auth;
 using Microsoft.AspNetCore.Identity;
+using RestSharp.Authenticators;
 
 namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer
 {
@@ -65,7 +68,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer
                 containerBootstrapper.Configure(container);
             }
 
-            container.RegisterType<IMapperFactory, MapperFactory>();
+            container.RegisterType<IMapperFactory, MapperFactory>((scope) => new MapperFactory(scope));
 
             container.RegisterType<IMapper<StatisticsInfo, ServerStatisticsInfoModel>, StatisticsInfoMapper<StatisticsInfo, ServerStatisticsInfoModel>>();
 
@@ -79,7 +82,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer
                 MemoryTotal = _runtimeHelper.GetTotalMemoryInMb()
             }, ContainerScope.Singleton);
 
-            container.RegisterType<ITaskTimerFactory, TaskTimerFactory>();
+            container.RegisterType<ITaskTimerFactory, TaskTimerFactory>((scope) => new TaskTimerFactory(scope));
             //container.RegisterType<ITaskTimer, GenericTaskTimer>();
 
             container.RegisterType<IHashHelper, HashHelper>();
@@ -92,6 +95,10 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer
             container.RegisterType<ISessions>((scope) => new SessionsProvider(scope.Resolve<ILogger>()), ContainerScope.Singleton);
 
             container.RegisterType<ISessionManager, SessionManager>();
+
+            container.RegisterType<ISessionManager, SessionManager>();
+            container.RegisterType<IAuthProviderFactory<PasswordAuthRequestData, IAuthenticator>, RestsharpOAuth2ProviderFactory>();
+            container.RegisterType<IApiClientFactory<IAuthenticator>, RestsharpApiClientFactory>();
             container.RegisterType<INodeRatingClientFactory, NodeRatingClientFactory<TAuthContext>>();
 
 

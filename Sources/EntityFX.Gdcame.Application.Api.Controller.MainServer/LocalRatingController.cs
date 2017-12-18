@@ -11,7 +11,7 @@ namespace EntityFX.Gdcame.Application.Api.Controller.MainServer
     using EntityFX.Gdcame.Infrastructure.Common;
     using EntityFX.Gdcame.Manager.Contract.Common.RatingManager;
 
-    [Authorize(Roles = "System")]
+    [Authorize(AuthenticationSchemes = "Bearer", Roles = "System")]
     [Route("api/rating")]
     public class LocalRatingController : RatingControllerBase, IRatingController
     {

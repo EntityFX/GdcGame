@@ -90,7 +90,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application Layer", "Applic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFx.Gdcame.Test.PerfomanceFramework", "EntityFx.Gdcame.Test.PerfomanceFramework\EntityFx.Gdcame.Test.PerfomanceFramework.csproj", "{6D20F8F3-D439-4577-B08D-6268737E6C3F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer", "EntityFX.Gdcame.Utils.ConsoleHostApp.Starter\EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer.csproj", "{44AFF47F-5878-4045-A851-AA882F27F9E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer", "EntityFX.Gdcame.Utils.ConsoleHostApp.Starter\EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.MainServer.csproj", "{44AFF47F-5878-4045-A851-AA882F27F9E8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "configs", "configs", "{2B7599D2-7071-41AE-94FD-BA0661F59B44}"
 	ProjectSection(SolutionItems) = preProject
@@ -114,15 +114,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NotifyConsumer", "NotifyCon
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.RatingServer", "EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.RatingServer\EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.RatingServer.csproj", "{153F3D78-258A-4644-BAEF-51EE589080DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer", "EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer\EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer.csproj", "{B8E3B80F-5E71-4785-BA18-62E77F74692A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer", "EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer\EntityFX.Gdcame.Utils.ConsoleHostApp.Starter.RatingServer.csproj", "{B8E3B80F-5E71-4785-BA18-62E77F74692A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.Manager.Contract.Common", "EntityFX.Gdcame.Manager.Contract.Common\EntityFX.Gdcame.Manager.Contract.Common.csproj", "{0E91EB31-4F0A-41A0-A785-006EA68BDA87}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.Manager.Common", "EntityFX.Gdcame.Manager.Common\EntityFX.Gdcame.Manager.Common.csproj", "{EBD3A77C-453E-4DC7-8616-C75C8580D3F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Utils.MainServer", "EntityFX.Gdcame.Utils.MainServer\EntityFX.Gdcame.Utils.MainServer.csproj", "{2AE99E38-4B45-4D8B-B9D5-840B21F82A43}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.Utils.MainServer", "EntityFX.Gdcame.Utils.MainServer\EntityFX.Gdcame.Utils.MainServer.csproj", "{2AE99E38-4B45-4D8B-B9D5-840B21F82A43}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Utils.Common", "EntityFX.Gdcame.Utils.Common\EntityFX.Gdcame.Utils.Common.csproj", "{12C5304D-AE3E-4FF0-8E09-D7B3D3EA90DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.Utils.Common", "EntityFX.Gdcame.Utils.Common\EntityFX.Gdcame.Utils.Common.csproj", "{12C5304D-AE3E-4FF0-8E09-D7B3D3EA90DC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.Application.Contract.Controller.Common", "EntityFX.Gdcame.Application.Contract.Controller.Common\EntityFX.Gdcame.Application.Contract.Controller.Common.csproj", "{34DA3755-975D-4194-8B02-7FA0476B23F0}"
 EndProject
@@ -170,13 +170,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.Engine.Work
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.Utils.WebApiClient.RatingServer", "EntityFX.Gdcame.Utils.WebApiClient.RatingServer\EntityFX.Gdcame.Utils.WebApiClient.RatingServer.csproj", "{8DD9172B-A711-4C8C-B26F-9C5F5C7A1608}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Utils.RatingServer", "EntityFX.Gdcame.Utils.RatingServer\EntityFX.Gdcame.Utils.RatingServer.csproj", "{82CC4CB7-E4AF-4FD1-B5BF-8F7802D0842C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.Utils.RatingServer", "EntityFX.Gdcame.Utils.RatingServer\EntityFX.Gdcame.Utils.RatingServer.csproj", "{82CC4CB7-E4AF-4FD1-B5BF-8F7802D0842C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.Engine.Contract.RatingServer", "EntityFX.Gdcame.Engine.Contract.RatingServer\EntityFX.Gdcame.Engine.Contract.RatingServer.csproj", "{FC66CF81-A030-4A43-B446-7B92B5D8708E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.Application.Api.Controller.MainServer", "EntityFX.Gdcame.Application.Api.Controller.MainServer\EntityFX.Gdcame.Application.Api.Controller.MainServer.csproj", "{DCFFA2F8-442C-4960-8707-5BA0E5D92BC7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Infrastructure", "EntityFX.Gdcame.Infrastructure\EntityFX.Gdcame.Infrastructure.csproj", "{797DE92C-5253-45C5-95E4-92786EBF5266}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.Infrastructure", "EntityFX.Gdcame.Infrastructure\EntityFX.Gdcame.Infrastructure.csproj", "{797DE92C-5253-45C5-95E4-92786EBF5266}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.Presentation.NetCoreClient", "EntityFX.Gdcame.Presentation.NetCoreClient\EntityFX.Gdcame.Presentation.NetCoreClient.csproj", "{5CE7B975-8398-4304-BEC8-E0C2A7A4AF8E}"
 EndProject
@@ -236,7 +236,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.Presentatio
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "EntityFX.Presentation.Shared.AdminConsole", "EntityFX.Presentation.Shared.AdminConsole\EntityFX.Presentation.Shared.AdminConsole.shproj", "{E69D6DAE-C821-4EFD-A8D9-654D102022F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.MainServerNetCore", "EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.MainServerNetCore\EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.MainServerNetCore.csproj", "{FD9AF710-6678-4C3C-BA67-6FBAE0040586}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.MainServerNetCore", "EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.MainServerNetCore\EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.MainServerNetCore.csproj", "{FD9AF710-6678-4C3C-BA67-6FBAE0040586}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.RatingServerNetCore", "EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.RatingServerNetCore\EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.RatingServerNetCore.csproj", "{8A7C90C2-2DC9-4BEC-A83B-D1B67D8C1681}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -703,6 +705,12 @@ Global
 		{FD9AF710-6678-4C3C-BA67-6FBAE0040586}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD9AF710-6678-4C3C-BA67-6FBAE0040586}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD9AF710-6678-4C3C-BA67-6FBAE0040586}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A7C90C2-2DC9-4BEC-A83B-D1B67D8C1681}.BuildServer|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A7C90C2-2DC9-4BEC-A83B-D1B67D8C1681}.BuildServer|Any CPU.Build.0 = Debug|Any CPU
+		{8A7C90C2-2DC9-4BEC-A83B-D1B67D8C1681}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A7C90C2-2DC9-4BEC-A83B-D1B67D8C1681}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A7C90C2-2DC9-4BEC-A83B-D1B67D8C1681}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A7C90C2-2DC9-4BEC-A83B-D1B67D8C1681}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -815,9 +823,10 @@ Global
 		{8CD16E4E-E525-4B8D-848D-437ADA040ECB} = {AEFD9CA5-4866-4ED7-A0D8-A93E3E5A0E43}
 		{E69D6DAE-C821-4EFD-A8D9-654D102022F1} = {AEFD9CA5-4866-4ED7-A0D8-A93E3E5A0E43}
 		{FD9AF710-6678-4C3C-BA67-6FBAE0040586} = {98B03C7B-E289-4E85-B54F-A490DAA0D74D}
+		{8A7C90C2-2DC9-4BEC-A83B-D1B67D8C1681} = {D9020279-B7E7-4D61-88F4-15F5F33D070A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35
 		SolutionGuid = {78357FC2-AE74-41EE-88BC-A3C6451723A9}
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35
 	EndGlobalSection
 EndGlobal

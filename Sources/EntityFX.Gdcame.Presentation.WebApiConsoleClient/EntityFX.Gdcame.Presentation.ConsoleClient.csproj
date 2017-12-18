@@ -145,7 +145,6 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="EntityFX.Gdcame.Presentation.ConsoleClient_TemporaryKey.pfx" />
     <None Include="nlog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

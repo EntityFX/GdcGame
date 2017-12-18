@@ -21,7 +21,10 @@ namespace EntityFX.Gdcame.Infrastructure
         {
             return JsonConvert.DeserializeObject<T>(response.Content, new JsonSerializerSettings()
             {
-                TypeNameHandling = TypeNameHandling.Auto
+                TypeNameHandling = TypeNameHandling.Auto, Error = (sender, args) =>
+                {
+                    args.ErrorContext.Handled = true;
+                }
             });
         }
 

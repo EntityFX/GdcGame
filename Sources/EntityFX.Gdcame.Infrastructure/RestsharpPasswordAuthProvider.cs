@@ -43,11 +43,18 @@ namespace EntityFX.Gdcame.Infrastructure
             JToken token = null;
             try
             {
-                token = JObject.Parse(response.Content);
+                token = JToken.Parse(response.Content);
             }
-            catch (System.Exception)
+            catch (System.Exception exception)
             {
-                throw new ClientException<ErrorData>(null, response.StatusDescription);
+                throw new ClientException<ErrorData>(null, response.StatusDescription, exception);
+            }
+
+            if (token.Type == JTokenType.String)
+            {
+                throw new WrongAuthException<PasswordAuthRequestData>(
+                    new WrongAuthData<PasswordAuthRequestData>() { Message = token.Value<string>(), RequestData = authRequest }, token.Value<string>(), null);
+
             }
 
 

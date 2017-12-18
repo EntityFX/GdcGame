@@ -16,6 +16,7 @@ namespace EntityFX.Gdcame.Engine.Worker.RatingServer
 
     public class RatingSyncWorker : WorkerBase, IWorker
     {
+        private readonly ILogger _logger;
         private readonly IServerDataAccessService serverDataAccessService;
 
         private readonly IGlobalRatingDataAccess globalRatingDataAccess;
@@ -26,8 +27,9 @@ namespace EntityFX.Gdcame.Engine.Worker.RatingServer
 
         private Task backgroundRatingSyncTask;
 
-        public RatingSyncWorker(IServerDataAccessService serverDataAccessService, IGlobalRatingDataAccess globalRatingDataAccess, INodeRatingClientFactory nodeRatingClientFactory, ITaskTimerFactory taskTimerFactory)
+        public RatingSyncWorker(ILogger logger, IServerDataAccessService serverDataAccessService, IGlobalRatingDataAccess globalRatingDataAccess, INodeRatingClientFactory nodeRatingClientFactory, ITaskTimerFactory taskTimerFactory)
         {
+            _logger = logger;
             this.serverDataAccessService = serverDataAccessService;
             this.globalRatingDataAccess = globalRatingDataAccess;
             this.nodeRatingClientFactory = nodeRatingClientFactory;
@@ -41,9 +43,36 @@ namespace EntityFX.Gdcame.Engine.Worker.RatingServer
             var sw = new Stopwatch();
             sw.Start();
             var servers = this.serverDataAccessService.GetServers();
-            var retrieveClients = servers.Select(server => this.nodeRatingClientFactory.BuildClient(new Uri(string.Format("http://{0}:{1}", server.Address, 9001)))).ToList();
+
+
+            var retrieveClients = servers.Select(server =>
+            {
+                var nodeClientAddress = new Uri(string.Format("http://{0}:{1}",
+                    server.Address, 9080));
+                try
+                {
+                    return this.nodeRatingClientFactory.BuildClient(nodeClientAddress);
+                }
+                catch (Exception e)
+                {
+                    _logger.Warning("Server with address {0} is not available", nodeClientAddress);
+                    _logger.Error(e);
+                    return null;
+                }
+
+            }).Where(server => server != null).ToList();
+
             var tasks = retrieveClients.Select(c => Task.Run(() => c.GetRaiting())).ToArray();
-            Task.WaitAll(tasks);
+
+            try
+            {
+                Task.WaitAll(tasks);
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e);
+            }
+
             var ratings = Task.WhenAll(tasks).Result;
             this.globalRatingDataAccess.DropStatistics();
             foreach (var topRatingStatistics in ratings)

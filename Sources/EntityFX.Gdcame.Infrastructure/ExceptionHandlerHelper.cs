@@ -39,17 +39,22 @@ namespace EntityFX.Gdcame.Infrastructure
 
             try
             {
-                token = JObject.Parse(response.Content);
+                token = JToken.Parse(response.Content);
             }
             catch (System.Exception)
             {
-                throw new ClientException<ErrorData>(null, response.StatusDescription);
+                throw new ClientException<ErrorData>(new ServerErrorData() { Message = response.StatusDescription, ExceptionType = "Critical Error"}, response.StatusDescription);
             }
 
-            var serverToken = token.SelectToken("server", false).Value<string>();
+            if (token != null && token.Type == JTokenType.String)
+            {
+                throw new ClientException<ServerErrorData>(new ServerErrorData() { Message = token.Value<string>()}, response.StatusDescription);
+            }
+
+            var serverToken = token.SelectToken("server", false);
             if (serverToken != null && response.StatusCode == HttpStatusCode.MovedPermanently)
             {
-                throw new ClientException<GameFrozenErrorData>(new GameFrozenErrorData() { Server = serverToken });
+                throw new ClientException<GameFrozenErrorData>(new GameFrozenErrorData() { Server = serverToken.Value<string>() });
             }
 
             var messageToken = (string)token.SelectToken("message", false);
@@ -67,8 +72,8 @@ namespace EntityFX.Gdcame.Infrastructure
                 }
             }
 
-            var invalidState = token.SelectToken("modelState", false);
-            if (invalidState != null)
+            var invalidState = token.SelectToken("errorDetails", false);
+            if (invalidState != null && invalidState.Type == JTokenType.Array)
             {
                 var validationErrorData = new ValidationErrorData()
                 {

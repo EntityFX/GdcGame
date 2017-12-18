@@ -54,7 +54,7 @@ namespace EntityFX.Gdcame.Application.Api.Common
         // POST api/Auth/Register
         [Route("Register")]
         [HttpPost]
-        public async Task<ActionResult> Register(RegisterAccountModel model)
+        public async Task<ActionResult> Register([FromBody]RegisterAccountModel model)
         {
             if (!ModelState.IsValid)
             {

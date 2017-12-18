@@ -26,6 +26,7 @@
     <ProjectReference Include="..\EntityFX.Gdcame.Engine.Contract.RatingServer\EntityFX.Gdcame.Engine.Contract.RatingServer.csproj" />
     <ProjectReference Include="..\EntityFX.Gdcame.Engine.RatingServer\EntityFX.Gdcame.Engine.Common.csproj" />
     <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure.Common\EntityFX.Gdcame.Infrastructure.Common.csproj" />
+    <ProjectReference Include="..\EntityFX.Gdcame.Infrastructure\EntityFX.Gdcame.Infrastructure.csproj" />
     <ProjectReference Include="..\EntityFX.Gdcame.Manager.Common\EntityFX.Gdcame.Manager.Common.csproj" />
     <ProjectReference Include="..\EntityFX.Gdcame.Utils.Common\EntityFX.Gdcame.Utils.Common.csproj" />
     <ProjectReference Include="..\EntityFX.Gdcame.Utils.Hashing\EntityFX.Gdcame.Utils.Hashing.csproj" />

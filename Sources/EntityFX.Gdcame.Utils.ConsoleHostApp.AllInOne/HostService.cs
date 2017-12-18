@@ -43,7 +43,7 @@ namespace EntityFX.Gdcame.Utils.ConsoleHostApp.AllInOne.MainServer
             container.RegisterType<RatingCalculationWorker>();
             container.RegisterType<NodeDataTransferWorker>();
 
-            container.RegisterType<IRuntimeHelper>((scope) => new RuntimeHelper());
+            container.RegisterType<IRuntimeHelper>((scope) => _runtimeHelper);
             container.RegisterType<ILogger>((scope) => new Logger(new NLoggerAdapter(NLog.LogManager.GetLogger("logger"))));
             container.RegisterType<ITaskTimer, GenericTaskTimer>();
             container.RegisterType<ICache, Cache>((scope) => new Cache(), ContainerScope.Singleton);

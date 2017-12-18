@@ -58,8 +58,12 @@ namespace EntityFX.Gdcame.Utils.Common
             return PrepareContainer?.Invoke(IocContainer, services);
         }
 
-        public virtual void Configure(IApplicationBuilder app)
+        public virtual void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
 
             app.UseMvc();
             app.Use(async (context, next) =>
